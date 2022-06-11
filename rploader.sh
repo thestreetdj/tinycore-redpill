@@ -1,22 +1,23 @@
 #!/bin/bash
 #
 # Author :
-# Date : 220523
-# Version : 0.7.1.8
+# Date : 220607
+# Version : 0.8.0.2
 #
 #
 # User Variables :
 
-rploaderver="0.7.1.8"
-rploaderfile="https://raw.githubusercontent.com/pocopico/tinycore-redpill/main/rploader.sh"
-rploaderrepo="https://github.com/pocopico/tinycore-redpill/raw/main/"
+rploaderver="0.8.0.2"
+build="main"
+rploaderfile="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/rploader.sh"
+rploaderrepo="https://github.com/pocopico/tinycore-redpill/raw/$build/"
 
-redpillextension="https://github.com/pocopico/rp-ext/raw/main/redpill/rpext-index.json"
-modextention="https://github.com/pocopico/rp-ext/raw/main/rpext-index.json"
-modalias4="https://raw.githubusercontent.com/pocopico/tinycore-redpill/main/modules.alias.4.json.gz"
-modalias3="https://raw.githubusercontent.com/pocopico/tinycore-redpill/main/modules.alias.3.json.gz"
-dtcbin="https://raw.githubusercontent.com/pocopico/tinycore-redpill/main/dtc"
-dtsfiles="https://raw.githubusercontent.com/pocopico/tinycore-redpill/main"
+redpillextension="https://github.com/pocopico/rp-ext/raw/$build/redpill/rpext-index.json"
+modextention="https://github.com/pocopico/rp-ext/raw/$build/rpext-index.json"
+modalias4="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/modules.alias.4.json.gz"
+modalias3="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/modules.alias.3.json.gz"
+dtcbin="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/dtc"
+dtsfiles="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build"
 timezone="UTC"
 ntpserver="pool.ntp.org"
 
@@ -48,6 +49,10 @@ function history() {
     0.7.1.6 Updated satamap function to fix the broken q35 KVM controller, and to stop scanning for CD-ROM's
     0.7.1.7 Updated serialgen function to include the option for using the realmac
     0.7.1.8 Updated satamap function to fine tune SATA port identification and identify SATABOOT
+    0.7.1.9 Updated patchdtc function to fix wrong port identification for VMware hosted systems
+    0.8.0.0 Stable version. All new features will be moved to develop repo
+    0.8.0.1 Updated postupdate to facilitate update to update2
+    0.8.0.2 Updated satamap to support DUMMY PORT detection 
     --------------------------------------------------------------------------------------
 EOF
 
@@ -426,9 +431,9 @@ function addrequiredexts() {
         cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
     done
 
-#    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ]; then
-#        patchdtc
-#    fi
+    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ]; then
+        patchdtc
+    fi
 
 }
 
@@ -447,6 +452,69 @@ function installapache() {
 }
 
 function postupdate() {
+
+    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+
+    cd /home/tc
+
+    echo "Creating temp ramdisk space" && mkdir /home/tc/ramdisk
+
+    echo "Mounting partition ${loaderdisk}1}" && sudo mount /dev/${loaderdisk}1
+    echo "Mounting partition ${loaderdisk}2}" && sudo mount /dev/${loaderdisk}2
+
+    cd /home/tc/ramdisk
+
+    echo "Extracting update ramdisk"
+
+    if [ $(od /mnt/${loaderdisk}2/rd.gz | head -1 | awk '{print $2}') == "000135" ]; then
+        sudo unlzma -c /mnt/${loaderdisk}2/rd.gz | cpio -idm 2>&1 >/dev/null
+    else
+        sudo cat /mnt/${loaderdisk}2/rd.gz | cpio -idm 2>&1 >/dev/null
+    fi
+
+    . ./etc.defaults/VERSION && echo "Found Version : ${productversion}-${buildnumber}-${smallfixnumber}"
+
+    echo -n "Do you want to use this for the loader ? [yY/nN] : "
+    read answer
+
+    if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+
+        echo "Extracting redpill ramdisk"
+
+        if [ $(od /mnt/${loaderdisk}1/rd.gz | head -1 | awk '{print $2}') == "000135" ]; then
+            sudo unlzma -c /mnt/${loaderdisk}1/rd.gz | cpio -idm
+        else
+            sudo cat /mnt/${loaderdisk}1/rd.gz | cpio -idm
+        fi
+
+        . ./etc.defaults/VERSION && echo "The new smallupdate version will be  : ${productversion}-${buildnumber}-${smallfixnumber}"
+
+        echo -n "Do you want to use this for the loader ? [yY/nN] : "
+        read answer
+
+        if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+
+            echo "Recreating ramdisk " && sudo find . 2>/dev/null | cpio -o -H newc -R root:root | xz -9 --format=lzma >../rd.gz
+
+            cd ..
+
+            echo "Adding fake sign" && sudo dd if=/dev/zero of=rd.gz bs=68 count=1 conv=notrunc oflag=append
+
+            echo "Putting ramdisk back to the loader partition ${loaderdisk}1" && sudo cp -f rd.gz /mnt/${loaderdisk}1/rd.gz
+
+            echo "Removing temp ramdisk space " && rm -rf ramdisk
+
+            echo "Done"
+        else
+
+            exit 0
+
+        fi
+
+    fi
+
+}
+function postupdatev1() {
 
     echo "Mounting root to get the latest dsmroot patch in /.syno/patch "
 
@@ -473,7 +541,7 @@ function postupdate() {
 
         echo "bspatch does not exist, bringing over from repo"
 
-        curl --location "https://raw.githubusercontent.com/pocopico/tinycore-redpill/main/bspatch" -O
+        curl --location "https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/bspatch" -O
 
         chmod 777 bspatch
         sudo mv bspatch /usr/local/bin/
@@ -871,7 +939,9 @@ function mountdatadisk() {
 }
 
 function patchdtc() {
-
+#stop using
+exit 0
+    checkmachine
     loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
     localdisks=$(lsblk | grep -i disk | grep -i sd | awk '{print $1}' | grep -v $loaderdisk)
     localnvme=$(lsblk | grep -i nvme | awk '{print $1}')
@@ -944,7 +1014,11 @@ function patchdtc() {
 
     for disk in $localdisks; do
         diskpath=$(udevadm info --query path --name $disk | awk -F "\/" '{print $4 ":" $5 }' | awk -F ":" '{print $2 ":" $3 "," $6}' | sed 's/,*$//')
-        diskport=$(udevadm info --query path --name $disk | sed -n '/target/{s/.*target//;p;}' | awk -F: '{print $1}')
+        if [ "$HYPERVISOR" == "VMware" ]; then
+            diskport=$(udevadm info --query path --name $disk | sed -n '/target/{s/.*target[1-9]//;p;}' | awk -F: '{print $1}')
+        else
+            diskport=$(udevadm info --query path --name $disk | sed -n '/target/{s/.*target//;p;}' | awk -F: '{print $1}')
+        fi
 
         echo "Found local disk $disk with path $diskpath, adding into internal_slot $diskslot with portnumber $diskport"
         if [ "${dtbfile}" == "ds920p" ]; then
@@ -1085,37 +1159,47 @@ function backup() {
 }
 
 function satamap() {
-    # This function will attempt to identify all SATA controllers and create sataportmap and diskidxmap.
-    # Since we cannot know how many ports are on the controllers, we ask the user for the desired number
-    # of disk ports to be mapped into DSM.
+
+    # This function identifies all SATA controllers and create a plausible sataportmap and diskidxmap.
     #
     # In the case of SATABOOT: While TinyCore suppresses the /dev/sd device servicing synoboot, the
     # controller still takes up a sataportmap entry. ThorGroup advised not to map the controller ports
-    # beyond the MaxDisks limit but there does not appear to be any harm in doing so - unless additional
-    # devices are connected along with SATABOOT. This will create a gap/empty first slot.
+    # beyond the MaxDisks limit, but there is no harm in doing so - unless additional devices are
+    # connected along with SATABOOT. This will create a gap/empty first slot.
     #
-    # By mapping the SATABOOT controller ports beyond MaxDisks, we force standardization of user data
-    # disks onto a secondary controller, and it's clear what the SATABOOT controller and device are
-    # being used for. Therefore, we must positively identify it, map it out, and ignore any other drives
-    # connected to it.
+    # By mapping the SATABOOT controller ports beyond MaxDisks like Jun loader, it forces data disks
+    # onto a secondary controller, and it's clear what the SATABOOT controller and device are being
+    # used for. The KVM q35 bogus controller is mapped in the same manner.
     #
-    # We need something similar to disable the bogus SATA controller in the KVM q35 hardware model.
+    # DUMMY ports (flagged by kernel as empty/non-functional, usually because hotplug is supported and
+    # not enabled, and no disk is attached are detected and alerted. Any DUMMY port visible to the
+    # DSM installer will result in a "SATA port disabled" message.
+    #
+    # SCSI/SAS and non-AHCI compliant SATA are unaffected by sataportmap and diskidxmap but a summary
+    # controller and drive report is provided in order to avoid user distress.
     #
     # This code was written with the intention of reusing the detection strategy for device tree
     # creation, and the two functions could easily be integrated if desired.
 
+#   add $2 arg to satamap invocation
+
     checkmachine
+    checkforscsi
 
     let diskidxmapidx=0
+    badportfail=false
     sataportmap=""
     diskidxmap=""
 
     maxdisks=$(jq -r ".synoinfo.maxdisks" user_config.json)
 
+    # look for dummy SATA flagged by kernel (bad ports)
+    dmys=$(dmesg | grep ": DUMMY$" | awk -F"] ata" '{print $2}' | awk -F: '{print $1}' | sort -n)
+
     # if we cannot find usb disk, the boot disk must be intended for SATABOOT
     if [ $(ls -la /sys/block/sd* | fgrep "/usb" | wc -l) -eq 0 ]; then
         loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
-        sbpci=$(ls -la /sys/block/$loaderdisk | awk -F"/ata" '{print $1}' | awk -F"/" '{print $NF}' | cut --complement -f1 -d:)
+        sbpci=$(ls -la /sys/block/$loaderdisk | awk -F"/ata" '{print $1}' | awk-F"/" '{print $NF}' | cut --complement -f1 -d:)
     fi
 
     # get all SATA controllers PCI class 106
@@ -1127,38 +1211,75 @@ function satamap() {
         # get attached block devices (exclude CD-ROMs)
         ports=$(ls -la /sys/class/ata_device | fgrep "$pci" | wc -l)
         drives=$(ls -la /sys/block | fgrep "$pci" | grep -v "sr.$" | wc -l)
-        echo -e "\nFound \"$(lspci -s $pci | sed "s/SATA controller: //")\""
+        echo -e "\nFound \"$(lspci -s $pci | sed "s/\ .*://")\""
         echo -n "Detected $ports ports/$drives drives. "
 
+        # look for bad ports on this controller
+        badports=""
+        for dmy in $dmys; do
+          badpci=$(ls -la /sys/class/ata_port/ata$dmy | awk -F"/ata$dmy/ata_port/" '{print $1}' | awk -F"/" '{print $NF}' | cut --complement -f1 -d:)
+          [ "$pci" = "$badpci" ] && badports=$(echo $badports$dmy" ")
+        done
+        # display the bad ports, referenced to controller port numbering
+        if [ ! -z "$badports" ]; then
+          # minmap is invalid with bad ports!
+          [ "$1" = "minmap" ] && badportfail=true
+          # get first port of PCI adapter with bad ports
+          badportbase=$(ls -la /sys/class/ata_port | fgrep "$badpci" | awk -F"/ata_port/ata" '{print $2}' | sort -n | head -1)
+          echo -n "Bad ports:"
+          for badport in $badports; do
+            let badport=$badport-$badportbase+1
+            echo -n " "$badport
+          done
+          echo -n ". "
+        fi
+        # SATABOOT controller? (if so, it has to be mapped as first controller, we think)
         if [ "$pci" = "$sbpci" ]; then
-            # sataboot controller? if so it has to be mapped as first controller (we think)
-            echo "SATABOOT detected. Mapping loader dev after maxdisks"
-            [ ${drives} -gt 1 ] && echo "WARNING: Additional devices are attached. These will be inaccessible!"
+            echo "SATABOOT drive detected, mapping it after maxdisks"
+            [ ${drives} -gt 1 ] && echo "WARNING: Non-SATABOOT drive(s) connected. Move them to another controller!"
             sataportmap=$sataportmap"1"
             diskidxmap=$diskidxmap$(printf "%02X" $maxdisks)
         else
             if [ "$pci" = "00:1f.2" ] && [ "$HYPERVISOR" = "KVM" ]; then
                 # KVM q35 bogus controller?
-                echo "Reserving and disabling KVM q35 bogus controller"
+                echo "KVM q35 bogus controller detected, mapping it after maxdisks"
                 sataportmap=$sataportmap"1"
                 diskidxmap=$diskidxmap$(printf "%02X" $maxdisks)
             else
-                # handle VMware insane port count
+                # handle VMware virtual SATA controller insane port count
                 if [ "$HYPERVISOR" = "VMware" ] && [ $ports -eq 30 ]; then
-                    echo "Setting 8 VMware virtual ports for compatibility with typical systems"
+                    echo "Defaulting 8 virtual ports for typical system compatibility"
                     ports=8
-                fi
-                echo -n "Override # of ports or ENTER to accept <$ports> "
-                read newports
-                if [ ! -z $newports ]; then
-                    ports=$newports
-                    if ! [ "$ports" -eq "$ports" ] 2>/dev/null; then
-                        echo "Non-numeric, overridden to 0"
-                        ports=0
+                else
+                    # if minmap and not vmware virtual sata, don't update sataportmap/diskidxmap
+                    if [ "$1" = "minmap" ]; then
+                        echo
+                        continue
                     fi
                 fi
+                # ask interactively if not minmap
+                if [ "$1" != "minmap" ]; then
+                    echo -n "Override # of ports or ENTER to accept <$ports> "
+                    read newports
+                    if [ ! -z $newports ]; then
+                        ports=$newports
+                        if ! [ "$ports" -eq "$ports" ] 2>/dev/null; then
+                            echo "Non-numeric, overridden to 0"
+                            ports=0
+                        fi
+                    fi
+                else
+                    echo
+                fi
+                # if badports are in the port range, set the fail flag
+                if [ ! -z "$badports" ]; then
+                  for badport in $badports; do
+                    let badport=$badport-$badportbase+1
+                    [ $ports -ge $badport ] && badportfail=true
+                  done
+                fi
                 if [ $ports -gt 9 ]; then
-                    echo "WARNING: specifying more than 9 ports per controller is unsupported and may affect stability"
+                    echo "WARNING: SataPortMap values >9 are experimental and may affect stability"
                     let ports=$ports+48
                     portchar=$(printf \\$(printf "%o" $ports))
                 else
@@ -1167,22 +1288,35 @@ function satamap() {
                 sataportmap=$sataportmap$portchar
                 diskidxmap=$diskidxmap$(printf "%02x" $diskidxmapidx)
                 let diskidxmapidx=$diskidxmapidx+$ports
-                # warn if exceeding maxdisks
-                [ $diskidxmapidx -gt $maxdisks ] && echo "WARNING: the total number of mapped ports exceeds maxdisks"
             fi
         fi
     done
 
+    # ports > maxdisks?
+    [ $diskidxmapidx -gt $maxdisks ] && echo "WARNING: mapped SATA port count exceeds maxdisks"
+
     # handle no assigned SATA ports affecting SCSI mapping problem
     if [ $diskidxmapidx -eq 0 ]; then
-        echo "No SATA ports mapped. Setup for compatibility with SCSI/SAS controller mapping."
+        echo -e "\nNo AHCI SATA ports mapped. Setting up compatibility for SCSI/SAS controller mappings."
         [ -z $sataportmap ] && sataportmap="1"
         diskidxmap=$diskidxmap"00"
     fi
 
-    echo -e "\nRecommended settings:"
+    # now advise on SCSI drives for user peace of mind
+    # 100 = SCSI, 104 = RAIDHBA, 107 = SAS - none of these honor sataportmap/diskidxmap
+    pcis=$((lspci -d ::100; lspci -d ::104; lspci -d ::107) | awk '{print $1}')
+    [ ! -z $pcis ] && echo
+    # loop through non-SATA controllers
+    for pci in $pcis; do
+        # get attached block devices (exclude CD-ROMs)
+        drives=$(ls -la /sys/block | fgrep "$pci" | grep -v "sr.$" | wc -l)
+        echo "Found SCSI/HBA \""$(lspci -s $pci | sed "s/\ .*://")"\" ($drives drives)"
+    done
+
+    echo -e "\nComputed settings:"
     echo "SataPortMap=$sataportmap"
     echo "DiskIdxMap=$diskidxmap"
+    [ "$badportfail" = true ] && echo -e "\nWARNING: Bad ports are mapped. The DSM installation will fail!"
 
     echo
     echo -n "Should i update the user_config.json with these values ? [Yy/Nn] "
@@ -1597,6 +1731,28 @@ EOF
 
 }
 
+function showsyntax() {
+    cat <<EOF
+$(basename ${0})
+
+Version : $rploaderver
+----------------------------------------------------------------------------------------
+
+Usage: ${0} <action> <platform version> <static or compile module> [extension manager arguments]
+
+Actions: build, ext, download, clean, update, listmod, serialgen, identifyusb, patchdtc, 
+satamap, backup, backuploader, restoreloader, restoresession, mountdsmroot, postupdate,
+mountshare, version, help
+
+----------------------------------------------------------------------------------------
+Available platform versions:
+----------------------------------------------------------------------------------------
+$(getPlatforms)
+----------------------------------------------------------------------------------------
+Check custom_config.json for platform settings.
+EOF
+}
+
 function showhelp() {
     cat <<EOF
 $(basename ${0})
@@ -1605,56 +1761,82 @@ Version : $rploaderver
 ----------------------------------------------------------------------------------------
 Usage: ${0} <action> <platform version> <static or compile module> [extension manager arguments]
 
-Actions: build, ext, download, clean, update, listmod, serialgen, identifyusb, satamap, mountshare
+Actions: build, ext, download, clean, update, listmod, serialgen, identifyusb, patchdtc, 
+satamap, backup, backuploader, restoreloader, restoresession, mountdsmroot, postupdate, 
+mountshare, version, help 
 
-- build:        Build the 💊 RedPill LKM and update the loader image for the specified 
-                platform version and update current loader.
+- build <platform> <option> : 
+  Build the 💊 RedPill LKM and update the loader image for the specified platform version and update
+  current loader.
 
-- ext:          Manage extensions, options go after platform (add/force_add/info/remove/update/cleanup/auto)
+  Valid Options:     static/compile/manual 
+  
+- ext <platform> <option> <URL> 
+  Manage extensions using redpill extension manager. 
 
-                example: 
+  Valid Options:  add/force_add/info/remove/update/cleanup/auto . Options after platform 
+  
+  Example: 
+  rploader.sh ext apollolake-7.0.1-42218 add https://raw.githubusercontent.com/pocopico/rp-ext/master/e1000/rpext-index.json
+  or for auto detect use 
+  rploader.sh ext apollolake-7.0.1-42218 auto 
+  
+- download <platform> :
+  Download redpill sources only
+  
+- clean :
+  Removes all cached and downloaded files and starts over clean
+  
+- update : 
+  Checks github repo for latest version of rploader, and prompts you download and overwrite
+  
+- listmods <platform>:
+  Tries to figure out any required extensions. This usually are device modules
+  
+- serialgen <synomodel> <option> :
+  Generates a serial number and mac address for the following platforms 
+  DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+
+  
+  Valid Options :  realmac , keeps the real mac of interface eth0
+  
+- identifyusb :    
+  Tries to identify your loader usb stick VID:PID and updates the user_config.json file 
+  
+- patchdtc :       
+  Tries to identify and patch your dtc model for your disk and nvme devices. If you want to have 
+  your manually edited dts file used convert it to dtb and place it under /home/tc/custom-modules
+  
+- satamap :
+  Tries to identify your SataPortMap and DiskIdxMap values and updates the user_config.json file 
+  
+- backup :
+  Backup and make changes /home/tc changed permanent to your loader disk. Next time you boot,
+  your /home will be restored to the current state.
+  
+- backuploader :
+  Backup current loader partitions to your TCRP partition
+  
+- restoreloader :
+  Restore current loader partitions from your TCRP partition
+  
+- restoresession :
+  Restore last user session files. (extensions and user_config.json)
+  
+- mountdsmroot :
+  Mount DSM root for manual intervention on DSM root partition
+  
+- postupdate :
+  Runs a postupdate process to recreate your rd.gz, zImage and custom.gz for junior to match root
+  
+- mountshare :
+  Mounts a remote CIFS working directory
 
-                rploader.sh ext apollolake-7.0.1-42218 add https://raw.githubusercontent.com/pocopico/rp-ext/master/e1000/rpext-index.json
+- version <option>:
+  Prints rploader version and if the history option is passed then the version history is listed.
 
-                or for auto detect use 
-
-                rploader.sh ext apollolake-7.0.1-42218 auto 
-
-- download:     Download redpill sources only
-
-- clean:        Removes all cached files and starts over
-
-- update:       Checks github repo for latest version of rploader 
-
-- listmods:     Tries to figure out required extensions
-
-- serialgen:    Generates a serial number and mac address for the following platforms 
-
-                DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+
-
-                options : realmac , keeps the real mac of interface eth0
-
-- identifyusb:  Tries to identify your loader usb stick VID:PID and updates the user_config.json file 
-
-- patchdtc:     Tries to identify and patch your dtc model for your disk and nvme devices.
-
-- satamap:      Tries to identify your SataPortMap and DiskIdxMap values and updates the user_config.json file 
-
-- backup:       Backup and make changes /home/tc changed permanent to your loader disk
-
-- backuploader: Backup current loader partitions to your TCRP partition
-
-- restoreloader:Restore current loader partitions from your TCRP partition
-
-- restoresession: Restore last user session files. (extensions and user_config.json)
-
-- mountdsmroot: Mount DSM root for manual intervention on DSM root partition
-
-- postupdate:   Runs a postupdate process to recreate your rd.gz, zImage and custom.gz for junior to match root
-
-- mountshare:   Mounts a remote CIFS working directory
-
-- version:      Prints rploader version and if the history option is passed then the version history is listed.
+  Valid Options : history, shows rploader release history.
+  
+- help:           Show this page
 
 Version : $rploaderver
 ----------------------------------------------------------------------------------------
@@ -1662,7 +1844,7 @@ Available platform versions:
 ----------------------------------------------------------------------------------------
 $(getPlatforms)
 ----------------------------------------------------------------------------------------
-Check global_settings.json for settings.
+Check custom_config.json for platform settings.
 EOF
 
 }
@@ -1980,8 +2162,9 @@ EOF
 }
 
 function getlatestrploader() {
-
-    echo -n "Checking if a newer version exists on the repo -> "
+#stop using
+exit 0
+    echo -n "Checking if a newer version exists on the $build repo -> "
 
     curl -s --location "$rploaderfile" --output latestrploader.sh
     curl -s --location "$modalias3" --output modules.alias.3.json.gz
@@ -2298,7 +2481,7 @@ build)
 
     getvars $2
     checkinternet
-#    getlatestrploader
+    getlatestrploader
     gitdownload
 
     case $3 in
@@ -2399,7 +2582,7 @@ interactive)
     if [ -f interactive.sh ]; then
         . ./interactive.sh
     else
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/interactive.sh" --output interactive.sh
+        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/$build/interactive.sh" --output interactive.sh
         . ./interactive.sh
         exit 99
     fi
@@ -2455,8 +2638,12 @@ installapache)
 version)
     version $@
     ;;
-*)
+help)
     showhelp
+    exit 99
+    ;;
+*)
+    showsyntax
     exit 99
     ;;
 
