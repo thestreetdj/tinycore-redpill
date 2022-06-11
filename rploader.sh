@@ -431,9 +431,9 @@ function addrequiredexts() {
         cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
     done
 
-    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ]; then
-        patchdtc
-    fi
+#    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ]; then
+#        patchdtc
+#    fi
 
 }
 
@@ -939,8 +939,6 @@ function mountdatadisk() {
 }
 
 function patchdtc() {
-#stop using
-exit 0
     checkmachine
     loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
     localdisks=$(lsblk | grep -i disk | grep -i sd | awk '{print $1}' | grep -v $loaderdisk)
@@ -2162,8 +2160,6 @@ EOF
 }
 
 function getlatestrploader() {
-#stop using
-exit 0
     echo -n "Checking if a newer version exists on the $build repo -> "
 
     curl -s --location "$rploaderfile" --output latestrploader.sh
@@ -2481,7 +2477,7 @@ build)
 
     getvars $2
     checkinternet
-    getlatestrploader
+#    getlatestrploader
     gitdownload
 
     case $3 in
