@@ -2518,6 +2518,16 @@ build)
         [ $? -eq 0 ] && savesession
         ;;
 
+    junmanual)
+        echo "Using static compiled redpill extension"
+        getstaticmodule
+        echo "Got $REDPILL_MOD_NAME "
+        echo "Starting loader creation "
+        buildloader junmod
+        [ $? -eq 0 ] && savesession
+        ;;
+
+
     static | *)
         echo "No extra build option or static specified, using default <static> "
         echo "Using static compiled redpill extension"
