@@ -91,7 +91,7 @@
       "add_extensions": [
         {
         "jumkey.qjs.000": "https://github.com/jumkey/redpill-load/raw/develop/redpill-runtime-qjs/rpext-index.json",
-        "jumkey.qjs.dtb": "https://github.com/jumkey/redpill-load/raw/develop/redpill-qjs-dtb/rpext-index.json",
+        "jumkey.qjs.dtb": "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-qjs-dtb/rpext-index.json",
         "redpill-misc": "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
         }
       ]
