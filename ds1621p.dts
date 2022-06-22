@@ -166,6 +166,181 @@
 		};
 	};
 
+	internal_slot@7 {
+		protocol_type = "sata";
+		led_type = "lp3943";
+
+		ahci { pcie_root = "00:12.0";
+			ata_port = <0x03>;
+		};
+
+		led_green {
+			led_name = "syno_led12";
+		};
+
+		led_orange {
+			led_name = "syno_led13";
+		};
+	};
+
+
+	internal_slot@8 {
+		protocol_type = "sata";
+		led_type = "lp3943";
+
+		ahci { pcie_root = "00:12.0";
+			ata_port = <0x04>;
+		};
+
+		led_green {
+			led_name = "syno_led14";
+		};
+
+		led_orange {
+			led_name = "syno_led15";
+		};
+	};
+
+
+	internal_slot@9 {
+		protocol_type = "sata";
+		led_type = "lp3943";
+
+		ahci { pcie_root = "00:12.0";
+			ata_port = <0x05>;
+		};
+
+		led_green {
+			led_name = "syno_led16";
+		};
+
+		led_orange {
+			led_name = "syno_led17";
+		};
+	};
+
+	internal_slot@10 {
+		protocol_type = "sata";
+		led_type = "lp3943";
+
+		ahci { pcie_root = "00:12.0";
+			ata_port = <0x05>;
+		};
+
+		led_green {
+			led_name = "syno_led18";
+		};
+
+		led_orange {
+			led_name = "syno_led19";
+		};
+	};
+
+
+	internal_slot@11 {
+		protocol_type = "sata";
+		led_type = "lp3943";
+
+		ahci { pcie_root = "00:12.0";
+			ata_port = <0x00>;
+		};
+
+		led_green {
+			led_name = "syno_led20";
+		};
+
+		led_orange {
+			led_name = "syno_led21";
+		};
+	};
+
+	internal_slot@12 {
+		protocol_type = "sata";
+		led_type = "lp3943";
+
+		ahci { pcie_root = "00:12.0";
+			ata_port = <0x01>;
+		};
+
+		led_green {
+			led_name = "syno_led22";
+		};
+
+		led_orange {
+			led_name = "syno_led23";
+		};
+	};
+
+	internal_slot@13 {
+		protocol_type = "sata";
+		led_type = "lp3943";
+
+		ahci { pcie_root = "00:12.0";
+			ata_port = <0x02>;
+		};
+
+		led_green {
+			led_name = "syno_led24";
+		};
+
+		led_orange {
+			led_name = "syno_led25";
+		};
+	};
+
+	internal_slot@14 {
+		protocol_type = "sata";
+		led_type = "lp3943";
+
+		ahci { pcie_root = "00:12.0";
+			ata_port = <0x03>;
+		};
+
+		led_green {
+			led_name = "syno_led26";
+		};
+
+		led_orange {
+			led_name = "syno_led27";
+		};
+	};
+
+
+	internal_slot@15 {
+		protocol_type = "sata";
+		led_type = "lp3943";
+
+		ahci { pcie_root = "00:12.0";
+			ata_port = <0x04>;
+		};
+
+		led_green {
+			led_name = "syno_led28";
+		};
+
+		led_orange {
+			led_name = "syno_led29";
+		};
+	};
+
+
+	internal_slot@16 {
+		protocol_type = "sata";
+		led_type = "lp3943";
+
+		ahci { pcie_root = "00:12.0";
+			ata_port = <0x05>;
+		};
+
+		led_green {
+			led_name = "syno_led30";
+		};
+
+		led_orange {
+			led_name = "syno_led31";
+		};
+	};
+
 	esata_port@1 {
 
 		ahci {
