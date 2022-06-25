@@ -405,15 +405,15 @@ if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] ; then
     fi
 elif [ "$MODEL" == "DS918+" ] ; then
     if [ $poco == "Y" ] ; then
+        cecho y "switch to pocopico static dtc mode"
         if [ $TARGET_REVISION != "42218" ] ; then
-            echo switch to pocopico static dtc mode
             curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json
         else
             curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json        
         fi
     elif [ $jumkey == "Y" ] ; then 
-        echo switch to jumkey dynamic dtc mode    
-        echo jumkey dynamic dtc mode is not ready yet. (Loader Build Exit)
+        cecho y "switch to jumkey dynamic dtc mode"
+        cecho r "jumkey dynamic dtc mode is not ready yet. (Loader Build Exit)"
         exit 0
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
     fi
