@@ -405,7 +405,9 @@ if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] ; then
     	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
     	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
     fi
-elif [ "$MODEL" == "DS918+" ] ; then
+      
+else
+
     if [ $poco == "Y" ] ; then
         cecho y "switch to pocopico static dtc mode"
         if [ $TARGET_REVISION != "42218" ] ; then
@@ -419,13 +421,7 @@ elif [ "$MODEL" == "DS918+" ] ; then
         exit 0
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
     fi
-    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh        
-else
-
-    if [ $jumkey == "Y" ] || [ $poco == "Y" ]; then                                     
-        echo "This Synology model not supported jumkey dynamic dtc patch or pocopico static dtc patch in TCRP."    
-        exit 0                                                        
-    fi  
+    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh  
 
     if [ $TARGET_REVISION == "42218" ] && [ $manual == "Y" ]; then                                                                                        
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh                                                                                                                                         
@@ -433,8 +429,6 @@ else
 
 fi
 
-if [ "$MODEL" != "DS918+" ]; then 
-#for DS918+ test
 if [ $jumkey == "N" ] && [ $poco == "N" ] && [ $TARGET_REVISION != "42218" ] && [ $manual == "N" ]  ; then  
     echo "y"|./rploader.sh update                                                                                                                       
     echo "n"|./rploader.sh fullupgrade                                                                                            
@@ -452,8 +446,6 @@ if [ $jumkey == "N" ] && [ $poco == "N" ] && [ $TARGET_REVISION != "42218" ] && 
     	fi
     fi   
 fi
-fi
-
 
 if [ $noconfig == "Y" ] ; then                            
     cecho r "SN Gen/Mac Gen/Vid/Pid/SataPortMap detection skipped!!"                                         
@@ -493,7 +485,7 @@ else
 fi
 
 # Sataportmap,DiskIdxMap to black for dtc
-if [ "$MODEL" == "DS918+" ]; then 
+if [ $poco == "Y" ] ; then
     cecho p "Sataportmap,DiskIdxMap to blanc for dtc"
     json="$(jq --arg var "$sataportmap" '.extra_cmdline.SataPortMap = ""' user_config.json)" && echo -E "${json}" | jq . >user_config.json
     json="$(jq --arg var "$diskidxmap" '.extra_cmdline.DiskIdxMap = ""' user_config.json)" && echo -E "${json}" | jq . >user_config.json
