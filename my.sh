@@ -413,6 +413,8 @@ elif [ "$MODEL" == "DS918+" ] ; then
         fi
     elif [ $jumkey == "Y" ] ; then 
         echo switch to jumkey dynamic dtc mode    
+        echo jumkey dynamic dtc mode is not ready yet. (Loader Build Exit)
+        exit 0
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
     fi
     curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh        
