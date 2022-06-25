@@ -405,13 +405,17 @@ if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] ; then
     fi
 elif [ "$MODEL" == "DS918+" ] ; then
     if [ $poco == "Y" ] ; then
-    echo switch to pocopico static dtc mode
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json
-   #    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
-   # Sataportmap,DiskIdxMap to null for dtc
-        #curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/user_config.json" --output user_config.json 
+        if [ $TARGET_REVISION != "42218" ] l then
+            echo switch to pocopico static dtc mode
+            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json
+        else
+            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json        
+        fi
+    elif [ $jumkey == "Y" ] ; then 
+        echo switch to jumkey dynamic dtc mode    
+        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
     fi
+    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh        
 else
 
     if [ $jumkey == "Y" ] || [ $poco == "Y" ]; then                                     
@@ -477,11 +481,20 @@ else
 
     echo "y"|./rploader.sh identifyusb
 
-    if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] ; then                                                             
+    if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS918+" ] ; then                                                             
     	cecho p "Device Tree usage model does not need SataPortMap setting...." 
     else
     	./rploader.sh satamap
     fi
+fi
+
+# Sataportmap,DiskIdxMap to black for dtc
+if [ "$MODEL" != "DS918+" ]; then 
+    echo "Sataportmap,DiskIdxMap to blanc for dtc"
+    var = ""
+    json="$(jq --arg var "$sataportmap" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+    json="$(jq --arg var "$diskidxmap" '.extra_cmdline.DiskIdxMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+    cat user_config.json
 fi
 
 echo
