@@ -494,10 +494,9 @@ fi
 
 # Sataportmap,DiskIdxMap to black for dtc
 if [ "$MODEL" == "DS918+" ]; then 
-    echo "Sataportmap,DiskIdxMap to blanc for dtc"
-    var = ""
-    json="$(jq --arg var "$sataportmap" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-    json="$(jq --arg var "$diskidxmap" '.extra_cmdline.DiskIdxMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+    cecho p "Sataportmap,DiskIdxMap to blanc for dtc"
+    json="$(jq --arg var "$sataportmap" '.extra_cmdline.SataPortMap = ""' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+    json="$(jq --arg var "$diskidxmap" '.extra_cmdline.DiskIdxMap = ""' user_config.json)" && echo -E "${json}" | jq . >user_config.json
     cat user_config.json
 fi
 
