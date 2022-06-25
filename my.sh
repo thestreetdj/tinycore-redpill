@@ -489,7 +489,7 @@ else
 fi
 
 # Sataportmap,DiskIdxMap to black for dtc
-if [ "$MODEL" != "DS918+" ]; then 
+if [ "$MODEL" == "DS918+" ]; then 
     echo "Sataportmap,DiskIdxMap to blanc for dtc"
     var = ""
     json="$(jq --arg var "$sataportmap" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
