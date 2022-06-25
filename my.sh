@@ -405,7 +405,7 @@ if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] ; then
     fi
 elif [ "$MODEL" == "DS918+" ] ; then
     if [ $poco == "Y" ] ; then
-        if [ $TARGET_REVISION != "42218" ] l then
+        if [ $TARGET_REVISION != "42218" ] ; then
             echo switch to pocopico static dtc mode
             curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json
         else
