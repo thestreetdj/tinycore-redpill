@@ -155,6 +155,8 @@ Options: postupdate, jumkey, noconfig, noclean, manual
 
 - jumkey  : Option to apply jumkey's dynamic automatic dtc patch extension files (contrary to pocopico's static dtc patch).  
 
+- poco    : Option to apply pocopico's static dtc patch extension file (only DS918+, known as non-dtc model, is supported).
+
 - noconfig: SKIP automatic detection change processing such as SN/Mac/Vid/Pid/SataPortMap of user_config.json file.
 
 - noclean: SKIP the 💊   RedPill LKM/LOAD directory without clearing it with the Clean command. 
