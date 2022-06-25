@@ -299,7 +299,7 @@ while [ "$2" != "" ]; do
             ;;
 
         poco)
-            jumkey="Y"
+            poco="Y"
             ;;
 
         postupdate)
@@ -405,8 +405,8 @@ if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] ; then
     fi
 elif [ "$MODEL" == "DS918+" ] ; then
     if [ $poco == "Y" ] ; then
-   # swith to pocopico static dtc mode
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json
+    echo switch to pocopico static dtc mode
+   #     curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json
    #    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
    # Sataportmap,DiskIdxMap to null for dtc
