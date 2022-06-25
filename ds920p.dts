@@ -61,7 +61,8 @@
 		detect_pin_gpio = <0x23 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x00>;
 		};
 
@@ -80,7 +81,8 @@
 		detect_pin_gpio = <0x24 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x01>;
 		};
 
@@ -99,7 +101,8 @@
 		detect_pin_gpio = <0x25 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                          pcie_root = "00:12.0";
 			ata_port = <0x02>;
 		};
 
@@ -118,7 +121,8 @@
 		detect_pin_gpio = <0x26 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x03>;
 		};
 
@@ -138,7 +142,8 @@
 		detect_pin_gpio = <0x27 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x04>;
 		};
 
@@ -158,7 +163,8 @@
 		detect_pin_gpio = <0x28 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x05>;
 		};
 
@@ -177,7 +183,8 @@
 		detect_pin_gpio = <0x29 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x03>;
 		};
 
@@ -197,7 +204,8 @@
 		detect_pin_gpio = <0x30 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x04>;
 		};
 
@@ -217,7 +225,8 @@
 		detect_pin_gpio = <0x3a 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x05>;
 		};
 
@@ -236,7 +245,8 @@
 		detect_pin_gpio = <0x3b 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x05>;
 		};
 
@@ -256,7 +266,8 @@
 		detect_pin_gpio = <0x3c 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x00>;
 		};
 
@@ -275,7 +286,8 @@
 		detect_pin_gpio = <0x3d 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x01>;
 		};
 
@@ -294,7 +306,8 @@
 		detect_pin_gpio = <0x3e 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x02>;
 		};
 
@@ -313,7 +326,8 @@
 		detect_pin_gpio = <0x3f 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x03>;
 		};
 
@@ -333,7 +347,8 @@
 		detect_pin_gpio = <0x40 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x04>;
 		};
 
@@ -353,7 +368,8 @@
 		detect_pin_gpio = <0x41 0x01>;
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x05>;
 		};
 

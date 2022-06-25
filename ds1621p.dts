@@ -170,7 +170,8 @@
 		protocol_type = "sata";
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x03>;
 		};
 
@@ -188,7 +189,8 @@
 		protocol_type = "sata";
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x04>;
 		};
 
@@ -206,7 +208,8 @@
 		protocol_type = "sata";
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x05>;
 		};
 
@@ -223,7 +226,8 @@
 		protocol_type = "sata";
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x05>;
 		};
 
@@ -241,7 +245,8 @@
 		protocol_type = "sata";
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x00>;
 		};
 
@@ -258,7 +263,8 @@
 		protocol_type = "sata";
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x01>;
 		};
 
@@ -275,7 +281,8 @@
 		protocol_type = "sata";
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x02>;
 		};
 
@@ -292,7 +299,8 @@
 		protocol_type = "sata";
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x03>;
 		};
 
@@ -310,7 +318,8 @@
 		protocol_type = "sata";
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x04>;
 		};
 
@@ -328,7 +337,8 @@
 		protocol_type = "sata";
 		led_type = "lp3943";
 
-		ahci { pcie_root = "00:12.0";
+		ahci { 
+                         pcie_root = "00:12.0";
 			ata_port = <0x05>;
 		};
 
