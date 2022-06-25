@@ -432,7 +432,9 @@ function addrequiredexts() {
         cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
     done
 
-    if [ ${TARGET_PLATFORM} = "apollolake" ] ; then
+    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] ; then
+        echo "For jumkey's dynamic dtc patch skip patchdtc function"
+    else
         patchdtc
     fi
 
@@ -949,15 +951,27 @@ function patchdtc() {
     usbvid=$(cat user_config.json | jq '.extra_cmdline .vid' | sed -e 's/"//g' | sed -e 's/0x//g')
     loaderusb=$(lsusb | grep "${usbvid}:${usbpid}" | awk '{print $2 "-"  $4 }' | sed -e 's/://g' | sed -s 's/00//g')
 
-    if [ "${TARGET_PLATFORM}" = "v1000" ]; then
+    if [ "${TARGET_PLATFORM}" = "apollolake" ]; then
+        dtbfile="ds918p"
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds920p.dts" --output /home/tc/redpill-load/ds918p.dts
+    elif [ "${TARGET_PLATFORM}" = "bromolow" ]; then
+        dtbfile="ds3615xs"
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds3615xs.dts
+    elif [ "${TARGET_PLATFORM}" = "broadwell" ]; then
+        dtbfile="ds3617xs"
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds3617xs.dts
+    elif [ "${TARGET_PLATFORM}" = "broadwellnk" ]; then
+        dtbfile="ds3622xsp"
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds3622xsp.dts
+    elif [ "${TARGET_PLATFORM}" = "v1000" ]; then
         dtbfile="ds1621p"
         curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds1621p.dts
+    elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
+        dtbfile="dva3221"
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/dva3221.dts
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
         dtbfile="ds920p"
         curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds920p.dts" --output /home/tc/redpill-load/ds920p.dts
-    elif [ "${TARGET_PLATFORM}" = "apollolake" ]; then
-        dtbfile="ds918p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds920p.dts" --output /home/tc/redpill-load/ds918p.dts
     else
         echo "${TARGET_PLATFORM} does not require model.dtc patching "
         return
