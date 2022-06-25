@@ -166,12 +166,13 @@
                 "branch": "master"
             },
             "redpill_load": {
-                "source_url": "https://github.com/pocopico/redpill-load.git",
-                "branch": "develop"
+                "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
+                "branch": "master"
             },
-          "add_extensions": [{
-		   "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
-	                        }]
+             "add_extensions": [{
+		    "redpill-dtb-static" : "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill-dtb-static/rpext-index.json",
+		    "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+	                        }]		 
         },
         {
             "id": "apollolake-7.1.0-42661",
@@ -198,9 +199,10 @@
                 "source_url": "https://github.com/pocopico/redpill-load.git",
                 "branch": "develop"
             },
-          "add_extensions": [{
-		   "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
-	                        }]
+             "add_extensions": [{
+		    "redpill-dtb-static" : "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill-dtb-static/rpext-index.json",
+		    "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+	                        }]		 
         },
 		 {
             "id": "geminilake-7.0.1-42218",
