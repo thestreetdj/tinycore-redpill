@@ -951,8 +951,13 @@ function patchdtc() {
 
     if [ "${TARGET_PLATFORM}" = "v1000" ]; then
         dtbfile="ds1621p"
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds1621p.dts
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
         dtbfile="ds920p"
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds920p.dts" --output /home/tc/redpill-load/ds920p.dts
+    elif [ "${TARGET_PLATFORM}" = "apollolake" ]; then
+        dtbfile="ds918p"
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds920p.dts" --output /home/tc/redpill-load/ds918p.dts
     else
         echo "${TARGET_PLATFORM} does not require model.dtc patching "
         return
@@ -1021,7 +1026,7 @@ function patchdtc() {
         fi
 
         echo "Found local disk $disk with path $diskpath, adding into internal_slot $diskslot with portnumber $diskport"
-        if [ "${dtbfile}" == "ds920p" ]; then
+        if [ "${dtbfile}" == "ds920p" ] || [ "${dtbfile}" == "ds918p" ];  then
             sed -i "/internal_slot\@${diskslot} {/!b;n;n;n;n;n;n;n;cpcie_root = \"$diskpath\";" ${dtbfile}.dts
             sed -i "/internal_slot\@${diskslot} {/!b;n;n;n;n;n;n;n;n;cata_port = <0x$diskport>;" ${dtbfile}.dts
             let diskslot=$diskslot+1
