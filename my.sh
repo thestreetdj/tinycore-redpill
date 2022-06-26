@@ -398,12 +398,24 @@ echo
 cecho y "TARGET_PLATFORM is $TARGET_PLATFORM"
 cecho g "SYNOMODEL is $SYNOMODEL"  
 
+if [ $jumkey == "Y" ] && [ $poco == "Y" ] ; then                                                             
+    cecho p "Can not use these two options together.." 
+    exit 0  
+fi
+
 if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] ; then                                                                                                         
 
     if [ $jumkey == "Y" ] ; then 
     	cecho p "jumkey's dynamic auto dtc patch ext file pre-downloading in progress..."  
     	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
     	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
+    elif [ $poco == "Y" ] ; then 
+        cecho y "pocopico static dtc mode is not supported. (Loader Build Exit)"
+        exit 0
+    else
+        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
+    	curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+    	curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
     fi
       
 else
@@ -431,6 +443,10 @@ else
         if [ "$MODEL" == "DS918+" ] ; then
             curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader_xdtc.sh" --output rploader.sh  
         fi    
+    else
+        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
+    	curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+    	curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
     fi
 
     if [ $TARGET_REVISION == "42218" ] && [ $manual == "Y" ]; then                                                                                        
