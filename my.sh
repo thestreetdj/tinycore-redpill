@@ -29,7 +29,7 @@
 # 2022.06.13
 # Update : Add manual option for jun mode
 # 2022.06.16
-# Update : Add dtc mode for DS918+
+# Update : Add dtc mode for known as non-dtc model
 # 2022.06.25
 
 mshellgz="my.sh.gz"
@@ -478,7 +478,7 @@ else
 
     echo "y"|./rploader.sh identifyusb
 
-    if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS918+" ] ; then                                                             
+    if [ $jumkey == "Y" ] || [ $poco == "Y" ] ; then                                                             
     	cecho p "Device Tree usage model does not need SataPortMap setting...." 
     else
     	./rploader.sh satamap
