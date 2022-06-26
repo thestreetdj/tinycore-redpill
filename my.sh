@@ -426,6 +426,11 @@ else
         fi    
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh  
+        
+        # for ds918+ dtc test
+        if [ "$MODEL" == "DS918+" ] ; then
+            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader_xdtc.sh" --output rploader.sh  
+        fi    
     fi
 
     if [ $TARGET_REVISION == "42218" ] && [ $manual == "Y" ]; then                                                                                        
