@@ -336,8 +336,14 @@ done
 #echo $noconfig
 #echo $manual
 
-#   cecho y "Cleaning lkm and load directory ..." 
-#   ./rploader.sh clean  
+# cecho y "Cleaning lkm and load directory ..." 
+if [ -d "/home/tc/redpill-load" ]; then
+    cecho y "Do you want to clean redpill-load / lkm directory ? ( !!! Causion !!!, if you added ext from myv.sh, answer n )  [Yy/Nn]"
+    read answer                                                                                                                                         
+    if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
+       ./rploader.sh clean  
+    fi
+fi
 
 if [ $TARGET_REVISION == "42218" ] ; then  
    if [ $postupdate == "Y" ] ; then                                                                                                                
