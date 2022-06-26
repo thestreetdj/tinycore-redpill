@@ -155,7 +155,7 @@ Options: postupdate, jumkey, noconfig, noclean, manual
 
 - jumkey  : Option to apply jumkey's dynamic automatic dtc patch extension files (contrary to pocopico's static dtc patch).  
 
-- poco    : Option to apply pocopico's static dtc patch extension file (only DS918+, known as non-dtc model, is supported).
+- poco    : Option to apply pocopico's static dtc patch extension file (Supports models known as non-dtc in addition to DS920+ and DS1621+).
 
 - noconfig: SKIP automatic detection change processing such as SN/Mac/Vid/Pid/SataPortMap of user_config.json file.
 
@@ -415,13 +415,14 @@ else
         else
             curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json        
         fi
+        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh  
     elif [ $jumkey == "Y" ] ; then 
         cecho y "switch to jumkey dynamic dtc mode"
         cecho r "jumkey dynamic dtc mode is not ready yet. (Loader Build Exit)"
         exit 0
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh  
     fi
-    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh  
 
     if [ $TARGET_REVISION == "42218" ] && [ $manual == "Y" ]; then                                                                                        
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh                                                                                                                                         
