@@ -336,15 +336,6 @@ done
 #echo $noconfig
 #echo $manual
 
-# cecho y "Cleaning lkm and load directory ..." 
-if [ -d "/home/tc/redpill-load" ]; then
-    cecho y "Do you want to clean redpill-load / lkm directory ? ( !!! Causion !!!, if you added ext from myv.sh, answer n )  [Yy/Nn]"
-    read answer                                                                                                                                         
-    if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
-       ./rploader.sh clean  
-    fi
-fi
-
 if [ $TARGET_REVISION == "42218" ] ; then  
    if [ $postupdate == "Y" ] ; then                                                                                                                
                                                                                                                                                     
@@ -405,7 +396,7 @@ cecho y "TARGET_PLATFORM is $TARGET_PLATFORM"
 cecho g "SYNOMODEL is $SYNOMODEL"  
 
 if [ $jumkey == "Y" ] && [ $poco == "Y" ] ; then                                                             
-    cecho p "Can not use these two options together.." 
+    cecho p "Can not use jumkey and poco options together.." 
     exit 0  
 fi
 
@@ -459,6 +450,15 @@ else
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh                                                                                                                                         
     fi 
 
+fi
+
+# cecho y "Cleaning lkm and load directory ..." 
+if [ -d "/home/tc/redpill-load" ]; then
+    cecho y "Do you want to clean redpill-load / lkm directory ? ( !!! Causion !!!, if you added ext from myv.sh, answer n )  [Yy/Nn]"
+    read answer                                                                                                                                         
+    if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
+       ./rploader.sh clean  
+    fi
 fi
 
 if [ $jumkey == "N" ] && [ $poco == "N" ] && [ $TARGET_REVISION != "42218" ] && [ $manual == "N" ]  ; then  
