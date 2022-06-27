@@ -1936,7 +1936,7 @@ function getstaticmodule() {
     elif [ "${TARGET_PLATFORM}" = "broadwellnk" ]; then
         SYNOMODEL="ds3622xsp_$TARGET_REVISION"
     elif [ "${TARGET_PLATFORM}" = "v1000" ]; then
-        SYNOMODEL="ds2422p_$TARGET_REVISION"
+        SYNOMODEL="ds1621p_$TARGET_REVISION"
     elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
         SYNOMODEL="dva3221_$TARGET_REVISION"
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
@@ -1960,7 +1960,7 @@ function getstaticmodule() {
         fi
     done
 
-    if [ -f redpill.ko ] && [ -n $(strings redpill.ko | grep ds1621p_42218) ]; then
+    if [ -f redpill.ko ] && [ -n $(strings redpill.ko | grep $SYNOMODEL) ]; then
         REDPILL_MOD_NAME="redpill-linux-v$(modinfo redpill.ko | grep vermagic | awk '{print $2}').ko"
         mv /home/tc/redpill.ko /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
     else
