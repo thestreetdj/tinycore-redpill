@@ -1960,7 +1960,7 @@ function getstaticmodule() {
         fi
     done
 
-    if [ -f redpill.ko ] && [ -n $(strings redpill.ko | grep $SYNOMODEL) ]; then
+    if [ -f redpill.ko ] && [ -n $(strings redpill.ko | grep ds1621p_42218) ]; then
         REDPILL_MOD_NAME="redpill-linux-v$(modinfo redpill.ko | grep vermagic | awk '{print $2}').ko"
         mv /home/tc/redpill.ko /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
     else
