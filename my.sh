@@ -412,7 +412,7 @@ if [ $jumkey == "Y" ] && [ $poco == "Y" ] ; then
     exit 0  
 fi
 
-if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] ; then                                                                                                         
+if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] ; then  
 
     if [ $jumkey == "Y" ] ; then 
     	cecho p "jumkey's dynamic auto dtc patch ext file pre-downloading in progress..."  
@@ -426,7 +426,15 @@ if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS242
     	curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
     	curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
     fi
-      
+
+elif [ "$MODEL" == "DS2422+" ] ; then  
+
+    if [ $jumkey == "Y" ] ; then 
+    	cecho p "jumkey's dynamic auto dtc patch ext file pre-downloading in progress..."  
+    	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+    	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader_ds2422p.sh" --output rploader.sh
+    fi
+
 else
 
     if [ $poco == "Y" ] ; then
