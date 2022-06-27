@@ -31,6 +31,8 @@
 # 2022.06.16
 # Update : Add dtc mode for known as non-dtc model
 # 2022.06.25
+# Update : Add dtc model DS2422+ (v1000) support
+# 2022.06.27
 
 mshellgz="my.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/my.sh.gz"
@@ -173,6 +175,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA3221
 ./$(basename ${0}) DS920+
 ./$(basename ${0}) DS1621+
+./$(basename ${0}) DS2422+ (Not Suporrted)
 
 - for jun mode
 
@@ -183,6 +186,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA3221J                                                                                                     
 ./$(basename ${0}) DS920+J                                                                                                      
 ./$(basename ${0}) DS1621+J  
+./$(basename ${0}) DS2422+J  
 
 EOF
 
@@ -213,15 +217,18 @@ TARGET_REVISION="42661"
         TARGET_PLATFORM="broadwell"                                                                                                                            
         SYNOMODEL="ds3617xs_$TARGET_REVISION"                                                                                                                  
         sha256="0a5a243109098587569ab4153923f30025419740fb07d0ea856b06917247ab5c"                                                                              
-    elif [ "$1" = "DS3622xs+" ]; then                                                                                                                    
-        TARGET_PLATFORM="broadwellnk"                                                                                                                          
-        SYNOMODEL="ds3622xsp_$TARGET_REVISION"                                                                                                                 
+    elif [ "$1" = "DS3622xs+" ]; then
+        TARGET_PLATFORM="broadwellnk"
+        SYNOMODEL="ds3622xsp_$TARGET_REVISION"
         sha256="53d0a4f1667288b6e890c4fdc48422557ff26ea8a2caede0955c5f45b560cccd"                                                                              
-    elif [ "$1" = "DS1621+" ]; then                                                                                                                      
+    elif [ "$1" = "DS1621+" ]; then
         TARGET_PLATFORM="v1000"                                                                                                                                
         SYNOMODEL="ds1621p_$TARGET_REVISION"                                                                                                                   
         sha256="381077302a89398a9fb5ec516217578d6f33b0219fe95135e80fd93cddbf88c4"                                                                              
 #        dtbfile="ds1621p"                                                                                                                                     
+    elif [ "$1" = "DS2422+" ] ; then
+        echo "Synology DS2422+ Jot Mode not supported by TCRP."
+        exit 0                                                                                               
     elif [ "$1" = "DVA3221" ]; then                                                                                                                      
         TARGET_PLATFORM="denverton"                                                                                                                            
         SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
@@ -257,6 +264,11 @@ TARGET_REVISION="42661"
         TARGET_PLATFORM="v1000"                                                  
         SYNOMODEL="ds1621p_$TARGET_REVISION"                                     
         sha256="19f56827ba8bf0397d42cd1d6f83c447f092c2c1bbb70d8a2ad3fbd427e866df"                                                                
+    elif [ "$1" = "DS2422+J" ]; then                                             
+        TARGET_REVISION="42218"                                                  
+        TARGET_PLATFORM="v1000"                                                  
+        SYNOMODEL="ds2422p_$TARGET_REVISION"                                     
+        sha256="415c54934d483a2557500bc3a2e74588a0cec1266e1f0d9a82a7d3aace002471"                                                                
     elif [ "$1" = "DVA3221J" ]; then                                             
         TARGET_REVISION="42218"                                                  
         TARGET_PLATFORM="denverton"                                              
@@ -400,7 +412,7 @@ if [ $jumkey == "Y" ] && [ $poco == "Y" ] ; then
     exit 0  
 fi
 
-if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] ; then                                                                                                         
+if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] ; then                                                                                                         
 
     if [ $jumkey == "Y" ] ; then 
     	cecho p "jumkey's dynamic auto dtc patch ext file pre-downloading in progress..."  
