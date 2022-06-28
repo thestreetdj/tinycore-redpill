@@ -429,6 +429,7 @@ if [ $TARGET_REVISION == "42218" ] && [ $jumkey == "N" ] && [ $poco == "N" ] ; t
 
     if [ "$MODEL" == "DS2422+" ] ; then  
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
     else
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
@@ -518,7 +519,7 @@ fi
 
 if [ $jumkey == "N" ] && [ $poco == "N" ] && [ $TARGET_REVISION != "42218" ] && [ $manual == "N" ]  ; then  
     echo "y"|./rploader.sh update
-    if [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] ; then  
+    if [ "$MODEL" == "DS2422+" ] ; then  
         cecho y "new model skip fullupgrade" 
     else
         echo "n"|./rploader.sh fullupgrade                                                                                            
