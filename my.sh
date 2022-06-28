@@ -227,7 +227,7 @@ TARGET_REVISION="42661"
         sha256="381077302a89398a9fb5ec516217578d6f33b0219fe95135e80fd93cddbf88c4"                                                                              
 #        dtbfile="ds1621p"                                                                                                                                     
     elif [ "$1" = "DS2422+" ] ; then
-        TARGET_PLATFORM="v1000"                                                                                                                                
+        TARGET_PLATFORM="ds2422p"                                                                                                                                
         SYNOMODEL="ds2422p_$TARGET_REVISION"                                                                                                                   
         sha256="c38fee0470c592b679ab52a64eac76b2a3912fb2e6aba65a65abb5aa05a98d4c"    
     elif [ "$1" = "DVA3221" ]; then                                                                                                                      
@@ -267,7 +267,7 @@ TARGET_REVISION="42661"
         sha256="19f56827ba8bf0397d42cd1d6f83c447f092c2c1bbb70d8a2ad3fbd427e866df"                                                                
     elif [ "$1" = "DS2422+J" ]; then                                             
         TARGET_REVISION="42218"                                                  
-        TARGET_PLATFORM="v1000"                                                  
+        TARGET_PLATFORM="ds2422p"                                                  
         SYNOMODEL="ds2422p_$TARGET_REVISION"                                     
         sha256="415c54934d483a2557500bc3a2e74588a0cec1266e1f0d9a82a7d3aace002471"                                                                
     elif [ "$1" = "DVA3221J" ]; then                                             
@@ -438,7 +438,7 @@ elif [ "$MODEL" == "DS2422+" ] ; then
     else
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json  
     fi
-    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader_ds2422p.sh" --output rploader.sh
+    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
 
 else
 
