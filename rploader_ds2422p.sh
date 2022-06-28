@@ -1967,6 +1967,10 @@ function getstaticmodule() {
         echo "Module does not contain platorm information for ${SYNOMODEL}"
         exit 99
     fi
+    
+    if [ "${TARGET_PLATFORM}" = "v1000" ]; then
+        SYNOMODEL="ds2422p_$TARGET_REVISION"
+    fi
 
 }
 
