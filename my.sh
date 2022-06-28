@@ -176,6 +176,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS920+
 ./$(basename ${0}) DS1621+
 ./$(basename ${0}) DS2422+ (Not Suporrted)
+./$(basename ${0}) DVA1622
 
 - for jun mode
 
@@ -187,6 +188,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS920+J                                                                                                      
 ./$(basename ${0}) DS1621+J  
 ./$(basename ${0}) DS2422+J  
+./$(basename ${0}) DVA1622J
 
 EOF
 
@@ -427,9 +429,13 @@ if [ $TARGET_REVISION == "42218" ] && [ $jumkey == "N" ] && [ $poco == "N" ] ; t
 
     cecho y "this is TCRP original jun mode"
 
-    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
-    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
+    if [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] ; then  
+        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+    else
+        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
+        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
+    fi
 
 else
 
