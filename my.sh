@@ -436,8 +436,9 @@ elif [ "$MODEL" == "DS2422+" ] ; then
     elif [ $poco == "Y" ] ; then 
         cecho y "switch to pocopico static dtc mode"
     else
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json  
+        cecho y "this is jot mode"
     fi
+    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json      
     curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
 
 else
