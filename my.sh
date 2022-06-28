@@ -428,6 +428,7 @@ if [ $TARGET_REVISION == "42218" ] && [ $jumkey == "N" ] && [ $poco == "N" ] ; t
     cecho y "this is TCRP original jun mode"
 
     if [ "$MODEL" == "DS2422+" ] ; then  
+        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json                
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
     else
