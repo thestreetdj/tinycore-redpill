@@ -423,19 +423,30 @@ if [ $jumkey == "Y" ] && [ $poco == "Y" ] ; then
 fi
 
 
-if [ $TARGET_REVISION == "42218" ] && [ $jumkey == "N" ] && [ $poco == "N" ] ; then  
+if [ $TARGET_REVISION == "42218" ] ; then
 
-    cecho y "this is TCRP original jun mode"
+    if [ $jumkey == "N" ] && [ $poco == "N" ] ; then  
+        cecho y "this is TCRP original jun mode"
 
-    if [ "$MODEL" == "DS2422+" ] ; then  
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json                
+        if [ "$MODEL" == "DS2422+" ] ; then  
+            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json                
+            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
+        else
+            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
+            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
+        fi
+        
+     elif [ $jumkey == "Y" ] ; then 
+        cecho p "jumkey's dynamic auto dtc patch ext file pre-downloading in progress..."  
+        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json            
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
-    else
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
-    fi
+     
+     elif [ $poco == "Y" ] ; then 
+     
+     fi
 
 else
 
