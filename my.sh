@@ -433,8 +433,8 @@ elif [ "$MODEL" == "DS2422+" ] ; then
     if [ $jumkey == "Y" ] ; then 
     	cecho p "jumkey's dynamic auto dtc patch ext file pre-downloading in progress..."  
     	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-    	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader_ds2422p.sh" --output rploader.sh
     fi
+    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader_ds2422p.sh" --output rploader.sh
 
 else
 
