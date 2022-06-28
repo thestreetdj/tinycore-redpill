@@ -433,6 +433,11 @@ elif [ "$MODEL" == "DS2422+" ] ; then
     if [ $jumkey == "Y" ] ; then 
     	cecho p "jumkey's dynamic auto dtc patch ext file pre-downloading in progress..."  
     	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+    elif [ $poco == "Y" ] ; then 
+        cecho y "pocopico static dtc mode is not supported. (Loader Build Exit)"
+        exit 0
+    else
+        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json  
     fi
     curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader_ds2422p.sh" --output rploader.sh
 
