@@ -282,6 +282,10 @@ function processpat() {
         SYNOMODEL="dva3221_$TARGET_REVISION" && MODEL="DVA3221"
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
         SYNOMODEL="ds920p_$TARGET_REVISION" && MODEL="DS920+"
+    elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
+        SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622"
+    elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
+        SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+"
     fi
 
     if [ ! -d "${temp_pat_folder}" ]; then
@@ -432,7 +436,7 @@ function addrequiredexts() {
         cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
     done
 
-    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] ; then
+    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] || [ ${TARGET_PLATFORM} = "dva1622" ] || [ ${TARGET_PLATFORM} = "ds2422p" ]; then
         echo "For jumkey's dynamic dtc patch skip patchdtc function"
     else
         patchdtc
@@ -972,6 +976,12 @@ function patchdtc() {
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
         dtbfile="ds920p"
         curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds920p.dts" --output /home/tc/redpill-load/ds920p.dts
+    elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
+        dtbfile="dva1622"
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds920p.dts" --output /home/tc/redpill-load/dva1622.dts
+    elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
+        dtbfile="ds2422p"
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds2422p.dts
     else
         echo "${TARGET_PLATFORM} does not require model.dtc patching "
         return
@@ -2263,7 +2273,7 @@ function getvars() {
         KERNEL_MAJOR="3"
         MODULE_ALIAS_FILE="modules.alias.3.json"
         ;;
-    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake)
+    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds2422p)        
         KERNEL_MAJOR="4"
         MODULE_ALIAS_FILE="modules.alias.4.json"
         ;;
@@ -2283,6 +2293,10 @@ function getvars() {
         SYNOMODEL="dva3221_$TARGET_REVISION" && MODEL="DVA3221"
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
         SYNOMODEL="ds920p_$TARGET_REVISION" && MODEL="DS920+"
+    elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
+        SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622"
+    elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
+        SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+"
     fi
 
     #echo "Platform : $platform_selected"
