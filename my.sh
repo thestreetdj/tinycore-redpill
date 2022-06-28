@@ -445,7 +445,7 @@ if [ $TARGET_REVISION == "42218" ] ; then
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
      
      elif [ $poco == "Y" ] ; then 
-        echo
+        cecho p "pocopico's static auto dtc patch ext file pre-downloading in progress..."  
      fi
 
 else
