@@ -281,11 +281,9 @@ TARGET_REVISION="42661"
         TARGET_PLATFORM="denverton"                                              
         SYNOMODEL="dva3221_$TARGET_REVISION"                                     
         sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"  
-    elif [ "$1" = "DVA1622J" ]; then                                                                                                                      
-        TARGET_REVISION="42218"    
-        TARGET_PLATFORM="dva1622"
-        SYNOMODEL="dva1622_$TARGET_REVISION"                                                                                                                   
-        sha256="ed3207db40b7bac4d96411378558193b7747ebe88f0fc9c26c59c0b5c688c359"                                                                              
+    elif [ "$1" = "DVA1622J" ]; then
+        echo "Synology model DVA1622 jun mode not supported by TCRP, DSM Revision 42218 doesn't exists on Synology"
+        exit 0                                                                                               
     elif [ "$1" = "DS920+J" ]; then                                                                                                                      
         TARGET_REVISION="42218"
         TARGET_PLATFORM="geminilake"                                                                                                                       
@@ -429,7 +427,7 @@ if [ $TARGET_REVISION == "42218" ] && [ $jumkey == "N" ] && [ $poco == "N" ] ; t
 
     cecho y "this is TCRP original jun mode"
 
-    if [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] ; then  
+    if [ "$MODEL" == "DS2422+" ] ; then  
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
     else
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
