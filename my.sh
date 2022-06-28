@@ -519,8 +519,12 @@ if [ -d "/home/tc/redpill-load" ]; then
 fi
 
 if [ $jumkey == "N" ] && [ $poco == "N" ] && [ $TARGET_REVISION != "42218" ] && [ $manual == "N" ]  ; then  
-    echo "y"|./rploader.sh update                                                                                                                       
-    echo "n"|./rploader.sh fullupgrade                                                                                            
+    echo "y"|./rploader.sh update
+    if [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] ; then  
+        cecho y "new model skip fullupgrade" 
+    else
+        echo "n"|./rploader.sh fullupgrade                                                                                            
+    fi    
 
     if [ $noconfig == "Y" ] ; then
         cecho y "Automatically restore your own user_config.json by noconfig option..."   
