@@ -545,8 +545,8 @@ if [ -d "/home/tc/redpill-load" ]; then
 fi
 
     
-if [ fullupgrade == "Y" ] ; then  
-    cecho y "new model skip fullupgrade" 
+if [ $fullupgrade == "Y" ] ; then  
+    cecho y "this model skip fullupgrade for custom adjustment" 
 else
     echo "n"|./rploader.sh fullupgrade                                                                                            
 fi    
