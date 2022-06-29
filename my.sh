@@ -546,9 +546,9 @@ fi
 
     
 if [ $fullupgrade == "Y" ] ; then  
-    cecho y "this model skip fullupgrade for custom adjustment" 
-else
     echo "n"|./rploader.sh fullupgrade                                                                                            
+else
+    cecho y "this model skip fullupgrade for custom adjustment" 
 fi    
 
 if [ $noconfig == "Y" ] ; then
