@@ -444,7 +444,7 @@ if [ $TARGET_REVISION == "42218" ] ; then
 
 else
     echo
-    echo y "This is TCRP original jot mode"
+    cecho y "This is TCRP original jot mode"
 
     curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
     curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
