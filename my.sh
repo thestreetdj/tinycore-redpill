@@ -186,7 +186,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS3622xs+J                                                                                                   
 ./$(basename ${0}) DVA3221J                                                                                                     
 ./$(basename ${0}) DS920+J                                                                                                      
-./$(basename ${0}) DS1621+J  
+./$(basename ${0}) DS1621+J (Not Suporrted) 
 ./$(basename ${0}) DS2422+J  
 ./$(basename ${0}) DVA1622J
 
@@ -422,6 +422,7 @@ if [ $jumkey == "Y" ] && [ $poco == "Y" ] ; then
     exit 0  
 fi
 
+fullupgrade="Y"
 
 if [ $TARGET_REVISION == "42218" ] ; then
 
@@ -429,23 +430,35 @@ if [ $TARGET_REVISION == "42218" ] ; then
         cecho y "this is TCRP original jun mode"
 
         if [ "$MODEL" == "DS2422+" ] ; then  
+            fullupgrade="N" 
             curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json                
             curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
             curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
         else
+            fullupgrade="Y"
             curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
             curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
             curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
         fi
         
      elif [ $jumkey == "Y" ] ; then 
-        cecho p "jumkey's dynamic auto dtc patch ext file pre-downloading in progress..."  
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json            
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
+     
+        if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] ; then  
+            fullupgrade="N"
+            cecho p "jumkey's dynamic auto dtc patch ext file pre-downloading in progress..."  
+            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json            
+            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
+        else
+            cecho p "this model doies not support jumkey's dynamic auto dtc patch (Loader Build Exit)"  
+            exit 0        
+        if
      
      elif [ $poco == "Y" ] ; then 
+        fullupgrade="N"
         cecho p "pocopico's static auto dtc patch ext file pre-downloading in progress..."  
+        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json        
+        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
      fi
 
 else
@@ -529,27 +542,26 @@ if [ -d "/home/tc/redpill-load" ]; then
     fi
 fi
 
-if [ $jumkey == "N" ] && [ $poco == "N" ] && [ $TARGET_REVISION != "42218" ] && [ $manual == "N" ]  ; then  
-    echo "y"|./rploader.sh update
-    if [ "$MODEL" == "DS2422+" ] ; then  
-        cecho y "new model skip fullupgrade" 
-    else
-        echo "n"|./rploader.sh fullupgrade                                                                                            
-    fi    
+    
+if [ fullupgrade == "Y" ] ; then  
+    cecho y "new model skip fullupgrade" 
+else
+    echo "n"|./rploader.sh fullupgrade                                                                                            
+fi    
 
-    if [ $noconfig == "Y" ] ; then
-        cecho y "Automatically restore your own user_config.json by noconfig option..."   
-        cp -f /home/tc/old/user_config.json.* ./user_config.json 
-    else
-    	cecho y "Do you want to restore your own user_config.json from old directory ?  [Yy/Nn]"                                                            
-   	read answer                                                                                                                                         
-    	if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
-            cp -f /home/tc/old/user_config.json.* ./user_config.json                                                                                        
-    	else                                                                                                                                                
-            echo "OK Remember that the new user_config.json file is used and your own user_config.json is deleted. "                                        
-    	fi
-    fi   
-fi
+if [ $noconfig == "Y" ] ; then
+    cecho y "Automatically restore your own user_config.json by noconfig option..."   
+    cp -f /home/tc/old/user_config.json.* ./user_config.json 
+else
+    cecho y "Do you want to restore your own user_config.json from old directory ?  [Yy/Nn]"                                                            
+read answer                                                                                                                                         
+    if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
+        cp -f /home/tc/old/user_config.json.* ./user_config.json                                                                                        
+    else                                                                                                                                                
+        echo "OK Remember that the new user_config.json file is used and your own user_config.json is deleted. "                                        
+    fi
+fi   
+
 
 if [ $noconfig == "Y" ] ; then                            
     cecho r "SN Gen/Mac Gen/Vid/Pid/SataPortMap detection skipped!!"                                         
