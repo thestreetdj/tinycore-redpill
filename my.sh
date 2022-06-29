@@ -450,10 +450,9 @@ if [ $TARGET_REVISION == "42218" ] ; then
             curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
             curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
         else
-            fullupgrade="Y"
             cecho p "this model does not support jumkey's dynamic auto dtc patch (Loader Build Exit)"
             exit 0        
-        if
+        fi
      
     elif [ $poco == "Y" ] ; then 
     
