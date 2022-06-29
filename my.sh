@@ -239,7 +239,7 @@ TARGET_REVISION="42661"
     elif [ "$1" = "DVA1622" ]; then                                                                                                                      
         TARGET_PLATFORM="dva1622"                                                                                                                            
         SYNOMODEL="dva1622_$TARGET_REVISION"                                                                                                                   
-        sha256="ed3207db40b7bac4d96411378558193b7747ebe88f0fc9c26c59c0b5c688c359"                                                                              
+        sha256="f1484cf302627072ca393293cd73e61dc9e09d479ef028b216eae7c12f7b7825"                                                                              
     elif [ "$1" = "DS920+" ]; then                                                                                                                       
         TARGET_PLATFORM="geminilake"                                                                                                                           
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
@@ -446,6 +446,8 @@ if [ $TARGET_REVISION == "42218" ] ; then
 else
     echo
     cecho y "This is TCRP original jot mode"
+
+    fullupgrade="Y"
 
     curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
     curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
