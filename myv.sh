@@ -213,11 +213,9 @@ $(basename ${0})
 ----------------------------------------------------------------------------------------
 Usage: ${0} <Synology Model Name> <Options>
 
-Options: postupdate, jumkey, noconfig, noclean, manual
+Options: postupdate, noconfig, noclean, manual
 
 - postupdate : Option to patch the restore loop after applying DSM 7.1.0-42661 Update 2, no additional build required.
-
-- jumkey  : Option to apply jumkey's dynamic automatic dtc patch extension files (contrary to pocopico's static dtc patch). 
 
 - noconfig: SKIP automatic detection change processing such as SN/Mac/Vid/Pid/SataPortMap of user_config.json file.
 
@@ -228,6 +226,8 @@ Options: postupdate, jumkey, noconfig, noclean, manual
 
 Please type Synology Model Name after ./$(basename ${0})
 
+- for jot mode
+
 ./$(basename ${0}) DS918+
 ./$(basename ${0}) DS3617xs
 ./$(basename ${0}) DS3615xs
@@ -235,6 +235,8 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA3221
 ./$(basename ${0}) DS920+
 ./$(basename ${0}) DS1621+
+./$(basename ${0}) DS2422+ (Not Suporrted)
+./$(basename ${0}) DVA1622
 
 - for jun mode
 
@@ -244,7 +246,9 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS3622xs+J                                                                                                   
 ./$(basename ${0}) DVA3221J                                                                                                     
 ./$(basename ${0}) DS920+J                                                                                                      
-./$(basename ${0}) DS1621+J  
+./$(basename ${0}) DS1621+J (Not Suporrted) 
+./$(basename ${0}) DS2422+J  
+./$(basename ${0}) DVA1622J
 
 EOF
 
@@ -284,6 +288,9 @@ TARGET_REVISION="42661"
     elif [ "$1" = "DVA3221" ]; then                                                                                                                      
         TARGET_PLATFORM="denverton"                                                                                                                            
         SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
+    elif [ "$1" = "DVA1622" ]; then                                                                                                                      
+        TARGET_PLATFORM="dva1622"                                                                                                                            
+        SYNOMODEL="dva1622_$TARGET_REVISION"
     elif [ "$1" = "DS920+" ]; then                                                                                                                       
         TARGET_PLATFORM="geminilake"                                                                                                                           
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
@@ -314,7 +321,10 @@ TARGET_REVISION="42661"
     elif [ "$1" = "DVA3221J" ]; then                                             
         TARGET_REVISION="42218"                                                  
         TARGET_PLATFORM="denverton"                                              
-        SYNOMODEL="dva3221_$TARGET_REVISION"                                     
+        SYNOMODEL="dva3221_$TARGET_REVISION"     
+    elif [ "$1" = "DVA1622J" ]; then
+        echo "Synology model DVA1622 jun mode not supported by TCRP yet."
+        exit 0	
     elif [ "$1" = "DS920+J" ]; then                                                                                                                      
         TARGET_REVISION="42218"
         TARGET_PLATFORM="geminilake"                                                                                                                       
