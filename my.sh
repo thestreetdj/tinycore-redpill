@@ -476,24 +476,23 @@ echo
     
 if [ $fullupgrade == "Y" ] ; then  
     echo "n"|./rploader.sh fullupgrade                                                                                            
+    
+    if [ $noconfig == "Y" ] ; then
+        cecho y "Automatically restore your own user_config.json by noconfig option..."   
+        cp -f /home/tc/old/user_config.json.* ./user_config.json 
+    else
+        cecho y "Do you want to restore your own user_config.json from old directory ?  [Yy/Nn]"                                                            
+    read answer                                                                                                                                         
+        if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
+            cp -f /home/tc/old/user_config.json.* ./user_config.json                                                                                        
+        else                                                                                                                                                
+            echo "OK Remember that the new user_config.json file is used and your own user_config.json is deleted. "                                        
+        fi
+    fi       
+    
 else
     cecho y "this model skip fullupgrade for custom adjustment" 
 fi    
-
-echo
-
-if [ $noconfig == "Y" ] ; then
-    cecho y "Automatically restore your own user_config.json by noconfig option..."   
-    cp -f /home/tc/old/user_config.json.* ./user_config.json 
-else
-    cecho y "Do you want to restore your own user_config.json from old directory ?  [Yy/Nn]"                                                            
-read answer                                                                                                                                         
-    if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
-        cp -f /home/tc/old/user_config.json.* ./user_config.json                                                                                        
-    else                                                                                                                                                
-        echo "OK Remember that the new user_config.json file is used and your own user_config.json is deleted. "                                        
-    fi
-fi   
 
 echo
 
