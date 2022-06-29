@@ -33,6 +33,9 @@
 # 2022.06.25
 # Update : Add dtc model DS2422+ (v1000) support
 # 2022.06.27
+# Update : remove jumkey, poco oprtions
+# 2022.06.30
+
 
 mshellgz="my.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/my.sh.gz"
@@ -154,10 +157,6 @@ Usage: ${0} <Synology Model Name> <Options>
 Options: postupdate, jumkey, noconfig, noclean, manual
 
 - postupdate : Option to patch the restore loop after applying DSM 7.1.0-42661 Update 2, no additional build required.
-
-- jumkey  : Option to apply jumkey's dynamic automatic dtc patch extension files (contrary to pocopico's static dtc patch).  
-
-- poco    : Option to apply pocopico's static dtc patch extension file (Supports models known as non-dtc in addition to DS920+ and DS1621+).
 
 - noconfig: SKIP automatic detection change processing such as SN/Mac/Vid/Pid/SataPortMap of user_config.json file.
 
@@ -358,6 +357,14 @@ done
 #echo $noconfig
 #echo $manual
 
+if [ $jumkey == "Y" ] ; then 
+    cecho p "jumkey option do not used anymore, shell exit..."          
+    exit 0
+elif [ $poco == "Y" ] ; then 
+    cecho p "poco option do not used anymore, shell exit..."
+    exit 0
+fi
+
 if [ $TARGET_REVISION == "42218" ] ; then  
    if [ $postupdate == "Y" ] ; then                                                                                                                
                                                                                                                                                     
@@ -417,48 +424,20 @@ echo
 cecho y "TARGET_PLATFORM is $TARGET_PLATFORM"
 cecho g "SYNOMODEL is $SYNOMODEL"  
 
-if [ $jumkey == "Y" ] && [ $poco == "Y" ] ; then                                                             
-    cecho p "Can not use jumkey and poco options together.." 
-    exit 0  
-fi
-
 fullupgrade="Y"
 
 if [ $TARGET_REVISION == "42218" ] ; then
     cecho y "this is TCRP original jun mode"
     
-    if [ $jumkey == "N" ] && [ $poco == "N" ] ; then  
+    fullupgrade="N"     
 
-        if [ "$MODEL" == "DS2422+" ] ; then  
-            fullupgrade="N" 
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json                
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
-        else
-            fullupgrade="Y"
-            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
-            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
-        fi
-        
-    else 
-    
-        fullupgrade="N"     
-        if [ $jumkey == "Y" ] ; then 
-            cecho p "jumkey's dynamic auto dtc patch ext file pre-downloading in progress..."          
-        elif [ $poco == "Y" ] ; then 
-            cecho p "pocopico's static auto dtc patch ext file pre-downloading in progress..."          
-        fi
-        
-        if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] ; then  
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-        else
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json
-        fi
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json                    
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh                
-
+    if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] ; then  
+        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+    else
+        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json
     fi
+    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json                    
+    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh                
 
 else
     echo y "this is TCRP original jot mode"
