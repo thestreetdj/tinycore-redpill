@@ -154,7 +154,7 @@ $(basename ${0})
 ----------------------------------------------------------------------------------------
 Usage: ${0} <Synology Model Name> <Options>
 
-Options: postupdate, jumkey, noconfig, noclean, manual
+Options: postupdate, noconfig, noclean, manual
 
 - postupdate : Option to patch the restore loop after applying DSM 7.1.0-42661 Update 2, no additional build required.
 
@@ -166,6 +166,8 @@ Options: postupdate, jumkey, noconfig, noclean, manual
 - manual: Options for manual extension processing and manual dtc processing in build action (skipping extension auto detection)
 
 Please type Synology Model Name after ./$(basename ${0})
+
+- for jot mode
 
 ./$(basename ${0}) DS918+
 ./$(basename ${0}) DS3617xs
