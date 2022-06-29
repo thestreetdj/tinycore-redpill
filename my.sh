@@ -128,7 +128,7 @@ function getlatestmshell() {
 
 
 function macgen() {
-
+echo
     mac2="$(generateMacAddress $1)"
 
     cecho y "Mac2 Address for Model $1 : $mac2 "
