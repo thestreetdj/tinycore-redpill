@@ -455,10 +455,16 @@ if [ $TARGET_REVISION == "42218" ] ; then
         fi
      
     elif [ $poco == "Y" ] ; then 
-    
-        fullupgrade="N"
+
         cecho p "pocopico's static auto dtc patch ext file pre-downloading in progress..."  
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json                    
+        if  [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] ; then  
+            fullupgrade="N"
+            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json                            
+        else
+            fullupgrade="Y" 
+            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json                                
+        fi
+
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json        
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
 
