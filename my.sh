@@ -491,6 +491,7 @@ read answer
     fi
 fi   
 
+echo
 
 if [ $noconfig == "Y" ] ; then                            
     cecho r "SN Gen/Mac Gen/Vid/Pid/SataPortMap detection skipped!!"                                         
@@ -610,6 +611,5 @@ fi
 
 rm -f /home/tc/custom-module                                                                                                                                             
 echo "y"|./rploader.sh backup                                                                                                                                         
-                                         
 
 exit 0
