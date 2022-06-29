@@ -228,9 +228,11 @@ TARGET_REVISION="42661"
         sha256="381077302a89398a9fb5ec516217578d6f33b0219fe95135e80fd93cddbf88c4"                                                                              
 #        dtbfile="ds1621p"                                                                                                                                     
     elif [ "$1" = "DS2422+" ] ; then
-        TARGET_PLATFORM="ds2422p"                                                                                                                                
-        SYNOMODEL="ds2422p_$TARGET_REVISION"                                                                                                                   
-        sha256="c38fee0470c592b679ab52a64eac76b2a3912fb2e6aba65a65abb5aa05a98d4c"    
+        echo "Synology model DS2422+ jot mode not supported by TCRP"
+        exit 0        
+#        TARGET_PLATFORM="ds2422p"                                                                                                                                
+#        SYNOMODEL="ds2422p_$TARGET_REVISION"                                                                                                                   
+#        sha256="c38fee0470c592b679ab52a64eac76b2a3912fb2e6aba65a65abb5aa05a98d4c"    
     elif [ "$1" = "DVA3221" ]; then                                                                                                                      
         TARGET_PLATFORM="denverton"                                                                                                                            
         SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
