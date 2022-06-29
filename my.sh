@@ -360,10 +360,10 @@ done
 #echo $manual
 
 if [ $jumkey == "Y" ] ; then 
-    cecho p "jumkey option do not used anymore, shell exit..."          
+    cecho p "The jumpkey option is deprecated, shell exit..."          
     exit 0
 elif [ $poco == "Y" ] ; then 
-    cecho p "poco option do not used anymore, shell exit..."
+    cecho p "The poco option is deprecated, shell exit..."
     exit 0
 fi
 
