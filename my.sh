@@ -205,7 +205,6 @@ echo
 
 TARGET_REVISION="42661"
 
-
     if [ "$1" = "DS918+" ]; then        
         TARGET_PLATFORM="apollolake"                                                                                                                           
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
@@ -367,6 +366,8 @@ elif [ $poco == "Y" ] ; then
     exit 0
 fi
 
+echo
+
 if [ $TARGET_REVISION == "42218" ] ; then  
    if [ $postupdate == "Y" ] ; then                                                                                                                
                                                                                                                                                     
@@ -461,12 +462,15 @@ if [ -d "/home/tc/redpill-load" ]; then
     fi
 fi
 
+echo
     
 if [ $fullupgrade == "Y" ] ; then  
     echo "n"|./rploader.sh fullupgrade                                                                                            
 else
     cecho y "this model skip fullupgrade for custom adjustment" 
 fi    
+
+echo
 
 if [ $noconfig == "Y" ] ; then
     cecho y "Automatically restore your own user_config.json by noconfig option..."   
@@ -600,6 +604,6 @@ fi
 
 rm -f /home/tc/custom-module                                                                                                                                             
 echo "y"|./rploader.sh backup                                                                                                                                         
-                                          
+                                         
 
 exit 0
