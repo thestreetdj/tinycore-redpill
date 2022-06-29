@@ -427,7 +427,8 @@ cecho g "SYNOMODEL is $SYNOMODEL"
 fullupgrade="Y"
 
 if [ $TARGET_REVISION == "42218" ] ; then
-    cecho y "this is TCRP original jun mode"
+    echo
+    cecho y "This is the jumkey's jun mode of TCRP. jun mode skips fullupgrade. If fullupgrade is required, please handle it separately."
     
     fullupgrade="N"     
 
@@ -440,84 +441,13 @@ if [ $TARGET_REVISION == "42218" ] ; then
     curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh                
 
 else
-    echo y "this is TCRP original jot mode"
-#    if [ $jumkey == "N" ] && [ $poco == "N" ] ; then  
-    
-#    elif [ $jumkey == "Y" ] ; then 
-    
-#    elif [ $poco == "Y" ] ; then 
-    
-#    fi
-    
+    echo
+    echo y "This is TCRP original jot mode"
 
-    if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] ; then  
+    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
+    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
+    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
 
-        if [ $jumkey == "Y" ] ; then 
-            cecho p "jumkey's dynamic auto dtc patch ext file pre-downloading in progress..."  
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
-        elif [ $poco == "Y" ] ; then 
-            cecho y "pocopico static dtc mode is not supported. (Loader Build Exit)"
-            exit 0
-        else
-            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
-            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
-        fi
-
-    elif [ "$MODEL" == "DS2422+" ] ; then  
-
-        if [ $jumkey == "Y" ] ; then 
-            cecho p "jumkey's dynamic auto dtc patch ext file pre-downloading in progress..."  
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json                
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-        elif [ $poco == "Y" ] ; then 
-            cecho y "switch to pocopico static dtc mode"
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json                
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-        else
-            cecho y "this is jot mode"
-            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json              
-        fi
-
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
-
-    else
-
-        if [ $poco == "Y" ] ; then
-            cecho y "switch to pocopico static dtc mode"
-            if [ $TARGET_REVISION != "42218" ] ; then
-                curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json
-            else
-                curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json        
-            fi
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh  
-        elif [ $jumkey == "Y" ] ; then 
-            cecho y "switch to jumkey dynamic dtc mode"        
-            if [ "$MODEL" == "DS918+" ] ; then
-                cecho g "this is test mode..!!!!!!!!!!!!!!!!!!!!! Do not use it for actual use.!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-            else
-                cecho r "jumkey dynamic dtc mode is not ready yet. (Loader Build Exit)"
-                exit 0
-            fi    
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh  
-
-            # for ds918+ dtc test
-            if [ "$MODEL" == "DS918+" ] ; then
-                curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader_xdtc.sh" --output rploader.sh  
-            fi    
-        else
-            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
-            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
-            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh
-        fi
-
-        if [ $TARGET_REVISION == "42218" ] && [ $manual == "Y" ]; then                                                                                        
-            curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh                                                                                                                                         
-        fi 
-
-    fi
 fi    
 
 # cecho y "Cleaning lkm and load directory ..." 
