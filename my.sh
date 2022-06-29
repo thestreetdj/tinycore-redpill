@@ -282,7 +282,7 @@ TARGET_REVISION="42661"
         SYNOMODEL="dva3221_$TARGET_REVISION"                                     
         sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"  
     elif [ "$1" = "DVA1622J" ]; then
-        echo "Synology model DVA1622 jun mode not supported by TCRP, DSM Revision 42218 doesn't exists on Synology"
+        echo "Synology model DVA1622 jun mode not supported by TCRP yet."
         exit 0                                                                                               
     elif [ "$1" = "DS920+J" ]; then                                                                                                                      
         TARGET_REVISION="42218"
