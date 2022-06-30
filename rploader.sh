@@ -1951,6 +1951,10 @@ function getstaticmodule() {
         SYNOMODEL="dva3221_$TARGET_REVISION"
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
         SYNOMODEL="ds920p_$TARGET_REVISION"
+    elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
+        SYNOMODEL="dva1622_$TARGET_REVISION"        
+    elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
+        SYNOMODEL="ds2422p_$TARGET_REVISION"        
     fi
 
     echo "Looking for redpill for : $SYNOMODEL "
