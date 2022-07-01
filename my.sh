@@ -465,7 +465,7 @@ fi
 if  [ "$MODEL" == "DS2422+" ] ; then  
     cecho y "Downloading DS2422+ redpill.ko ..."
     curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output redpill-linux-v4.4.180+.ko
-    mv redpill-linux-v4.4.180+.ko /home/tc/custom-module/redpill.ko
+    sudo mv redpill-linux-v4.4.180+.ko /home/tc/custom-module/redpill.ko
 fi
 
 # cecho y "Cleaning lkm and load directory ..." 
@@ -531,19 +531,15 @@ else
 
     echo "y"|./rploader.sh identifyusb
 
-    if [ $jumkey == "Y" ] || [ $poco == "Y" ] ; then                                                             
+    if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] ; then  
     	cecho p "Device Tree usage model does not need SataPortMap setting...." 
     else
-    	./rploader.sh satamap
+        cecho p "Sataportmap,DiskIdxMap to blanc for dtc"
+        json="$(jq --arg var "$sataportmap" '.extra_cmdline.SataPortMap = ""' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+        json="$(jq --arg var "$diskidxmap" '.extra_cmdline.DiskIdxMap = ""' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+        cat user_config.json
+#    	./rploader.sh satamap
     fi
-fi
-
-# Sataportmap,DiskIdxMap to black for dtc
-if [ $jumkey == "Y" ] || [ $poco == "Y" ] ; then
-    cecho p "Sataportmap,DiskIdxMap to blanc for dtc"
-    json="$(jq --arg var "$sataportmap" '.extra_cmdline.SataPortMap = ""' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-    json="$(jq --arg var "$diskidxmap" '.extra_cmdline.DiskIdxMap = ""' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-    cat user_config.json
 fi
 
 echo
