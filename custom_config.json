@@ -468,18 +468,19 @@
                                     "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
                             }
                     },
-                    "redpill_lkm": {
-                            "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-                            "branch": "master"
-                    },
-                    "redpill_load": {
-                            "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-                            "branch": "master"
-                    },
-            "add_extensions": [{
-		    "redpill-dtb-static" : "https://github.com/pocopico/rp-ext/raw/main/redpill-dtb-static/rpext-index.json",
-		    "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/develop/redpill-misc/rpext-index.json"
-	                        }]
+		      "redpill_lkm": {
+			"source_url": "https://github.com/pocopico/redpill-lkm.git",
+			"branch": "master"
+		      },
+		      "redpill_load": {
+			"source_url": "https://github.com/jumkey/redpill-load.git",
+			"branch": "develop"
+		      },
+		      "add_extensions": [{
+			    "jumkey.qjs.000": "https://github.com/jumkey/redpill-load/raw/develop/redpill-runtime-qjs/rpext-index.json",          
+			    "jumkey.qjs.dtb": "https://github.com/jumkey/redpill-load/raw/develop/redpill-qjs-dtb/rpext-index.json",
+			    "redpill-misc": "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json"     
+			}]
             }      
     ]
 }
