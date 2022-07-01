@@ -229,11 +229,11 @@ TARGET_REVISION="42661"
         sha256="381077302a89398a9fb5ec516217578d6f33b0219fe95135e80fd93cddbf88c4"                                                                              
 #        dtbfile="ds1621p"                                                                                                                                     
     elif [ "$1" = "DS2422+" ] ; then
-        echo "Synology model DS2422+ jot mode not supported by TCRP"
-        exit 0        
-#        TARGET_PLATFORM="ds2422p"                                                                                                                                
-#        SYNOMODEL="ds2422p_$TARGET_REVISION"                                                                                                                   
-#        sha256="c38fee0470c592b679ab52a64eac76b2a3912fb2e6aba65a65abb5aa05a98d4c"    
+#        echo "Synology model DS2422+ jot mode not supported by TCRP"
+#        exit 0        
+        TARGET_PLATFORM="ds2422p"                                                                                                                                
+        SYNOMODEL="ds2422p_$TARGET_REVISION"                                                                                                                   
+        sha256="c38fee0470c592b679ab52a64eac76b2a3912fb2e6aba65a65abb5aa05a98d4c"    
     elif [ "$1" = "DVA3221" ]; then                                                                                                                      
         TARGET_PLATFORM="denverton"                                                                                                                            
         SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
@@ -453,6 +453,10 @@ else
         fullupgrade="N"
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config.json" --output custom_config.json    
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rploader.sh" --output rploader.sh        
+    elif  [ "$MODEL" == "DS2422+" ] ; then
+        fullupgrade="N"    
+        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json
+        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" --output rploader.sh                        
     else
         fullupgrade="Y"
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" --output custom_config.json    
