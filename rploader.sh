@@ -2138,15 +2138,15 @@ function buildloader() {
 
     if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | cut -c 1-3 | sed -e 's/M//g') -le 400 ]; then
         echo "No adequate space on TCRP loader partition /mnt/${tcrppart} to cache pat file"
-        echo "Found $(ls /mnt/${tcrppart}/auxfiles/*pat) file"
-        echo -n "Do you want me to remove older cached pat files and cache current ? [yY/nN] : "
-        read answer
-        if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
-            rm -f /mnt/${tcrppart}/auxfiles/*.pat
-            patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
-            echo "Found ${patfile}, copying to cache directory : ${local_cache} "
-            cp -f ${patfile} ${local_cache}
-        fi
+        echo "Found $(ls /mnt/${tcrppart}/auxfiles/*pat) file, kepp this file"
+#        echo -n "Do you want me to remove older cached pat files and cache current ? [yY/nN] :"
+#        read answer
+#        if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+#            rm -f /mnt/${tcrppart}/auxfiles/*.pat
+#            patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
+#            echo "Found ${patfile}, copying to cache directory : ${local_cache} "
+#            cp -f ${patfile} ${local_cache}
+#        fi
     else
         if [ -f "$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)" ]; then
             patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
