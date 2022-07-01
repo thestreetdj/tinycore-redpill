@@ -283,8 +283,8 @@ TARGET_REVISION="42661"
         TARGET_PLATFORM="v1000"                                                                                                                                
         SYNOMODEL="ds1621p_$TARGET_REVISION"                                                                                                                   
     elif [ "$1" = "DS2422+" ] ; then
-        echo "Synology DS2422+ Jot Mode not supported by TCRP."
-        exit 0                                                                                               
+        TARGET_PLATFORM="ds2422p"                                                                                                                                
+        SYNOMODEL="ds2422p_$TARGET_REVISION"                                                                                              
     elif [ "$1" = "DVA3221" ]; then                                                                                                                      
         TARGET_PLATFORM="denverton"                                                                                                                            
         SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
