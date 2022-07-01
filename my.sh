@@ -460,8 +460,13 @@ else
     fi
     curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" --output custom_config_jun.json
 
-
 fi    
+
+if  [ "$MODEL" == "DS2422+" ] ; then  
+    cecho y "Downloading DS2422+ redpill.ko ..."
+    curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output redpill-linux-v4.4.180+.ko
+    mv redpill-linux-v4.4.180+.ko /home/tc/custom-module/redpill.ko
+fi
 
 # cecho y "Cleaning lkm and load directory ..." 
 if [ -d "/home/tc/redpill-load" ]; then
