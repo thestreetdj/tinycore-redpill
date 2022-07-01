@@ -1920,15 +1920,16 @@ function getstaticmodule() {
     cd /home/tc
 
     if [ -d /home/tc/custom-module ] && [ -f /home/tc/custom-module/redpill.ko ]; then
-        echo "Found custom redpill module, do you want to use this instead ? [yY/nN] : "
-        read answer
+        echo "Found custom redpill module. Use this instead..."
+#        echo "Found custom redpill module, do you want to use this instead ? [yY/nN] : "
+#        read answer
 
-        if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+#        if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
             REDPILL_MOD_NAME="redpill-linux-v$(modinfo /home/tc/custom-module/redpill.ko | grep vermagic | awk '{print $2}').ko"
             cp /home/tc/custom-module/redpill.ko /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
             strip --strip-debug /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
             return
-        fi
+#        fi
 
     fi
 
@@ -2043,12 +2044,12 @@ function buildloader() {
     else
 
         if [ -d /home/tc/custom-module ]; then
-            echo "Want to use firmware files from /home/tc/custom-module/*.pat ? [yY/nN] : "
-            read answer
+#            echo "Want to use firmware files from /home/tc/custom-module/*.pat ? [yY/nN] : "
+#            read answer
 
-            if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+#            if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
                 sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
-            fi
+#            fi
         fi
 
     fi
