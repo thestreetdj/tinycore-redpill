@@ -182,7 +182,11 @@ function EXDRIVER_FN() {
 		    if [ $TARGET_REVISION == "42218" ] ; then
                         ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json    
 		    else
-			./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json
+			if [ "$1" = "DS2422+" ] ; then
+			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/Peter-Q3/rp-ext/master/$IEXT/rpext-index.json
+			else
+			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json			
+			fi
 	    	    fi
 
                 done < <(echo $I_O | tr ',' '\n')
@@ -198,7 +202,11 @@ function EXDRIVER_FN() {
                 if [ $TARGET_REVISION == "42218" ] ; then                                                                                                                                    
                     ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json                                 
                 else                                                                                                                                                                         
-                    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json                                     
+			if [ "$1" = "DS2422+" ] ; then
+			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/Peter-Q3/rp-ext/master/$IEXT/rpext-index.json
+			else
+			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json			
+			fi
                 fi   
 
             fi
