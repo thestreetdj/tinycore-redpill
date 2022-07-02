@@ -17,8 +17,10 @@
 # 2022.05.25
 # Update : Add jumkey's Jun mode
 # 2022.06.11
-# Update : Add DS2422+ Support
+# Update : Add DS2422+ jun mode Support
 # 2022.06.28
+# Update : Add DS2422+ jot mode Support
+# 2022.07.02
                                                                                         
 mshellgz="myv.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/myv.sh.gz"
@@ -235,7 +237,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA3221
 ./$(basename ${0}) DS920+
 ./$(basename ${0}) DS1621+
-./$(basename ${0}) DS2422+ (Not Suporrted)
+./$(basename ${0}) DS2422+ (7.1.0-42661 Extension not yet supported)
 ./$(basename ${0}) DVA1622
 
 - for jun mode
