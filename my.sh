@@ -35,6 +35,8 @@
 # 2022.06.27
 # Update : remove jumkey, poco oprtions
 # 2022.06.30
+# Update : Add DS2422+ jot mode
+# 2022.07.02
 
 
 mshellgz="my.sh.gz"
@@ -176,7 +178,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA3221
 ./$(basename ${0}) DS920+
 ./$(basename ${0}) DS1621+
-./$(basename ${0}) DS2422+ (Not Suporrted)
+./$(basename ${0}) DS2422+ (7.1.0-42661 Extension not yet supported)
 ./$(basename ${0}) DVA1622
 
 - for jun mode
@@ -468,8 +470,7 @@ fi
 
 if  [ "$MODEL" == "DS2422+" ] ; then  
     cecho y "Downloading DS2422+ redpill.ko ..."
-    curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output redpill-linux-v4.4.180+.ko
-    sudo mv redpill-linux-v4.4.180+.ko /home/tc/custom-module/redpill.ko
+    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 fi
 
 # cecho y "Cleaning lkm and load directory ..." 
@@ -600,6 +601,11 @@ else
         echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION}     
     fi
 fi 
+
+if  [ "$MODEL" == "DS2422+" ] ; then  
+    cecho y "Removing DS2422+ redpill.ko ..."
+    rm -rf /home/tc/custom-module/redpill.ko
+fi
 
 echo                                                                                                                                                                           
 cecho y "Backup in progress..."                                                                                                                                                
