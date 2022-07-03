@@ -625,8 +625,9 @@ rm -rf /home/tc/oldpat.tar.gz
 
 if [ $noclean == "Y" ]  ; then                            
     cecho r "Cleaning redpill-load directory and pat files in auxfiles directory skipped!!!"                 
-    rm -f /home/tc/redpill-load/cache/*                                                                      
+    rm -f /home/tc/redpill-load/cache/*
     rm -f /home/tc/redpill-load/loader.img                                                                   
+    rm -f /home/tc/redpill-load/.git
 else                                                                                                         
     ./rploader.sh clean                                                                                  
     rm -f /mnt/${tcrppart}/auxfiles/*.pat                                                                    
