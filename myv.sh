@@ -348,7 +348,7 @@ TARGET_REVISION="42661"
 if [ $SYNOMODEL == "ds2422p_42661" ] ; then
 	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
 	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rpext-index.json" -O
-elif [ $SYNOMODEL == "dva1622p_42661" ] ; then
+elif [ $SYNOMODEL == "dva1622_42661" ] ; then
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config.json" -O
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rpext-index.json" -O
 else
