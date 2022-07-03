@@ -316,6 +316,7 @@ noclean="N"
 noconfig="N"
 manual="N"
 poco="N"
+frmyv="N"
 
 while [ "$2" != "" ]; do
 #    echo $2
@@ -345,6 +346,9 @@ while [ "$2" != "" ]; do
         manual)
             manual="Y"
             ;;
+        frmyv)
+            frmyv="Y"
+            ;;
 
         *)
             echo "Syntax error, not valid arguments or not enough options"
@@ -361,6 +365,7 @@ done
 #echo $noclean
 #echo $noconfig
 #echo $manual
+#echo $frmyv
 
 if [ $jumkey == "Y" ] ; then 
     cecho p "The jumpkey option is deprecated, shell exit..."          
@@ -477,13 +482,13 @@ if  [ "$MODEL" == "DS2422+" ] ; then
     sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 fi
 
-# cecho y "Cleaning lkm and load directory ..." 
-if [ -d "/home/tc/redpill-load" ]; then
-    cecho y "Do you want to clean redpill-load / lkm directory ? ( !!! Causion !!!, if you added ext from myv.sh, answer n )  [Yy/Nn]"
-    read answer                                                                                                                                         
-    if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
+if [ -d "/home/tc/redpill-load" ] && [ $frmyv == "N" ] ; then
+    cecho y "Cleaning lkm and load directory ..." 
+#    cecho y "Do you want to clean redpill-load / lkm directory ? ( !!! Causion !!!, if you added ext from myv.sh, answer n )  [Yy/Nn]"
+#    read answer                                                                                                                                         
+#    if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
        ./rploader.sh clean  
-    fi
+#    fi
 fi
 
 echo
