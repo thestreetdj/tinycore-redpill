@@ -461,7 +461,7 @@ else
         fullupgrade="N"
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config.json" -O
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rploader.sh" -O
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rpext-index.json" -O
+        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rpext-index.json" -O
     elif  [ "$MODEL" == "DS2422+" ] ; then
         fullupgrade="N"    
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
