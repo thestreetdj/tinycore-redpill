@@ -365,6 +365,6 @@ fi
 
 
 cecho g "Call my.sh now..."
-./my.sh $@
+./my.sh $@ frmyv
 
 exit 0
