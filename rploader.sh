@@ -2002,6 +2002,17 @@ function downloadtools() {
 
 function buildloader() {
 
+    if [ ! -n "$(which bspatch)" ]; then
+
+        echo "bspatch does not exist, bringing over from repo"
+
+        curl --location "https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/bspatch" -O
+
+        chmod 777 bspatch
+        sudo mv bspatch /usr/local/bin/
+
+    fi
+
     tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
 
