@@ -29,7 +29,7 @@
       "add_extensions": [
         {
   	  "redpill-dtb-static" : "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill-dtb-static/rpext-index.json",		
-          "redpill-misc": "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+          "thethorgroup.virtio": "https://github.com/pocopico/redpill-load/raw/develop/redpill-virtio/rpext-index.json"
         }
       ]
     },
@@ -61,7 +61,7 @@
       "add_extensions": [
         {
 	"redpill-dtb-static" : "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill-dtb-static/rpext-index.json",
-        "redpill-misc": "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+        "thethorgroup.virtio": "https://github.com/pocopico/redpill-load/raw/develop/redpill-virtio/rpext-index.json"
         }
       ]
     },
@@ -126,7 +126,7 @@
       "add_extensions": [
         {
   	  "redpill-dtb-static" : "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill-dtb-static/rpext-index.json",		
-          "redpill-misc": "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+          "thethorgroup.virtio": "https://github.com/pocopico/redpill-load/raw/develop/redpill-virtio/rpext-index.json"
         }
       ]
     },
@@ -158,7 +158,7 @@
       "add_extensions": [
         {
   	  "redpill-dtb-static" : "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill-dtb-static/rpext-index.json",
-          "redpill-misc": "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+          "thethorgroup.virtio": "https://github.com/pocopico/redpill-load/raw/develop/redpill-virtio/rpext-index.json"
         }
       ]
     },
@@ -253,8 +253,7 @@
       },
       "add_extensions": [
         {
-  	  "redpill-dtb-static" : "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill-dtb-static/rpext-index.json",		
-          "redpill-misc": "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+  	  "redpill-dtb-static" : "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill-dtb-static/rpext-index.json"
         }
       ]
     }
