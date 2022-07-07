@@ -286,8 +286,10 @@ TARGET_REVISION="42661"
         SYNOMODEL="dva3221_$TARGET_REVISION"                                     
         sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"  
     elif [ "$1" = "DVA1622J" ]; then
-        echo "Synology model DVA1622 jun mode not supported by TCRP yet."
-        exit 0                                                                                               
+        TARGET_REVISION="42218"                                                                                                
+        TARGET_PLATFORM="dva1622"                                                                                           
+        SYNOMODEL="dva1622_$TARGET_REVISION"                                                                                    
+        sha256="fe2a4648f76adeb65c3230632503ea36bbac64ee88b459eb9bfb5f3b8c8cebb3"
     elif [ "$1" = "DS920+J" ]; then                                                                                                                      
         TARGET_REVISION="42218"
         TARGET_PLATFORM="geminilake"                                                                                                                       
@@ -444,7 +446,7 @@ if [ $TARGET_REVISION == "42218" ] ; then
     
     fullupgrade="N"     
 
-    if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] ; then  
+    if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] ; then  
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
     else
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json
@@ -477,8 +479,8 @@ else
 
 fi    
 
-if  [ "$MODEL" == "DS2422+" ] ; then  
-    cecho y "Downloading DS2422+ redpill.ko ..."
+if  [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ]  ; then  
+    cecho y "Downloading recompiled redpill.ko ..."
     sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 fi
 
@@ -546,13 +548,13 @@ else
     echo "y"|./rploader.sh identifyusb
 
     if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] ; then  
-    	cecho p "Device Tree usage model does not need SataPortMap setting...." 
+        cecho p "Device Tree usage model does not need SataPortMap setting...." 
     else
         cecho p "Sataportmap,DiskIdxMap to blanc for dtc"
         json="$(jq --arg var "$sataportmap" '.extra_cmdline.SataPortMap = ""' user_config.json)" && echo -E "${json}" | jq . >user_config.json
         json="$(jq --arg var "$diskidxmap" '.extra_cmdline.DiskIdxMap = ""' user_config.json)" && echo -E "${json}" | jq . >user_config.json
         cat user_config.json
-#    	./rploader.sh satamap
+#       ./rploader.sh satamap
     fi
 fi
 
@@ -560,7 +562,11 @@ echo
 echo
 cecho p "DSM PAT file pre-downloading in progress..."
 if [ $TARGET_REVISION == "42218" ]; then
-    URL="https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_${MODEL}_$TARGET_REVISION.pat"
+    if [ "$MODEL" == "DVA1622" ] ; then
+        URL="https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS920+_$TARGET_REVISION.pat"
+    else
+        URL="https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_${MODEL}_$TARGET_REVISION.pat"
+    fi
 else
     URL="https://global.download.synology.com/download/DSM/release/7.1/42661-1/DSM_${MODEL}_$TARGET_REVISION.pat"  
 fi
@@ -611,8 +617,8 @@ else
     fi
 fi 
 
-if  [ "$MODEL" == "DS2422+" ] ; then  
-    cecho y "Removing DS2422+ redpill.ko ..."
+if  [ -f /home/tc/custom-module/redpill.ko ] ; then  
+    cecho y "Removing redpill.ko ..."
     rm -rf /home/tc/custom-module/redpill.ko
 fi
 
