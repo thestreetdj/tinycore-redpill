@@ -37,6 +37,10 @@
 # 2022.06.30
 # Update : Add DS2422+ jot mode
 # 2022.07.02
+# Update : Add DVA1622 jun mode (Testing)
+# 2022.07.07
+# Update : Add DS1520+ jun mode
+# 2022.07.08
 
 
 mshellgz="my.sh.gz"
@@ -178,8 +182,9 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA3221
 ./$(basename ${0}) DS920+
 ./$(basename ${0}) DS1621+
-./$(basename ${0}) DS2422+ (7.1.0-42661 Extension not yet supported)
+./$(basename ${0}) DS2422+
 ./$(basename ${0}) DVA1622
+./$(basename ${0}) DS1520+ (Not Suppoted)
 
 - for jun mode
 
@@ -189,9 +194,10 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS3622xs+J                                                                                                   
 ./$(basename ${0}) DVA3221J                                                                                                     
 ./$(basename ${0}) DS920+J                                                                                                      
-./$(basename ${0}) DS1621+J (Not Suporrted) 
+./$(basename ${0}) DS1621+J (Testing) 
 ./$(basename ${0}) DS2422+J  
 ./$(basename ${0}) DVA1622J
+./$(basename ${0}) DS1520+J
 
 EOF
 
@@ -244,12 +250,14 @@ TARGET_REVISION="42661"
         TARGET_PLATFORM="dva1622"                                                                                                                            
         SYNOMODEL="dva1622_$TARGET_REVISION"                                                                                                                   
         sha256="f1484cf302627072ca393293cd73e61dc9e09d479ef028b216eae7c12f7b7825"                                                                              
-    elif [ "$1" = "DS920+" ]; then                                                                                                                       
+    elif [ "$1" = "DS920+" ]; then
         TARGET_PLATFORM="geminilake"                                                                                                                           
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
         sha256="8076950fdad2ca58ea9b91a12584b9262830fe627794a0c4fc5861f819095261"                                                                              
 #        dtbfile="ds920p"                                                                                                                                      
-                                                                                                                                                               
+    elif [ "$1" = "DS1520+" ]; then
+        echo "Synology model DS1520+ jot mode not supported by m shell"
+        exit 0        
     elif [ "$1" = "DS918+J" ]; then                                                                                                                      
         TARGET_REVISION="42218"                                                                                                                                
         TARGET_PLATFORM="apollolake"                                                                                                                       
@@ -294,7 +302,12 @@ TARGET_REVISION="42661"
         TARGET_REVISION="42218"
         TARGET_PLATFORM="geminilake"                                                                                                                       
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
-        sha256="fe2a4648f76adeb65c3230632503ea36bbac64ee88b459eb9bfb5f3b8c8cebb3"     
+        sha256="fe2a4648f76adeb65c3230632503ea36bbac64ee88b459eb9bfb5f3b8c8cebb3"
+    elif [ "$1" = "DS1520+J" ]; then
+        TARGET_REVISION="42218"
+        TARGET_PLATFORM="ds1520p"
+        SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
+        sha256="fe2a4648f76adeb65c3230632503ea36bbac64ee88b459eb9bfb5f3b8c8cebb3"
     else                                                                                                     
         echo "Synology model not supported by TCRP."                                                         
         exit 0                                                                                               
@@ -307,7 +320,6 @@ if [ $TARGET_REVISION == "42218" ] ; then
 else
     MODEL=$tem
 fi
-
 
 cecho y "MODEL is $MODEL"
 
@@ -446,7 +458,7 @@ if [ $TARGET_REVISION == "42218" ] ; then
     
     fullupgrade="N"     
 
-    if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] ; then  
+    if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ "$MODEL" == "DS1520+" ] ; then
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
     else
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json
@@ -479,7 +491,7 @@ else
 
 fi    
 
-if  [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ]  ; then  
+if  [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ "$MODEL" == "DS1520+" ] ; then
     cecho y "Downloading recompiled redpill.ko ..."
     sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 fi
@@ -547,7 +559,7 @@ else
 
     echo "y"|./rploader.sh identifyusb
 
-    if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] ; then  
+    if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ "$MODEL" == "DS1520+" ] ; then
         cecho p "Device Tree usage model does not need SataPortMap setting...." 
     else
         cecho p "Sataportmap,DiskIdxMap to blanc for dtc"
