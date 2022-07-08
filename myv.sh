@@ -180,7 +180,11 @@ function EXDRIVER_FN() {
                     IEXT=`echo "${IRRAY[$j]}" | sed 's/\\\ln//g' | sed 's/\\\lt//g' | awk '{print $2}'`
 
 		    if [ $TARGET_REVISION == "42218" ] ; then
-                        ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json    
+		    	if [ $SYNOMODEL == "ds1520p_42218" ] ; then
+			    ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
+			else
+                            ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json    
+			fi	
 		    else
 			if [ $SYNOMODEL == "ds2422p_42661" ] ; then
 			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
@@ -200,7 +204,11 @@ function EXDRIVER_FN() {
                 done
 
                 if [ $TARGET_REVISION == "42218" ] ; then                                                                                                                                    
-                    ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json                                 
+		    	if [ $SYNOMODEL == "ds1520p_42218" ] ; then
+			    ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
+			else
+                            ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json    
+			fi	
                 else                                                                                                                                                                         
 			if [ $SYNOMODEL == "ds2422p_42661" ] ; then
 			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
@@ -245,8 +253,9 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA3221
 ./$(basename ${0}) DS920+
 ./$(basename ${0}) DS1621+
-./$(basename ${0}) DS2422+ (7.1.0-42661 Extension not yet supported)
+./$(basename ${0}) DS2422+ 
 ./$(basename ${0}) DVA1622
+./$(basename ${0}) DS1520+ (Not Suppoted)
 
 - for jun mode
 
@@ -256,9 +265,10 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS3622xs+J                                                                                                   
 ./$(basename ${0}) DVA3221J                                                                                                     
 ./$(basename ${0}) DS920+J                                                                                                      
-./$(basename ${0}) DS1621+J (Not Suporrted) 
+./$(basename ${0}) DS1621+J (Testing) 
 ./$(basename ${0}) DS2422+J  
 ./$(basename ${0}) DVA1622J
+./$(basename ${0}) DS1520+J
 
 EOF
 
@@ -303,7 +313,10 @@ TARGET_REVISION="42661"
         SYNOMODEL="dva1622_$TARGET_REVISION"
     elif [ "$1" = "DS920+" ]; then                                                                                                                       
         TARGET_PLATFORM="geminilake"                                                                                                                           
-        SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
+        SYNOMODEL="ds920p_$TARGET_REVISION"     
+    elif [ "$1" = "DS1520+" ]; then
+        echo "Synology model DS1520+ jot mode not supported by m shell"
+        exit 0	
     elif [ "$1" = "DS918+J" ]; then                                                                                                                      
         TARGET_REVISION="42218"                                                                                                                                
         TARGET_PLATFORM="apollolake"                                                                                                                       
@@ -333,12 +346,17 @@ TARGET_REVISION="42661"
         TARGET_PLATFORM="denverton"                                              
         SYNOMODEL="dva3221_$TARGET_REVISION"     
     elif [ "$1" = "DVA1622J" ]; then
-        echo "Synology model DVA1622 jun mode not supported by TCRP yet."
-        exit 0	
+        TARGET_REVISION="42218"                                                                                                
+        TARGET_PLATFORM="dva1622"                                                                                           
+        SYNOMODEL="dva1622_$TARGET_REVISION"  
     elif [ "$1" = "DS920+J" ]; then                                                                                                                      
         TARGET_REVISION="42218"
         TARGET_PLATFORM="geminilake"                                                                                                                       
-        SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
+        SYNOMODEL="ds920p_$TARGET_REVISION"
+    elif [ "$1" = "DS1520+J" ]; then
+        TARGET_REVISION="42218"
+        TARGET_PLATFORM="ds1520p"
+        SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
     else                                                                                                     
         echo "Synology model not supported by TCRP."                                                         
         exit 0                                                                                               
@@ -351,6 +369,9 @@ if [ $SYNOMODEL == "ds2422p_42661" ] ; then
 elif [ $SYNOMODEL == "dva1622_42661" ] ; then
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config.json" -O
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rpext-index.json" -O
+elif [ $SYNOMODEL == "ds1520p_42218" ] ; then
+	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
+	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rpext-index.json" -O
 else
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" -O
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rpext-index.json" -O  
