@@ -307,7 +307,7 @@ TARGET_REVISION="42661"
         TARGET_REVISION="42218"
         TARGET_PLATFORM="ds1520p"
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
-        sha256="fe2a4648f76adeb65c3230632503ea36bbac64ee88b459eb9bfb5f3b8c8cebb3"
+        sha256="5c421dcbc3d1cc4d02cd985c7ddd385f2f01a66730ee8efa700ce4f03421d9d1"
     else                                                                                                     
         echo "Synology model not supported by TCRP."                                                         
         exit 0                                                                                               
