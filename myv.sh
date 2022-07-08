@@ -21,6 +21,10 @@
 # 2022.06.28
 # Update : Add DS2422+ jot mode Support
 # 2022.07.02
+# Update : Add DVA1622 jun mode (Testing)
+# 2022.07.07
+# Update : Add DS1520+ jun mode
+# 2022.07.08
                                                                                         
 mshellgz="myv.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/myv.sh.gz"
