@@ -286,6 +286,8 @@ function processpat() {
         SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622"
     elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
         SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+"
+    elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
+        SYNOMODEL="ds1520p_$TARGET_REVISION" && MODEL="DS1520+"
     fi
 
     if [ ! -d "${temp_pat_folder}" ]; then
@@ -436,7 +438,7 @@ function addrequiredexts() {
         cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
     done
 
-    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] || [ ${TARGET_PLATFORM} = "dva1622" ] || [ ${TARGET_PLATFORM} = "ds2422p" ]; then
+    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] || [ ${TARGET_PLATFORM} = "dva1622" ] || [ ${TARGET_PLATFORM} = "ds2422p" ] || [ ${TARGET_PLATFORM} = "ds1520p" ] ; then
         echo "For jumkey's dynamic dtc patch skip patchdtc function"
     else
         patchdtc
@@ -1962,7 +1964,9 @@ function getstaticmodule() {
     elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
         SYNOMODEL="dva1622_$TARGET_REVISION"        
     elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
-        SYNOMODEL="ds2422p_$TARGET_REVISION"        
+        SYNOMODEL="ds2422p_$TARGET_REVISION"   
+    elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
+        SYNOMODEL="ds1520p_$TARGET_REVISION"           
     fi
 
     echo "Looking for redpill for : $SYNOMODEL "
@@ -2296,7 +2300,7 @@ function getvars() {
         KERNEL_MAJOR="3"
         MODULE_ALIAS_FILE="modules.alias.3.json"
         ;;
-    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds2422p)        
+    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds2422p | ds1520p)        
         KERNEL_MAJOR="4"
         MODULE_ALIAS_FILE="modules.alias.4.json"
         ;;
@@ -2320,6 +2324,8 @@ function getvars() {
         SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622"
     elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
         SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+"
+    elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
+        SYNOMODEL="ds1520p_$TARGET_REVISION" && MODEL="DS1520+"        
     fi
 
     #echo "Platform : $platform_selected"
