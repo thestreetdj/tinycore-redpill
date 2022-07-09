@@ -219,6 +219,8 @@ echo
 
 TARGET_REVISION="42661"
 
+MSHELL_ONLY_MODEL="N"
+
     if [ "$1" = "DS918+" ]; then        
         TARGET_PLATFORM="apollolake"                                                                                                                           
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
@@ -306,6 +308,7 @@ TARGET_REVISION="42661"
         TARGET_PLATFORM="ds1520p"
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
         sha256="06947c58f25bd591f7fa3c58ad9473777481bdd7a049b42d1cb585ca01b053ee"
+        MSHELL_ONLY_MODEL="Y"
     else                                                                                                     
         echo "Synology model not supported by TCRP."                                                         
         exit 0                                                                                               
@@ -456,13 +459,13 @@ if [ $TARGET_REVISION == "42218" ] ; then
     
     fullupgrade="N"     
 
-    if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ "$MODEL" == "DS1520+" ] ; then
+    if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y" ] ; then
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
     else
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json
     fi
     
-    if [ "$MODEL" == "DS1520+" ] ; then
+    if [ $MSHELL_ONLY_MODEL == "Y" ] ; then
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rpext-index.json" -O    
     else
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rpext-index.json" -O        
@@ -495,7 +498,7 @@ else
 
 fi    
 
-if  [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ "$MODEL" == "DS1520+" ] ; then
+if  [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y"  ] ; then
     cecho y "Downloading recompiled redpill.ko ..."
     sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 fi
@@ -563,7 +566,7 @@ else
 
     echo "y"|./rploader.sh identifyusb
 
-    if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ "$MODEL" == "DS1520+" ] ; then
+    if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y"  ] ; then
         cecho p "Device Tree usage model does not need SataPortMap setting...." 
     else
         cecho p "Sataportmap,DiskIdxMap to blanc for dtc"
@@ -578,11 +581,7 @@ echo
 echo
 cecho p "DSM PAT file pre-downloading in progress..."
 if [ $TARGET_REVISION == "42218" ]; then
-    if [ "$MODEL" == "DVA1622" ] ; then
-        URL="https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS920+_$TARGET_REVISION.pat"
-    else
-        URL="https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_${MODEL}_$TARGET_REVISION.pat"
-    fi
+    URL="https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_${MODEL}_$TARGET_REVISION.pat"
 else
     URL="https://global.download.synology.com/download/DSM/release/7.1/42661-1/DSM_${MODEL}_$TARGET_REVISION.pat"  
 fi
