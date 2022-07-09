@@ -41,6 +41,8 @@
 # 2022.07.07
 # Update : Add DS1520+ jun mode
 # 2022.07.08
+# Update : Add DVA3219 jun mode
+# 2022.07.09
 
 
 mshellgz="my.sh.gz"
@@ -185,6 +187,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS2422+
 ./$(basename ${0}) DVA1622
 ./$(basename ${0}) DS1520+ (Not Suppoted)
+./$(basename ${0}) DVA3219
 
 - for jun mode
 
@@ -194,10 +197,11 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS3622xs+J                                                                                                   
 ./$(basename ${0}) DVA3221J                                                                                                     
 ./$(basename ${0}) DS920+J                                                                                                      
-./$(basename ${0}) DS1621+J (Testing) 
+./$(basename ${0}) DS1621+J 
 ./$(basename ${0}) DS2422+J  
-./$(basename ${0}) DVA1622J
+./$(basename ${0}) DVA1622J (Not Suppoted)
 ./$(basename ${0}) DS1520+J
+./$(basename ${0}) DVA3219J
 
 EOF
 
@@ -235,10 +239,7 @@ TARGET_REVISION="42661"
         TARGET_PLATFORM="v1000"                                                                                                                                
         SYNOMODEL="ds1621p_$TARGET_REVISION"                                                                                                                   
         sha256="381077302a89398a9fb5ec516217578d6f33b0219fe95135e80fd93cddbf88c4"                                                                              
-#        dtbfile="ds1621p"                                                                                                                                     
     elif [ "$1" = "DS2422+" ] ; then
-#        echo "Synology model DS2422+ jot mode not supported by TCRP"
-#        exit 0        
         TARGET_PLATFORM="ds2422p"                                                                                                                                
         SYNOMODEL="ds2422p_$TARGET_REVISION"                                                                                                                   
         sha256="c38fee0470c592b679ab52a64eac76b2a3912fb2e6aba65a65abb5aa05a98d4c"    
@@ -254,7 +255,6 @@ TARGET_REVISION="42661"
         TARGET_PLATFORM="geminilake"                                                                                                                           
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
         sha256="8076950fdad2ca58ea9b91a12584b9262830fe627794a0c4fc5861f819095261"                                                                              
-#        dtbfile="ds920p"                                                                                                                                      
     elif [ "$1" = "DS1520+" ]; then
         echo "Synology model DS1520+ jot mode not supported by m shell"
         exit 0        
@@ -294,10 +294,8 @@ TARGET_REVISION="42661"
         SYNOMODEL="dva3221_$TARGET_REVISION"                                     
         sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"  
     elif [ "$1" = "DVA1622J" ]; then
-        TARGET_REVISION="42218"                                                                                                
-        TARGET_PLATFORM="dva1622"                                                                                           
-        SYNOMODEL="dva1622_$TARGET_REVISION"                                                                                    
-        sha256="fe2a4648f76adeb65c3230632503ea36bbac64ee88b459eb9bfb5f3b8c8cebb3"
+        echo "Synology model DVA1622 jun mode not supported by m shell"
+        exit 0        
     elif [ "$1" = "DS920+J" ]; then                                                                                                                      
         TARGET_REVISION="42218"
         TARGET_PLATFORM="geminilake"                                                                                                                       
