@@ -41,8 +41,6 @@
 # 2022.07.07
 # Update : Add DS1520+ jun mode
 # 2022.07.08
-# Update : Add DVA3219 jun mode
-# 2022.07.09
 
 
 mshellgz="my.sh.gz"
