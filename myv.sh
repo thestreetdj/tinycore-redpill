@@ -184,7 +184,7 @@ function EXDRIVER_FN() {
                     IEXT=`echo "${IRRAY[$j]}" | sed 's/\\\ln//g' | sed 's/\\\lt//g' | awk '{print $2}'`
 
 		    if [ $TARGET_REVISION == "42218" ] ; then
-		    	if [ $SYNOMODEL == "ds1520p_42218" ] ; then
+		    	if [ $SYNOMODEL == "dva1622_42218" ] || [ $SYNOMODEL == "ds1520p_42218" ] ; then
 			    ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
 			else
                             ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json    
@@ -208,7 +208,7 @@ function EXDRIVER_FN() {
                 done
 
                 if [ $TARGET_REVISION == "42218" ] ; then                                                                                                                                    
-		    	if [ $SYNOMODEL == "ds1520p_42218" ] ; then
+		    	if [ $SYNOMODEL == "dva1622_42218" ] || [ $SYNOMODEL == "ds1520p_42218" ] ; then
 			    ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
 			else
                             ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json    
@@ -269,7 +269,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS3622xs+J                                                                                                   
 ./$(basename ${0}) DVA3221J                                                                                                     
 ./$(basename ${0}) DS920+J                                                                                                      
-./$(basename ${0}) DS1621+J (Testing) 
+./$(basename ${0}) DS1621+J
 ./$(basename ${0}) DS2422+J  
 ./$(basename ${0}) DVA1622J
 ./$(basename ${0}) DS1520+J
@@ -373,7 +373,7 @@ if [ $SYNOMODEL == "ds2422p_42661" ] ; then
 elif [ $SYNOMODEL == "dva1622_42661" ] ; then
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config.json" -O
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rpext-index.json" -O
-elif [ $SYNOMODEL == "ds1520p_42218" ] ; then
+elif [ $SYNOMODEL == "dva1622_42218" ] || [ $SYNOMODEL == "ds1520p_42218" ] ; then
 	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
 	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rpext-index.json" -O
 else
