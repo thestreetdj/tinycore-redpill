@@ -187,7 +187,6 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS2422+
 ./$(basename ${0}) DVA1622
 ./$(basename ${0}) DS1520+ (Not Suppoted)
-./$(basename ${0}) DVA3219
 
 - for jun mode
 
@@ -201,7 +200,6 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS2422+J  
 ./$(basename ${0}) DVA1622J (Not Suppoted)
 ./$(basename ${0}) DS1520+J
-./$(basename ${0}) DVA3219J
 
 EOF
 
