@@ -44,6 +44,10 @@
 # Update : Add FS2500 jun mode
 # 2022.07.10
 
+##### INCLUDES #########################################################################################################
+. /common.sh # my.sh / myv.sh common use 
+########################################################################################################################
+
 mshellgz="my.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/my.sh.gz"
 
