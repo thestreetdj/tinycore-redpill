@@ -51,26 +51,6 @@
 mshellgz="my.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/my.sh.gz"
 
-function macgen() {
-echo
-    mac2="$(generateMacAddress $1)"
-
-    cecho y "Mac2 Address for Model $1 : $mac2 "
-
-    macaddress2=$(echo $mac2 | sed -s 's/://g')
-
-    sed -i "/\"extra_cmdline\": {/c\  \"extra_cmdline\": {\"mac2\": \"$macaddress2\",\"netif_num\": \"2\", "  user_config.json
-
-    echo "After changing user_config.json"      
-    cat user_config.json
-
-}
-
-function generateMacAddress() {
-    printf '00:11:32:%02X:%02X:%02X' $((RANDOM % 256)) $((RANDOM % 256)) $((RANDOM % 256))
-
-}
-
 checkinternet
 getlatestmshell
 
