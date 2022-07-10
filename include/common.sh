@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -u
 
-function showhelp() {
+showhelp() {
     cat <<EOF
 $(basename ${0})
 
@@ -54,7 +54,7 @@ EOF
 }
 
 
-function getvars()
+getvars()
 {
     cecho y "{1}"
     TARGET_REVISION="42661"
@@ -291,7 +291,7 @@ cecho () {
 }   
 
 
-function checkinternet() {
+checkinternet() {
 
     echo -n "Checking Internet Access -> "
     nslookup github.com 2>&1 >/dev/null
@@ -304,7 +304,7 @@ function checkinternet() {
 
 }
 
-function getlatestmshell() {
+getlatestmshell() {
 
     echo -n "Checking if a newer mshell version exists on the repo -> "
 
@@ -338,7 +338,7 @@ function getlatestmshell() {
 
 }
 
-function macgen() {
+macgen() {
 echo
     mac2="$(generateMacAddress ${1})"
 
@@ -353,7 +353,7 @@ echo
 
 }
 
-function generateMacAddress() {
+generateMacAddress() {
     printf '00:11:32:%02X:%02X:%02X' $((RANDOM % 256)) $((RANDOM % 256)) $((RANDOM % 256))
 
 }
@@ -364,7 +364,7 @@ function generateMacAddress() {
 # ==============================================================================
 # Extension Driver Function
 # ==============================================================================
-function EXDRIVER_FN() {
+EXDRIVER_FN() {
 
     # ==============================================================================
     # Clear extension & install extension driver
