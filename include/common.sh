@@ -53,6 +53,188 @@ EOF
 
 }
 
+
+function getvars()
+{
+
+    TARGET_REVISION="42661"
+
+    MSHELL_ONLY_MODEL="N"
+
+    if [ "$1" = "DS918+" ]; then        
+        TARGET_PLATFORM="apollolake"                                                                                                                           
+        SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
+        sha256="4e8a9d82a8a1fde5af9a934391080b7bf6b91811d9583acb73b90fb6577e22d7"                                                                              
+    elif [ "$1" = "DS3615xs" ]; then                                                                                                                     
+        TARGET_PLATFORM="bromolow"                                                                                                                             
+        SYNOMODEL="ds3615xs_$TARGET_REVISION"                                                                                                                  
+        sha256="1e95d8c63981bcf42ea2eaedfbc7acc4248ff16d129344453b7479953f9ad145"                                                                              
+    elif [ "$1" = "DS3617xs" ]; then                                                                                                                     
+        TARGET_PLATFORM="broadwell"                                                                                                                            
+        SYNOMODEL="ds3617xs_$TARGET_REVISION"                                                                                                                  
+        sha256="0a5a243109098587569ab4153923f30025419740fb07d0ea856b06917247ab5c"                                                                              
+    elif [ "$1" = "DS3622xs+" ]; then
+        TARGET_PLATFORM="broadwellnk"
+        SYNOMODEL="ds3622xsp_$TARGET_REVISION"
+        sha256="53d0a4f1667288b6e890c4fdc48422557ff26ea8a2caede0955c5f45b560cccd"                                                                              
+    elif [ "$1" = "DS1621+" ]; then
+        TARGET_PLATFORM="v1000"                                                                                                                                
+        SYNOMODEL="ds1621p_$TARGET_REVISION"                                                                                                                   
+        sha256="381077302a89398a9fb5ec516217578d6f33b0219fe95135e80fd93cddbf88c4"                                                                              
+    elif [ "$1" = "DS2422+" ] ; then
+        TARGET_PLATFORM="ds2422p"                                                                                                                                
+        SYNOMODEL="ds2422p_$TARGET_REVISION"                                                                                                                   
+        sha256="c38fee0470c592b679ab52a64eac76b2a3912fb2e6aba65a65abb5aa05a98d4c"    
+    elif [ "$1" = "DVA3221" ]; then                                                                                                                      
+        TARGET_PLATFORM="denverton"                                                                                                                            
+        SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
+        sha256="ed3207db40b7bac4d96411378558193b7747ebe88f0fc9c26c59c0b5c688c359"                                                                              
+    elif [ "$1" = "DVA1622" ]; then                                                                                                                      
+        TARGET_PLATFORM="dva1622"                                                                                                                            
+        SYNOMODEL="dva1622_$TARGET_REVISION"                                                                                                                   
+        sha256="f1484cf302627072ca393293cd73e61dc9e09d479ef028b216eae7c12f7b7825"                                                                              
+    elif [ "$1" = "DS920+" ]; then
+        TARGET_PLATFORM="geminilake"                                                                                                                           
+        SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
+        sha256="8076950fdad2ca58ea9b91a12584b9262830fe627794a0c4fc5861f819095261"                                                                              
+    elif [ "$1" = "DS1520+" ]; then
+        echo "Synology model DS1520+ jot mode not supported by m shell"
+        exit 0        
+    elif [ "$1" = "DF2500" ]; then
+        echo "Synology model FS2500 jot mode not supported by m shell"
+        exit 0        
+
+
+    elif [ "$1" = "DS918+J" ]; then                                                                                                                      
+        TARGET_REVISION="42218"                                                                                                                                
+        TARGET_PLATFORM="apollolake"                                                                                                                       
+        SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
+        sha256="a403809ab2cd476c944fdfa18cae2c2833e4af36230fa63f0cdee31a92bebba2"                                                                              
+    elif [ "$1" = "DS3615xsJ" ]; then         
+        TARGET_REVISION="42218"               
+        TARGET_PLATFORM="bromolow"            
+        SYNOMODEL="ds3615xs_$TARGET_REVISION"                                   
+        sha256="dddd26891815ddca02d0d53c1d42e8b39058b398a4cc7b49b80c99f851cf0ef7"                             
+    elif [ "$1" = "DS3617xsJ" ]; then                                           
+        TARGET_REVISION="42218"               
+        TARGET_PLATFORM="broadwell"           
+        SYNOMODEL="ds3617xs_$TARGET_REVISION" 
+        sha256="d65ee4ed5971e38f6cdab00e1548183435b53ba49a5dca7eaed6f56be939dcd2"                             
+    elif [ "$1" = "DS3622xs+J" ]; then        
+        TARGET_REVISION="42218"               
+        TARGET_PLATFORM="broadwellnk"         
+        SYNOMODEL="ds3622xsp_$TARGET_REVISION"
+        sha256="f38329b8cdc5824a8f01fb1e377d3b1b6bd23da365142a01e2158beff5b8a424"                                                                
+    elif [ "$1" = "DS1621+J" ]; then                                             
+        TARGET_REVISION="42218"                                                  
+        TARGET_PLATFORM="v1000"                                                  
+        SYNOMODEL="ds1621p_$TARGET_REVISION"                                     
+        sha256="19f56827ba8bf0397d42cd1d6f83c447f092c2c1bbb70d8a2ad3fbd427e866df"                                                                
+    elif [ "$1" = "DS2422+J" ]; then                                             
+        TARGET_REVISION="42218"                                                  
+        TARGET_PLATFORM="ds2422p"                                                  
+        SYNOMODEL="ds2422p_$TARGET_REVISION"                                     
+        sha256="415c54934d483a2557500bc3a2e74588a0cec1266e1f0d9a82a7d3aace002471"                                                                
+    elif [ "$1" = "DVA3221J" ]; then                                             
+        TARGET_REVISION="42218"                                                  
+        TARGET_PLATFORM="denverton"                                              
+        SYNOMODEL="dva3221_$TARGET_REVISION"                                     
+        sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"  
+    elif [ "$1" = "DVA1622J" ]; then
+        echo "Synology model DVA1622 jun mode not supported by m shell"
+        exit 0        
+    elif [ "$1" = "DS920+J" ]; then                                                                                                                      
+        TARGET_REVISION="42218"
+        TARGET_PLATFORM="geminilake"                                                                                                                       
+        SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
+        sha256="fe2a4648f76adeb65c3230632503ea36bbac64ee88b459eb9bfb5f3b8c8cebb3"
+    elif [ "$1" = "DS1520+J" ]; then
+        TARGET_REVISION="42218"
+        TARGET_PLATFORM="ds1520p"
+        SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
+        sha256="06947c58f25bd591f7fa3c58ad9473777481bdd7a049b42d1cb585ca01b053ee"
+        MSHELL_ONLY_MODEL="Y"
+    elif [ "$1" = "FS2500J" ]; then
+        TARGET_REVISION="42218"
+        TARGET_PLATFORM="fs2500"
+        SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
+        sha256="4d060be8afec548fdb042bc8095524f10ff200033cab74df37ae07f3de5eaa69"
+        MSHELL_ONLY_MODEL="Y"
+    else                                                                                                     
+        echo "Synology model not supported by TCRP."                                                         
+        exit 0                                                                                               
+    fi    
+
+    tem="$1"
+
+    if [ $TARGET_REVISION == "42218" ] ; then
+        MODEL="$(echo $tem | sed 's/J//g')"
+    else
+        MODEL=$tem
+    fi
+
+    cecho y "MODEL is $MODEL"
+
+    #Options map to variable
+    jumkey="N"
+    postupdate="N"
+    noclean="N"
+    noconfig="N"
+    manual="N"
+    poco="N"
+    frmyv="N"
+
+    while [ "$2" != "" ]; do
+    #    echo $2
+
+        case $2 in
+
+        jumkey)
+            jumkey="Y"
+            ;;
+
+        poco)
+            poco="Y"
+            ;;
+
+        postupdate)
+            postupdate="Y"
+            ;;
+
+        noclean)
+            noclean="Y"
+            ;;
+
+        noconfig)
+            noconfig="Y"
+            ;;
+
+        manual)
+            manual="Y"
+            ;;
+        frmyv)
+            frmyv="Y"
+            ;;
+
+        *)
+            echo "Syntax error, not valid arguments or not enough options"
+            exit 0
+            ;;
+
+        esac
+
+        shift 
+    done
+
+    #echo $jumkey
+    #echo $postupdate
+    #echo $noclean
+    #echo $noconfig
+    #echo $manual
+    #echo $frmyv
+
+}
+
 # Function READ_YN, cecho                                                                                        
 # Made by FOXBI                                                                                                               
 # 2022.04.14                                                                                                                  
