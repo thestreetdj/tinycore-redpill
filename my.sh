@@ -94,7 +94,7 @@ if [ $# -lt 1 ]; then
     exit 99
 fi
 
-getvars
+getvars "$@"
 
 if [ $jumkey == "Y" ] ; then 
     cecho p "The jumpkey option is deprecated, shell exit..."          
