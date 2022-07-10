@@ -173,7 +173,7 @@ getvars()
         MODEL=$tem
     fi
 
-    cecho y "MODEL is $MODEL"
+    echo "MODEL is $MODEL"
 
     #Options map to variable
     jumkey="N"
