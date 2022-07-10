@@ -314,8 +314,8 @@ function getlatestmshell() {
 
     curl -s --location "$mshtarfile" --output latest.mshell.gz
 
-    CURRENTSHA="$(sha256sum $mshellgz | awk '{print ${1}}')"
-    REPOSHA="$(sha256sum latest.mshell.gz | awk '{print ${1}}')"
+    CURRENTSHA="$(sha256sum $mshellgz | awk '{print $1}')"
+    REPOSHA="$(sha256sum latest.mshell.gz | awk '{print $1}')"
 
     if [ "${CURRENTSHA}" != "${REPOSHA}" ]; then
         echo -n "There is a newer version of m shell script on the repo should we use that ? [yY/nN]"
