@@ -210,6 +210,10 @@ EOF
 
 }
 
+test_include
+
+exit 0
+
 checkinternet
 getlatestmshell
 
