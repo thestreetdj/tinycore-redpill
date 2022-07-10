@@ -184,7 +184,7 @@ function EXDRIVER_FN() {
                     IEXT=`echo "${IRRAY[$j]}" | sed 's/\\\ln//g' | sed 's/\\\lt//g' | awk '{print $2}'`
 
 		    if [ $TARGET_REVISION == "42218" ] ; then
-		    	if [ $SYNOMODEL == "dva1622_42218" ] || [ $SYNOMODEL == "ds1520p_42218" ] ; then
+		    	if [ $MSHELL_ONLY_MODEL == "Y" ] ; then
 			    ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
 			else
                             ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json    
@@ -208,7 +208,7 @@ function EXDRIVER_FN() {
                 done
 
                 if [ $TARGET_REVISION == "42218" ] ; then                                                                                                                                    
-		    	if [ $SYNOMODEL == "dva1622_42218" ] || [ $SYNOMODEL == "ds1520p_42218" ] ; then
+		    	if [ $MSHELL_ONLY_MODEL == "Y" ] ; then
 			    ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
 			else
                             ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json    
@@ -271,7 +271,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS920+J                                                                                                      
 ./$(basename ${0}) DS1621+J
 ./$(basename ${0}) DS2422+J  
-./$(basename ${0}) DVA1622J
+./$(basename ${0}) DVA1622J (Not Suppoted)
 ./$(basename ${0}) DS1520+J
 
 EOF
@@ -290,6 +290,7 @@ echo
 
 TARGET_REVISION="42661"
 
+MSHELL_ONLY_MODEL="N"
 
     if [ "$1" = "DS918+" ]; then        
         TARGET_PLATFORM="apollolake"                                                                                                                           
@@ -350,9 +351,8 @@ TARGET_REVISION="42661"
         TARGET_PLATFORM="denverton"                                              
         SYNOMODEL="dva3221_$TARGET_REVISION"     
     elif [ "$1" = "DVA1622J" ]; then
-        TARGET_REVISION="42218"                                                                                                
-        TARGET_PLATFORM="dva1622"                                                                                           
-        SYNOMODEL="dva1622_$TARGET_REVISION"  
+        echo "Synology model DVA1622 jun mode not supported by m shell"
+        exit 0      
     elif [ "$1" = "DS920+J" ]; then                                                                                                                      
         TARGET_REVISION="42218"
         TARGET_PLATFORM="geminilake"                                                                                                                       
@@ -360,7 +360,8 @@ TARGET_REVISION="42661"
     elif [ "$1" = "DS1520+J" ]; then
         TARGET_REVISION="42218"
         TARGET_PLATFORM="ds1520p"
-        SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
+        SYNOMODEL="ds1520p_$TARGET_REVISION"         
+	MSHELL_ONLY_MODEL="Y"
     else                                                                                                     
         echo "Synology model not supported by TCRP."                                                         
         exit 0                                                                                               
@@ -373,7 +374,7 @@ if [ $SYNOMODEL == "ds2422p_42661" ] ; then
 elif [ $SYNOMODEL == "dva1622_42661" ] ; then
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config.json" -O
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rpext-index.json" -O
-elif [ $SYNOMODEL == "dva1622_42218" ] || [ $SYNOMODEL == "ds1520p_42218" ] ; then
+elif [ $MSHELL_ONLY_MODEL == "Y" ] ; then
 	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
 	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rpext-index.json" -O
 else
