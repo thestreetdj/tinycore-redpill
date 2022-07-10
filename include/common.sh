@@ -156,3 +156,100 @@ function getlatestmshell() {
 
 }
 
+# Function EXDRIVER_FN
+# Made by FOXBI
+# 2022.04.14
+# ==============================================================================
+# Extension Driver Function
+# ==============================================================================
+function EXDRIVER_FN() {
+
+    # ==============================================================================
+    # Clear extension & install extension driver
+    # ==============================================================================
+    echo
+    cecho c "Delete extension file..."
+    sudo rm -rf ./redpill-load/custom/extensions/*
+    echo
+#    cecho c "Update ext-manager..."
+#    ./redpill-load/ext-manager.sh update
+
+    echo    
+    cecho r "Add to Driver Repository..."
+    echo
+    READ_YN "Do you want Add Driver? Y/N :  "
+    ICHK=$Y_N
+    while [ "$ICHK" == "y" ] || [ "$ICHK" == "Y" ]
+    do
+        ICNT=
+        JCNT=
+        IRRAY=()
+        while read LINE_I;
+        do
+            ICNT=$(($ICNT + 1))
+            JCNT=$(($ICNT%5))
+            if [ "$JCNT" -eq "0" ]
+            then
+                IRRAY+=("$ICNT) $LINE_I\ln");
+            else
+                IRRAY+=("$ICNT) $LINE_I\lt");
+            fi
+        done < <(curl --no-progress-meter https://github.com/pocopico/rp-ext | grep "raw.githubusercontent.com" | awk '{print $2}' | awk -F= '{print $2}' | sed "s/\"//g" | awk -F/ '{print $7}')
+            echo ""
+            echo -e " ${IRRAY[@]}" | sed 's/\\ln/\n/g' | sed 's/\\lt/\t/g'
+            echo ""
+            read -n100 -p " -> Select Number Enter (To select multiple, separate them with , ): " I_O
+            echo ""
+            I_OCHK=`echo $I_O | grep , | wc -l`
+            if [ "$I_OCHK" -gt "0" ]
+            then
+                while read LINE_J;
+                do
+                    j=$((LINE_J - 1))
+                    IEXT=`echo "${IRRAY[$j]}" | sed 's/\\\ln//g' | sed 's/\\\lt//g' | awk '{print $2}'`
+
+		    if [ $TARGET_REVISION == "42218" ] ; then
+		    	if [ $MSHELL_ONLY_MODEL == "Y" ] ; then
+			    ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
+			else
+                            ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json    
+			fi	
+		    else
+			if [ $SYNOMODEL == "ds2422p_42661" ] ; then
+			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
+			else
+			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json			
+			fi
+	    	    fi
+
+                done < <(echo $I_O | tr ',' '\n')
+            else
+                I_O=$(($I_O - 1))
+                for (( i = 0; i < $ICNT; i++)); do
+                    if [ "$I_O" == $i ]
+                    then
+                        export IEXT=`echo "${IRRAY[$i]}" | sed 's/\\\ln//g' | sed 's/\\\lt//g' | awk '{print $2}'`
+                    fi
+                done
+
+                if [ $TARGET_REVISION == "42218" ] ; then                                                                                                                                    
+		    	if [ $MSHELL_ONLY_MODEL == "Y" ] ; then
+			    ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
+			else
+                            ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json    
+			fi	
+                else                                                                                                                                                                         
+			if [ $SYNOMODEL == "ds2422p_42661" ] ; then
+			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
+			else
+			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json			
+			fi
+                fi   
+
+            fi
+        echo
+        READ_YN "Do you want add driver? Y/N :  "
+        ICHK=$Y_N
+    done
+}
+
