@@ -1,15 +1,4 @@
-#!/usr/bin/env bash
-set -u
-
-##### BASIC RUNTIME VALIDATION #########################################################################################
-# shellcheck disable=SC2128
-if [ -z "${BASH_SOURCE}" ] ; then
-    echo "You need to execute this script using bash v4+ without using pipes"
-    exit 1
-fi
-
-cd "${BASH_SOURCE%/*}/" || exit 1
-
+#!/bin/bash
 # my.sh (Batch Shell Script for rploader.sh)                 
 # Made by Peter Suh
 # 2022.04.18                      
@@ -55,7 +44,7 @@ cd "${BASH_SOURCE%/*}/" || exit 1
 # 2022.07.10
 
 ##### INCLUDES #########################################################################################################
-. include/common.sh # my.sh / myv.sh common use 
+source include/common.sh # my.sh / myv.sh common use 
 ########################################################################################################################
 
 mshellgz="my.sh.gz"
