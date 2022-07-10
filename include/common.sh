@@ -255,42 +255,6 @@ READ_YN () { # ${1}:question ${2}:default
     esac                                                                                                                      
 }                                                                                         
 
-# ==============================================================================          
-# Color Function                                                                          
-# ==============================================================================          
-cecho () {                                                                                
-    if [ -n "${3}" ]                                                                                                            
-    then                                                                                  
-        case "${3}" in                                                                                 
-            black  | bk) bgcolor="40";;                                                              
-            red    |  r) bgcolor="41";;                                                              
-            green  |  g) bgcolor="42";;                                                                 
-            yellow |  y) bgcolor="43";;                                             
-            blue   |  b) bgcolor="44";;                                             
-            purple |  p) bgcolor="45";;                                                   
-            cyan   |  c) bgcolor="46";;                                             
-            gray   | gr) bgcolor="47";;                                             
-        esac                                                                        
-    else                                                                            
-        bgcolor="0"                                                                 
-    fi                                                                              
-    code="\033["                                                                    
-    case "${1}" in                                                                    
-        black  | bk) color="${code}${bgcolor};30m";;                                
-        red    |  r) color="${code}${bgcolor};31m";;                                
-        green  |  g) color="${code}${bgcolor};32m";;                                
-        yellow |  y) color="${code}${bgcolor};33m";;                                
-        blue   |  b) color="${code}${bgcolor};34m";;                                
-        purple |  p) color="${code}${bgcolor};35m";;                                
-        cyan   |  c) color="${code}${bgcolor};36m";;                                
-        gray   | gr) color="${code}${bgcolor};37m";;                                
-    esac                                                                            
-                                                                                                                                                                    
-    text="$color${2}${code}0m"                                                                                                                                        
-    echo -e "$text"                                                                                                                                                 
-}   
-
-
 checkinternet() {
 
     echo -n "Checking Internet Access -> "
