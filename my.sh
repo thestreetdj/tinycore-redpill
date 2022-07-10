@@ -42,7 +42,7 @@
 # Update : Add DS1520+ jun mode
 # 2022.07.08
 # Update : Add FS2500 jun mode
-# 2022.07.08
+# 2022.07.10
 
 mshellgz="my.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/my.sh.gz"
