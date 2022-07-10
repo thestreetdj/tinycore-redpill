@@ -41,7 +41,8 @@
 # 2022.07.07
 # Update : Add DS1520+ jun mode
 # 2022.07.08
-
+# Update : Add FS2500 jun mode
+# 2022.07.08
 
 mshellgz="my.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/my.sh.gz"
@@ -185,6 +186,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS2422+
 ./$(basename ${0}) DVA1622
 ./$(basename ${0}) DS1520+ (Not Suppoted)
+./$(basename ${0}) FS2500 (Not Suppoted)
 
 - for jun mode
 
@@ -198,6 +200,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS2422+J  
 ./$(basename ${0}) DVA1622J (Not Suppoted)
 ./$(basename ${0}) DS1520+J
+./$(basename ${0}) FS2500J
 
 EOF
 
@@ -256,6 +259,11 @@ MSHELL_ONLY_MODEL="N"
     elif [ "$1" = "DS1520+" ]; then
         echo "Synology model DS1520+ jot mode not supported by m shell"
         exit 0        
+    elif [ "$1" = "DF2500" ]; then
+        echo "Synology model FS2500 jot mode not supported by m shell"
+        exit 0        
+
+
     elif [ "$1" = "DS918+J" ]; then                                                                                                                      
         TARGET_REVISION="42218"                                                                                                                                
         TARGET_PLATFORM="apollolake"                                                                                                                       
@@ -303,6 +311,12 @@ MSHELL_ONLY_MODEL="N"
         TARGET_REVISION="42218"
         TARGET_PLATFORM="ds1520p"
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
+        sha256="06947c58f25bd591f7fa3c58ad9473777481bdd7a049b42d1cb585ca01b053ee"
+        MSHELL_ONLY_MODEL="Y"
+    elif [ "$1" = "FS2500J" ]; then
+        TARGET_REVISION="42218"
+        TARGET_PLATFORM="fs2500"
+        SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
         sha256="06947c58f25bd591f7fa3c58ad9473777481bdd7a049b42d1cb585ca01b053ee"
         MSHELL_ONLY_MODEL="Y"
     else                                                                                                     
