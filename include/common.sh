@@ -56,7 +56,7 @@ EOF
 
 getvars()
 {
-    cecho y "{1}"
+
     TARGET_REVISION="42661"
 
     MSHELL_ONLY_MODEL="N"
