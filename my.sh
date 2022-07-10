@@ -317,7 +317,7 @@ MSHELL_ONLY_MODEL="N"
         TARGET_REVISION="42218"
         TARGET_PLATFORM="fs2500"
         SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
-        sha256="06947c58f25bd591f7fa3c58ad9473777481bdd7a049b42d1cb585ca01b053ee"
+        sha256="4d060be8afec548fdb042bc8095524f10ff200033cab74df37ae07f3de5eaa69"
         MSHELL_ONLY_MODEL="Y"
     else                                                                                                     
         echo "Synology model not supported by TCRP."                                                         
