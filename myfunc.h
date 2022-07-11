@@ -175,64 +175,6 @@ getvars()
 
     echo "MODEL is $MODEL"
 
-    #Options map to variable
-    jumkey="N"
-    postupdate="N"
-    noclean="N"
-    noconfig="N"
-    manual="N"
-    poco="N"
-    frmyv="N"
-
-    while [ "${2}" != "" ]; do
-    #    echo ${2}
-
-        case ${2} in
-
-        jumkey)
-            jumkey="Y"
-            ;;
-
-        poco)
-            poco="Y"
-            ;;
-
-        postupdate)
-            postupdate="Y"
-            ;;
-
-        noclean)
-            noclean="Y"
-            ;;
-
-        noconfig)
-            noconfig="Y"
-            ;;
-
-        manual)
-            manual="Y"
-            ;;
-        frmyv)
-            frmyv="Y"
-            ;;
-
-        *)
-            echo "Syntax error, not valid arguments or not enough options"
-            exit 0
-            ;;
-
-        esac
-
-        shift 
-    done
-
-    #echo $jumkey
-    #echo $postupdate
-    #echo $noclean
-    #echo $noconfig
-    #echo $manual
-    #echo $frmyv
-
 }
 
 # Function READ_YN, cecho                                                                                        

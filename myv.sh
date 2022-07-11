@@ -5,7 +5,7 @@
 # 2022.04.18                      
 
 ##### INCLUDES #########################################################################################################
-source include/common.sh # my.sh / myv.sh common use 
+source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
                                                                                         
 mshellgz="myv.sh.gz"
@@ -20,7 +20,7 @@ if [ $# -lt 1 ]; then
     exit 99
 fi
 
-getvars
+getvars "$1"
 
 if [ $SYNOMODEL == "ds2422p_42661" ] ; then
 	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O

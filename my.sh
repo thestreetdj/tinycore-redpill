@@ -44,7 +44,7 @@
 # 2022.07.10
 
 ##### INCLUDES #########################################################################################################
-source include/common.sh # my.sh / myv.sh common use 
+source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
 mshellgz="my.sh.gz"
@@ -94,7 +94,65 @@ if [ $# -lt 1 ]; then
     exit 99
 fi
 
-getvars "$@"
+getvars "$1"
+
+jumkey="N"
+postupdate="N"
+noclean="N"
+noconfig="N"
+manual="N"
+poco="N"
+frmyv="N"
+
+while [ "$2" != "" ]; do
+    echo $2
+
+        case $2 in
+
+        jumkey)
+            jumkey="Y"
+            ;;
+
+        poco)
+            poco="Y"
+            ;;
+
+        postupdate)
+            postupdate="Y"
+            ;;
+
+        noclean)
+            noclean="Y"
+            ;;
+
+        noconfig)
+            noconfig="Y"
+            ;;
+
+        manual)
+            manual="Y"
+            ;;
+        frmyv)
+            frmyv="Y"
+            ;;
+
+        *)
+            echo "Syntax error, not valid arguments or not enough options"
+            exit 0
+            ;;
+
+        esac
+
+    shift 
+done
+
+#echo $jumkey
+#echo $postupdate
+#echo $noclean
+#echo $noconfig
+#echo $manual
+#echo $frmyv
+
 
 if [ $jumkey == "Y" ] ; then 
     cecho p "The jumpkey option is deprecated, shell exit..."          
