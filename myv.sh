@@ -8,8 +8,8 @@
 source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
                                                                                         
-mshellgz="myv.sh.gz"
-mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/myv.sh.gz"
+mshellgz="my.sh.gz"
+mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/my.sh.gz"
 
 # ==============================================================================                                        
 # Color Function                                                                                                        
