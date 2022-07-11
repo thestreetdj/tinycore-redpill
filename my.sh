@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 # my.sh (Batch Shell Script for rploader.sh)                 
 # Made by Peter Suh
 # 2022.04.18                      
@@ -42,6 +43,8 @@
 # 2022.07.08
 # Update : Add FS2500 jun mode
 # 2022.07.10
+# Update : function headers for my.sh and myv.shUse common function headers for my.sh and myv.sh
+# 2022.07.11
 
 ##### INCLUDES #########################################################################################################
 source myfunc.h # my.sh / myv.sh common use 
@@ -54,21 +57,21 @@ mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/
 # Color Function                                                                          
 # ==============================================================================          
 cecho () {                                                                                
-    if [ -n "$3" ]                                                                                                            
-    then                                                                                  
-        case "$3" in                                                                                 
-            black  | bk) bgcolor="40";;                                                              
-            red    |  r) bgcolor="41";;                                                              
-            green  |  g) bgcolor="42";;                                                                 
-            yellow |  y) bgcolor="43";;                                             
-            blue   |  b) bgcolor="44";;                                             
-            purple |  p) bgcolor="45";;                                                   
-            cyan   |  c) bgcolor="46";;                                             
-            gray   | gr) bgcolor="47";;                                             
-        esac                                                                        
-    else                                                                            
+#    if [ -n "$3" ]                                                                                                            
+#    then                                                                                  
+#        case "$3" in                                                                                 
+#            black  | bk) bgcolor="40";;                                                              
+#            red    |  r) bgcolor="41";;                                                              
+#            green  |  g) bgcolor="42";;                                                                 
+#            yellow |  y) bgcolor="43";;                                             
+#            blue   |  b) bgcolor="44";;                                             
+#            purple |  p) bgcolor="45";;                                                   
+#            cyan   |  c) bgcolor="46";;                                             
+#            gray   | gr) bgcolor="47";;                                             
+#        esac                                                                        
+#    else                                                                            
         bgcolor="0"                                                                 
-    fi                                                                              
+#    fi                                                                              
     code="\033["                                                                    
     case "$1" in                                                                    
         black  | bk) color="${code}${bgcolor};30m";;                                
@@ -85,7 +88,6 @@ cecho () {
     echo -e "$text"                                                                                                                                                 
 }   
 
-
 checkinternet
 getlatestmshell
 
@@ -96,6 +98,13 @@ fi
 
 getvars "$1"
 
+#echo "$TARGET_REVISION"                                                      
+#echo "$MSHELL_ONLY_MODEL"                                                        
+#echo "$TARGET_PLATFORM"                                            
+#echo "$SYNOMODEL"                                      
+#echo "$sha256"
+
+echo "Multi-argument input variable assignment mapping"
 jumkey="N"
 postupdate="N"
 noclean="N"
@@ -104,11 +113,9 @@ manual="N"
 poco="N"
 frmyv="N"
 
-while [ "$2" != "" ]; do
-    echo $2
+    while [[ "$#" > 0 ]] ; do
 
-        case $2 in
-
+        case $1 in
         jumkey)
             jumkey="Y"
             ;;
@@ -137,14 +144,15 @@ while [ "$2" != "" ]; do
             ;;
 
         *)
-            echo "Syntax error, not valid arguments or not enough options"
-            exit 0
+            if [ "$(echo $1 | sed 's/J//g')" != "$MODEL" ] ; then
+                echo "Syntax error, not valid arguments or not enough options"
+                exit 0
+            fi
             ;;
 
         esac
-
-    shift 
-done
+        shift
+    done
 
 #echo $jumkey
 #echo $postupdate
@@ -152,7 +160,6 @@ done
 #echo $noconfig
 #echo $manual
 #echo $frmyv
-
 
 if [ $jumkey == "Y" ] ; then 
     cecho p "The jumpkey option is deprecated, shell exit..."          
