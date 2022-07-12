@@ -94,8 +94,7 @@
       },
       "add_extensions": [
         {
-        "jumkey.qjs.000": "https://github.com/jumkey/redpill-load/raw/develop/redpill-runtime-qjs/rpext-index.json",
-        "jumkey.qjs.dtb": "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-qjs-dtb/rpext-index.json",
+        "dtbpatch": "https://raw.githubusercontent.com/pocopico/rp-ext/master/dtbpatch/rpext-index.json",
         "redpill-misc": "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
         }
       ]
@@ -193,7 +192,7 @@
       },
       "add_extensions": [
         {
-  	  "redpill-dtb-static" : "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill-dtb-static/rpext-index.json",
+  	  "dtbpatch": "https://raw.githubusercontent.com/pocopico/rp-ext/master/dtbpatch/rpext-index.json",
           "redpill-misc": "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
         }
       ]
@@ -225,7 +224,7 @@
       },
       "add_extensions": [
         {
-  	  "redpill-dtb-static" : "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill-dtb-static/rpext-index.json",
+  	  "dtbpatch": "https://raw.githubusercontent.com/pocopico/rp-ext/master/dtbpatch/rpext-index.json",
           "jumkey.misc": "https://github.com/jumkey/redpill-load/raw/develop/redpill-misc/rpext-index.json"
         }
       ]
