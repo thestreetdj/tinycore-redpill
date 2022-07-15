@@ -260,7 +260,12 @@ echo
 
     macaddress2=$(echo $mac2 | sed -s 's/://g')
 
-    sed -i "/\"extra_cmdline\": {/c\  \"extra_cmdline\": {\"mac2\": \"$macaddress2\",\"netif_num\": \"2\", "  user_config.json
+    if [ $(cat user_config.json | grep "mac2" | wc -l) -gt 0 ]; then
+        cecho y "The Mac2 address already exists. Change an existing value."
+
+    else
+        sed -i "/\"extra_cmdline\": {/c\  \"extra_cmdline\": {\"mac2\": \"$macaddress2\",\"netif_num\": \"2\", "  user_config.json
+    fi
 
     echo "After changing user_config.json"      
     cat user_config.json
