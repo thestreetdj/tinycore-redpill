@@ -335,9 +335,9 @@ else
     cat user_config.json
 
     if [ $realmac == "Y" ] ; then 
-        echo "y"|./rploader.sh serialgen $MODEL REALMAC
+        echo "y"|./rploader.sh serialgen $MODEL realmac
     else
-        echo "y"|./rploader.sh serialgen $MODEL    
+        echo "y"|./rploader.sh serialgen $MODEL
     fi
 
     #check nic count
