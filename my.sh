@@ -341,24 +341,24 @@ else
     fi
 
     #check nic count
-#    let nicport=0                                                                                                                                                 
-#    lspci -n | while read line; do                                                                                                                  
-#        class="$(echo $line | cut -c 9-12)"                                                                                                          
+    let nicport=0                                                                                                                                                 
+    lspci -n | while read line; do                                                                                                                  
+        class="$(echo $line | cut -c 9-12)"                                                                                                          
                                                                                                                                                      
         #echo "Class : $class"                                                                             
-#        case $class in                                                                                                                               
-#        0200)   
-#            let nicport=$nicport+1                                                                                                                                     
-#            #echo "Found Ethernet Interface port count: $nicport "       
-#            if [ $nicport -eq 2 ]; then
-#               cecho g "Two or more Ethernet Interface was detected!! $nicport "
-#               cecho g "Add mac2 automatically."
-#               macgen $MODEL
-#            fi                                                     
-#      
-#            ;;                                                                                                                                       
-#        esac                                                                                                                                         
-#    done 
+        case $class in                                                                                                                               
+        0200)   
+            let nicport=$nicport+1                                                                                                                                     
+            #echo "Found Ethernet Interface port count: $nicport "       
+            if [ $nicport -eq 2 ]; then
+               cecho g "Two or more Ethernet Interface was detected!! $nicport "
+               cecho g "Add mac2 automatically."
+               macgen $MODEL
+            fi                                                     
+      
+            ;;                                                                                                                                       
+        esac                                                                                                                                         
+    done 
 
     echo "y"|./rploader.sh identifyusb
 
