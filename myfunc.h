@@ -263,7 +263,7 @@ echo
     if [ $(cat user_config.json | grep "mac2" | wc -l) -gt 0 ]; then
         bf_mac2="$(cat user_config.json | grep "mac2" | cut -d ':' -f 2 | cut -d '"' -f 2)"
         cecho y "The Mac2 address : $bf_mac2 already exists. Change an existing value."
-        json="$(jq --arg var "$macaddress2" '.extra_cmdline.mac1 = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+        json="$(jq --arg var "$macaddress2" '.extra_cmdline.mac2 = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
 #        sed -i "/mac2/s/'$bf_mac2'/'$macaddress2'/g" user_config.json
     else
         sed -i "/\"extra_cmdline\": {/c\  \"extra_cmdline\": {\"mac2\": \"$macaddress2\",\"netif_num\": \"2\", "  user_config.json
