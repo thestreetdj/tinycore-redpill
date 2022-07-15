@@ -261,7 +261,7 @@ echo
     macaddress2=$(echo $mac2 | sed -s 's/://g')
 
     if [ $(cat user_config.json | grep "mac2" | wc -l) -gt 0 ]; then
-        bf_mac2= $(cat user_config.json | grep "mac2" | cut -d ':' -f 2 | cut -d '"' -f 2)
+        bf_mac2= "$(cat user_config.json | grep "mac2" | cut -d ':' -f 2 | cut -d '"' -f 2)"
         cecho y "The Mac2 address : $bf_mac2 already exists. Change an existing value."
         sed -i "/mac2/s/'$bf_mac2'/'$macaddress2'/g" user_config.json
     else
