@@ -45,6 +45,9 @@
 # 2022.07.10
 # Update : function headers for my.sh and myv.shUse common function headers for my.sh and myv.sh
 # 2022.07.11
+# Update : Add REALMAC Option
+# 2022.07.15
+
 
 ##### INCLUDES #########################################################################################################
 source myfunc.h # my.sh / myv.sh common use 
