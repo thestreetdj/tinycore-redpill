@@ -114,6 +114,7 @@ noclean="N"
 noconfig="N"
 manual="N"
 poco="N"
+realmac="N"
 frmyv="N"
 
     while [[ "$#" > 0 ]] ; do
@@ -142,6 +143,9 @@ frmyv="N"
         manual)
             manual="Y"
             ;;
+        realmac)
+            realmac="Y"
+            ;;
         frmyv)
             frmyv="Y"
             ;;
@@ -162,6 +166,7 @@ frmyv="N"
 #echo $noclean
 #echo $noconfig
 #echo $manual
+#echo $realmac
 #echo $frmyv
 
 if [ $jumkey == "Y" ] ; then 
@@ -169,6 +174,11 @@ if [ $jumkey == "Y" ] ; then
     exit 0
 elif [ $poco == "Y" ] ; then 
     cecho p "The poco option is deprecated, shell exit..."
+    exit 0
+fi
+
+if [ $noconfig == "Y" ] && [ $realmac == "Y" ] ; then 
+    cecho p "The noconfig option and the realmac option cannot be used together, shell exit..."
     exit 0
 fi
 
@@ -324,7 +334,11 @@ else
     cecho c "Before changing user_config.json" 
     cat user_config.json
 
-    echo "y"|./rploader.sh serialgen $MODEL
+    if [ $realmac == "Y" ] ; then 
+        echo "y"|./rploader.sh serialgen $MODEL REALMAC
+    else
+        echo "y"|./rploader.sh serialgen $MODEL    
+    fi
 
     #check nic count
     let nicport=0                                                                                                                                                 
