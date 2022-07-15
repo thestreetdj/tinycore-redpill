@@ -248,10 +248,10 @@ getlatestmshell() {
 macgen() {
 echo
 
-    if [ realmac == 'Y' ] ; then
+    if [ "$realmac" == 'Y' ] ; then
         mac2=$(ifconfig eth1 | head -1 | awk '{print $NF}')
-        echo "Real Mac Address : $mac2"
-        echo "Notice : realmac option is requested, real mac will be used"
+        echo "Real Mac2 Address : $mac2"
+        echo "Notice : realmac option is requested, real mac2 will be used"
     else
         mac2="$(generateMacAddress ${1})"
     fi
