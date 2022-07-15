@@ -366,8 +366,8 @@ else
         cecho p "Device Tree usage model does not need SataPortMap setting...." 
     else
         cecho p "Sataportmap,DiskIdxMap to blanc for dtc"
-        "$(jq --arg var "$sataportmap" '.extra_cmdline.SataPortMap = ""' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-        "$(jq --arg var "$diskidxmap" '.extra_cmdline.DiskIdxMap = ""' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+        json="$(jq --arg var "" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+        json="$(jq --arg var "" '.extra_cmdline.DiskIdxMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json        
         cat user_config.json
 #       ./rploader.sh satamap
     fi
