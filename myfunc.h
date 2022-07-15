@@ -8,7 +8,7 @@ $(basename ${0})
 ----------------------------------------------------------------------------------------
 Usage: ${0} <Synology Model Name> <Options>
 
-Options: postupdate, noconfig, noclean, manual
+Options: postupdate, noconfig, noclean, manual, realmac
 
 - postupdate : Option to patch the restore loop after applying DSM 7.1.0-42661 Update 2, no additional build required.
 
@@ -17,7 +17,9 @@ Options: postupdate, noconfig, noclean, manual
 - noclean: SKIP the 💊   RedPill LKM/LOAD directory without clearing it with the Clean command. 
            However, delete the Cache directory and loader.img.
 
-- manual: Options for manual extension processing and manual dtc processing in build action (skipping extension auto detection)
+- manual: Options for manual extension processing and manual dtc processing in build action (skipping extension auto detection).
+
+- realmac : Option to use the NIC's real address instead of creating a virtual one.
 
 Please type Synology Model Name after ./$(basename ${0})
 
