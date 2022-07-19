@@ -92,7 +92,7 @@ function syntaxcheck() {
 
         serialgen)
             echo "Syntax error, You have to specify one of the existing models"
-            echo "DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS2422+ DS1520+ FS2500"
+            echo "DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ DS2422+ DS1520+ FS2500"
             ;;
 
         patchdtc)
@@ -276,6 +276,8 @@ function processpat() {
         SYNOMODEL="ds3617xs_$TARGET_REVISION" && MODEL="DS3617xs"
     elif [ "${TARGET_PLATFORM}" = "broadwellnk" ]; then
         SYNOMODEL="ds3622xsp_$TARGET_REVISION" && MODEL="DS3622xs+"
+    elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
+        SYNOMODEL="ds1621xsp_$TARGET_REVISION" && MODEL="DS1621xs+"
     elif [ "${TARGET_PLATFORM}" = "v1000" ]; then
         SYNOMODEL="ds1621p_$TARGET_REVISION" && MODEL="DS1621+"
     elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
@@ -1436,7 +1438,7 @@ function serialgen() {
 
     [ "$2" == "realmac" ] && let keepmac=1 || let keepmac=0
 
-    if [ "$1" = "DS3615xs" ] || [ "$1" = "DS3617xs" ] || [ "$1" = "DS916+" ] || [ "$1" = "DS918+" ] || [ "$1" = "DS920+" ] || [ "$1" = "DS3622xs+" ] || [ "$1" = "FS6400" ] || [ "$1" = "DVA3219" ] || [ "$1" = "DVA3221" ] || [ "$1" = "DS1621+" ] || [ "$1" = "DS2422+" ] || [ "$1" = "DS1520+" ] || [ "$1" = "FS2500" ]; then
+    if [ "$1" = "DS3615xs" ] || [ "$1" = "DS3617xs" ] || [ "$1" = "DS916+" ] || [ "$1" = "DS918+" ] || [ "$1" = "DS920+" ] || [ "$1" = "DS3622xs+" ] || [ "$1" = "FS6400" ] || [ "$1" = "DVA3219" ] || [ "$1" = "DVA3221" ] || [ "$1" = "DS1621+" ] || [ "$1" = "DS1621xs+" ]  || [ "$1" = "DS2422+" ] || [ "$1" = "DS1520+" ] || [ "$1" = "FS2500" ]; then
         serial="$(generateSerial $1)"
         mac="$(generateMacAddress $1)"
         realmac=$(ifconfig eth0 | head -1 | awk '{print $NF}')
@@ -1464,7 +1466,7 @@ function serialgen() {
         fi
     else
         echo "Error : $1 is not an available model for serial number generation. "
-        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS2422+ DS1520+ FS2500"
+        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ DS2422+ DS1520+ FS2500"
     fi
 
 }
@@ -1499,6 +1501,10 @@ function beginArray() {
     DS3622xs+)
         permanent="SQR"
         serialstart="2030 2040 20C0 2150"
+        ;;
+    DS1621xs+)
+        permanent="S7R"
+        serialstart="2080"
         ;;
     DS1621+)
         permanent="S7R"
@@ -1591,6 +1597,9 @@ function generateSerial() {
         serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
         ;;
     DS3622xs+)
+        serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
+        ;;
+    DS1621xs+)
         serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
         ;;
     DS1621+)
@@ -1971,6 +1980,8 @@ function getstaticmodule() {
         SYNOMODEL="ds3617xs_$TARGET_REVISION"
     elif [ "${TARGET_PLATFORM}" = "broadwellnk" ]; then
         SYNOMODEL="ds3622xsp_$TARGET_REVISION"
+    elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
+        SYNOMODEL="ds1621xsp_$TARGET_REVISION"
     elif [ "${TARGET_PLATFORM}" = "v1000" ]; then
         SYNOMODEL="ds1621p_$TARGET_REVISION"
     elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
@@ -2316,7 +2327,7 @@ function getvars() {
         KERNEL_MAJOR="3"
         MODULE_ALIAS_FILE="modules.alias.3.json"
         ;;
-    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds2422p | ds1520p | fs2500)        
+    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds2422p | ds1520p | fs2500 | ds1621xsp)
         KERNEL_MAJOR="4"
         MODULE_ALIAS_FILE="modules.alias.4.json"
         ;;
@@ -2330,6 +2341,8 @@ function getvars() {
         SYNOMODEL="ds3617xs_$TARGET_REVISION" && MODEL="DS3617xs"
     elif [ "${TARGET_PLATFORM}" = "broadwellnk" ]; then
         SYNOMODEL="ds3622xsp_$TARGET_REVISION" && MODEL="DS3622xs+"
+    elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
+        SYNOMODEL="ds1621xsp_$TARGET_REVISION" && MODEL="DS1621xs+"
     elif [ "${TARGET_PLATFORM}" = "v1000" ]; then
         SYNOMODEL="ds1621p_$TARGET_REVISION" && MODEL="DS1621+"
     elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
