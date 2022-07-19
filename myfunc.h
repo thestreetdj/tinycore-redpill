@@ -36,6 +36,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA1622
 ./$(basename ${0}) DS1520+ (Not Suppoted)
 ./$(basename ${0}) FS2500 (Not Suppoted)
+./$(basename ${0}) DS1621xs+ (Not Suppoted)
 
 - for jun mode
 
@@ -50,6 +51,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA1622J (Not Suppoted)
 ./$(basename ${0}) DS1520+J
 ./$(basename ${0}) FS2500J
+./$(basename ${0}) DS1621xs+J
 
 EOF
 
@@ -78,7 +80,10 @@ getvars()
         TARGET_PLATFORM="broadwellnk"
         SYNOMODEL="ds3622xsp_$TARGET_REVISION"
         sha256="53d0a4f1667288b6e890c4fdc48422557ff26ea8a2caede0955c5f45b560cccd"                                                                              
-    elif [ "${1}" = "DS1621+" ]; then
+    elif [ "${1}" = "DS1621xs+" ]; then
+        echo "Synology model DS1621xs+ jot mode not supported by m shell"
+        exit 0
+   elif [ "${1}" = "DS1621+" ]; then
         TARGET_PLATFORM="v1000"                                                                                                                                
         SYNOMODEL="ds1621p_$TARGET_REVISION"                                                                                                                   
         sha256="381077302a89398a9fb5ec516217578d6f33b0219fe95135e80fd93cddbf88c4"                                                                              
@@ -120,27 +125,32 @@ getvars()
         TARGET_REVISION="42218"               
         TARGET_PLATFORM="broadwell"           
         SYNOMODEL="ds3617xs_$TARGET_REVISION" 
-        sha256="d65ee4ed5971e38f6cdab00e1548183435b53ba49a5dca7eaed6f56be939dcd2"                             
+        sha256="d65ee4ed5971e38f6cdab00e1548183435b53ba49a5dca7eaed6f56be939dcd2"
     elif [ "${1}" = "DS3622xs+J" ]; then        
         TARGET_REVISION="42218"               
         TARGET_PLATFORM="broadwellnk"         
         SYNOMODEL="ds3622xsp_$TARGET_REVISION"
-        sha256="f38329b8cdc5824a8f01fb1e377d3b1b6bd23da365142a01e2158beff5b8a424"                                                                
+        sha256="f38329b8cdc5824a8f01fb1e377d3b1b6bd23da365142a01e2158beff5b8a424"
+    elif [ "${1}" = "DS1621xs+J" ]; then        
+        TARGET_REVISION="42218"               
+        TARGET_PLATFORM="ds1621xsp"         
+        SYNOMODEL="ds1621xsp_$TARGET_REVISION"
+        sha256="f38329b8cdc5824a8f01fb1e377d3b1b6bd23da365142a01e2158beff5b8a424"
     elif [ "${1}" = "DS1621+J" ]; then                                             
         TARGET_REVISION="42218"                                                  
         TARGET_PLATFORM="v1000"                                                  
         SYNOMODEL="ds1621p_$TARGET_REVISION"                                     
-        sha256="19f56827ba8bf0397d42cd1d6f83c447f092c2c1bbb70d8a2ad3fbd427e866df"                                                                
+        sha256="19f56827ba8bf0397d42cd1d6f83c447f092c2c1bbb70d8a2ad3fbd427e866df"
     elif [ "${1}" = "DS2422+J" ]; then                                             
         TARGET_REVISION="42218"                                                  
         TARGET_PLATFORM="ds2422p"                                                  
         SYNOMODEL="ds2422p_$TARGET_REVISION"                                     
-        sha256="415c54934d483a2557500bc3a2e74588a0cec1266e1f0d9a82a7d3aace002471"                                                                
+        sha256="415c54934d483a2557500bc3a2e74588a0cec1266e1f0d9a82a7d3aace002471"
     elif [ "${1}" = "DVA3221J" ]; then                                             
         TARGET_REVISION="42218"                                                  
         TARGET_PLATFORM="denverton"                                              
         SYNOMODEL="dva3221_$TARGET_REVISION"                                     
-        sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"  
+        sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"
     elif [ "${1}" = "DVA1622J" ]; then
         echo "Synology model DVA1622 jun mode not supported by m shell"
         exit 0        
