@@ -2,57 +2,6 @@
 
 # my.sh (Batch Shell Script for rploader.sh)                 
 # Made by Peter Suh
-# 2022.04.18                      
-# Update add 42661 U1 NanoPacked 
-# 2022.04.28
-# Update : add noconfig, noclean, manual options
-# 2022.04.30
-# Update : add noconfig, noclean, manual combinatione options
-# 2022.05.06   
-# Update : add pat file sha256 check                         
-# 2022.05.07      
-# Update : Added dtc compilation function for user custom.dts file
-# 2022.05.15
-# Update : add jumkey's jun mode
-# 2022.05.24
-# Update : apply jumkey's dyn dtc upx
-# 2022.05.25
-# Update : apply jumkey's dyn dtc upx for option
-# 2022.06.01
-# Update : add rd.gz patch for 42661 U2
-# 2022.06.03
-# Update : Fixed Jun mode build option incorrectly applied
-# 2022.06.06
-# Update : Add jumkey's Jun mode (use jumkey repo)
-# 2022.06.11
-# Update : Adjunst Option Operation
-# 2022.06.13
-# Update : Add manual option for jun mode
-# 2022.06.16
-# Update : Add dtc mode for known as non-dtc model
-# 2022.06.25
-# Update : Add dtc model DS2422+ (v1000) support
-# 2022.06.27
-# Update : remove jumkey, poco oprtions
-# 2022.06.30
-# Update : Add DS2422+ jot mode
-# 2022.07.02
-# Update : Add DVA1622 jun mode (Testing)
-# 2022.07.07
-# Update : Add DS1520+ jun mode
-# 2022.07.08
-# Update : Add FS2500 jun mode
-# 2022.07.10
-# Update : function headers for my.sh and myv.shUse common function headers for my.sh and myv.sh
-# 2022.07.11
-# Update : Add REALMAC Option
-# 2022.07.15
-# Update : Add DS1621xs+ jun mode
-# 2022.07.19
-# Update : Add DS1621xs+ jot mode
-# 2022.07.20
-
-
 
 ##### INCLUDES #########################################################################################################
 source myfunc.h # my.sh / myv.sh common use 
