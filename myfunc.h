@@ -50,7 +50,7 @@ set -u
 # 2022.07.15
 # Update : Add DS1621xs+ jun mode
 # 2022.07.19
-# Update : Add DS1621xs+ jot mode
+# Update : Add DS1621xs+ jot mode, Add RS4021xs+
 # 2022.07.20
 
 showhelp() {
@@ -88,7 +88,8 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA1622
 ./$(basename ${0}) DS1520+ (Not Suppoted)
 ./$(basename ${0}) FS2500 (Not Suppoted)
-./$(basename ${0}) DS1621xs+ 
+./$(basename ${0}) DS1621xs+
+./$(basename ${0}) RS4021xs+
 
 - for jun mode
 
@@ -104,6 +105,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS1520+J
 ./$(basename ${0}) FS2500J
 ./$(basename ${0}) DS1621xs+J
+./$(basename ${0}) RS4021xs+J
 
 EOF
 
@@ -135,6 +137,11 @@ getvars()
     elif [ "${1}" = "DS1621xs+" ]; then
         TARGET_PLATFORM="ds1621xsp"
         SYNOMODEL="ds1621xsp_$TARGET_REVISION"
+        sha256="9dba7c728dbeb69f881a515b841ec82b091fda6741fdbf225d94f1af5bb2a2d6"
+        MSHELL_ONLY_MODEL="Y"
+    elif [ "${1}" = "RS4021xs+" ]; then
+        TARGET_PLATFORM="rs4021xsp"
+        SYNOMODEL="rs4021xsp_$TARGET_REVISION"
         sha256="9dba7c728dbeb69f881a515b841ec82b091fda6741fdbf225d94f1af5bb2a2d6"
         MSHELL_ONLY_MODEL="Y"
     elif [ "${1}" = "DS1621+" ]; then
@@ -192,6 +199,12 @@ getvars()
         TARGET_REVISION="42218"               
         TARGET_PLATFORM="ds1621xsp"         
         SYNOMODEL="ds1621xsp_$TARGET_REVISION"
+        sha256="5db4e5943d246b1a2414942ae19267adc94d2a6ab167ba3e2fc10b42aefded23"
+        MSHELL_ONLY_MODEL="Y"
+    elif [ "${1}" = "RS4021xs+J" ]; then        
+        TARGET_REVISION="42218"               
+        TARGET_PLATFORM="rs4021xsp"         
+        SYNOMODEL="rs4021xsp_$TARGET_REVISION"
         sha256="5db4e5943d246b1a2414942ae19267adc94d2a6ab167ba3e2fc10b42aefded23"
         MSHELL_ONLY_MODEL="Y"        
     elif [ "${1}" = "DS1621+J" ]; then                                             
