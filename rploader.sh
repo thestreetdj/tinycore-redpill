@@ -2420,7 +2420,7 @@ function listpci() {
         vendor="$(echo $line | cut -c 15-18)"
         device="$(echo $line | cut -c 20-23)"
 
-        #echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
+        echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
         case $class in
         0100)
             echo "Found SCSI Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
