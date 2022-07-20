@@ -189,6 +189,11 @@ fi
 
 echo
 
+if  [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y"  ] ; then
+    cecho y "Downloading recompiled redpill.ko ..."
+    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+fi
+
 if [ $TARGET_REVISION == "42218" ] ; then  
    if [ $postupdate == "Y" ] ; then                                                                                                                
                                                                                                                                                     
@@ -292,11 +297,6 @@ else
     curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" -O
 
 fi    
-
-if  [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y"  ] ; then
-    cecho y "Downloading recompiled redpill.ko ..."
-    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
-fi
 
 if [ -d "/home/tc/redpill-load" ] && [ $frmyv == "N" ] ; then
     cecho y "Cleaning lkm and load directory ..." 
