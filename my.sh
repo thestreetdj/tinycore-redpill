@@ -47,6 +47,11 @@
 # 2022.07.11
 # Update : Add REALMAC Option
 # 2022.07.15
+# Update : Add DS1621xs+ jun mode
+# 2022.07.19
+# Update : Add DS1621xs+ jot mode
+# 2022.07.20
+
 
 
 ##### INCLUDES #########################################################################################################
@@ -257,14 +262,8 @@ if [ $TARGET_REVISION == "42218" ] ; then
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json
     fi
     
-    if [ $MSHELL_ONLY_MODEL == "Y" ] ; then
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rpext-index.json" -O    
-    else
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rpext-index.json" -O        
-    fi
     curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" -O
     curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
-
 
 else
     echo
@@ -274,17 +273,14 @@ else
         fullupgrade="N"
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config.json" -O
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rploader.sh" -O
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rpext-index.json" -O
-    elif  [ "$MODEL" == "DS2422+" ] ; then
+    elif  [ $MSHELL_ONLY_MODEL == "Y" ] ; then
         fullupgrade="N"    
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rpext-index.json" -O
     else
         fullupgrade="Y"
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" -O
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" -O
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rpext-index.json" -O        
     fi
     curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" -O
 
