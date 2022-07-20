@@ -135,7 +135,7 @@ getvars()
     elif [ "${1}" = "DS1621xs+" ]; then
         TARGET_PLATFORM="ds1621xsp"
         SYNOMODEL="ds1621xsp_$TARGET_REVISION"
-        sha256="5db4e5943d246b1a2414942ae19267adc94d2a6ab167ba3e2fc10b42aefded23"
+        sha256="9dba7c728dbeb69f881a515b841ec82b091fda6741fdbf225d94f1af5bb2a2d6"
         MSHELL_ONLY_MODEL="Y"
     elif [ "${1}" = "DS1621+" ]; then
         TARGET_PLATFORM="v1000"                                                                                                                                
