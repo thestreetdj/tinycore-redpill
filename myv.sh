@@ -105,7 +105,7 @@ function EXDRIVER_FN() {
                             ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json    
 			fi	
 		    else
-			if [ $SYNOMODEL == "ds2422p_42661" ] ; then
+			if [ $MSHELL_ONLY_MODEL == "Y" ] ; then
 			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
 			else
 			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json			
@@ -129,7 +129,7 @@ function EXDRIVER_FN() {
                             ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-42218-JUN add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json    
 			fi	
                 else                                                                                                                                                                         
-			if [ $SYNOMODEL == "ds2422p_42661" ] ; then
+			if [ $MSHELL_ONLY_MODEL == "Y" ] ; then
 			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
 			else
 			    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/pocopico/rp-ext/master/$IEXT/rpext-index.json			
@@ -155,15 +155,13 @@ fi
 
 getvars "$1"
 
-if [ $SYNOMODEL == "ds2422p_42661" ] ; then
+if [ $MSHELL_ONLY_MODEL == "Y" ] ; then
 	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
+	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O	
 	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rpext-index.json" -O
 elif [ $SYNOMODEL == "dva1622_42661" ] ; then
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config.json" -O
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rpext-index.json" -O
-elif [ $MSHELL_ONLY_MODEL == "Y" ] ; then
-	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
-	curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rpext-index.json" -O
 else
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" -O
         curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rpext-index.json" -O  
