@@ -88,7 +88,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA1622
 ./$(basename ${0}) DS1520+ (Not Suppoted)
 ./$(basename ${0}) FS2500 (Not Suppoted)
-./$(basename ${0}) DS1621xs+ (Not Suppoted)
+./$(basename ${0}) DS1621xs+ 
 
 - for jun mode
 
