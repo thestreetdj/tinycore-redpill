@@ -1,12 +1,11 @@
 #!/bin/bash
 #
-# Author :
+# Author : pocopico
 # Date : 220607
 # Version : 0.8.0.3
 #
-#
-# User Variables :
 
+# User Variables :
 rploaderver="0.8.0.3"
 build="main"
 rploaderfile="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/rploader.sh"
