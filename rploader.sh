@@ -2418,6 +2418,8 @@ function matchpciidmodule() {
 
     pciid="${vendor}d0000${device}"
 
+    echo "$pciid"
+
     #jq -e -r ".modules[] | select(.alias | test(\"(?i)${1}\")?) |   .name " modules.alias.json
     # Correction to work with tinycore jq
     matchedmodule=$(jq -e -r ".modules[] | select(.alias | contains(\"${pciid}\")?) | .name " $MODULE_ALIAS_FILE)
@@ -2439,7 +2441,7 @@ function listpci() {
         vendor="$(echo $line | cut -c 15-18)"
         device="$(echo $line | cut -c 20-23)"
 
-        #echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
+        echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
         case $class in
         0100)
             echo "Found SCSI Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
@@ -2537,7 +2539,7 @@ function listmodules() {
 }
 
 function listextension() {
-
+echo "listextension $modextention"
     if [ ! -f rpext-index.json ]; then
         curl --progress-bar --location "${modextention}" --output rpext-index.json
     fi
