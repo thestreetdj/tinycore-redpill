@@ -239,7 +239,7 @@ getvars()
         TARGET_REVISION="42218"                                                  
         TARGET_PLATFORM="dva3219"                                              
         SYNOMODEL="dva3219_$TARGET_REVISION"                                     
-        sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"
+        sha256="3557df23ff6af9bbb0cf46872ba2fc09c344eb303a38e8283dbc9a46e5eae979"
         MSHELL_ONLY_MODEL="Y"        
     elif [ "${1}" = "DVA1622J" ]; then
         echo "Synology model DVA1622 jun mode not supported by m shell"
