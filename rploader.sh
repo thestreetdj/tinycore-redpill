@@ -12,8 +12,8 @@ build="main"
 rploaderfile="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/rploader.sh"
 rploaderrepo="https://github.com/pocopico/tinycore-redpill/raw/$build/"
 
-redpillextension="https://github.com/pocopico/rp-ext/raw/$build/redpill/rpext-index.json"
-modextention="https://github.com/pocopico/rp-ext/raw/$build/rpext-index.json"
+redpillextension="https://github.com/PeterSuh-Q3/rp-ext/raw/$build/redpill/rpext-index.json"
+modextention="https://github.com/PeterSuh-Q3/rp-ext/raw/$build/rpext-index.json"
 modalias4="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/modules.alias.4.json.gz"
 modalias3="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/modules.alias.3.json.gz"
 dtcbin="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/dtc"
@@ -2418,8 +2418,6 @@ function matchpciidmodule() {
 
     pciid="${vendor}d0000${device}"
 
-    echo "$pciid"
-
     #jq -e -r ".modules[] | select(.alias | test(\"(?i)${1}\")?) |   .name " modules.alias.json
     # Correction to work with tinycore jq
     matchedmodule=$(jq -e -r ".modules[] | select(.alias | contains(\"${pciid}\")?) | .name " $MODULE_ALIAS_FILE)
@@ -2441,7 +2439,7 @@ function listpci() {
         vendor="$(echo $line | cut -c 15-18)"
         device="$(echo $line | cut -c 20-23)"
 
-        echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
+        #echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
         case $class in
         0100)
             echo "Found SCSI Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
@@ -2539,7 +2537,7 @@ function listmodules() {
 }
 
 function listextension() {
-echo "listextension $modextention"
+
     if [ ! -f rpext-index.json ]; then
         curl --progress-bar --location "${modextention}" --output rpext-index.json
     fi
@@ -2549,7 +2547,10 @@ echo "listextension $modextention"
 
     if [ ! -z $1 ]; then
         echo "Searching for matching extension for $1"
-        matchingextension=($(jq ". | select(.id | contains(\"${1}\")) .url  " rpext-index.json))
+        #matchingextension=($(jq ". | select(.id | contains(\"${1}\")) .url  " rpext-index.json))
+        matchingextension='"https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/${1}/rpext-index.json"'
+
+echo "matchingextension = $matchingextension"
 
         if [ ! -z $matchingextension ]; then
             echo "Found matching extension : "
