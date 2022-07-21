@@ -165,7 +165,7 @@ getvars()
     elif [ "${1}" = "DVA3219" ]; then                                                                                                                      
         TARGET_PLATFORM="dva3219"                                                                                                                            
         SYNOMODEL="dva3219_$TARGET_REVISION"                                                                                                                   
-        sha256="ed3207db40b7bac4d96411378558193b7747ebe88f0fc9c26c59c0b5c688c359"                                                                              
+        sha256="01596eaf7310a56b504fde5743262f721dd0be2836e53d2d74386e14f509bec4"                                                                              
         MSHELL_ONLY_MODEL="Y"        
     elif [ "${1}" = "DVA1622" ]; then                                                                                                                      
         TARGET_PLATFORM="dva1622"                                                                                                                            
