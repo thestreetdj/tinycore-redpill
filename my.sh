@@ -196,13 +196,13 @@ cecho y "TARGET_PLATFORM is $TARGET_PLATFORM"
 cecho p "TARGET_REVISION is $TARGET_REVISION"
 cecho g "SYNOMODEL is $SYNOMODEL"  
 
-fullupgrade="Y"
+#fullupgrade="Y"
+
+cecho y "If fullupgrade is required, please handle it separately."
 
 if [ $TARGET_REVISION == "42218" ] ; then
     echo
-    cecho y "This is the jumkey's jun mode of TCRP. jun mode skips fullupgrade. If fullupgrade is required, please handle it separately."
-    
-    fullupgrade="N"     
+    #fullupgrade="N"     
 
     if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y" ] ; then
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
@@ -221,23 +221,18 @@ else
     echo
     cecho y "This is TCRP original jot mode"
 
-    if  [ "$MODEL" == "DVA1622" ] ; then  
-        fullupgrade="N"
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config.json" -O
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rploader.sh" -O
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rpext-index.json" -O        
-    elif  [ $MSHELL_ONLY_MODEL == "Y" ] ; then
-        fullupgrade="N"    
+    if  [ $MSHELL_ONLY_MODEL == "Y" ] ; then
+        #fullupgrade="N"    
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
         curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O        
     else
-        fullupgrade="Y"
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" -O
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" -O
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rpext-index.json" -O        
+        #fullupgrade="Y"
+        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config.json" -O
+        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rploader.sh" -O
+        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rpext-index.json" -O        
     fi
-    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config_jun.json" -O
+    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config_jun.json" -O
 
 fi    
 
@@ -252,25 +247,23 @@ fi
 
 echo
     
-if [ $fullupgrade == "Y" ] ; then  
-    echo "n"|./rploader.sh fullupgrade                                                                                            
-    
-    if [ $noconfig == "Y" ] ; then
-        cecho y "Automatically restore your own user_config.json by noconfig option..."   
-        cp -f /home/tc/old/user_config.json.* ./user_config.json 
-    else
-        cecho y "Do you want to restore your own user_config.json from old directory ?  [Yy/Nn]"                                                            
-    read answer                                                                                                                                         
-        if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
-            cp -f /home/tc/old/user_config.json.* ./user_config.json                                                                                        
-        else                                                                                                                                                
-            echo "OK Remember that the new user_config.json file is used and your own user_config.json is deleted. "                                        
-        fi
-    fi       
-    
-else
-    cecho y "this model skip fullupgrade for custom adjustment" 
-fi    
+#if [ $fullupgrade == "Y" ] ; then  
+#    echo "n"|./rploader.sh fullupgrade                                                                                            
+#    if [ $noconfig == "Y" ] ; then
+#        cecho y "Automatically restore your own user_config.json by noconfig option..."   
+#        cp -f /home/tc/old/user_config.json.* ./user_config.json 
+#    else
+#        cecho y "Do you want to restore your own user_config.json from old directory ?  [Yy/Nn]"                                                            
+#    read answer                                                                                                                                         
+#        if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
+#            cp -f /home/tc/old/user_config.json.* ./user_config.json                                                                                        
+#        else                                                                                                                                                
+#            echo "OK Remember that the new user_config.json file is used and your own user_config.json is deleted. "                                        
+#        fi
+#    fi       
+#else
+#    cecho y "this model skip fullupgrade for custom adjustment" 
+#fi    
 
 echo
 
