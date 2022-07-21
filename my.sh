@@ -136,37 +136,14 @@ if [ $noconfig == "Y" ] && [ $realmac == "Y" ] ; then
     exit 0
 fi
 
+if [ $TARGET_REVISION == "42218" ] ; then
+    if [ $postupdate == "Y" ] ; then  
+        cecho g "postupdate is not allowed on jun mode."                                                                                              
+        exit 0                                                                                                                                       
+    fi    
+fi                                                                                                                                               
+
 echo
-
-if  [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y"  ] ; then
-    cecho y "Downloading recompiled redpill.ko ..."
-    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
-fi
-
-if [ $TARGET_REVISION == "42218" ] ; then  
-   if [ $postupdate == "Y" ] ; then                                                                                                                
-                                                                                                                                                    
-      cecho g "postupdate is not allowed on jun mode."                                                                                              
-      exit 99                                                                                                                                       
-                                                                                                                                                    
-   fi                                                                                                                                               
-else
-   if [ $postupdate == "Y" ] ; then
-      if [ $# -gt 2 ]; then
-          cecho g "Additional options are not allowed on postupdate."
-          exit 99                                                                                                                                 
-      fi       
-      cecho y "Postupdate for 42661 update 2 in progress..."  
-
-      ./rploader.sh postupdate ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION}
-      echo                                                                                                                                        
-      cecho y "Backup in progress..."                                                                                                             
-      echo                                                                                                                                        
-      echo "y"|./rploader.sh backup    
-      exit 0
-
-   fi
-fi
 
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
 echo
@@ -179,6 +156,22 @@ fi
 if [ ! -h /home/tc/custom-module ]; then
     cecho y "making link /home/tc/custom-module"  
     sudo ln -s /mnt/${tcrppart}/auxfiles /home/tc/custom-module 
+fi
+
+if  [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y"  ] ; then
+    cecho y "Downloading recompiled redpill.ko ..."
+    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+fi
+
+if [ $postupdate == "Y" ] ; then
+    cecho y "Postupdate in progress..."  
+    ./rploader.sh postupdate ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION}
+
+    echo                                                                                                                                        
+    cecho y "Backup in progress..."                                                                                                             
+    echo                                                                                                                                        
+    echo "y"|./rploader.sh backup    
+    exit 0
 fi
 
 #dtc
@@ -200,6 +193,7 @@ fi
 
 echo
 cecho y "TARGET_PLATFORM is $TARGET_PLATFORM"
+cecho p "TARGET_REVISION is $TARGET_REVISION"
 cecho g "SYNOMODEL is $SYNOMODEL"  
 
 fullupgrade="Y"
