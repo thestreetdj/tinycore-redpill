@@ -284,6 +284,8 @@ function processpat() {
         SYNOMODEL="ds1621p_$TARGET_REVISION" && MODEL="DS1621+"
     elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
         SYNOMODEL="dva3221_$TARGET_REVISION" && MODEL="DVA3221"
+    elif [ "${TARGET_PLATFORM}" = "dva3219" ]; then
+        SYNOMODEL="dva3219_$TARGET_REVISION" && MODEL="DVA3219"
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
         SYNOMODEL="ds920p_$TARGET_REVISION" && MODEL="DS920+"
     elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
@@ -1997,6 +1999,8 @@ function getstaticmodule() {
         SYNOMODEL="ds1621p_$TARGET_REVISION"
     elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
         SYNOMODEL="dva3221_$TARGET_REVISION"
+    elif [ "${TARGET_PLATFORM}" = "dva3219" ]; then
+        SYNOMODEL="dva3219_$TARGET_REVISION"
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
         SYNOMODEL="ds920p_$TARGET_REVISION"
     elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
@@ -2338,7 +2342,7 @@ function getvars() {
         KERNEL_MAJOR="3"
         MODULE_ALIAS_FILE="modules.alias.3.json"
         ;;
-    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds2422p | ds1520p | fs2500 | ds1621xsp| rs4021xsp)
+    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds2422p | ds1520p | fs2500 | ds1621xsp| rs4021xsp| dva3219)
         KERNEL_MAJOR="4"
         MODULE_ALIAS_FILE="modules.alias.4.json"
         ;;
@@ -2360,6 +2364,8 @@ function getvars() {
         SYNOMODEL="ds1621p_$TARGET_REVISION" && MODEL="DS1621+"
     elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
         SYNOMODEL="dva3221_$TARGET_REVISION" && MODEL="DVA3221"
+    elif [ "${TARGET_PLATFORM}" = "dva3219" ]; then
+        SYNOMODEL="dva3219_$TARGET_REVISION" && MODEL="DVA3219"
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
         SYNOMODEL="ds920p_$TARGET_REVISION" && MODEL="DS920+"
     elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
@@ -2433,7 +2439,7 @@ function listpci() {
         vendor="$(echo $line | cut -c 15-18)"
         device="$(echo $line | cut -c 20-23)"
 
-        echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
+        #echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
         case $class in
         0100)
             echo "Found SCSI Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
