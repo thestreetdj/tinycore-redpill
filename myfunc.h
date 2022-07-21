@@ -205,7 +205,7 @@ getvars()
         TARGET_REVISION="42218"               
         TARGET_PLATFORM="rs4021xsp"         
         SYNOMODEL="rs4021xsp_$TARGET_REVISION"
-        sha256="5db4e5943d246b1a2414942ae19267adc94d2a6ab167ba3e2fc10b42aefded23"
+        sha256="7afca3970ac7324d7431c1484d4249939bedd4c18ac34187f894c43119edf3a1"
         MSHELL_ONLY_MODEL="Y"        
     elif [ "${1}" = "DS1621+J" ]; then                                             
         TARGET_REVISION="42218"                                                  
