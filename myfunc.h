@@ -52,6 +52,9 @@ set -u
 # 2022.07.19
 # Update : Add DS1621xs+ jot mode, Add RS4021xs+
 # 2022.07.20
+# Update : Add DVA3219
+# 2022.07.21
+
 
 showhelp() {
     cat <<EOF
@@ -87,9 +90,10 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS2422+
 ./$(basename ${0}) DVA1622
 ./$(basename ${0}) DS1520+ (Not Suppoted)
-./$(basename ${0}) FS2500 (Not Suppoted)
+./$(basename ${0}) FS2500  (Not Suppoted, Has DTC issue)
 ./$(basename ${0}) DS1621xs+
 ./$(basename ${0}) RS4021xs+
+./$(basename ${0}) DVA3219
 
 - for jun mode
 
@@ -103,9 +107,10 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS2422+J  
 ./$(basename ${0}) DVA1622J (Not Suppoted)
 ./$(basename ${0}) DS1520+J
-./$(basename ${0}) FS2500J
+./$(basename ${0}) FS2500J  (Not Suppoted, Has DTC issue)
 ./$(basename ${0}) DS1621xs+J
-./$(basename ${0}) RS4021xs+J
+./$(basename ${0}) RS4021xs+J (Not Suppoted, Has some bugs)
+./$(basename ${0}) DVA3219J
 
 EOF
 
@@ -157,6 +162,11 @@ getvars()
         TARGET_PLATFORM="denverton"                                                                                                                            
         SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
         sha256="ed3207db40b7bac4d96411378558193b7747ebe88f0fc9c26c59c0b5c688c359"                                                                              
+    elif [ "${1}" = "DVA3219" ]; then                                                                                                                      
+        TARGET_PLATFORM="dva3219"                                                                                                                            
+        SYNOMODEL="dva3219_$TARGET_REVISION"                                                                                                                   
+        sha256="ed3207db40b7bac4d96411378558193b7747ebe88f0fc9c26c59c0b5c688c359"                                                                              
+        MSHELL_ONLY_MODEL="Y"        
     elif [ "${1}" = "DVA1622" ]; then                                                                                                                      
         TARGET_PLATFORM="dva1622"                                                                                                                            
         SYNOMODEL="dva1622_$TARGET_REVISION"                                                                                                                   
@@ -170,7 +180,7 @@ getvars()
         MSHELL_ONLY_MODEL="Y"            
         exit 0        
     elif [ "${1}" = "DF2500" ]; then
-        echo "Synology model FS2500 jot mode not supported by m shell"
+        echo "Synology model FS2500 jot mode not supported by m shell, Because It has DTC mapping issue"
         MSHELL_ONLY_MODEL="Y"    
         exit 0        
 
@@ -202,6 +212,9 @@ getvars()
         sha256="5db4e5943d246b1a2414942ae19267adc94d2a6ab167ba3e2fc10b42aefded23"
         MSHELL_ONLY_MODEL="Y"
     elif [ "${1}" = "RS4021xs+J" ]; then        
+        echo "Synology model RS4021xs+ jun mode not supported by m shell, Because It has some bugs"
+        exit 0        
+    
         TARGET_REVISION="42218"               
         TARGET_PLATFORM="rs4021xsp"         
         SYNOMODEL="rs4021xsp_$TARGET_REVISION"
@@ -222,6 +235,12 @@ getvars()
         TARGET_PLATFORM="denverton"                                              
         SYNOMODEL="dva3221_$TARGET_REVISION"                                     
         sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"
+    elif [ "${1}" = "DVA3219J" ]; then
+        TARGET_REVISION="42218"                                                  
+        TARGET_PLATFORM="dva3219"                                              
+        SYNOMODEL="dva3219_$TARGET_REVISION"                                     
+        sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"
+        MSHELL_ONLY_MODEL="Y"        
     elif [ "${1}" = "DVA1622J" ]; then
         echo "Synology model DVA1622 jun mode not supported by m shell"
         exit 0        
@@ -237,6 +256,9 @@ getvars()
         sha256="06947c58f25bd591f7fa3c58ad9473777481bdd7a049b42d1cb585ca01b053ee"
         MSHELL_ONLY_MODEL="Y"
     elif [ "${1}" = "FS2500J" ]; then
+        echo "Synology model FS2500 jun mode not supported by m shell, Because It has DTC mapping issue"
+        exit 0        
+    
         TARGET_REVISION="42218"
         TARGET_PLATFORM="fs2500"
         SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
