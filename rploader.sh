@@ -2546,8 +2546,8 @@ function listextension() {
 
     if [ ! -z $1 ]; then
         echo "Searching for matching extension for $1"
-        #matchingextension=($(jq ". | select(.id | contains(\"${1}\")) .url  " rpext-index.json))
-        matchingextension='"https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$1/rpext-index.json"'
+        matchingextension=($(jq ". | select(.id | contains(\"${1}\")) .url  " rpext-index.json))
+        #matchingextension='"https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$1/rpext-index.json"'
 
 echo "matchingextension = $matchingextension"
 
