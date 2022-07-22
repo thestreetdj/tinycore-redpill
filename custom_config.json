@@ -352,10 +352,10 @@
                 "source_url": "https://github.com/pocopico/redpill-lkm.git",
                 "branch": "master"
             },
-	      "redpill_load": {
-		"source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-		"branch": "master"
-	      },
+              "redpill_load": {
+                "source_url": "https://github.com/pocopico/redpill-load.git",
+                "branch": "develop"
+               },		
 	      "add_extensions": [{
 		      "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/dtbpatch/rpext-index.json",
 		      "redpill-misc": "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json"     
