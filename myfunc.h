@@ -178,7 +178,7 @@ getvars()
     elif [ "${1}" = "DS1520+" ]; then
         TARGET_PLATFORM="ds1520p"
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
-        sha256="06947c58f25bd591f7fa3c58ad9473777481bdd7a049b42d1cb585ca01b053ee"
+        sha256="3a8499c5f72d7241b81781ec741d4019eaa506e6e7a4fd17ce54fb149f6ffae6"
         MSHELL_ONLY_MODEL="Y"
     elif [ "${1}" = "DF2500" ]; then
         echo "Synology model FS2500 jot mode not supported by m shell, Because It has DTC mapping issue"
