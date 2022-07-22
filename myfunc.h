@@ -89,7 +89,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS1621+
 ./$(basename ${0}) DS2422+
 ./$(basename ${0}) DVA1622
-./$(basename ${0}) DS1520+ (Not Suppoted)
+./$(basename ${0}) DS1520+ 
 ./$(basename ${0}) FS2500  (Not Suppoted, Has DTC issue)
 ./$(basename ${0}) DS1621xs+
 ./$(basename ${0}) RS4021xs+
@@ -176,9 +176,10 @@ getvars()
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
         sha256="8076950fdad2ca58ea9b91a12584b9262830fe627794a0c4fc5861f819095261"                                                                              
     elif [ "${1}" = "DS1520+" ]; then
-        echo "Synology model DS1520+ jot mode not supported by m shell"
-        MSHELL_ONLY_MODEL="Y"            
-        exit 0        
+        TARGET_PLATFORM="ds1520p"
+        SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
+        sha256="06947c58f25bd591f7fa3c58ad9473777481bdd7a049b42d1cb585ca01b053ee"
+        MSHELL_ONLY_MODEL="Y"
     elif [ "${1}" = "DF2500" ]; then
         echo "Synology model FS2500 jot mode not supported by m shell, Because It has DTC mapping issue"
         MSHELL_ONLY_MODEL="Y"    
