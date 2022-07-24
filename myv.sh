@@ -86,7 +86,7 @@ function EXDRIVER_FN() {
             fi
         done < <(curl --no-progress-meter https://github.com/PeterSuh-Q3/rp-ext | grep "raw.githubusercontent.com" | awk '{print $2}' | awk -F= '{print $2}' | sed "s/\"//g" | awk -F/ '{print $7}')
             echo ""
-            echo -e " ${IRRAY[@]}" | sed 's/\\ln/\n/g' | sed 's/\\lt/\t/g'
+            echo -e " ${IRRAY[@]}" | sed 's/\\ln/\n/g' | sed 's/\\lt/\t\t/g'
             echo ""
             read -n100 -p " -> Select Number Enter (To select multiple, separate them with , ): " I_O
             echo ""
