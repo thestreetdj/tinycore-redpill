@@ -52,7 +52,7 @@ set -u
 # 2022.07.19
 # Update : Add DS1621xs+ jot mode, Add RS4021xs+
 # 2022.07.20
-# Update : Add DVA3219
+# Update : Add DVA3219 jot mode (Release 22.07.25)
 # 2022.07.21
 
 
@@ -93,7 +93,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) FS2500  (Not Suppoted, Testing..., Has DTC issue)
 ./$(basename ${0}) DS1621xs+
 ./$(basename ${0}) RS4021xs+
-./$(basename ${0}) DVA3219 (Not Suppoted, Testing...)
+./$(basename ${0}) DVA3219 
 
 - for jun mode
 
@@ -173,6 +173,11 @@ getvars()
         TARGET_PLATFORM="rs4021xsp"
         SYNOMODEL="rs4021xsp_$TARGET_REVISION"
         sha256="496b64e431dafa34cdebb92da8ac736bf1610fe157f03df7e6d11152d60991f5"
+    elif [ "${1}" = "DVA3219" ]; then
+        MSHELL_ONLY_MODEL="Y"    
+        TARGET_PLATFORM="dva3219"                                                                                                                            
+        SYNOMODEL="dva3219_$TARGET_REVISION"                                                                                                                   
+        sha256="01596eaf7310a56b504fde5743262f721dd0be2836e53d2d74386e14f509bec4"                                                                              
 
 # JOT MODE NEW MODEL TESTTING
     elif [ "${1}" = "DS1520+" ]; then
@@ -183,13 +188,6 @@ getvars()
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
         sha256="3a8499c5f72d7241b81781ec741d4019eaa506e6e7a4fd17ce54fb149f6ffae6"
         MSHELL_ONLY_MODEL="Y"
-    elif [ "${1}" = "DVA3219" ]; then
-        MSHELL_ONLY_MODEL="Y"    
-        echo "Synology model ${1} jot mode not supported by m shell, Testing..."
-        exit 0    
-        TARGET_PLATFORM="dva3219"                                                                                                                            
-        SYNOMODEL="dva3219_$TARGET_REVISION"                                                                                                                   
-        sha256="01596eaf7310a56b504fde5743262f721dd0be2836e53d2d74386e14f509bec4"                                                                              
     elif [ "${1}" = "DF2500" ]; then
         MSHELL_ONLY_MODEL="Y"    
         echo "Synology model ${1} jot mode not supported by m shell, Because It has DTC mapping issue"
