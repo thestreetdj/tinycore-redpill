@@ -301,15 +301,22 @@ else
 
     echo "y"|./rploader.sh identifyusb
 
-    if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y"  ] ; then
-        cecho p "Device Tree usage model does not need SataPortMap setting...." 
+    if  [ $DTC_BASE_MODEL == "Y" ] ; then
+        cecho p "Device Tree based model does not need SataPortMap setting...."     
     else
-        cecho p "Sataportmap,DiskIdxMap to blanc for dtc"
-        json="$(jq --arg var "" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-        json="$(jq --arg var "" '.extra_cmdline.DiskIdxMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json        
-        cat user_config.json
-#       ./rploader.sh satamap
+        ./rploader.sh satamap    
+        cat user_config.json        
     fi
+
+#    if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y"  ] ; then
+#        cecho p "Device Tree based model does not need SataPortMap setting...."     
+#    else
+#        cecho p "Sataportmap,DiskIdxMap to blanc for dtc"
+#        json="$(jq --arg var "" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+#        json="$(jq --arg var "" '.extra_cmdline.DiskIdxMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json        
+#        cat user_config.json
+#    fi
+
 fi
 
 echo
