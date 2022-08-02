@@ -56,6 +56,9 @@ set -u
 # 2022.07.21
 # Update : Active rploader.sh satamap for non dtc model
 # 2022.07.27
+# Update : Release DS1520+ jot mode
+# 2022.08.03
+
 
 showhelp() {
     cat <<EOF
@@ -90,7 +93,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS1621+
 ./$(basename ${0}) DS2422+
 ./$(basename ${0}) DVA1622
-./$(basename ${0}) DS1520+ (Not Suppoted, Testing...)
+./$(basename ${0}) DS1520+ 
 ./$(basename ${0}) FS2500  (Not Suppoted, Testing..., Has DTC issue)
 ./$(basename ${0}) DS1621xs+
 ./$(basename ${0}) RS4021xs+
@@ -191,17 +194,14 @@ getvars()
         TARGET_PLATFORM="dva3219"                                                                                                                            
         SYNOMODEL="dva3219_$TARGET_REVISION"                                                                                                                   
         sha256="01596eaf7310a56b504fde5743262f721dd0be2836e53d2d74386e14f509bec4"                                                                              
-
-# JOT MODE NEW MODEL TESTTING
     elif [ "${1}" = "DS1520+" ]; then
         DTC_BASE_MODEL="Y"    
         MSHELL_ONLY_MODEL="Y"    
-        echo "Synology model ${1} jot mode not supported by m shell, Testing..."
-        exit 0
         TARGET_PLATFORM="ds1520p"
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
         sha256="3a8499c5f72d7241b81781ec741d4019eaa506e6e7a4fd17ce54fb149f6ffae6"
-        MSHELL_ONLY_MODEL="Y"
+
+# JOT MODE NEW MODEL TESTTING        
     elif [ "${1}" = "DF2500" ]; then
         DTC_BASE_MODEL="Y"    
         MSHELL_ONLY_MODEL="Y"    
