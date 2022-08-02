@@ -128,80 +128,6 @@ function EXDRIVER_FN() {
 }
 
 
-# Function EXTALL_FN
-# Made by PeterSuh-Q3
-# 2022.08.01
-# ==============================================================================
-# Extension Driver Function for all
-# ==============================================================================
-function EXTALL_FN() {
-
-    # ==============================================================================
-    # Clear extension & install extension driver
-    # ==============================================================================
-    echo
-    cecho c "Delete extension file..."
-    sudo rm -rf ./redpill-load/custom/extensions/*
-    echo
-#    cecho c "Update ext-manager..."
-#    ./redpill-load/ext-manager.sh update
-
-    echo    
-    cecho r "Add to Driver Repository..."
-    echo
-
-    ICHK="Y"
-    while [ "$ICHK" == "y" ] || [ "$ICHK" == "Y" ]
-    do
-        ICNT=
-        JCNT=
-        IRRAY=()
-        while read LINE_I;
-        do
-            ICNT=$(($ICNT + 1))
-            JCNT=$(($ICNT%5))
-            if [ "$JCNT" -eq "0" ]
-            then
-                IRRAY+=("$ICNT) $LINE_I\ln");
-            else
-                IRRAY+=("$ICNT) $LINE_I\lt");
-            fi
-        done < <(curl --no-progress-meter https://github.com/PeterSuh-Q3/rp-ext | grep "raw.githubusercontent.com" | awk '{print $2}' | awk -F= '{print $2}' | sed "s/\"//g" | awk -F/ '{print $7}')
-	
-        echo ""
-        echo -e " ${IRRAY[@]}" | sed 's/\\ln/\n/g' | sed 's/\\lt/\t\t/g'
-        echo ""
-	    
-#                while read LINE_J;
-#                do
-#                    j=$((LINE_J - 1))
-#                    IEXT=`echo "${IRRAY[$j]}" | sed 's/\\\ln//g' | sed 's/\\\lt//g' | awk '{print $2}'`
-#		    if [ $TARGET_REVISION == "42218" ] ; then
-#                        ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json    
-#		    else
-#	    		./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
-#	    	    fi
-#                done < <(echo $I_O | tr ',' '\n')
-
-#        I_O=$(($I_O - 1))
-#        for (( i = 0; i < $ICNT; i++)); do
-#            if [ "$I_O" == $i ]
-#            then
-#                export IEXT=`echo "${IRRAY[$i]}" | sed 's/\\\ln//g' | sed 's/\\\lt//g' | awk '{print $2}'`
-#            fi
-#        done
-	
-#        if [ $TARGET_REVISION == "42218" ] ; then
-#	    ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json    
-#    	else
-#	    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
-#	fi
-
-        echo
-
-        ICHK="N"
-    done
-}
 
 checkinternet
 getlatestmshell
@@ -225,8 +151,7 @@ fi
 
 cecho y "Adding Ext in progress..."                                                                                                                                     
                                                                                                                                                                         
-#EXDRIVER_FN
-EXTALL_FN
+EXDRIVER_FN
 
 if [ ! -f my.sh ]; then
     echo "my.sh file not found, trying to download"
