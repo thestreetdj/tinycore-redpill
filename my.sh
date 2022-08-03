@@ -158,10 +158,12 @@ if [ ! -h /home/tc/custom-module ]; then
     sudo ln -s /mnt/${tcrppart}/auxfiles /home/tc/custom-module 
 fi
 
-if  [ $MSHELL_ONLY_MODEL == "Y"  ] ; then
-    cecho y "Downloading recompiled redpill.ko ..."
-    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
-fi
+echo
+cecho y "Downloading fabio's redpill.ko ..."
+sudo curl --location --progress-bar "https://github.com/fbelavenuto/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
+gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
+sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko /home/tc/custom-module/redpill.ko
+#    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 
 if [ $postupdate == "Y" ] ; then
     cecho y "Postupdate in progress..."  
