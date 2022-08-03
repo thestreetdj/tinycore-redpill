@@ -58,6 +58,8 @@ set -u
 # 2022.07.27
 # Update : Add Re-Install DSM menuentry
 # 2022.08.03
+# Update : Apply fabio's redpill.ko
+# 2022.08.04
 
 
 showhelp() {
