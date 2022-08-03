@@ -56,7 +56,7 @@ set -u
 # 2022.07.21
 # Update : Active rploader.sh satamap for non dtc model
 # 2022.07.27
-# Update : Release DS1520+ jot mode
+# Update : Add Re-Install DSM menuentry
 # 2022.08.03
 
 
