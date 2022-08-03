@@ -454,11 +454,12 @@ function addrequiredexts() {
         cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
     done
 
-    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] || [ ${TARGET_PLATFORM} = "dva1622" ] || [ ${TARGET_PLATFORM} = "ds2422p" ] || [ ${TARGET_PLATFORM} = "ds1520p" ] ; then
-        echo "For jumkey's dynamic dtc patch skip patchdtc function"
-    else
-        patchdtc
-    fi
+# Use dtbpatch ext now
+#    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] || [ ${TARGET_PLATFORM} = "dva1622" ] || [ ${TARGET_PLATFORM} = "ds2422p" ] || [ ${TARGET_PLATFORM} = "ds1520p" ] ; then
+#        echo "For jumkey's dynamic dtc patch skip patchdtc function"
+#    else
+#        patchdtc
+#    fi
 
 }
 
