@@ -158,7 +158,7 @@ if [ ! -h /home/tc/custom-module ]; then
     sudo ln -s /mnt/${tcrppart}/auxfiles /home/tc/custom-module 
 fi
 
-if  [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y"  ] ; then
+if  [ $MSHELL_ONLY_MODEL == "Y"  ] ; then
     cecho y "Downloading recompiled redpill.ko ..."
     sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 fi
