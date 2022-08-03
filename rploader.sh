@@ -125,6 +125,16 @@ function version() {
 
 }
 
+function checkmachine() {
+
+    if grep -q ^flags.*\ hypervisor\  /proc/cpuinfo; then
+        MACHINE="VIRTUAL"
+        HYPERVISOR=$(dmesg | grep -i "Hypervisor detected" | awk '{print $5}')
+        echo "Machine is $MACHINE Hypervisor=$HYPERVISOR"
+    fi
+
+}
+
 function savesession() {
 
     lastsessiondir="/mnt/${tcrppart}/lastsession"
@@ -1170,16 +1180,6 @@ function mountshare() {
         echo "No user/password given, mount without. Press enter"
         sudo mount.cifs "//$server$share" "$mountpoint"
     fi
-}
-
-function checkmachine() {
-
-    if grep -q ^flags.*\ hypervisor\  /proc/cpuinfo; then
-        MACHINE="VIRTUAL"
-        HYPERVISOR=$(dmesg | grep -i "Hypervisor detected" | awk '{print $5}')
-        echo "Machine is $MACHINE Hypervisor=$HYPERVISOR"
-    fi
-
 }
 
 function backup() {
