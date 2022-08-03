@@ -526,6 +526,16 @@ function postupdate() {
 
         fi
 
+        checkmachine
+
+        if [ "$MACHINE" = "VIRTUAL" ]; then
+            echo "Setting default boot entry to SATA"
+            sudo sed -i "/set default=/cset default=\"1\"" /mnt/localdisk1/boot/grub/grub.cfg
+        else
+            echo "Setting default boot entry to USB"
+            sudo sed -i "/set default=/cset default=\"0\"" /mnt/localdisk1/boot/grub/grub.cfg
+        fi
+
     fi
 
 }
