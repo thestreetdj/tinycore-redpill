@@ -200,39 +200,44 @@ cecho g "SYNOMODEL is $SYNOMODEL"
 
 cecho y "If fullupgrade is required, please handle it separately."
 
+cecho g "Downloading Peter Suh's custom configuration files.................."
+
+curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
+curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
+curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
+curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O  
+
 if [ $TARGET_REVISION == "42218" ] ; then
     echo
-    #fullupgrade="N"     
+    cecho y "This is TCRP jumkey's jun mode"
 
-    if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y" ] ; then
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
-    else
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json
-    fi
-    if [ $MSHELL_ONLY_MODEL == "Y" ] ; then
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O    
-    else
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rpext-index.json" -O        
-    fi    
-    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" -O
-    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
+#    if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y" ] ; then
+#        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
+#    else
+#        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json
+#    fi
+#    if [ $MSHELL_ONLY_MODEL == "Y" ] ; then
+#        curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O    
+#    else
+#        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rpext-index.json" -O        
+#    fi    
+#    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" -O
+#    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
 
 else
     echo
     cecho y "This is TCRP original jot mode"
 
-    if  [ $MSHELL_ONLY_MODEL == "Y" ] ; then
-        #fullupgrade="N"    
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
-        curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O        
-    else
-        #fullupgrade="Y"
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config.json" -O
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rploader.sh" -O
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rpext-index.json" -O        
-    fi
-    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config_jun.json" -O
+#    if  [ $MSHELL_ONLY_MODEL == "Y" ] ; then
+#        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
+#        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
+#        curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O        
+#    else
+#        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config.json" -O
+#        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rploader.sh" -O
+#        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/rpext-index.json" -O        
+#    fi
+#    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/develop/custom_config_jun.json" -O
 
 fi    
 
@@ -241,7 +246,7 @@ if [ -d "/home/tc/redpill-load" ] && [ $frmyv == "N" ] ; then
 #    cecho y "Do you want to clean redpill-load / lkm directory ? ( !!! Causion !!!, if you added ext from myv.sh, answer n )  [Yy/Nn]"
 #    read answer                                                                                                                                         
 #    if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
-       ./rploader.sh clean  
+       ./rploader.sh clean
 #    fi
 fi
 
