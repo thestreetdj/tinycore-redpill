@@ -177,7 +177,7 @@ fi
 
 if [ $postupdate == "Y" ] ; then
     cecho y "Postupdate in progress..."  
-    ./rploader.sh postupdate ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION}
+    sudo ./rploader.sh postupdate ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION}
 
     echo                                                                                                                                        
     cecho y "Backup in progress..."                                                                                                             
