@@ -50,8 +50,14 @@ echo
         echo "Setting default boot entry to SATA"
         sudo sed -i "/set default=/cset default=\"1\"" /mnt/localdiskp1/boot/grub/grub.cfg
     elif [ "$1" = "3" ]; then
-        echo "Setting default boot entry to Tiny Core Image Build"                                                                                                                             
+        echo "Setting default boot entry to USB Re-Install DSM / Tiny Core Image Build"                                                                                                                             
         sudo sed -i "/set default=/cset default=\"2\"" /mnt/localdiskp1/boot/grub/grub.cfg
+    elif [ "$1" = "4" ]; then
+        echo "Setting default boot entry to SATA Re-Install DSM"
+        sudo sed -i "/set default=/cset default=\"3\"" /mnt/localdiskp1/boot/grub/grub.cfg
+    elif [ "$1" = "5" ]; then
+        echo "Setting default boot entry to Tiny Core Image Build"                                                                                                                             
+        sudo sed -i "/set default=/cset default=\"4\"" /mnt/localdiskp1/boot/grub/grub.cfg
     fi
 
 echo
