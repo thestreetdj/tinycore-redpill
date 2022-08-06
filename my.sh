@@ -243,7 +243,7 @@ if [ $userdts == "Y" ] ; then
         return
     fi
 
-    ./rploader.sh add $SYNOMODEL "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/redpill-dtb-static/rpext-index.json"
+    ./rploader.sh ext $SYNOMODEL add "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/redpill-dtb-static/rpext-index.json"
     
     cecho y "user-define dts file copy in progress..."  
     echo
