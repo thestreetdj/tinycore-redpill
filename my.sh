@@ -245,13 +245,13 @@ if [ $userdts == "Y" ] ; then
     
     cecho y "user-define dts file copy in progress..."  
     echo
-    cecho g "copy and paste user dts contents here..."      
     
+    cecho g "copy and paste user dts contents here, press any key to continue..."      
     read answer
     sudo vi /home/tc/custom-module/$dtbfile.dts
-    
+
+    cecho p "press any key to continue..."
     read answer
-    cecho g "press any key to continue..."
     sudo ./rploader.sh patchdtc ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION}
 
     echo                                                                                                                                        
