@@ -243,6 +243,11 @@ if [ $userdts == "Y" ] ; then
         return
     fi
     
+    extension="redpill-dtb-static"
+    echo "Adding extension ${extension} "
+    cd /home/tc/redpill-load/ && ./ext-manager.sh add "$(echo $extension | sed -s 's/"//g' | sed -s 's/,//g')"    
+    cd ~
+    
     cecho y "user-define dts file copy in progress..."  
     echo
     
