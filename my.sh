@@ -242,14 +242,8 @@ if [ $userdts == "Y" ] ; then
         echo "${TARGET_PLATFORM} does not require model.dtc patching "
         return
     fi
-
-    if [ $TARGET_REVISION == "42218" ] ; then                                                                                       
-        ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/redpill-dtb-static/rpext-index.json   
-    else                                                                                                                            
-        ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/redpill-dtb-static/rpext-index.json
-    fi  
     
-    cecho y "user-define dts file copy in progress..."  
+    cecho y "user-define dts file make in progress..."  
     echo
     
     cecho g "copy and paste user dts contents here, press any key to continue..."      
@@ -258,7 +252,6 @@ if [ $userdts == "Y" ] ; then
 
     cecho p "press any key to continue..."
     read answer
-    echo "y"|sudo ./rploader.sh patchdtc ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION}
 
     echo                                                                                                                                        
     cecho y "Backup in progress..."
