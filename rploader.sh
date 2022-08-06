@@ -1034,8 +1034,8 @@ function patchdtc() {
     if [ -f /home/tc/custom-module/${dtbfile}.dtb ]; then
 
         echo "Fould locally cached dtb file"
-        read -p "Should i use that file ? [Yy/Nn]" answer
-        if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
+#        read -p "Should i use that file ? [Yy/Nn]" answer
+#        if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
             echo "OK copying over the cached dtb file"
 
             dtbextfile="$(find /home/tc/redpill-load/custom -name model_${dtbfile}.dtb)"
@@ -1056,9 +1056,9 @@ function patchdtc() {
                 echo "execute manually : cp ${dtbfile}.dtb ${dtbextfile} and re-run"
                 exit 99
             fi
-        else
-            echo "OK lets continue patching"
-        fi
+#        else
+#            echo "OK lets continue patching"
+#        fi
     else
         echo "No cached dtb file found in /home/tc/custom-module/${dtbfile}.dtb"
     fi
