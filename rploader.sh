@@ -1066,7 +1066,7 @@ function patchdtc() {
 }
 
 function dont_use_patchdtc() {
-{
+
     if [ ! -f ${dtbfile}.dts ]; then
         echo "dts file for ${dtbfile} not found, trying to download"
         curl --location --progress-bar -O "${dtsfiles}/${dtbfile}.dts"
