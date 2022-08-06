@@ -228,6 +228,9 @@ fi
 
 if [ $userdts == "Y" ] ; then
 
+    sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config.json
+    sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config_jun.json
+
     if [ "${TARGET_PLATFORM}" = "v1000" ]; then
         dtbfile="ds1621p"
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
