@@ -215,6 +215,23 @@ curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/
 curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
 curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O  
 
+if [ "${TARGET_PLATFORM}" = "v1000" ]; then
+    dtbfile="ds1621p"
+elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
+    dtbfile="ds920p"
+elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
+    dtbfile="dva1622"
+elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
+    dtbfile="ds2422p"
+elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
+    dtbfile="ds1520p"
+fi
+
+if [ -f /home/tc/custom-module/${dtbfile}.dts ] ; then
+    sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config.json
+    sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config_jun.json
+fi
+
 if [ $postupdate == "Y" ] ; then
     cecho y "Postupdate in progress..."  
     sudo ./rploader.sh postupdate ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION}
@@ -227,24 +244,6 @@ if [ $postupdate == "Y" ] ; then
 fi
 
 if [ $userdts == "Y" ] ; then
-
-    sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config.json
-    sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config_jun.json
-
-    if [ "${TARGET_PLATFORM}" = "v1000" ]; then
-        dtbfile="ds1621p"
-    elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
-        dtbfile="ds920p"
-    elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
-        dtbfile="dva1622"
-    elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
-        dtbfile="ds2422p"
-    elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
-        dtbfile="ds1520p"
-    else
-        echo "${TARGET_PLATFORM} does not require model.dtc patching "
-        return
-    fi
     
     cecho y "user-define dts file make in progress..."  
     echo
