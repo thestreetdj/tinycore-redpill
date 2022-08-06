@@ -1061,10 +1061,12 @@ function patchdtc() {
         fi
     else
         echo "No cached dtb file found in /home/tc/custom-module/${dtbfile}.dtb"
-        exit 99
     fi
-exit 0
 
+}
+
+function dont_use_patchdtc() {
+{
     if [ ! -f ${dtbfile}.dts ]; then
         echo "dts file for ${dtbfile} not found, trying to download"
         curl --location --progress-bar -O "${dtsfiles}/${dtbfile}.dts"
