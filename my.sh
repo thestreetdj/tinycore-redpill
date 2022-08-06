@@ -242,10 +242,10 @@ if [ $userdts == "Y" ] ; then
         echo "${TARGET_PLATFORM} does not require model.dtc patching "
         return
     fi
-    
+
     extension="redpill-dtb-static"
-    echo "Adding extension ${extension} "
-    cd /home/tc/redpill-load/ && ./ext-manager.sh add "$(echo $extension | sed -s 's/"//g' | sed -s 's/,//g')"    
+    echo "Updating extension : ${extension} contents for model : ${SYNOMODEL}  "
+    cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
     cd ~
     
     cecho y "user-define dts file copy in progress..."  
