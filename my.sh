@@ -252,7 +252,7 @@ if [ $userdts == "Y" ] ; then
 
     cecho p "press any key to continue..."
     read answer
-    sudo ./rploader.sh patchdtc ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION}
+    echo "y"|sudo ./rploader.sh patchdtc ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION}
 
     echo                                                                                                                                        
     cecho y "Backup in progress..."
