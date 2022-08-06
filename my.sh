@@ -243,7 +243,11 @@ if [ $userdts == "Y" ] ; then
         return
     fi
 
-    ./rploader.sh ext $SYNOMODEL add "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/redpill-dtb-static/rpext-index.json"
+    if [ $TARGET_REVISION == "42218" ] ; then                                                                                       
+        ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/redpill-dtb-static/rpext-index.json   
+    else                                                                                                                            
+        ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/redpill-dtb-static/rpext-index.json
+    fi  
     
     cecho y "user-define dts file copy in progress..."  
     echo
