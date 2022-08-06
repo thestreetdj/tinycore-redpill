@@ -455,10 +455,10 @@ function addrequiredexts() {
     done
 
 # Use user define dts file instaed of dtbpatch ext now
-    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] || [ ${TARGET_PLATFORM} = "dva1622" ] || [ ${TARGET_PLATFORM} = "ds2422p" ] || [ ${TARGET_PLATFORM} = "ds1520p" ] ; then
-        echo "For user define dts file instaed of dtbpatch ext"
-        patchdtc
-    fi
+#    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] || [ ${TARGET_PLATFORM} = "dva1622" ] || [ ${TARGET_PLATFORM} = "ds2422p" ] || [ ${TARGET_PLATFORM} = "ds1520p" ] ; then
+#        echo "For user define dts file instaed of dtbpatch ext"
+#        patchdtc
+#    fi
 
 }
 
