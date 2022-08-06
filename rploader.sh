@@ -1010,6 +1010,9 @@ function patchdtc() {
     elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
         dtbfile="ds2422p"
         curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds2422p.dts
+    elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
+        dtbfile="ds1520p"
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds1520p.dts
     else
         echo "${TARGET_PLATFORM} does not require model.dtc patching "
         return
