@@ -60,6 +60,8 @@ set -u
 # 2022.08.03
 # Update : Apply fabio's redpill.ko
 # 2022.08.04
+# Update : Add Userdts Options
+# 2022.08.06
 
 
 showhelp() {
@@ -69,7 +71,7 @@ $(basename ${0})
 ----------------------------------------------------------------------------------------
 Usage: ${0} <Synology Model Name> <Options>
 
-Options: postupdate, noconfig, noclean, manual, realmac
+Options: postupdate, noconfig, noclean, manual, realmac, userdts
 
 - postupdate : Option to patch the restore loop after applying DSM 7.1.0-42661 Update 2, no additional build required.
 
@@ -81,6 +83,9 @@ Options: postupdate, noconfig, noclean, manual, realmac
 - manual: Options for manual extension processing and manual dtc processing in build action (skipping extension auto detection).
 
 - realmac : Option to use the NIC's real address instead of creating a virtual one.
+
+- userdts : Option to use the user-defined platform.dts file instead of auto-discovery mapping with dtcpatch.
+
 
 Please type Synology Model Name after ./$(basename ${0})
 
