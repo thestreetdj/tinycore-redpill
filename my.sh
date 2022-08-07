@@ -215,6 +215,8 @@ curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/
 curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
 curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O  
 
+dtbfile=""     
+
 if [ "${TARGET_PLATFORM}" = "v1000" ]; then
     dtbfile="ds1621p"
 elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
@@ -225,6 +227,8 @@ elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
     dtbfile="ds2422p"
 elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
     dtbfile="ds1520p"
+else
+    echo "${TARGET_PLATFORM} does not require model.dtc patching "    
 fi
 
 if [ -f /home/tc/custom-module/${dtbfile}.dts ] ; then
