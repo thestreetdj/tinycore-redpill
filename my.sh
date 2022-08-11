@@ -169,6 +169,10 @@ echo
 if [ $MODEL == "DS1621xs+" ]; then
     cecho y "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
     sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+elif [ $MODEL == "DS3622xs+" ]; then
+    cecho y "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
+    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+    sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
 elif [ $MODEL == "DS3615xs" ]; then
     cecho y "Downloading fabio's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
     sudo curl --location --progress-bar "https://github.com/fbelavenuto/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko.gz
@@ -180,23 +184,6 @@ else
     gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
     sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko /home/tc/custom-module/redpill.ko
 fi
-
-#dtc
-#    if [ ! -d /lib64 ]; then
-#        [ ! -h /lib64 ] && sudo ln -s /lib /lib64
-#    fi
-#
-#    dtcbin="https://raw.githubusercontent.com/pocopico/tinycore-redpill/main/dtc"
-#
-#    echo "Downloading dtc binary"
-#    curl --location --progress-bar "$dtcbin" -O
-#    chmod 700 dtc
-#
-#    if [ -f /home/tc/custom-module/${dtbfile}.dts ]; then                                                    
-#        cecho r "Fould locally cached dts file"                                                              
-#        cecho y "Converting dts file : ${dtbfile}.dts to dtb file : >${dtbfile}.dtb "                        
-#        ./dtc -q -I dts -O dtb /home/tc/custom-module/${dtbfile}.dts >/home/tc/custom-module/${dtbfile}.dtb  
-#    fi 
 
 echo
 cecho y "TARGET_PLATFORM is $TARGET_PLATFORM"
@@ -219,29 +206,10 @@ if [ $TARGET_REVISION == "42218" ] ; then
     echo
     cecho y "This is TCRP jumkey's jun mode"
 
-#    if  [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y" ] ; then
-#        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
-#    else
-#        curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun_poco.json" --output custom_config_jun.json
-#    fi
-#    if [ $MSHELL_ONLY_MODEL == "Y" ] ; then
-#        curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O    
-#    else
-#        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rpext-index.json" -O        
-#    fi    
-#    curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" -O
-#    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
-
 else
     echo
     cecho y "This is TCRP original jot mode"
 
-    if  [ $MODEL == "DS3622xs+" ] ; then
-        cecho g "Downloading pocopico's TCRP original configuration files.................."    
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/custom_config.json" -O
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rploader.sh" -O
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/main/rpext-index.json" -O        
-    fi
 fi   
 
 dtbfile=""     
@@ -303,26 +271,6 @@ if [ -d "/home/tc/redpill-load" ] && [ $frmyv == "N" ] ; then
        ./rploader.sh clean
 #    fi
 fi
-
-echo
-    
-#if [ $fullupgrade == "Y" ] ; then  
-#    echo "n"|./rploader.sh fullupgrade                                                                                            
-#    if [ $noconfig == "Y" ] ; then
-#        cecho y "Automatically restore your own user_config.json by noconfig option..."   
-#        cp -f /home/tc/old/user_config.json.* ./user_config.json 
-#    else
-#        cecho y "Do you want to restore your own user_config.json from old directory ?  [Yy/Nn]"                                                            
-#    read answer                                                                                                                                         
-#        if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
-#            cp -f /home/tc/old/user_config.json.* ./user_config.json                                                                                        
-#        else                                                                                                                                                
-#            echo "OK Remember that the new user_config.json file is used and your own user_config.json is deleted. "                                        
-#        fi
-#    fi       
-#else
-#    cecho y "this model skip fullupgrade for custom adjustment" 
-#fi    
 
 echo
 
