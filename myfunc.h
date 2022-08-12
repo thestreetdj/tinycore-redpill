@@ -62,7 +62,8 @@ set -u
 # 2022.08.04
 # Update : Add Userdts Options
 # 2022.08.06
-
+# Update : Release FS2500
+# 2022.08.12
 
 showhelp() {
     cat <<EOF
@@ -220,7 +221,7 @@ getvars()
         TARGET_PLATFORM="fs2500"
         ORIGIN_PLATFORM="v1000"        
         SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
-        sha256="4d060be8afec548fdb042bc8095524f10ff200033cab74df37ae07f3de5eaa69"
+        sha256="f8343ac070b43fe62d02af6ac9a9c61f8c9852b6b2c79b933629409113e1d3e6"
         
 # JOT MODE NEW MODEL TESTTING                
     elif [ "${1}" = "DS1520+" ]; then
