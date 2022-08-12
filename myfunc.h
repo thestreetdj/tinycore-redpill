@@ -101,7 +101,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS2422+
 ./$(basename ${0}) DVA1622
 ./$(basename ${0}) DS1520+ (Not Suppoted, Testing...)
-./$(basename ${0}) FS2500  (Not Suppoted, Testing..., Has DTC issue)
+./$(basename ${0}) FS2500
 ./$(basename ${0}) DS1621xs+
 ./$(basename ${0}) RS4021xs+
 ./$(basename ${0}) DVA3219 
@@ -118,7 +118,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS2422+J  
 ./$(basename ${0}) DVA1622J (Not Suppoted)
 ./$(basename ${0}) DS1520+J
-./$(basename ${0}) FS2500J  (Not Suppoted, Has DTC issue)
+./$(basename ${0}) FS2500J
 ./$(basename ${0}) DS1621xs+J
 ./$(basename ${0}) RS4021xs+J ((Not Suppoted, Testing...)
 ./$(basename ${0}) DVA3219J (Not Suppoted, Testing...)
@@ -214,6 +214,13 @@ getvars()
         ORIGIN_PLATFORM="denverton"        
         SYNOMODEL="dva3219_$TARGET_REVISION"                                                                                                                   
         sha256="01596eaf7310a56b504fde5743262f721dd0be2836e53d2d74386e14f509bec4"                                                                              
+    elif [ "${1}" = "FS2500" ]; then
+        DTC_BASE_MODEL="Y"    
+        MSHELL_ONLY_MODEL="Y"    
+        TARGET_PLATFORM="fs2500"
+        ORIGIN_PLATFORM="v1000"        
+        SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
+        sha256="4d060be8afec548fdb042bc8095524f10ff200033cab74df37ae07f3de5eaa69"
         
 # JOT MODE NEW MODEL TESTTING                
     elif [ "${1}" = "DS1520+" ]; then
@@ -224,11 +231,6 @@ getvars()
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
         sha256="3a8499c5f72d7241b81781ec741d4019eaa506e6e7a4fd17ce54fb149f6ffae6"
         echo "Synology model ${1} jot mode not supported by m shell, Testing..."        
-        exit 0        
-    elif [ "${1}" = "DF2500" ]; then
-        DTC_BASE_MODEL="Y"    
-        MSHELL_ONLY_MODEL="Y"    
-        echo "Synology model ${1} jot mode not supported by m shell, Because It has DTC mapping issue"
         exit 0        
         
 #JUN MODE
@@ -306,21 +308,19 @@ getvars()
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="ds1621xsp_$TARGET_REVISION"
         sha256="5db4e5943d246b1a2414942ae19267adc94d2a6ab167ba3e2fc10b42aefded23"
-# JUN MODE NEW MODEL TESTTING
-    elif [ "${1}" = "DVA1622J" ]; then
-        DTC_BASE_MODEL="Y"    
-        echo "Synology model ${1} jun mode not supported by m shell"
-        exit 0        
     elif [ "${1}" = "FS2500J" ]; then
         DTC_BASE_MODEL="Y"    
         MSHELL_ONLY_MODEL="Y"    
-        echo "Synology model ${1} jun mode not supported by m shell, Because It has DTC mapping issue"
-        exit 0        
         TARGET_REVISION="42218"
         TARGET_PLATFORM="fs2500"
         ORIGIN_PLATFORM="v1000"        
         SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
         sha256="4d060be8afec548fdb042bc8095524f10ff200033cab74df37ae07f3de5eaa69"
+# JUN MODE NEW MODEL TESTTING
+    elif [ "${1}" = "DVA1622J" ]; then
+        DTC_BASE_MODEL="Y"    
+        echo "Synology model ${1} jun mode not supported by m shell"
+        exit 0        
     elif [ "${1}" = "RS4021xs+J" ]; then
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"    
