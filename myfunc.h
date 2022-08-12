@@ -62,8 +62,17 @@ set -u
 # 2022.08.04
 # Update : Add Userdts Options
 # 2022.08.06
-# Update : Release FS2500
+# Update : Release FS2500 Jot / Jun Mode
 # 2022.08.12
+
+showlastupdate() {
+    cat <<EOF
+
+# Update : Release FS2500 Jot / Jun Mode
+# 2022.08.12
+   
+EOF
+}
 
 showhelp() {
     cat <<EOF
@@ -414,6 +423,7 @@ getlatestmshell() {
             rm -f /home/tc/latest.mshell.gz
             tar -zxvf $mshellgz
             echo "Updating m shell with latest updates"
+            showlastupdate
             exit
         else
             rm -f /home/tc/latest.mshell.gz
