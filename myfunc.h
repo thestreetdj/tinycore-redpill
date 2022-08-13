@@ -241,7 +241,7 @@ getvars()
         TARGET_PLATFORM="rs3618xs"
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
-        sha256="0a5a243109098587569ab4153923f30025419740fb07d0ea856b06917247ab5c"
+        sha256="1aaa9b78d0287b2acc3d4f38757b4aef72ce98f20e3a44b71a44dddea1b842ea"
         
 # JOT MODE NEW MODEL TESTTING                
     elif [ "${1}" = "DS1520+" ]; then
@@ -344,7 +344,7 @@ getvars()
         TARGET_PLATFORM="rs3618xs"
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
-        sha256="0a5a243109098587569ab4153923f30025419740fb07d0ea856b06917247ab5c"
+        sha256="2b7623a6781fe10e0eface1665d41dfe2e5adb033b26e50e27c3449aee5fe4b0"
         
 # JUN MODE NEW MODEL TESTTING
     elif [ "${1}" = "DVA1622J" ]; then
