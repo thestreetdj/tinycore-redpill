@@ -423,6 +423,7 @@ getlatestmshell() {
             rm -f /home/tc/latest.mshell.gz
             tar -zxvf $mshellgz
             echo "Updating m shell with latest updates"
+            source myfunc.h
             showlastupdate
             exit
         else
