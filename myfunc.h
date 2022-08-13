@@ -64,12 +64,14 @@ set -u
 # 2022.08.06
 # Update : Release FS2500 Jot / Jun Mode
 # 2022.08.12
+# Update : Add RS3618xs Jot / Jun Mode
+# 2022.08.14
 
 showlastupdate() {
     cat <<EOF
 
-# Update : Release FS2500 Jot / Jun Mode
-# 2022.08.12
+# Update : Add RS3618xs Jot / Jun Mode
+# 2022.08.14
    
 EOF
 }
@@ -114,7 +116,8 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) FS2500
 ./$(basename ${0}) DS1621xs+
 ./$(basename ${0}) RS4021xs+
-./$(basename ${0}) DVA3219 
+./$(basename ${0}) DVA3219
+./$(basename ${0}) RS3618xs
 
 - for jun mode
 
@@ -132,6 +135,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS1621xs+J
 ./$(basename ${0}) RS4021xs+J ((Not Suppoted, Testing...)
 ./$(basename ${0}) DVA3219J (Not Suppoted, Testing...)
+./$(basename ${0}) RS3618xsJ
 
 EOF
 
@@ -231,6 +235,13 @@ getvars()
         ORIGIN_PLATFORM="v1000"        
         SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
         sha256="f8343ac070b43fe62d02af6ac9a9c61f8c9852b6b2c79b933629409113e1d3e6"
+    elif [ "${1}" = "RS3618xs" ]; then                                                                                                                     
+        DTC_BASE_MODEL="N"    
+        MSHELL_ONLY_MODEL="Y"        
+        TARGET_PLATFORM="rs3618xs"
+        ORIGIN_PLATFORM="broadwell"
+        SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
+        sha256="0a5a243109098587569ab4153923f30025419740fb07d0ea856b06917247ab5c"
         
 # JOT MODE NEW MODEL TESTTING                
     elif [ "${1}" = "DS1520+" ]; then
@@ -326,6 +337,15 @@ getvars()
         ORIGIN_PLATFORM="v1000"        
         SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
         sha256="4d060be8afec548fdb042bc8095524f10ff200033cab74df37ae07f3de5eaa69"
+    elif [ "${1}" = "RS3618xsJ" ]; then                                                                                                                     
+        DTC_BASE_MODEL="N"    
+        MSHELL_ONLY_MODEL="Y"
+        TARGET_REVISION="42218"        
+        TARGET_PLATFORM="rs3618xs"
+        ORIGIN_PLATFORM="broadwell"
+        SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
+        sha256="0a5a243109098587569ab4153923f30025419740fb07d0ea856b06917247ab5c"
+        
 # JUN MODE NEW MODEL TESTTING
     elif [ "${1}" = "DVA1622J" ]; then
         DTC_BASE_MODEL="Y"    
