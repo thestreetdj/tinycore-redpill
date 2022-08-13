@@ -90,7 +90,7 @@ function syntaxcheck() {
 
         serialgen)
             echo "Syntax error, You have to specify one of the existing models"
-            echo "DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ DS2422+ DS1520+ FS2500 RS4021xs+"
+            echo "DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ DS2422+ DS1520+ FS2500 RS4021xs+ RS3618xs"
             ;;
 
         patchdtc)
@@ -304,6 +304,8 @@ function processpat() {
         SYNOMODEL="ds1520p_$TARGET_REVISION" && MODEL="DS1520+"
     elif [ "${TARGET_PLATFORM}" = "fs2500" ]; then
         SYNOMODEL="fs2500_$TARGET_REVISION" && MODEL="FS2500"
+    elif [ "${TARGET_PLATFORM}" = "rs3618xs" ]; then
+        SYNOMODEL="rs3618xs_$TARGET_REVISION" && MODEL="RS3618xs"
     fi
 
     if [ ! -d "${temp_pat_folder}" ]; then
@@ -1457,7 +1459,7 @@ function serialgen() {
 
     [ "$2" == "realmac" ] && let keepmac=1 || let keepmac=0
 
-    if [ "$1" = "DS3615xs" ] || [ "$1" = "DS3617xs" ] || [ "$1" = "DS916+" ] || [ "$1" = "DS918+" ] || [ "$1" = "DS920+" ] || [ "$1" = "DS3622xs+" ] || [ "$1" = "FS6400" ] || [ "$1" = "DVA3219" ] || [ "$1" = "DVA3221" ] || [ "$1" = "DS1621+" ] || [ "$1" = "DS1621xs+" ] || [ "$1" = "RS4021xs+" ] || [ "$1" = "DS2422+" ] || [ "$1" = "DS1520+" ] || [ "$1" = "FS2500" ]; then
+    if [ "$1" = "DS3615xs" ] || [ "$1" = "DS3617xs" ] || [ "$1" = "DS916+" ] || [ "$1" = "DS918+" ] || [ "$1" = "DS920+" ] || [ "$1" = "DS3622xs+" ] || [ "$1" = "FS6400" ] || [ "$1" = "DVA3219" ] || [ "$1" = "DVA3221" ] || [ "$1" = "DS1621+" ] || [ "$1" = "DS1621xs+" ] || [ "$1" = "RS4021xs+" ] || [ "$1" = "DS2422+" ] || [ "$1" = "DS1520+" ] || [ "$1" = "FS2500" ] || [ "$1" = "RS3618xs" ] ; then
         serial="$(generateSerial $1)"
         mac="$(generateMacAddress $1)"
         realmac=$(ifconfig eth0 | head -1 | awk '{print $NF}')
@@ -1485,7 +1487,7 @@ function serialgen() {
         fi
     else
         echo "Error : $1 is not an available model for serial number generation. "
-        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500"
+        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs"
     fi
 
 }
@@ -1552,6 +1554,10 @@ function beginArray() {
     DVA3221)
         permanent="SJR"
         serialstart="2030 2040 20C0 2150"
+        ;;
+    RS3618xs)
+        permanent="ODN"
+        serialstart="1130 1230 1330 1430"
         ;;
     esac
 
@@ -1639,6 +1645,9 @@ function generateSerial() {
         ;;
     DVA3221)
         serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
+        ;;
+    RS3618xs)
+        serialnum="$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(random)
         ;;
     esac
 
@@ -1884,7 +1893,7 @@ mountshare, version, help
   
 - serialgen <synomodel> <option> :
   Generates a serial number and mac address for the following platforms 
-  DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+
+  DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ FS2500 RS3618xs
   
   Valid Options :  realmac , keeps the real mac of interface eth0
   
@@ -2391,6 +2400,8 @@ function getvars() {
         SYNOMODEL="ds1520p_$TARGET_REVISION" && MODEL="DS1520+"        
     elif [ "${TARGET_PLATFORM}" = "fs2500" ]; then
         SYNOMODEL="fs2500_$TARGET_REVISION" && MODEL="FS2500"
+    elif [ "${TARGET_PLATFORM}" = "rs3618xs" ]; then
+        SYNOMODEL="rs3618xs_$TARGET_REVISION" && MODEL="RS3618xs"
     fi
 
     #echo "Platform : $platform_selected"
