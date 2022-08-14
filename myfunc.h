@@ -85,7 +85,7 @@ Usage: ${0} <Synology Model Name> <Options>
 
 Options: postupdate, noconfig, noclean, manual, realmac, userdts
 
-- postupdate : Option to patch the restore loop after applying DSM 7.1.0-42661 Update 2, no additional build required.
+- postupdate : Option to patch the restore loop after applying DSM 7.1.0-42661 after Update 2, no additional build required.
 
 - noconfig: SKIP automatic detection change processing such as SN/Mac/Vid/Pid/SataPortMap of user_config.json file.
 
@@ -94,7 +94,7 @@ Options: postupdate, noconfig, noclean, manual, realmac, userdts
 
 - manual: Options for manual extension processing and manual dtc processing in build action (skipping extension auto detection).
 
-- realmac : Option to use the NIC's real address instead of creating a virtual one.
+- realmac : Option to use the NIC's real mac address instead of creating a virtual one.
 
 - userdts : Option to use the user-defined platform.dts file instead of auto-discovery mapping with dtcpatch.
 
@@ -136,6 +136,17 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) RS4021xs+J ((Not Suppoted, Testing...)
 ./$(basename ${0}) DVA3219J (Not Suppoted, Testing...)
 ./$(basename ${0}) RS3618xsJ
+
+ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
+
+- When you want to build the loader while maintaining the already set SN/Mac/Vid/Pid/SataPortMap
+./my.sh DS3622xs+ noconfig
+
+- When you want to build the loader while maintaining the already set SN/Mac/Vid/Pid/SataPortMap and without deleting the downloaded DSM pat file.
+./my.sh DS3622xs+ noconfig noclean
+
+- When you want to build the loader While using the real MAC address of the NIC, with extended auto-detection disabled
+./my.sh DS3622xs+ realmac manual
 
 EOF
 
