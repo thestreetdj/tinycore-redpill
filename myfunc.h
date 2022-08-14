@@ -145,7 +145,7 @@ ex) Except for postupdate and userdts that must be used alone, the rest of the o
 - When you want to build the loader while maintaining the already set SN/Mac/Vid/Pid/SataPortMap and without deleting the downloaded DSM pat file.
 ./my.sh DS3622xs+ noconfig noclean
 
-- When you want to build the loader While using the real MAC address of the NIC, with extended auto-detection disabled
+- When you want to build the loader while using the real MAC address of the NIC, with extended auto-detection disabled
 ./my.sh DS3622xs+ realmac manual
 
 EOF
