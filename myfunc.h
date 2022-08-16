@@ -374,7 +374,7 @@ getvars()
         TARGET_PLATFORM="rs3413xsp"
         ORIGIN_PLATFORM="bromolow"        
         SYNOMODEL="rs3413xsp_$TARGET_REVISION"
-        sha256="496b64e431dafa34cdebb92da8ac736bf1610fe157f03df7e6d11152d60991f5"        
+        sha256="9796536979407817ca96aef07aaabb3f03252a8e54df0f64ff7caf3c737f0da9"        
         
 # JUN MODE NEW MODEL TESTTING
     elif [ "${1}" = "DVA1622J" ]; then
