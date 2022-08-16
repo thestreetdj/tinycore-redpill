@@ -263,7 +263,7 @@ getvars()
         TARGET_PLATFORM="rs3413xsp"
         ORIGIN_PLATFORM="bromolow"        
         SYNOMODEL="rs3413xsp_$TARGET_REVISION"
-        sha256="496b64e431dafa34cdebb92da8ac736bf1610fe157f03df7e6d11152d60991f5"
+        sha256="16446a2f8c157ecde3714d0dc1c37cf4e9fd8189286a6417d77c65c0ea87c8e5"
         
 # JOT MODE NEW MODEL TESTTING                
     elif [ "${1}" = "DS1520+" ]; then
