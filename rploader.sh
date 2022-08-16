@@ -90,7 +90,7 @@ function syntaxcheck() {
 
         serialgen)
             echo "Syntax error, You have to specify one of the existing models"
-            echo "DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ DS2422+ DS1520+ FS2500 RS4021xs+ RS3618xs"
+            echo "DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ DS2422+ DS1520+ FS2500 RS4021xs+ RS3618xs RS3413xs+"
             ;;
 
         patchdtc)
@@ -306,6 +306,8 @@ function processpat() {
         SYNOMODEL="fs2500_$TARGET_REVISION" && MODEL="FS2500"
     elif [ "${TARGET_PLATFORM}" = "rs3618xs" ]; then
         SYNOMODEL="rs3618xs_$TARGET_REVISION" && MODEL="RS3618xs"
+    elif [ "${TARGET_PLATFORM}" = "rs3413xsp" ]; then
+        SYNOMODEL="rs3413xsp_$TARGET_REVISION" && MODEL="RS3413xs+"
     fi
 
     if [ ! -d "${temp_pat_folder}" ]; then
@@ -1459,7 +1461,7 @@ function serialgen() {
 
     [ "$2" == "realmac" ] && let keepmac=1 || let keepmac=0
 
-    if [ "$1" = "DS3615xs" ] || [ "$1" = "DS3617xs" ] || [ "$1" = "DS916+" ] || [ "$1" = "DS918+" ] || [ "$1" = "DS920+" ] || [ "$1" = "DS3622xs+" ] || [ "$1" = "FS6400" ] || [ "$1" = "DVA3219" ] || [ "$1" = "DVA3221" ] || [ "$1" = "DS1621+" ] || [ "$1" = "DS1621xs+" ] || [ "$1" = "RS4021xs+" ] || [ "$1" = "DS2422+" ] || [ "$1" = "DS1520+" ] || [ "$1" = "FS2500" ] || [ "$1" = "RS3618xs" ] ; then
+    if [ "$1" = "DS3615xs" ] || [ "$1" = "DS3617xs" ] || [ "$1" = "DS916+" ] || [ "$1" = "DS918+" ] || [ "$1" = "DS920+" ] || [ "$1" = "DS3622xs+" ] || [ "$1" = "FS6400" ] || [ "$1" = "DVA3219" ] || [ "$1" = "DVA3221" ] || [ "$1" = "DS1621+" ] || [ "$1" = "DS1621xs+" ] || [ "$1" = "RS4021xs+" ] || [ "$1" = "DS2422+" ] || [ "$1" = "DS1520+" ] || [ "$1" = "FS2500" ] || [ "$1" = "RS3618xs" ] || [ "$1" = "RS3413xs+" ] ; then
         serial="$(generateSerial $1)"
         mac="$(generateMacAddress $1)"
         realmac=$(ifconfig eth0 | head -1 | awk '{print $NF}')
@@ -1487,7 +1489,7 @@ function serialgen() {
         fi
     else
         echo "Error : $1 is not an available model for serial number generation. "
-        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs"
+        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+"
     fi
 
 }
@@ -1558,6 +1560,10 @@ function beginArray() {
     RS3618xs)
         permanent="ODN"
         serialstart="1130 1230 1330 1430"
+        ;;
+    RS3413xs+)
+        permanent="S7R"
+        serialstart="2080"
         ;;
     esac
 
@@ -1648,6 +1654,9 @@ function generateSerial() {
         ;;
     RS3618xs)
         serialnum="$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(random)
+        ;;
+    RS3413xs+)
+        serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
         ;;
     esac
 
@@ -2033,6 +2042,8 @@ function getstaticmodule() {
         SYNOMODEL="ds2422p_$TARGET_REVISION"   
     elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
         SYNOMODEL="ds1520p_$TARGET_REVISION"           
+    elif [ "${TARGET_PLATFORM}" = "rs3413xsp" ]; then
+        SYNOMODEL="rs3413xsp_$TARGET_REVISION"
     fi
 
     echo "Looking for redpill for : $SYNOMODEL "
@@ -2362,7 +2373,7 @@ function getvars() {
 
     case $TARGET_PLATFORM in
 
-    bromolow)
+    bromolow | rs3413xsp)
         KERNEL_MAJOR="3"
         MODULE_ALIAS_FILE="modules.alias.3.json"
         ;;
@@ -2382,7 +2393,7 @@ function getvars() {
         SYNOMODEL="ds3622xsp_$TARGET_REVISION" && MODEL="DS3622xs+"
     elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
         SYNOMODEL="ds1621xsp_$TARGET_REVISION" && MODEL="DS1621xs+"
-    elif [ "${TARGET_PLATFORM}" = "rs1621xsp" ]; then
+    elif [ "${TARGET_PLATFORM}" = "rs4021xsp" ]; then
         SYNOMODEL="rs4021xsp_$TARGET_REVISION" && MODEL="RS4021xs+"
     elif [ "${TARGET_PLATFORM}" = "v1000" ]; then
         SYNOMODEL="ds1621p_$TARGET_REVISION" && MODEL="DS1621+"
@@ -2402,6 +2413,8 @@ function getvars() {
         SYNOMODEL="fs2500_$TARGET_REVISION" && MODEL="FS2500"
     elif [ "${TARGET_PLATFORM}" = "rs3618xs" ]; then
         SYNOMODEL="rs3618xs_$TARGET_REVISION" && MODEL="RS3618xs"
+    elif [ "${TARGET_PLATFORM}" = "rs3413xsp" ]; then
+        SYNOMODEL="rs3413xsp_$TARGET_REVISION" && MODEL="RS3413xs+"
     fi
 
     #echo "Platform : $platform_selected"
