@@ -66,12 +66,14 @@ set -u
 # 2022.08.12
 # Update : Add RS3618xs Jot / Jun Mode
 # 2022.08.14
+# Update : Add RS3413xs+ Jot / Jun Mode
+# 2022.08.16
 
 showlastupdate() {
     cat <<EOF
 
-# Update : Add RS3618xs Jot / Jun Mode
-# 2022.08.14
+# Update : Add RS3413xs+ Jot / Jun Mode
+# 2022.08.16
    
 EOF
 }
@@ -118,6 +120,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) RS4021xs+
 ./$(basename ${0}) DVA3219
 ./$(basename ${0}) RS3618xs
+./$(basename ${0}) RS3413xs+
 
 - for jun mode
 
@@ -136,6 +139,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) RS4021xs+J ((Not Suppoted, Testing...)
 ./$(basename ${0}) DVA3219J (Not Suppoted, Testing...)
 ./$(basename ${0}) RS3618xsJ
+./$(basename ${0}) RS3413xs+J
 
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
@@ -253,6 +257,13 @@ getvars()
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
         sha256="1aaa9b78d0287b2acc3d4f38757b4aef72ce98f20e3a44b71a44dddea1b842ea"
+    elif [ "${1}" = "RS3413xs+" ]; then
+        DTC_BASE_MODEL="N"    
+        MSHELL_ONLY_MODEL="Y"    
+        TARGET_PLATFORM="rs3413xsp"
+        ORIGIN_PLATFORM="bromolow"        
+        SYNOMODEL="rs3413xsp_$TARGET_REVISION"
+        sha256="496b64e431dafa34cdebb92da8ac736bf1610fe157f03df7e6d11152d60991f5"
         
 # JOT MODE NEW MODEL TESTTING                
     elif [ "${1}" = "DS1520+" ]; then
@@ -356,6 +367,14 @@ getvars()
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
         sha256="2b7623a6781fe10e0eface1665d41dfe2e5adb033b26e50e27c3449aee5fe4b0"
+    elif [ "${1}" = "RS3413xs+J" ]; then
+        DTC_BASE_MODEL="N"    
+        MSHELL_ONLY_MODEL="Y"    
+        TARGET_REVISION="42218"        
+        TARGET_PLATFORM="rs3413xsp"
+        ORIGIN_PLATFORM="bromolow"        
+        SYNOMODEL="rs3413xsp_$TARGET_REVISION"
+        sha256="496b64e431dafa34cdebb92da8ac736bf1610fe157f03df7e6d11152d60991f5"        
         
 # JUN MODE NEW MODEL TESTTING
     elif [ "${1}" = "DVA1622J" ]; then
