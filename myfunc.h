@@ -258,8 +258,6 @@ getvars()
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
         sha256="1aaa9b78d0287b2acc3d4f38757b4aef72ce98f20e3a44b71a44dddea1b842ea"
     elif [ "${1}" = "RS3413xs+" ]; then
-        echo "Synology model ${1} jot mode not supported by m shell, Testing..."
-        exit 0    
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_PLATFORM="rs3413xsp"
@@ -378,8 +376,6 @@ getvars()
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
         sha256="2b7623a6781fe10e0eface1665d41dfe2e5adb033b26e50e27c3449aee5fe4b0"
     elif [ "${1}" = "RS3413xs+J" ]; then
-        echo "Synology model ${1} jot mode not supported by m shell, Testing..."
-        exit 0    
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_REVISION="42218"        
