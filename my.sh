@@ -169,6 +169,9 @@ echo
 if [ $MODEL == "DS1621xs+" ]||[ $MODEL == "RS3618xs" ]; then
     cecho y "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
     sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+elif [ $MODEL == "DVA3219" ]; then
+    cecho y "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
+    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-dva3219-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 #elif [ $MODEL == "RS3413xs+" ]; then
 #    cecho y "Downloading peter's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
 #    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v3.10.108.ko" --output /home/tc/custom-module/redpill.ko
