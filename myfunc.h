@@ -137,7 +137,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) FS2500J
 ./$(basename ${0}) DS1621xs+J
 ./$(basename ${0}) RS4021xs+J 
-./$(basename ${0}) DVA3219J 
+./$(basename ${0}) DVA3219J   (Not Suppoted, Testing...)
 ./$(basename ${0}) RS3618xsJ
 ./$(basename ${0}) RS3413xs+J (Not Suppoted, Testing...)
 
@@ -257,24 +257,28 @@ getvars()
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
         sha256="1aaa9b78d0287b2acc3d4f38757b4aef72ce98f20e3a44b71a44dddea1b842ea"
+        
+# JOT MODE NEW MODEL TESTTING                
     elif [ "${1}" = "RS3413xs+" ]; then
+        echo "Synology model ${1} jot mode not supported by m shell, Testing..."        
+        exit 0        
+    
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_PLATFORM="rs3413xsp"
         ORIGIN_PLATFORM="bromolow"        
         SYNOMODEL="rs3413xsp_$TARGET_REVISION"
         sha256="16446a2f8c157ecde3714d0dc1c37cf4e9fd8189286a6417d77c65c0ea87c8e5"
-        
-# JOT MODE NEW MODEL TESTTING                
     elif [ "${1}" = "DS1520+" ]; then
+        echo "Synology model ${1} jot mode not supported by m shell, Testing..."        
+        exit 0        
+    
         DTC_BASE_MODEL="Y"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_PLATFORM="ds1520p"
         ORIGIN_PLATFORM="geminilake"        
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
         sha256="3a8499c5f72d7241b81781ec741d4019eaa506e6e7a4fd17ce54fb149f6ffae6"
-        echo "Synology model ${1} jot mode not supported by m shell, Testing..."        
-        exit 0        
         
 #JUN MODE
     elif [ "${1}" = "DS918+J" ]; then           
@@ -375,7 +379,12 @@ getvars()
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
         sha256="2b7623a6781fe10e0eface1665d41dfe2e5adb033b26e50e27c3449aee5fe4b0"
+
+# JUN MODE NEW MODEL TESTTING
     elif [ "${1}" = "RS3413xs+J" ]; then
+        echo "Synology model ${1} jun mode not supported by m shell"
+        exit 0        
+        
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_REVISION="42218"        
@@ -384,6 +393,9 @@ getvars()
         SYNOMODEL="rs3413xsp_$TARGET_REVISION"
         sha256="9796536979407817ca96aef07aaabb3f03252a8e54df0f64ff7caf3c737f0da9"        
     elif [ "${1}" = "DVA3219J" ]; then
+        echo "Synology model ${1} jun mode not supported by m shell"
+        exit 0        
+        
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_REVISION="42218"                                                  
@@ -391,8 +403,6 @@ getvars()
         ORIGIN_PLATFORM="denverton"        
         SYNOMODEL="dva3219_$TARGET_REVISION"                                     
         sha256="3557df23ff6af9bbb0cf46872ba2fc09c344eb303a38e8283dbc9a46e5eae979"
-
-# JUN MODE NEW MODEL TESTTING
     elif [ "${1}" = "DVA1622J" ]; then
         DTC_BASE_MODEL="Y"    
         echo "Synology model ${1} jun mode not supported by m shell"
