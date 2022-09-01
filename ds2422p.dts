@@ -210,7 +210,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.2";
-			ata_port = <0x00>;
+			ata_port = <0x08>;
 		};
 
 		led_green {
@@ -228,10 +228,10 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.2";
-			ata_port = <0x01>;
+			ata_port = <0x09>;
 		};
 
-		led_green {
+	led_green {
 			led_name = "syno_led18";
 		};
 
@@ -247,7 +247,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.2";
-			ata_port = <0x02>;
+			ata_port = <0x10>;
 		};
 
 		led_green {
@@ -265,7 +265,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.2";
-			ata_port = <0x03>;
+			ata_port = <0x11>;
 		};
 
 		led_green {
