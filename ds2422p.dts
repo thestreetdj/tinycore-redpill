@@ -64,7 +64,7 @@
 
 		ahci {
 			pcie_root = "00:01.1,00.1";
-			ata_port = <0x0>;
+			ata_port = <0x00>;
 		};
 
 		led_green {
@@ -82,7 +82,7 @@
 
 		ahci {
 			pcie_root = "00:01.1,00.1";
-			ata_port = <0x1>;
+			ata_port = <0x01>;
 		};
 
 		led_green {
@@ -100,7 +100,7 @@
 
 		ahci {
 			pcie_root = "00:01.1,00.1";
-			ata_port = <0x2>;
+			ata_port = <0x02>;
 		};
 
 		led_green {
@@ -118,7 +118,7 @@
 
 		ahci {
 			pcie_root = "00:01.1,00.1";
-			ata_port = <0x3>;
+			ata_port = <0x03>;
 		};
 
 		led_green {
@@ -136,7 +136,7 @@
 
 		ahci {
 			pcie_root = "00:01.1,00.1";
-			ata_port = <0x2>;
+			ata_port = <0x04>;
 		};
 
 		led_green {
@@ -154,7 +154,7 @@
 
 		ahci {
 			pcie_root = "00:01.1,00.1";
-			ata_port = <0x3>;
+			ata_port = <0x05>;
 		};
 
 		led_green {
@@ -172,7 +172,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.1";
-			ata_port = <0x03>;
+			ata_port = <0x06>;
 		};
 
 		led_green {
@@ -191,7 +191,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.1";
-			ata_port = <0x04>;
+			ata_port = <0x07>;
 		};
 
 		led_green {
@@ -210,7 +210,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.2";
-			ata_port = <0x05>;
+			ata_port = <0x01>;
 		};
 
 		led_green {
@@ -228,7 +228,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.2";
-			ata_port = <0x05>;
+			ata_port = <0x02>;
 		};
 
 		led_green {
@@ -247,7 +247,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.2";
-			ata_port = <0x00>;
+			ata_port = <0x03>;
 		};
 
 		led_green {
@@ -265,7 +265,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.2";
-			ata_port = <0x01>;
+			ata_port = <0x04>;
 		};
 
 		led_green {
