@@ -210,7 +210,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.2,07.0,00.0";
-			ata_port = <0x08>;
+			ata_port = <0x00>;
 		};
 
 		led_green {
@@ -228,7 +228,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.2,07.0,00.0";
-			ata_port = <0x09>;
+			ata_port = <0x01>;
 		};
 
 		led_green {
@@ -247,7 +247,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.2,07.0,00.0";
-			ata_port = <0x10>;
+			ata_port = <0x02>;
 		};
 
 		led_green {
@@ -265,7 +265,7 @@
 
 		ahci { 
                          pcie_root = "00:01.1,00.2,07.0,00.0";
-			ata_port = <0x11>;
+			ata_port = <0x03>;
 		};
 
 		led_green {
@@ -274,80 +274,6 @@
 
 		led_orange {
 			led_name = "syno_led23";
-		};
-	};
-
-	internal_slot@13 {
-		protocol_type = "sata";
-		led_type = "lp3943";
-
-		ahci { 
-                         pcie_root = "00:01.1,00.3";
-			ata_port = <0x02>;
-		};
-
-		led_green {
-			led_name = "syno_led24";
-		};
-
-		led_orange {
-			led_name = "syno_led25";
-		};
-	};
-
-	internal_slot@14 {
-		protocol_type = "sata";
-		led_type = "lp3943";
-
-		ahci { 
-                         pcie_root = "00:01.1,00.3";
-			ata_port = <0x03>;
-		};
-
-		led_green {
-			led_name = "syno_led26";
-		};
-
-		led_orange {
-			led_name = "syno_led27";
-		};
-	};
-
-
-	internal_slot@15 {
-		protocol_type = "sata";
-		led_type = "lp3943";
-
-		ahci { 
-                         pcie_root = "00:01.1,00.3";
-			ata_port = <0x04>;
-		};
-
-		led_green {
-			led_name = "syno_led28";
-		};
-
-		led_orange {
-			led_name = "syno_led29";
-		};
-	};
-
-
-	internal_slot@16 {
-		protocol_type = "sata";
-		led_type = "lp3943";
-
-		ahci { 
-                         pcie_root = "00:01.1,00.3";
-			ata_port = <0x05>;
-		};
-
-		led_green {
-			led_name = "syno_led30";
-		};
-
-		led_orange {
-			led_name = "syno_led31";
 		};
 	};
 
@@ -373,7 +299,7 @@
 	};
 
 	nvme_slot@2 {
-		pcie_root = "00:01.4";
+		pcie_root = "40:01.2,00.0";
 		port_type = "ssdcache";
 	};
 
