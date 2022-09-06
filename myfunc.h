@@ -68,12 +68,14 @@ set -u
 # 2022.08.14
 # Update : Add RS3413xs+ Jot / Jun Mode
 # 2022.08.16
+# Update : Change to DSM 7.1.1-42661
+# 2022.09.06
 
 showlastupdate() {
     cat <<EOF
 
-# Update : Add RS3413xs+ Jot / Jun Mode
-# 2022.08.16
+# Update : Change to DSM 7.1.1-42661
+# 2022.09.06
    
 EOF
 }
@@ -159,7 +161,7 @@ EOF
 getvars()
 {
 
-    TARGET_REVISION="42661"
+    TARGET_REVISION="42962"
     MSHELL_ONLY_MODEL="N"
     DTC_BASE_MODEL="N"
     ORIGIN_PLATFORM=""
