@@ -241,7 +241,7 @@ fi
 
 if [ $postupdate == "Y" ] ; then
     cecho y "Postupdate in progress..."  
-    sudo ./rploader.sh postupdate ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION}
+    sudo ./rploader.sh postupdate ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}
 
     echo                                                                                                                                        
     cecho y "Backup in progress..."
@@ -376,14 +376,14 @@ if [ $manual == "Y" ]; then
 #        cecho y "Manual option is not allowed in jun mode build, It is built with the static option!!!  "  
         ./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218-JUN junmanual                                                                  
     else
-        echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} manual   
+        echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} manual   
     fi
 else                                                                                                                           
 
     if [ $TARGET_REVISION == "42218" ] ; then
         ./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218-JUN jun                                                                        
     else
-        echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION}     
+        echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}     
     fi
 fi 
 
