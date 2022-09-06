@@ -510,7 +510,7 @@
                 "branch": "master"
             },
          "add_extensions": [{
-		    "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+		    "redpill-misc" : "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json"
 	                        }]
         },
         {
@@ -539,7 +539,7 @@
                 "branch": "master"
             },
              "add_extensions": [{
-		    "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+		    "redpill-misc" : "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json"
 	                        }]		 
         },
         {
@@ -569,7 +569,7 @@
             },
              "add_extensions": [{
 		    "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/dtbpatch/rpext-index.json",
-		    "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+		    "redpill-misc" : "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json"
 	                        }]
         },
         {
@@ -599,7 +599,7 @@
                             "branch": "master"
                     },
 					 "add_extensions": [{
-   		    "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+   		    "redpill-misc" : "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json"
 	                        }]					
          },
         {
@@ -659,7 +659,7 @@
                             "branch": "master"
                     },
             "add_extensions": [{
-  	            "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+  	            "redpill-misc" : "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json"
 	                        }]
            },
            {
@@ -750,7 +750,7 @@
                     },
             "add_extensions": [{
 	            "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/dtbpatch/rpext-index.json",
-		    "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+		    "redpill-misc" : "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json"
 	                        }]
             },
             {
@@ -780,7 +780,7 @@
                             "branch": "master"
                     },
              "add_extensions": [{
-		     "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/master/redpill-misc/rpext-index.json"
+		     "redpill-misc" : "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json"
 	                        }]
             },
             {
@@ -840,7 +840,7 @@
             },
              "add_extensions": [{
 	            "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/dtbpatch/rpext-index.json",
-		    "redpill-misc" : "https://github.com/pocopico/redpill-load/raw/develop/redpill-misc/rpext-index.json"
+		    "redpill-misc" : "https://github.com/PeterSuh-Q3/redpill-load/raw/develop/redpill-misc/rpext-index.json"
 	                        }]
         },	    
         {
