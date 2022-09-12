@@ -166,7 +166,7 @@ fi
 
 echo
 
-if [ $MODEL == "DS1621xs+" ]||[ $MODEL == "RS3618xs" ]; then
+if [ $MODEL == "DS1621xs+" ]||[ $MODEL == "RS3618xs" ]||[ $ORIGIN_PLATFORM == "geminilake" ]; then
     cecho y "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
     sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 elif [ $MODEL == "DVA3219" ]; then
@@ -175,7 +175,7 @@ elif [ $MODEL == "DVA3219" ]; then
 #elif [ $MODEL == "RS3413xs+" ]; then
 #    cecho y "Downloading peter's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
 #    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v3.10.108.ko" --output /home/tc/custom-module/redpill.ko
-elif [ $MODEL == "DS3622xs+" ]||[ $MODEL == "DS1621+" ]; then
+elif [ $MODEL == "DS3622xs+" ]||[ $ORIGIN_PLATFORM == "v1000" ]; then
     cecho y "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
     sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
     sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
