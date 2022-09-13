@@ -270,7 +270,7 @@ getvars()
         TARGET_PLATFORM="ds1520p"
         ORIGIN_PLATFORM="geminilake"        
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
-        sha256="3a8499c5f72d7241b81781ec741d4019eaa506e6e7a4fd17ce54fb149f6ffae6"
+        sha256="f19d2ac39fae564797c148929b8fe7c9740ac3a74099bf573b68df8fe0228cb3"
     elif [ "${1}" = "RS3413xs+" ]; then
         echo "Synology model ${1} jot mode not supported by m shell, Testing..."        
         exit 0        
@@ -280,7 +280,7 @@ getvars()
         TARGET_PLATFORM="rs3413xsp"
         ORIGIN_PLATFORM="bromolow"        
         SYNOMODEL="rs3413xsp_$TARGET_REVISION"
-        sha256="16446a2f8c157ecde3714d0dc1c37cf4e9fd8189286a6417d77c65c0ea87c8e5"
+        sha256="de2425d55667a1c67763aeea1155bc6e336fb419148bb70f1ae1243d914d34ff"
         
 #JUN MODE
     elif [ "${1}" = "DS918+J" ]; then           
