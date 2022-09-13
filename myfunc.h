@@ -76,6 +76,9 @@ set -u
 showlastupdate() {
     cat <<EOF
 
+# Update : Added support for DSM 7.1.1-42962
+# 2022.09.13
+
 # Update : Add DS1019+ Jot / Jun Mode
 # 2022.09.14
    
