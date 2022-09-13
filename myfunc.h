@@ -398,7 +398,7 @@ getvars()
         TARGET_PLATFORM="ds1019p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
-        sha256="a403809ab2cd476c944fdfa18cae2c2833e4af36230fa63f0cdee31a92bebba2"         
+        sha256="920b53b9022ebd4675049b43c493455a1307ec97344846ca9dfd25d964b75684"         
 
 # JUN MODE NEW MODEL TESTTING
     elif [ "${1}" = "RS3413xs+J" ]; then
