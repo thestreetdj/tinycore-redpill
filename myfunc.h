@@ -68,14 +68,14 @@ set -u
 # 2022.08.14
 # Update : Add RS3413xs+ Jot / Jun Mode
 # 2022.08.16
-# Update : Change to DSM 7.1.1-42661
-# 2022.09.06
+# Update : Added support for DSM 7.1.1-42962
+# 2022.09.13
 
 showlastupdate() {
     cat <<EOF
 
-# Update : Change to DSM 7.1.1-42661
-# 2022.09.06
+# Update : Added support for DSM 7.1.1-42962
+# 2022.09.13
    
 EOF
 }
