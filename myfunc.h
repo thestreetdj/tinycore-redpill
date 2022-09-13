@@ -70,12 +70,14 @@ set -u
 # 2022.08.16
 # Update : Added support for DSM 7.1.1-42962
 # 2022.09.13
+# Update : Add DS1019+ Jot / Jun Mode
+# 2022.09.14
 
 showlastupdate() {
     cat <<EOF
 
-# Update : Added support for DSM 7.1.1-42962
-# 2022.09.13
+# Update : Add DS1019+ Jot / Jun Mode
+# 2022.09.14
    
 EOF
 }
@@ -123,6 +125,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA3219
 ./$(basename ${0}) RS3618xs
 ./$(basename ${0}) RS3413xs+ (Not Suppoted, Testing...)
+./$(basename ${0}) DS1019+
 
 - for jun mode
 
@@ -142,6 +145,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DVA3219J   (Not Suppoted, Testing...)
 ./$(basename ${0}) RS3618xsJ
 ./$(basename ${0}) RS3413xs+J (Not Suppoted, Testing...)
+./$(basename ${0}) DS1019+J
 
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
@@ -259,6 +263,12 @@ getvars()
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
         sha256="da1851fbaed8cf99537f323539f2f56df81f84c87d430b57e1e7174858834508"
+    elif [ "${1}" = "DS1019+" ]; then        
+        DTC_BASE_MODEL="N"
+        TARGET_PLATFORM="ds1019p"
+        ORIGIN_PLATFORM="apollolake"
+        SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
+        sha256="c1ffb1b48301fbcf1ccffae00062e95c8b5b18d50a70c3fbb79ea12a38a39bb7"        
         
 # JOT MODE NEW MODEL TESTTING                
     elif [ "${1}" = "DS1520+" ]; then
@@ -381,6 +391,14 @@ getvars()
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
         sha256="2b7623a6781fe10e0eface1665d41dfe2e5adb033b26e50e27c3449aee5fe4b0"
+    elif [ "${1}" = "DS1019+J" ]; then
+        DTC_BASE_MODEL="N"
+        MSHELL_ONLY_MODEL="Y"        
+        TARGET_REVISION="42218"                                                                                                                                
+        TARGET_PLATFORM="ds1019p"
+        ORIGIN_PLATFORM="apollolake"
+        SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
+        sha256="a403809ab2cd476c944fdfa18cae2c2833e4af36230fa63f0cdee31a92bebba2"         
 
 # JUN MODE NEW MODEL TESTTING
     elif [ "${1}" = "RS3413xs+J" ]; then
