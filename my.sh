@@ -166,26 +166,26 @@ fi
 
 echo
 
-if [ $MODEL == "DS1621xs+" ]||[ $MODEL == "RS3618xs" ]||[ $MODEL == "FS2500" ]||[ $MODEL == "DS1019+" ]||[ $MODEL == "RS3413xs+" ]||[ $MODEL == "DS1520+" ]; then
-    cecho y "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
-elif [ $MODEL == "DVA3219" ]; then
-    cecho y "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
-    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-dva3219-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
-elif [ $MODEL == "DS3622xs+" ]||[ $MODEL == "DS920+" ]||[ $MODEL == "DVA1622" ]||[ $MODEL == "DS1621+" ]; then
-    cecho y "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
-    sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
+if [ $MODEL == "DS918+" ]||[ $MODEL == "DS3617xs" ]||[ $MODEL == "DVA3221" ]||[ $MODEL == "DS2422+" ]||[ $MODEL == "RS4021xs+" ]; then
+    cecho y "Downloading fabio's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
+    sudo curl --location --progress-bar "https://github.com/fbelavenuto/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
+    gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
+    sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko /home/tc/custom-module/redpill.ko
 elif [ $MODEL == "DS3615xs" ]; then
     cecho y "Downloading fabio's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
     sudo curl --location --progress-bar "https://github.com/fbelavenuto/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko.gz
     gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko.gz
     sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko /home/tc/custom-module/redpill.ko
+elif [ $MODEL == "DS3622xs+" ]||[ $MODEL == "DS920+" ]||[ $MODEL == "DVA1622" ]||[ $MODEL == "DS1621+" ]; then
+    cecho y "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
+    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+    sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
+elif [ $MODEL == "DVA3219" ]; then
+    cecho y "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
+    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-dva3219-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 else
-    cecho y "Downloading fabio's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-    sudo curl --location --progress-bar "https://github.com/fbelavenuto/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
-    gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
-    sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko /home/tc/custom-module/redpill.ko
+    cecho y "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
+    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 fi
 
 echo
