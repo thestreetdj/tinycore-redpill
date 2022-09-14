@@ -74,6 +74,9 @@ set -u
 # 2022.09.14
 # Update : Release DS1520+ jot mode
 # 2022.09.14
+# Update : Release DVA3219 jun mode
+# 2022.09.14
+
 
 showlastupdate() {
     cat <<EOF
@@ -85,6 +88,9 @@ showlastupdate() {
 # 2022.09.14
 
 # Update : Release DS1520+ jot mode
+# 2022.09.14
+
+# Update : Release DVA3219 jun mode
 # 2022.09.14
 
 EOF
@@ -150,7 +156,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) FS2500J
 ./$(basename ${0}) DS1621xs+J
 ./$(basename ${0}) RS4021xs+J 
-./$(basename ${0}) DVA3219J   (Not Suppoted, Testing...)
+./$(basename ${0}) DVA3219J
 ./$(basename ${0}) RS3618xsJ
 ./$(basename ${0}) RS3413xs+J (Not Suppoted, Testing...)
 ./$(basename ${0}) DS1019+J
@@ -404,10 +410,18 @@ getvars()
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
         sha256="920b53b9022ebd4675049b43c493455a1307ec97344846ca9dfd25d964b75684"         
+    elif [ "${1}" = "DVA3219J" ]; then
+        DTC_BASE_MODEL="N"    
+        MSHELL_ONLY_MODEL="Y"    
+        TARGET_REVISION="42218"                                                  
+        TARGET_PLATFORM="dva3219"
+        ORIGIN_PLATFORM="denverton"        
+        SYNOMODEL="dva3219_$TARGET_REVISION"                                     
+        sha256="3557df23ff6af9bbb0cf46872ba2fc09c344eb303a38e8283dbc9a46e5eae979"
 
 # JUN MODE NEW MODEL TESTTING
     elif [ "${1}" = "RS3413xs+J" ]; then
-        echo "Synology model ${1} jun mode not supported by m shell"
+        echo "Synology model ${1} jun mode not supported by m shell, Testing..."
         exit 0        
         
         DTC_BASE_MODEL="N"    
@@ -417,17 +431,6 @@ getvars()
         ORIGIN_PLATFORM="bromolow"        
         SYNOMODEL="rs3413xsp_$TARGET_REVISION"
         sha256="9796536979407817ca96aef07aaabb3f03252a8e54df0f64ff7caf3c737f0da9"        
-    elif [ "${1}" = "DVA3219J" ]; then
-        echo "Synology model ${1} jun mode not supported by m shell"
-        exit 0        
-        
-        DTC_BASE_MODEL="N"    
-        MSHELL_ONLY_MODEL="Y"    
-        TARGET_REVISION="42218"                                                  
-        TARGET_PLATFORM="dva3219"
-        ORIGIN_PLATFORM="denverton"        
-        SYNOMODEL="dva3219_$TARGET_REVISION"                                     
-        sha256="3557df23ff6af9bbb0cf46872ba2fc09c344eb303a38e8283dbc9a46e5eae979"
     elif [ "${1}" = "DVA1622J" ]; then
         DTC_BASE_MODEL="Y"    
         echo "Synology model ${1} jun mode not supported by m shell"
