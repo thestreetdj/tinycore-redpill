@@ -72,6 +72,8 @@ set -u
 # 2022.09.13
 # Update : Add DS1019+ Jot / Jun Mode
 # 2022.09.14
+# Update : Release DS1520+ jot mode
+# 2022.09.14
 
 showlastupdate() {
     cat <<EOF
@@ -81,7 +83,10 @@ showlastupdate() {
 
 # Update : Add DS1019+ Jot / Jun Mode
 # 2022.09.14
-   
+
+# Update : Release DS1520+ jot mode
+# 2022.09.14
+
 EOF
 }
 
@@ -121,13 +126,13 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS1621+
 ./$(basename ${0}) DS2422+
 ./$(basename ${0}) DVA1622
-./$(basename ${0}) DS1520+ (Not Suppoted, Testing...)
+./$(basename ${0}) DS1520+
 ./$(basename ${0}) FS2500
 ./$(basename ${0}) DS1621xs+
 ./$(basename ${0}) RS4021xs+
 ./$(basename ${0}) DVA3219
 ./$(basename ${0}) RS3618xs
-./$(basename ${0}) RS3413xs+ (Not Suppoted, Testing...)
+./$(basename ${0}) RS3413xs+ (Not Suppoted, Testing..., No synoboot)
 ./$(basename ${0}) DS1019+
 
 - for jun mode
@@ -272,18 +277,15 @@ getvars()
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
         sha256="91bb367f501a3d86988211b7e35f68809a8f967e6e4e54ff31ed89bd50a66cc9"        
-        
-# JOT MODE NEW MODEL TESTTING                
     elif [ "${1}" = "DS1520+" ]; then
-        echo "Synology model ${1} jot mode not supported by m shell, Testing..."        
-        exit 0        
-    
         DTC_BASE_MODEL="Y"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_PLATFORM="ds1520p"
         ORIGIN_PLATFORM="geminilake"        
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
         sha256="f19d2ac39fae564797c148929b8fe7c9740ac3a74099bf573b68df8fe0228cb3"
+        
+# JOT MODE NEW MODEL TESTTING                
     elif [ "${1}" = "RS3413xs+" ]; then
         echo "Synology model ${1} jot mode not supported by m shell, Testing..."        
         exit 0        
