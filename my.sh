@@ -45,6 +45,16 @@ cecho () {
     echo -e "$text"                                                                                                                                                 
 }   
 
+function checkmachine() {
+
+    if grep -q ^flags.*\ hypervisor\  /proc/cpuinfo; then
+        MACHINE="VIRTUAL"
+        HYPERVISOR=$(dmesg | grep -i "Hypervisor detected" | awk '{print $5}')
+        echo "Machine is $MACHINE Hypervisor=$HYPERVISOR"
+    fi
+
+}
+
 checkinternet
 getlatestmshell
 
@@ -278,7 +288,21 @@ fi
 echo
 
 if [ $noconfig == "Y" ] ; then                            
-    cecho r "SN Gen/Mac Gen/Vid/Pid/SataPortMap detection skipped!!"                                         
+    cecho r "SN Gen/Mac Gen/Vid/Pid/SataPortMap detection skipped!!"
+    
+    if [ $DTC_BASE_MODEL == "Y" ] ; then
+        cecho p "Device Tree based model does not need SataPortMap setting...."     
+    else
+        checkmachine
+
+        if [ "$MACHINE" = "VIRTUAL" ]; then
+            cecho p "Sataportmap,DiskIdxMap to blank for VIRTUAL MACHINE"
+            json="$(jq --arg var "" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+            json="$(jq --arg var "" '.extra_cmdline.DiskIdxMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json        
+            cat user_config.json
+        fi
+        
+    fi    
 else 
     cecho c "Before changing user_config.json" 
     cat user_config.json
@@ -317,16 +341,6 @@ else
         ./rploader.sh satamap    
         cat user_config.json        
     fi
-
-#    if [ "$MODEL" == "DS920+" ] || [ "$MODEL" == "DS1621+" ] || [ "$MODEL" == "DS2422+" ] || [ "$MODEL" == "DVA1622" ] || [ $MSHELL_ONLY_MODEL == "Y"  ] ; then
-#        cecho p "Device Tree based model does not need SataPortMap setting...."     
-#    else
-#        cecho p "Sataportmap,DiskIdxMap to blanc for dtc"
-#        json="$(jq --arg var "" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-#        json="$(jq --arg var "" '.extra_cmdline.DiskIdxMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json        
-#        cat user_config.json
-#    fi
-
 fi
 
 echo
