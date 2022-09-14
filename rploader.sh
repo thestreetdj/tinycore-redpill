@@ -1366,7 +1366,7 @@ function satamap() {
         lspci -d ::104
         lspci -d ::107 | awk '{print $1}'
     )
-    [ ! -z "$pcis" ] && echo ""
+    [ ! -z "$pcis" ] && echo
     # loop through non-SATA controllers
     for pci in $pcis; do
         # get attached block devices (exclude CD-ROMs)
