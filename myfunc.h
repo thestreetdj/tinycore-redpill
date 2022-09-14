@@ -76,6 +76,8 @@ set -u
 # 2022.09.14
 # Update : Release DVA3219 jun mode
 # 2022.09.14
+# Update : Sataportmap,DiskIdxMap to blank for VM with noconfig option
+# 2022.09.14
 
 
 showlastupdate() {
@@ -91,6 +93,9 @@ showlastupdate() {
 # 2022.09.14
 
 # Update : Release DVA3219 jun mode
+# 2022.09.14
+
+# Update : Sataportmap,DiskIdxMap to blank for VM with noconfig option
 # 2022.09.14
 
 EOF
