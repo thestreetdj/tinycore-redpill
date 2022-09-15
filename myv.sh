@@ -101,7 +101,7 @@ function EXDRIVER_FN() {
 		    if [ $TARGET_REVISION == "42218" ] ; then
                         ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json    
 		    else
-	    		./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
+	    		./rploader.sh ext ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
 	    	    fi
 
                 done < <(echo $I_O | tr ',' '\n')
@@ -117,7 +117,7 @@ function EXDRIVER_FN() {
 		if [ $TARGET_REVISION == "42218" ] ; then
 		    ./rploader.sh ext ${TARGET_PLATFORM}-7.0.1-${TARGET_REVISION}-JUN add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json    
     	        else
-		    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.0-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
+		    ./rploader.sh ext ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/$IEXT/rpext-index.json
 	        fi
 		
             fi
