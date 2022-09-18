@@ -51,6 +51,8 @@ function checkmachine() {
         MACHINE="VIRTUAL"
         HYPERVISOR=$(dmesg | grep -i "Hypervisor detected" | awk '{print $5}')
         echo "Machine is $MACHINE Hypervisor=$HYPERVISOR"
+    else
+        MACHINE="NON-VIRTUAL"
     fi
 
 }
