@@ -536,7 +536,7 @@
             },
             "redpill_load": {
                 "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-                "branch": "master"
+                "branch": "develop"
             },
              "add_extensions": [{
 		    "redpill-misc" : "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json"
