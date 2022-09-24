@@ -18,6 +18,7 @@ dtcbin="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/tools
 dtsfiles="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build"
 timezone="UTC"
 ntpserver="pool.ntp.org"
+userconfigfile="/home/tc/user_config.json"
 
 fullupdatefiles="custom_config.json custom_config_jun.json global_config.json modules.alias.3.json.gz modules.alias.4.json.gz rpext-index.json user_config.json dtc rploader.sh ds1621p.dts ds920p.dts"
 
