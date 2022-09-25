@@ -72,7 +72,7 @@ getvars "$1"
 #echo "$TARGET_PLATFORM"                                            
 #echo "$SYNOMODEL"                                      
 #echo "$sha256"
-echo "$FRIEND_MODE_YN"
+#echo "$FRIEND_MODE_YN"
 
 echo "Multi-argument input variable assignment mapping"
 jumkey="N"
@@ -152,7 +152,7 @@ fi
 #echo $manual
 #echo $realmac
 #echo $frmyv
-echo $friend_mode
+#echo $friend_mode
 
 if [ $jumkey == "Y" ] ; then 
     cecho p "The jumpkey option is deprecated, shell exit..."          
@@ -406,7 +406,7 @@ echo
 cecho g "Loader Building in progress..."
 echo
 
-if [ $manual == "Y"] && [ $friend_mode == "N" ]; then    
+if [ $manual == "Y" ] && [ $friend_mode == "N" ]; then    
     cecho r "Loader Manual Building in progress..." 
 
     if [ $TARGET_REVISION == "42218" ] ; then
