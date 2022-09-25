@@ -200,6 +200,7 @@ getvars()
     MSHELL_ONLY_MODEL="N"
     DTC_BASE_MODEL="N"
     ORIGIN_PLATFORM=""
+    FRIEND_MODE_YN="N"
 
 # JOT MODE
     if [ "${1}" = "DS918+" ] || [ "${1}" = "DS918+F" ]; then        
@@ -462,10 +463,21 @@ getvars()
     if [ $TARGET_REVISION == "42218" ] ; then
         MODEL="$(echo $tem | sed 's/J//g')"
     else
-        if [ "${1}" = "FS2500F" ]; then
+        if [ $tem = "FS2500F" ]; then
+            FRIEND_MODE_YN="Y"        
+            MODEL="FS2500"
+        elif [ $tem = "FS2500" ]; then    
+            FRIEND_MODE_YN="N"
             MODEL="FS2500"
         else
-            MODEL="$(echo $tem | sed 's/F//g')"
+            if [ $(echo $tem | grep F | wc -l) -gt 0 ]; then
+                FRIEND_MODE_YN="Y"
+                MODEL="$(echo $tem | sed 's/F//g')"
+            else
+                FRIEND_MODE_YN="N"
+                MODEL=$tem
+            fi
+            
         fi    
     fi
 
