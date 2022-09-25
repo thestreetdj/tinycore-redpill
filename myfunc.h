@@ -78,25 +78,17 @@ set -u
 # 2022.09.14
 # Update : Sataportmap,DiskIdxMap to blank for VM with noconfig option
 # 2022.09.14
-
+# Update : Release TCRP FRIEND mode
+# 2022.09.25
 
 showlastupdate() {
     cat <<EOF
 
-# Update : Added support for DSM 7.1.1-42962
-# 2022.09.13
-
-# Update : Add DS1019+ Jot / Jun Mode
-# 2022.09.14
-
-# Update : Release DS1520+ jot mode
-# 2022.09.14
-
-# Update : Release DVA3219 jun mode
-# 2022.09.14
-
 # Update : Sataportmap,DiskIdxMap to blank for VM with noconfig option
 # 2022.09.14
+
+# Update : Release TCRP FRIEND mode
+# 2022.09.25
 
 EOF
 }
@@ -166,6 +158,26 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) RS3413xs+J (Not Suppoted, Testing...)
 ./$(basename ${0}) DS1019+J
 
+- for friend mode
+
+./$(basename ${0}) DS918+F
+./$(basename ${0}) DS3617xsF                                                                                                    
+./$(basename ${0}) DS3615xsF                                                                                                    
+./$(basename ${0}) DS3622xs+F                                                                                                   
+./$(basename ${0}) DVA3221F                                                                                                     
+./$(basename ${0}) DS920+F                                                                                                      
+./$(basename ${0}) DS1621+F 
+./$(basename ${0}) DS2422+F  
+./$(basename ${0}) DVA1622F
+./$(basename ${0}) DS1520+F
+./$(basename ${0}) FS2500F
+./$(basename ${0}) DS1621xs+F
+./$(basename ${0}) RS4021xs+F 
+./$(basename ${0}) DVA3219F
+./$(basename ${0}) RS3618xsF
+./$(basename ${0}) RS3413xs+F (Not Suppoted, Testing...)
+./$(basename ${0}) DS1019+F
+
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
 - When you want to build the loader while maintaining the already set SN/Mac/Vid/Pid/SataPortMap
@@ -190,49 +202,49 @@ getvars()
     ORIGIN_PLATFORM=""
 
 # JOT MODE
-    if [ "${1}" = "DS918+" ]; then        
+    if [ "${1}" = "DS918+" || "${1}" = "DS918+F" ]; then        
         DTC_BASE_MODEL="N"
         TARGET_PLATFORM="apollolake"
         ORIGIN_PLATFORM=$TARGET_PLATFORM
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
         sha256="c1ffb1b48301fbcf1ccffae00062e95c8b5b18d50a70c3fbb79ea12a38a39bb7"
-    elif [ "${1}" = "DS3615xs" ]; then                                                                                                                     
+    elif [ "${1}" = "DS3615xs" || "${1}" = "DS3615xsF" ]; then                                                                                                                     
         DTC_BASE_MODEL="N"    
         TARGET_PLATFORM="bromolow"
         ORIGIN_PLATFORM=$TARGET_PLATFORM
         SYNOMODEL="ds3615xs_$TARGET_REVISION"                                                                                                                  
         sha256="b79c129354c203b7340010573d16b2d6ebc6a676c946579a959c891a70b8bcfc"
-    elif [ "${1}" = "DS3617xs" ]; then                                                                                                                     
+    elif [ "${1}" = "DS3617xs" || "${1}" = "DS3617xsF" ]; then                                                                                                                     
         DTC_BASE_MODEL="N"    
         TARGET_PLATFORM="broadwell"
         ORIGIN_PLATFORM=$TARGET_PLATFORM
         SYNOMODEL="ds3617xs_$TARGET_REVISION"                                                                                                                  
         sha256="2a556206201df10245dbcf4cf0366b2f32cb318cd705fbdd74412303d85e7267"
-    elif [ "${1}" = "DS3622xs+" ]; then
+    elif [ "${1}" = "DS3622xs+" || "${1}" = "DS3622xs+F" ]; then
         DTC_BASE_MODEL="N"    
         TARGET_PLATFORM="broadwellnk"
         ORIGIN_PLATFORM=$TARGET_PLATFORM
         SYNOMODEL="ds3622xsp_$TARGET_REVISION"
         sha256="b48aadaba7ff561b7d55aa9ed75f1f2f4c49c0c2f73ece4020f3ffd08f6bbfd0"
-    elif [ "${1}" = "DS1621+" ]; then
+    elif [ "${1}" = "DS1621+" || "${1}" = "DS1621+F" ]; then
         DTC_BASE_MODEL="Y"    
         TARGET_PLATFORM="v1000"
         ORIGIN_PLATFORM=$TARGET_PLATFORM
         SYNOMODEL="ds1621p_$TARGET_REVISION"                                                                                                                   
         sha256="bd88dfdf1eccdf7fefcdac67e11929818ae3aea938fd13286c1ac7b5aaa3964f"
-    elif [ "${1}" = "DVA3221" ]; then                                                                                                                      
+    elif [ "${1}" = "DVA3221" || "${1}" = "DVA3221F" ]; then                                                                                                                      
         DTC_BASE_MODEL="N"    
         TARGET_PLATFORM="denverton"
         ORIGIN_PLATFORM=$TARGET_PLATFORM
         SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
         sha256="d83044ff12c9ed81c5e7f5ba4b23b68d96c9a40c29a6a9e5c53ad807d1e27ed2"
-    elif [ "${1}" = "DVA1622" ]; then
+    elif [ "${1}" = "DVA1622" || "${1}" = "DVA1622F" ]; then
         DTC_BASE_MODEL="Y"    
         TARGET_PLATFORM="dva1622"
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="dva1622_$TARGET_REVISION"                                                                                                                   
         sha256="9106f6bcc52b4bc2b4ce82748788ca353ddecf8b7552e7c6fb477eb4eca42e67"
-    elif [ "${1}" = "DS920+" ]; then
+    elif [ "${1}" = "DS920+" || "${1}" = "DS920+F" ]; then
         DTC_BASE_MODEL="Y"    
         TARGET_PLATFORM="geminilake"
         ORIGIN_PLATFORM=$TARGET_PLATFORM
@@ -240,55 +252,55 @@ getvars()
         sha256="90b1bd215b85eb366b3d3b6bef6bb6bef657dd0caba032dae556717b58e44c06"
 
 # JOT MODE NEW MODEL SUCCESS
-    elif [ "${1}" = "DS2422+" ] ; then
+    elif [ "${1}" = "DS2422+" || "${1}" = "DS2422+F" ] ; then
         DTC_BASE_MODEL="Y"    
         MSHELL_ONLY_MODEL="Y"                
         TARGET_PLATFORM="ds2422p"
         ORIGIN_PLATFORM="v1000"
         SYNOMODEL="ds2422p_$TARGET_REVISION"                                                                                                                   
         sha256="a887cc3f06e2b51d34f682a1a812637486aeefbef57c309414f69c3e5514edef"
-    elif [ "${1}" = "DS1621xs+" ]; then
+    elif [ "${1}" = "DS1621xs+" || "${1}" = "DS1621xs+F" ]; then
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_PLATFORM="ds1621xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="ds1621xsp_$TARGET_REVISION"
         sha256="199d70693a7eb3a4ff69100bb2634c8b97b115f828bd1f6403d2832cce4e7052"
-    elif [ "${1}" = "RS4021xs+" ]; then
+    elif [ "${1}" = "RS4021xs+" || "${1}" = "RS4021xs+F" ]; then
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_PLATFORM="rs4021xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="rs4021xsp_$TARGET_REVISION"
         sha256="fd848be9336d8b5cc9b514e71d447c7612d0f542d373eef61a6d427430daa931"
-    elif [ "${1}" = "DVA3219" ]; then
+    elif [ "${1}" = "DVA3219" || "${1}" = "DVA3219F" ]; then
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_PLATFORM="dva3219"
         ORIGIN_PLATFORM="denverton"        
         SYNOMODEL="dva3219_$TARGET_REVISION"                                                                                                                   
         sha256="f03395fd9db108d2c5a684b6ba9b4fadc6b1ab05c4e227d401572c01ec4b3dca"                                                                              
-    elif [ "${1}" = "FS2500" ]; then
+    elif [ "${1}" = "FS2500" || "${1}" = "FS2500F" ]; then
         DTC_BASE_MODEL="Y"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_PLATFORM="fs2500"
         ORIGIN_PLATFORM="v1000"        
         SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
         sha256="1adc272ba9f308866dc69a8f550d4511966a1156c553f925be167815046a5ab4"
-    elif [ "${1}" = "RS3618xs" ]; then                                                                                                                     
+    elif [ "${1}" = "RS3618xs" || "${1}" = "RS3618xsF" ]; then                                                                                                                     
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"        
         TARGET_PLATFORM="rs3618xs"
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
         sha256="da1851fbaed8cf99537f323539f2f56df81f84c87d430b57e1e7174858834508"
-    elif [ "${1}" = "DS1019+" ]; then        
+    elif [ "${1}" = "DS1019+" || "${1}" = "DS1019+F" ]; then        
         DTC_BASE_MODEL="N"
         TARGET_PLATFORM="ds1019p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
         sha256="91bb367f501a3d86988211b7e35f68809a8f967e6e4e54ff31ed89bd50a66cc9"        
-    elif [ "${1}" = "DS1520+" ]; then
+    elif [ "${1}" = "DS1520+" || "${1}" = "DS1520+F" ]; then
         DTC_BASE_MODEL="Y"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_PLATFORM="ds1520p"
@@ -297,7 +309,7 @@ getvars()
         sha256="f19d2ac39fae564797c148929b8fe7c9740ac3a74099bf573b68df8fe0228cb3"
         
 # JOT MODE NEW MODEL TESTTING                
-    elif [ "${1}" = "RS3413xs+" ]; then
+    elif [ "${1}" = "RS3413xs+" || "${1}" = "RS3413xs+F" ]; then
         echo "Synology model ${1} jot mode not supported by m shell, Testing..."        
         exit 0        
     
@@ -450,7 +462,11 @@ getvars()
     if [ $TARGET_REVISION == "42218" ] ; then
         MODEL="$(echo $tem | sed 's/J//g')"
     else
-        MODEL=$tem
+        if [ "${1}" = "FS2500F" ]; then
+            MODEL="FS2500"
+        else
+            MODEL="$(echo $tem | sed 's/F//g')"
+        fi    
     fi
 
     echo "MODEL is $MODEL"
