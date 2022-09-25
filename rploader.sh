@@ -1,28 +1,31 @@
 #!/bin/bash
 #
 # Author : pocopico 
-# Date : 220607
-# Version : 0.8.0.3
+# Date : 220925
+# Version : 0.9.2.3
 
 # User Variables :
-rploaderver="0.8.0.3"
+rploaderver="0.9.2.3"
 build="main"
 rploaderfile="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/rploader.sh"
 rploaderrepo="https://github.com/pocopico/tinycore-redpill/raw/$build/"
 
-redpillextension="https://github.com/PeterSuh-Q3/rp-ext/raw/$build/redpill/rpext-index.json"
-modextention="https://github.com/PeterSuh-Q3/rp-ext/raw/$build/rpext-index.json"
+redpillextension="https://github.com/PeterSuh-Q3/rp-ext/raw/main/redpill/rpext-index.json"
+modextention="https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json"
 modalias4="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/modules.alias.4.json.gz"
 modalias3="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/modules.alias.3.json.gz"
-dtcbin="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/dtc"
+dtcbin="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/tools/dtc"
 dtsfiles="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build"
 timezone="UTC"
 ntpserver="pool.ntp.org"
+userconfigfile="/home/tc/user_config.json"
 
 fullupdatefiles="custom_config.json custom_config_jun.json global_config.json modules.alias.3.json.gz modules.alias.4.json.gz rpext-index.json user_config.json dtc rploader.sh ds1621p.dts ds920p.dts"
 
 # END Do not modify after this line
 ######################################################################################################
+
+# extract nano  LD_LIBRARY_PATH=/home/tc/archive/lib /home/tc/archive/synoarchive.nano -xvf ../synology_geminilake_dva1622.pat
 
 function history() {
 
@@ -49,11 +52,148 @@ function history() {
     0.7.1.8 Updated satamap function to fine tune SATA port identification and identify SATABOOT
     0.7.1.9 Updated patchdtc function to fix wrong port identification for VMware hosted systems
     0.8.0.0 Stable version. All new features will be moved to develop repo
+    0.8.0.0 Stable version. All new features will be moved to develop repo
     0.8.0.1 Updated postupdate to facilitate update to update2
     0.8.0.2 Updated satamap to support DUMMY PORT detection 
     0.8.0.3 Updated satamap to avoid the use of 0 in first controller that cause KP
+    0.9.0.0 Development version. Moving all new features to development build
+    0.9.0.1 Updated postupdate to facilitate update to update2
+    0.9.0.2 Added system monitor function 
+    0.9.0.3 Updated satamap to support DUMMY PORT detection 
+    0.9.0.4 More satamap fixes
+    0.9.0.5 Added the option to get grub variables into user_config.json
+    0.9.0.6 Experimental DVA1622 (geminilake) addition
+    0.9.0.7 Experimental DVA1622 serialgen
+    0.9.0.8 Experimental DVA1622 increase disk count to 16
+    0.9.0.9 Fixed missing bspatch
+    0.9.1.0 Added dtc depth patch
+    0.9.1.1 Default action for DTB system is to use the dtbpatch by fbelavenuto
+    0.9.1.2 Fixed a jq issue in listextension
+    0.9.1.3 Fixed bsdiff not found issue
+    0.9.1.4 Fixed overlaping downloadextractor processes
+    0.9.1.5 Enhanced postupdate process to update user_config.json to new format
+    0.9.1.6 Fixed compressed non-compressed RAMDISK issue 
+    0.9.1.7 Enhanced build process to update user_config.json during build process 
+    0.9.1.8 Enhanced build process to create friend files
+    0.9.1.9 Further enhanced build process 
+    0.9.2.0 Introducing TCRP Friend
+    0.9.2.1 If TCRP Friend is used then default option will be TCRP Friend
+    0.9.2.2 Upgrade your system by adding TCRP Friend with command bringfriend
+    0.9.2.3 Adding experimental DS2422+ support
     --------------------------------------------------------------------------------------
 EOF
+
+}
+
+function httpconf() {
+
+    cat >/home/tc/lighttpd.conf <<EOF
+server.document-root = "/home/tc/"
+server.modules  = ( "mod_cgi" , "mod_alias" )
+server.errorlog             = "/home/tc/error.log"
+server.pid-file             = "/home/tc/lighttpd.pid"
+server.username             = "tc"
+server.groupname            = "staff"
+server.port                 = 80
+alias.url       = ( "/rploader/" => "/home/tc/" )
+cgi.assign = ( ".sh" => "/usr/local/bin/bash" )
+index-file.names           = ( "index.html","index.htm", "index.sh" )
+EOF
+
+    sudo lighttpd -f /home/tc/lighttpd.conf
+
+}
+
+function getgrubconf() {
+
+    tcrpdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+    grubdisk="${tcrpdisk}1"
+
+    echo "Mounting bootloader disk to get grub contents"
+    sudo mount /dev/$grubdisk
+
+    if [ $(df | grep -i $grubdisk | wc -l) -gt 0 ]; then
+        echo -n "Mounted succesfully : $(df -h | grep $grubdisk)"
+        [ -f /mnt/$grubdisk/boot/grub/grub.cfg ] && [ $(cat /mnt/$grubdisk/boot/grub/grub.cfg | wc -l) -gt 0 ] && echo "  -> Grub cfg is accessible and readable"
+    else
+        echo "Couldnt mount device : $grubdisk "
+        exit 99
+    fi
+
+    echo "Getting known loader grub variables"
+
+    grep pid /mnt/$grubdisk/boot/grub/grub.cfg >/tmp/grub.vars
+
+    while IFS=" " read -r -a line; do
+        printf "%s\n" "${line[@]}"
+    done </tmp/grub.vars | egrep -i "sataportmap|sn|pid|vid|mac|hddhotplug|diskidxmap|netif_num" | sort | uniq >/tmp/known.vars
+
+    if [ -f /tmp/known.vars ]; then
+        echo "Sourcing vars, found in grub : "
+        . /tmp/known.vars
+        rows="%-15s| %-15s | %-10s | %-10s | %-10s | %-15s | %-15s %c\n"
+        printf "$rows" Serial Mac Netif_num PID VID SataPortMap DiskIdxMap
+        printf "$rows" $sn $mac1 $netif_num $pid $vid $SataPortMap $DiskIdxMap
+
+        echo "Checking user config against grub vars"
+
+        for var in pid vid sn mac1 SataPortMap DiskIdxMap; do
+            if [ $(jq -r .extra_cmdline.$var user_config.json) == "${!var}" ]; then
+                echo "Grub var $var = ${!var} Matches your user_config.json"
+            else
+                echo "Grub var $var = ${!var} does not match your user_config.json variable which is set to : $(jq -r .extra_cmdline.$var user_config.json) "
+                echo "Should we populate user_config.json with these variables ? [Yy/Nn] "
+                read answer
+                if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
+                    json="$(jq --arg newvar "${!var}" '.extra_cmdline.'$var'= $newvar' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+                else
+                    echo "OK, you can edit yourself later"
+                fi
+            fi
+        done
+
+    else
+
+        echo "Could not read variables"
+    fi
+
+}
+
+function monitor() {
+
+    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+    mount /dev/${loaderdisk}1
+    mount /dev/${loaderdisk}2
+
+    while [ -z "$GATEWAY_INTERFACE" ]; do
+        clear
+        echo -e "-------------------------------System Information----------------------------"
+        echo -e "Hostname:\t\t"$(hostname) "uptime:\t\t\t"$(uptime | awk '{print $3,$4}' | sed 's/,//')
+        echo -e "Manufacturer:\t\t"$(cat /sys/class/dmi/id/chassis_vendor) "Product Name:\t\t"$(cat /sys/class/dmi/id/product_name)
+        echo -e "Version:\t\t"$(cat /sys/class/dmi/id/product_version)
+        echo -e "Serial Number:\t\t"$(sudo cat /sys/class/dmi/id/product_serial)
+        echo -e "Machine Type:\t\t"$(
+            vserver=$(lscpu | grep Hypervisor | wc -l)
+            if [ $vserver -gt 0 ]; then echo "VM"; else echo "Physical"; fi
+        ) "Operating System:\t"$(grep PRETTY_NAME /etc/os-release | awk -F \= '{print $2}')
+        echo -e "Kernel:\t\t\t"$(uname -r)
+        echo -e ""$(lscpu | head -1)"\t" "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
+        echo -e "Active Users:\t\t"$(who -u | cut -d ' ' -f1 | grep -v USER | xargs -n1)
+        echo -e "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
+        [ $(ps -ef | grep -i sshd | wc -l) -gt 0 ] && echo -e "SSHD connections ready" || echo -e "SSHD connections not ready"
+        echo -e "-------------------------------Loader boot entries------------------------------"
+        grep -i menuentry /mnt/${loaderdisk}1/boot/grub/grub.cfg | awk -F \' '{print $2}'
+        echo -e "-------------------------------CPU/Memory Usage------------------------------"
+        echo -e "Memory Usage:\t"$(free | awk '/Mem/{printf("%.2f%"), $3/$2*100}')
+        echo -e "Swap Usage:\t"$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
+        echo -e "CPU Usage:\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
+        echo -e "-------------------------------Disk Usage >80%-------------------------------"
+        df -Ph | grep -v loop
+        [ $(lscpu | grep Hypervisor | wc -l) -gt 0 ] && echo "$(hostname) is a VM"
+
+        echo "Press ctrl-c to exti"
+        sleep 10
+    done
 
 }
 
@@ -392,13 +532,13 @@ function processpat() {
         echo -e "Configdir : $configdir \nConfigfile: $configfile \nPat URL : $pat_url"
         echo "Downloading pat file from URL : ${pat_url} "
 
-        if [ $(df -h ${local_cache} | grep mnt | awk '{print $4}' | cut -c 1-3) -le 370 ]; then
+        if [ $(df -h /${local_cache} | grep mnt | awk '{print $4}' | cut -c 1-3) -le 370 ]; then
             echo "No adequate space on ${local_cache} to download file into cache folder, clean up the space and restart"
             exit 99
         fi
 
-        [ -n $pat_url ] && curl --location ${pat_url} -o "${local_cache}/${SYNOMODEL}.pat"
-        patfile="${local_cache}/${SYNOMODEL}.pat"
+        [ -n $pat_url ] && curl --location ${pat_url} -o "/${local_cache}/${SYNOMODEL}.pat"
+        patfile="/${local_cache}/${SYNOMODEL}.pat"
         if [ -f ${patfile} ]; then
             testarchive ${patfile}
         else
@@ -464,6 +604,7 @@ function addrequiredexts() {
     if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] || [ ${TARGET_PLATFORM} = "dva1622" ] || [ ${TARGET_PLATFORM} = "ds2422p" ] || [ ${TARGET_PLATFORM} = "ds1520p" ] ; then
         echo "For user define dts file instaed of dtbpatch ext"
         patchdtc
+        echo "Patch dtc is superseded by fbelavenuto dtbpatch"
     fi
 
 }
@@ -482,16 +623,234 @@ function installapache() {
 
 }
 
+function updateuserconfig() {
+
+    echo "Checking user config for general block"
+    generalblock="$(jq -r -e '.general' $userconfigfile)"
+    if [ "$generalblock" = "null" ] || [ -n "$generalblock" ]; then
+        echo "Result=${generalblock}, File does not contain general block, adding block"
+
+        for field in model version zimghash rdhash usb_line sata_line; do
+            jsonfile=$(jq ".general+={\"$field\":\"\"}" $userconfigfile)
+            echo $jsonfile | jq . >$userconfigfile
+        done
+    fi
+}
+
+function updateuserconfigfield() {
+
+    block="$1"
+    field="$2"
+    value="$3"
+
+    if [ -n "$1 " ] && [ -n "$2" ]; then
+        jsonfile=$(jq ".$block+={\"$field\":\"$value\"}" $userconfigfile)
+        echo $jsonfile | jq . >$userconfigfile
+    else
+        echo "No values to update specified"
+    fi
+}
+
+removefriend() {
+
+    clear
+    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+
+    echo "------------------------------------------------------------------------------------------------------------"
+    echo "You are not satisfied with TCRP friend."
+    echo "Understandable, but you will not be able to perform automatic patching after updates."
+    echo "you can still though use the postupdate process instead or just set the default option to SATA or USB as usual"
+    echo "------------------------------------------------------------------------------------------------------------"
+
+    echo -n "Do you still want to remove TCRP Friend, please answer [Yy/Nn]"
+    read answer
+
+    if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
+
+        mount /dev/${loaderdisk}1 2>/dev/null
+        mount /dev/${loaderdisk}2 2>/dev/null
+        mount /dev/${loaderdisk}3 2>/dev/null
+
+        echo "Removing TCRP Friend from ${loaderdisk}3 "
+        [ -f /mnt/${loaderdisk}3/initrd-friend ] && sudo rm -rf /mnt/${loaderdisk}3/initrd-friend
+        [ -f /mnt/${loaderdisk}3/bzImage-friend ] && sudo rm -rf /mnt/${loaderdisk}3/bzImage-friend
+        echo "Removing initrd-dsm and zimage-dsm from ${loaderdisk}3 "
+        [ ! "$(sha256sum /mnt/${loaderdisk}3/initrd-dsm | awk '{print $2}')" = "$(sha256sum /mnt/${loaderdisk}1/rd.gz | awk '{print $2}')" ] && cp /mnt/${loaderdisk}3/initrd-dsm /mnt/${loaderdisk}1/rd.gz
+        [ -f /mnt/${loaderdisk}3/initrd-dsm ] && sudo rm -rf /mnt/${loaderdisk}3/initrd-dsm
+        [ ! "$(sha256sum /mnt/${loaderdisk}3/zImage-dsm | awk '{print $2}')" = "$(sha256sum /mnt/${loaderdisk}1/zImage | awk '{print $2}')" ] && cp /mnt/${loaderdisk}3/zImage-dsm /mnt/${loaderdisk}1/zImage
+        [ -f /mnt/${loaderdisk}3/zimage-dsm ] && sudo rm -rf /mnt/${loaderdisk}3/zimage-dsm
+        echo "Removing TCRP Friend Grub entry "
+        [ $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ] && sed -i "/Tiny Core Friend/,+9d" /mnt/${loaderdisk}1/boot/grub/grub.cfg
+
+        if [ "$MACHINE" = "VIRTUAL" ]; then
+            echo "Setting default boot entry to SATA"
+            cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" /mnt/${loaderdisk}1/boot/grub/grub.cfg
+        else
+            echo "Setting default boot entry to USB"
+            cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"0\"" /mnt/${loaderdisk}1/boot/grub/grub.cfg
+        fi
+    else
+        echo "OK ! Wise choice !!! "
+    fi
+
+}
+
+bringfriend() {
+
+    clear
+
+    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+
+    mount /dev/${loaderdisk}1 2>/dev/null
+    mount /dev/${loaderdisk}2 2>/dev/null
+    mount /dev/${loaderdisk}3 2>/dev/null
+
+    if [ -f /mnt/${loaderdisk}3/lastsession/user_config.json ]; then
+        cp /mnt/${loaderdisk}3/lastsession/user_config.json /home/tc/user_config.json
+        getgrubconf
+    else
+        getgrubconf
+    fi
+
+    if [ -f /mnt/${loaderdisk}3/bzImage-friend ] && [ -f /mnt/${loaderdisk}3/initrd-friend ] && [ -f /mnt/${loaderdisk}3/zImage-dsm ] && [ -f /mnt/${loaderdisk}3/initrd-dsm ] && [ -f /mnt/${loaderdisk}3/user_config.json ] && [ $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ]; then
+        echo "Your TCRP friend seems in place, do you want to re-run the process ?"
+        read answer
+        if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
+            echo "OK re-running the TCRP Friend bring over process"
+        else
+            echo "Wise choice"
+            exit 0
+        fi
+    fi
+
+    echo "You are upgrading your system with TCRP friend."
+    echo "Your system will still be able to boot using the USB/SATA options."
+    echo "After bringing over TCRP Friend, The default boot option will be set TCRP Friend."
+    echo "You will still have the option to move to SATA/USB but for automatic patching after an update,"
+    echo "please leave the default to TCRR Friend"
+
+    echo -n "If you agree with the above, please answer [Yy/Nn]"
+    read answer
+
+    if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
+
+        if [ ! -f /mnt/${loaderdisk}3/initrd-friend ] || [ ! -f /mnt/${loaderdisk}3/bzImage-friend ]; then
+
+            [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ] && bringoverfriend
+
+            if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
+
+                cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
+                cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
+
+            fi
+
+        else
+
+            [ $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ] || tcrpfriendentry | sudo tee --append /mnt/${loaderdisk}1/boot/grub/grub.cfg
+
+            # Compining rd.gz and custom.gz
+
+            echo "Compining rd.gz and custom.gz and copying zimage to ${loaderdisk}3 "
+
+            [ ! -d /home/tc/rd.temp ] && mkdir /home/tc/rd.temp
+            [ -d /home/tc/rd.temp ] && cd /home/tc/rd.temp
+            if [ "$(od /mnt/${loaderdisk}1/rd.gz | head -1 | awk '{print $2}')" = "000135" ]; then
+                RD_COMPRESSED="true"
+            else
+                RD_COMPRESSED="false"
+            fi
+
+            if [ "$RD_COMPRESSED" = "false" ]; then
+                echo "Ramdisk in not compressed "
+                cat /mnt/${loaderdisk}1/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+                (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) 2>&1 >/dev/null
+            else
+                unlzma -dc /mnt/${loaderdisk}1/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+                (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) 2>&1 >/dev/null
+            fi
+
+            . /home/tc/rd.temp/etc/VERSION
+
+            MODEL="$(grep upnpmodelname /home/tc/rd.temp/etc/synoinfo.conf | awk -F= '{print $2}' | sed -e 's/"//g')"
+            VERSION="${productversion}-${buildnumber}"
+
+            cp -f /mnt/${loaderdisk}1/zImage /mnt/${loaderdisk}3/zImage-dsm
+
+            updateuserconfig
+
+            updateuserconfigfield "general" "model" "$MODEL"
+            updateuserconfigfield "general" "version" "${VERSION}"
+            zimghash=$(sha256sum /mnt/${loaderdisk}2/zImage | awk '{print $1}')
+            updateuserconfigfield "general" "zimghash" "$zimghash"
+            rdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
+            updateuserconfigfield "general" "rdhash" "$rdhash"
+
+            USB_LINE="$(grep -A 5 "USB," /mnt/${loaderdisk}1/boot/grub/grub.cfg | grep linux | cut -c 16-999)"
+            SATA_LINE="$(grep -A 5 "SATA," /mnt/${loaderdisk}1/boot/grub/grub.cfg | grep linux | cut -c 16-999)"
+
+            echo "Updated user_config with USB Command Line : $USB_LINE"
+            json=$(jq --arg var "${USB_LINE}" '.general.usb_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
+            echo "Updated user_config with SATA Command Line : $SATA_LINE"
+            json=$(jq --arg var "${SATA_LINE}" '.general.sata_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
+
+            cp $userconfigfile /mnt/${loaderdisk}3/
+
+            echo "Setting default boot entry to TCRP Friend"
+            sudo sed -i "/set default=\"*\"/cset default=\"3\"" /mnt/${loaderdisk}1/boot/grub/grub.cfg
+
+            if [ ! -f /mnt/${loaderdisk}3/bzImage-friend ] || [ ! -f /mnt/${loaderdisk}3/initrd-friend ] || [ ! -f /mnt/${loaderdisk}3/zImage-dsm ] || [ ! -f /mnt/${loaderdisk}3/initrd-dsm ] || [ ! -f /mnt/${loaderdisk}3/user_config.json ] || [ ! $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ]; then
+                echo "ERROR !!! Something went wrong, please re-run the process"
+            fi
+            echo "Cleaning up temp files"
+            cd /home/tc
+            sudo rm -rf /home/tc/friend
+            sudo rm -rf /home/tc/rd.temp
+            echo "Unmounting file systems"
+            sudo umount /dev/${loaderdisk}1
+            sudo umount /dev/${loaderdisk}2
+
+        fi
+
+    else
+
+        echo "OK ! its your choice"
+        sudo umount /dev/${loaderdisk}1
+        sudo umount /dev/${loaderdisk}2
+    fi
+
+}
+
 function postupdate() {
 
     loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
 
     cd /home/tc
 
+    updateuserconfig
+    updateuserconfigfield "general" "model" "$MODEL"
+    updateuserconfigfield "general" "version" "${TARGET_VERSION}-${TARGET_REVISION}"
+
     echo "Creating temp ramdisk space" && mkdir /home/tc/ramdisk
 
     echo "Mounting partition ${loaderdisk}1" && sudo mount /dev/${loaderdisk}1
     echo "Mounting partition ${loaderdisk}2" && sudo mount /dev/${loaderdisk}2
+
+    zimghash=$(sha256sum /mnt/${loaderdisk}2/zImage | awk '{print $1}')
+    updateuserconfigfield "general" "zimghash" "$zimghash"
+    rdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
+    updateuserconfigfield "general" "rdhash" "$rdhash"
+
+    zimghash=$(sha256sum /mnt/${loaderdisk}2/zImage | awk '{print $1}')
+    updateuserconfigfield "general" "zimghash" "$zimghash"
+    rdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
+    updateuserconfigfield "general" "rdhash" "$rdhash"
+    echo "Backing up $userconfigfile "
+    cp $userconfigfile /mnt/${loaderdisk}3
 
     cd /home/tc/ramdisk
 
@@ -514,6 +873,7 @@ function postupdate() {
 
         if [ $(od /mnt/${loaderdisk}1/rd.gz | head -1 | awk '{print $2}') == "000135" ]; then
             sudo unlzma -c /mnt/${loaderdisk}1/rd.gz | cpio -idm
+            RD_COMPRESSED="yes"
         else
             sudo cat /mnt/${loaderdisk}1/rd.gz | cpio -idm
         fi
@@ -525,7 +885,13 @@ function postupdate() {
 
         if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
 
-            echo "Recreating ramdisk " && sudo find . 2>/dev/null | cpio -o -H newc -R root:root | xz -9 --format=lzma >../rd.gz
+            echo "Recreating ramdisk "
+
+            if [ "$RD_COMPRESSED" = "yes" ]; then
+                sudo find . 2>/dev/null | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >../rd.gz
+            else
+                sudo find . 2>/dev/null | sudo cpio -o -H newc -R root:root >../rd.gz
+            fi
 
             cd ..
 
@@ -537,7 +903,7 @@ function postupdate() {
 
             echo "Done"
         else
-
+            echo "Removing temp ramdisk space " && rm -rf ramdisk
             exit 0
 
         fi
@@ -555,6 +921,7 @@ function postupdate() {
     fi
 
 }
+
 function postupdatev1() {
 
     echo "Mounting root to get the latest dsmroot patch in /.syno/patch "
@@ -582,7 +949,7 @@ function postupdatev1() {
 
         echo "bspatch does not exist, bringing over from repo"
 
-        curl --location "https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/bspatch" -O
+        curl --location "https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/tools/bspatch" -O
 
         chmod 777 bspatch
         sudo mv bspatch /usr/local/bin/
@@ -761,6 +1128,102 @@ function removebundledexts() {
 
 }
 
+function downloadextractorv2() {
+
+    mkdir /home/tc/patch-extractor/
+
+    cd /home/tc/patch-extractor/
+
+    curl --insecure --location https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat --output /home/tc/oldpat.tar.gz
+    #[ -f /home/tc/oldpat.tar.gz ] && tar -C${temp_folder} -xf /home/tc/oldpat.tar.gz rd.gz
+
+    tar xvf ../oldpat.tar.gz hda1.tgz
+    tar xf hda1.tgz usr/lib
+    tar xf hda1.tgz usr/syno/sbin
+
+    mkdir /home/tc/patch-extractor/lib/
+
+    cp usr/lib/libicudata.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libicui18n.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libicuuc.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libjson.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libboost_program_options.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libboost_locale.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libboost_filesystem.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libboost_thread.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libboost_coroutine.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libboost_regex.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libapparmor.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libjson-c.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libsodium.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libboost_context.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libsynocrypto.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libsynocredentials.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libboost_iostreams.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libsynocore.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libicuio.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libboost_chrono.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libboost_date_time.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libboost_system.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libsynocodesign.so.7* /home/tc/patch-extractor/lib
+    cp usr/lib/libsynocredential.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libjson-glib-1.0.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libboost_serialization.so* /home/tc/patch-extractor/lib
+    cp usr/lib/libmsgpackc.so* /home/tc/patch-extractor/lib
+
+    cp -r usr/syno/sbin/synoarchive /home/tc/patch-extractor/
+
+    sudo rm -rf usr
+    sudo rm -rf ../oldpat.tar.gz
+    sudo rm -rf hda1.tgz
+
+    curl --silent --location https://github.com/pocopico/tinycore-redpill/blob/develop/tools/xxd?raw=true --output xxd
+
+    chmod +x xxd
+
+    ./xxd synoarchive | sed -s 's/000039f0: 0300/000039f0: 0100/' | ./xxd -r >synoarchive.nano
+    ./xxd synoarchive | sed -s 's/000039f0: 0300/000039f0: 0a00/' | ./xxd -r >synoarchive.smallpatch
+    ./xxd synoarchive | sed -s 's/000039f0: 0300/000039f0: 0000/' | ./xxd -r >synoarchive.system
+
+    chmod +x synoarchive.*
+
+    [ ! -d /mnt/${tcrppart}/auxfiles/patch-extractor ] && mkdir /mnt/${tcrppart}/auxfiles/patch-extractor
+
+    cp -rf /home/tc/patch-extractor/lib /mnt/${tcrppart}/auxfiles/patch-extractor/
+    cp -rf /home/tc/patch-extractor/synoarchive.* /mnt/${tcrppart}/auxfiles/patch-extractor/
+
+    ## get list of available pat versions from
+    curl --silent https://archive.synology.com/download/Os/DSM/ | grep "/download/Os/DSM/7" | awk '{print $2}' | awk -F\/ '{print $5}' | sed -s 's/"//g'
+    ## Get the selected update pats for your platform/version
+    curl --silent https://archive.synology.com/download/Os/DSM/7.1-42661-3 | grep href | grep apollolake | awk '{print $2}'
+    ## Select URL
+    curl --silent https://archive.synology.com/download/Os/DSM/7.1-42661-2 | grep href | grep apollolake | awk '{print $2}' | awk -F= '{print $2}'
+    ## URL
+    url=$(curl --silent https://archive.synology.com/download/Os/DSM/7.1-42661-3 | grep href | grep geminilake | awk '{print $2}' | awk -F= '{print $2}' | sed -s 's/"//g')
+
+    curl --location $url -O
+
+    patfile=$(echo $url | awk -F/ '{print $9}')
+
+    mkdir temp && cd temp
+
+    if [ -d /mnt/${tcrppart}/auxfiles/patch-extractor ] && [ -f /mnt/${tcrppart}/auxfiles/patch-extractor/synoarchive.nano ]; then
+        LD_LIBRARY_PATH=/mnt/${tcrppart}/auxfiles/patch-extractor/lib /mnt/${tcrppart}/auxfiles/patch-extractor/synoarchive.nano -xvf /home/tc/patch-extractor/$patfile
+    else
+        wecho "Extractor not found"
+    fi
+    ## Extract ramdisk
+
+    flashfile=$(ls flashupdate*s2*)
+
+    tar xvf $flashfile && tar xvf content.txz
+
+    mkdir rd.temp
+    cd rd.temp && unlzma -c ../rd.gz | cpio -idm
+    etc/VERSION
+
+}
+
 function fullupgrade() {
 
     backupdate="$(date +%Y-%b-%d-%H-%M)"
@@ -774,8 +1237,8 @@ function fullupgrade() {
 
         echo "Updating ${updatefile}"
 
-        sudo mv $updatefile old/${updatefile}.${backupdate}
-        sudo curl --location "${rploaderrepo}/${updatefile}" -O
+        [ -f ${updatefile} ] && sudo mv $updatefile old/${updatefile}.${backupdate}
+        sudo curl --insecure --silent --location "${rploaderrepo}/${updatefile}" -O
 
     done
 
@@ -1459,7 +1922,7 @@ function usbidentify() {
 
 function serialgen() {
 
-    shift 1
+    [ ! -z "$GATEWAY_INTERFACE" ] && shift 0 || shift 1
 
     [ "$2" == "realmac" ] && let keepmac=1 || let keepmac=0
 
@@ -1467,13 +1930,19 @@ function serialgen() {
         serial="$(generateSerial $1)"
         mac="$(generateMacAddress $1)"
         realmac=$(ifconfig eth0 | head -1 | awk '{print $NF}')
-        echo "Serial Number for Model : $serial"
-        echo "Mac Address for Model $1 : $mac "
+        echo "Serial Number for Model = $serial"
+        echo "Mac Address for Model $1 = $mac "
         [ $keepmac -eq 1 ] && echo "Real Mac Address : $realmac"
         [ $keepmac -eq 1 ] && echo "Notice : realmac option is requested, real mac will be used"
 
-        echo "Should i update the user_config.json with these values ? [Yy/Nn]"
-        read answer
+        if [ -z "$GATEWAY_INTERFACE" ]; then
+
+            echo "Should i update the user_config.json with these values ? [Yy/Nn]"
+            read answer
+        else
+            answer="y"
+        fi
+
         if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
             # sed -i "/\"sn\": \"/c\    \"sn\": \"$serial\"," user_config.json
             json="$(jq --arg var "$serial" '.extra_cmdline.sn = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
@@ -1847,6 +2316,22 @@ EOF
 
 }
 
+function tcrpfriendentry() {
+
+    cat <<EOF
+menuentry 'Tiny Core Friend' {
+        savedefault
+        set root=(hd0,msdos3)
+        echo Loading Linux...
+        linux /bzImage-friend loglevel=3 cde waitusb=5 vga=791
+        echo Loading initramfs...
+        initrd /initrd-friend
+        echo Booting TinyCore Friend
+}
+EOF
+
+}
+
 function showsyntax() {
     cat <<EOF
 $(basename ${0})
@@ -1856,9 +2341,9 @@ Version : $rploaderver
 
 Usage: ${0} <action> <platform version> <static or compile module> [extension manager arguments]
 
-Actions: build, ext, download, clean, update, listmod, serialgen, identifyusb, patchdtc, 
+Actions: build, ext, download, clean, update, fullupgrade, listmod, serialgen, identifyusb, patchdtc, 
 satamap, backup, backuploader, restoreloader, restoresession, mountdsmroot, postupdate,
-mountshare, version, help
+mountshare, version, monitor, getgrubconf, help
 
 ----------------------------------------------------------------------------------------
 Available platform versions:
@@ -1879,13 +2364,15 @@ Usage: ${0} <action> <platform version> <static or compile module> [extension ma
 
 Actions: build, ext, download, clean, update, listmod, serialgen, identifyusb, patchdtc, 
 satamap, backup, backuploader, restoreloader, restoresession, mountdsmroot, postupdate, 
-mountshare, version, help 
+mountshare, version, monitor, help 
 
 - build <platform> <option> : 
   Build the 💊 RedPill LKM and update the loader image for the specified platform version and update
   current loader.
 
-  Valid Options:     static/compile/manual 
+  Valid Options:     static/compile/manual/junmod/withfriend
+
+  ** withfriend add the TCRP friend and a boot option for auto patching 
   
 - ext <platform> <option> <URL> 
   Manage extensions using redpill extension manager. 
@@ -1905,6 +2392,10 @@ mountshare, version, help
   
 - update : 
   Checks github repo for latest version of rploader, and prompts you download and overwrite
+
+- fullupgrade : 
+  Performs a full upgrade of the local files to the latest available on the repo. It will
+  backup the current filed under /home/tc/old
   
 - listmods <platform>:
   Tries to figure out any required extensions. This usually are device modules
@@ -1951,7 +2442,22 @@ mountshare, version, help
   Prints rploader version and if the history option is passed then the version history is listed.
 
   Valid Options : history, shows rploader release history.
-  
+
+- monitor :
+  Prints system statistics related to TCRP loader 
+
+- getgrubconf :
+  Checks your user_config.json file variables against current grub.cfg variables and updates your
+  user_config.json accordingly
+
+- bringfriend
+  Downloads TCRP friend and makes it the default boot option. TCRP Friend is here to assist with
+  automated patching after an upgrade. No postupgrade actions will be required anymore, if TCRP
+  friend is left as the default boot option.
+
+- removefriend
+  Reverse bringfriend actions and remove TCRP from your loader 
+
 - help:           Show this page
 
 Version : $rploaderver
@@ -2082,14 +2588,6 @@ function getstaticmodule() {
 
 }
 
-function downloadtools() {
-
-    curl -s --progress-bar --location "https://packages.slackonly.com/pub/packages/14.1-x86_64/development/bsdiff/bsdiff-4.3-x86_64-1_slack.txz" --output /home/tc/bsdiff.txz
-    [ ! -f /home/tc/bsdiff.txz ] && echo "bsdiff binary was not downloaded"
-    [ -f /home/tc/bsdiff.txz ] && cd / && sudo tar xf /home/tc/bsdiff.txz && rm -rf /home/tc/bsdiff.txz && cd /home/tc
-
-}
-
 function buildloader() {
 
     tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
@@ -2110,8 +2608,6 @@ function buildloader() {
     fi
 
     removebundledexts
-
-    downloadtools
 
     if [ ! -d /lib64 ]; then
         sudo ln -s /lib /lib64
@@ -2141,12 +2637,12 @@ function buildloader() {
     else
 
         if [ -d /home/tc/custom-module ]; then
-#            echo "Want to use firmware files from /home/tc/custom-module/*.pat ? [yY/nN] : "
-#            read answer
+            #echo "Want to use firmware files from /home/tc/custom-module/*.pat ? [yY/nN] : "
+            #read answer
 
-#            if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
-                sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
-#            fi
+            #if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+            sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
+            #fi
         fi
 
     fi
@@ -2186,6 +2682,11 @@ function buildloader() {
 
     loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
 
+    # Unmount to make sure you are able to mount properly
+
+    sudo umount /dev/${loaderdisk}1
+    sudo umount /dev/${loaderdisk}2
+
     if [ -d localdiskp1 ]; then
         sudo mount /dev/${loaderdisk}1 localdiskp1
         echo "Mounting /dev/${loaderdisk}1 to localdiskp1 "
@@ -2209,6 +2710,20 @@ function buildloader() {
         sudo cp -rf part2/* localdiskp2/
         echo "Creating tinycore entry"
         tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
+
+        if [ "$WITHFRIEND" = "YES" ]; then
+
+            [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ] && bringoverfriend
+
+            if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
+
+                cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
+                cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
+
+                tcrpfriendentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            fi
+        fi
+
     else
         echo "ERROR: Failed to mount correctly all required partitions"
     fi
@@ -2216,6 +2731,64 @@ function buildloader() {
     echo "Entries in Localdisk bootloader : "
     echo "======================================================================="
     grep menuentry localdiskp1/boot/grub/grub.cfg
+
+    ### Updating user_config.json
+
+    updateuserconfigfield "general" "model" "$MODEL"
+    updateuserconfigfield "general" "version" "${TARGET_VERSION}-${TARGET_REVISION}"
+    zimghash=$(sha256sum /home/tc/redpill-load/localdiskp2/zImage | awk '{print $1}')
+    updateuserconfigfield "general" "zimghash" "$zimghash"
+    rdhash=$(sha256sum /home/tc/redpill-load/localdiskp2/rd.gz | awk '{print $1}')
+    updateuserconfigfield "general" "rdhash" "$rdhash"
+
+    USB_LINE="$(grep -A 5 "USB," /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | grep linux | cut -c 16-999)"
+    SATA_LINE="$(grep -A 5 "SATA," /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | grep linux | cut -c 16-999)"
+
+    echo "Updated user_config with USB Command Line : $USB_LINE"
+    json=$(jq --arg var "${USB_LINE}" '.general.usb_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
+    echo "Updated user_config with SATA Command Line : $SATA_LINE"
+    json=$(jq --arg var "${SATA_LINE}" '.general.sata_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
+
+    cp $userconfigfile /mnt/${loaderdisk}3/
+
+    if [ "$WITHFRIEND" = "YES" ]; then
+
+        cp localdiskp1/zImage /mnt/${loaderdisk}3/zImage-dsm
+
+        # Compining rd.gz and custom.gz
+
+        [ ! -d /home/tc/rd.temp ] && mkdir /home/tc/rd.temp
+        [ -d /home/tc/rd.temp ] && cd /home/tc/rd.temp
+        RD_COMPRESSED=$(cat /home/tc/redpill-load/config/$MODEL/${TARGET_VERSION}-${TARGET_REVISION}/config.json | jq -r -e ' .extra .compress_rd')
+
+        if [ "$RD_COMPRESSED" = "false" ]; then
+            echo "Ramdisk in not compressed "
+            cat /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
+            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
+            sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+            (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
+        else
+            unlzma -dc /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
+            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
+            sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+            (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
+        fi
+
+        echo "Setting default boot entry to TCRP Friend"
+        cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"3\"" localdiskp1/boot/grub/grub.cfg
+
+    else
+
+        if [ "$MACHINE" = "VIRTUAL" ]; then
+            echo "Setting default boot entry to SATA"
+            cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
+        fi
+
+    fi
+
+    cd /home/tc/redpill-load/
+
+    ####
 
     checkmachine
 
@@ -2229,6 +2802,9 @@ function buildloader() {
     sudo umount localdiskp1
     sudo umount localdiskp2
     sudo losetup -D
+
+    echo "Cleaning up files"
+    sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/redpill-load/loader.img
 
     echo "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
@@ -2251,6 +2827,29 @@ function buildloader() {
             cp -f ${patfile} ${local_cache}
         fi
     fi
+
+}
+
+function bringoverfriend() {
+
+    echo "Bringing over my friend"
+    [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
+
+    #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")
+    URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
+    for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
+
+    if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
+        FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
+        BZIMAGESHA256="$(grep bzImage-friend chksum | awk '{print $1}')"
+        INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
+        [ "$(sha256sum bzImage-friend | awk '{print $1}')" == "$BZIMAGESHA256" ] && echo "bzImage-friend checksum OK !" || echo "bzImage-friend checksum ERROR !" || exit 99
+        [ "$(sha256sum initrd-friend | awk '{print $1}')" == "$INITRDSHA256" ] && echo "initrd-friend checksum OK !" || echo "initrd-friend checksum ERROR !" || exit 99
+    else
+        echo "Could not find friend files, exiting" && exit 0
+    fi
+
+    cd /home/tc/redpill-load
 
 }
 
@@ -2359,11 +2958,13 @@ function getvars() {
     tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
 
+    [ ! -h /lib64 ] && ln -s /lib /lib64
+
     if [ ! -n "$(which bspatch)" ]; then
 
         echo "bspatch does not exist, bringing over from repo"
 
-        curl --location "https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/bspatch" -O
+        curl --location "https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/tools/bspatch" -O
 
         chmod 777 bspatch
         sudo mv bspatch /usr/local/bin/
@@ -2597,7 +3198,6 @@ function listextension() {
 
     if [ ! -z $1 ]; then
         echo "Searching for matching extension for $1"
-
         matchingextension=($(jq ". | select(.id | endswith(\"${1}\")) .url  " rpext-index.json))
 
         if [ ! -z $matchingextension ]; then
@@ -2631,182 +3231,208 @@ if [ $# -lt 2 ]; then
     syntaxcheck $@
 fi
 
-case $1 in
+if [ -z "$GATEWAY_INTERFACE" ]; then
 
-download)
-    getvars $2
-    checkinternet
-    gitdownload
-    ;;
+    case $1 in
 
-build)
+    download)
+        getvars $2
+        checkinternet
+        gitdownload
+        ;;
 
-    getvars $2
-    checkinternet
-#    getlatestrploader
-    gitdownload
+    build)
 
-    case $3 in
+        getvars $2
+        checkinternet
+#        getlatestrploader
+        gitdownload
 
-    compile)
-        prepareforcompile
-        if [ "$COMPILE_METHOD" = "toolkit_dev" ]; then
-            gettoolchain
-            compileredpill
+        [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
+
+        case $3 in
+
+        compile)
+            prepareforcompile
+            if [ "$COMPILE_METHOD" = "toolkit_dev" ]; then
+                gettoolchain
+                compileredpill
+                echo "Starting loader creation "
+                buildloader
+            else
+                getsynokernel
+                kernelprepare
+                compileredpill
+                echo "Starting loader creation "
+                buildloader
+            fi
+            ;;
+        manual)
+
+            echo "Using static compiled redpill extension"
+            getstaticmodule
+            echo "Got $REDPILL_MOD_NAME "
+            echo "Manual extension handling,skipping extension auto detection "
             echo "Starting loader creation "
             buildloader
+            [ $? -eq 0 ] && savesession
+            ;;
+
+        jun)
+            echo "Using static compiled redpill extension"
+            getstaticmodule
+            echo "Got $REDPILL_MOD_NAME "
+            listmodules
+            echo "Starting loader creation "
+            buildloader junmod
+            [ $? -eq 0 ] && savesession
+            ;;
+
+        static | *)
+            echo "No extra build option or static specified, using default <static> "
+            echo "Using static compiled redpill extension"
+            getstaticmodule
+            echo "Got $REDPILL_MOD_NAME "
+            listmodules
+            echo "Starting loader creation "
+            buildloader
+            [ $? -eq 0 ] && savesession
+            ;;
+
+        esac
+
+        ;;
+
+    \
+        ext)
+        getvars $2
+        checkinternet
+        gitdownload
+
+        if [ "$3" = "auto" ]; then
+            listmodules
         else
-            getsynokernel
-            kernelprepare
-            compileredpill
-            echo "Starting loader creation "
-            buildloader
+            ext_manager $@ # instead of listmodules
         fi
         ;;
-    manual)
 
-        echo "Using static compiled redpill extension"
+    restoresession)
+        getvars $2
+        checkinternet
+        gitdownload
+        restoresession
+        ;;
+
+    clean)
+        cleanloader
+        ;;
+
+    update)
+        checkinternet
+        getlatestrploader
+        ;;
+
+    listmods)
+        getvars $2
+        checkinternet
+        gitdownload
+        listmodules
+        echo "$extensionslist"
+        ;;
+
+    serialgen)
+        serialgen $@
+        ;;
+
+    interactive)
+        if [ -f interactive.sh ]; then
+            . ./interactive.sh
+        else
+            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/$build/interactive.sh" --output interactive.sh
+            . ./interactive.sh
+            exit 99
+        fi
+        ;;
+
+    identifyusb)
+        usbidentify
+        ;;
+
+    patchdtc)
+        getvars $2
+        checkinternet
+        patchdtc
+        ;;
+
+    satamap)
+        satamap $2
+        ;;
+
+    backup)
+        backup
+        ;;
+
+    backuploader)
+        backuploader
+        ;;
+
+    restoreloader)
+        restoreloader
+        ;;
+    postupdate)
+        getvars $2
+        checkinternet
+        gitdownload
         getstaticmodule
-        echo "Got $REDPILL_MOD_NAME "
-        echo "Manual extension handling,skipping extension auto detection "
-        echo "Starting loader creation "
-        buildloader
+        postupdate
         [ $? -eq 0 ] && savesession
         ;;
 
-    jun)
-        echo "Using static compiled redpill extension"
-        getstaticmodule
-        echo "Got $REDPILL_MOD_NAME "
-        listmodules
-        echo "Starting loader creation "
-        buildloader junmod
-        [ $? -eq 0 ] && savesession
+    mountdsmroot)
+        mountdsmroot
+        ;;
+    fullupgrade)
+        fullupgrade
         ;;
 
-    static | *)
-        echo "No extra build option or static specified, using default <static> "
-        echo "Using static compiled redpill extension"
-        getstaticmodule
-        echo "Got $REDPILL_MOD_NAME "
-        listmodules
-        echo "Starting loader creation "
-        buildloader
-        [ $? -eq 0 ] && savesession
+    mountshare)
+        mountshare
+        ;;
+    installapache)
+        installapache
+        ;;
+    version)
+        version $@
+        ;;
+    help)
+        showhelp
+        exit 99
+        ;;
+    monitor)
+        monitor
+        exit 0
+        ;;
+    getgrubconf)
+        getgrubconf
+        exit 0
+        ;;
+    bringfriend)
+        bringfriend
+        exit 0
+        ;;
+    removefriend)
+        removefriend
+        exit 0
+        ;;
+    *)
+        showsyntax
+        exit 99
         ;;
 
     esac
 
-    ;;
+else
 
-\
-    ext)
-    getvars $2
-    checkinternet
-    gitdownload
+    htmlstart
 
-    if [ "$3" = "auto" ]; then
-        listmodules
-    else
-        ext_manager $@ # instead of listmodules
-    fi
-    ;;
-
-restoresession)
-    getvars $2
-    checkinternet
-    gitdownload
-    restoresession
-    ;;
-
-clean)
-    cleanloader
-    ;;
-
-update)
-    checkinternet
-    getlatestrploader
-    ;;
-
-listmods)
-    getvars $2
-    checkinternet
-    gitdownload
-    listmodules
-    echo "$extensionslist"
-    ;;
-
-serialgen)
-    serialgen $@
-    ;;
-
-interactive)
-    if [ -f interactive.sh ]; then
-        . ./interactive.sh
-    else
-        curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/$build/interactive.sh" --output interactive.sh
-        . ./interactive.sh
-        exit 99
-    fi
-    ;;
-
-identifyusb)
-    usbidentify
-    ;;
-
-patchdtc)
-    getvars $2
-    checkinternet
-    patchdtc
-    ;;
-
-satamap)
-    satamap $2
-    ;;
-
-backup)
-    backup
-    ;;
-
-backuploader)
-    backuploader
-    ;;
-
-restoreloader)
-    restoreloader
-    ;;
-postupdate)
-    getvars $2
-    checkinternet
-    gitdownload
-    getstaticmodule
-    postupdate
-    [ $? -eq 0 ] && savesession
-    ;;
-
-mountdsmroot)
-    mountdsmroot
-    ;;
-fullupgrade)
-    fullupgrade
-    ;;
-
-mountshare)
-    mountshare
-    ;;
-installapache)
-    installapache
-    ;;
-version)
-    version $@
-    ;;
-help)
-    showhelp
-    exit 99
-    ;;
-*)
-    showsyntax
-    exit 99
-    ;;
-
-esac
+fi
