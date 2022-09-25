@@ -801,7 +801,7 @@ bringfriend() {
             cp $userconfigfile /mnt/${loaderdisk}3/
 
             echo "Setting default boot entry to TCRP Friend"
-            sudo sed -i "/set default=\"*\"/cset default=\"5\"" /mnt/${loaderdisk}1/boot/grub/grub.cfg
+            sudo sed -i "/set default=\"*\"/cset default=\"3\"" /mnt/${loaderdisk}1/boot/grub/grub.cfg
 
             if [ ! -f /mnt/${loaderdisk}3/bzImage-friend ] || [ ! -f /mnt/${loaderdisk}3/initrd-friend ] || [ ! -f /mnt/${loaderdisk}3/zImage-dsm ] || [ ! -f /mnt/${loaderdisk}3/initrd-dsm ] || [ ! -f /mnt/${loaderdisk}3/user_config.json ] || [ ! $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ]; then
                 echo "ERROR !!! Something went wrong, please re-run the process"
