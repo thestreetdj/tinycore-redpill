@@ -2836,8 +2836,11 @@ function bringoverfriend() {
     [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
     #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")
-    URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/v0.0.0 | jq -r ".assets[].browser_download_url")
-    for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
+#    URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
+#    for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
+
+    curl --insecure --location --progress-bar "https://github.com/pocopico/tcrpfriend/releases/download/v0.0.0/bzImage-friend" -O
+    curl --insecure --location --progress-bar "https://github.com/pocopico/tcrpfriend/releases/download/v0.0.0/initrd-friend" -O
 
     if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
         FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
