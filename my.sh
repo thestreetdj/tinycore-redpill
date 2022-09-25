@@ -72,6 +72,7 @@ getvars "$1"
 #echo "$TARGET_PLATFORM"                                            
 #echo "$SYNOMODEL"                                      
 #echo "$sha256"
+echo "$FRIEND_MODE_YN"
 
 echo "Multi-argument input variable assignment mapping"
 jumkey="N"
@@ -84,6 +85,10 @@ poco="N"
 realmac="N"
 frmyv="N"
 friend_mode="N"
+
+if [ $FRIEND_MODE_YN == "Y" ]; then
+    friend_mode="Y"
+fi
 
     while [[ "$#" > 0 ]] ; do
 
