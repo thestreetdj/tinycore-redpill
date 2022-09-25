@@ -227,11 +227,7 @@ cecho g "Downloading Peter Suh's custom configuration files.................."
 
 curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
 curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
-if [ $friend_mode == "Y" ] ; then
-    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader_fr.sh" --output rploader.sh
-else
-    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
-fi
+curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
 curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O  
 
 if [ $TARGET_REVISION == "42218" ] ; then
