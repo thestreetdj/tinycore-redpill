@@ -133,7 +133,7 @@ fi
             elif [ $1 = "FS2500" ]; then                                      
                 echo                                                          
             else                                                              
-                if [ "$(echo $1 | sed 's/J//g')" != "$MODEL" ] || [ "$(echo $1 | sed 's/F//g')" != "$MODEL" ] ; then
+                if [ "$(echo $1 | sed 's/J//g')" != "$MODEL" ] && [ "$(echo $1 | sed 's/F//g')" != "$MODEL" ] ; then
                     echo "Syntax error, not valid arguments or not enough options"
                     exit 0                                                        
                 fi                                                                
