@@ -241,7 +241,7 @@ if [ $TARGET_REVISION == "42218" ] ; then
 else
     echo
     if [ $friend_mode == "Y" ] ; then    
-        cecho y "This is TCRP original friend mode"
+        cecho y "This is TCRP friend mode"
     else    
         cecho y "This is TCRP original jot mode"
     fi
@@ -421,9 +421,9 @@ else
         ./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218-JUN jun                                                                        
     else
         if [ $friend_mode == "Y" ] ; then    
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}     
-        else
             echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} withfriend
+        else
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}
         fi
     fi
 fi 
