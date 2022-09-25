@@ -2842,15 +2842,15 @@ function bringoverfriend() {
     curl --insecure --location --progress-bar "https://github.com/pocopico/tcrpfriend/releases/download/v0.0.0/bzImage-friend" -O
     curl --insecure --location --progress-bar "https://github.com/pocopico/tcrpfriend/releases/download/v0.0.0/initrd-friend" -O
 
-    if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
-        FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
-        BZIMAGESHA256="$(grep bzImage-friend chksum | awk '{print $1}')"
-        INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
-        [ "$(sha256sum bzImage-friend | awk '{print $1}')" == "$BZIMAGESHA256" ] && echo "bzImage-friend checksum OK !" || echo "bzImage-friend checksum ERROR !" || exit 99
-        [ "$(sha256sum initrd-friend | awk '{print $1}')" == "$INITRDSHA256" ] && echo "initrd-friend checksum OK !" || echo "initrd-friend checksum ERROR !" || exit 99
-    else
-        echo "Could not find friend files, exiting" && exit 0
-    fi
+#    if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
+#        FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
+#        BZIMAGESHA256="$(grep bzImage-friend chksum | awk '{print $1}')"
+#        INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
+#        [ "$(sha256sum bzImage-friend | awk '{print $1}')" == "$BZIMAGESHA256" ] && echo "bzImage-friend checksum OK !" || echo "bzImage-friend checksum ERROR !" || exit 99
+#        [ "$(sha256sum initrd-friend | awk '{print $1}')" == "$INITRDSHA256" ] && echo "initrd-friend checksum OK !" || echo "initrd-friend checksum ERROR !" || exit 99
+#    else
+#        echo "Could not find friend files, exiting" && exit 0
+#    fi
 
     cd /home/tc/redpill-load
 
