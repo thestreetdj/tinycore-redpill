@@ -83,6 +83,7 @@ manual="N"
 poco="N"
 realmac="N"
 frmyv="N"
+friend_mode="N"
 
     while [[ "$#" > 0 ]] ; do
 
@@ -140,6 +141,7 @@ frmyv="N"
 #echo $manual
 #echo $realmac
 #echo $frmyv
+echo $friend_mode
 
 if [ $jumkey == "Y" ] ; then 
     cecho p "The jumpkey option is deprecated, shell exit..."          
@@ -214,7 +216,11 @@ cecho g "Downloading Peter Suh's custom configuration files.................."
 
 curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
 curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
-curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
+if [ $friend_mode == "Y" ] ; then
+    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader_fr.sh" --output rploader.sh
+else
+    curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
+fi
 curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O  
 
 if [ $TARGET_REVISION == "42218" ] ; then
@@ -223,8 +229,12 @@ if [ $TARGET_REVISION == "42218" ] ; then
 
 else
     echo
-    cecho y "This is TCRP original jot mode"
-
+    if [ $friend_mode == "Y" ] ; then    
+        cecho y "This is TCRP original friend mode"
+    else    
+        cecho y "This is TCRP original jot mode"
+    fi
+    
 fi   
 
 dtbfile=""     
@@ -385,7 +395,7 @@ echo
 cecho g "Loader Building in progress..."
 echo
 
-if [ $manual == "Y" ]; then    
+if [ $manual == "Y"] && [ $friend_mode == "N" ]; then    
     cecho r "Loader Manual Building in progress..." 
 
     if [ $TARGET_REVISION == "42218" ] ; then
@@ -399,7 +409,11 @@ else
     if [ $TARGET_REVISION == "42218" ] ; then
         ./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218-JUN jun                                                                        
     else
-        echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}     
+        if [ $friend_mode == "Y" ] ; then    
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}     
+        else
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} withfriend
+        fi
     fi
 fi 
 
