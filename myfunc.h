@@ -272,14 +272,7 @@ getvars()
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="ds1621xsp_$TARGET_REVISION"
         sha256="199d70693a7eb3a4ff69100bb2634c8b97b115f828bd1f6403d2832cce4e7052"
-    elif [ "${1}" = "RS4021xs+" ]; then
-        DTC_BASE_MODEL="N"    
-        MSHELL_ONLY_MODEL="Y"    
-        TARGET_PLATFORM="rs4021xsp"
-        ORIGIN_PLATFORM="broadwellnk"        
-        SYNOMODEL="rs4021xsp_$TARGET_REVISION"
-        sha256="fd848be9336d8b5cc9b514e71d447c7612d0f542d373eef61a6d427430daa931"
-    elif [ "${1}" = "RS4021xs+F" ]; then
+    elif [ "${1}" = "RS4021xs+" ] || [ "${1}" = "RS4021xs+F" ]; then
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"    
         TARGET_PLATFORM="rs4021xsp"
