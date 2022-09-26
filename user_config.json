@@ -3,23 +3,22 @@
     "pid": "0xa4a5",
     "vid": "0x0525",
     "sn": "1230LWN009033",
-    "mac1": "0011322A46E7",
-    "SataPortMap": "58",
-    "DiskIdxMap": "0A00"
+    "mac1": "0011322A46E9",
+    "SataPortMap": "",
+    "DiskIdxMap": ""
   },
   "synoinfo": {
-
-          "internalportcfg" : "0xffff",
-          "maxdisks" : "16",
-	      "support_bde_internal_10g" : "no",
-	      "support_disk_compatibility" : "no",
-          "support_memory_compatibility" : "no"
-
-
-},
+    "internalportcfg" : "0xffff",
+    "maxdisks" : "16",
+    "support_bde_internal_10g" : "no",
+    "support_disk_compatibility" : "no",
+    "support_memory_compatibility" : "no",
+  "rss_server": "https://raw.githubusercontent.com/pocopico/redpill-load/develop/rss.xml",
+  "rss_server_ssl": "https://raw.githubusercontent.com/pocopico/redpill-load/develop/rss.xml",
+  "rss_server_v2": "https://raw.githubusercontent.com/pocopico/redpill-load/develop/rss.json",
+  "small_info_path": "https://example.com/null",
+  "security_version_server": "https://example.com/smallupdate"
+  },
   "ramdisk_copy": {
-
-    
-}
-
+  }
 }
