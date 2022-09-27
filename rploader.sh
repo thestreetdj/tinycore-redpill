@@ -808,7 +808,7 @@ bringfriend() {
             fi
             echo "Cleaning up temp files"
             cd /home/tc
-            sudo rm -rf /home/tc/friend
+#            sudo rm -rf /home/tc/friend
             sudo rm -rf /home/tc/rd.temp
             echo "Unmounting file systems"
             sudo umount /dev/${loaderdisk}1
