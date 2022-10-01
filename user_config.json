@@ -4,6 +4,7 @@
     "vid": "0x0525",
     "sn": "1230LWN009033",
     "mac1": "0011322A46E9",
+    "netif_num": "1",
     "SataPortMap": "",
     "DiskIdxMap": ""
   },
