@@ -3207,7 +3207,18 @@ function listextension() {
         fi
 
         extensionslist+="${matchingextension} "
-        #echo $extensionslist
+        echo $extensionslist
+
+#m shell only
+        echo "Target Platform : ${TARGET_PLATFORM}"
+        if [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "rs4021xsp" ] || [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
+            if [ -d /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe ]; then
+                echo "Removing : PeterSuh-Q3.ixgbe"
+                echo "Reason : The Broadwellnk platform has a vanilla.ixgbe ext driver built into the DSM, so they conflict with each other if ixgbe is added separately."
+                sudo rm -rf /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe
+            fi
+        fi
+        
     else
         echo "No matching extension"
     fi
