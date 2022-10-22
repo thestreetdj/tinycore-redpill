@@ -1,12 +1,15 @@
 #!/bin/bash
 #
 # Author : pocopico 
-# Date : 220925
-# Version : 0.9.2.3
-
+# Date : 221020
+# Version : 0.9.2.9
+#
+#
 # User Variables :
-rploaderver="0.9.2.3"
+
+rploaderver="0.9.2.9"
 build="main"
+
 rploaderfile="https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/rploader.sh"
 rploaderrepo="https://github.com/pocopico/tinycore-redpill/raw/$build/"
 
@@ -20,7 +23,7 @@ timezone="UTC"
 ntpserver="pool.ntp.org"
 userconfigfile="/home/tc/user_config.json"
 
-fullupdatefiles="custom_config.json custom_config_jun.json global_config.json modules.alias.3.json.gz modules.alias.4.json.gz rpext-index.json user_config.json dtc rploader.sh ds1621p.dts ds920p.dts"
+fullupdatefiles="custom_config.json custom_config_jun.json global_config.json modules.alias.3.json.gz modules.alias.4.json.gz rpext-index.json user_config.json rploader.sh"
 
 # END Do not modify after this line
 ######################################################################################################
@@ -80,27 +83,63 @@ function history() {
     0.9.2.1 If TCRP Friend is used then default option will be TCRP Friend
     0.9.2.2 Upgrade your system by adding TCRP Friend with command bringfriend
     0.9.2.3 Adding experimental DS2422+ support
+    0.9.2.4 Added the redpillmake variable to select between prod and dev modules
+    0.9.2.5 Adding experimental RS4021xs+ support
+    0.9.2.6 Added the downloadupgradepat action **experimental
+    0.9.2.7 Added setting the static network configuration for TCRP Friend
+    0.9.2.8 Changed all curl calls to use the --insecure flag to avoid expired certificate issues
+    0.9.2.9 Added the smallfixnumber key in user_config.json and changed the platform ids to model ids
     --------------------------------------------------------------------------------------
 EOF
 
 }
 
+function setnetwork() {
+
+    if [ -f /opt/eth*.sh ] && [ "$(grep dhcp /opt/eth*.sh | wc -l)" -eq 0 ]; then
+
+        ipset="static"
+        ipgw="$(route | grep default | head -1 | awk '{print $2}')"
+        ipprefix="$(grep ifconfig /opt/eth*.sh | head -1 | awk '{print "ipcalc -p " $3 " " $5 }' | sh - | awk -F= '{print $2}')"
+        myip="$(grep ifconfig /opt/eth*.sh | head -1 | awk '{print $3 }')"
+        ipaddr="${myip}/${ipprefix}"
+        ipgw="$(grep route /opt/eth*.sh | head -1 | awk '{print  $5 }')"
+        ipdns="$(grep nameserver /opt/eth*.sh | head -1 | awk '{print  $3 }')"
+        ipproxy="$(env | grep -i http | awk -F= '{print $2}' | uniq)"
+
+        for field in ipset ipaddr ipgw ipdns ipproxy; do
+            jsonfile=$(jq ".ipsettings+={\"$field\":\"${!field}\"}" $userconfigfile)
+            echo $jsonfile | jq . >$userconfigfile
+        done
+
+    fi
+
+}
+
 function httpconf() {
 
+    tce-load -iw lighttpd 2>&1 >/dev/null
+
     cat >/home/tc/lighttpd.conf <<EOF
-server.document-root = "/home/tc/"
+server.document-root = "/home/tc/html"
 server.modules  = ( "mod_cgi" , "mod_alias" )
-server.errorlog             = "/home/tc/error.log"
-server.pid-file             = "/home/tc/lighttpd.pid"
+server.errorlog             = "/home/tc/html/error.log"
+server.pid-file             = "/home/tc/html/lighttpd.pid"
 server.username             = "tc"
 server.groupname            = "staff"
 server.port                 = 80
-alias.url       = ( "/rploader/" => "/home/tc/" )
+alias.url       = ( "/rploader/" => "/home/tc/html/" )
 cgi.assign = ( ".sh" => "/usr/local/bin/bash" )
 index-file.names           = ( "index.html","index.htm", "index.sh" )
+
 EOF
 
     sudo lighttpd -f /home/tc/lighttpd.conf
+
+    [ $(sudo netstat -an 2>/dev/null | grep LISTEN | grep ":80" 2>/dev/null | wc -l) -eq 1 ] && echo "Server started succesfully"
+
+    # Add entry to bootlocal and backup
+    # cat /opt/bootlocal.sh
 
 }
 
@@ -368,7 +407,7 @@ function downloadextractor() {
             echo "Processing old pat file to extract required files for extraction"
             tar -C${temp_folder} -xf /${patfile} rd.gz
         else
-            curl --location https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat --output /home/tc/oldpat.tar.gz
+            curl --insecure --location https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat --output /home/tc/oldpat.tar.gz
             [ -f /home/tc/oldpat.tar.gz ] && tar -C${temp_folder} -xf /home/tc/oldpat.tar.gz rd.gz
         fi
 
@@ -416,41 +455,7 @@ function processpat() {
     local_cache="/mnt/${tcrppart}/auxfiles"
     temp_pat_folder="/tmp/pat"
 
-    if [ "${TARGET_PLATFORM}" = "apollolake" ]; then
-        SYNOMODEL="ds918p_$TARGET_REVISION" && MODEL="DS918+"
-    elif [ "${TARGET_PLATFORM}" = "bromolow" ]; then
-        SYNOMODEL="ds3615xs_$TARGET_REVISION" && MODEL="DS3615xs"
-    elif [ "${TARGET_PLATFORM}" = "broadwell" ]; then
-        SYNOMODEL="ds3617xs_$TARGET_REVISION" && MODEL="DS3617xs"
-    elif [ "${TARGET_PLATFORM}" = "broadwellnk" ]; then
-        SYNOMODEL="ds3622xsp_$TARGET_REVISION" && MODEL="DS3622xs+"
-    elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
-        SYNOMODEL="ds1621xsp_$TARGET_REVISION" && MODEL="DS1621xs+"
-    elif [ "${TARGET_PLATFORM}" = "rs4021xsp" ]; then
-        SYNOMODEL="rs4021xsp_$TARGET_REVISION" && MODEL="RS4021xs+"
-    elif [ "${TARGET_PLATFORM}" = "v1000" ]; then
-        SYNOMODEL="ds1621p_$TARGET_REVISION" && MODEL="DS1621+"
-    elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
-        SYNOMODEL="dva3221_$TARGET_REVISION" && MODEL="DVA3221"
-    elif [ "${TARGET_PLATFORM}" = "dva3219" ]; then
-        SYNOMODEL="dva3219_$TARGET_REVISION" && MODEL="DVA3219"
-    elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
-        SYNOMODEL="ds920p_$TARGET_REVISION" && MODEL="DS920+"
-    elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
-        SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622"
-    elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
-        SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+"
-    elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
-        SYNOMODEL="ds1520p_$TARGET_REVISION" && MODEL="DS1520+"
-    elif [ "${TARGET_PLATFORM}" = "fs2500" ]; then
-        SYNOMODEL="fs2500_$TARGET_REVISION" && MODEL="FS2500"
-    elif [ "${TARGET_PLATFORM}" = "rs3618xs" ]; then
-        SYNOMODEL="rs3618xs_$TARGET_REVISION" && MODEL="RS3618xs"
-    elif [ "${TARGET_PLATFORM}" = "rs3413xsp" ]; then
-        SYNOMODEL="rs3413xsp_$TARGET_REVISION" && MODEL="RS3413xs+"
-    elif [ "${TARGET_PLATFORM}" = "ds1019p" ]; then
-        SYNOMODEL="ds1019p_$TARGET_REVISION" && MODEL="DS1019+"
-    fi
+    setplatform
 
     if [ ! -d "${temp_pat_folder}" ]; then
         echo "Creating temp folder ${temp_pat_folder} "
@@ -532,12 +537,12 @@ function processpat() {
         echo -e "Configdir : $configdir \nConfigfile: $configfile \nPat URL : $pat_url"
         echo "Downloading pat file from URL : ${pat_url} "
 
-        if [ $(df -h /${local_cache} | grep mnt | awk '{print $4}' | cut -c 1-3) -le 370 ]; then
+        if [ $(df -h /${local_cache} | grep mnt | awk '{print $4}' | sed -e 's/M//g' -e 's/G//g' | cut -c 1-3) -le 370 ]; then
             echo "No adequate space on ${local_cache} to download file into cache folder, clean up the space and restart"
             exit 99
         fi
 
-        [ -n $pat_url ] && curl --location ${pat_url} -o "/${local_cache}/${SYNOMODEL}.pat"
+        [ -n $pat_url ] && curl --insecure --location ${pat_url} -o "/${local_cache}/${SYNOMODEL}.pat"
         patfile="/${local_cache}/${SYNOMODEL}.pat"
         if [ -f ${patfile} ]; then
             testarchive ${patfile}
@@ -600,6 +605,7 @@ function addrequiredexts() {
         cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
     done
 
+#m shell only
  #Use user define dts file instaed of dtbpatch ext now
     if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] || [ ${TARGET_PLATFORM} = "dva1622" ] || [ ${TARGET_PLATFORM} = "ds2422p" ] || [ ${TARGET_PLATFORM} = "ds1520p" ] ; then
         echo "For user define dts file instaed of dtbpatch ext"
@@ -630,13 +636,13 @@ function updateuserconfig() {
     if [ "$generalblock" = "null" ] || [ -n "$generalblock" ]; then
         echo "Result=${generalblock}, File does not contain general block, adding block"
 
-        for field in model version zimghash rdhash usb_line sata_line; do
+        for field in model version smallfixnumber redpillmake zimghash rdhash usb_line sata_line; do
             jsonfile=$(jq ".general+={\"$field\":\"\"}" $userconfigfile)
             echo $jsonfile | jq . >$userconfigfile
         done
     fi
-}
 
+}
 function updateuserconfigfield() {
 
     block="$1"
@@ -745,7 +751,9 @@ bringfriend() {
 
             fi
 
-        else
+        fi
+
+        if [ -f /mnt/${loaderdisk}3/initrd-friend ] || [ -f /mnt/${loaderdisk}3/bzImage-friend ]; then
 
             [ $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ] || tcrpfriendentry | sudo tee --append /mnt/${loaderdisk}1/boot/grub/grub.cfg
 
@@ -782,9 +790,12 @@ bringfriend() {
             cp -f /mnt/${loaderdisk}1/zImage /mnt/${loaderdisk}3/zImage-dsm
 
             updateuserconfig
+            setnetwork
 
             updateuserconfigfield "general" "model" "$MODEL"
             updateuserconfigfield "general" "version" "${VERSION}"
+            updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}"
+            updateuserconfigfield "general" "redpillmake" "${redpillmake}"
             zimghash=$(sha256sum /mnt/${loaderdisk}2/zImage | awk '{print $1}')
             updateuserconfigfield "general" "zimghash" "$zimghash"
             rdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
@@ -808,7 +819,7 @@ bringfriend() {
             fi
             echo "Cleaning up temp files"
             cd /home/tc
-#            sudo rm -rf /home/tc/friend
+            sudo rm -rf /home/tc/friend
             sudo rm -rf /home/tc/rd.temp
             echo "Unmounting file systems"
             sudo umount /dev/${loaderdisk}1
@@ -832,9 +843,12 @@ function postupdate() {
     cd /home/tc
 
     updateuserconfig
+    setnetwork
+
     updateuserconfigfield "general" "model" "$MODEL"
     updateuserconfigfield "general" "version" "${TARGET_VERSION}-${TARGET_REVISION}"
-
+    updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}"
+    updateuserconfigfield "general" "redpillmake" "${redpillmake}"
     echo "Creating temp ramdisk space" && mkdir /home/tc/ramdisk
 
     echo "Mounting partition ${loaderdisk}1" && sudo mount /dev/${loaderdisk}1
@@ -908,6 +922,7 @@ function postupdate() {
 
         fi
 
+#m shell only
         checkmachine
 
         if [ "$MACHINE" = "VIRTUAL" ]; then
@@ -949,7 +964,7 @@ function postupdatev1() {
 
         echo "bspatch does not exist, bringing over from repo"
 
-        curl --location "https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/tools/bspatch" -O
+        curl --insecure --location "https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/tools/bspatch" -O
 
         chmod 777 bspatch
         sudo mv bspatch /usr/local/bin/
@@ -1118,7 +1133,7 @@ function removebundledexts() {
 
     echo "Removing bundled exts directories"
     for bundledext in $(grep ":" bundled-exts.json | awk '{print $2}' | sed -e 's/"//g' | sed -e 's/,/\n/g'); do
-        bundledextdir=$(curl --location -s "$bundledext" | jq -r -e '.id')
+        bundledextdir=$(curl --insecure --location -s "$bundledext" | jq -r -e '.id')
         if [ -d /home/tc/redpill-load/custom/extensions/${bundledextdir} ]; then
             echo "Removing : ${bundledextdir}"
             sudo rm -rf /home/tc/redpill-load/custom/extensions/${bundledextdir}
@@ -1130,18 +1145,17 @@ function removebundledexts() {
 
 function downloadextractorv2() {
 
-    mkdir /home/tc/patch-extractor/
+    [ ! -d /home/tc/patch-extractor/ ] && mkdir /home/tc/patch-extractor/
 
     cd /home/tc/patch-extractor/
 
-    curl --insecure --location https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat --output /home/tc/oldpat.tar.gz
-    #[ -f /home/tc/oldpat.tar.gz ] && tar -C${temp_folder} -xf /home/tc/oldpat.tar.gz rd.gz
+    [ -f /home/tc/oldpat.tar.gz ] || curl --insecure --location https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat --output /home/tc/oldpat.tar.gz
 
-    tar xvf ../oldpat.tar.gz hda1.tgz
+    tar xf ../oldpat.tar.gz hda1.tgz
     tar xf hda1.tgz usr/lib
     tar xf hda1.tgz usr/syno/sbin
 
-    mkdir /home/tc/patch-extractor/lib/
+    [ ! -d /home/tc/patch-extractor/lib/ ] && mkdir /home/tc/patch-extractor/lib/
 
     cp usr/lib/libicudata.so* /home/tc/patch-extractor/lib
     cp usr/lib/libicui18n.so* /home/tc/patch-extractor/lib
@@ -1177,7 +1191,7 @@ function downloadextractorv2() {
     sudo rm -rf ../oldpat.tar.gz
     sudo rm -rf hda1.tgz
 
-    curl --silent --location https://github.com/pocopico/tinycore-redpill/blob/develop/tools/xxd?raw=true --output xxd
+    curl --insecure --silent --location https://github.com/pocopico/tinycore-redpill/blob/main/tools/xxd?raw=true --output xxd
 
     chmod +x xxd
 
@@ -1190,37 +1204,108 @@ function downloadextractorv2() {
     [ ! -d /mnt/${tcrppart}/auxfiles/patch-extractor ] && mkdir /mnt/${tcrppart}/auxfiles/patch-extractor
 
     cp -rf /home/tc/patch-extractor/lib /mnt/${tcrppart}/auxfiles/patch-extractor/
-    cp -rf /home/tc/patch-extractor/synoarchive.* /mnt/${tcrppart}/auxfiles/patch-extractor/
+    cp -rf /home/tc/patch-extractor/synoarchive* /mnt/${tcrppart}/auxfiles/patch-extractor/
 
-    ## get list of available pat versions from
-    curl --silent https://archive.synology.com/download/Os/DSM/ | grep "/download/Os/DSM/7" | awk '{print $2}' | awk -F\/ '{print $5}' | sed -s 's/"//g'
-    ## Get the selected update pats for your platform/version
-    curl --silent https://archive.synology.com/download/Os/DSM/7.1-42661-3 | grep href | grep apollolake | awk '{print $2}'
-    ## Select URL
-    curl --silent https://archive.synology.com/download/Os/DSM/7.1-42661-2 | grep href | grep apollolake | awk '{print $2}' | awk -F= '{print $2}'
-    ## URL
-    url=$(curl --silent https://archive.synology.com/download/Os/DSM/7.1-42661-3 | grep href | grep geminilake | awk '{print $2}' | awk -F= '{print $2}' | sed -s 's/"//g')
+    sudo cp -rf /home/tc/patch-extractor/lib /lib
+    sudo cp -rf /home/tc/patch-extractor/synoarchive.* /bin
 
-    curl --location $url -O
+}
 
-    patfile=$(echo $url | awk -F/ '{print $9}')
+function downloadupgradepat() {
 
-    mkdir temp && cd temp
+    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
 
-    if [ -d /mnt/${tcrppart}/auxfiles/patch-extractor ] && [ -f /mnt/${tcrppart}/auxfiles/patch-extractor/synoarchive.nano ]; then
-        LD_LIBRARY_PATH=/mnt/${tcrppart}/auxfiles/patch-extractor/lib /mnt/${tcrppart}/auxfiles/patch-extractor/synoarchive.nano -xvf /home/tc/patch-extractor/$patfile
+    if [ ! -d /mnt/${tcrppart}/auxfiles/patch-extractor ] || [ ! -f /mnt/${tcrppart}/auxfiles/patch-extractor/synoarchive.nano ]; then
+        downloadextractorv2
     else
-        wecho "Extractor not found"
+        echo "Found locally cached extractor"
+        [ ! -h /lib64 ] && sudo ln -s /lib /lib64
+        sudo cp -f /mnt/${tcrppart}/auxfiles/patch-extractor/lib/* /lib/
+        sudo cp -f /mnt/${tcrppart}/auxfiles/patch-extractor/synoarchive* /bin
     fi
-    ## Extract ramdisk
 
-    flashfile=$(ls flashupdate*s2*)
+    cd /home/tc
 
-    tar xvf $flashfile && tar xvf content.txz
+    PS3="Select Model : "
 
-    mkdir rd.temp
-    cd rd.temp && unlzma -c ../rd.gz | cpio -idm
-    etc/VERSION
+    select model in $(ls /home/tc/redpill-load/config | grep -v common); do
+
+        echo "Selected model : ${model} "
+
+        PS3="Select update version : "
+        select version in $(curl --insecure --silent https://archive.synology.com/download/Os/DSM/ | grep "/download/Os/DSM/7" | awk '{print $2}' | awk -F\/ '{print $5}' | sed -s 's/"//g'); do
+            echo "Selected version : $version"
+            selectedmodel=$(echo $model | sed -e 's/DS//g' | sed -e 's/RS//g' | sed -e 's/DVA//g' | sed -e 's/+//g')
+            PS3="Select pat file URL : "
+            select patfile in $(curl --insecure --silent "https://archive.synology.com/download/Os/DSM/${version}" | grep href | grep -i $selectedmodel | awk '{print $2}' | sed -e 's/href=//g'); do
+
+                patfile="$(echo $patfile | sed -e 's/"//g')"
+                echo "Selected patfile :  $patfile "
+                patfilever="$(echo $patfile | awk -F\/ '{print $8}')"
+                updatepat="/home/tc/${model}_${patfilever}.pat"
+
+                echo "Downloading PAT file "
+                curl --insecure --progress-bar -L "$patfile" -o $updatepat
+
+                [ -f $updatepat ] && echo "Downloaded Patfile $updatepat "
+
+                extractdownloadpat "$version" && return
+
+            done
+
+        done
+
+    done
+
+}
+
+function extractdownloadpat() {
+
+    upgradepatdir="/home/tc/upgradepat"
+    temppat="/home/tc/temppat"
+
+    rm -rf $upgradepatdir
+    rm -rf $temppat
+
+    echo "Extracting pat file to find your files..."
+    [ ! -d $temppat ] && mkdir $temppat
+    cd $temppat
+
+    echo "Upgrade patfile $updatepat will be extracted to $temppat"
+
+    issystempat="$(echo $version | grep -i nano | wc -l)"
+
+    if [ $issystempat -eq 1 ]; then
+        echo "PAT file is a system nanopacked file "
+        synoarchive.system -xf ${updatepat}
+    else
+        echo "PAT file is a smallupdate file "
+        synoarchive.nano -xf ${updatepat}
+        tarfile="$(ls flash*update* | head -1 2>/dev/null)"
+        if [ ! -z $tarfile ]; then
+            tar xf $tarfile
+            tar xf content.txz
+        else
+            echo "update does not contain a flashupdate"
+        fi
+
+    fi
+
+    [ ! -d $upgradepatdir ] && mkdir $upgradepatdir
+
+    [ -f rd.gz ] && echo "Copying rd.gz to $upgradepatdir" && cp rd.gz $upgradepatdir
+    [ -f zImage ] && echo "Copying zImage to $upgradepatdir" && cp zImage $upgradepatdir
+
+    if [ -f $upgradepatdir/rd.gz ] && [ -f $upgradepatdir/zImage ]; then
+        cd /home/tc
+        echo "Cleaning up "
+        rm -rf $temppat
+        rm -rf $updatepat
+        echo "The initrd you need is -> $(ls $upgradepatdir/rd.gz) "
+    else
+        echo "Something went wrong or the update file does not contain rd.gz or zImage"
+    fi
 
 }
 
@@ -1231,7 +1316,7 @@ function fullupgrade() {
     echo "Performing a full TCRP upgrade"
     echo "Warning some of your local files will be moved to /home/tc/old/xxxx.${backupdate}"
 
-    [ ! -d /home/tc/old ] && mkdir /home/tc/old
+    mkdir -p /home/tc/old
 
     for updatefile in ${fullupdatefiles}; do
 
@@ -1239,6 +1324,7 @@ function fullupgrade() {
 
         [ -f ${updatefile} ] && sudo mv $updatefile old/${updatefile}.${backupdate}
         sudo curl --insecure --silent --location "${rploaderrepo}/${updatefile}" -O
+        [ ! -f ${updatefile} ] && mv old/${updatefile}.${backupdate} $updatefile
 
     done
 
@@ -1262,7 +1348,7 @@ function backuploader() {
         return
     fi
 
-    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | cut -c 1-3) -le 50 ]; then
+    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' -e 's/G//g' | cut -c 1-3) -le 50 ]; then
         echo "No adequate space on TCRP loader partition  /mnt/${tcrppart} "
         return
     fi
@@ -1492,7 +1578,7 @@ function patchdtc() {
     fi
 
     echo "Downloading dtc binary"
-    curl --location --progress-bar "$dtcbin" -O
+    curl --insecure --location --progress-bar "$dtcbin" -O
     chmod 700 dtc
 
     if [ -f /home/tc/custom-module/${dtbfile}.dts ] && [ ! -f /home/tc/custom-module/${dtbfile}.dtb ]; then
@@ -1538,7 +1624,7 @@ function dont_use_patchdtc() {
 
     if [ ! -f ${dtbfile}.dts ]; then
         echo "dts file for ${dtbfile} not found, trying to download"
-        curl --location --progress-bar -O "${dtsfiles}/${dtbfile}.dts"
+        curl --insecure --location --progress-bar -O "${dtsfiles}/${dtbfile}.dts"
     fi
 
     echo "Found $(echo $localdisks | wc -w) disks and $(echo $localnvme | wc -w) nvme"
@@ -1546,15 +1632,25 @@ function dont_use_patchdtc() {
     echo "Collecting disk paths"
 
     for disk in $localdisks; do
-        diskpath=$(udevadm info --query path --name $disk | awk -F "\/" '{print $4 ":" $5 }' | awk -F ":" '{print $2 ":" $3 "," $6}' | sed 's/,*$//')
+        diskdepth=$(udevadm info --query path --name $disk | awk -F"/" '{print NF-1}')
+        if [[ $diskdepth = 9 ]]; then
+            diskpath=$(udevadm info --query path --name $disk | awk -F "/" '{print $4 ":" $5 }' | awk -F ":" '{print $2 ":" $3 }')
+        elif [[ $diskdepth = 11 ]]; then
+            diskpath=$(udevadm info --query path --name $disk | awk -F "/" '{print $4 ":" $5 ":" $6 }' | awk -F ":" '{print $2 ":" $3 "," $6 "," $9 }')
+        else
+            diskpath=$(udevadm info --query path --name $disk | awk -F "/" '{print $4 ":" $5 }' | awk -F ":" '{print $2 ":" $3 "," $6}')
+        fi
+        #diskpath=$(udevadm info --query path --name $disk | awk -F "\/" '{print $4 ":" $5 }' | awk -F ":" '{print $2 ":" $3 "," $6}' | sed 's/,*$//')
         if [ "$HYPERVISOR" == "VMware" ]; then
-            diskport=$(udevadm info --query path --name $disk | sed -n '/target/{s/.*target[1-9]//;p;}' | awk -F: '{print $1}')
+            diskport=$(udevadm info --query path --name $disk | sed -n '/target/{s/.*target//;p;}' | awk -F: '{print $1}')
+            diskport=$(($diskport - 30)) && diskport=$(printf "%x" $diskport)
         else
             diskport=$(udevadm info --query path --name $disk | sed -n '/target/{s/.*target//;p;}' | awk -F: '{print $1}')
+            diskport=$(printf "%x" $diskport)
         fi
 
         echo "Found local disk $disk with path $diskpath, adding into internal_slot $diskslot with portnumber $diskport"
-        if [ "${dtbfile}" == "ds920p" ] || [ "${dtbfile}" == "ds918p" ];  then
+        if [ "${dtbfile}" == "ds920p" ] || [ "${dtbfile}" == "dva1622" ]; then
             sed -i "/internal_slot\@${diskslot} {/!b;n;n;n;n;n;n;n;cpcie_root = \"$diskpath\";" ${dtbfile}.dts
             sed -i "/internal_slot\@${diskslot} {/!b;n;n;n;n;n;n;n;n;cata_port = <0x$diskport>;" ${dtbfile}.dts
             let diskslot=$diskslot+1
@@ -2169,7 +2265,7 @@ function gettoolchain() {
         echo "File already cached"
     else
         echo "Downloading and caching toolchain"
-        curl --progress-bar --location "${TOOLKIT_URL}" --output dsm-toolchain.7.0.txz
+        curl --insecure --progress-bar --location "${TOOLKIT_URL}" --output dsm-toolchain.7.0.txz
     fi
 
     echo -n "Checking file -> "
@@ -2238,7 +2334,7 @@ function getsynokernel() {
         rm -rf synokernel.txz
     else
         echo "Downloading and caching synokernel"
-        cd /home/tc && curl --progress-bar --location ${SYNOKERNEL_URL} --output synokernel.txz
+        cd /home/tc && curl --insecure --progress-bar --location ${SYNOKERNEL_URL} --output synokernel.txz
         checkfilechecksum synokernel.txz ${SYNOKERNEL_SHA}
         echo "OK, file matches sha256sum, extracting"
         echo "Extracting synokernel"
@@ -2323,7 +2419,7 @@ menuentry 'Tiny Core Friend' {
         savedefault
         set root=(hd0,msdos3)
         echo Loading Linux...
-        linux /bzImage-friend loglevel=3 cde waitusb=5 vga=791
+        linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 
         echo Loading initramfs...
         initrd /initrd-friend
         echo Booting TinyCore Friend
@@ -2364,7 +2460,7 @@ Usage: ${0} <action> <platform version> <static or compile module> [extension ma
 
 Actions: build, ext, download, clean, update, listmod, serialgen, identifyusb, patchdtc, 
 satamap, backup, backuploader, restoreloader, restoresession, mountdsmroot, postupdate, 
-mountshare, version, monitor, help 
+mountshare, version, monitor, bringfriend, downloadupgradepat, help 
 
 - build <platform> <option> : 
   Build the 💊 RedPill LKM and update the loader image for the specified platform version and update
@@ -2402,7 +2498,7 @@ mountshare, version, monitor, help
   
 - serialgen <synomodel> <option> :
   Generates a serial number and mac address for the following platforms 
-  DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ FS2500 RS3618xs
+  DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DVA1622 DS2422+ RS4021xs+
   
   Valid Options :  realmac , keeps the real mac of interface eth0
   
@@ -2455,18 +2551,16 @@ mountshare, version, monitor, help
   automated patching after an upgrade. No postupgrade actions will be required anymore, if TCRP
   friend is left as the default boot option.
 
+- downloadupgradepat
+  Downloads a specific upgade pat that can be used for various troubleshooting purposes
+
 - removefriend
   Reverse bringfriend actions and remove TCRP from your loader 
 
 - help:           Show this page
 
+----------------------------------------------------------------------------------------
 Version : $rploaderver
-----------------------------------------------------------------------------------------
-Available platform versions:
-----------------------------------------------------------------------------------------
-$(getPlatforms)
-----------------------------------------------------------------------------------------
-Check custom_config.json for platform settings.
 EOF
 
 }
@@ -2513,63 +2607,34 @@ function getstaticmodule() {
     cd /home/tc
 
     if [ -d /home/tc/custom-module ] && [ -f /home/tc/custom-module/redpill.ko ]; then
-        echo "Found custom redpill module. Use this instead..."
-#        echo "Found custom redpill module, do you want to use this instead ? [yY/nN] : "
-#        read answer
+        #echo "Found custom redpill module, do you want to use this instead ? [yY/nN] : "
+        #read answer
 
-#        if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+        #if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
             REDPILL_MOD_NAME="redpill-linux-v$(modinfo /home/tc/custom-module/redpill.ko | grep vermagic | awk '{print $2}').ko"
             cp /home/tc/custom-module/redpill.ko /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
             strip --strip-debug /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
             return
-#        fi
+        #fi
 
     fi
 
     echo "Removing any old redpill.ko modules"
     [ -f /home/tc/redpill.ko ] && rm -f /home/tc/redpill.ko
 
-    extension=$(curl -s --location "$redpillextension")
+    extension=$(curl --insecure -s --location "$redpillextension")
 
-    if [ "${TARGET_PLATFORM}" = "apollolake" ]; then
-        SYNOMODEL="ds918p_$TARGET_REVISION"
-    elif [ "${TARGET_PLATFORM}" = "bromolow" ]; then
-        SYNOMODEL="ds3615xs_$TARGET_REVISION"
-    elif [ "${TARGET_PLATFORM}" = "broadwell" ]; then
-        SYNOMODEL="ds3617xs_$TARGET_REVISION"
-    elif [ "${TARGET_PLATFORM}" = "broadwellnk" ]; then
-        SYNOMODEL="ds3622xsp_$TARGET_REVISION"
-    elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
-        SYNOMODEL="ds1621xsp_$TARGET_REVISION"
-    elif [ "${TARGET_PLATFORM}" = "rs4021xsp" ]; then
-        SYNOMODEL="rs4021xsp_$TARGET_REVISION"
-    elif [ "${TARGET_PLATFORM}" = "v1000" ]; then
-        SYNOMODEL="ds1621p_$TARGET_REVISION"
-    elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
-        SYNOMODEL="dva3221_$TARGET_REVISION"
-    elif [ "${TARGET_PLATFORM}" = "dva3219" ]; then
-        SYNOMODEL="dva3219_$TARGET_REVISION"
-    elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
-        SYNOMODEL="ds920p_$TARGET_REVISION"
-    elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
-        SYNOMODEL="dva1622_$TARGET_REVISION"        
-    elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
-        SYNOMODEL="ds2422p_$TARGET_REVISION"   
-    elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
-        SYNOMODEL="ds1520p_$TARGET_REVISION"           
-    elif [ "${TARGET_PLATFORM}" = "rs3413xsp" ]; then
-        SYNOMODEL="rs3413xsp_$TARGET_REVISION"
-    fi
+    setplatform
 
     echo "Looking for redpill for : $SYNOMODEL "
 
     #release=`echo $extension |  jq -r '.releases .${SYNOMODEL}_{$TARGET_REVISION}'`
     release=$(echo $extension | jq -r -e --arg SYNOMODEL $SYNOMODEL '.releases[$SYNOMODEL]')
-    files=$(curl -s --location "$release" | jq -r '.files[] .url')
+    files=$(curl --insecure -s --location "$release" | jq -r '.files[] .url')
 
     for file in $files; do
         echo "Getting file $file"
-        curl -s -O $file
+        curl --insecure -s -O $file
         if [ -f redpill*.tgz ]; then
             echo "Extracting module"
             tar xf redpill*.tgz
@@ -2728,6 +2793,8 @@ function buildloader() {
         echo "ERROR: Failed to mount correctly all required partitions"
     fi
 
+    cd /home/tc/redpill-load
+
     echo "Entries in Localdisk bootloader : "
     echo "======================================================================="
     grep menuentry localdiskp1/boot/grub/grub.cfg
@@ -2736,6 +2803,8 @@ function buildloader() {
 
     updateuserconfigfield "general" "model" "$MODEL"
     updateuserconfigfield "general" "version" "${TARGET_VERSION}-${TARGET_REVISION}"
+    updateuserconfigfield "general" "redpillmake" "${redpillmake}"
+    updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}"
     zimghash=$(sha256sum /home/tc/redpill-load/localdiskp2/zImage | awk '{print $1}')
     updateuserconfigfield "general" "zimghash" "$zimghash"
     rdhash=$(sha256sum /home/tc/redpill-load/localdiskp2/rd.gz | awk '{print $1}')
@@ -2792,6 +2861,7 @@ function buildloader() {
 
     checkmachine
 
+#m shell only
     if [ "$MACHINE" = "VIRTUAL" ]; then
         echo "Setting default boot entry to SATA"
         sudo sed -i "/set default=\"0\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
@@ -2804,22 +2874,19 @@ function buildloader() {
     sudo losetup -D
 
     echo "Cleaning up files"
-    sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/redpill-load/loader.img
+    sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/redpill-load/loader.img /home/tc/cache/*pat
 
     echo "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
 
-    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | cut -c 1-3 | sed -e 's/M//g') -le 400 ]; then
+    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' -e 's/G//g' | cut -c 1-3) -le 400 ]; then
         echo "No adequate space on TCRP loader partition /mnt/${tcrppart} to cache pat file"
-        echo "Found $(ls /mnt/${tcrppart}/auxfiles/*pat) file, kepp this file"
-#        echo -n "Do you want me to remove older cached pat files and cache current ? [yY/nN] :"
-#        read answer
-#        if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
-#            rm -f /mnt/${tcrppart}/auxfiles/*.pat
-#            patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
-#            echo "Found ${patfile}, copying to cache directory : ${local_cache} "
-#            cp -f ${patfile} ${local_cache}
-#        fi
+        echo "Found $(ls /mnt/${tcrppart}/auxfiles/*pat) file"
+        echo "Removing older cached pat files to cache current"
+        rm -f /mnt/${tcrppart}/auxfiles/*.pat
+        patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
+        echo "Found ${patfile}, copying to cache directory : ${local_cache} "
+        cp -f ${patfile} ${local_cache} && rm /home/tc/redpill-load/cache/*.pat
     else
         if [ -f "$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)" ]; then
             patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
@@ -2849,8 +2916,6 @@ function bringoverfriend() {
         echo "Could not find friend files, exiting" && exit 0
     fi
 
-    cd /home/tc/redpill-load
-
 }
 
 function kernelprepare() {
@@ -2859,11 +2924,11 @@ function kernelprepare() {
 
     cd /home/tc/linux-kernel
     cp synoconfigs/${TARGET_PLATFORM} .config
-    if [ ${TARGET_PLATFORM} = "apollolake" ]; then
+    if [ ${TARGET_PLATFORM} = "apollolake" ] || [ ${TARGET_PLATFORM} = "ds918p" ]; then
         echo '+' >.scmversion
     fi
 
-    if [ ${TARGET_PLATFORM} = "bromolow" ]; then
+    if [ ${TARGET_PLATFORM} = "bromolow" ] || [ ${TARGET_PLATFORM} = "ds3615xs" ]; then
 
         cat <<EOF >patch-reloc
 --- arch/x86/tools/relocs.c
@@ -2895,10 +2960,10 @@ function getlatestrploader() {
 
     echo -n "Checking if a newer version exists on the $build repo -> "
 
-    curl -s --location "$rploaderfile" --output latestrploader.sh
-    curl -s --location "$modalias3" --output modules.alias.3.json.gz
+    curl --insecure -s --location "$rploaderfile" --output latestrploader.sh
+    curl --insecure -s --location "$modalias3" --output modules.alias.3.json.gz
     [ -f modules.alias.3.json.gz ] && gunzip -f modules.alias.3.json.gz
-    curl -s --location "$modalias4" --output modules.alias.4.json.gz
+    curl --insecure -s --location "$modalias4" --output modules.alias.4.json.gz
     [ -f modules.alias.4.json.gz ] && gunzip -f modules.alias.4.json.gz
 
     CURRENTSHA="$(sha256sum rploader.sh | awk '{print $1}')"
@@ -2929,12 +2994,52 @@ function getlatestrploader() {
 
 }
 
+function setplatform() {
+
+    if [ "${TARGET_PLATFORM}" = "apollolake" ] || [ "${TARGET_PLATFORM}" = "ds918p" ]; then
+        SYNOMODEL="ds918p_$TARGET_REVISION" && MODEL="DS918+"
+    elif [ "${TARGET_PLATFORM}" = "bromolow" ] || [ "${TARGET_PLATFORM}" = "ds3615xs" ]; then
+        SYNOMODEL="ds3615xs_$TARGET_REVISION" && MODEL="DS3615xs"
+    elif [ "${TARGET_PLATFORM}" = "broadwell" ] || [ "${TARGET_PLATFORM}" = "ds3617xs" ]; then
+        SYNOMODEL="ds3617xs_$TARGET_REVISION" && MODEL="DS3617xs"
+    elif [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "ds3622xsp" ]; then
+        SYNOMODEL="ds3622xsp_$TARGET_REVISION" && MODEL="DS3622xs+"
+    elif [ "${TARGET_PLATFORM}" = "v1000" ] || [ "${TARGET_PLATFORM}" = "ds1621p" ]; then
+        SYNOMODEL="ds1621p_$TARGET_REVISION" && MODEL="DS1621+"
+    elif [ "${TARGET_PLATFORM}" = "denverton" ] || [ "${TARGET_PLATFORM}" = "dva3221" ]; then
+        SYNOMODEL="dva3221_$TARGET_REVISION" && MODEL="DVA3221"
+    elif [ "${TARGET_PLATFORM}" = "geminilake" ] || [ "${TARGET_PLATFORM}" = "ds920p" ]; then
+        SYNOMODEL="ds920p_$TARGET_REVISION" && MODEL="DS920+"
+    elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
+        SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622"
+    elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
+        SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+"
+    elif [ "${TARGET_PLATFORM}" = "rs4021xsp" ]; then
+        SYNOMODEL="rs4021xsp_$TARGET_REVISION" && MODEL="RS4021xs+"
+    elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
+        SYNOMODEL="ds1621xsp_$TARGET_REVISION" && MODEL="DS1621xs+"
+    elif [ "${TARGET_PLATFORM}" = "dva3219" ]; then
+        SYNOMODEL="dva3219_$TARGET_REVISION" && MODEL="DVA3219"
+    elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
+        SYNOMODEL="ds1520p_$TARGET_REVISION" && MODEL="DS1520+"
+    elif [ "${TARGET_PLATFORM}" = "fs2500" ]; then
+        SYNOMODEL="fs2500_$TARGET_REVISION" && MODEL="FS2500"
+    elif [ "${TARGET_PLATFORM}" = "rs3618xs" ]; then
+        SYNOMODEL="rs3618xs_$TARGET_REVISION" && MODEL="RS3618xs"
+    elif [ "${TARGET_PLATFORM}" = "rs3413xsp" ]; then
+        SYNOMODEL="rs3413xsp_$TARGET_REVISION" && MODEL="RS3413xs+"
+    elif [ "${TARGET_PLATFORM}" = "ds1019p" ]; then
+        SYNOMODEL="ds1019p_$TARGET_REVISION" && MODEL="DS1019+"
+    fi
+
+}
+
 function getvars() {
 
     CONFIG=$(readConfig)
     selectPlatform $1
 
-    GETTIME=$(curl -v --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+    GETTIME=$(curl --insecure -v --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
     INTERNETDATE=$(date +"%d%m%Y" -d "$GETTIME")
     LOCALDATE=$(date +"%d%m%Y")
 
@@ -2958,13 +3063,15 @@ function getvars() {
     tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
 
-    [ ! -h /lib64 ] && ln -s /lib /lib64
+    [ ! -h /lib64 ] && sudo ln -s /lib /lib64
+
+    sudo chown -R tc:staff /home/tc
 
     if [ ! -n "$(which bspatch)" ]; then
 
         echo "bspatch does not exist, bringing over from repo"
 
-        curl --location "https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/tools/bspatch" -O
+        curl --insecure --location "https://raw.githubusercontent.com/pocopico/tinycore-redpill/$build/tools/bspatch" -O
 
         chmod 777 bspatch
         sudo mv bspatch /usr/local/bin/
@@ -2987,47 +3094,13 @@ function getvars() {
         KERNEL_MAJOR="3"
         MODULE_ALIAS_FILE="modules.alias.3.json"
         ;;
-    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds1019p | ds2422p | ds1520p | fs2500 | ds1621xsp|  rs4021xsp | dva3219 | rs3618xs)
+    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds1019p | ds2422p | ds1520p | fs2500 | ds1621xsp|  rs4021xsp | dva3219 | rs3618xs | *)
         KERNEL_MAJOR="4"
         MODULE_ALIAS_FILE="modules.alias.4.json"
         ;;
     esac
 
-    if [ "${TARGET_PLATFORM}" = "apollolake" ]; then
-        SYNOMODEL="ds918p_$TARGET_REVISION" && MODEL="DS918+"
-    elif [ "${TARGET_PLATFORM}" = "bromolow" ]; then
-        SYNOMODEL="ds3615xs_$TARGET_REVISION" && MODEL="DS3615xs"
-    elif [ "${TARGET_PLATFORM}" = "broadwell" ]; then
-        SYNOMODEL="ds3617xs_$TARGET_REVISION" && MODEL="DS3617xs"
-    elif [ "${TARGET_PLATFORM}" = "broadwellnk" ]; then
-        SYNOMODEL="ds3622xsp_$TARGET_REVISION" && MODEL="DS3622xs+"
-    elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
-        SYNOMODEL="ds1621xsp_$TARGET_REVISION" && MODEL="DS1621xs+"
-    elif [ "${TARGET_PLATFORM}" = "rs4021xsp" ]; then
-        SYNOMODEL="rs4021xsp_$TARGET_REVISION" && MODEL="RS4021xs+"
-    elif [ "${TARGET_PLATFORM}" = "v1000" ]; then
-        SYNOMODEL="ds1621p_$TARGET_REVISION" && MODEL="DS1621+"
-    elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
-        SYNOMODEL="dva3221_$TARGET_REVISION" && MODEL="DVA3221"
-    elif [ "${TARGET_PLATFORM}" = "dva3219" ]; then
-        SYNOMODEL="dva3219_$TARGET_REVISION" && MODEL="DVA3219"
-    elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
-        SYNOMODEL="ds920p_$TARGET_REVISION" && MODEL="DS920+"
-    elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
-        SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622"
-    elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
-        SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+"
-    elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
-        SYNOMODEL="ds1520p_$TARGET_REVISION" && MODEL="DS1520+"        
-    elif [ "${TARGET_PLATFORM}" = "fs2500" ]; then
-        SYNOMODEL="fs2500_$TARGET_REVISION" && MODEL="FS2500"
-    elif [ "${TARGET_PLATFORM}" = "rs3618xs" ]; then
-        SYNOMODEL="rs3618xs_$TARGET_REVISION" && MODEL="RS3618xs"
-    elif [ "${TARGET_PLATFORM}" = "rs3413xsp" ]; then
-        SYNOMODEL="rs3413xsp_$TARGET_REVISION" && MODEL="RS3413xs+"
-    elif [ "${TARGET_PLATFORM}" = "ds1019p" ]; then
-        SYNOMODEL="ds1019p_$TARGET_REVISION" && MODEL="DS1019+"
-    fi
+    setplatform
 
     #echo "Platform : $platform_selected"
     echo "Rploader Version : ${rploaderver}"
@@ -3190,7 +3263,7 @@ function listmodules() {
 function listextension() {
 
     if [ ! -f rpext-index.json ]; then
-        curl --progress-bar --location "${modextention}" --output rpext-index.json
+        curl --insecure --progress-bar --location "${modextention}" --output rpext-index.json
     fi
 
     ## Get extension author rpext-index.json and then parse for extension download with :
@@ -3359,7 +3432,7 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         if [ -f interactive.sh ]; then
             . ./interactive.sh
         else
-            curl --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/$build/interactive.sh" --output interactive.sh
+            curl --insecure --location --progress-bar "https://github.com/pocopico/tinycore-redpill/raw/$build/interactive.sh" --output interactive.sh
             . ./interactive.sh
             exit 99
         fi
@@ -3433,6 +3506,10 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         ;;
     removefriend)
         removefriend
+        exit 0
+        ;;
+    downloadupgradepat)
+        downloadupgradepat
         exit 0
         ;;
     *)
