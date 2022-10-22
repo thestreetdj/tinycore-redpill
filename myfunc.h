@@ -82,18 +82,20 @@ set -u
 # 2022.09.25
 # Update : Change to stable redpill kernel ( DS1621xs+, DVA3221, RS3618xs )
 # 2022.09.26
+# Update : Synchronization according to the TCRP Platform naming convention
+# 2022.10.22
 
 showlastupdate() {
     cat <<EOF
-
-# Update : Sataportmap,DiskIdxMap to blank for VM with noconfig option
-# 2022.09.14
 
 # Update : Release TCRP FRIEND mode
 # 2022.09.25
 
 # Update : Change to stable redpill kernel ( DS1621xs+, DVA3221, RS3618xs )
 # 2022.09.26
+
+# Update : Synchronization according to the TCRP Platform naming convention
+# 2022.10.22
 
 EOF
 }
@@ -210,38 +212,38 @@ getvars()
 # JOT MODE
     if [ "${1}" = "DS918+" ] || [ "${1}" = "DS918+F" ]; then        
         DTC_BASE_MODEL="N"
-        TARGET_PLATFORM="apollolake"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="ds918p"
+        ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
         sha256="c1ffb1b48301fbcf1ccffae00062e95c8b5b18d50a70c3fbb79ea12a38a39bb7"
     elif [ "${1}" = "DS3615xs" ] || [ "${1}" = "DS3615xsF" ]; then                                                                                                                     
         DTC_BASE_MODEL="N"    
-        TARGET_PLATFORM="bromolow"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="ds3615xs"
+        ORIGIN_PLATFORM="bromolow"
         SYNOMODEL="ds3615xs_$TARGET_REVISION"                                                                                                                  
         sha256="b79c129354c203b7340010573d16b2d6ebc6a676c946579a959c891a70b8bcfc"
     elif [ "${1}" = "DS3617xs" ] || [ "${1}" = "DS3617xsF" ]; then                                                                                                                     
         DTC_BASE_MODEL="N"    
-        TARGET_PLATFORM="broadwell"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="ds3617xs"
+        ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="ds3617xs_$TARGET_REVISION"                                                                                                                  
         sha256="2a556206201df10245dbcf4cf0366b2f32cb318cd705fbdd74412303d85e7267"
     elif [ "${1}" = "DS3622xs+" ] || [ "${1}" = "DS3622xs+F" ]; then
         DTC_BASE_MODEL="N"    
-        TARGET_PLATFORM="broadwellnk"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="ds3622xsp"
+        ORIGIN_PLATFORM="broadwellnk"
         SYNOMODEL="ds3622xsp_$TARGET_REVISION"
         sha256="b48aadaba7ff561b7d55aa9ed75f1f2f4c49c0c2f73ece4020f3ffd08f6bbfd0"
     elif [ "${1}" = "DS1621+" ] || [ "${1}" = "DS1621+F" ]; then
         DTC_BASE_MODEL="Y"    
-        TARGET_PLATFORM="v1000"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="ds1621p"
+        ORIGIN_PLATFORM="v1000"
         SYNOMODEL="ds1621p_$TARGET_REVISION"                                                                                                                   
         sha256="bd88dfdf1eccdf7fefcdac67e11929818ae3aea938fd13286c1ac7b5aaa3964f"
     elif [ "${1}" = "DVA3221" ] || [ "${1}" = "DVA3221F" ]; then                                                                                                                      
         DTC_BASE_MODEL="N"    
-        TARGET_PLATFORM="denverton"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="dva3221"
+        ORIGIN_PLATFORM="denverton"
         SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
         sha256="d83044ff12c9ed81c5e7f5ba4b23b68d96c9a40c29a6a9e5c53ad807d1e27ed2"
     elif [ "${1}" = "DVA1622" ] || [ "${1}" = "DVA1622F" ]; then
@@ -252,8 +254,8 @@ getvars()
         sha256="9106f6bcc52b4bc2b4ce82748788ca353ddecf8b7552e7c6fb477eb4eca42e67"
     elif [ "${1}" = "DS920+" ] || [ "${1}" = "DS920+F" ]; then
         DTC_BASE_MODEL="Y"    
-        TARGET_PLATFORM="geminilake"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="ds920p"
+        ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
         sha256="90b1bd215b85eb366b3d3b6bef6bb6bef657dd0caba032dae556717b58e44c06"
 
@@ -330,50 +332,50 @@ getvars()
     elif [ "${1}" = "DS918+J" ]; then           
         DTC_BASE_MODEL="N"    
         TARGET_REVISION="42218"                                                                                                                                
-        TARGET_PLATFORM="apollolake"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="ds918p"
+        ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
         sha256="a403809ab2cd476c944fdfa18cae2c2833e4af36230fa63f0cdee31a92bebba2"                                                                              
     elif [ "${1}" = "DS3615xsJ" ]; then
         DTC_BASE_MODEL="N"    
         TARGET_REVISION="42218"               
-        TARGET_PLATFORM="bromolow"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="ds3615xs"
+        ORIGIN_PLATFORM="bromolow"
         SYNOMODEL="ds3615xs_$TARGET_REVISION"                                   
         sha256="dddd26891815ddca02d0d53c1d42e8b39058b398a4cc7b49b80c99f851cf0ef7"                             
     elif [ "${1}" = "DS3617xsJ" ]; then
         DTC_BASE_MODEL="N"    
         TARGET_REVISION="42218"               
-        TARGET_PLATFORM="broadwell"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="ds3617xs"
+        ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="ds3617xs_$TARGET_REVISION" 
         sha256="d65ee4ed5971e38f6cdab00e1548183435b53ba49a5dca7eaed6f56be939dcd2"
     elif [ "${1}" = "DS3622xs+J" ]; then
         DTC_BASE_MODEL="N"    
         TARGET_REVISION="42218"               
-        TARGET_PLATFORM="broadwellnk"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="ds3622xsp"
+        ORIGIN_PLATFORM="broadwellnk"
         SYNOMODEL="ds3622xsp_$TARGET_REVISION"
         sha256="f38329b8cdc5824a8f01fb1e377d3b1b6bd23da365142a01e2158beff5b8a424"
     elif [ "${1}" = "DS1621+J" ]; then
         DTC_BASE_MODEL="Y"    
         TARGET_REVISION="42218"                                                  
-        TARGET_PLATFORM="v1000"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="ds1621p"
+        ORIGIN_PLATFORM="v1000"
         SYNOMODEL="ds1621p_$TARGET_REVISION"                                     
         sha256="19f56827ba8bf0397d42cd1d6f83c447f092c2c1bbb70d8a2ad3fbd427e866df"
     elif [ "${1}" = "DVA3221J" ]; then
         DTC_BASE_MODEL="N"    
         TARGET_REVISION="42218"                                                  
-        TARGET_PLATFORM="denverton"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="dva3221"
+        ORIGIN_PLATFORM="denverton"
         SYNOMODEL="dva3221_$TARGET_REVISION"                                     
         sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"
     elif [ "${1}" = "DS920+J" ]; then
         DTC_BASE_MODEL="Y"    
         TARGET_REVISION="42218"
-        TARGET_PLATFORM="geminilake"
-        ORIGIN_PLATFORM=$TARGET_PLATFORM
+        TARGET_PLATFORM="ds920p"
+        ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
         sha256="fe2a4648f76adeb65c3230632503ea36bbac64ee88b459eb9bfb5f3b8c8cebb3"
     elif [ "${1}" = "DS2422+J" ]; then
