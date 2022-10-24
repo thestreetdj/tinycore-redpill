@@ -790,7 +790,7 @@
                 {
                     "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/dtbpatch/rpext-index.json",
                     "redpill-misc": "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json",
-                    "rtc-cmos": "https://github.com/PeterSuh-Q3/rp-ext/raw/master/rtc-cmos/rpext-index.json"
+                    "rtc-cmos": "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rtc-cmos/rpext-index.json"
                 }
             ]
         },
