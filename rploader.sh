@@ -3252,12 +3252,9 @@ function listmodules() {
         echo "File OK"
         echo "------------------------------------------------------------------------------------------------"
         echo -e "It looks that you will need the following modules : \n\n"
-        
-        if [ "${TARGET_PLATFORM}" = "ds920p" ]; then
-            echo -e "$TARGET_PLATFORM skips modules auto detection !!!!!!!!!!!!! : \n\n"
-        else
-            listpci
-        fi
+
+        #Block listpci for using all-modules. 2022.11.09
+        #listpci
 
         echo "------------------------------------------------------------------------------------------------"
     else
