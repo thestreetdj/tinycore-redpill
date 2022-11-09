@@ -3252,7 +3252,13 @@ function listmodules() {
         echo "File OK"
         echo "------------------------------------------------------------------------------------------------"
         echo -e "It looks that you will need the following modules : \n\n"
-        listpci
+        
+        if [ "${TARGET_PLATFORM}" = "ds920p" ]; then
+            echo -e "$TARGET_PLATFORM skips modules auto detection !!!!!!!!!!!!! : \n\n"
+        else
+            listpci
+        if
+
         echo "------------------------------------------------------------------------------------------------"
     else
         echo "Error : File $MODULE_ALIAS_FILE could not be parsed"
