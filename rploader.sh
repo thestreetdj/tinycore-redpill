@@ -3257,7 +3257,7 @@ function listmodules() {
             echo -e "$TARGET_PLATFORM skips modules auto detection !!!!!!!!!!!!! : \n\n"
         else
             listpci
-        if
+        fi
 
         echo "------------------------------------------------------------------------------------------------"
     else
