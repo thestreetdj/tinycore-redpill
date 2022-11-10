@@ -771,13 +771,13 @@ bringfriend() {
 
             if [ "$RD_COMPRESSED" = "false" ]; then
                 echo "Ramdisk in not compressed "
-                cat /mnt/${loaderdisk}2/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
-                cat /mnt/${loaderdisk}2/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                cat /mnt/${loaderdisk}1/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
                 sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
                 (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) 2>&1 >/dev/null
             else
-                unlzma -dc /mnt/${loaderdisk}2/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
-                cat /mnt/${loaderdisk}2/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                unlzma -dc /mnt/${loaderdisk}1/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
                 sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
                 (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) 2>&1 >/dev/null
             fi
@@ -2832,13 +2832,13 @@ function buildloader() {
 
         if [ "$RD_COMPRESSED" = "false" ]; then
             echo "Ramdisk in not compressed "
-            cat /home/tc/redpill-load/localdiskp2/rd.gz | sudo cpio -idm
-            cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
+            cat /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
+            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
             sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
             (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
         else
-            unlzma -dc /home/tc/redpill-load/localdiskp2/rd.gz | sudo cpio -idm
-            cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
+            unlzma -dc /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
+            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
             sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
             (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
         fi
