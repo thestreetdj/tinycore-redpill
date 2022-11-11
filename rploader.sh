@@ -811,8 +811,15 @@ bringfriend() {
 
             cp $userconfigfile /mnt/${loaderdisk}3/
 
+#m shell only start
+            USB_DEL_TEXT="$(grep -A 8 "USB," /mnt/${loaderdisk}1/boot/grub/grub.cfg)"
+            SATA_DEL_TEXT="$(grep -A 9 "SATA," /mnt/${loaderdisk}1/boot/grub/grub.cfg)"
+            sudo sed -i "s/${USB_DEL_TEXT}//g" /mnt/${loaderdisk}1/boot/grub/grub.cfg
+            sudo sed -i "s/${SATA_DEL_TEXT}//g" /mnt/${loaderdisk}1/boot/grub/grub.cfg            
+#m shell only end
+
             echo "Setting default boot entry to TCRP Friend"
-            sudo sed -i "/set default=\"*\"/cset default=\"3\"" /mnt/${loaderdisk}1/boot/grub/grub.cfg
+            sudo sed -i "/set default=\"*\"/cset default=\"1\"" /mnt/${loaderdisk}1/boot/grub/grub.cfg
 
             if [ ! -f /mnt/${loaderdisk}3/bzImage-friend ] || [ ! -f /mnt/${loaderdisk}3/initrd-friend ] || [ ! -f /mnt/${loaderdisk}3/zImage-dsm ] || [ ! -f /mnt/${loaderdisk}3/initrd-dsm ] || [ ! -f /mnt/${loaderdisk}3/user_config.json ] || [ ! $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ]; then
                 echo "ERROR !!! Something went wrong, please re-run the process"
@@ -2820,6 +2827,13 @@ function buildloader() {
 
     cp $userconfigfile /mnt/${loaderdisk}3/
 
+#m shell only start
+    USB_DEL_TEXT="$(grep -A 8 "USB," /mnt/${loaderdisk}1/boot/grub/grub.cfg)"
+    SATA_DEL_TEXT="$(grep -A 9 "SATA," /mnt/${loaderdisk}1/boot/grub/grub.cfg)"
+    sudo sed -i "s/${USB_DEL_TEXT}//g" /mnt/${loaderdisk}1/boot/grub/grub.cfg
+    sudo sed -i "s/${SATA_DEL_TEXT}//g" /mnt/${loaderdisk}1/boot/grub/grub.cfg            
+#m shell only end
+
     if [ "$WITHFRIEND" = "YES" ]; then
 
         cp localdiskp1/zImage /mnt/${loaderdisk}3/zImage-dsm
@@ -2850,15 +2864,14 @@ function buildloader() {
         fi
 
         echo "Setting default boot entry to TCRP Friend"
-        cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"3\"" localdiskp1/boot/grub/grub.cfg
+        cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
 
     else
-
-        if [ "$MACHINE" = "VIRTUAL" ]; then
-            echo "Setting default boot entry to SATA"
-            cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
-        fi
-
+        echo
+#        if [ "$MACHINE" = "VIRTUAL" ]; then
+#            echo "Setting default boot entry to SATA"
+#            cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
+#        fi
     fi
 
 #m shell only start
@@ -2874,13 +2887,6 @@ function buildloader() {
     ####
 
     checkmachine
-
-#m shell only start
-    if [ "$MACHINE" = "VIRTUAL" ]; then
-        echo "Setting default boot entry to SATA"
-        sudo sed -i "/set default=\"0\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
-    fi
-#m shell only end
 
     sudo umount part1
     sudo umount part2
