@@ -812,10 +812,7 @@ bringfriend() {
             cp $userconfigfile /mnt/${loaderdisk}3/
 
 #m shell only start
-            USB_DEL_TEXT="$(grep -A 8 "USB," /mnt/${loaderdisk}1/boot/grub/grub.cfg)"
-            SATA_DEL_TEXT="$(grep -A 9 "SATA," /mnt/${loaderdisk}1/boot/grub/grub.cfg)"
-            sudo sed -i "s/${USB_DEL_TEXT}//g" /mnt/${loaderdisk}1/boot/grub/grub.cfg
-            sudo sed -i "s/${SATA_DEL_TEXT}//g" /mnt/${loaderdisk}1/boot/grub/grub.cfg            
+            sudo sed -i '61,80d' /mnt/${loaderdisk}1/boot/grub/grub.cfg
 #m shell only end
 
             echo "Setting default boot entry to TCRP Friend"
@@ -2828,10 +2825,7 @@ function buildloader() {
     cp $userconfigfile /mnt/${loaderdisk}3/
 
 #m shell only start
-    USB_DEL_TEXT="$(grep -A 8 "USB," /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg)"
-    SATA_DEL_TEXT="$(grep -A 9 "SATA," /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg)"
-    sudo sed -i "s/${USB_DEL_TEXT}//g" /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
-    sudo sed -i "s/${SATA_DEL_TEXT}//g" /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg            
+    sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
 #m shell only end
 
     if [ "$WITHFRIEND" = "YES" ]; then
