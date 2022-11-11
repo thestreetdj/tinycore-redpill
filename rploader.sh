@@ -2417,9 +2417,9 @@ EOF
 }
 
 function tcrpfriendentry() {
-
+    
     cat <<EOF
-menuentry 'Tiny Core Friend' {
+menuentry 'Tiny Core Friend $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update ${smallfixnumber}' {
         savedefault
         set root=(hd0,msdos3)
         echo Loading Linux...
