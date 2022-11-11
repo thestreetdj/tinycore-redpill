@@ -2823,8 +2823,8 @@ function buildloader() {
 #m shell only start
     echo "Move rd.gz and custom.gz to partition 3"
     
-    mv localdiskp1/rd.gz /mnt/${loaderdisk}3
-    mv localdiskp1/custom.gz /mnt/${loaderdisk}3 
+    sudo mv localdiskp1/rd.gz /mnt/${loaderdisk}3
+    sudo mv localdiskp1/custom.gz /mnt/${loaderdisk}3 
 #m shell only end
 
     if [ "$WITHFRIEND" = "YES" ]; then
