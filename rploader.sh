@@ -2820,14 +2820,6 @@ function buildloader() {
 
     cp $userconfigfile /mnt/${loaderdisk}3/
 
-#m shell only start
-    echo "Move rd.gz and custom.gz to partition 3"
-    sudo mv localdiskp1/rd.gz /mnt/${loaderdisk}3
-    sudo mv localdiskp1/custom.gz /mnt/${loaderdisk}3 
-    echo "Copy zImage to partition 3"    
-    sudo cp localdiskp1/zImage /mnt/${loaderdisk}3     
-#m shell only end
-
     if [ "$WITHFRIEND" = "YES" ]; then
 
         cp localdiskp1/zImage /mnt/${loaderdisk}3/zImage-dsm
@@ -2840,20 +2832,18 @@ function buildloader() {
 
         if [ "$RD_COMPRESSED" = "false" ]; then
             echo "Ramdisk in not compressed "
-#            cat /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
+            cat /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
 #            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
 #m shell only start
-            cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
-            cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
+            cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
 #m shell only end
             sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
             (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
         else
-#            unlzma -dc /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
+            unlzma -dc /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
 #            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
 #m shell only start
-            unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
-            cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
+            cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
 #m shell only end
             sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
             (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
@@ -2870,6 +2860,14 @@ function buildloader() {
         fi
 
     fi
+
+#m shell only start
+    echo "Move rd.gz and custom.gz to partition 3"
+    sudo mv localdiskp1/rd.gz     /mnt/${loaderdisk}3
+    sudo mv localdiskp2/custom.gz /mnt/${loaderdisk}3 
+    echo "Copy zImage to partition 3"    
+    cp localdiskp1/zImage         /mnt/${loaderdisk}3     
+#m shell only end
 
     cd /home/tc/redpill-load/
 
