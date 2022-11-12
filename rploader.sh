@@ -2879,7 +2879,7 @@ function buildloader() {
         sudo mv localdiskp2/custom.gz /mnt/${loaderdisk}3 
         echo "Copy zImage to partition 3"    
         cp localdiskp1/zImage         /mnt/${loaderdisk}3     
-    if
+    fi
 #m shell only end
 
     cd /home/tc/redpill-load/
