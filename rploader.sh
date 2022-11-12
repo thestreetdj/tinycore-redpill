@@ -2722,6 +2722,8 @@ function buildloader() {
 
     if [ "$JUNLOADER" == "YES" ]; then
         echo "jun build option has been specified, so JUN MOD loader will be created"
+        # jun's mod must patch using custom.gz from the first partition, so you need to fix the partition.
+        sed -i "s/BRP_OUT_P2}\/\${BRP_CUSTOM_RD_NAME/BRP_OUT_P1}\/\${BRP_CUSTOM_RD_NAME/g" /home/tc/redpill-load/build-loader.sh        
         sudo BRP_JUN_MOD=1 BRP_DEBUG=0 BRP_USER_CFG=user_config.json ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
     else
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
