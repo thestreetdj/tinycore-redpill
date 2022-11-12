@@ -2871,11 +2871,15 @@ function buildloader() {
     fi
 
 #m shell only start
-    echo "Move rd.gz and custom.gz to partition 3"
-    sudo mv localdiskp1/rd.gz     /mnt/${loaderdisk}3
-    sudo mv localdiskp2/custom.gz /mnt/${loaderdisk}3 
-    echo "Copy zImage to partition 3"    
-    cp localdiskp1/zImage         /mnt/${loaderdisk}3     
+    if [ "$JUNLOADER" == "YES" ]; then
+        echo "Don't move file in jun's mod"
+    else
+        echo "Move rd.gz and custom.gz to partition 3"
+        sudo mv localdiskp1/rd.gz     /mnt/${loaderdisk}3
+        sudo mv localdiskp2/custom.gz /mnt/${loaderdisk}3 
+        echo "Copy zImage to partition 3"    
+        cp localdiskp1/zImage         /mnt/${loaderdisk}3     
+    if
 #m shell only end
 
     cd /home/tc/redpill-load/
