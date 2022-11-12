@@ -2827,7 +2827,8 @@ function buildloader() {
     cp $userconfigfile /mnt/${loaderdisk}3/
 
 #m shell only start
-    sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+#remark for jun's mod
+#    sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
 #m shell only end
 
     if [ "$WITHFRIEND" = "YES" ]; then
