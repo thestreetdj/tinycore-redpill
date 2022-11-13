@@ -382,21 +382,25 @@ patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"
         cecho r "Found locally cached pat file ${SYNOMODEL}.pat in /mnt/${tcrppart}/auxfiles"
         cecho b "Downloadng Skipped!!!"                                                     
     else                                                                                    
-        curl -o ${patfile} $URL                                                             
-                                                                                            
+        STATUS=`curl --insecure -w "%{http_code}" -L "${URL}" -o ${patfile} --progress-bar`
+        if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
+           echo  "Check internet or cache disk space"
+           exit 99
+        fi
+    fi        
         os_sha256=$(sha256sum ${patfile} | awk '{print $1}')                                
         cecho y "Pat file  sha256sum is : $os_sha256"                                       
-                                                                                            
+
         verifyid="${sha256}"                                                                
         cecho p "verifyid  sha256sum is : $verifyid"                                        
-                                                                                            
+
         if [ "$os_sha256" == "$verifyid" ]; then                                            
             cecho y "pat file sha256sum is OK ! "                                           
         else                                                                                
             cecho y "os sha256 verify FAILED, check ${patfile}  "                           
             exit 99                                                                         
         fi                                                                                  
-    fi  
+
 
 echo
 cecho g "Loader Building in progress..."
