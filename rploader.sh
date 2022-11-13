@@ -374,20 +374,6 @@ function downloadextractor() {
 
         echo "Found extractor locally cached"
 
-        echo "Copying required libraries to local lib directory"
-        sudo cp /mnt/${tcrppart}/auxfiles/extractor/lib* /lib/
-        echo "Linking lib to lib64"
-        [ ! -h /lib64 ] && sudo ln -s /lib /lib64
-        echo "Copying executable"
-        sudo cp /mnt/${tcrppart}/auxfiles/extractor/scemd /bin/syno_extract_system_patch
-
-        echo "Removing temp folder /tmp/synoesp"
-        rm -rf $temp_folder
-
-        echo "Checking if tool is accessible"
-        /bin/syno_extract_system_patch 2>&1 >/dev/null
-        if [ $? -eq 255 ]; then echo "Executed succesfully"; else echo "Cound not execute"; fi
-
     else
 
         echo "Getting required extraction tool"
@@ -430,21 +416,26 @@ function downloadextractor() {
             cp $file /mnt/${tcrppart}/auxfiles/extractor
         done
 
-        echo "Copying required libraries to local lib directory"
-        sudo cp /mnt/${tcrppart}/auxfiles/extractor/lib* /lib/
-        echo "Linking lib to lib64"
-        [ ! -h /lib64 ] && sudo ln -s /lib /lib64
-        echo "Copying executable"
-        sudo cp /mnt/${tcrppart}/auxfiles/extractor/scemd /bin/syno_extract_system_patch
-
-        echo "Removing temp folder /tmp/synoesp"
-        rm -rf $temp_folder
-
-        echo "Checking if tools is accessible"
-        /bin/syno_extract_system_patch
-        if [ $? -eq 255 ]; then echo "Executed succesfully"; else echo "Cound not execute"; fi
-
     fi
+
+#m shell mofified
+    echo "Copying required libraries to local lib directory"
+    sudo cp /mnt/${tcrppart}/auxfiles/extractor/lib* /lib/
+    echo "Linking lib to lib64"
+    [ ! -h /lib64 ] && sudo ln -s /lib /lib64
+    echo "Copying executable"
+    sudo cp /mnt/${tcrppart}/auxfiles/extractor/scemd /bin/syno_extract_system_patch
+
+    echo "Removing temp folder /tmp/synoesp"
+    rm -rf $temp_folder
+
+    echo "Checking if tool is accessible"
+    if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then    
+        /bin/syno_extract_system_patch 2>&1 >/dev/null
+    else
+        /bin/syno_extract_system_patch
+    fi
+    if [ $? -eq 255 ]; then echo "Executed succesfully"; else echo "Cound not execute"; fi    
 
 }
 
