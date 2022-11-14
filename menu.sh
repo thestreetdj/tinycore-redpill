@@ -1,15 +1,21 @@
 #!/usr/bin/env bash
 
-#. /home/tc/include/functions.sh
+##### INCLUDES #####################################################################################################
+source /home/tc/menufunc.h
+#####################################################################################################
 
 [[ "$(which dialog)_" == "_" ]] && tce-load -wi dialog
 
 # Get actual IP
 IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
 
+userconfigfile="/home/tc/user_config.json"
 TMP_PATH=/tmp
-MODEL="DS3622xs+"
+MODEL="$(jq -r -e '.general.model' $userconfigfile)"
 BUILD="42962"
+SN="$(jq -r -e '.extra_cmdline.sn' $userconfigfile)"
+MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $userconfigfile)"
+MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $userconfigfile)"
 
 ###############################################################################
 # Mounts backtitle dynamically
@@ -34,6 +40,16 @@ function backtitle() {
     BACKTITLE+=" ${IP}"
   else
     BACKTITLE+=" (no IP)"
+  fi
+  if [ -n "${MACADDR1}" ]; then
+    BACKTITLE+=" ${MACADDR1}"
+  else
+    BACKTITLE+=" (no MACADDR1)"
+  fi
+  if [ -n "${MACADDR2}" ]; then
+    BACKTITLE+=" ${MACADDR2}"
+  else
+    BACKTITLE+=" (no MACADDR2)"
   fi
   if [ -n "${KEYMAP}" ]; then
     BACKTITLE+=" (${LAYOUT}/${KEYMAP})"
@@ -85,7 +101,7 @@ function serialMenu() {
       done
       break
     elif [ "${resp}" = "a" ]; then
-      SERIAL=`./serialnumbergen.sh "${MODEL}"`
+      SERIAL=serialgen "${MODEL}"
       break
     fi
   done
