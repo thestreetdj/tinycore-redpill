@@ -92,8 +92,8 @@ function serialgen() {
 
     [ ! -z "$GATEWAY_INTERFACE" ] && shift 0 || shift 1
 
-    if [ "$1" = "DS3615xs" ] || [ "$1" = "DS3617xs" ] || [ "$1" = "DS916+" ] || [ "$1" = "DS918+" ] || [ "$1" = "DS1019+" ] || [ "$1" = "DS920+" ] || [ "$1" = "DS3622xs+" ] || [ "$1" = "FS6400" ] || [ "$1" = "DVA3219" ] || [ "$1" = "DVA3221" ] || [ "$1" = "DS1621+" ] || [ "$1" = "DS1621xs+" ] || [ "$1" = "RS4021xs+" ] || [ "$1" = "DS2422+" ] || [ "$1" = "DS1520+" ] || [ "$1" = "FS2500" ] || [ "$1" = "RS3618xs" ] || [ "$1" = "RS3413xs+" ] ; then
-        serial="$(generateSerial $1)"
+    if [ "${1}" = "DS3615xs" ] || [ "${1}" = "DS3617xs" ] || [ "${1}" = "DS916+" ] || [ "${1}" = "DS918+" ] || [ "${1}" = "DS1019+" ] || [ "${1}" = "DS920+" ] || [ "${1}" = "DS3622xs+" ] || [ "${1}" = "FS6400" ] || [ "${1}" = "DVA3219" ] || [ "${1}" = "DVA3221" ] || [ "${1}" = "DS1621+" ] || [ "${1}" = "DS1621xs+" ] || [ "${1}" = "RS4021xs+" ] || [ "${1}" = "DS2422+" ] || [ "${1}" = "DS1520+" ] || [ "${1}" = "FS2500" ] || [ "${1}" = "RS3618xs" ] || [ "${1}" = "RS3413xs+" ] ; then
+        serial="$(generateSerial ${1})"
         echo "Serial Number for Model = $serial"
 
         if [ -z "$GATEWAY_INTERFACE" ]; then
@@ -110,12 +110,8 @@ function serialgen() {
             echo "OK remember to update manually by editing user_config.json file"
         fi
     else
-        echo "Error : $1 is not an available model for serial number generation. "
+        echo "Error : ${1} is not an available model for serial number generation. "
         echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+"
-    fi
-
-    if [ ! -z $2 ]; then
-        macgen $2
     fi
 
 }
@@ -124,7 +120,7 @@ function macgen() {
 
     [ ! -z "$GATEWAY_INTERFACE" ] && shift 0 || shift 1
 
-    [ "$1" == "realmac" ] && let keepmac=1 || let keepmac=0
+    [ "${1}" == "realmac" ] && let keepmac=1 || let keepmac=0
 
         mac="$(generateMacAddress)"
         realmac=$(ifconfig eth0 | head -1 | awk '{print $NF}')
@@ -159,7 +155,7 @@ function macgen() {
 
 function beginArray() {
 
-    case $1 in
+    case ${1} in
     DS3615xs)
         permanent="LWN"
         serialstart="1130 1230 1330 1430"
@@ -259,7 +255,7 @@ function generateRandomValue() {
 }
 
 function toupper() {
-    echo $1 | tr '[:lower:]' '[:upper:]'
+    echo ${1} | tr '[:lower:]' '[:upper:]'
 }
 
 function generateMacAddress() {
@@ -270,9 +266,9 @@ function generateMacAddress() {
 
 function generateSerial() {
 
-    beginArray $1
+    beginArray ${1}
 
-    case $1 in
+    case ${1} in
 
     DS3615xs)
         serialnum="$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(random)
