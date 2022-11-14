@@ -330,7 +330,7 @@ while true; do
     m) modelMenu; 	NEXT="s" ;;
     s) serialMenu; 	NEXT="a" ;;
     a) macMenu; 	NEXT="d" ;;
-    d) make; 		NEXT="e" ;;
+    d) make; 		NEXT="r" ;;
     u) editUserConfig; 	NEXT="d" ;;
     c) dialog --backtitle "`backtitle`" --title "Cleaning" --aspect 18 \
       --prgbox "rm -rfv \"${CACHE_PATH}/dl\"" 0 0 ;;
