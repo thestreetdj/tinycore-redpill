@@ -12,8 +12,11 @@ IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
 # Dirty flag
 DIRTY=0
 
-USER_CONFIG_FILE="/home/tc/user_config.json"
 TMP_PATH=/tmp
+LOG_FILE="${TMP_PATH}/log.txt"
+USER_CONFIG_FILE="/home/tc/user_config.json"
+RAMDISK_PATH="${TMP_PATH}/ramdisk"
+
 MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
 BUILD="42962"
 SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
@@ -219,10 +222,9 @@ function make() {
 #    make || return
 #  fi
 
-  ./my.sh "${MODEL}"F noconfig
+  ./my.sh "${MODEL}"F noconfig >"${LOG_FILE}" 2>&1
   if [ $? -ne 0 ]; then
-    dialog --backtitle "`backtitle`" --title "Error" --aspect 18 \
-      --msgbox "Loader for ${MODEL} Build Error!!!" 0 0
+    dialog --backtitle "`backtitle`" --title "Error loader building" --textbox "${LOG_FILE}" 0 0    
     return 1
   fi
 
