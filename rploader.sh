@@ -2015,48 +2015,19 @@ function serialgen() {
 
     [ ! -z "$GATEWAY_INTERFACE" ] && shift 0 || shift 1
 
+    [ "$2" == "realmac" ] && let keepmac=1 || let keepmac=0
+
     if [ "$1" = "DS3615xs" ] || [ "$1" = "DS3617xs" ] || [ "$1" = "DS916+" ] || [ "$1" = "DS918+" ] || [ "$1" = "DS1019+" ] || [ "$1" = "DS920+" ] || [ "$1" = "DS3622xs+" ] || [ "$1" = "FS6400" ] || [ "$1" = "DVA3219" ] || [ "$1" = "DVA3221" ] || [ "$1" = "DS1621+" ] || [ "$1" = "DS1621xs+" ] || [ "$1" = "RS4021xs+" ] || [ "$1" = "DS2422+" ] || [ "$1" = "DS1520+" ] || [ "$1" = "FS2500" ] || [ "$1" = "RS3618xs" ] || [ "$1" = "RS3413xs+" ] ; then
         serial="$(generateSerial $1)"
-        echo "Serial Number for Model = $serial"
-
-        if [ -z "$GATEWAY_INTERFACE" ]; then
-            echo "Should i update the user_config.json with these values ? [Yy/Nn]"
-            read answer
-        else
-            answer="y"
-        fi
-
-        if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
-            json="$(jq --arg var "$serial" '.extra_cmdline.sn = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-            echo "$serial"
-        else
-            echo "OK remember to update manually by editing user_config.json file"
-        fi
-    else
-        echo "Error : $1 is not an available model for serial number generation. "
-        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+"
-    fi
-
-    if [ ! -z $2 ]; then
-        macgen $2
-    fi
-
-}
-
-function macgen() {
-
-    [ ! -z "$GATEWAY_INTERFACE" ] && shift 0 || shift 1
-
-    [ "$1" == "realmac" ] && let keepmac=1 || let keepmac=0
-
-        mac="$(generateMacAddress)"
+        mac="$(generateMacAddress $1)"
         realmac=$(ifconfig eth0 | head -1 | awk '{print $NF}')
-
-        echo "Mac Address = $mac "
+        echo "Serial Number for Model = $serial"
+        echo "Mac Address for Model $1 = $mac "
         [ $keepmac -eq 1 ] && echo "Real Mac Address : $realmac"
         [ $keepmac -eq 1 ] && echo "Notice : realmac option is requested, real mac will be used"
 
         if [ -z "$GATEWAY_INTERFACE" ]; then
+
             echo "Should i update the user_config.json with these values ? [Yy/Nn]"
             read answer
         else
@@ -2064,6 +2035,8 @@ function macgen() {
         fi
 
         if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
+            # sed -i "/\"sn\": \"/c\    \"sn\": \"$serial\"," user_config.json
+            json="$(jq --arg var "$serial" '.extra_cmdline.sn = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
 
             if [ $keepmac -eq 1 ]; then
                 macaddress=$(echo $realmac | sed -s 's/://g')
@@ -2072,13 +2045,16 @@ function macgen() {
             fi
 
             json="$(jq --arg var "$macaddress" '.extra_cmdline.mac1 = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-            echo "$macaddress"
+            # sed -i "/\"mac1\": \"/c\    \"mac1\": \"$macaddress\"," user_config.json
         else
             echo "OK remember to update manually by editing user_config.json file"
         fi
+    else
+        echo "Error : $1 is not an available model for serial number generation. "
+        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+"
+    fi
 
 }
-
 
 function beginArray() {
 
