@@ -9,13 +9,15 @@ source /home/tc/menufunc.h
 # Get actual IP
 IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
 
+# Dirty flag
+DIRTY=0
+
 USER_CONFIG_FILE="/home/tc/user_config.json"
 TMP_PATH=/tmp
 MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
 BUILD="42962"
 SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
 MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
-DIRTY=0
 
 ###############################################################################
 # Write to json config file
