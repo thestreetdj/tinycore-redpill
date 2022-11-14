@@ -9,13 +9,13 @@ source /home/tc/menufunc.h
 # Get actual IP
 IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
 
-userconfigfile="/home/tc/user_config.json"
+USER_CONFIG_FILE="/home/tc/user_config.json"
 TMP_PATH=/tmp
-MODEL="$(jq -r -e '.general.model' $userconfigfile)"
+MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
 BUILD="42962"
-SN="$(jq -r -e '.extra_cmdline.sn' $userconfigfile)"
-MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $userconfigfile)"
-MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $userconfigfile)"
+SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
+MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
+MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
 
 ###############################################################################
 # Mounts backtitle dynamically
@@ -101,12 +101,58 @@ function serialMenu() {
       done
       break
     elif [ "${resp}" = "a" ]; then
-      SERIAL=serialgen "${MODEL}"
+      SERIAL=`./sngen.sh "${MODEL}"`
       break
     fi
   done
   SN="${SERIAL}"
+  DIRTY=1
 }
+
+###############################################################################
+# Shows menu to generate randomly or to get realmac
+function macMenu() {
+  while true; do
+    dialog --clear --backtitle "`backtitle`" \
+      --menu "Choose a option" 0 0 0 \
+      d "Generate a random mac address" \
+      c "Get a real mac address" \
+    2>${TMP_PATH}/resp
+    [ $? -ne 0 ] && return
+    resp=$(<${TMP_PATH}/resp)
+    [ -z "${resp}" ] && return
+    if [ "${resp}" = "d" ]; then
+      MACADDR=`./macgen.sh "randommac"`
+      break
+    elif [ "${resp}" = "c" ]; then
+      MACADDR=`./macgen.sh "realmac"`
+      break
+    fi
+  done
+  MACADDR1="${MACADDR}"
+  DIRTY=1
+}
+
+###############################################################################
+# Permits user edit the user config
+function editUserConfig() {
+  while true; do
+    dialog --backtitle "`backtitle`" --title "Edit with caution" \
+      --editbox "${USER_CONFIG_FILE}" 0 0 2>"${TMP_PATH}/userconfig"
+    [ $? -ne 0 ] && return
+    mv "${TMP_PATH}/userconfig" "${USER_CONFIG_FILE}"
+    [ $? -eq 0 ] && break
+    dialog --backtitle "`backtitle`" --title "Invalid JSON format" --msgbox "${ERRORS}" 0 0
+  done
+
+  MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
+  BUILD="42962"
+  SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
+  MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
+  MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
+
+}
+
 
 ###############################################################################
 # Shows available keymaps to user choose one
@@ -161,7 +207,7 @@ while true; do
   echo "m \"Choose a model\""                          > "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     echo "s \"Choose a serial number\""               >> "${TMP_PATH}/menu"
-    echo "x \"Cmdline menu\""                         >> "${TMP_PATH}/menu"
+    echo "a \"Choose a mac address\""                 >> "${TMP_PATH}/menu"
     echo "d \"Build the loader\""                     >> "${TMP_PATH}/menu"
   fi
   echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
@@ -173,11 +219,11 @@ while true; do
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
   case `<"${TMP_PATH}/resp"` in
-    m) modelMenu; NEXT="s" ;;
-    s) serialMenu; NEXT="d" ;;
-    x) cmdlineMenu;;
-    d) make; NEXT="e" ;;
-    u) editUserConfig; NEXT="u" ;;
+    m) modelMenu; 	NEXT="s" ;;
+    s) serialMenu; 	NEXT="a" ;;
+    a) macMenu; 	NEXT="d" ;;
+    d) make; 		NEXT="e" ;;
+    u) editUserConfig; 	NEXT="d" ;;
     k) keymapMenu ;;
     c) dialog --backtitle "`backtitle`" --title "Cleaning" --aspect 18 \
       --prgbox "rm -rfv \"${CACHE_PATH}/dl\"" 0 0 ;;
