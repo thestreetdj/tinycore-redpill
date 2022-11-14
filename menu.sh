@@ -305,7 +305,9 @@ function make() {
 }
 
 function reboot() {
+    clean
     sudo reboot
+    break
 }
 
 # Main loop
