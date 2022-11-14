@@ -15,7 +15,33 @@ MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
 BUILD="42962"
 SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
 MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
-MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
+
+###############################################################################
+# Write to json config file
+function writeConfigKey() {
+
+    block="$1"
+    field="$2"
+    value="$3"
+
+    if [ -n "$1 " ] && [ -n "$2" ]; then
+        jsonfile=$(jq ".$block+={\"$field\":\"$value\"}" $USER_CONFIG_FILE)
+        echo $jsonfile | jq . >$userconfigfile
+    else
+        echo "No values to update"
+    fi
+
+}
+
+###############################################################################
+# Read key value from json config file
+# 1 - Path of key
+# Return Value
+function readConfigKey() {
+  RESULT="$(jq -r -e '.$1' $USER_CONFIG_FILE)"
+  [ "${RESULT}" == "null" ] && echo "" || echo ${RESULT}
+}
+
 
 ###############################################################################
 # Mounts backtitle dynamically
@@ -46,17 +72,112 @@ function backtitle() {
   else
     BACKTITLE+=" (no MACADDR1)"
   fi
-  if [ -n "${MACADDR2}" ]; then
-    BACKTITLE+=" ${MACADDR2}"
-  else
-    BACKTITLE+=" (no MACADDR2)"
-  fi
-  if [ -n "${KEYMAP}" ]; then
-    BACKTITLE+=" (${LAYOUT}/${KEYMAP})"
-  else
-    BACKTITLE+=" (qwerty/us)"
-  fi
   echo ${BACKTITLE}
+}
+
+function checkmachine() {
+
+    if grep -q ^flags.*\ hypervisor\  /proc/cpuinfo; then
+        MACHINE="VIRTUAL"
+        HYPERVISOR=$(dmesg | grep -i "Hypervisor detected" | awk '{print $5}')
+        echo "Machine is $MACHINE Hypervisor=$HYPERVISOR"
+    fi
+
+}
+
+function usbidentify() {
+
+    checkmachine
+
+    if [ "$MACHINE" = "VIRTUAL" ] && [ "$HYPERVISOR" = "VMware" ]; then
+        echo "Running on VMware, no need to set USB VID and PID, you should SATA shim instead"
+        exit 0
+    fi
+
+    if [ "$MACHINE" = "VIRTUAL" ] && [ "$HYPERVISOR" = "QEMU" ]; then
+        echo "Running on QEMU, If you are using USB shim, VID 0x46f4 and PID 0x0001 should work for you"
+        vendorid="0x46f4"
+        productid="0x0001"
+        echo "Vendor ID : $vendorid Product ID : $productid"
+
+        echo "Should i update the user_config.json with these values ? [Yy/Nn]"
+        read answer
+        if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
+            sed -i "/\"pid\": \"/c\    \"pid\": \"$productid\"," user_config.json
+            sed -i "/\"vid\": \"/c\    \"vid\": \"$vendorid\"," user_config.json
+        else
+            echo "OK remember to update manually by editing user_config.json file"
+        fi
+        exit 0
+    fi
+
+    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
+
+    lsusb -v 2>&1 | grep -B 33 -A 1 SCSI >/tmp/lsusb.out
+
+    usblist=$(grep -B 33 -A 1 SCSI /tmp/lsusb.out)
+    vendorid=$(grep -B 33 -A 1 SCSI /tmp/lsusb.out | grep -i idVendor | awk '{print $2}')
+    productid=$(grep -B 33 -A 1 SCSI /tmp/lsusb.out | grep -i idProduct | awk '{print $2}')
+
+    if [ $(echo $vendorid | wc -w) -gt 1 ]; then
+        echo "Found more than one USB disk devices, please select which one is your loader on"
+        usbvendor=$(for item in $vendorid; do grep $item /tmp/lsusb.out | awk '{print $3}'; done)
+        select usbdev in $usbvendor; do
+            vendorid=$(grep -B 10 -A 10 $usbdev /tmp/lsusb.out | grep idVendor | grep $usbdev | awk '{print $2}')
+            productid=$(grep -B 10 -A 10 $usbdev /tmp/lsusb.out | grep -A 1 idVendor | grep idProduct | awk '{print $2}')
+            echo "Selected Device : $usbdev , with VendorID: $vendorid and ProductID: $productid"
+            break
+        done
+    else
+        usbdevice="$(grep iManufacturer /tmp/lsusb.out | awk '{print $3}') $(grep iProduct /tmp/lsusb.out | awk '{print $3}') SerialNumber: $(grep iSerial /tmp/lsusb.out | awk '{print $3}')"
+    fi
+
+    if [ -n "$usbdevice" ] && [ -n "$vendorid" ] && [ -n "$productid" ]; then
+        echo "Found $usbdevice"
+        echo "Vendor ID : $vendorid Product ID : $productid"
+
+        echo "Should i update the user_config.json with these values ? [Yy/Nn]"
+        read answer
+        if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
+            #  sed -i "/\"pid\": \"/c\    \"pid\": \"$productid\"," user_config.json
+            json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+            #  sed -i "/\"vid\": \"/c\    \"vid\": \"$vendorid\"," user_config.json
+            json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+        else
+            echo "OK remember to update manually by editing user_config.json file"
+        fi
+    else
+        echo "Sorry, no usb disk could be identified"
+        rm /tmp/lsusb.out
+    fi
+}
+
+
+###############################################################################
+# Validate a serial number for a model
+# 1 - Model
+# 2 - Serial number to test
+# Returns 1 if serial number is valid
+function validateSerial() {
+  PREFIX=`readModelArray "$1" "serial.prefix"`
+  MIDDLE=`readModelKey "$1" "serial.middle"`
+  S=${2:0:4}
+  P=${2:4:3}
+  L=${#2}
+  if [ ${L} -ne 13 ]; then
+    echo 0
+    return
+  fi
+  echo ${PREFIX} | grep -q ${S}
+  if [ $? -eq 1 ]; then
+    echo 0
+    return
+  fi
+  if [ "${MIDDLE}" != "${P}" ]; then
+    echo 0
+    return
+  fi
+  echo 1
 }
 
 ###############################################################################
@@ -153,36 +274,22 @@ function editUserConfig() {
 
 }
 
-
-###############################################################################
-# Shows available keymaps to user choose one
-function keymapMenu() {
-  dialog --backtitle "`backtitle`" --default-item "${LAYOUT}" --no-items \
-    --menu "Choose a layout" 0 0 0 "azerty" "bepo" "carpalx" "colemak" \
-    "dvorak" "fgGIod" "neo" "olpc" "qwerty" "qwertz" \
-    2>${TMP_PATH}/resp
-  [ $? -ne 0 ] && return
-  LAYOUT="`<${TMP_PATH}/resp`"
-  OPTIONS=""
-  while read KM; do
-    OPTIONS+="${KM::-7} "
-  done < <(cd /usr/share/keymaps/i386/${LAYOUT}; ls *.map.gz)
-  dialog --backtitle "`backtitle`" --no-items --default-item "${KEYMAP}" \
-    --menu "Choice a keymap" 0 0 0 ${OPTIONS} \
-    2>/tmp/resp
-  [ $? -ne 0 ] && return
-  resp=`cat /tmp/resp 2>/dev/null`
-  [ -z "${resp}" ] && return
-  KEYMAP=${resp}
-  writeConfigKey "layout" "${LAYOUT}" "${USER_CONFIG_FILE}"
-  writeConfigKey "keymap" "${KEYMAP}" "${USER_CONFIG_FILE}"
-  zcat /usr/share/keymaps/i386/${LAYOUT}/${KEYMAP}.map.gz | loadkeys
-}
-
 ###############################################################################
 # Where the magic happens!
 function make() {
+  usbidentify
   clear
+
+  if [ ${DIRTY}. -eq 1 ]; then
+      writeConfigKey "general" "model" "${MODEL}"
+      writeConfigKey "extra_cmdline" "sn"   "${SN}"
+      writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
+  fi
+# && dialog --backtitle "`backtitle`" --title "Alert" \
+#    --yesno "Config changed, would you like to rebuild the loader?" 0 0
+#  if [ $? -eq 0 ]; then
+#    make || return
+#  fi
 
   ./my.sh "${MODEL}"F noconfig
   if [ $? -ne 0 ]; then
@@ -211,7 +318,6 @@ while true; do
     echo "d \"Build the loader\""                     >> "${TMP_PATH}/menu"
   fi
   echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
-  echo "k \"Choose a keymap\" "                       >> "${TMP_PATH}/menu"
   echo "r \"Reboot\"" 				      >> "${TMP_PATH}/menu"
   echo "e \"Exit\""                                   >> "${TMP_PATH}/menu"
   dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
@@ -224,7 +330,6 @@ while true; do
     a) macMenu; 	NEXT="d" ;;
     d) make; 		NEXT="e" ;;
     u) editUserConfig; 	NEXT="d" ;;
-    k) keymapMenu ;;
     c) dialog --backtitle "`backtitle`" --title "Cleaning" --aspect 18 \
       --prgbox "rm -rfv \"${CACHE_PATH}/dl\"" 0 0 ;;
     r) reboot ;;
