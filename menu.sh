@@ -222,9 +222,9 @@ function make() {
 #    make || return
 #  fi
 
-  ./my.sh "${MODEL}"F noconfig >"${LOG_FILE}" 2>&1
+  ./my.sh "${MODEL}"F noconfig #>"${LOG_FILE}" 2>&1
   if [ $? -ne 0 ]; then
-    dialog --backtitle "`backtitle`" --title "Error loader building" --textbox "${LOG_FILE}" 0 0    
+    dialog --backtitle "`backtitle`" --title "Error loader building" 0 0 #--textbox "${LOG_FILE}" 0 0    
     return 1
   fi
 
