@@ -222,7 +222,7 @@ function make() {
   ./my.sh "${MODEL}"F noconfig
   if [ $? -ne 0 ]; then
     dialog --backtitle "`backtitle`" --title "Error" --aspect 18 \
-      --msgbox "Ramdisk not patched:\n`<"${LOG_FILE}"`" 0 0
+      --msgbox "Loader for ${MODEL} Build Error!!!" 0 0
     return 1
   fi
 
