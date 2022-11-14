@@ -2037,7 +2037,7 @@ function serialgen() {
         echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+"
     fi
 
-    if [ ! -z $2]
+    if [ ! -z $2 ]; then
         macgen $2
     fi
 
