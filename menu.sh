@@ -26,7 +26,7 @@ function writeConfigKey() {
 
     if [ -n "$1 " ] && [ -n "$2" ]; then
         jsonfile=$(jq ".$block+={\"$field\":\"$value\"}" $USER_CONFIG_FILE)
-        echo $jsonfile | jq . >$userconfigfile
+        echo $jsonfile | jq . >$USER_CONFIG_FILE
     else
         echo "No values to update"
     fi
@@ -280,7 +280,7 @@ function make() {
   usbidentify
   clear
 
-  if [ ${DIRTY}. -eq 1 ]; then
+  if [ ${DIRTY} -eq 1 ]; then
       writeConfigKey "general" "model" "${MODEL}"
       writeConfigKey "extra_cmdline" "sn"   "${SN}"
       writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
