@@ -333,3 +333,30 @@ function generateSerial() {
     echo $serialnum
 
 }
+
+###############################################################################
+# Validate a serial number for a model
+# 1 - Model
+# 2 - Serial number to test
+# Returns 1 if serial number is valid
+function validateSerial() {
+  PREFIX=`readModelArray "${1}" "serial.prefix"`
+  MIDDLE=`readModelKey "${1}" "serial.middle"`
+  S=${2:0:4}
+  P=${2:4:3}
+  L=${#2}
+  if [ ${L} -ne 13 ]; then
+    echo 0
+    return
+  fi
+  echo ${PREFIX} | grep -q ${S}
+  if [ $? -eq 1 ]; then
+    echo 0
+    return
+  fi
+  if [ "${MIDDLE}" != "${P}" ]; then
+    echo 0
+    return
+  fi
+  echo 1
+}
