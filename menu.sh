@@ -15,6 +15,7 @@ MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
 BUILD="42962"
 SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
 MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
+DIRTY=0
 
 ###############################################################################
 # Write to json config file
