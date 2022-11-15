@@ -316,4 +316,4 @@ while true; do
   esac
 done
 clear
-echo -e "Call \033[1;32./mmenu.sh\033[0m to return to menu"
+echo -e "Call \033[1;32m./menu.sh\033[0m to return to menu"
