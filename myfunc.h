@@ -86,6 +86,8 @@ set -u
 # 2022.10.22
 # Update : Dropped support for TCRP Jot's Mod /Jun's Mod.
 # 2022.11.11
+# Update : Deploy menu.sh
+# 2022.11.14
 
 showlastupdate() {
     cat <<EOF
@@ -101,6 +103,12 @@ showlastupdate() {
 
 # Update : Dropped support for TCRP Jot's Mod /Jun's Mod.
 # 2022.11.11
+
+# Update : Deploy menu.sh
+# 2022.11.14
+
+There is a new distribution of menu.sh that looks like an APRL-style menu.
+Run ./menu.sh to use the menu.
 
 EOF
 }
