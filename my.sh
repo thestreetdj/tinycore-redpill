@@ -57,6 +57,13 @@ function checkmachine() {
 
 }
 
+if [ $(cat /home/tc/.xsession | grep menu.sh | wc -l) -gt 0 ]; then
+    cat /home/tc/.xsession
+else
+    echo "insert autorun script in /home/tc/.xsession"
+    echo "aterm -bg black -fg green -title \"TinyCore RedPill Menu\" -e /home/tc/menu.sh &" >> .xsession   
+fi
+
 checkinternet
 getlatestmshell
 
