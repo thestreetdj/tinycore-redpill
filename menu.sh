@@ -145,15 +145,8 @@ function usbidentify() {
     if [ -n "$usbdevice" ] && [ -n "$vendorid" ] && [ -n "$productid" ]; then
         echo "Found $usbdevice"
         echo "Vendor ID : $vendorid Product ID : $productid"
-
-        echo "Should i update the user_config.json with these values ? [Yy/Nn]"
-        read answer
-        if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
-            json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-            json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-        else
-            echo "OK remember to update manually by editing user_config.json file"
-        fi
+        json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+        json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
     else
         echo "Sorry, no usb disk could be identified"
         rm /tmp/lsusb.out
