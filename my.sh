@@ -203,7 +203,7 @@ if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; t
 else
     cecho g "making directory  /mnt/${tcrppart}/auxfiles/extractor"  
     mkdir /mnt/${tcrppart}/auxfiles/extractor
-    curl -L --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/extractor.gz" -output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
+    sudo curl -L --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
     gunzip /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
 fi
 
