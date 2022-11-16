@@ -2846,11 +2846,6 @@ function buildloader() {
         echo "Setting default boot entry to TCRP Friend"
         cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
 
-#m shell only start
-        echo "Save space for partition 1 of TCRP Friend"
-        rm -f /home/tc/redpill-load/localdiskp1/custom.gz
-#m shell only end
-
     else
         echo
 #        if [ "$MACHINE" = "VIRTUAL" ]; then
