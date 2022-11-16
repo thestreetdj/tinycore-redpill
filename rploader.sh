@@ -2811,7 +2811,7 @@ function buildloader() {
     cp $userconfigfile /mnt/${loaderdisk}3/
 
 #m shell only start
-#    sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+    sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
 #m shell only end
 
     if [ "$WITHFRIEND" = "YES" ]; then
@@ -2827,17 +2827,17 @@ function buildloader() {
         if [ "$RD_COMPRESSED" = "false" ]; then
             echo "Ramdisk in not compressed "
             cat /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
-#            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
+            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
 #m shell only start
-            cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
+#            cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
 #m shell only end
             sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
             (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
         else
             unlzma -dc /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
-#            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
+            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
 #m shell only start
-            cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
+#            cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
 #m shell only end
             sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
             (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
