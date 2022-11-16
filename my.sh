@@ -394,7 +394,7 @@ patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"
            echo  "Check internet or cache disk space"
            exit 99
         fi
-    fi        
+
         os_sha256=$(sha256sum ${patfile} | awk '{print $1}')                                
         cecho y "Pat file  sha256sum is : $os_sha256"                                       
 
@@ -407,7 +407,7 @@ patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"
             cecho y "os sha256 verify FAILED, check ${patfile}  "                           
             exit 99                                                                         
         fi                                                                                  
-
+    fi
 
 echo
 cecho g "Loader Building in progress..."
