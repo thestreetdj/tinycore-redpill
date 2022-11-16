@@ -204,7 +204,7 @@ else
     cecho g "making directory  /mnt/${tcrppart}/auxfiles/extractor"  
     mkdir /mnt/${tcrppart}/auxfiles/extractor
     sudo curl -L --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
-    sudo gunzip /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
+    sudo tar -zxvf /mnt/${tcrppart}/auxfiles/extractor/extractor.gz -C /mnt/${tcrppart}/auxfiles/extractor
 fi
 
 echo
