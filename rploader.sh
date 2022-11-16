@@ -2858,21 +2858,31 @@ function buildloader() {
     if [ "$JUNLOADER" == "YES" ]; then
         echo "Don't move file in jun's mod"
     else
-        echo "Move rd.gz and custom.gz to partition 3"
-        sudo mv localdiskp1/rd.gz     /mnt/${loaderdisk}3
+        echo "Copy rd.gz to partition 3"
+        sudo cp localdiskp1/rd.gz     /mnt/${loaderdisk}3
         if [ $? -eq 0 ]; then
-            echo "Success moving file: localdiskp1/rd.gz to /mnt/${loaderdisk}3"
+            echo "Success coping file: localdiskp1/rd.gz to /mnt/${loaderdisk}3"
         else
-            echo "File move failed!!!, Build Action exiting!!!"
+            echo "File copy failed!!!, Build Action exiting!!!"
             exit 0
         fi
-        sudo mv localdiskp2/custom.gz /mnt/${loaderdisk}3 
+        
+        echo "Copy custom.gz to partition 1 and 3"        
+        sudo cp localdiskp2/custom.gz /mnt/${loaderdisk}1         
         if [ $? -eq 0 ]; then
-            echo "Success moving file: localdiskp2/custom.gz to /mnt/${loaderdisk}3"
+            echo "Success coping file: localdiskp2/custom.gz to /mnt/${loaderdisk}1"
         else
-            echo "File move failed!!!, Build Action exiting!!!"
+            echo "File copy failed!!!, Build Action exiting!!!"
             exit 0
         fi
+        sudo cp localdiskp2/custom.gz /mnt/${loaderdisk}3 
+        if [ $? -eq 0 ]; then
+            echo "Success coping file: localdiskp2/custom.gz to /mnt/${loaderdisk}3"
+        else
+            echo "File copy failed!!!, Build Action exiting!!!"
+            exit 0
+        fi
+        
         echo "Copy zImage to partition 3"    
         cp localdiskp1/zImage         /mnt/${loaderdisk}3     
         if [ $? -eq 0 ]; then
