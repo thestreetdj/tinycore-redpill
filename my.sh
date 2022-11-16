@@ -196,6 +196,17 @@ if [ ! -h /home/tc/custom-module ]; then
     sudo ln -s /mnt/${tcrppart}/auxfiles /home/tc/custom-module 
 fi
 
+
+local_cache="/mnt/${tcrppart}/auxfiles"
+if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then
+    echo "Found extractor locally cached"
+else
+    cecho g "making directory  /mnt/${tcrppart}/auxfiles/extractor"  
+    mkdir /mnt/${tcrppart}/auxfiles/extractor
+    curl -L --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/extractor.gz" -output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
+    gunzip /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
+fi
+
 echo
 
 if [ $MODEL == "DS918+" ]||[ $MODEL == "DS3617xs" ]||[ $MODEL == "DS2422+" ]||[ $MODEL == "RS4021xs+" ]||[ $MODEL == "DS1621xs+" ]||[ $MODEL == "RS3618xs" ]; then
@@ -232,10 +243,10 @@ cecho y "If fullupgrade is required, please handle it separately."
 
 cecho g "Downloading Peter Suh's custom configuration files.................."
 
-curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
-curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
-curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
-curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O  
+curl -L --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
+curl -L --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
+curl -L --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
+curl -L --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O  
 
 if [ $TARGET_REVISION == "42218" ] ; then
     echo
