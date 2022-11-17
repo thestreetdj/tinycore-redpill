@@ -88,7 +88,7 @@ set -u
 # 2022.11.11
 # Update : Deploy menu.sh
 # 2022.11.14
-# Update : Add autoupdate script
+# Update : Added autoupdate script, Added Keymap function to menu.sh for multilingual keybaord support
 # 2022.11.17
 
 showlastupdate() {
@@ -103,7 +103,7 @@ showlastupdate() {
 # Update : Deploy menu.sh
 # 2022.11.14
 
-# Update : Add autoupdate script
+# Update : Added autoupdate script, Added Keymap function to menu.sh for multilingual keyboard support
 # 2022.11.17
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
