@@ -57,11 +57,14 @@ function checkmachine() {
 
 }
 
-if [ $(cat /home/tc/.xsession | grep menu.sh | wc -l) -gt 0 ]; then
-    cat /home/tc/.xsession
-else
-    echo "insert autorun script in /home/tc/.xsession"
+if [ $(cat /home/tc/.xsession | grep menu.sh | wc -l) -eq 0 ]; then
+    echo "insert menu.sh autorun script in /home/tc/.xsession"
     echo "aterm -bg black -fg green -title \"TinyCore RedPill Menu\" -e /home/tc/menu.sh &" >> .xsession   
+fi
+
+if [ $(cat /home/tc/.xsession | grep my.sh | wc -l) -eq 0 ]; then
+    echo "insert my.sh autoupdate script in /home/tc/.xsession"
+    echo "aterm -bg black -fg green -title \"TinyCore RedPill M Shell AutoUpdate\" -e echo \"y\"|/home/tc/my.sh &" >> .xsession
 fi
 
 checkinternet
