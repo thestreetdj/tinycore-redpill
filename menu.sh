@@ -301,6 +301,7 @@ function reboot() {
 }
 
 # Main loop
+sudo loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.map
 NEXT="m"
 while true; do
   echo "m \"Choose a model\""                          > "${TMP_PATH}/menu"
