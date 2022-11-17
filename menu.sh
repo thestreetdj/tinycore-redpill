@@ -302,6 +302,12 @@ function reboot() {
 }
 
 # Main loop
+if [ "${KEYMAP}" = "null" ]; then
+    LAYOUT="qwerty"
+    KEYMAP="us"
+    writeConfigKey "general" "layout" "${LAYOUT}"
+    writeConfigKey "general" "keymap" "${KEYMAP}"
+fi
 loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 NEXT="m"
 while true; do
