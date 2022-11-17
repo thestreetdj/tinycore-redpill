@@ -64,7 +64,7 @@ fi
 
 if [ $(cat /home/tc/.xsession | grep my.sh | wc -l) -eq 0 ]; then
     echo "insert my.sh autoupdate script in /home/tc/.xsession"
-    echo "aterm -bg black -fg green -title \"TinyCore RedPill M Shell AutoUpdate\" -e echo \"y\"|/home/tc/my.sh &" >> .xsession
+    echo "aterm -bg black -fg green -title \"TinyCore RedPill M Shell AutoUpdate\" -e /home/tc/my.sh update &" >> .xsession
 fi
 
 checkinternet
@@ -95,6 +95,7 @@ poco="N"
 realmac="N"
 frmyv="N"
 friend_mode="N"
+update="N"
 
 if [ $FRIEND_MODE_YN == "Y" ]; then
     friend_mode="Y"
@@ -130,11 +131,17 @@ fi
         manual)
             manual="Y"
             ;;
+            
         realmac)
             realmac="Y"
             ;;
+            
         frmyv)
             frmyv="Y"
+            ;;
+            
+        update)
+            update="Y"
             ;;
 
         *)
@@ -163,6 +170,13 @@ fi
 #echo $realmac
 #echo $frmyv
 #echo $friend_mode
+#echo $update
+
+if [ $update == "Y" ] ; then 
+    getlatestmshell "noask"
+    exit 0
+fi
+
 
 if [ $jumkey == "Y" ] ; then 
     cecho p "The jumpkey option is deprecated, shell exit..."          
