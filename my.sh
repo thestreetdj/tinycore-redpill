@@ -68,7 +68,6 @@ if [ $(cat /home/tc/.xsession | grep my.sh | wc -l) -eq 0 ]; then
 fi
 
 checkinternet
-getlatestmshell
 
 if [ $# -lt 1 ]; then
     showhelp 
@@ -175,8 +174,9 @@ fi
 if [ $update == "Y" ] ; then 
     getlatestmshell "noask"
     exit 0
+else
+    getlatestmshell "ask"
 fi
-
 
 if [ $jumkey == "Y" ] ; then 
     cecho p "The jumpkey option is deprecated, shell exit..."          
