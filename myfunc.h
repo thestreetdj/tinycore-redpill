@@ -88,6 +88,8 @@ set -u
 # 2022.11.11
 # Update : Deploy menu.sh
 # 2022.11.14
+# Update : Add autoupdate script
+# 2022.11.17
 
 showlastupdate() {
     cat <<EOF
@@ -95,17 +97,14 @@ showlastupdate() {
 # Update : Release TCRP FRIEND mode
 # 2022.09.25
 
-# Update : Change to stable redpill kernel ( DS1621xs+, DVA3221, RS3618xs )
-# 2022.09.26
-
-# Update : Synchronization according to the TCRP Platform naming convention
-# 2022.10.22
-
 # Update : Dropped support for TCRP Jot's Mod /Jun's Mod.
 # 2022.11.11
 
 # Update : Deploy menu.sh
 # 2022.11.14
+
+# Update : Add autoupdate script
+# 2022.11.17
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
@@ -120,7 +119,9 @@ $(basename ${0})
 ----------------------------------------------------------------------------------------
 Usage: ${0} <Synology Model Name> <Options>
 
-Options: postupdate, noconfig, noclean, manual, realmac, userdts
+Options: update, postupdate, noconfig, noclean, manual, realmac, userdts
+
+- update : Option to handle updates to the m shell.
 
 - postupdate : Option to patch the restore loop after applying DSM 7.1.0-42661 after Update 2, no additional build required.
 
@@ -512,8 +513,14 @@ getlatestmshell() {
     REPOSHA="$(sha256sum latest.mshell.gz | awk '{print $1}')"
 
     if [ "${CURRENTSHA}" != "${REPOSHA}" ]; then
-        echo -n "There is a newer version of m shell script on the repo should we use that ? [yY/nN]"
-        read confirmation
+    
+        if [ "${1}" = "noask" ]; then
+            confirmation="y"
+        else
+            echo -n "There is a newer version of m shell script on the repo should we use that ? [yY/nN]"
+            read confirmation
+        fi
+    
         if [ "$confirmation" = "y" ] || [ "$confirmation" = "Y" ]; then
             echo "OK, updating, please re-run after updating"
             cp -f /home/tc/latest.mshell.gz /home/tc/$mshellgz
