@@ -42,8 +42,8 @@ BUILD="42962"
 SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
 MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
 
-LAYOUT="$(jq -r -e 'general.layout' $USER_CONFIG_FILE)"
-KEYMAP="$(jq -r -e 'general.keymap' $USER_CONFIG_FILE)"
+LAYOUT="$(jq -r -e '.general.layout' $USER_CONFIG_FILE)"
+KEYMAP="$(jq -r -e '.general.keymap' $USER_CONFIG_FILE)"
 
 ###############################################################################
 # Write to json config file
