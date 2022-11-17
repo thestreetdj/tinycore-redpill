@@ -66,7 +66,7 @@ function writeConfigKey() {
 ###############################################################################
 # Mounts backtitle dynamically
 function backtitle() {
-  BACKTITLE="TCRP 0.9.2.9"
+  BACKTITLE="TCRP 0.9.3.0"
   if [ -n "${MODEL}" ]; then
     BACKTITLE+=" ${MODEL}"
   else
