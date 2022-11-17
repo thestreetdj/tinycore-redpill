@@ -25,6 +25,8 @@ fi
 
 [[ "$(which dialog)_" == "_" ]] && tce-load -wi dialog
 
+[[ "$(which kmaps)_" == "_" ]] && tce-load -wi kmaps
+
 # Get actual IP
 IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
 
@@ -34,12 +36,14 @@ DIRTY=0
 TMP_PATH=/tmp
 LOG_FILE="${TMP_PATH}/log.txt"
 USER_CONFIG_FILE="/home/tc/user_config.json"
-RAMDISK_PATH="${TMP_PATH}/ramdisk"
 
 MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
 BUILD="42962"
 SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
 MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
+
+LAYOUT="$(jq -r -e 'general.layout' $USER_CONFIG_FILE)"
+KEYMAP="$(jq -r -e 'general.keymap' $USER_CONFIG_FILE)"
 
 ###############################################################################
 # Write to json config file
@@ -56,15 +60,6 @@ function writeConfigKey() {
         echo "No values to update"
     fi
 
-}
-
-###############################################################################
-# Read key value from json config file
-# 1 - Path of key
-# Return Value
-function readConfigKey() {
-  RESULT="$(jq -r -e '.$1' $USER_CONFIG_FILE)"
-  [ "${RESULT}" == "null" ] && echo "" || echo ${RESULT}
 }
 
 
@@ -96,6 +91,11 @@ function backtitle() {
     BACKTITLE+=" ${MACADDR1}"
   else
     BACKTITLE+=" (no MACADDR1)"
+  fi
+  if [ -n "${KEYMAP}" ]; then
+    BACKTITLE+=" (${LAYOUT}/${KEYMAP})"
+  else
+    BACKTITLE+=" (qwerty/us)"
   fi
   echo ${BACKTITLE}
 }
@@ -269,6 +269,31 @@ function make() {
   return 0
 }
 
+###############################################################################
+# Shows available keymaps to user choose one
+function keymapMenu() {
+  dialog --backtitle "`backtitle`" --default-item "${LAYOUT}" --no-items \
+    --menu "Choose a layout" 0 0 0 "azerty" "colemak" \
+    "dvorak" "fgGIod" "olpc" "qwerty" "qwertz" \
+    2>${TMP_PATH}/resp
+  [ $? -ne 0 ] && return
+  LAYOUT="`<${TMP_PATH}/resp`"
+  OPTIONS=""
+  while read KM; do
+    OPTIONS+="${KM::-7} "
+  done < <(cd /usr/share/kmap/${LAYOUT}; ls *.kmap)
+  dialog --backtitle "`backtitle`" --no-items --default-item "${KEYMAP}" \
+    --menu "Choice a keymap" 0 0 0 ${OPTIONS} \
+    2>/tmp/resp
+  [ $? -ne 0 ] && return
+  resp=`cat /tmp/resp 2>/dev/null`
+  [ -z "${resp}" ] && return
+  KEYMAP=${resp}
+  writeConfigKey "general" "layout" "${LAYOUT}"
+  writeConfigKey "general" "keymap" "${KEYMAP}"
+  sudo loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.map
+}
+
 function reboot() {
     clean
     sudo reboot
@@ -297,6 +322,7 @@ while true; do
     a) macMenu; 	NEXT="d" ;;
     d) make; 		NEXT="r" ;;
     u) editUserConfig; 	NEXT="d" ;;
+    k) keymapMenu ;;
     c) dialog --backtitle "`backtitle`" --title "Cleaning" --aspect 18 \
       --prgbox "rm -rfv \"${CACHE_PATH}/dl\"" 0 0 ;;
     r) reboot ;;
