@@ -291,7 +291,7 @@ function keymapMenu() {
   KEYMAP=${resp}
   writeConfigKey "general" "layout" "${LAYOUT}"
   writeConfigKey "general" "keymap" "${KEYMAP}"
-  sudo loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
+  loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
   cd ~
 }
 
