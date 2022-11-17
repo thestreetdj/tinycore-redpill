@@ -68,6 +68,12 @@ if [ $(cat /home/tc/.xsession | grep my.sh | wc -l) -eq 0 ]; then
 fi
 
 checkinternet
+if [ "$1" == "update" ] ; then 
+    getlatestmshell "noask"
+    exit 0
+else
+    getlatestmshell "ask"
+fi
 
 if [ $# -lt 1 ]; then
     showhelp 
@@ -138,10 +144,6 @@ fi
         frmyv)
             frmyv="Y"
             ;;
-            
-        update)
-            update="Y"
-            ;;
 
         *)
             if [ $1 = "FS2500F" ]; then                                       
@@ -169,14 +171,6 @@ fi
 #echo $realmac
 #echo $frmyv
 #echo $friend_mode
-#echo $update
-
-if [ $update == "Y" ] ; then 
-    getlatestmshell "noask"
-    exit 0
-else
-    getlatestmshell "ask"
-fi
 
 if [ $jumkey == "Y" ] ; then 
     cecho p "The jumpkey option is deprecated, shell exit..."          
