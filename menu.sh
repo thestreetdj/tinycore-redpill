@@ -295,6 +295,10 @@ function keymapMenu() {
   cd ~
 }
 
+function backup() {
+    echo "y"|./rploader.sh backup
+}
+
 function reboot() {
     clean
     sudo reboot
@@ -319,6 +323,7 @@ while true; do
   fi
   echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
   echo "k \"Choose a keymap\" "                       >> "${TMP_PATH}/menu"
+  echo "b \"backup TCRP\"" 			      >> "${TMP_PATH}/menu"  
   echo "r \"Reboot\"" 				      >> "${TMP_PATH}/menu"
   echo "e \"Exit\""                                   >> "${TMP_PATH}/menu"
   dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
@@ -334,6 +339,7 @@ while true; do
     k) keymapMenu ;;
     c) dialog --backtitle "`backtitle`" --title "Cleaning" --aspect 18 \
       --prgbox "rm -rfv \"${CACHE_PATH}/dl\"" 0 0 ;;
+    b) backup ;;      
     r) reboot ;;
     e) break ;;
   esac
