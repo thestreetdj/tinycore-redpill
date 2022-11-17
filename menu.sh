@@ -280,7 +280,7 @@ function keymapMenu() {
   LAYOUT="`<${TMP_PATH}/resp`"
   OPTIONS=""
   while read KM; do
-    OPTIONS+="${KM::-7} "
+    OPTIONS+="${KM::-5} "
   done < <(cd /usr/share/kmap/${LAYOUT}; ls *.kmap)
   dialog --backtitle "`backtitle`" --no-items --default-item "${KEYMAP}" \
     --menu "Choice a keymap" 0 0 0 ${OPTIONS} \
