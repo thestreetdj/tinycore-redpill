@@ -291,7 +291,7 @@ function keymapMenu() {
   KEYMAP=${resp}
   writeConfigKey "general" "layout" "${LAYOUT}"
   writeConfigKey "general" "keymap" "${KEYMAP}"
-  sudo loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.map
+  sudo loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 }
 
 function reboot() {
@@ -301,7 +301,7 @@ function reboot() {
 }
 
 # Main loop
-sudo loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.map
+loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 NEXT="m"
 while true; do
   echo "m \"Choose a model\""                          > "${TMP_PATH}/menu"
