@@ -68,11 +68,16 @@ if [ $(cat /home/tc/.xsession | grep my.sh | wc -l) -eq 0 ]; then
 fi
 
 checkinternet
-if [ "$1" == "update" ] ; then 
-    getlatestmshell "noask"
-    exit 0
-else
+
+if [ $# -lt 1 ]; then
     getlatestmshell "ask"
+else
+    if [ "$1" == "update" ] ; then 
+        getlatestmshell "noask"
+        exit 0
+    else
+        getlatestmshell "ask"
+    fi
 fi
 
 if [ $# -lt 1 ]; then
