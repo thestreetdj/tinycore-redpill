@@ -261,10 +261,10 @@ function macMenu2() {
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
     if [ "${resp}" = "d" ]; then
-      MACADDR=`./macgen.sh "randommac" "eth1"` 
+      MAC2=`./macgen.sh "randommac" "eth1"` 
       break
     elif [ "${resp}" = "c" ]; then
-      MACADDR=`./macgen.sh "realmac" "eth1"`
+      MAC2=`./macgen.sh "realmac" "eth1"`
       break
     elif [ "${resp}" = "m" ]; then
       while true; do
@@ -272,8 +272,8 @@ function macMenu2() {
           --inputbox "Please enter a mac address " 0 0 "" \
           2>${TMP_PATH}/resp
         [ $? -ne 0 ] && return
-        MACADDR=`cat ${TMP_PATH}/resp`
-        if [ -z "${MACADDR}" ]; then
+        MAC2=`cat ${TMP_PATH}/resp`
+        if [ -z "${MAC2}" ]; then
           return
         else
           break
@@ -282,7 +282,7 @@ function macMenu2() {
       break
     fi
   done
-  MACADDR2="${MACADDR}"
+  MACADDR2="${MAC2}"
   DIRTY=1
 }
 
