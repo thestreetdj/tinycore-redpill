@@ -7,7 +7,7 @@ function generateMacAddress() {
 [ "${1}" == "realmac" ] && let keepmac=1 || let keepmac=0
 
     mac="$(generateMacAddress)"
-    realmac=$(ifconfig eth0 | head -1 | awk '{print $NF}')
+    realmac=$(ifconfig ${2} | head -1 | awk '{print $NF}')
 
     #echo "Mac Address = $mac "
     #[ $keepmac -eq 1 ] && echo "Real Mac Address : $realmac"
