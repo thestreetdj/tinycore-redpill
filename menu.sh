@@ -247,46 +247,6 @@ function macMenu() {
 }
 
 ###############################################################################
-# Shows menu to generate randomly or to get realmac
-function macMenu2() {
-  while true; do
-    dialog --clear --backtitle "`backtitle`" \
-      --menu "Choose a option" 0 0 0 \
-      d "Generate a random mac address" \
-      c "Get a real mac address" \
-#      m "Enter a mac address" \      
-    2>${TMP_PATH}/resp
-    [ $? -ne 0 ] && return
-    resp=$(<${TMP_PATH}/resp)
-    [ -z "${resp}" ] && return
-    if [ "${resp}" = "d" ]; then
-      MAC2=`./macgen.sh "randommac" "eth1"` 
-      break
-    elif [ "${resp}" = "c" ]; then
-      MAC2=`./macgen.sh "realmac" "eth1"`
-      break
-#    elif [ "${resp}" = "m" ]; then
-#      while true; do
-#        dialog --backtitle "`backtitle`" \
-#          --inputbox "Please enter a mac address " 0 0 "" \
-#          2>${TMP_PATH}/resp
-#        [ $? -ne 0 ] && return
-#        MAC2=`cat ${TMP_PATH}/resp`
-#        if [ -z "${MAC2}" ]; then
-#          return
-#        else
-#          break
-#        fi
-#      done
-#      break
-    fi
-  done
-  MACADDR2="${MAC2}"
-  DIRTY=1
-}
-
-
-###############################################################################
 # Permits user edit the user config
 function editUserConfig() {
   while true; do
