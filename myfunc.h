@@ -90,6 +90,8 @@ set -u
 # 2022.11.14
 # Update : Added autoupdate script, Added Keymap function to menu.sh for multilingual keybaord support
 # 2022.11.17
+# Update : Added dual mac address make function to menu.sh
+# 2022.11.18
 
 showlastupdate() {
     cat <<EOF
@@ -105,6 +107,9 @@ showlastupdate() {
 
 # Update : Added autoupdate script, Added Keymap function to menu.sh for multilingual keyboard support
 # 2022.11.17
+
+# Update : Added dual mac address make function to menu.sh
+# 2022.11.18
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
