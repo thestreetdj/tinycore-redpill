@@ -273,7 +273,7 @@ function editUserConfig() {
   BUILD="42962"
   SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
   MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
-    if [ "$NETNUM"="2" ]; then
+  if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
     MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
   fi
 
@@ -289,7 +289,7 @@ function make() {
       writeConfigKey "general" "model" "${MODEL}"
       writeConfigKey "extra_cmdline" "sn"   "${SN}"
       writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
-      if [ "$NETNUM"="2" ]; then
+      if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
         writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
         writeConfigKey "extra_cmdline" "netif_num" "${NETNUM}"        
       fi
