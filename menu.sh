@@ -210,7 +210,7 @@ function serialMenu() {
 
 ###############################################################################
 # Shows menu to generate randomly or to get realmac
-function macMenu1() {
+function macMenu() {
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
@@ -222,10 +222,10 @@ function macMenu1() {
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
     if [ "${resp}" = "d" ]; then
-      MACADDR=`./macgen.sh "randommac" "eth0"`
+      MACADDR=`./macgen.sh "randommac" $1`
       break
     elif [ "${resp}" = "c" ]; then
-      MACADDR=`./macgen.sh "realmac" "eth0"`
+      MACADDR=`./macgen.sh "realmac" $1`
       break
     elif [ "${resp}" = "m" ]; then
       while true; do
@@ -243,7 +243,6 @@ function macMenu1() {
       break
     fi
   done
-  MACADDR1="${MACADDR}"
   DIRTY=1
 }
 
@@ -255,7 +254,7 @@ function macMenu2() {
       --menu "Choose a option" 0 0 0 \
       d "Generate a random mac address" \
       c "Get a real mac address" \
-      m "Enter a mac address" \      
+#      m "Enter a mac address" \      
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
@@ -266,20 +265,20 @@ function macMenu2() {
     elif [ "${resp}" = "c" ]; then
       MAC2=`./macgen.sh "realmac" "eth1"`
       break
-    elif [ "${resp}" = "m" ]; then
-      while true; do
-        dialog --backtitle "`backtitle`" \
-          --inputbox "Please enter a mac address " 0 0 "" \
-          2>${TMP_PATH}/resp
-        [ $? -ne 0 ] && return
-        MAC2=`cat ${TMP_PATH}/resp`
-        if [ -z "${MAC2}" ]; then
-          return
-        else
-          break
-        fi
-      done
-      break
+#    elif [ "${resp}" = "m" ]; then
+#      while true; do
+#        dialog --backtitle "`backtitle`" \
+#          --inputbox "Please enter a mac address " 0 0 "" \
+#          2>${TMP_PATH}/resp
+#        [ $? -ne 0 ] && return
+#        MAC2=`cat ${TMP_PATH}/resp`
+#        if [ -z "${MAC2}" ]; then
+#          return
+#        else
+#          break
+#        fi
+#      done
+#      break
     fi
   done
   MACADDR2="${MAC2}"
@@ -409,8 +408,8 @@ while true; do
   case `<"${TMP_PATH}/resp"` in
     m) modelMenu; 	NEXT="s" ;;
     s) serialMenu; 	NEXT="a" ;;
-    a) macMenu1; 	NEXT="d" ;;
-    f) macMenu2; 	NEXT="d" ;;
+    a) macMenu; MACADDR1="${MACADDR}"; 	NEXT="d" ;;
+    f) macMenu; MACADDR2="${MACADDR}";	NEXT="d" ;;
     d) make; 		NEXT="r" ;;
     u) editUserConfig; 	NEXT="d" ;;
     k) keymapMenu ;;
