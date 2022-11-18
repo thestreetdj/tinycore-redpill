@@ -368,7 +368,7 @@ while true; do
     echo "d \"Build the loader\""                     >> "${TMP_PATH}/menu"
   fi
   echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
-  echo "k \"Choose a keymap\" "                       >> "${TMP_PATH}/menu"
+  echo "k \"Choose a keymap\""                       >> "${TMP_PATH}/menu"
   echo "b \"Backup TCRP\"" 			      >> "${TMP_PATH}/menu"  
   echo "r \"Reboot\"" 				      >> "${TMP_PATH}/menu"
   echo "e \"Exit\""                                   >> "${TMP_PATH}/menu"
