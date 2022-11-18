@@ -243,10 +243,12 @@ function macMenu() {
   done
   
   if [ "$1"="eth0" ]; then
+      MACADDR1="${MACADDR}"
       writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
   fi
   
   if [ "$1"="eth1" ]; then
+      MACADDR2="${MACADDR}"
       writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
       writeConfigKey "extra_cmdline" "netif_num" "${NETNUM}"        
   fi
@@ -374,8 +376,8 @@ while true; do
   case `<"${TMP_PATH}/resp"` in
     m) modelMenu; 	NEXT="s" ;;
     s) serialMenu; 	NEXT="a" ;;
-    a) macMenu "eth0"; MACADDR1="${MACADDR}"; 	NEXT="d" ;;
-    f) macMenu "eth1"; MACADDR2="${MACADDR}";	NEXT="d" ;;
+    a) macMenu "eth0"; 	NEXT="d" ;;
+    f) macMenu "eth1"; 	NEXT="d" ;;
     d) make; 		NEXT="r" ;;
     u) editUserConfig; 	NEXT="d" ;;
     k) keymapMenu ;;
