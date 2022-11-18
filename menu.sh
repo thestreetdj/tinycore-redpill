@@ -408,8 +408,8 @@ while true; do
   case `<"${TMP_PATH}/resp"` in
     m) modelMenu; 	NEXT="s" ;;
     s) serialMenu; 	NEXT="a" ;;
-    a) macMenu; MACADDR1="${MACADDR}"; 	NEXT="d" ;;
-    f) macMenu; MACADDR2="${MACADDR}";	NEXT="d" ;;
+    a) macMenu "eth0"; MACADDR1="${MACADDR}"; 	NEXT="d" ;;
+    f) macMenu "eth1"; MACADDR2="${MACADDR}";	NEXT="d" ;;
     d) make; 		NEXT="r" ;;
     u) editUserConfig; 	NEXT="d" ;;
     k) keymapMenu ;;
