@@ -44,6 +44,8 @@ MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
 if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
   MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
   NETNUM="2"
+else
+  NETNUM="1"
 fi
 
 LAYOUT="$(jq -r -e '.general.layout' $USER_CONFIG_FILE)"
@@ -290,7 +292,7 @@ function make() {
       writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
       if [ "$NETNUM"="2" ]; then
         writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
-        writeConfigKey "extra_cmdline" "net_num" "${NETNUM}"        
+        writeConfigKey "extra_cmdline" "netif_num" "${NETNUM}"        
       fi
   fi
 # && dialog --backtitle "`backtitle`" --title "Alert" \
