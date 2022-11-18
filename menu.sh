@@ -216,6 +216,7 @@ function macMenu1() {
       --menu "Choose a option" 0 0 0 \
       d "Generate a random mac address" \
       c "Get a real mac address" \
+      m "Enter a mac address" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
@@ -225,6 +226,20 @@ function macMenu1() {
       break
     elif [ "${resp}" = "c" ]; then
       MACADDR=`./macgen.sh "realmac" "eth0"`
+      break
+    elif [ "${resp}" = "m" ]; then
+      while true; do
+        dialog --backtitle "`backtitle`" \
+          --inputbox "Please enter a mac address " 0 0 "" \
+          2>${TMP_PATH}/resp
+        [ $? -ne 0 ] && return
+        MACADDR=`cat ${TMP_PATH}/resp`
+        if [ -z "${MACADDR}" ]; then
+          return
+        else
+          break
+        fi
+      done
       break
     fi
   done
@@ -240,6 +255,7 @@ function macMenu2() {
       --menu "Choose a option" 0 0 0 \
       d "Generate a random mac address" \
       c "Get a real mac address" \
+      m "Enter a mac address" \      
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
@@ -249,6 +265,20 @@ function macMenu2() {
       break
     elif [ "${resp}" = "c" ]; then
       MACADDR=`./macgen.sh "realmac" "eth1"`
+      break
+    elif [ "${resp}" = "m" ]; then
+      while true; do
+        dialog --backtitle "`backtitle`" \
+          --inputbox "Please enter a mac address " 0 0 "" \
+          2>${TMP_PATH}/resp
+        [ $? -ne 0 ] && return
+        MACADDR=`cat ${TMP_PATH}/resp`
+        if [ -z "${MACADDR}" ]; then
+          return
+        else
+          break
+        fi
+      done
       break
     fi
   done
