@@ -41,11 +41,10 @@ MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
 BUILD="42962"
 SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
 MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
+NETNUM="1"
 if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
   MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
   NETNUM="2"
-else
-  NETNUM="1"
 fi
 
 LAYOUT="$(jq -r -e '.general.layout' $USER_CONFIG_FILE)"
