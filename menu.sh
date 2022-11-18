@@ -41,6 +41,10 @@ MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
 BUILD="42962"
 SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
 MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
+if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
+  MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
+  NETNUM="2"
+fi
 
 LAYOUT="$(jq -r -e '.general.layout' $USER_CONFIG_FILE)"
 KEYMAP="$(jq -r -e '.general.keymap' $USER_CONFIG_FILE)"
@@ -92,7 +96,14 @@ function backtitle() {
   else
     BACKTITLE+=" (no MACADDR1)"
   fi
-  if [ -n "${KEYMAP}" ]; then
+  if [ "$NETNUM"="2" ]; then
+    if [ "${MACADDR2}" = "null" ]; then
+      BACKTITLE+=" (no MACADDR2)"  
+    else
+      BACKTITLE+=" ${MACADDR2}"
+    fi
+  fi  
+    if [ -n "${KEYMAP}" ]; then
     BACKTITLE+=" (${LAYOUT}/${KEYMAP})"
   else
     BACKTITLE+=" (qwerty/us)"
@@ -198,7 +209,7 @@ function serialMenu() {
 
 ###############################################################################
 # Shows menu to generate randomly or to get realmac
-function macMenu() {
+function macMenu1() {
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
@@ -209,16 +220,41 @@ function macMenu() {
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
     if [ "${resp}" = "d" ]; then
-      MACADDR=`./macgen.sh "randommac"`
+      MACADDR=`./macgen.sh "randommac" "eth0"`
       break
     elif [ "${resp}" = "c" ]; then
-      MACADDR=`./macgen.sh "realmac"`
+      MACADDR=`./macgen.sh "realmac" "eth0"`
       break
     fi
   done
   MACADDR1="${MACADDR}"
   DIRTY=1
 }
+
+###############################################################################
+# Shows menu to generate randomly or to get realmac
+function macMenu2() {
+  while true; do
+    dialog --clear --backtitle "`backtitle`" \
+      --menu "Choose a option" 0 0 0 \
+      d "Generate a random mac address" \
+      c "Get a real mac address" \
+    2>${TMP_PATH}/resp
+    [ $? -ne 0 ] && return
+    resp=$(<${TMP_PATH}/resp)
+    [ -z "${resp}" ] && return
+    if [ "${resp}" = "d" ]; then
+      MACADDR=`./macgen.sh "randommac" "eth1"` 
+      break
+    elif [ "${resp}" = "c" ]; then
+      MACADDR=`./macgen.sh "realmac" "eth1"`
+      break
+    fi
+  done
+  MACADDR2="${MACADDR}"
+  DIRTY=1
+}
+
 
 ###############################################################################
 # Permits user edit the user config
@@ -236,7 +272,9 @@ function editUserConfig() {
   BUILD="42962"
   SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
   MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
-  MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
+    if [ "$NETNUM"="2" ]; then
+    MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
+  fi
 
 }
 
@@ -250,6 +288,10 @@ function make() {
       writeConfigKey "general" "model" "${MODEL}"
       writeConfigKey "extra_cmdline" "sn"   "${SN}"
       writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
+      if [ "$NETNUM"="2" ]; then
+        writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
+        writeConfigKey "extra_cmdline" "net_num" "${NETNUM}"        
+      fi
   fi
 # && dialog --backtitle "`backtitle`" --title "Alert" \
 #    --yesno "Config changed, would you like to rebuild the loader?" 0 0
@@ -318,12 +360,15 @@ while true; do
   echo "m \"Choose a model\""                          > "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     echo "s \"Choose a serial number\""               >> "${TMP_PATH}/menu"
-    echo "a \"Choose a mac address\""                 >> "${TMP_PATH}/menu"
+    echo "a \"Choose a mac address 1\""               >> "${TMP_PATH}/menu"
+    if [ "$NETNUM"="2" ]; then
+      echo "f \"Choose a mac address 2\""               >> "${TMP_PATH}/menu"
+    fi  
     echo "d \"Build the loader\""                     >> "${TMP_PATH}/menu"
   fi
   echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
   echo "k \"Choose a keymap\" "                       >> "${TMP_PATH}/menu"
-  echo "b \"backup TCRP\"" 			      >> "${TMP_PATH}/menu"  
+  echo "b \"Backup TCRP\"" 			      >> "${TMP_PATH}/menu"  
   echo "r \"Reboot\"" 				      >> "${TMP_PATH}/menu"
   echo "e \"Exit\""                                   >> "${TMP_PATH}/menu"
   dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
@@ -333,7 +378,8 @@ while true; do
   case `<"${TMP_PATH}/resp"` in
     m) modelMenu; 	NEXT="s" ;;
     s) serialMenu; 	NEXT="a" ;;
-    a) macMenu; 	NEXT="d" ;;
+    a) macMenu1; 	NEXT="d" ;;
+    f) macMenu2; 	NEXT="d" ;;
     d) make; 		NEXT="r" ;;
     u) editUserConfig; 	NEXT="d" ;;
     k) keymapMenu ;;
