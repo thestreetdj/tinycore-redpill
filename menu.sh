@@ -362,7 +362,7 @@ while true; do
   if [ -n "${MODEL}" ]; then
     echo "s \"Choose a serial number\""               >> "${TMP_PATH}/menu"
     echo "a \"Choose a mac address 1\""               >> "${TMP_PATH}/menu"
-    if [ "$NETNUM"="2" ]; then
+    if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
       echo "f \"Choose a mac address 2\""               >> "${TMP_PATH}/menu"
     fi  
     echo "d \"Build the loader\""                     >> "${TMP_PATH}/menu"
