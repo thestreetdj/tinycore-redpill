@@ -30,9 +30,6 @@ fi
 # Get actual IP
 IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
 
-# Dirty flag
-DIRTY=0
-
 TMP_PATH=/tmp
 LOG_FILE="${TMP_PATH}/log.txt"
 USER_CONFIG_FILE="/home/tc/user_config.json"
@@ -171,6 +168,7 @@ function modelMenu() {
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
   MODEL="`<${TMP_PATH}/resp`"
+  writeConfigKey "general" "model" "${MODEL}"
 }
 
 ###############################################################################
@@ -205,7 +203,7 @@ function serialMenu() {
     fi
   done
   SN="${SERIAL}"
-  DIRTY=1
+  writeConfigKey "extra_cmdline" "sn" "${SN}"
 }
 
 ###############################################################################
@@ -243,7 +241,16 @@ function macMenu() {
       break
     fi
   done
-  DIRTY=1
+  
+  if [ "$1"="eth0" ]; then
+      writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
+  fi
+  
+  if [ "$1"="eth1" ]; then
+      writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
+      writeConfigKey "extra_cmdline" "netif_num" "${NETNUM}"        
+  fi
+  
 }
 
 ###############################################################################
@@ -274,15 +281,14 @@ function make() {
   usbidentify
   clear
 
-  if [ ${DIRTY} -eq 1 ]; then
-      writeConfigKey "general" "model" "${MODEL}"
-      writeConfigKey "extra_cmdline" "sn"   "${SN}"
-      writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
-      if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
-        writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
-        writeConfigKey "extra_cmdline" "netif_num" "${NETNUM}"        
-      fi
-  fi
+#      writeConfigKey "general" "model" "${MODEL}"
+#      writeConfigKey "extra_cmdline" "sn"   "${SN}"
+#      writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
+#      if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
+#        writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
+#        writeConfigKey "extra_cmdline" "netif_num" "${NETNUM}"        
+#      fi
+
 # && dialog --backtitle "`backtitle`" --title "Alert" \
 #    --yesno "Config changed, would you like to rebuild the loader?" 0 0
 #  if [ $? -eq 0 ]; then
@@ -297,7 +303,7 @@ function make() {
 
   echo "Ready!"
   sleep 3
-  DIRTY=0
+
   return 0
 }
 
