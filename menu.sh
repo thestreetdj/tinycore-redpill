@@ -16,7 +16,7 @@ BUILD="42962"
 SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
 MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
 NETNUM="1"
-if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
+if [ $(ifconfig eth1 | grep inet | wc -l) -gt 0 ]; then
   MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
   NETNUM="2"
 fi
@@ -262,7 +262,7 @@ function editUserConfig() {
   BUILD="42962"
   SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
   MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
-  if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
+  if [ $(ifconfig eth1 | grep inet | wc -l) -gt 0 ]; then
     MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
   fi
 
@@ -273,20 +273,6 @@ function editUserConfig() {
 function make() {
   usbidentify
   clear
-
-#      writeConfigKey "general" "model" "${MODEL}"
-#      writeConfigKey "extra_cmdline" "sn"   "${SN}"
-#      writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
-#      if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
-#        writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
-#        writeConfigKey "extra_cmdline" "netif_num" "${NETNUM}"        
-#      fi
-
-# && dialog --backtitle "`backtitle`" --title "Alert" \
-#    --yesno "Config changed, would you like to rebuild the loader?" 0 0
-#  if [ $? -eq 0 ]; then
-#    make || return
-#  fi
 
   ./my.sh "${MODEL}"F noconfig #>"${LOG_FILE}" 2>&1
   if [ $? -ne 0 ]; then
