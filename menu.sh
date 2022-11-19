@@ -4,29 +4,6 @@
 #source /home/tc/menufunc.h
 #####################################################################################################
 
-function checkmachine() {
-
-    if grep -q ^flags.*\ hypervisor\  /proc/cpuinfo; then
-        MACHINE="VIRTUAL"
-        HYPERVISOR=$(dmesg | grep -i "Hypervisor detected" | awk '{print $5}')
-        echo "Machine is $MACHINE Hypervisor=$HYPERVISOR"
-    fi
-
-}
-
-checkmachine
-
-# interval for loading somthing...
-if [ "$MACHINE" = "VIRTUAL" ]; then
-    sleep 1
-else
-    sleep 3
-fi
-
-[[ "$(which dialog)_" == "_" ]] && tce-load -wi dialog
-
-[[ "$(which kmaps)_" == "_" ]] && tce-load -wi kmaps
-
 # Get actual IP
 IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
 
@@ -46,6 +23,18 @@ fi
 
 LAYOUT="$(jq -r -e '.general.layout' $USER_CONFIG_FILE)"
 KEYMAP="$(jq -r -e '.general.keymap' $USER_CONFIG_FILE)"
+
+###############################################################################
+# check VM or baremetal
+function checkmachine() {
+
+    if grep -q ^flags.*\ hypervisor\  /proc/cpuinfo; then
+        MACHINE="VIRTUAL"
+        HYPERVISOR=$(dmesg | grep -i "Hypervisor detected" | awk '{print $5}')
+        echo "Machine is $MACHINE Hypervisor=$HYPERVISOR"
+    fi
+
+}
 
 ###############################################################################
 # Write to json config file
@@ -109,6 +98,8 @@ function backtitle() {
   echo ${BACKTITLE}
 }
 
+###############################################################################
+# identify usb's pid vid
 function usbidentify() {
 
     checkmachine
@@ -352,8 +343,20 @@ if [ "${KEYMAP}" = "null" ]; then
     writeConfigKey "general" "layout" "${LAYOUT}"
     writeConfigKey "general" "keymap" "${KEYMAP}"
 fi
+
+checkmachine
+# interval for loading somthing...
+if [ "$MACHINE" = "VIRTUAL" ]; then
+    sleep 1
+else
+    sleep 7
+fi
+[[ "$(which dialog)_" == "_" ]] && tce-load -wi dialog
+[[ "$(which kmaps)_" == "_" ]] && tce-load -wi kmaps
 loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
+
 NEXT="m"
+
 while true; do
   echo "m \"Choose a model\""                          > "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
