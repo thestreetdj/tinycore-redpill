@@ -77,7 +77,7 @@ else
         echo "y"|./rploader.sh backup        
         exit 0
     else
-        getlatestmshell "ask"
+        getlatestmshell "noask"
     fi
 fi
 
