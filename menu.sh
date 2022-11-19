@@ -83,7 +83,7 @@ function backtitle() {
   else
     BACKTITLE+=" (no MACADDR1)"
   fi
-  if [ "$NETNUM"="2" ]; then
+  if [ $(ifconfig eth1 | grep inet | wc -l) -gt 0 ]; then
     if [ "${MACADDR2}" = "null" ]; then
       BACKTITLE+=" (no MACADDR2)"  
     else
@@ -233,15 +233,17 @@ function macMenu() {
     fi
   done
   
-  if [ "$1"="eth0" ]; then
+  if [ "$1" = "eth0" ]; then
       MACADDR1="${MACADDR}"
       writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
   fi
   
-  if [ "$1"="eth1" ]; then
+  if [ $(ifconfig eth1 | grep inet | wc -l) -gt 0 ]; then
+    if [ "$1" = "eth1" ]; then
       MACADDR2="${MACADDR}"
       writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
       writeConfigKey "extra_cmdline" "netif_num" "${NETNUM}"        
+    fi  
   fi
   
 }
