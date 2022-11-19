@@ -74,6 +74,7 @@ if [ $# -lt 1 ]; then
 else
     if [ "$1" == "update" ] ; then 
         getlatestmshell "noask"
+        echo "y"|./rploader.sh backup        
         exit 0
     else
         getlatestmshell "ask"
