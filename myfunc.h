@@ -92,6 +92,9 @@ set -u
 # 2022.11.17
 # Update : Added dual mac address make function to menu.sh
 # 2022.11.18
+# Update : Added ds923+
+# 2022.11.25
+
 
 showlastupdate() {
     cat <<EOF
@@ -110,6 +113,9 @@ showlastupdate() {
 
 # Update : Added dual mac address make function to menu.sh
 # 2022.11.18
+
+# Update : Added ds923+
+# 2022.11.25
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
@@ -163,6 +169,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) RS3618xsF
 ./$(basename ${0}) RS3413xs+F (Not Suppoted, Testing...)
 ./$(basename ${0}) DS1019+F
+./$(basename ${0}) DS923+F
 
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
@@ -237,6 +244,12 @@ getvars()
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
         sha256="90b1bd215b85eb366b3d3b6bef6bb6bef657dd0caba032dae556717b58e44c06"
+    elif [ "${1}" = "DS923+" ] || [ "${1}" = "DS923+F" ]; then
+        DTC_BASE_MODEL="Y"    
+        TARGET_PLATFORM="ds923p"
+        ORIGIN_PLATFORM="r1000"
+        SYNOMODEL="ds923p_$TARGET_REVISION"                                                                                                                    
+        sha256="e33b47df446ce0bd99c5613767c9dba977915e25acfb5ccb9f5650b14459458f"
 
 # JOT MODE NEW MODEL SUCCESS
     elif [ "${1}" = "DS2422+" ] || [ "${1}" = "DS2422+F" ] ; then
