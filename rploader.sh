@@ -270,7 +270,7 @@ function syntaxcheck() {
 
         serialgen)
             echo "Syntax error, You have to specify one of the existing models"
-            echo "DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ DS2422+ DS1520+ FS2500 RS4021xs+ RS3618xs RS3413xs+"
+            echo "DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ DS2422+ DS1520+ FS2500 RS4021xs+ RS3618xs RS3413xs+ DS923+"
             ;;
 
         patchdtc)
@@ -1555,6 +1555,9 @@ function patchdtc() {
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
         dtbfile="ds920p"
         curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds920p.dts" --output /home/tc/redpill-load/ds920p.dts
+    elif [ "${TARGET_PLATFORM}" = "ds923p" ]; then
+        dtbfile="ds923p"
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds923p.dts" --output /home/tc/redpill-load/ds923p.dts
     elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
         dtbfile="dva1622"
         curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds920p.dts" --output /home/tc/redpill-load/dva1622.dts
@@ -2018,7 +2021,7 @@ function serialgen() {
 
     [ "$2" == "realmac" ] && let keepmac=1 || let keepmac=0
 
-    if [ "$1" = "DS3615xs" ] || [ "$1" = "DS3617xs" ] || [ "$1" = "DS916+" ] || [ "$1" = "DS918+" ] || [ "$1" = "DS1019+" ] || [ "$1" = "DS920+" ] || [ "$1" = "DS3622xs+" ] || [ "$1" = "FS6400" ] || [ "$1" = "DVA3219" ] || [ "$1" = "DVA3221" ] || [ "$1" = "DS1621+" ] || [ "$1" = "DS1621xs+" ] || [ "$1" = "RS4021xs+" ] || [ "$1" = "DS2422+" ] || [ "$1" = "DS1520+" ] || [ "$1" = "FS2500" ] || [ "$1" = "RS3618xs" ] || [ "$1" = "RS3413xs+" ] ; then
+    if [ "$1" = "DS3615xs" ] || [ "$1" = "DS3617xs" ] || [ "$1" = "DS916+" ] || [ "$1" = "DS918+" ] || [ "$1" = "DS1019+" ] || [ "$1" = "DS920+" ] || [ "$1" = "DS923+" ] || [ "$1" = "DS3622xs+" ] || [ "$1" = "FS6400" ] || [ "$1" = "DVA3219" ] || [ "$1" = "DVA3221" ] || [ "$1" = "DS1621+" ] || [ "$1" = "DS1621xs+" ] || [ "$1" = "RS4021xs+" ] || [ "$1" = "DS2422+" ] || [ "$1" = "DS1520+" ] || [ "$1" = "FS2500" ] || [ "$1" = "RS3618xs" ] || [ "$1" = "RS3413xs+" ] ; then
         serial="$(generateSerial $1)"
         mac="$(generateMacAddress $1)"
         realmac=$(ifconfig eth0 | head -1 | awk '{print $NF}')
@@ -2052,7 +2055,7 @@ function serialgen() {
         fi
     else
         echo "Error : $1 is not an available model for serial number generation. "
-        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+"
+        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS923+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+"
     fi
 
 }
@@ -2088,6 +2091,10 @@ function beginArray() {
         permanent="SBR"
         serialstart="2030 2040 20C0 2150"
         ;;    
+    DS923+)
+        permanent="SBR"
+        serialstart="2030 2040 20C0 2150"
+        ;;
     DS3622xs+)
         permanent="SQR"
         serialstart="2030 2040 20C0 2150"
@@ -2199,6 +2206,9 @@ function generateSerial() {
         serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
         ;;
     DS1520+)
+        serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
+        ;;
+    DS923+)
         serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
         ;;
     DS3622xs+)
@@ -2494,7 +2504,7 @@ mountshare, version, monitor, bringfriend, downloadupgradepat, help
   
 - serialgen <synomodel> <option> :
   Generates a serial number and mac address for the following platforms 
-  DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DVA1622 DS2422+ RS4021xs+
+  DS3615xs DS3617xs DS916+ DS918+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DVA1622 DS2422+ RS4021xs+ DS923+
   
   Valid Options :  realmac , keeps the real mac of interface eth0
   
@@ -3043,6 +3053,8 @@ function setplatform() {
         SYNOMODEL="dva3221_$TARGET_REVISION" && MODEL="DVA3221"
     elif [ "${TARGET_PLATFORM}" = "geminilake" ] || [ "${TARGET_PLATFORM}" = "ds920p" ]; then
         SYNOMODEL="ds920p_$TARGET_REVISION" && MODEL="DS920+"
+    elif [ "${TARGET_PLATFORM}" = "r1000" ] || [ "${TARGET_PLATFORM}" = "ds923p" ]; then
+        SYNOMODEL="ds923p_$TARGET_REVISION" && MODEL="DS923+"
     elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
         SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622"
     elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
