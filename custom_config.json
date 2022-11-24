@@ -565,7 +565,7 @@
           },
           "redpill_load": {
             "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-            "branch": "develop"
+            "branch": "master"
           },
           "add_extensions": [
             {
