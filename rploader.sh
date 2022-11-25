@@ -224,7 +224,7 @@ function monitor() {
         echo -e "Kernel:\t\t\t"$(uname -r)
         echo -e ""$(lscpu | head -1)"\t" "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
         echo -e "Active Users:\t\t"$(who -u | cut -d ' ' -f1 | grep -v USER | xargs -n1)
-        echo -e "Current Date Time:\t\t"$(date)
+        echo -e "Current Date Time:\t"$(date)
         echo -e "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
         [ $(ps -ef | grep -i sshd | wc -l) -gt 0 ] && echo -e "SSHD connections ready" || echo -e "SSHD connections not ready"
         echo -e "-------------------------------Loader boot entries------------------------------"
