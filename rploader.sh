@@ -201,6 +201,11 @@ function getgrubconf() {
 
 function monitor() {
 
+# Set DateTime
+    tce-load -iw ntpclient 2>&1 >/dev/null
+    export TZ="${timezone}"
+    sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
+
     loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
     mount /dev/${loaderdisk}1
     mount /dev/${loaderdisk}2
@@ -219,6 +224,7 @@ function monitor() {
         echo -e "Kernel:\t\t\t"$(uname -r)
         echo -e ""$(lscpu | head -1)"\t" "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
         echo -e "Active Users:\t\t"$(who -u | cut -d ' ' -f1 | grep -v USER | xargs -n1)
+        echo -e "Current Date Time:\t\t"$(date)
         echo -e "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
         [ $(ps -ef | grep -i sshd | wc -l) -gt 0 ] && echo -e "SSHD connections ready" || echo -e "SSHD connections not ready"
         echo -e "-------------------------------Loader boot entries------------------------------"
@@ -231,7 +237,7 @@ function monitor() {
         df -Ph | grep -v loop
         [ $(lscpu | grep Hypervisor | wc -l) -gt 0 ] && echo "$(hostname) is a VM"
 
-        echo "Press ctrl-c to exti"
+        echo "Press ctrl-c to exit"
         sleep 10
     done
 
