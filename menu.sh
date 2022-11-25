@@ -153,9 +153,9 @@ function usbidentify() {
 # Shows available models to user choose one
 function modelMenu() {
   dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-    --menu "Choose a model" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" "DS1019+" "DS918+" \
-		"DS920+" "DS1520+" "DS1621+" "DS2422+" "FS2500" \
-		"DS3617xs" "RS3618xs" "DVA1622" "DVA3221" "DVA3219" "DS3615xs" \
+    --menu "Choose a model" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" "DS918+" "DS1019+" \
+		"DS923+" "DS920+" "DS1520+" "DVA1622" "DS1621+" "DS2422+" "FS2500" \
+		"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" "DS3615xs" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
   MODEL="`<${TMP_PATH}/resp`"
