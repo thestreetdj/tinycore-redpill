@@ -3192,6 +3192,8 @@ function getvars() {
 
 function matchpciidmodule() {
 
+    MODULE_ALIAS_FILE="modules.alias.4.json"
+
     vendor="$(echo $1 | sed 's/[a-z]/\U&/g')"
     device="$(echo $2 | sed 's/[a-z]/\U&/g')"
 
