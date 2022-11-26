@@ -227,6 +227,7 @@ function monitor() {
         echo -e "Current Date Time:\t"$(date)
         echo -e "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
         [ $(ps -ef | grep -i sshd | wc -l) -gt 0 ] && echo -e "SSHD connections ready" || echo -e "SSHD connections not ready"
+        listpci
         echo -e "-------------------------------Loader boot entries------------------------------"
         grep -i menuentry /mnt/${loaderdisk}1/boot/grub/grub.cfg | awk -F \' '{print $2}'
         echo -e "-------------------------------CPU/Memory Usage------------------------------"
@@ -3204,7 +3205,7 @@ function matchpciidmodule() {
 
     echo "$matchedmodule"
 
-    listextension $matchedmodule
+    #listextension $matchedmodule
 
 }
 
@@ -3219,27 +3220,27 @@ function listpci() {
 
         #echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
         case $class in
-        0100)
-            echo "Found SCSI Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0106)
-            echo "Found SATA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0101)
-            echo "Found IDE Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0107)
-            echo "Found SAS Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
+#        0100)
+#            echo "Found SCSI Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+#        0106)
+#            echo "Found SATA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+#        0101)
+#            echo "Found IDE Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+#        0107)
+#            echo "Found SAS Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
         0200)
-            echo "Found Ethernet Interface : pciid ${vendor}d0000${device} Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            echo "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             ;;
-        0300)
-            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0c04)
-            echo "Found Fibre Channel Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
+#        0300)
+#            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+#        0c04)
+#            echo "Found Fibre Channel Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
         esac
     done
 
