@@ -338,7 +338,7 @@ while true; do
     break
   fi
   sleep 1
-  echo "Wait for internet active!!!"
+  echo "Waiting for internet activation !!!"
 done
 
 checkmachine
