@@ -332,26 +332,22 @@ if [ "${KEYMAP}" = "null" ]; then
     writeConfigKey "general" "keymap" "${KEYMAP}"
 fi
 
+while true; do
+  if [ $(ifconfig eth0 | grep inet | wc -l) -gt 0 ]; then
+    ./my.sh update
+    break
+  fi
+  sleep 1
+  echo "Wait for internet active!!!"
+done
+
 checkmachine
 
 if [ ! -n "$(which dialog)" ] && [ ! -n "$(which kmaps)" ]; then
-    # interval for loading somthing...
-    if [ "$MACHINE" = "VIRTUAL" ]; then
-        sleep 1
-    else
-        sleep 7
-    fi
     tce-load -wi dialog
     tce-load -wi kmaps
 
     tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
-
-    # interval for loading somthing...
-    if [ "$MACHINE" = "VIRTUAL" ]; then
-        sleep 1
-    else
-        sleep 4
-    fi
     
     sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz" --output /mnt/${tcrppart}/cde/optional/dialog.tcz
     sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz.dep" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.dep
@@ -361,7 +357,6 @@ if [ ! -n "$(which dialog)" ] && [ ! -n "$(which kmaps)" ]; then
 
     sudo echo "dialog.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
     sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-
 fi
 
 loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
