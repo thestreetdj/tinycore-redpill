@@ -360,8 +360,8 @@ if [ "$(which dialog)_" == "_" ] || [ "$(which kmaps)_" == "_" ]; then
     sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz
     sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
 
-    echo "dialog.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-    echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+    sudo echo "dialog.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+    sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 
 fi
 
