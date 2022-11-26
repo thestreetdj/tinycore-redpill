@@ -333,14 +333,38 @@ if [ "${KEYMAP}" = "null" ]; then
 fi
 
 checkmachine
-# interval for loading somthing...
-if [ "$MACHINE" = "VIRTUAL" ]; then
-    sleep 1
-else
-    sleep 7
+
+if [ "$(which dialog)_" == "_" ] || [ "$(which kmaps)_" == "_" ]; then
+    # interval for loading somthing...
+    if [ "$MACHINE" = "VIRTUAL" ]; then
+        sleep 1
+    else
+        sleep 7
+    fi
+    tce-load -wi dialog
+    tce-load -wi kmaps
 fi
-[[ "$(which dialog)_" == "_" ]] && tce-load -wi dialog
-[[ "$(which kmaps)_" == "_" ]] && tce-load -wi kmaps
+
+tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
+if [ "$(which dialog)_" == "_" ] || [ "$(which kmaps)_" == "_" ]; then
+    # interval for loading somthing...
+    if [ "$MACHINE" = "VIRTUAL" ]; then
+        sleep 1
+    else
+        sleep 4
+    fi
+    
+    sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz" --output /mnt/${tcrppart}/cde/optional/dialog.tcz
+    sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz.dep" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.dep
+    sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.md5.txt
+    sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz
+    sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
+
+    echo "dialog.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+    echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+
+fi
+
 loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 
 NEXT="m"
