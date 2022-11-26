@@ -202,7 +202,7 @@ function getgrubconf() {
 function monitor() {
 
 # Set DateTime
-    tce-load -iw ntpclient 2>&1 >/dev/null
+    [[ "$(which ntpclient)_" == "_" ]] && tce-load -iw ntpclient 2>&1 >/dev/null
     export TZ="${timezone}"
     sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
 
