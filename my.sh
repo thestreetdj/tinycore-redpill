@@ -57,11 +57,6 @@ function checkmachine() {
 
 }
 
-if [ $(cat /home/tc/.xsession | grep my.sh | wc -l) -eq 0 ]; then
-    echo "insert my.sh autoupdate script in /home/tc/.xsession"
-    echo "aterm -bg black -fg green -title \"TinyCore RedPill M Shell AutoUpdate\" -e /home/tc/my.sh update & sleep 1 &" >> .xsession
-fi
-
 if [ $(cat /home/tc/.xsession | grep menu.sh | wc -l) -eq 0 ]; then
     echo "insert menu.sh autorun script in /home/tc/.xsession"
     echo "aterm -bg black -fg green -title \"TinyCore RedPill Menu\" -e /home/tc/menu.sh &" >> .xsession   
