@@ -334,7 +334,7 @@ fi
 
 checkmachine
 
-if [ "$(which dialog)_" == "_" ] || [ "$(which kmaps)_" == "_" ]; then
+if [ ! -n "$(which dialog)" ] || [ ! -n "$(which kmaps)" ]; then
     # interval for loading somthing...
     if [ "$MACHINE" = "VIRTUAL" ]; then
         sleep 1
@@ -346,7 +346,7 @@ if [ "$(which dialog)_" == "_" ] || [ "$(which kmaps)_" == "_" ]; then
 fi
 
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
-if [ "$(which dialog)_" == "_" ] || [ "$(which kmaps)_" == "_" ]; then
+if [ ! -n "$(which dialog)" ] || [ ! -n "$(which kmaps)" ]; then
     # interval for loading somthing...
     if [ "$MACHINE" = "VIRTUAL" ]; then
         sleep 1
