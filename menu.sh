@@ -361,6 +361,7 @@ if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
   NETNUM="2"
 else  
   DeleteConfigKey "extra_cmdline" "mac2"
+  writeConfigKey "extra_cmdline" "netif_num" "1"
 fi
 
 checkmachine
