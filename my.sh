@@ -232,12 +232,13 @@ elif [ $MODEL == "DS3615xs" ]; then
 #    gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko.gz
 #    sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko /home/tc/custom-module/redpill.ko
 
-#    cecho y "Downloading pocopico's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
-#    sudo curl --location --progress-bar "https://github.com/pocopico/rp-ext/raw/main/redpillprod/releases/redpill-3.10.108.tgz" --output /home/tc/custom-module/redpill.ko.tgz
-#    sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/    
+    cecho y "Downloading pocopico's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
+    sudo curl --location --progress-bar "https://github.com/pocopico/rp-ext/raw/main/redpillprod/releases/redpill-3.10.108.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+    sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/    
 
-    cecho y "Downloading peter's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
-    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v3.10.108.ko" --output /home/tc/custom-module/redpill.ko
+#    peter's redpill.ko triggers KP
+#    cecho y "Downloading peter's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
+#    sudo curl --location --progress-bar "https://github.com/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v3.10.108.ko" --output /home/tc/custom-module/redpill.ko
 elif [ $MODEL == "DS923+" ]||[ $MODEL == "DS3622xs+" ]||[ $MODEL == "DS920+" ]||[ $MODEL == "DVA1622" ]||[ $MODEL == "DS1621+" ]||[ $MODEL == "DVA3221" ]; then
     cecho y "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
     sudo curl --location --progress-bar "https://github.com/pocopico/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
