@@ -48,6 +48,23 @@ function writeConfigKey() {
 
 }
 
+###############################################################################
+# Delete field from json config file
+function DeleteConfigKey() {
+
+    block="$1"
+    field="$2"
+
+    if [ -n "$1 " ] && [ -n "$2" ]; then
+        jsonfile=$(jq "del(.$block.$field)" $USER_CONFIG_FILE)
+        echo $jsonfile | jq . >$USER_CONFIG_FILE
+    else
+        echo "No values to remove"
+    fi
+
+}
+
+
 
 ###############################################################################
 # Mounts backtitle dynamically
@@ -342,6 +359,8 @@ IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
 if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
   MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
   NETNUM="2"
+else  
+  DeleteConfigKey "extra_cmdline" "mac2"
 fi
 
 checkmachine
