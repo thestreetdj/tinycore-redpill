@@ -5,7 +5,6 @@
 #####################################################################################################
 
 # Get actual IP
-IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
 
 TMP_PATH=/tmp
 LOG_FILE="${TMP_PATH}/log.txt"
@@ -16,10 +15,6 @@ BUILD="42962"
 SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
 MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
 NETNUM="1"
-if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
-  MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
-  NETNUM="2"
-fi
 
 LAYOUT="$(jq -r -e '.general.layout' $USER_CONFIG_FILE)"
 KEYMAP="$(jq -r -e '.general.keymap' $USER_CONFIG_FILE)"
@@ -341,6 +336,13 @@ while true; do
   sleep 1
   echo "Waiting for internet activation !!!"
 done
+
+IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
+
+if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
+  MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
+  NETNUM="2"
+fi
 
 checkmachine
 
