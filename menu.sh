@@ -113,7 +113,7 @@ function usbidentify() {
         echo "Vendor ID : $vendorid Product ID : $productid"
         json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
         json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-    else	    
+    else            
     
         loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
 
@@ -124,28 +124,28 @@ function usbidentify() {
         productid=$(grep -B 33 -A 1 SCSI /tmp/lsusb.out | grep -i idProduct | awk '{print $2}')
 
         if [ $(echo $vendorid | wc -w) -gt 1 ]; then
-	    echo "Found more than one USB disk devices, please select which one is your loader on"
-	    usbvendor=$(for item in $vendorid; do grep $item /tmp/lsusb.out | awk '{print $3}'; done)
-	    select usbdev in $usbvendor; do
-	        vendorid=$(grep -B 10 -A 10 $usbdev /tmp/lsusb.out | grep idVendor | grep $usbdev | awk '{print $2}')
-	        productid=$(grep -B 10 -A 10 $usbdev /tmp/lsusb.out | grep -A 1 idVendor | grep idProduct | awk '{print $2}')
-	        echo "Selected Device : $usbdev , with VendorID: $vendorid and ProductID: $productid"
-    	        break
-	    done
+            echo "Found more than one USB disk devices, please select which one is your loader on"
+            usbvendor=$(for item in $vendorid; do grep $item /tmp/lsusb.out | awk '{print $3}'; done)
+            select usbdev in $usbvendor; do
+                vendorid=$(grep -B 10 -A 10 $usbdev /tmp/lsusb.out | grep idVendor | grep $usbdev | awk '{print $2}')
+                productid=$(grep -B 10 -A 10 $usbdev /tmp/lsusb.out | grep -A 1 idVendor | grep idProduct | awk '{print $2}')
+                echo "Selected Device : $usbdev , with VendorID: $vendorid and ProductID: $productid"
+                break
+            done
         else
-	    usbdevice="$(grep iManufacturer /tmp/lsusb.out | awk '{print $3}') $(grep iProduct /tmp/lsusb.out | awk '{print $3}') SerialNumber: $(grep iSerial /tmp/lsusb.out | awk '{print $3}')"
+            usbdevice="$(grep iManufacturer /tmp/lsusb.out | awk '{print $3}') $(grep iProduct /tmp/lsusb.out | awk '{print $3}') SerialNumber: $(grep iSerial /tmp/lsusb.out | awk '{print $3}')"
         fi
 
         if [ -n "$usbdevice" ] && [ -n "$vendorid" ] && [ -n "$productid" ]; then
-	    echo "Found $usbdevice"
-	    echo "Vendor ID : $vendorid Product ID : $productid"
-    	    json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-	    json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+            echo "Found $usbdevice"
+            echo "Vendor ID : $vendorid Product ID : $productid"
+            json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+            json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
         else
-	    echo "Sorry, no usb disk could be identified"
-	    rm /tmp/lsusb.out
+            echo "Sorry, no usb disk could be identified"
+            rm /tmp/lsusb.out
         fi
-    fi	    
+    fi      
 }
 
 
@@ -154,9 +154,9 @@ function usbidentify() {
 function modelMenu() {
   dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
     --menu "Choose a model" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" "DS918+" "DS1019+" \
-		"DS923+" "DS920+" "DS1520+" "DVA1622" "DS1621+" "DS2422+" "FS2500" \
-		"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \ 
-		# "DS3615xs" \
+                "DS923+" "DS920+" "DS1520+" "DVA1622" "DS1621+" "DS2422+" "FS2500" \
+                "DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \ 
+                # "DS3615xs" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
   MODEL="`<${TMP_PATH}/resp`"
@@ -204,18 +204,18 @@ function macMenu() {
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
-      d "Generate a random mac address" \      
-      c "Get a real mac address" \      
+      c "Get a real mac address" \
+      d "Generate a random mac address" \
       m "Enter a mac address" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
-    if [ "${resp}" = "c" ]; then
-      MACADDR=`./macgen.sh "realmac" $1`
-      break    
-    elif [ "${resp}" = "d" ]; then
+    if [ "${resp}" = "d" ]; then
       MACADDR=`./macgen.sh "randommac" $1`
+      break
+    elif [ "${resp}" = "c" ]; then
+      MACADDR=`./macgen.sh "realmac" $1`
       break
     elif [ "${resp}" = "m" ]; then
       while true; do
@@ -376,20 +376,20 @@ while true; do
   fi
   echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
   echo "k \"Choose a keymap\""                       >> "${TMP_PATH}/menu"
-  echo "b \"Backup TCRP\"" 			      >> "${TMP_PATH}/menu"  
-  echo "r \"Reboot\"" 				      >> "${TMP_PATH}/menu"
+  echo "b \"Backup TCRP\""                            >> "${TMP_PATH}/menu"  
+  echo "r \"Reboot\""                                 >> "${TMP_PATH}/menu"
   echo "e \"Exit\""                                   >> "${TMP_PATH}/menu"
   dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
     --menu "Choose the option" 0 0 0 --file "${TMP_PATH}/menu" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
   case `<"${TMP_PATH}/resp"` in
-    m) modelMenu; 	NEXT="s" ;;
-    s) serialMenu; 	NEXT="a" ;;
-    a) macMenu "eth0"; 	NEXT="d" ;;
-    f) macMenu "eth1"; 	NEXT="d" ;;
-    d) make; 		NEXT="r" ;;
-    u) editUserConfig; 	NEXT="d" ;;
+    m) modelMenu;       NEXT="s" ;;
+    s) serialMenu;      NEXT="a" ;;
+    a) macMenu "eth0";  NEXT="d" ;;
+    f) macMenu "eth1";  NEXT="d" ;;
+    d) make;            NEXT="r" ;;
+    u) editUserConfig;  NEXT="d" ;;
     k) keymapMenu ;;
     c) dialog --backtitle "`backtitle`" --title "Cleaning" --aspect 18 \
       --prgbox "rm -rfv \"${CACHE_PATH}/dl\"" 0 0 ;;
