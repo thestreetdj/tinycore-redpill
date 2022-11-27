@@ -16,7 +16,7 @@ BUILD="42962"
 SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
 MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
 NETNUM="1"
-if [ $(ifconfig eth1 | grep inet | wc -l) -gt 0 ]; then
+if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
   MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
   NETNUM="2"
 fi
@@ -83,7 +83,7 @@ function backtitle() {
   else
     BACKTITLE+=" (no MACADDR1)"
   fi
-  if [ $(ifconfig eth1 | grep inet | wc -l) -gt 0 ]; then
+  if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
     if [ "${MACADDR2}" = "null" ]; then
       BACKTITLE+=" (no MACADDR2)"  
     else
@@ -369,7 +369,7 @@ while true; do
   if [ -n "${MODEL}" ]; then
     echo "s \"Choose a serial number\""               >> "${TMP_PATH}/menu"
     echo "a \"Choose a mac address 1\""               >> "${TMP_PATH}/menu"
-    if [ $(ifconfig eth1 | grep inet | wc -l) -gt 0 ]; then
+    if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
       echo "f \"Choose a mac address 2\""               >> "${TMP_PATH}/menu"
     fi  
     echo "d \"Build the loader\""                     >> "${TMP_PATH}/menu"
