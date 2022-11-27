@@ -204,18 +204,18 @@ function macMenu() {
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
+      c "Get a real mac address" \      
       d "Generate a random mac address" \
-      c "Get a real mac address" \
       m "Enter a mac address" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
-    if [ "${resp}" = "d" ]; then
-      MACADDR=`./macgen.sh "randommac" $1`
-      break
-    elif [ "${resp}" = "c" ]; then
+    if [ "${resp}" = "c" ]; then
       MACADDR=`./macgen.sh "realmac" $1`
+      break    
+    elif [ "${resp}" = "d" ]; then
+      MACADDR=`./macgen.sh "randommac" $1`
       break
     elif [ "${resp}" = "m" ]; then
       while true; do
