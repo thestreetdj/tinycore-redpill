@@ -550,6 +550,7 @@ getlatestmshell() {
             echo "Updating m shell with latest updates"
             source myfunc.h
             showlastupdate
+            echo "y"|./rploader.sh backup
             exit
         else
             rm -f /home/tc/latest.mshell.gz
