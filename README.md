@@ -16,6 +16,10 @@ b. For virtual gunzip and use the provided vmdk file
 
 2. Boot tinycore
 
+<p align="center">
+  <img src="doc/스크린샷 2022-11-27 오후 8.13.34.png" width="100%" align=center alt="M SHELL for TCRP MENU">
+</p>
+
 3. ssh to your booted loader or just open the desktop terminal 
 
 4. Bring over your json files (global_config.json,custom_config.json, user_config.json )
