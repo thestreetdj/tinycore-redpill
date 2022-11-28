@@ -10,29 +10,38 @@ Please note that minimum recommended memory size for configuring the loader is 2
 
 # Instructions 
 
-A normal build process would start with :
+A typical build process starts with:
 
-1. Image burn
+1. Burn images
+    A. To burn physical gunzip and img files to a USB stick
+    B. For virtual gunzip use the provided vmdk file
+    
+2. Boot Tinycore
 
-a. For physical gunzip and burn img file to usb stick
+3. Loader Building
 
-b. For virtual gunzip and use the provided vmdk file 
+<p align="center">
+  <img src="doc/스크린샷 2022-11-27 오후 8.13.34.png" width="100%" align=center alt="M SHELL for TCRP MENU">
+</p>
 
-2. Boot tinycore
+        A. Choose one of the Synology models.
 
-3. ssh to your booted loader or just open the desktop terminal 
+<p align="center">
+  <img src="doc/스크린샷 2022-11-27 오후 8.14.08.png" width="60%" align=center alt="M SHELL for TCRP MENU">
+</p>
 
-4. Bring over your json files (global_config.json,custom_config.json, user_config.json )
+        B. Create a virtual serial number or enter a prepared serial number.
 
-5. Check the contents of user_config.json, if satisfied keep or else run :
+<p align="center">
+  <img src="doc/스크린샷 2022-11-27 오후 8.14.47.png" width="60%" align=center alt="M SHELL for TCRP MENU">
+</p>
 
-a. Change you serial and mac address by running ./rploader.sh serialgen DS3615xs
+        C. Select the real mac address of the nic or create a virtual mac address or input the prepared mac address. (If there are 2 nics, you can enter up to the 2nd mac address)
+    
+<p align="center">
+  <img src="doc/스크린샷 2022-11-27 오후 8.15.31.png" width="60%" align=center alt="M SHELL for TCRP MENU">
+</p>
+    
+        D. Build the loader.
 
-b. Update user_config.json with your VID:PID of your usb stick by running ./rploader.sh identifyusb now
-
-c. Update user_config.json with your SataPortMap and DiskIdxMap by running ./rploader.sh satamap now (needs testing)
-
-d. Backup your changes to local loader disk by running  ./rploader.sh backup now
-
-
-6. ./rploader.sh build bromolow-7.0.1-42218
+6. Reboot
