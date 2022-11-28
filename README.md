@@ -1,5 +1,9 @@
 # M Shell for tinycore-redpill
 
+<p align="center">
+  <img src="doc/스크린샷 2022-11-28 오후 5.21.53.png" width="100%" align=center alt="M SHELL for TCRP MENU">
+</p>
+
 This is a testing version. Do not use unless you are certain you have no data to lose.
 
 Please note that minimum recommended memory size for configuring the loader is 2GB
@@ -15,10 +19,6 @@ a. For physical gunzip and burn img file to usb stick
 b. For virtual gunzip and use the provided vmdk file 
 
 2. Boot tinycore
-
-<p align="center">
-  <img src="doc/스크린샷 2022-11-27 오후 8.13.34.png" width="100%" align=center alt="M SHELL for TCRP MENU">
-</p>
 
 3. ssh to your booted loader or just open the desktop terminal 
 
