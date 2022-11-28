@@ -1,4 +1,4 @@
-# tinycore-redpill
+# M Shell for tinycore-redpill
 
 This is a testing version. Do not use unless you are certain you have no data to lose.
 
