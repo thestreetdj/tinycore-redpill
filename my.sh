@@ -64,6 +64,30 @@ if [ $(cat /home/tc/.xsession | grep menu.sh | wc -l) -eq 0 ]; then
     echo "aterm -bg black -fg green -title \"TinyCore RedPill Menu\" -e /home/tc/menu.sh &" >> .xsession   
 fi
 
+checkinternet() {
+
+    echo -n "Checking Internet Access -> "
+    nslookup $gitdomain 2>&1 >/dev/null
+    if [ $? -eq 0 ]; then
+        echo "OK"
+    else
+        cecho g "Error: No internet found, or $gitdomain is not accessible"
+        
+        gitdomain="gitee.com"
+        cecho p "Try to connect to $gitdomain......"
+        nslookup $gitdomain 2>&1 >/dev/null
+        if [ $? -eq 0 ]; then
+            echo "OK"
+        else
+            cecho g "Error: No internet found, or $gitdomain is not accessible"
+            exit 99
+        fi
+
+        exit 99
+    fi
+
+}
+
 checkinternet
 
 if [ $# -lt 1 ]; then
