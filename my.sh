@@ -7,7 +7,7 @@
 source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-gitdomain="gitHub.com"
+gitdomain="github.com"
 
 mshellgz="my.sh.gz"
 mshtarfile="https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/my.sh.gz"
