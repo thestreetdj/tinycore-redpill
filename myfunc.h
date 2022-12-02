@@ -507,19 +507,6 @@ READ_YN () { # ${1}:question ${2}:default
     esac                                                                                                                      
 }                                                                                         
 
-checkinternet() {
-
-    echo -n "Checking Internet Access -> "
-    nslookup github.com 2>&1 >/dev/null
-    if [ $? -eq 0 ]; then
-        echo "OK"
-    else
-        cecho g "Error: No internet found, or github is not accessible"
-        exit 99
-    fi
-
-}
-
 getlatestmshell() {
 
     echo -n "Checking if a newer mshell version exists on the repo -> "
