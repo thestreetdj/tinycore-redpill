@@ -238,7 +238,11 @@ if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; t
 else
     cecho g "making directory  /mnt/${tcrppart}/auxfiles/extractor"  
     mkdir /mnt/${tcrppart}/auxfiles/extractor
-    sudo curl -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
+    if [ $gitdomain == "gitee.com" ]; then
+        sudo curl -L --progress-bar "https://sourceforge.net/projects/tinycore-redpill/files/extractor.gz/download" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
+    else    
+        sudo curl -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
+    fi    
     sudo tar -zxvf /mnt/${tcrppart}/auxfiles/extractor/extractor.gz -C /mnt/${tcrppart}/auxfiles/extractor
 fi
 
