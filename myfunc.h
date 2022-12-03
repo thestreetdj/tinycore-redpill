@@ -94,6 +94,8 @@ set -u
 # 2022.11.18
 # Update : Added ds923+
 # 2022.11.25
+# Update : Added gitee conversion function when github connection is not possible
+# 2022.12.03
 
 
 showlastupdate() {
@@ -108,14 +110,11 @@ showlastupdate() {
 # Update : Deploy menu.sh
 # 2022.11.14
 
-# Update : Added autoupdate script, Added Keymap function to menu.sh for multilingual keyboard support
-# 2022.11.17
-
-# Update : Added dual mac address make function to menu.sh
-# 2022.11.18
-
 # Update : Added ds923+
 # 2022.11.25
+
+# Update : Added gitee conversion function when github connection is not possible
+# 2022.12.03
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
