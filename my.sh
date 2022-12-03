@@ -82,8 +82,6 @@ checkinternet() {
             cecho g "Error: No internet found, or $gitdomain is not accessible"
             exit 99
         fi
-
-        exit 99
     fi
 
 }
