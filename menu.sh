@@ -377,11 +377,11 @@ if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
   NETNUM="2"
 fi  
 if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
-  MACADDR3="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
+  MACADDR3="$(jq -r -e '.extra_cmdline.mac3' $USER_CONFIG_FILE)"
   NETNUM="3"
 fi  
 if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
-  MACADDR4="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
+  MACADDR4="$(jq -r -e '.extra_cmdline.mac4' $USER_CONFIG_FILE)"
   NETNUM="4"
 fi  
 
