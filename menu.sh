@@ -433,10 +433,10 @@ while true; do
       echo "f \"Choose a mac address 2\""               >> "${TMP_PATH}/menu"
     fi  
     if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
-      echo "f \"Choose a mac address 3\""               >> "${TMP_PATH}/menu"
+      echo "g \"Choose a mac address 3\""               >> "${TMP_PATH}/menu"
     fi  
     if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
-      echo "f \"Choose a mac address 4\""               >> "${TMP_PATH}/menu"
+      echo "h \"Choose a mac address 4\""               >> "${TMP_PATH}/menu"
     fi  
     echo "d \"Build the loader\""                     >> "${TMP_PATH}/menu"
   fi
