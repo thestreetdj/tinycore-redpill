@@ -387,14 +387,14 @@ fi
 
 CURNETNUM="$(jq -r -e '.extra_cmdline.netif_num' $USER_CONFIG_FILE)"
 if [ $CURNETNUM != $NETNUM ]; then
-  if [ $NETNUM =="3" ]; then 
+  if [ $NETNUM == "3" ]; then 
     DeleteConfigKey "extra_cmdline" "mac4"
   fi  
-  if [ $NETNUM =="2" ]; then 
+  if [ $NETNUM == "2" ]; then 
     DeleteConfigKey "extra_cmdline" "mac4"  
     DeleteConfigKey "extra_cmdline" "mac3"
   fi  
-  if [ $NETNUM =="1" ]; then
+  if [ $NETNUM == "1" ]; then
     DeleteConfigKey "extra_cmdline" "mac4"  
     DeleteConfigKey "extra_cmdline" "mac3"
     DeleteConfigKey "extra_cmdline" "mac2"    
