@@ -93,16 +93,24 @@ function backtitle() {
   if [ -n "${MACADDR1}" ]; then
     BACKTITLE+=" ${MACADDR1}"
   else
-    BACKTITLE+=" (no MACADDR1)"
+    BACKTITLE+=" (no MAC1)"
   fi
-  if [ $(ifconfig eth1 | grep inet | wc -l) -gt 0 ]; then
-    if [ "${MACADDR2}" = "null" ]; then
-      BACKTITLE+=" (no MACADDR2)"  
-    else
-      BACKTITLE+=" ${MACADDR2}"
-    fi
-  fi  
-    if [ -n "${KEYMAP}" ]; then
+  if [ -n "${MACADDR2}" ]; then
+    BACKTITLE+=" ${MACADDR2}"
+  else
+    BACKTITLE+=" (no MAC2)"
+  fi
+  if [ -n "${MACADDR3}" ]; then
+    BACKTITLE+=" ${MACADDR3}"
+  else
+    BACKTITLE+=" (no MAC3)"
+  fi
+  if [ -n "${MACADDR4}" ]; then
+    BACKTITLE+=" ${MACADDR4}"
+  else
+    BACKTITLE+=" (no MAC4)"
+  fi
+  if [ -n "${KEYMAP}" ]; then
     BACKTITLE+=" (${LAYOUT}/${KEYMAP})"
   else
     BACKTITLE+=" (qwerty/us)"
@@ -249,14 +257,24 @@ function macMenu() {
       writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
   fi
   
-  if [ $(ifconfig eth1 | grep inet | wc -l) -gt 0 ]; then
-    if [ "$1" = "eth1" ]; then
+  if [ "$1" = "eth1" ]; then
       MACADDR2="${MACADDR}"
       writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
-      writeConfigKey "extra_cmdline" "netif_num" "${NETNUM}"        
-    fi  
+      writeConfigKey "extra_cmdline" "netif_num" "2"
   fi
   
+  if [ "$1" = "eth2" ]; then
+      MACADDR3="${MACADDR}"
+      writeConfigKey "extra_cmdline" "mac2" "${MACADDR3}"
+      writeConfigKey "extra_cmdline" "netif_num" "3"
+  fi
+
+  if [ "$1" = "eth3" ]; then
+      MACADDR4="${MACADDR}"
+      writeConfigKey "extra_cmdline" "mac2" "${MACADDR4}"
+      writeConfigKey "extra_cmdline" "netif_num" "4"
+  fi
+
 }
 
 ###############################################################################
@@ -275,10 +293,10 @@ function editUserConfig() {
   BUILD="42962"
   SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
   MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
-  if [ $(ifconfig eth1 | grep inet | wc -l) -gt 0 ]; then
-    MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
-  fi
-
+  MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
+  MACADDR3="$(jq -r -e '.extra_cmdline.mac3' $USER_CONFIG_FILE)"
+  MACADDR4="$(jq -r -e '.extra_cmdline.mac4' $USER_CONFIG_FILE)"
+  NETNUM"=$(jq -r -e '.extra_cmdline.netif_num' $USER_CONFIG_FILE)"
 }
 
 ###############################################################################
@@ -357,9 +375,31 @@ IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
 if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
   MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
   NETNUM="2"
-else  
-  DeleteConfigKey "extra_cmdline" "mac2"
-  writeConfigKey "extra_cmdline" "netif_num" "1"
+fi  
+if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
+  MACADDR3="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
+  NETNUM="3"
+fi  
+if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
+  MACADDR4="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
+  NETNUM="4"
+fi  
+
+CURNETNUM="$(jq -r -e '.extra_cmdline.netif_num' $USER_CONFIG_FILE)"
+if [ $CURNETNUM != $NETNUM ]; then
+  if [ $NETNUM =="3" ]; then 
+    DeleteConfigKey "extra_cmdline" "mac4"
+  fi  
+  if [ $NETNUM =="2" ]; then 
+    DeleteConfigKey "extra_cmdline" "mac4"  
+    DeleteConfigKey "extra_cmdline" "mac3"
+  fi  
+  if [ $NETNUM =="1" ]; then
+    DeleteConfigKey "extra_cmdline" "mac4"  
+    DeleteConfigKey "extra_cmdline" "mac3"
+    DeleteConfigKey "extra_cmdline" "mac2"    
+  fi  
+  writeConfigKey "extra_cmdline" "netif_num" "$NETNUM"
 fi
 
 checkmachine
@@ -389,8 +429,14 @@ while true; do
   if [ -n "${MODEL}" ]; then
     echo "s \"Choose a serial number\""               >> "${TMP_PATH}/menu"
     echo "a \"Choose a mac address 1\""               >> "${TMP_PATH}/menu"
-    if [ $(ifconfig eth1 | grep inet | wc -l) -gt 0 ]; then
+    if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
       echo "f \"Choose a mac address 2\""               >> "${TMP_PATH}/menu"
+    fi  
+    if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
+      echo "f \"Choose a mac address 3\""               >> "${TMP_PATH}/menu"
+    fi  
+    if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
+      echo "f \"Choose a mac address 4\""               >> "${TMP_PATH}/menu"
     fi  
     echo "d \"Build the loader\""                     >> "${TMP_PATH}/menu"
   fi
@@ -408,6 +454,8 @@ while true; do
     s) serialMenu;      NEXT="a" ;;
     a) macMenu "eth0";  NEXT="d" ;;
     f) macMenu "eth1";  NEXT="d" ;;
+    g) macMenu "eth2";  NEXT="d" ;;
+    h) macMenu "eth3";  NEXT="d" ;;    
     d) make;            NEXT="r" ;;
     u) editUserConfig;  NEXT="d" ;;
     k) keymapMenu ;;
