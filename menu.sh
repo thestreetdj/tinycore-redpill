@@ -265,13 +265,13 @@ function macMenu() {
   
   if [ "$1" = "eth2" ]; then
       MACADDR3="${MACADDR}"
-      writeConfigKey "extra_cmdline" "mac2" "${MACADDR3}"
+      writeConfigKey "extra_cmdline" "mac3" "${MACADDR3}"
       writeConfigKey "extra_cmdline" "netif_num" "3"
   fi
 
   if [ "$1" = "eth3" ]; then
       MACADDR4="${MACADDR}"
-      writeConfigKey "extra_cmdline" "mac2" "${MACADDR4}"
+      writeConfigKey "extra_cmdline" "mac4" "${MACADDR4}"
       writeConfigKey "extra_cmdline" "netif_num" "4"
   fi
 
