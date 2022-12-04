@@ -344,7 +344,7 @@ if [ "${KEYMAP}" = "null" ]; then
 fi
 
 while true; do
-  if [ $(ifconfig eth0 | grep inet | wc -l) -gt 0 ]; then
+  if [ $(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | wc -l) -gt 0 ]; then
     ./my.sh update
     break
   fi
