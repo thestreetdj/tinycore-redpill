@@ -96,6 +96,8 @@ set -u
 # 2022.11.25
 # Update : Added gitee conversion function when github connection is not possible
 # 2022.12.03
+# Update : Added quad mac address make function to menu.sh
+# 2022.12.04
 
 
 showlastupdate() {
@@ -115,6 +117,9 @@ showlastupdate() {
 
 # Update : Added gitee conversion function when github connection is not possible
 # 2022.12.03
+
+# Update : Added quad mac address make function to menu.sh
+# 2022.12.04
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
