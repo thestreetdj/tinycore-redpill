@@ -453,8 +453,8 @@ while true; do
     m) modelMenu;       NEXT="s" ;;
     s) serialMenu;      NEXT="a" ;;
     a) macMenu "eth0";  NEXT="d" ;;
-    f) macMenu "eth1";  NEXT="d" ;;
-    g) macMenu "eth2";  NEXT="d" ;;
+    f) macMenu "eth1";  ;;
+    g) macMenu "eth2";  ;;
     h) macMenu "eth3";  NEXT="d" ;;    
     d) make;            NEXT="r" ;;
     u) editUserConfig;  NEXT="d" ;;
