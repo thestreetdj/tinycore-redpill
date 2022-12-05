@@ -67,7 +67,9 @@ fi
 checkinternet() {
 
     echo -n "Checking Internet Access -> "
-    nslookup $gitdomain 2>&1 >/dev/null
+#    nslookup $gitdomain 2>&1 >/dev/null
+    curl -L https://github.com/about.html -O 2>&1 >/dev/null
+
     if [ $? -eq 0 ]; then
         echo "OK"
     else
