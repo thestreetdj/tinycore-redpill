@@ -239,7 +239,7 @@ else
     cecho g "making directory  /mnt/${tcrppart}/auxfiles/extractor"  
     mkdir /mnt/${tcrppart}/auxfiles/extractor
     if [ $gitdomain == "gitee.com" ]; then
-        sudo curl -L --progress-bar "https://sourceforge.net/projects/tinycore-redpill/files/extractor.gz/download" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
+        sudo curl -k -L --progress-bar "https://sourceforge.net/projects/tinycore-redpill/files/extractor.gz/download" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
     else    
         sudo curl -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
     fi    
@@ -251,7 +251,7 @@ echo
 if [ $MODEL == "DS918+" ]||[ $MODEL == "DS3617xs" ]||[ $MODEL == "DS2422+" ]||[ $MODEL == "RS4021xs+" ]||[ $MODEL == "DS1621xs+" ]||[ $MODEL == "RS3618xs" ]; then
     cecho y "Downloading fabio's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
     if [ $gitdomain == "gitee.com" ]; then
-        sudo curl --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
+        sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
     else
         sudo curl --location --progress-bar "https://$gitdomain/fbelavenuto/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
     fi    
@@ -265,7 +265,7 @@ elif [ $MODEL == "DS3615xs" ]; then
 
     cecho y "Downloading pocopico's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
     if [ $gitdomain == "gitee.com" ]; then
-        sudo curl --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-3.10.108.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+        sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-3.10.108.tgz" --output /home/tc/custom-module/redpill.ko.tgz
     else
         sudo curl --location --progress-bar "https://$gitdomain/pocopico/rp-ext/raw/main/redpillprod/releases/redpill-3.10.108.tgz" --output /home/tc/custom-module/redpill.ko.tgz
     fi    
@@ -277,17 +277,17 @@ elif [ $MODEL == "DS3615xs" ]; then
 elif [ $MODEL == "DS923+" ]||[ $MODEL == "DS3622xs+" ]||[ $MODEL == "DS920+" ]||[ $MODEL == "DVA1622" ]||[ $MODEL == "DS1621+" ]||[ $MODEL == "DVA3221" ]; then
     cecho y "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
     if [ $gitdomain == "gitee.com" ]; then
-        sudo curl --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+        sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
     else
         sudo curl --location --progress-bar "https://$gitdomain/pocopico/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
     fi
     sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
 elif [ $MODEL == "DVA3219" ]; then
     cecho y "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
-    sudo curl --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-dva3219-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+    sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-dva3219-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 else
     cecho y "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-    sudo curl --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+    sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 fi
 
 echo
@@ -302,10 +302,10 @@ cecho y "If fullupgrade is required, please handle it separately."
 
 cecho g "Downloading Peter Suh's custom configuration files.................."
 
-curl -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
-curl -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
-curl -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
-curl -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O  
+curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
+curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
+curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
+curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O  
 
 if [ $TARGET_REVISION == "42218" ] ; then
     echo
