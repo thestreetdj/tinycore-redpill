@@ -113,7 +113,6 @@ getvars "$1"
 #echo "$TARGET_PLATFORM"                                            
 #echo "$SYNOMODEL"                                      
 #echo "$sha256"
-#echo "$FRIEND_MODE_YN"
 
 echo "Multi-argument input variable assignment mapping"
 jumkey="N"
@@ -125,12 +124,7 @@ manual="N"
 poco="N"
 realmac="N"
 frmyv="N"
-friend_mode="N"
-update="N"
-
-if [ $FRIEND_MODE_YN == "Y" ]; then
-    friend_mode="Y"
-fi
+jot="N"
 
     while [[ "$#" > 0 ]] ; do
 
@@ -170,6 +164,10 @@ fi
         frmyv)
             frmyv="Y"
             ;;
+            
+        jot)
+            jot="Y"
+            ;;
 
         *)
             if [ $1 = "FS2500F" ]; then                                       
@@ -196,7 +194,6 @@ fi
 #echo $manual
 #echo $realmac
 #echo $frmyv
-#echo $friend_mode
 
 if [ $jumkey == "Y" ] ; then 
     cecho p "The jumpkey option is deprecated, shell exit..."          
@@ -315,7 +312,7 @@ if [ $TARGET_REVISION == "42218" ] ; then
 
 else
     echo
-    if [ $friend_mode == "Y" ] ; then    
+    if [ $jot == "N" ] ; then    
         cecho y "This is TCRP friend mode"
     else    
         cecho y "This is TCRP original jot mode"
@@ -485,7 +482,7 @@ echo
 cecho g "Loader Building in progress..."
 echo
 
-if [ $manual == "Y" ] && [ $friend_mode == "N" ]; then    
+if [ $manual == "Y" ]; then    
     cecho r "Loader Manual Building in progress..." 
 
     if [ $TARGET_REVISION == "42218" ] ; then
@@ -494,17 +491,19 @@ if [ $manual == "Y" ] && [ $friend_mode == "N" ]; then
     else
         echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} manual   
     fi
+    
 else                                                                                                                           
 
     if [ $TARGET_REVISION == "42218" ] ; then
         ./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218-JUN jun                                                                        
     else
-        if [ $friend_mode == "Y" ] ; then    
+        if [ $jot == "N" ] ; then    
             echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} withfriend
         else
             echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}
         fi
     fi
+    
 fi 
 
 if  [ -f /home/tc/custom-module/redpill.ko ] ; then  
