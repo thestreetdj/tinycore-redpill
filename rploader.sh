@@ -813,7 +813,9 @@ bringfriend() {
             cp $userconfigfile /mnt/${loaderdisk}3/
 
 #m shell only start
-            sudo sed -i '61,80d' /mnt/${loaderdisk}1/boot/grub/grub.cfg
+            if [ "$WITHFRIEND" = "YES" ]; then
+                sudo sed -i '61,80d' /mnt/${loaderdisk}1/boot/grub/grub.cfg
+            fi    
 #m shell only end
 
             echo "Setting default boot entry to TCRP Friend"
@@ -2829,11 +2831,11 @@ function buildloader() {
 
     cp $userconfigfile /mnt/${loaderdisk}3/
 
-#m shell only start
-    sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
-#m shell only end
-
     if [ "$WITHFRIEND" = "YES" ]; then
+
+#m shell only start
+        sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+#m shell only end
 
         cp localdiskp1/zImage /mnt/${loaderdisk}3/zImage-dsm
 
