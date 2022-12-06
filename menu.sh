@@ -305,7 +305,7 @@ function make() {
   usbidentify
   clear
 
-  ./my.sh "${MODEL}"F noconfig #>"${LOG_FILE}" 2>&1
+  ./my.sh "${MODEL}"F noconfig $1#>"${LOG_FILE}" 2>&1
   if [ $? -ne 0 ]; then
     dialog --backtitle "`backtitle`" --title "Error loader building" 0 0 #--textbox "${LOG_FILE}" 0 0    
     return 1
@@ -438,7 +438,8 @@ while true; do
     if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
       echo "h \"Choose a mac address 4\""               >> "${TMP_PATH}/menu"
     fi  
-    echo "d \"Build the loader\""                     >> "${TMP_PATH}/menu"
+    echo "d \"Build the friend mode loader\""         >> "${TMP_PATH}/menu"
+    echo "j \"Build the jot mode loader\""            >> "${TMP_PATH}/menu"   
   fi
   echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
   echo "k \"Choose a keymap\""                       >> "${TMP_PATH}/menu"
@@ -456,7 +457,8 @@ while true; do
     f) macMenu "eth1";  NEXT="g" ;;
     g) macMenu "eth2";  NEXT="h" ;;
     h) macMenu "eth3";  NEXT="d" ;;    
-    d) make;            NEXT="r" ;;
+    d) make ;             NEXT="r" ;;
+    j) make "jot";        NEXT="r" ;;    
     u) editUserConfig;  NEXT="d" ;;
     k) keymapMenu ;;
     c) dialog --backtitle "`backtitle`" --title "Cleaning" --aspect 18 \
