@@ -98,6 +98,8 @@ set -u
 # 2022.12.03
 # Update : Added quad mac address make function to menu.sh
 # 2022.12.04
+# Update : Added independent JOT mode build menu to menu.sh
+# 2022.12.06
 
 
 showlastupdate() {
@@ -120,6 +122,9 @@ showlastupdate() {
 
 # Update : Added quad mac address make function to menu.sh
 # 2022.12.04
+
+# Update : Added independent JOT mode build menu to menu.sh
+# 2022.12.06
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
