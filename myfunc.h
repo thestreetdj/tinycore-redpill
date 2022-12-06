@@ -202,7 +202,6 @@ getvars()
     MSHELL_ONLY_MODEL="N"
     DTC_BASE_MODEL="N"
     ORIGIN_PLATFORM=""
-    FRIEND_MODE_YN="Y"
 
 # JOT MODE
     if [ "${1}" = "DS918+" ] || [ "${1}" = "DS918+F" ]; then        
@@ -475,17 +474,13 @@ getvars()
         MODEL="$(echo $tem | sed 's/J//g')"
     else
         if [ $tem = "FS2500F" ]; then
-            FRIEND_MODE_YN="Y"        
             MODEL="FS2500"
         elif [ $tem = "FS2500" ]; then    
-            FRIEND_MODE_YN="Y"
             MODEL="FS2500"
         else
             if [ $(echo $tem | grep F | wc -l) -gt 0 ]; then
-                FRIEND_MODE_YN="Y"
                 MODEL="$(echo $tem | sed 's/F//g')"
             else
-                FRIEND_MODE_YN="Y"
                 MODEL=$tem
             fi
             
@@ -592,4 +587,3 @@ generateMacAddress() {
     printf '00:11:32:%02X:%02X:%02X' $((RANDOM % 256)) $((RANDOM % 256)) $((RANDOM % 256))
 
 }
-
