@@ -2869,10 +2869,10 @@ function buildloader() {
 
     else
         echo
-#        if [ "$MACHINE" = "VIRTUAL" ]; then
-#            echo "Setting default boot entry to SATA"
-#            cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
-#        fi
+        if [ "$MACHINE" = "VIRTUAL" ]; then
+            echo "Setting default boot entry to JOT SATA"
+            cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
+        fi
     fi
 
 #m shell only start
