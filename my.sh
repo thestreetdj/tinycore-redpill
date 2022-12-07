@@ -90,14 +90,16 @@ checkinternet() {
 
 checkinternet
 
-if [ $# -lt 1 ]; then
-    getlatestmshell "ask"
-else
-    if [ "$1" == "update" ] ; then 
-        getlatestmshell "noask"
-        exit 0
+if [ $gitdomain == "githun.com" ]; then
+    if [ $# -lt 1 ]; then
+        getlatestmshell "ask"
     else
-        getlatestmshell "noask"
+        if [ "$1" == "update" ] ; then 
+            getlatestmshell "noask"
+            exit 0
+        else
+            getlatestmshell "noask"
+        fi
     fi
 fi
 
