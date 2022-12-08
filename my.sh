@@ -75,7 +75,7 @@ checkinternet() {
     else
         cecho g "Error: No internet found, or $gitdomain is not accessible"
         
-        gitdomain="gitee.com"
+        gitdomain="gitlab.playstreet.kr"
         cecho p "Try to connect to $gitdomain......"
         nslookup $gitdomain 2>&1 >/dev/null
         if [ $? -eq 0 ]; then
@@ -239,11 +239,7 @@ if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; t
 else
     cecho g "making directory  /mnt/${tcrppart}/auxfiles/extractor"  
     mkdir /mnt/${tcrppart}/auxfiles/extractor
-    if [ $gitdomain == "gitee.com" ]; then
-        sudo curl -k -L --progress-bar "https://sourceforge.net/projects/tinycore-redpill/files/extractor.gz/download" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
-    else    
-        sudo curl -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
-    fi    
+    sudo curl -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
     sudo tar -zxvf /mnt/${tcrppart}/auxfiles/extractor/extractor.gz -C /mnt/${tcrppart}/auxfiles/extractor
 fi
 
@@ -251,7 +247,7 @@ echo
 
 if [ $MODEL == "DS918+" ]||[ $MODEL == "DS3617xs" ]||[ $MODEL == "DS2422+" ]||[ $MODEL == "RS4021xs+" ]||[ $MODEL == "DS1621xs+" ]||[ $MODEL == "RS3618xs" ]; then
     cecho y "Downloading fabio's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-    if [ $gitdomain == "gitee.com" ]; then
+    if [ $gitdomain == "gitlab.playstreet.kr" ]; then
         sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
     else
         sudo curl --location --progress-bar "https://$gitdomain/fbelavenuto/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
@@ -265,7 +261,7 @@ elif [ $MODEL == "DS3615xs" ]; then
 #    sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko /home/tc/custom-module/redpill.ko
 
     cecho y "Downloading pocopico's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
-    if [ $gitdomain == "gitee.com" ]; then
+    if [ $gitdomain == "gitlab.playstreet.kr" ]; then
         sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-3.10.108.tgz" --output /home/tc/custom-module/redpill.ko.tgz
     else
         sudo curl --location --progress-bar "https://$gitdomain/pocopico/rp-ext/raw/main/redpillprod/releases/redpill-3.10.108.tgz" --output /home/tc/custom-module/redpill.ko.tgz
@@ -277,7 +273,7 @@ elif [ $MODEL == "DS3615xs" ]; then
 #    sudo curl --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v3.10.108.ko" --output /home/tc/custom-module/redpill.ko
 elif [ $MODEL == "DS923+" ]||[ $MODEL == "DS3622xs+" ]||[ $MODEL == "DS920+" ]||[ $MODEL == "DVA1622" ]||[ $MODEL == "DS1621+" ]||[ $MODEL == "DVA3221" ]; then
     cecho y "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-    if [ $gitdomain == "gitee.com" ]; then
+    if [ $gitdomain == "gitlab.playstreet.kr" ]; then
         sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
     else
         sudo curl --location --progress-bar "https://$gitdomain/pocopico/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
