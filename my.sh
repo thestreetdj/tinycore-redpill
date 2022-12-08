@@ -90,7 +90,7 @@ checkinternet() {
 
 checkinternet
 
-if [ $gitdomain == "githun.com" ]; then
+if [ $gitdomain == "github.com" ]; then
     if [ $# -lt 1 ]; then
         getlatestmshell "ask"
     else
