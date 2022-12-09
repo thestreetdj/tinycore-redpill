@@ -2965,6 +2965,7 @@ function bringoverfriend() {
         BZIMAGESHA256="$(grep bzImage-friend chksum | awk '{print $1}')"
         INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
         cat chksum |grep VERSION
+        echo
         [ "$(sha256sum bzImage-friend | awk '{print $1}')" == "$BZIMAGESHA256" ] && echo "bzImage-friend checksum OK !" || echo "bzImage-friend checksum ERROR !" || exit 99
         [ "$(sha256sum initrd-friend | awk '{print $1}')" == "$INITRDSHA256" ] && echo "initrd-friend checksum OK !" || echo "initrd-friend checksum ERROR !" || exit 99
     else
