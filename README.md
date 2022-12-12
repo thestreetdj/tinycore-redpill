@@ -38,7 +38,8 @@ A typical build process starts with:
   <img src="doc/스크린샷 2022-11-27 오후 8.14.47.png" width="60%" align=center alt="M SHELL for TCRP MENU">
 </p>
 
-        C. Select the real mac address of the nic or create a virtual mac address or input the prepared mac address. 
+        C. Select the real mac address of the nic or create a virtual mac address or 
+           input the prepared mac address. 
            (If there are 2 nics, you can enter up to the 2nd mac address)
     
 <p align="center">
