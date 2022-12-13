@@ -3053,41 +3053,41 @@ function getlatestrploader() {
 function setplatform() {
 
     if [ "${TARGET_PLATFORM}" = "apollolake" ] || [ "${TARGET_PLATFORM}" = "ds918p" ]; then
-        SYNOMODEL="ds918p_$TARGET_REVISION" && MODEL="DS918+"
+        SYNOMODEL="ds918p_$TARGET_REVISION" && MODEL="DS918+" && ORIGIN_PLATFORM="apollolake"
     elif [ "${TARGET_PLATFORM}" = "bromolow" ] || [ "${TARGET_PLATFORM}" = "ds3615xs" ]; then
-        SYNOMODEL="ds3615xs_$TARGET_REVISION" && MODEL="DS3615xs"
+        SYNOMODEL="ds3615xs_$TARGET_REVISION" && MODEL="DS3615xs" && ORIGIN_PLATFORM="bromolow"
     elif [ "${TARGET_PLATFORM}" = "broadwell" ] || [ "${TARGET_PLATFORM}" = "ds3617xs" ]; then
-        SYNOMODEL="ds3617xs_$TARGET_REVISION" && MODEL="DS3617xs"
+        SYNOMODEL="ds3617xs_$TARGET_REVISION" && MODEL="DS3617xs" && ORIGIN_PLATFORM="broadwell"
     elif [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "ds3622xsp" ]; then
-        SYNOMODEL="ds3622xsp_$TARGET_REVISION" && MODEL="DS3622xs+"
+        SYNOMODEL="ds3622xsp_$TARGET_REVISION" && MODEL="DS3622xs+" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "v1000" ] || [ "${TARGET_PLATFORM}" = "ds1621p" ]; then
-        SYNOMODEL="ds1621p_$TARGET_REVISION" && MODEL="DS1621+"
+        SYNOMODEL="ds1621p_$TARGET_REVISION" && MODEL="DS1621+" && ORIGIN_PLATFORM="v1000"
     elif [ "${TARGET_PLATFORM}" = "denverton" ] || [ "${TARGET_PLATFORM}" = "dva3221" ]; then
-        SYNOMODEL="dva3221_$TARGET_REVISION" && MODEL="DVA3221"
+        SYNOMODEL="dva3221_$TARGET_REVISION" && MODEL="DVA3221" && ORIGIN_PLATFORM="denverton"
     elif [ "${TARGET_PLATFORM}" = "geminilake" ] || [ "${TARGET_PLATFORM}" = "ds920p" ]; then
-        SYNOMODEL="ds920p_$TARGET_REVISION" && MODEL="DS920+"
+        SYNOMODEL="ds920p_$TARGET_REVISION" && MODEL="DS920+" && ORIGIN_PLATFORM="geminilake"
     elif [ "${TARGET_PLATFORM}" = "r1000" ] || [ "${TARGET_PLATFORM}" = "ds923p" ]; then
-        SYNOMODEL="ds923p_$TARGET_REVISION" && MODEL="DS923+"
+        SYNOMODEL="ds923p_$TARGET_REVISION" && MODEL="DS923+" && ORIGIN_PLATFORM="r1000"
     elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
-        SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622"
+        SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622" && ORIGIN_PLATFORM="geminilake"
     elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
-        SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+"
+        SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+" && ORIGIN_PLATFORM="v1000"
     elif [ "${TARGET_PLATFORM}" = "rs4021xsp" ]; then
-        SYNOMODEL="rs4021xsp_$TARGET_REVISION" && MODEL="RS4021xs+"
+        SYNOMODEL="rs4021xsp_$TARGET_REVISION" && MODEL="RS4021xs+" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
-        SYNOMODEL="ds1621xsp_$TARGET_REVISION" && MODEL="DS1621xs+"
+        SYNOMODEL="ds1621xsp_$TARGET_REVISION" && MODEL="DS1621xs+" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "dva3219" ]; then
-        SYNOMODEL="dva3219_$TARGET_REVISION" && MODEL="DVA3219"
+        SYNOMODEL="dva3219_$TARGET_REVISION" && MODEL="DVA3219" && ORIGIN_PLATFORM="denverton"
     elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
-        SYNOMODEL="ds1520p_$TARGET_REVISION" && MODEL="DS1520+"
+        SYNOMODEL="ds1520p_$TARGET_REVISION" && MODEL="DS1520+" && ORIGIN_PLATFORM="geminilake"
     elif [ "${TARGET_PLATFORM}" = "fs2500" ]; then
-        SYNOMODEL="fs2500_$TARGET_REVISION" && MODEL="FS2500"
+        SYNOMODEL="fs2500_$TARGET_REVISION" && MODEL="FS2500" && ORIGIN_PLATFORM="v1000"
     elif [ "${TARGET_PLATFORM}" = "rs3618xs" ]; then
-        SYNOMODEL="rs3618xs_$TARGET_REVISION" && MODEL="RS3618xs"
+        SYNOMODEL="rs3618xs_$TARGET_REVISION" && MODEL="RS3618xs" && ORIGIN_PLATFORM="broadwell"
     elif [ "${TARGET_PLATFORM}" = "rs3413xsp" ]; then
-        SYNOMODEL="rs3413xsp_$TARGET_REVISION" && MODEL="RS3413xs+"
+        SYNOMODEL="rs3413xsp_$TARGET_REVISION" && MODEL="RS3413xs+" && ORIGIN_PLATFORM="bromolow"
     elif [ "${TARGET_PLATFORM}" = "ds1019p" ]; then
-        SYNOMODEL="ds1019p_$TARGET_REVISION" && MODEL="DS1019+"
+        SYNOMODEL="ds1019p_$TARGET_REVISION" && MODEL="DS1019+" && ORIGIN_PLATFORM="apollolake"
     fi
 
 }
@@ -3321,8 +3321,11 @@ function listmodules() {
         echo "------------------------------------------------------------------------------------------------"
         echo -e "It looks that you will need the following modules : \n\n"
 
-        #Block listpci for using all-modules. 2022.11.09
-        #listpci
+        if [ "$WITHFRIEND" = "YES" ]; then
+            echo "Block listpci for using all-modules. 2022.11.09"
+        else    
+            listpci
+        fi
 
         echo "------------------------------------------------------------------------------------------------"
     else
@@ -3382,6 +3385,52 @@ function ext_manager() {
 
 }
 
+function getredpillko() {
+
+    if [ $MODEL == "DS918+" ]||[ $MODEL == "DS3617xs" ]||[ $MODEL == "DS2422+" ]||[ $MODEL == "RS4021xs+" ]||[ $MODEL == "DS1621xs+" ]||[ $MODEL == "RS3618xs" ]; then
+        echo "Downloading fabio's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
+        if [ $gitdomain == "gitlab.playstreet.kr" ]; then
+            sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
+        else
+            sudo curl --location --progress-bar "https://$gitdomain/fbelavenuto/redpill-lkm/raw/r1000/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
+        fi    
+        gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
+        sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko /home/tc/custom-module/redpill.ko
+    elif [ $MODEL == "DS3615xs" ]; then
+    #    echo "Downloading fabio's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
+    #    sudo curl --location --progress-bar "https://$gitdomain/fbelavenuto/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko.gz
+    #    gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko.gz
+    #    sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-3.10.108-prod.ko /home/tc/custom-module/redpill.ko
+
+        echo "Downloading pocopico's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
+        if [ $gitdomain == "gitlab.playstreet.kr" ]; then
+            sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-3.10.108.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+        else
+            sudo curl --location --progress-bar "https://$gitdomain/pocopico/rp-ext/raw/main/redpillprod/releases/redpill-3.10.108.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+        fi    
+        sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/    
+
+    #    peter's redpill.ko triggers KP
+    #    echo "Downloading peter's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
+    #    sudo curl --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v3.10.108.ko" --output /home/tc/custom-module/redpill.ko
+    elif [ $MODEL == "DS923+" ]||[ $MODEL == "DS3622xs+" ]||[ $MODEL == "DS920+" ]||[ $MODEL == "DVA1622" ]||[ $MODEL == "DS1621+" ]||[ $MODEL == "DVA3221" ]; then
+        echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
+        if [ $gitdomain == "gitlab.playstreet.kr" ]; then
+            sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+        else
+            sudo curl --location --progress-bar "https://$gitdomain/pocopico/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+        fi
+        sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
+    elif [ $MODEL == "DVA3219" ]; then
+        echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
+        sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-dva3219-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+    else
+        echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
+        sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+    fi
+
+}
+
 if [ $# -lt 2 ]; then
     syntaxcheck $@
 fi
@@ -3401,6 +3450,7 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         getvars $2
         checkinternet
 #        getlatestrploader
+        getredpillko
         gitdownload
 
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
