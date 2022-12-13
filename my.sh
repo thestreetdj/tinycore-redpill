@@ -250,7 +250,7 @@ if [ $MODEL == "DS918+" ]||[ $MODEL == "DS3617xs" ]||[ $MODEL == "DS2422+" ]||[ 
     if [ $gitdomain == "gitlab.playstreet.kr" ]; then
         sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
     else
-        sudo curl --location --progress-bar "https://$gitdomain/fbelavenuto/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
+        sudo curl --location --progress-bar "https://$gitdomain/fbelavenuto/redpill-lkm/raw/r1000/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
     fi    
     gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
     sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko /home/tc/custom-module/redpill.ko
