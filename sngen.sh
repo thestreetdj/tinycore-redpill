@@ -28,12 +28,12 @@ function beginArray() {
         serialstart="2030 2040 20C0 2150"
         ;;
     DS923+)
-        permanent="SBR"
+        permanent="TQR"
         serialstart="2030 2040 20C0 2150"
         ;;
     DS1520+)
-        permanent="SBR"
-        serialstart="2030 2040 20C0 2150"
+        permanent="TRR"
+        serialstart="2270"
         ;;    
     DS3622xs+)
         permanent="SQR"
@@ -68,6 +68,10 @@ function beginArray() {
         serialstart="1930 1940"
         ;;
     DVA3221)
+        permanent="SJR"
+        serialstart="2030 2040 20C0 2150"
+        ;;
+    DVA1622)
         permanent="SJR"
         serialstart="2030 2040 20C0 2150"
         ;;
@@ -173,6 +177,9 @@ function generateSerial() {
     DVA3221)
         serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
         ;;
+    DVA1622)
+        serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
+        ;;
     RS3618xs)
         serialnum="$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(random)
         ;;
@@ -195,8 +202,8 @@ Usage: ${0} <platform>
 
 Available platforms :
 ----------------------------------------------------------------------------------------
-DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ 
-DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+
+DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DVA1622
+DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+
 
 e.g. $(basename ${0}) DS3615xs
 ----------------------------------------------------------------------------------------
@@ -207,10 +214,10 @@ EOF
 if [ -z "$1" ]; then
     showhelp
 else
-    if [ "$1" = "DS3615xs" ] || [ "$1" = "DS3617xs" ] || [ "$1" = "DS916+" ] || [ "$1" = "DS918+" ] || [ "$1" = "DS1019+" ] || [ "$1" = "DS920+" ] || [ "$1" = "DS923+" ] || [ "$1" = "DS3622xs+" ] || [ "$1" = "FS6400" ] || [ "$1" = "DVA3219" ] || [ "$1" = "DVA3221" ] || [ "$1" = "DS1621+" ] || [ "$1" = "DS1621xs+" ] || [ "$1" = "RS4021xs+" ] || [ "$1" = "DS2422+" ] || [ "$1" = "DS1520+" ] || [ "$1" = "FS2500" ] || [ "$1" = "RS3618xs" ] || [ "$1" = "RS3413xs+" ] ; then
+    if [ "$1" = "DS3615xs" ] || [ "$1" = "DS3617xs" ] || [ "$1" = "DS916+" ] || [ "$1" = "DS918+" ] || [ "$1" = "DS1019+" ] || [ "$1" = "DS920+" ] || [ "$1" = "DS923+" ] || [ "$1" = "DS3622xs+" ] || [ "$1" = "FS6400" ] || [ "$1" = "DVA3219" ] || [ "$1" = "DVA3221" ] || [ "$1" = "DVA1622" ] || [ "$1" = "DS1621+" ] || [ "$1" = "DS1621xs+" ] || [ "$1" = "RS4021xs+" ] || [ "$1" = "DS2422+" ] || [ "$1" = "DS1520+" ] || [ "$1" = "FS2500" ] || [ "$1" = "RS3618xs" ] || [ "$1" = "RS3413xs+" ] ; then
         echo $(generateSerial $1)
     else
         echo "Error : $1 is not an available model for serial number generation. "
-        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+"
+        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DVA1622 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+"
     fi
 fi
