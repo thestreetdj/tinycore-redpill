@@ -100,7 +100,8 @@ set -u
 # 2022.12.04
 # Update : Added independent JOT mode build menu to menu.sh
 # 2022.12.06
-
+# Correct serial number for DS1520+,DS923+, by Orphee
+# 2022.12.13
 
 showlastupdate() {
     cat <<EOF
@@ -125,6 +126,9 @@ showlastupdate() {
 
 # Update : Added independent JOT mode build menu to menu.sh
 # 2022.12.06
+
+# Correct serial number for DS1520+,DS923+, by Orphee
+# 2022.12.13
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
