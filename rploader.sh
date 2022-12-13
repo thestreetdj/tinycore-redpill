@@ -3138,6 +3138,11 @@ function getvars() {
         sudo mv bspatch /usr/local/bin/
 
     fi
+    
+    echo "Redownload the latest module.alias.4.json file ..."    
+    echo
+    curl --insecure -s --location "$modalias4" --output modules.alias.4.json.gz
+    [ -f modules.alias.4.json.gz ] && gunzip -f modules.alias.4.json.gz    
 
     [ ! -d ${local_cache} ] && sudo mkdir -p ${local_cache}
     [ -h /home/tc/custom-module ] && unlink /home/tc/custom-module
