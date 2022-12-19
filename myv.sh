@@ -127,7 +127,19 @@ function EXDRIVER_FN() {
     done
 }
 
+checkinternet() {
 
+    echo -n "Checking Internet Access -> "
+    curl -L https://github.com/about.html -O 2>&1 >/dev/null
+
+    if [ $? -eq 0 ]; then
+        echo "OK"
+    else
+        cecho g "Error: No internet found, or github.com is not accessible"
+        exit 99
+    fi
+
+}
 
 checkinternet
 getlatestmshell
