@@ -2445,12 +2445,44 @@ EOF
 
 }
 
+function tinyentrymmc() {
+
+    cat <<EOF
+menuentry 'Tiny Core Image Build' {
+        savedefault
+        search --set=root --fs-uuid $usbpart3uuid --hint hd1,msdos3
+        echo Loading Linux...
+        linux /vmlinuz64 loglevel=3 cde waitusb=5 vga=791
+        echo Loading initramfs...
+        initrd /corepure64.gz
+        echo Booting TinyCore for loader creation
+}
+EOF
+
+}
+
 function tcrpfriendentry() {
     
     cat <<EOF
 menuentry 'Tiny Core Friend $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update ${smallfixnumber}' {
         savedefault
         search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
+        echo Loading Linux...
+        linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 
+        echo Loading initramfs...
+        initrd /initrd-friend
+        echo Booting TinyCore Friend
+}
+EOF
+
+}
+
+function tcrpfriendentrymmc() {
+    
+    cat <<EOF
+menuentry 'Tiny Core Friend $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update ${smallfixnumber}' {
+        savedefault
+        search --set=root --fs-uuid $usbpart3uuid --hint hd1,msdos3
         echo Loading Linux...
         linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 
         echo Loading initramfs...
@@ -2803,9 +2835,15 @@ fi
         sudo cp -rf part1/* localdiskp1/
         sudo cp -rf part2/* localdiskp2/
         echo "Replacing set root with filesystem UUID instead"
-        sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" localdiskp1/boot/grub/grub.cfg
-        echo "Creating tinycore entry"
-        tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
+        if [ $tcrppart == "mmc3" ]; then        
+            sudo sed -i "s/set root=(hd1,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd1,msdos1/" localdiskp1/boot/grub/grub.cfg        
+            echo "Creating tinycore entry for mmc (sdcard)"
+            tinyentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+        else
+            sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" localdiskp1/boot/grub/grub.cfg
+            echo "Creating tinycore entry"
+            tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
+        fi    
 
         if [ "$WITHFRIEND" = "YES" ]; then
 
@@ -2815,8 +2853,11 @@ fi
 
                 cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
                 cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
-
-                tcrpfriendentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+                if [ $tcrppart == "mmc3" ]; then        
+                    tcrpfriendentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg                
+                else
+                    tcrpfriendentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+                fi    
             fi
         fi
 
