@@ -2835,7 +2835,7 @@ fi
         sudo cp -rf part1/* localdiskp1/
         sudo cp -rf part2/* localdiskp2/
         echo "Replacing set root with filesystem UUID instead"
-        if [ $tcrppart == "mmc3" ]; then        
+        if [ $loaderdisk == "mmcblk0p" ]; then        
             sudo sed -i "s/set root=(hd1,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd1,msdos1/" localdiskp1/boot/grub/grub.cfg        
             echo "Creating tinycore entry for mmc (sdcard)"
             tinyentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg
@@ -2853,7 +2853,7 @@ fi
 
                 cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
                 cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
-                if [ $tcrppart == "mmc3" ]; then        
+                if [ $loaderdisk == "mmcblk0p" ]; then        
                     tcrpfriendentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg                
                 else
                     tcrpfriendentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
