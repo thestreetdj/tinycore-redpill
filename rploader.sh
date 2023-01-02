@@ -3120,6 +3120,10 @@ function getvars() {
     REDPILL_LKM_MAKE_TARGET="$(echo $platform_selected | jq -r -e '.redpill_lkm_make_target')"
     tcrpdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
     tcrppart="${tcrpdisk}3"
+if [ $tcrppart == "mmc3" ]; then
+    tcrppart="mmcblk0p3"
+    tcrpdisk="mmcblk0p"
+fi    
     local_cache="/mnt/${tcrppart}/auxfiles"
     usbpart1uuid=$(blkid /dev/${tcrpdisk}1 | awk '{print $3}' | sed -e "s/\"//g" -e "s/UUID=//g")
     usbpart3uuid=$(blkid /dev/${tcrpdisk}3 | awk '{print $2}' | sed -e "s/\"//g" -e "s/UUID=//g")
