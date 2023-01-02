@@ -220,9 +220,15 @@ fi
 echo
 
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
+
+if [ $tcrppart == "mmc3" ]; then
+    tcrppart="mmcblk0p3"
+fi
+
 echo
 echo tcrppart is $tcrppart                                                  
 echo
+
 if [ ! -d "/mnt/${tcrppart}/auxfiles" ]; then
     cecho g "making directory  /mnt/${tcrppart}/auxfiles"  
     mkdir /mnt/${tcrppart}/auxfiles 
