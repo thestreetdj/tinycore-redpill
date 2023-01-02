@@ -453,6 +453,12 @@ function processpat() {
 
     loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
     tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
+    
+if [ $tcrppart == "mmc3" ]; then
+    tcrppart="mmcblk0p3"
+    tcrpdisk="mmcblk0p"
+fi  
+
     local_cache="/mnt/${tcrppart}/auxfiles"
     temp_pat_folder="/tmp/pat"
 
