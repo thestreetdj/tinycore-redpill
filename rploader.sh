@@ -456,7 +456,7 @@ function processpat() {
     
 if [ $tcrppart == "mmc3" ]; then
     tcrppart="mmcblk0p3"
-    tcrpdisk="mmcblk0p"
+    loaderdisk="mmcblk0p"
 fi  
 
     local_cache="/mnt/${tcrppart}/auxfiles"
@@ -713,7 +713,9 @@ bringfriend() {
     clear
 
     loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
-
+if [ $loaderdisk == "mmc" ]; then
+    loaderdisk="mmcblk0p"
+fi    
     mount /dev/${loaderdisk}1 2>/dev/null
     mount /dev/${loaderdisk}2 2>/dev/null
     mount /dev/${loaderdisk}3 2>/dev/null
@@ -2684,7 +2686,9 @@ function buildloader() {
 
     tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
-
+if [ $tcrppart == "mmc3" ]; then
+    tcrppart="mmcblk0p3"
+fi    
     [ "$1" == "junmod" ] && JUNLOADER="YES"
 
     [ -d $local_cache ] && echo "Found tinycore cache folder, linking to home/tc/custom-module" && [ ! -d /home/tc/custom-module ] && ln -s $local_cache /home/tc/custom-module
@@ -2775,7 +2779,9 @@ function buildloader() {
     fi
 
     loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
-
+if [ $loaderdisk == "mmc" ]; then
+    loaderdisk="mmcblk0p"
+fi    
     # Unmount to make sure you are able to mount properly
 
     sudo umount /dev/${loaderdisk}1
