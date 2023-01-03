@@ -148,7 +148,7 @@ EOF
 
 function getgrubconf() {
 
-    tcrpdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+#    tcrpdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
     grubdisk="${tcrpdisk}1"
 
     echo "Mounting bootloader disk to get grub contents"
@@ -208,7 +208,7 @@ function monitor() {
     export TZ="${timezone}"
     sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
 
-    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+#    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
     mount /dev/${loaderdisk}1
     mount /dev/${loaderdisk}2
 
@@ -375,12 +375,8 @@ function restoresession() {
 }
 
 function downloadextractor() {
-    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
-    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
-if [ $tcrppart == "mmc3" ]; then
-    tcrppart="mmcblk0p3"
-    loaderdisk="mmcblk0p"
-fi    
+#    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+#    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
     temp_folder="/tmp/synoesp"
 
@@ -455,14 +451,8 @@ fi
 
 function processpat() {
 
-    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
-    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
-    
-if [ $tcrppart == "mmc3" ]; then
-    tcrppart="mmcblk0p3"
-    loaderdisk="mmcblk0p"
-fi  
-
+#    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+#    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
     temp_pat_folder="/tmp/pat"
 
@@ -671,7 +661,7 @@ function updateuserconfigfield() {
 removefriend() {
 
     clear
-    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+#    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
 
     echo "------------------------------------------------------------------------------------------------------------"
     echo "You are not satisfied with TCRP friend."
@@ -716,10 +706,7 @@ bringfriend() {
 
     clear
 
-    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
-if [ $loaderdisk == "mmc" ]; then
-    loaderdisk="mmcblk0p"
-fi    
+#    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
     mount /dev/${loaderdisk}1 2>/dev/null
     mount /dev/${loaderdisk}2 2>/dev/null
     mount /dev/${loaderdisk}3 2>/dev/null
@@ -857,7 +844,7 @@ fi
 
 function postupdate() {
 
-    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+#    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
 
     cd /home/tc
 
@@ -1086,7 +1073,7 @@ function postupdatev1() {
     [ -n "mount |grep -i localdiskp1" ] && [ -n "mount |grep -i localdiskp2" ] && echo "mounted succesfully"
 
     echo -n "Mounting loader disk -> "
-    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+#    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
 
     sudo mount /dev/${loaderdisk}1
     sudo mount /dev/${loaderdisk}2
@@ -1232,8 +1219,8 @@ function downloadextractorv2() {
 
 function downloadupgradepat() {
 
-    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
-    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
+#    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+#    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
 
     if [ ! -d /mnt/${tcrppart}/auxfiles/patch-extractor ] || [ ! -f /mnt/${tcrppart}/auxfiles/patch-extractor/synoarchive.nano ]; then
         downloadextractorv2
@@ -1357,8 +1344,8 @@ function fullupgrade() {
 
 function backuploader() {
 
-    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
-    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
+#    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+#    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     homesize=$(du -sh /home/tc | awk '{print $1}')
     backupdate="$(date +%Y-%b-%d-%H-%M)"
 
@@ -1403,8 +1390,8 @@ function backuploader() {
 
 function restoreloader() {
 
-    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
-    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
+#    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+#    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     homesize=$(du -sh /home/tc | awk '{print $1}')
     PS3="Select backup folder to restore : "
     options=""
@@ -1550,7 +1537,7 @@ function mountdatadisk() {
 function patchdtc() {
 
     checkmachine
-    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
+#    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
     localdisks=$(lsblk | grep -i disk | grep -i sd | awk '{print $1}' | grep -v $loaderdisk)
     localnvme=$(lsblk | grep -i nvme | awk '{print $1}')
     usbpid=$(cat user_config.json | jq '.extra_cmdline .pid' | sed -e 's/"//g' | sed -e 's/0x//g')
@@ -1778,12 +1765,8 @@ function mountshare() {
 
 function backup() {
 
-    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
+#    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
     homesize=$(du -sh /home/tc | awk '{print $1}')
-
-if [ $loaderdisk == "mmc" ]; then
-    loaderdisk="mmcblk0p"
-fi  
 
     echo "Please make sure you are using the latest 1GB img before using backup option"
     echo "Current /home/tc size is $homesize , try to keep it less than 1GB as it might not fit into your image"
@@ -1841,7 +1824,7 @@ function satamap() {
 
     # if we cannot find usb disk, the boot disk must be intended for SATABOOT
     if [ $(ls -la /sys/block/sd* | fgrep "/usb" | wc -l) -eq 0 ]; then
-        loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
+#        loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
         sbpci=$(ls -la /sys/block/$loaderdisk | awk -F"/ata" '{print $1}' | awk -F"/" '{print $NF}' | cut --complement -f1 -d:)
     fi
 
@@ -2001,7 +1984,7 @@ function usbidentify() {
         exit 0
     fi
 
-    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
+#    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
 
     lsusb -v 2>&1 | grep -B 33 -A 1 SCSI >/tmp/lsusb.out
 
@@ -2720,11 +2703,9 @@ function getstaticmodule() {
 
 function buildloader() {
 
-    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
+#    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
-if [ $tcrppart == "mmc3" ]; then
-    tcrppart="mmcblk0p3"
-fi    
+
     [ "$1" == "junmod" ] && JUNLOADER="YES"
 
     [ -d $local_cache ] && echo "Found tinycore cache folder, linking to home/tc/custom-module" && [ ! -d /home/tc/custom-module ] && ln -s $local_cache /home/tc/custom-module
@@ -2814,10 +2795,8 @@ fi
         sudo mount ${loopdev}p2 part2
     fi
 
-    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
-if [ $loaderdisk == "mmc" ]; then
-    loaderdisk="mmcblk0p"
-fi    
+#    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
+
     # Unmount to make sure you are able to mount properly
 
     sudo umount /dev/${loaderdisk}1
@@ -3095,7 +3074,7 @@ function getlatestrploader() {
             echo "OK, updating, please re-run after updating"
             cp -f /home/tc/latestrploader.sh /home/tc/rploader.sh
             rm -f /home/tc/latestrploader.sh
-            loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
+#            loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
             echo "Updating tinycore loader with latest updates"
             #cleanloader
             filetool.sh -b ${loaderdisk}3
@@ -3179,12 +3158,8 @@ function getvars() {
     TARGET_VERSION="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[1])"
     TARGET_REVISION="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[2])"
     REDPILL_LKM_MAKE_TARGET="$(echo $platform_selected | jq -r -e '.redpill_lkm_make_target')"
-    tcrpdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+#    tcrpdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
     tcrppart="${tcrpdisk}3"
-if [ $tcrppart == "mmc3" ]; then
-    tcrppart="mmcblk0p3"
-    tcrpdisk="mmcblk0p"
-fi    
     local_cache="/mnt/${tcrppart}/auxfiles"
     usbpart1uuid=$(blkid /dev/${tcrpdisk}1 | awk '{print $3}' | sed -e "s/\"//g" -e "s/UUID=//g")
     usbpart3uuid=$(blkid /dev/${tcrpdisk}3 | awk '{print $2}' | sed -e "s/\"//g" -e "s/UUID=//g")
@@ -3501,6 +3476,16 @@ if [ $# -lt 2 ]; then
 fi
 
 if [ -z "$GATEWAY_INTERFACE" ]; then
+
+    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
+
+    if [ $loaderdisk == "mmc" ]; then
+        tcrppart="mmcblk0p3"
+        loaderdisk="mmcblk0p"
+    fi    
+
+    tcrpdisk=$loaderdisk
 
     case $1 in
 
