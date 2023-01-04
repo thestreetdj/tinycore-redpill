@@ -2980,7 +2980,7 @@ function buildloader() {
         avail=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' | cut -c 1-3)
     fi
 
-    avail_num=$(($avail))
+    avail_num=$(($avail)|bc -l)
 
     if [ $avail_num -le 400 ]; then
         echo "No adequate space on TCRP loader partition /mnt/${tcrppart} to cache pat file"
