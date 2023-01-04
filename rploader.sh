@@ -2975,12 +2975,12 @@ function buildloader() {
 
     if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | grep G | wc -l) -gt 0 ]; then
         avail_str=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/G//g' | cut -c 1-3)
-        avail=$(echo "$avail_str 1024" | awk '{print $1 * $2}')
+        avail=$(echo "$avail_str 1000" | awk '{print $1 * $2}')
     else
         avail=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' | cut -c 1-3)
     fi
 
-    avail_num=$(($avail)|bc -l)
+    avail_num=$(($avail))
 
     if [ $avail_num -le 400 ]; then
         echo "No adequate space on TCRP loader partition /mnt/${tcrppart} to cache pat file"
