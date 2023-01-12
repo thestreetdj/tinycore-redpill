@@ -318,6 +318,12 @@ function make() {
 }
 
 ###############################################################################
+# Post Update for jot mode 
+function postupdate() {
+  ./my.sh "${MODEL}" postupdate | tee "/home/tc/zpostupdate.log"
+}
+
+###############################################################################
 # Shows available keymaps to user choose one
 function keymapMenu() {
   dialog --backtitle "`backtitle`" --default-item "${LAYOUT}" --no-items \
@@ -442,6 +448,7 @@ while true; do
     fi  
     echo "d \"Build the friend mode loader\""         >> "${TMP_PATH}/menu"
     echo "j \"Build the jot mode loader\""            >> "${TMP_PATH}/menu"   
+    echo "p \"Post Update for jot mode\""             >> "${TMP_PATH}/menu"       
   fi
   echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
   echo "k \"Choose a keymap\""                       >> "${TMP_PATH}/menu"
@@ -460,7 +467,8 @@ while true; do
     g) macMenu "eth2";  NEXT="h" ;;
     h) macMenu "eth3";  NEXT="d" ;;    
     d) make ;             NEXT="r" ;;
-    j) make "jot";        NEXT="r" ;;    
+    j) make "jot";        NEXT="r" ;;  
+    p) postupdate ;       NEXT="r" ;;
     u) editUserConfig;  NEXT="d" ;;
     k) keymapMenu ;;
     c) dialog --backtitle "`backtitle`" --title "Cleaning" --aspect 18 \
