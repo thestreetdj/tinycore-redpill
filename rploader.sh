@@ -3443,7 +3443,7 @@ function getredpillko() {
         else
             URLS=$(curl --insecure -s https://api.github.com/repos/fbelavenuto/redpill-lkm/releases/latest | jq -r ".assets[].browser_download_url")
             sudo curl --location --progress-bar "$URLS" --output /home/tc/custom-module/rp-lkms.zip
-            unzip  /home/tc/custom-module/rp-lkms.zip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz -d /home/tc/custom-module
+            unzip  /home/tc/custom-module/rp-lkms.zip rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz -d /home/tc/custom-module
         fi    
         gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
         sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko /home/tc/custom-module/redpill.ko
