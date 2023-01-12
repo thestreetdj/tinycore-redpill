@@ -3436,7 +3436,7 @@ function ext_manager() {
 
 function getredpillko() {
 
-    if [ $MODEL == "DS918+" ]||[ $MODEL == "DS3617xs" ]||[ $MODEL == "DS2422+" ]||[ $MODEL == "RS4021xs+" ]||[ $MODEL == "DS1621xs+" ]||[ $MODEL == "RS3618xs" ]; then
+    if [ $MODEL == "DS918+" ]||[ $MODEL == "DS3617xs" ]||[ $MODEL == "DS2422+" ]||[ $MODEL == "DS1621xs+" ]||[ $MODEL == "RS3618xs" ]; then
         echo "Downloading fabio's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
         if [ $gitdomain == "gitlab.playstreet.kr" ]; then
             sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
@@ -3462,7 +3462,7 @@ function getredpillko() {
     #    peter's redpill.ko triggers KP
     #    echo "Downloading peter's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
     #    sudo curl --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v3.10.108.ko" --output /home/tc/custom-module/redpill.ko
-    elif [ $MODEL == "DS923+" ]||[ $MODEL == "DS3622xs+" ]||[ $MODEL == "DS920+" ]||[ $MODEL == "DVA1622" ]||[ $MODEL == "DS1621+" ]||[ $MODEL == "DVA3221" ]; then
+    elif [ $MODEL == "RS4021xs+" ]||[ $MODEL == "DS923+" ]||[ $MODEL == "DS3622xs+" ]||[ $MODEL == "DS920+" ]||[ $MODEL == "DVA1622" ]||[ $MODEL == "DS1621+" ]||[ $MODEL == "DVA3221" ]; then
         echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
         if [ $gitdomain == "gitlab.playstreet.kr" ]; then
             sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
