@@ -884,10 +884,10 @@ function postupdate() {
 
     . ./etc.defaults/VERSION && echo "Found Version : ${productversion}-${buildnumber}-${smallfixnumber}"
 
-    echo -n "Do you want to use this for the loader ? [yY/nN] : "
-    read answer
+#    echo -n "Do you want to use this for the loader ? [yY/nN] : "
+#    read answer
 
-    if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+#    if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
 
         echo "Extracting redpill ramdisk"
 
@@ -900,10 +900,10 @@ function postupdate() {
 
         . ./etc.defaults/VERSION && echo "The new smallupdate version will be  : ${productversion}-${buildnumber}-${smallfixnumber}"
 
-        echo -n "Do you want to use this for the loader ? [yY/nN] : "
-        read answer
+#        echo -n "Do you want to use this for the loader ? [yY/nN] : "
+#        read answer
 
-        if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+#        if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
 
             echo "Recreating ramdisk "
 
@@ -922,11 +922,10 @@ function postupdate() {
             echo "Removing temp ramdisk space " && rm -rf ramdisk
 
             echo "Done"
-        else
-            echo "Removing temp ramdisk space " && rm -rf ramdisk
-            exit 0
-
-        fi
+#        else
+#            echo "Removing temp ramdisk space " && rm -rf ramdisk
+#            exit 0
+#        fi
 
 #m shell only
         checkmachine
@@ -939,7 +938,7 @@ function postupdate() {
             sudo sed -i "/set default=/cset default=\"0\"" /mnt/${loaderdisk}1/boot/grub/grub.cfg
         fi
 
-    fi
+#    fi
 
 }
 
