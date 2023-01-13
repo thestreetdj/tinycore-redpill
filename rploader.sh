@@ -3435,21 +3435,23 @@ function ext_manager() {
 
 function getredpillko() {
 
-    if [ $MODEL == "FS2500" ]||[ $MODEL == "DS1019+" ]; then
+    if [ $MODEL == "FS2500" ]; then
     
         echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
         sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 
-#        echo "Downloading fabio's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-#        if [ $gitdomain == "develop.playstreet.kr" ]; then
-#            sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
-#        else
-#            URLS=$(curl --insecure -s https://api.github.com/repos/fbelavenuto/redpill-lkm/releases/latest | jq -r ".assets[].browser_download_url")
-#            sudo curl --location --progress-bar "$URLS" --output /home/tc/custom-module/rp-lkms.zip
-#            unzip  /home/tc/custom-module/rp-lkms.zip rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz -d /home/tc/custom-module
-#        fi    
-#        gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
-#        sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko /home/tc/custom-module/redpill.ko
+    elif [ $MODEL == "DS1019+" ]; then
+    
+        echo "Downloading fabio's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
+        if [ $gitdomain == "develop.playstreet.kr" ]; then
+            sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
+        else
+            URLS=$(curl --insecure -s https://api.github.com/repos/fbelavenuto/redpill-lkm/releases/latest | jq -r ".assets[].browser_download_url")
+            sudo curl --location --progress-bar "$URLS" --output /home/tc/custom-module/rp-lkms.zip
+            unzip  /home/tc/custom-module/rp-lkms.zip rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz -d /home/tc/custom-module
+        fi    
+        gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
+        sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko /home/tc/custom-module/redpill.ko
         
     elif [ $MODEL == "DS3615xs" ]; then
 
