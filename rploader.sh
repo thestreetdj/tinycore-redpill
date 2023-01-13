@@ -3435,17 +3435,10 @@ function ext_manager() {
 
 function getredpillko() {
 
-    if [ $MODEL == "RS4021xs+" ]||[ $MODEL == "DS923+" ]||[ $MODEL == "DS3622xs+" ]||[ $MODEL == "DS920+" ]||[ $MODEL == "DVA1622" ]||[ $MODEL == "DS1621+" ]||[ $MODEL == "DVA3221" ]
-      || [ $MODEL == "DS918+" ]||[ $MODEL == "DS3617xs" ]||[ $MODEL == "DS2422+" ]||[ $MODEL == "DS1621xs+" ]||[ $MODEL == "RS3618xs" ]||[ $MODEL == "DVA3219" ]; then
-
-        echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-        if [ $gitdomain == "develop.playstreet.kr" ]; then
-            sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
-        else
-            sudo curl --location --progress-bar "https://$gitdomain/pocopico/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
-        fi
-        sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
-
+    if [ $MODEL == "FS2500" ]||[ $MODEL == "DS1019+" ]; then
+    
+        echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
+        sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 
 #        echo "Downloading fabio's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
 #        if [ $gitdomain == "develop.playstreet.kr" ]; then
@@ -3474,8 +3467,13 @@ function getredpillko() {
        
     else
     
-        echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-        sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+        echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
+        if [ $gitdomain == "develop.playstreet.kr" ]; then
+            sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+        else
+            sudo curl --location --progress-bar "https://$gitdomain/pocopico/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+        fi
+        sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
         
     fi
 
