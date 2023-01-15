@@ -3437,10 +3437,15 @@ function ext_manager() {
 
 function getredpillko() {
 
-    if [ $MODEL == "FS2500" ] || [ $MODEL == "DS723+" ]; then
+    if [ $MODEL == "FS2500" ]; then
     
         echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
         sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+
+    elif [ $MODEL == "DS723+" ]; then
+    
+        echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
+        sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-load/raw/master/ext/rp-lkm/rp-r1000-4.4.180-prod.ko" --output /home/tc/custom-module/redpill.ko
 
     elif [ $MODEL == "DS1019+" ]; then
 
