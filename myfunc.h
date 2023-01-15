@@ -102,6 +102,9 @@ set -u
 # 2022.12.06
 # Correct serial number for DS1520+,DS923+, by Orphee
 # 2022.12.13
+# Update : Added ds723+ (r1000)
+# 2023.01.15
+
 
 showlastupdate() {
     cat <<EOF
@@ -109,26 +112,14 @@ showlastupdate() {
 # Update : Release TCRP FRIEND mode
 # 2022.09.25
 
-# Update : Dropped support for TCRP Jot's Mod /Jun's Mod.
-# 2022.11.11
-
 # Update : Deploy menu.sh
 # 2022.11.14
 
 # Update : Added ds923+
 # 2022.11.25
 
-# Update : Added gitee conversion function when github connection is not possible
-# 2022.12.03
-
-# Update : Added quad mac address make function to menu.sh
-# 2022.12.04
-
-# Update : Added independent JOT mode build menu to menu.sh
-# 2022.12.06
-
-# Correct serial number for DS1520+,DS923+, by Orphee
-# 2022.12.13
+# Update : Added ds723+ (r1000)
+# 2023.01.15
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
