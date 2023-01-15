@@ -3116,6 +3116,8 @@ function setplatform() {
         SYNOMODEL="ds920p_$TARGET_REVISION" && MODEL="DS920+" && ORIGIN_PLATFORM="geminilake"
     elif [ "${TARGET_PLATFORM}" = "r1000" ] || [ "${TARGET_PLATFORM}" = "ds923p" ]; then
         SYNOMODEL="ds923p_$TARGET_REVISION" && MODEL="DS923+" && ORIGIN_PLATFORM="r1000"
+    elif [ "${TARGET_PLATFORM}" = "ds723p" ]; then
+        SYNOMODEL="ds723p_$TARGET_REVISION" && MODEL="DS723+" && ORIGIN_PLATFORM="r1000"
     elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
         SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622" && ORIGIN_PLATFORM="geminilake"
     elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
