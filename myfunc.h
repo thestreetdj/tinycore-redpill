@@ -174,6 +174,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) RS3413xs+F (Not Suppoted, Testing...)
 ./$(basename ${0}) DS1019+F
 ./$(basename ${0}) DS923+F
+./$(basename ${0}) DS723+F
 
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
@@ -256,6 +257,12 @@ getvars()
         ORIGIN_PLATFORM="r1000"
         SYNOMODEL="ds923p_$TARGET_REVISION"                                                                                                                    
         sha256="e33b47df446ce0bd99c5613767c9dba977915e25acfb5ccb9f5650b14459458f"
+    elif [ "${1}" = "DS723+" ] || [ "${1}" = "DS723+F" ]; then
+        DTC_BASE_MODEL="Y"    
+        TARGET_PLATFORM="ds723p"
+        ORIGIN_PLATFORM="r1000"
+        SYNOMODEL="ds723p_$TARGET_REVISION"                                                                                                                    
+        sha256="e5a96f3b6c8e0535eea5fd585eb5aeca7f445f6fc976628875dc64b2cbb66180"
 
 # JOT MODE NEW MODEL SUCCESS
     elif [ "${1}" = "DS2422+" ] || [ "${1}" = "DS2422+F" ] ; then
