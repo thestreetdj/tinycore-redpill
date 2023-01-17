@@ -407,7 +407,7 @@ cecho p "DSM PAT file pre-downloading in progress..."
 if [ $TARGET_REVISION == "42218" ]; then
     URL="https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_${DN_MODEL}_$TARGET_REVISION.pat"
 else
-    URL="https://global.download.synology.com/download/DSM/release/7.1.1/42962-1/DSM_${DN_MODEL}_$TARGET_REVISION.pat"  
+    URL="https://global.download.synology.com/download/DSM/release/7.1.1/42962/DSM_${DN_MODEL}_$TARGET_REVISION.pat"  
 fi
 
 cecho y "$URL"
