@@ -230,10 +230,10 @@ function macMenu() {
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
     if [ "${resp}" = "d" ]; then
-      MACADDR=`./macgen.sh "randommac" $1`
+      MACADDR=`./macgen.sh "randommac" $1 ${MODEL}`
       break
     elif [ "${resp}" = "c" ]; then
-      MACADDR=`./macgen.sh "realmac" $1`
+      MACADDR=`./macgen.sh "realmac" $1 ${MODEL}`
       break
     elif [ "${resp}" = "m" ]; then
       while true; do
