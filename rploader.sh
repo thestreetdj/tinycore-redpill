@@ -2033,8 +2033,8 @@ function serialgen() {
         serial=`./sngen.sh $1`
 #        serial="$(generateSerial $1)"
         
-        mac=`./macgen.sh "randommac" $1`
-        realmac=`./macgen.sh "realmac" $1`        
+        mac=`./macgen.sh "randommac" "eth0" $1`
+        realmac=`./macgen.sh "realmac" "eth0" $1`        
 #        mac="$(generateMacAddress $1)"
 #        realmac=$(ifconfig eth0 | head -1 | awk '{print $NF}')
 
