@@ -172,7 +172,7 @@ function usbidentify() {
 # Shows available models to user choose one
 function modelMenu() {
   dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-    --menu "Choose a model\n8 threads limit (DS918+,DS920+,DS1019+,DVA1622)" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" "DS918+" "DS1019+" \
+    --menu "Choose a model\n8 threads limit (DS918+,DS920+,DS1019+,DS1520+,DVA1622)" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" "DS918+" "DS1019+" \
 		"DS923+" "DS723+" "DS920+" "DS1520+" "DVA1622" "DS1621+" "DS2422+" "FS2500" \
 		"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
     2>${TMP_PATH}/resp
