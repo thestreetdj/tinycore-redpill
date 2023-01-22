@@ -232,8 +232,8 @@ function monitor() {
         listpci
         echo -e "-------------------------------Loader boot entries------------------------------"
         grep -i menuentry /mnt/${loaderdisk}1/boot/grub/grub.cfg | awk -F \' '{print $2}'
-        echo -e "-------------------------------CPU/Memory Usage------------------------------"
-        echo -e "Memory Usage:\t"$(free | awk '/Mem/{printf("%.2f%"), $3/$2*100}')
+        echo -e "-------------------------------CPU / Memory------------------------------"
+        echo -e "Total Memory (MB):\t"$(cat /proc/meminfo |grep MemTotal | awk '{printf("%.2f%"), $2/1000}')
         echo -e "Swap Usage:\t"$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
         echo -e "CPU Usage:\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
         echo -e "-------------------------------Disk Usage >80%-------------------------------"
