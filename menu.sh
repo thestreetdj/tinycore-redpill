@@ -32,6 +32,18 @@ function checkmachine() {
 }
 
 ###############################################################################
+# check Intel or AMD
+function checkcpu() {
+
+    if [ $(lscpu |grep Intel |wc -l) -gt 0 ]; then
+        CPU="INTEL"
+    else	
+        CPU="AMD"    
+    fi
+
+}
+
+###############################################################################
 # Write to json config file
 function writeConfigKey() {
 
@@ -409,6 +421,7 @@ if [ $CURNETNUM != $NETNUM ]; then
 fi
 
 checkmachine
+checkcpu
 
 if [ ! -n "$(which dialog)" ] && [ ! -n "$(which kmaps)" ]; then
     tce-load -wi dialog
@@ -445,8 +458,14 @@ while true; do
     fi  
     if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
       echo "h \"Choose a mac address 4\""               >> "${TMP_PATH}/menu"
-    fi  
-    echo "d \"Build the friend mode loader\""         >> "${TMP_PATH}/menu"
+    fi
+    if [ "${CPU}" == "INTEL" ]; then
+      echo "d \"Build the friend mode loader\""         >> "${TMP_PATH}/menu"    
+    else
+      if [ "${MODEL}" == "DS923+" ]||[ "${MODEL}" == "DS1621+" ]||[ "${MODEL}" == "DS2422+" ]||[ "${MODEL}" == "F2500" ]; then    
+        echo "d \"Build the friend mode loader\""         >> "${TMP_PATH}/menu"          
+      fi
+    fi
     echo "j \"Build the jot mode loader\""            >> "${TMP_PATH}/menu"   
     echo "p \"Post Update for jot mode\""             >> "${TMP_PATH}/menu"       
   fi
