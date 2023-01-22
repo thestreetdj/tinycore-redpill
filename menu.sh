@@ -462,7 +462,7 @@ while true; do
     if [ "${CPU}" == "INTEL" ]; then
       echo "d \"Build the friend mode loader\""         >> "${TMP_PATH}/menu"    
     else
-      if [ "${MODEL}" == "DS923+" ]||[ "${MODEL}" == "DS1621+" ]||[ "${MODEL}" == "DS2422+" ]||[ "${MODEL}" == "F2500" ]; then    
+      if [ "${MODEL}" == "DS923+" ]||[ "${MODEL}" == "DS1621+" ]||[ "${MODEL}" == "DS2422+" ]||[ "${MODEL}" == "FS2500" ]; then    
         echo "d \"Build the friend mode loader\""         >> "${TMP_PATH}/menu"          
       fi
     fi
