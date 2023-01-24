@@ -215,7 +215,8 @@ function monitor() {
     while [ -z "$GATEWAY_INTERFACE" ]; do
         clear
         echo -e "-------------------------------System Information----------------------------"
-        echo -e "Hostname:\t\t"$(hostname) "uptime:\t\t\t"$(uptime | awk '{print $3,$4}' | sed 's/,//')
+        echo -e "Hostname:\t\t"$(hostname) 
+        echo -e "uptime:\t\t\t"$(uptime | awk '{print $3,$4}' | sed 's/,//')
         echo -e "Manufacturer:\t\t"$(cat /sys/class/dmi/id/chassis_vendor) 
         echo -e "Product Name:\t\t"$(cat /sys/class/dmi/id/product_name)
         echo -e "Version:\t\t"$(cat /sys/class/dmi/id/product_version)
@@ -235,8 +236,8 @@ function monitor() {
         grep -i menuentry /mnt/${loaderdisk}1/boot/grub/grub.cfg | awk -F \' '{print $2}'
         echo -e "-------------------------------CPU / Memory------------------------------"
         echo -e "Total Memory (MB):\t"$(cat /proc/meminfo |grep MemTotal | awk '{printf("%.2f%"), $2/1000}')
-        echo -e "Swap Usage:\t\t\t"$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
-        echo -e "CPU Usage:\t\t\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
+        echo -e "Swap Usage:\t\t"$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
+        echo -e "CPU Usage:\t\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
         echo -e "-------------------------------Disk Usage >80%-------------------------------"
         df -Ph | grep -v loop
         [ $(lscpu | grep Hypervisor | wc -l) -gt 0 ] && echo "$(hostname) is a VM"
