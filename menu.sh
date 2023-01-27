@@ -193,6 +193,35 @@ function modelMenu() {
   writeConfigKey "general" "model" "${MODEL}"
 }
 
+# Set Describe model-specific requirements or suggested hardware
+function setSuggest() {
+
+  desc=""
+   
+  case ${MODEL} in
+    DS3622xs+)   desc="${MODEL}";
+    DS1621xs+)   desc="${MODEL}";
+    RS4021xs+)   desc="${MODEL}";
+    DS1621xs+)   desc="${MODEL}";
+    DS918+)   desc="${MODEL}";
+    DS1019+)   desc="${MODEL}";
+    DS923+)   desc="${MODEL}";
+    DS723+)   desc="${MODEL}";
+    DS920+)   desc="${MODEL}";
+    DS1520+)   desc="${MODEL}";
+    DVA1622+)   desc="${MODEL}";
+    DS1621+)   desc="${MODEL}";
+    DS2422+)   desc="${MODEL}";
+    FS2500+)   desc="${MODEL}";
+    DS3617xs+)   desc="${MODEL}";
+    RS3618xs+)   desc="${MODEL}";
+    DVA3221+)   desc="${MODEL}";
+    DVA3219+)   desc="${MODEL}";
+  esac
+   
+
+}
+
 ###############################################################################
 # Shows menu to user type one or generate randomly
 function serialMenu() {
@@ -475,7 +504,7 @@ while true; do
   echo "r \"Reboot\""                                 >> "${TMP_PATH}/menu"
   echo "e \"Exit\""                                   >> "${TMP_PATH}/menu"
   dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
-    --menu "Choose the option\nDevice-Tree[DT] Base Models & HBAs\ndo not require SataPortMap,DiskIdxMap" 0 0 0 --file "${TMP_PATH}/menu" \
+    --menu "Choose the option\nDevice-Tree[DT] Base Models & HBAs\ndo not require SataPortMap,DiskIdxMap\n${desc}" 0 0 0 --file "${TMP_PATH}/menu" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
   case `<"${TMP_PATH}/resp"` in
