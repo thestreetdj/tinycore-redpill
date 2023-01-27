@@ -200,23 +200,23 @@ function setSuggest() {
   desc=""
    
   case $MODEL in
-    DS3622xs+)   desc="${MODEL}";;
-    DS1621xs+)   desc="${MODEL}";;
-    RS4021xs+)   desc="${MODEL}";;
-    DS918+)      desc="${MODEL}";;
-    DS1019+)     desc="${MODEL}";;
-    DS923+)      desc="${MODEL}";;
-    DS723+)      desc="${MODEL}";;
-    DS920+)      desc="${MODEL}";;
-    DS1520+)     desc="${MODEL}";;
-    DVA1622+)    desc="${MODEL}";;
-    DS1621+)     desc="${MODEL}";;
-    DS2422+)     desc="${MODEL}";;
-    FS2500+)     desc="${MODEL}";;
-    DS3617xs+)   desc="${MODEL}";;
-    RS3618xs+)   desc="${MODEL}";;
-    DVA3221+)    desc="${MODEL}";;
-    DVA3219+)    desc="${MODEL}";;
+    DS3622xs+)   desc="${MODEL}:broadwellnk";;
+    DS1621xs+)   desc="${MODEL}:broadwellnk";;
+    RS4021xs+)   desc="${MODEL}:broadwellnk";;
+    DS918+)      desc="${MODEL}:apollolake";;
+    DS1019+)     desc="${MODEL}:apollolake";;
+    DS923+)      desc="${MODEL}:r1000(DT,Ryzen)";;
+    DS723+)      desc="${MODEL}:r1000(DT,Ryzen)";;
+    DS920+)      desc="${MODEL}:geminilake(DT)";;
+    DS1520+)     desc="${MODEL}:geminilake(DT)";;
+    DVA1622+)    desc="${MODEL}:geminilake(DT)";;
+    DS1621+)     desc="${MODEL}:v1000(DT,Ryzen)";;
+    DS2422+)     desc="${MODEL}:v1000(DT,Ryzen)";;
+    FS2500+)     desc="${MODEL}:v1000(DT,Ryzen)";;
+    DS3617xs+)   desc="${MODEL}:broadwell";;
+    RS3618xs+)   desc="${MODEL}:broadwell";;
+    DVA3221+)    desc="${MODEL}:denverton";;
+    DVA3219+)    desc="${MODEL}:denverton";;
   esac
 
 }
