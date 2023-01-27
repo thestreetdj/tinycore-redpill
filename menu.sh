@@ -200,23 +200,23 @@ function setSuggest() {
   desc=""
    
   case $MODEL in
-    DS3622xs+)   desc="${MODEL}:broadwellnk";;
-    DS1621xs+)   desc="${MODEL}:broadwellnk";;
-    RS4021xs+)   desc="${MODEL}:broadwellnk";;
-    DS918+)      desc="${MODEL}:apollolake";;
-    DS1019+)     desc="${MODEL}:apollolake";;
-    DS923+)      desc="${MODEL}:r1000(DT,Ryzen)";;
-    DS723+)      desc="${MODEL}:r1000(DT,Ryzen)";;
-    DS920+)      desc="${MODEL}:geminilake(DT)";;
-    DS1520+)     desc="${MODEL}:geminilake(DT)";;
-    DVA1622+)    desc="${MODEL}:geminilake(DT)";;
-    DS1621+)     desc="${MODEL}:v1000(DT,Ryzen)";;
-    DS2422+)     desc="${MODEL}:v1000(DT,Ryzen)";;
-    FS2500+)     desc="${MODEL}:v1000(DT,Ryzen)";;
-    DS3617xs+)   desc="${MODEL}:broadwell";;
-    RS3618xs+)   desc="${MODEL}:broadwell";;
-    DVA3221+)    desc="${MODEL}:denverton";;
-    DVA3219+)    desc="${MODEL}:denverton";;
+    DS3622xs+)   desc="${MODEL}:broadwellnk,all intel generations";;
+    DS1621xs+)   desc="${MODEL}:broadwellnk,all intel generations";;
+    RS4021xs+)   desc="${MODEL}:broadwellnk,all intel generations";;
+    DS918+)      desc="${MODEL}:apollolake,Haswell or later,iGPU Transcoding supported,HBA displays incorrect disk serial number";;
+    DS1019+)     desc="${MODEL}:apollolake,Haswell or later,iGPU Transcoding supported,HBA displays incorrect disk serial number";;
+    DS923+)      desc="${MODEL}:r1000(DT,Ryzen),all intel generations";;
+    DS723+)      desc="${MODEL}:r1000(DT,Ryzen),all intel generations";;
+    DS920+)      desc="${MODEL}:geminilake(DT),Haswell or later,iGPU Transcoding supported";;
+    DS1520+)     desc="${MODEL}:geminilake(DT),Haswell or later,iGPU Transcoding supported";;
+    DVA1622+)    desc="${MODEL}:geminilake(DT),Haswell or later,iGPU Transcoding supported,Have a camera license";;
+    DS1621+)     desc="${MODEL}:v1000(DT,Ryzen),all intel generations";;
+    DS2422+)     desc="${MODEL}:v1000(DT,Ryzen),all intel generations";;
+    FS2500+)     desc="${MODEL}:v1000(DT,Ryzen),all intel generations";;
+    DS3617xs+)   desc="${MODEL}:broadwell,all intel generations";;
+    RS3618xs+)   desc="${MODEL}:broadwell,all intel generations";;
+    DVA3221+)    desc="${MODEL}:denverton,Haswell or later,Nvidia GTX1650,Have a camera license";;
+    DVA3219+)    desc="${MODEL}:denverton,Haswell or later,Have a camera license";;
   esac
 
 }
@@ -503,7 +503,7 @@ while true; do
   echo "r \"Reboot\""                                 >> "${TMP_PATH}/menu"
   echo "e \"Exit\""                                   >> "${TMP_PATH}/menu"
   dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
-    --menu "Choose the option\nDevice-Tree[DT] Base Models & HBAs\ndo not require SataPortMap,DiskIdxMap\n${desc}" 0 0 0 --file "${TMP_PATH}/menu" \
+    --menu "Choose the option\nDevice-Tree[DT] Base Models & HBAs\ndo not require SataPortMap,DiskIdxMap\nDT models do not support HBAs\n${desc}" 0 0 0 --file "${TMP_PATH}/menu" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
   case `<"${TMP_PATH}/resp"` in
