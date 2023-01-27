@@ -209,14 +209,14 @@ function setSuggest() {
     DS723+)      desc="${MODEL}:r1000(DT,Ryzen),all intel generations";;
     DS920+)      desc="${MODEL}:geminilake(DT),Haswell or later,iGPU Transcoding supported";;
     DS1520+)     desc="${MODEL}:geminilake(DT),Haswell or later,iGPU Transcoding supported";;
-    DVA1622+)    desc="${MODEL}:geminilake(DT),Haswell or later,iGPU Transcoding supported,Have a camera license";;
+    DVA1622)     desc="${MODEL}:geminilake(DT),Haswell or later,iGPU Transcoding supported,Have a camera license";;
     DS1621+)     desc="${MODEL}:v1000(DT,Ryzen),all intel generations";;
     DS2422+)     desc="${MODEL}:v1000(DT,Ryzen),all intel generations";;
-    FS2500+)     desc="${MODEL}:v1000(DT,Ryzen),all intel generations";;
-    DS3617xs+)   desc="${MODEL}:broadwell,all intel generations";;
-    RS3618xs+)   desc="${MODEL}:broadwell,all intel generations";;
-    DVA3221+)    desc="${MODEL}:denverton,Haswell or later,Nvidia GTX1650,Have a camera license";;
-    DVA3219+)    desc="${MODEL}:denverton,Haswell or later,Have a camera license";;
+    FS2500)      desc="${MODEL}:v1000(DT,Ryzen),all intel generations";;
+    DS3617xs)    desc="${MODEL}:broadwell,all intel generations";;
+    RS3618xs)    desc="${MODEL}:broadwell,all intel generations";;
+    DVA3221)     desc="${MODEL}:denverton,Haswell or later,Nvidia GTX1650,Have a camera license";;
+    DVA3219)     desc="${MODEL}:denverton,Haswell or later,Have a camera license";;
   esac
 
 }
