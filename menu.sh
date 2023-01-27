@@ -199,27 +199,25 @@ function setSuggest() {
 
   desc=""
    
-  case ${MODEL} in
-    DS3622xs+)   desc="${MODEL}";
-    DS1621xs+)   desc="${MODEL}";
-    RS4021xs+)   desc="${MODEL}";
-    DS1621xs+)   desc="${MODEL}";
-    DS918+)   desc="${MODEL}";
-    DS1019+)   desc="${MODEL}";
-    DS923+)   desc="${MODEL}";
-    DS723+)   desc="${MODEL}";
-    DS920+)   desc="${MODEL}";
-    DS1520+)   desc="${MODEL}";
-    DVA1622+)   desc="${MODEL}";
-    DS1621+)   desc="${MODEL}";
-    DS2422+)   desc="${MODEL}";
-    FS2500+)   desc="${MODEL}";
-    DS3617xs+)   desc="${MODEL}";
-    RS3618xs+)   desc="${MODEL}";
-    DVA3221+)   desc="${MODEL}";
-    DVA3219+)   desc="${MODEL}";
+  case $MODEL in
+    DS3622xs+)   desc="${MODEL}";;
+    DS1621xs+)   desc="${MODEL}";;
+    RS4021xs+)   desc="${MODEL}";;
+    DS918+)      desc="${MODEL}";;
+    DS1019+)     desc="${MODEL}";;
+    DS923+)      desc="${MODEL}";;
+    DS723+)      desc="${MODEL}";;
+    DS920+)      desc="${MODEL}";;
+    DS1520+)     desc="${MODEL}";;
+    DVA1622+)    desc="${MODEL}";;
+    DS1621+)     desc="${MODEL}";;
+    DS2422+)     desc="${MODEL}";;
+    FS2500+)     desc="${MODEL}";;
+    DS3617xs+)   desc="${MODEL}";;
+    RS3618xs+)   desc="${MODEL}";;
+    DVA3221+)    desc="${MODEL}";;
+    DVA3219+)    desc="${MODEL}";;
   esac
-   
 
 }
 
