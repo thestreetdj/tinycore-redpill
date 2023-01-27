@@ -191,6 +191,7 @@ function modelMenu() {
   [ $? -ne 0 ] && return
   MODEL="`<${TMP_PATH}/resp`"
   writeConfigKey "general" "model" "${MODEL}"
+  setSuggest
 }
 
 # Set Describe model-specific requirements or suggested hardware
