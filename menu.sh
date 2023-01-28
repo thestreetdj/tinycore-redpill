@@ -41,6 +41,8 @@ function checkcpu() {
         CPU="AMD"    
     fi
 
+    threads="$(lscpu |grep CPU\(s\): | awk '{print $2}')
+
 }
 
 ###############################################################################
