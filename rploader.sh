@@ -228,6 +228,7 @@ function monitor() {
         echo -e "Operating System:\t"$(grep PRETTY_NAME /etc/os-release | awk -F \= '{print $2}')
         echo -e "Kernel:\t\t\t"$(uname -r)
         echo -e "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
+        echo -e "CPU Threads:\t\t"$(lscpu |grep CPU\(s\): | awk '{print $2}')
         echo -e "Current Date Time:\t"$(date)
         echo -e "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
         [ $(ps -ef | grep -i sshd | wc -l) -gt 0 ] && echo -e "SSHD connections ready" || echo -e "SSHD connections not ready"
