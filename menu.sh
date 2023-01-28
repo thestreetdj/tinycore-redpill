@@ -197,7 +197,7 @@ function modelMenu() {
 # Set Describe model-specific requirements or suggested hardware
 function setSuggest() {
 
-  line="-------------------------------------------------/n"
+  line="-------------------------------------------------\n"
    
   case $MODEL in
     DS3622xs+)   desc="[${MODEL}]:broadwellnk, Max 24 Threads, any x86-64";;
