@@ -174,7 +174,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) RS3413xs+F (Not Suppoted, Testing...)
 ./$(basename ${0}) DS1019+F
 ./$(basename ${0}) DS923+F
-./$(basename ${0}) DS723+F
+./$(basename ${0}) DS723+F (Not Suppoted, Testing...)
 
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
