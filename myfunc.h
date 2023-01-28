@@ -104,7 +104,8 @@ set -u
 # 2022.12.13
 # Update : Added ds723+ (r1000)
 # 2023.01.15
-
+# Update : Add buildable model limit per CPU max threads to menu.sh, add description of features and restrictions for each model
+# 2023.01.28
 
 showlastupdate() {
     cat <<EOF
@@ -120,6 +121,9 @@ showlastupdate() {
 
 # Update : Added ds723+ (r1000)
 # 2023.01.15
+
+# Update : Add buildable model limit per CPU max threads to menu.sh, add description of features and restrictions for each model
+# 2023.01.28
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
