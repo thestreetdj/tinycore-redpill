@@ -197,26 +197,26 @@ function modelMenu() {
 # Set Describe model-specific requirements or suggested hardware
 function setSuggest() {
 
-  desc=""
+  desc="-------------------------------------------------/n"
    
   case $MODEL in
-    DS3622xs+)   desc="${MODEL}:broadwellnk,all intel generations";;
-    DS1621xs+)   desc="${MODEL}:broadwellnk,all intel generations";;
-    RS4021xs+)   desc="${MODEL}:broadwellnk,all intel generations";;
-    DS918+)      desc="${MODEL}:apollolake,Haswell or later,iGPU Transcoding supported,HBA displays incorrect disk serial number";;
-    DS1019+)     desc="${MODEL}:apollolake,Haswell or later,iGPU Transcoding supported,HBA displays incorrect disk serial number";;
-    DS923+)      desc="${MODEL}:r1000(DT,Ryzen),all intel generations";;
-    DS723+)      desc="${MODEL}:r1000(DT,Ryzen),all intel generations";;
-    DS920+)      desc="${MODEL}:geminilake(DT),Haswell or later,iGPU Transcoding supported";;
-    DS1520+)     desc="${MODEL}:geminilake(DT),Haswell or later,iGPU Transcoding supported";;
-    DVA1622)     desc="${MODEL}:geminilake(DT),Haswell or later,iGPU Transcoding supported,Have a camera license";;
-    DS1621+)     desc="${MODEL}:v1000(DT,Ryzen),all intel generations";;
-    DS2422+)     desc="${MODEL}:v1000(DT,Ryzen),all intel generations";;
-    FS2500)      desc="${MODEL}:v1000(DT,Ryzen),all intel generations";;
-    DS3617xs)    desc="${MODEL}:broadwell,all intel generations";;
-    RS3618xs)    desc="${MODEL}:broadwell,all intel generations";;
-    DVA3221)     desc="${MODEL}:denverton,Haswell or later,Nvidia GTX1650,Have a camera license";;
-    DVA3219)     desc="${MODEL}:denverton,Haswell or later,Have a camera license";;
+    DS3622xs+)   desc="[${MODEL}]:broadwellnk, Max 24 Threads, any x86-64";;
+    DS1621xs+)   desc="[${MODEL}]:broadwellnk, Max 24 Threads, any x86-64";;
+    RS4021xs+)   desc="[${MODEL}]:broadwellnk, Max 24 Threads, any x86-64";;
+    DS918+)      desc="[${MODEL}]:apollolake, Max 8 Threads, Haswell or later,iGPU Transcoding, HBA displays incorrect disk S/N";;
+    DS1019+)     desc="[${MODEL}]:apollolake, Max 8 Threads, Haswell or later,iGPU Transcoding, HBA displays incorrect disk S/N";;
+    DS923+)      desc="[${MODEL}]:r1000(DT,AMD Ryzen), Max ? Threads, any x86-64";;
+    DS723+)      desc="[${MODEL}]:r1000(DT,AMD Ryzen), Max ? Threads, any x86-64";;
+    DS920+)      desc="[${MODEL}]:geminilake(DT), Max 8 Threads,Haswell or later, iGPU Transcoding";;
+    DS1520+)     desc="[${MODEL}]:geminilake(DT), Max 8 Threads,Haswell or later, iGPU Transcoding";;
+    DVA1622)     desc="[${MODEL}]:geminilake(DT), Max 8 Threads,Haswell or later, iGPU Transcoding, Have a camera license";;
+    DS1621+)     desc="[${MODEL}]:v1000(DT,AMD Ryzen), Max 16 Threads, any x86-64";;
+    DS2422+)     desc="[${MODEL}]:v1000(DT,AMD Ryzen), Max 16 Threads, any x86-64";;
+    FS2500)      desc="[${MODEL}]:v1000(DT,AMD Ryzen), Max 16 Threads, any x86-64";;
+    DS3617xs)    desc="[${MODEL}]:broadwell, Max 24 Threads, any x86-64";;
+    RS3618xs)    desc="[${MODEL}]:broadwell, Max 24 Threads, any x86-64";;
+    DVA3221)     desc="[${MODEL}]:denverton, Max 16 Threads, Haswell or later, Nvidia GTX1650, Have a camera license";;
+    DVA3219)     desc="[${MODEL}]:denverton, Max 16 Threads, Haswell or later, Nvidia GTX1050Ti, Have a camera license";;
   esac
 
 }
