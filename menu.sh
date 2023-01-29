@@ -513,14 +513,14 @@ while true; do
       echo "h \"Choose a mac address 4\""               >> "${TMP_PATH}/menu"
     fi
     if [ "${CPU}" == "INTEL" ]; then
-      echo "d \"Build the friend mode loader\""         >> "${TMP_PATH}/menu"    
+      echo "d \"Build the [TCRP FRIEND] loader\""         >> "${TMP_PATH}/menu"    
     else
       if [ "${platform}" == "r1000" ]||[ "${platform}" == "v1000" ]; then    
-        echo "d \"Build the friend mode loader\""         >> "${TMP_PATH}/menu"          
+        echo "d \"Build the [TCRP FRIEND] loader\""         >> "${TMP_PATH}/menu"          
       fi
     fi
-    echo "j \"Build the jot mode loader\""            >> "${TMP_PATH}/menu"   
-    echo "p \"Post Update for jot mode\""             >> "${TMP_PATH}/menu"       
+    echo "j \"Build the [TCRP JOT Mod] loader\""            >> "${TMP_PATH}/menu"   
+    echo "p \"Post Update for [TCRP JOT Mod]\""             >> "${TMP_PATH}/menu"       
   fi
   echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
   echo "k \"Choose a keymap\""                       >> "${TMP_PATH}/menu"
