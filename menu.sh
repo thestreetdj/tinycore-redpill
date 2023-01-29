@@ -193,7 +193,7 @@ function usbidentify() {
 # Shows available models to user choose one
 function modelMenu() {
 
-  if [ $HBADETECT=="ON" ]; then
+  if [ "$HBADETECT" = "ON" ]; then
 	  if [ $threads -gt 16 ]; then
 
 	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
