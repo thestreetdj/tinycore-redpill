@@ -479,7 +479,7 @@ if [ "${CURRENTSHA}" != "${REPOSHA}" ]; then
   cp -f /home/tc/menu.sh /home/tc/menu2.sh
   chmod +x /home/tc/menu2.sh
   source /home/tc/menu2.sh
-  call /home/tc/menu2.sh
+  /home/tc/menu2.sh
   exit 0
 fi
 
