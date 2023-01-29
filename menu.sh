@@ -475,13 +475,13 @@ while true; do
 done
 REPOSHA="$(sha256sum /home/tc/menu.sh | awk '{print $1}')"
 
-if [ "${CURRENTSHA}" != "${REPOSHA}" ]; then
-  cp -f /home/tc/menu.sh /home/tc/menu2.sh
-  chmod +x /home/tc/menu2.sh
-  source /home/tc/menu2.sh
-  /home/tc/menu2.sh
-  exit 0
-fi
+#if [ "${CURRENTSHA}" != "${REPOSHA}" ]; then
+#  cp -f /home/tc/menu.sh /home/tc/menu2.sh
+#  chmod +x /home/tc/menu2.sh
+#  source /home/tc/menu2.sh
+#  /home/tc/menu2.sh
+#  exit 0
+#fi
 
 IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
 
