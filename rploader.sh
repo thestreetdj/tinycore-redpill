@@ -3117,7 +3117,7 @@ function listpci() {
 #            ;;
         0107)
             echo "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\[${vendor}:${device}\]//' | sed 's/(rev 03)//'
+            echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\[${vendor}:${device}]//' | sed 's/(rev 03)//'
             ;;
         0200)
             echo "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
