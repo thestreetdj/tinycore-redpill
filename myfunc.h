@@ -106,6 +106,8 @@ set -u
 # 2023.01.15
 # Update : Add buildable model limit per CPU max threads to menu.sh, add description of features and restrictions for each model
 # 2023.01.28
+# Update : DT-based model restriction function added to ./menu.sh
+# 2023.01.30
 
 showlastupdate() {
     cat <<EOF
@@ -124,6 +126,9 @@ showlastupdate() {
 
 # Update : Add buildable model limit per CPU max threads to menu.sh, add description of features and restrictions for each model
 # 2023.01.28
+
+# Update : DT-based model restriction function added to ./menu.sh
+# 2023.01.30
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
