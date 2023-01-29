@@ -28,6 +28,13 @@ function checkmachine() {
         HYPERVISOR=$(dmesg | grep -i "Hypervisor detected" | awk '{print $5}')
         echo "Machine is $MACHINE Hypervisor=$HYPERVISOR"
     fi
+    
+    if [ $(lspci -nn | grep -ie "\[0107\]" | wc -l) -gt 0 ]; then
+        echo "Found SAS HBAs, We need to block DT Models"
+        HBADETECT="ON"
+    else
+        HBADETECT="OFF"    
+    fi    
 
 }
 
@@ -186,30 +193,55 @@ function usbidentify() {
 # Shows available models to user choose one
 function modelMenu() {
 
-  if [ $threads -gt 16 ]; then
+  if [ $HBADETECT=="ON" ]; then
+	  if [ $threads -gt 16 ]; then
 
-  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
-		"DS3617xs" "RS3618xs" \
-    2>${TMP_PATH}/resp
+	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
+	    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
+			"DS3617xs" "RS3618xs" \
+	    2>${TMP_PATH}/resp
 
-  elif [ $threads -gt 8 ]; then
+	  elif [ $threads -gt 8 ]; then
 
-  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
-		"DS923+" "DS723+" "DS1621+" "DS2422+" "FS2500" \
-		"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
-    2>${TMP_PATH}/resp
+	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
+	    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
+			"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
+	    2>${TMP_PATH}/resp
 
+	  else
+
+	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
+	    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" "DS918+" "DS1019+" \
+			"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
+	    2>${TMP_PATH}/resp
+
+	  fi
   else
+	  if [ $threads -gt 16 ]; then
 
-  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" "DS918+" "DS1019+" \
-		"DS923+" "DS723+" "DS920+" "DS1520+" "DVA1622" "DS1621+" "DS2422+" "FS2500" \
-		"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
-    2>${TMP_PATH}/resp
+	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
+	    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
+			"DS3617xs" "RS3618xs" \
+	    2>${TMP_PATH}/resp
 
-  fi
+	  elif [ $threads -gt 8 ]; then
+
+	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
+	    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
+			"DS923+" "DS723+" "DS1621+" "DS2422+" "FS2500" \
+			"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
+	    2>${TMP_PATH}/resp
+
+	  else
+
+	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
+	    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" "DS918+" "DS1019+" \
+			"DS923+" "DS723+" "DS920+" "DS1520+" "DVA1622" "DS1621+" "DS2422+" "FS2500" \
+			"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
+	    2>${TMP_PATH}/resp
+
+	  fi
+  fi	  
 
   [ $? -ne 0 ] && return
   MODEL="`<${TMP_PATH}/resp`"
