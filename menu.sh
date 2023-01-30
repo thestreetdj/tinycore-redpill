@@ -464,25 +464,6 @@ if [ "${KEYMAP}" = "null" ]; then
     writeConfigKey "general" "keymap" "${KEYMAP}"
 fi
 
-CURRENTSHA="$(sha256sum /home/tc/menu.sh | awk '{print $1}')"
-while true; do
-  if [ $(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | wc -l) -gt 0 ]; then
-    ./my.sh update
-    break
-  fi
-  sleep 1
-  echo "Waiting for internet activation !!!"
-done
-REPOSHA="$(sha256sum /home/tc/menu.sh | awk '{print $1}')"
-
-#if [ "${CURRENTSHA}" != "${REPOSHA}" ]; then
-#  cp -f /home/tc/menu.sh /home/tc/menu2.sh
-#  chmod +x /home/tc/menu2.sh
-#  source /home/tc/menu2.sh
-#  /home/tc/menu2.sh
-#  exit 0
-#fi
-
 IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
 
 if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
