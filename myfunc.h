@@ -108,7 +108,7 @@ set -u
 # 2023.01.28
 # Update : DT-based model restriction function added to ./menu.sh
 # 2023.01.30
-# Update : Separation and addition to check.sh for real-time reflection after menu.sh update
+# Update : Separation and addition to menu_m.sh for real-time reflection after menu.sh update
 # 2023.01.30
 
 showlastupdate() {
@@ -132,7 +132,7 @@ showlastupdate() {
 # Update : DT-based model restriction function added to ./menu.sh
 # 2023.01.30
 
-# Update : Separation and addition to check.sh for real-time reflection after menu.sh update
+# Update : Separation and addition to menu_m.sh for real-time reflection after menu.sh update
 # 2023.01.30
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
