@@ -6,8 +6,8 @@ while true; do
     break
   fi
   sleep 1
-  echo "Waiting for internet activation in check.sh !!!"
+  echo "Waiting for internet activation in menu.sh !!!"
 done
 
-/home/tc/menu.sh
+/home/tc/menu_m.sh
 exit 0
