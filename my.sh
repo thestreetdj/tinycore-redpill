@@ -83,9 +83,9 @@ checkinternet() {
 
 }
 
-if [ $(cat /home/tc/.xsession | grep chech.sh | wc -l) -eq 0 ]; then
-    echo "insert check.sh in /home/tc/.xsession"
-    echo "aterm -bg black -fg green -title \"TinyCore RedPill Menu\" -e /home/tc/check.sh &" >> .xsession 
+if [ $(cat /home/tc/.xsession | grep menu.sh | wc -l) -eq 0 ]; then
+    echo "insert menu.sh in /home/tc/.xsession"
+    echo "aterm -bg black -fg green -title \"TinyCore RedPill Menu\" -e /home/tc/menu.sh &" >> .xsession 
 fi
 
 checkinternet
