@@ -59,11 +59,6 @@ function checkmachine() {
 
 }
 
-if [ $(cat /home/tc/.xsession | grep menu.sh | wc -l) -eq 0 ]; then
-    echo "insert menu.sh autorun script in /home/tc/.xsession"
-    echo "aterm -bg black -fg green -title \"TinyCore RedPill Menu\" -e /home/tc/menu.sh &" >> .xsession   
-fi
-
 checkinternet() {
 
     echo -n "Checking Internet Access -> "
