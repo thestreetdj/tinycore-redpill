@@ -83,6 +83,11 @@ checkinternet() {
 
 }
 
+if [ $(cat /home/tc/.xsession | grep chech.sh | wc -l) -eq 0 ]; then
+    echo "insert check.sh in /home/tc/.xsession"
+    echo "aterm -bg black -fg green -title \"TinyCore RedPill Menu\" -e /home/tc/check.sh &" >> .xsession 
+fi
+
 checkinternet
 
 if [ $gitdomain == "github.com" ]; then
