@@ -457,6 +457,12 @@ function reboot() {
 }
 
 # Main loop
+
+if [ $(cat /home/tc/.xsession | grep menu.sh | wc -l) -gt 0 ]; then
+    echo "change menu.sh autorun script to check.sh in /home/tc/.xsession"
+    sed -i 's/menu.sh/check.sh/g' /home/tc/.xsession
+fi
+
 if [ "${KEYMAP}" = "null" ]; then
     LAYOUT="qwerty"
     KEYMAP="us"
