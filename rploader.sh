@@ -3115,6 +3115,10 @@ function listpci() {
 #        0101)
 #            echo "Found IDE Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
 #            ;;
+        0104)
+            echo "RAID bus Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0104/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 05)//'
+            ;;
         0107)
             echo "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 03)//'
