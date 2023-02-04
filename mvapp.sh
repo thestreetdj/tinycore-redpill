@@ -12,12 +12,16 @@ echo
 for app in $(ls -r /volume$1/\@appstore); do
 
     echo
-    echo "Moving $app from volume$1 to volume$2"
     echo "Stopping Package $app"
     synopkg stop $app
     sleep 3
 
+done
+
+for app in $(ls -r /volume$1/\@appstore); do
+
     echo
+    echo "Moving $app from volume$1 to volume$2"    
     echo "=>moving appstore for $app"
     mv /volume$1/\@appstore/$app /volume$2/\@appstore/.
     echo "=>moving apphome for $app"
