@@ -9,7 +9,7 @@ echo "Prepare Make Direcrtory for volume$2"
 [ ! -d /volume$2/\@appconf/ ] && mkdir /volume$2/\@appconf/
 echo
 
-for app in $(ls /volume$1/\@appstore); do
+for app in $(ls -r /volume$1/\@appstore); do
 
     echo
     echo "Moving $app from volume$1 to volume$2"
@@ -50,7 +50,7 @@ for app in $(ls /volume$1/\@appstore); do
     
     echo
     echo "=== Left ==="
-    ls /volume$1/\@appstore
+    ls -r /volume$1/\@appstore
 
     echo
     echo "======================================================="
