@@ -9,7 +9,7 @@ echo "Prepare Make Direcrtory for volume$2"
 [ ! -d /volume$2/\@appconf/ ] && mkdir /volume$2/\@appconf/
 echo
 
-for app in $(ls -r /volume$1/\@appstore); do
+for app in $(ls /volume$1/\@appstore); do
 
     echo
     echo "Stopping Package $app"
@@ -54,7 +54,7 @@ for app in $(ls -r /volume$1/\@appstore); do
     
     echo
     echo "=== Left ==="
-    ls -r /volume$1/\@appstore
+    ls /volume$1/\@appstore
 
     echo
     echo "======================================================="
