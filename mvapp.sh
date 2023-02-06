@@ -44,7 +44,7 @@ for app in $(ls /volume$1/\@appstore); do
     rm -f var;ln -s /volume$2/\@appdata/$app var
     
     echo
-    echo "Srarting Package $app"
+    echo "Starting Package $app"
     synopkg start $app
     sleep 3
     
