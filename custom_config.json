@@ -318,8 +318,8 @@
             },
             "add_extensions": [
                 {
-                    "redpill-misc": "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json",
-                    "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/nvme-cache/rpext-index.json"
+                    "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/nvme-cache/rpext-index.json",                    
+                    "redpill-misc": "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json"
                 }
             ]
         },
@@ -350,8 +350,8 @@
             },
             "add_extensions": [
                 {
-                    "redpill-misc": "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json",
-                    "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/nvme-cache/rpext-index.json"
+                    "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/nvme-cache/rpext-index.json",
+                    "redpill-misc": "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json"
                 }
             ]
         },
@@ -545,9 +545,9 @@
             },
             "add_extensions": [
                 {
+                    "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/nvme-cache/rpext-index.json",                   
                     "redpill-misc": "https://github.com/PeterSuh-Q3/redpill-load/raw/master/redpill-misc/rpext-index.json",
-                    "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/powersched/rpext-index.json",
-                    "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/nvme-cache/rpext-index.json"
+                    "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/powersched/rpext-index.json"
                 }
             ]
         },
