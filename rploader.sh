@@ -2828,12 +2828,14 @@ function bringoverfriend() {
 
     # 2nd try
     if [ $? -ne 0 ]; then
+        echo "Download failed from develop.playstreet.kr, Tring github.com..."    
         #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")    
         URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
         for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
         
         # 3rd try
         if [ $? -ne 0 ]; then
+           echo "Download failed from github.com, Tring gitee.com..."            
             curl -k --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" -O
             curl -k --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" -O
             curl -k --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend" -O        
