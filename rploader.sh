@@ -2822,14 +2822,23 @@ function bringoverfriend() {
     echo "Bringing over my friend"
     [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
-    #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")
-    URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
-    for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
+    curl -k --insecure --location --progress-bar "https://develop.playstreet.kr/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" -O
+    curl -k --insecure --location --progress-bar "https://develop.playstreet.kr/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" -O
+    curl -k --insecure --location --progress-bar "https://develop.playstreet.kr/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend" -O
 
-# Temporary apply for slow api.github.com
-#curl -k --insecure --location --progress-bar "https://develop.playstreet.kr/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" -O
-#curl -k --insecure --location --progress-bar "https://develop.playstreet.kr/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" -O
-#curl -k --insecure --location --progress-bar "https://develop.playstreet.kr/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend" -O
+    # 2nd try
+    if [ $? -ne 0 ]; then
+        #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")    
+        URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
+        for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
+        
+        # 3rd try
+        if [ $? -ne 0 ]; then
+            curl -k --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" -O
+            curl -k --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" -O
+            curl -k --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend" -O        
+        fi        
+    fi
 
     if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
         FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
@@ -2840,7 +2849,7 @@ function bringoverfriend() {
         [ "$(sha256sum bzImage-friend | awk '{print $1}')" == "$BZIMAGESHA256" ] && echo "bzImage-friend checksum OK !" || echo "bzImage-friend checksum ERROR !" || exit 99
         [ "$(sha256sum initrd-friend | awk '{print $1}')" == "$INITRDSHA256" ] && echo "initrd-friend checksum OK !" || echo "initrd-friend checksum ERROR !" || exit 99
     else
-        echo "Could not find friend files, exiting" && exit 0
+        echo "Could not find friend files !!!!!!!!!!!!!!!!!!!!!!!"
     fi
 
 }
