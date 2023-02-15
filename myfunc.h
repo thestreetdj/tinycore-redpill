@@ -350,7 +350,7 @@ getvars()
         TARGET_PLATFORM="ds918p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
-        sha256="a403809ab2cd476c944fdfa18cae2c2833e4af36230fa63f0cdee31a92bebba2"                                                                              
+        sha256="a662d11999c266dfa86c54f7ba01045c6644c191124195a22d056d618790dffe"                                                                              
 #    elif [ "${1}" = "DS3615xsJ" ]; then
 #        DTC_BASE_MODEL="N"    
 #        TARGET_REVISION="42218"               
@@ -392,7 +392,7 @@ getvars()
         TARGET_PLATFORM="ds920p"
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
-        sha256="fe2a4648f76adeb65c3230632503ea36bbac64ee88b459eb9bfb5f3b8c8cebb3"
+        sha256="b9b77846e0983f50496276bec6bcdfcfadd4c1f9f0db8ed2ca5766f131ddf97f"
 #    elif [ "${1}" = "DS2422+J" ]; then
 #        DTC_BASE_MODEL="Y"    
 #        TARGET_REVISION="42218"                                                  
@@ -449,7 +449,7 @@ getvars()
         TARGET_PLATFORM="ds1019p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
-        sha256="920b53b9022ebd4675049b43c493455a1307ec97344846ca9dfd25d964b75684"         
+        sha256="e782ad4ce5e0505e7981a5a3fa7ca986a4575240f645ec2c64f92def1774556f"         
 #    elif [ "${1}" = "DVA3219J" ]; then
 #        DTC_BASE_MODEL="N"    
 #        MSHELL_ONLY_MODEL="Y"    
