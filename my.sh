@@ -210,13 +210,6 @@ if [ $noconfig == "Y" ] && [ $realmac == "Y" ] ; then
     exit 0
 fi
 
-if [ $TARGET_REVISION == "42218" ] ; then
-    if [ $postupdate == "Y" ] ; then  
-        cecho g "postupdate is not allowed on jun mode."                                                                                              
-        exit 0                                                                                                                                       
-    fi    
-fi                                                                                                                                               
-
 echo
 
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
@@ -262,23 +255,16 @@ cecho y "If fullupgrade is required, please handle it separately."
 cecho g "Downloading Peter Suh's custom configuration files.................."
 
 curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
-curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
+#curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
 curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
 curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O  
 
-if [ $TARGET_REVISION == "42218" ] ; then
-    echo
-    cecho y "This is TCRP jumkey's jun mode"
-
-else
-    echo
-    if [ $jot == "N" ] ; then    
-        cecho y "This is TCRP friend mode"
-    else    
-        cecho y "This is TCRP original jot mode"
-    fi
-    
-fi   
+echo
+if [ $jot == "N" ] ; then    
+cecho y "This is TCRP friend mode"
+else    
+cecho y "This is TCRP original jot mode"
+fi
 
 dtbfile=""     
 
@@ -447,7 +433,7 @@ if [ $manual == "Y" ]; then
 
     if [ $TARGET_REVISION == "42218" ] ; then
 #        cecho y "Manual option is not allowed in jun mode build, It is built with the static option!!!  "  
-        ./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218-JUN junmanual                                                                  
+        echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218 manual                                                                  
     else
         echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} manual   
     fi
@@ -455,9 +441,13 @@ if [ $manual == "Y" ]; then
 else                                                                                                                           
 
     if [ $TARGET_REVISION == "42218" ] ; then
-        ./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218-JUN jun                                                                        
+        if [ $jot == "N" ] ; then
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218 withfriend
+        else
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218
+        fi
     else
-        if [ $jot == "N" ] ; then    
+        if [ $jot == "N" ] ; then
             echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} withfriend
         else
             echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}
