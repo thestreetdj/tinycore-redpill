@@ -110,6 +110,8 @@ set -u
 # 2023.01.30
 # Update : Separation and addition to menu_m.sh for real-time reflection after menu.sh update
 # 2023.01.30
+# Update : 7.0.1-42218 friend correspondence for DS918+,DS920+,DS1019+ transcoding
+# 2023.02.15
 
 showlastupdate() {
     cat <<EOF
@@ -123,17 +125,8 @@ showlastupdate() {
 # Update : Added ds923+
 # 2022.11.25
 
-# Update : Added ds723+ (r1000)
-# 2023.01.15
-
-# Update : Add buildable model limit per CPU max threads to menu.sh, add description of features and restrictions for each model
-# 2023.01.28
-
-# Update : DT-based model restriction function added to ./menu.sh
-# 2023.01.30
-
-# Update : Separation and addition to menu_m.sh for real-time reflection after menu.sh update
-# 2023.01.30
+# Update : 7.0.1-42218 friend correspondence for DS918+,DS920+,DS1019+ transcoding
+# 2023.02.15
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
@@ -351,13 +344,13 @@ getvars()
         sha256="de2425d55667a1c67763aeea1155bc6e336fb419148bb70f1ae1243d914d34ff"
         
 #JUN MODE
-#    elif [ "${1}" = "DS918+J" ]; then           
-#        DTC_BASE_MODEL="N"    
-#        TARGET_REVISION="42218"                                                                                                                                
-#        TARGET_PLATFORM="ds918p"
-#        ORIGIN_PLATFORM="apollolake"
-#        SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
-#        sha256="a403809ab2cd476c944fdfa18cae2c2833e4af36230fa63f0cdee31a92bebba2"                                                                              
+    elif [ "${1}" = "DS918+J" ]; then           
+        DTC_BASE_MODEL="N"    
+        TARGET_REVISION="42218"                                                                                                                                
+        TARGET_PLATFORM="ds918p"
+        ORIGIN_PLATFORM="apollolake"
+        SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
+        sha256="a403809ab2cd476c944fdfa18cae2c2833e4af36230fa63f0cdee31a92bebba2"                                                                              
 #    elif [ "${1}" = "DS3615xsJ" ]; then
 #        DTC_BASE_MODEL="N"    
 #        TARGET_REVISION="42218"               
@@ -393,13 +386,13 @@ getvars()
 #        ORIGIN_PLATFORM="denverton"
 #        SYNOMODEL="dva3221_$TARGET_REVISION"                                     
 #        sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"
-#    elif [ "${1}" = "DS920+J" ]; then
-#        DTC_BASE_MODEL="Y"    
-#        TARGET_REVISION="42218"
-#        TARGET_PLATFORM="ds920p"
-#        ORIGIN_PLATFORM="geminilake"
-#        SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
-#        sha256="fe2a4648f76adeb65c3230632503ea36bbac64ee88b459eb9bfb5f3b8c8cebb3"
+    elif [ "${1}" = "DS920+J" ]; then
+        DTC_BASE_MODEL="Y"    
+        TARGET_REVISION="42218"
+        TARGET_PLATFORM="ds920p"
+        ORIGIN_PLATFORM="geminilake"
+        SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
+        sha256="fe2a4648f76adeb65c3230632503ea36bbac64ee88b459eb9bfb5f3b8c8cebb3"
 #    elif [ "${1}" = "DS2422+J" ]; then
 #        DTC_BASE_MODEL="Y"    
 #        TARGET_REVISION="42218"                                                  
@@ -449,14 +442,14 @@ getvars()
 #        ORIGIN_PLATFORM="broadwell"
 #        SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
 #        sha256="2b7623a6781fe10e0eface1665d41dfe2e5adb033b26e50e27c3449aee5fe4b0"
-#    elif [ "${1}" = "DS1019+J" ]; then
-#        DTC_BASE_MODEL="N"
-#        MSHELL_ONLY_MODEL="Y"        
-#        TARGET_REVISION="42218"                                                                                                                                
-#        TARGET_PLATFORM="ds1019p"
-#        ORIGIN_PLATFORM="apollolake"
-#        SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
-#        sha256="920b53b9022ebd4675049b43c493455a1307ec97344846ca9dfd25d964b75684"         
+    elif [ "${1}" = "DS1019+J" ]; then
+        DTC_BASE_MODEL="N"
+        MSHELL_ONLY_MODEL="Y"        
+        TARGET_REVISION="42218"                                                                                                                                
+        TARGET_PLATFORM="ds1019p"
+        ORIGIN_PLATFORM="apollolake"
+        SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
+        sha256="920b53b9022ebd4675049b43c493455a1307ec97344846ca9dfd25d964b75684"         
 #    elif [ "${1}" = "DVA3219J" ]; then
 #        DTC_BASE_MODEL="N"    
 #        MSHELL_ONLY_MODEL="Y"    
