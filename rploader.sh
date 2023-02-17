@@ -2822,12 +2822,12 @@ function bringoverfriend() {
     echo "Bringing over my friend"
     [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
-    curl -k --insecure --location --progress-bar "https://develop.playstreet.kr/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" -O
-    curl -k --insecure --location --progress-bar "https://develop.playstreet.kr/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" -O
-    curl -k --insecure --location --progress-bar "https://develop.playstreet.kr/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend" -O
+#    curl -k --insecure --location --progress-bar "https://develop.playstreet.kr/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" -O
+#    curl -k --insecure --location --progress-bar "https://develop.playstreet.kr/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" -O
+#    curl -k --insecure --location --progress-bar "https://develop.playstreet.kr/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend" -O
 
     # 2nd try
-    if [ $? -ne 0 ]; then
+#    if [ $? -ne 0 ]; then
         echo "Download failed from develop.playstreet.kr, Tring github.com..."    
         #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")    
         URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
@@ -2840,7 +2840,7 @@ function bringoverfriend() {
             curl -k --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" -O
             curl -k --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend" -O        
         fi        
-    fi
+#    fi
 
     if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
         FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
