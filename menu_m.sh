@@ -205,14 +205,14 @@ function modelMenu() {
 
 	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
 	    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
-			"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
+			"DS3615xs" "DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
 	    2>${TMP_PATH}/resp
 
 	  else
 
 	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
 	    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" "DS918+" "DS1019+" \
-			"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
+			"DS3615xs" "DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
 	    2>${TMP_PATH}/resp
 
 	  fi
@@ -229,7 +229,7 @@ function modelMenu() {
 	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
 	    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
 			"DS923+" "DS723+" "DS1621+" "DS2422+" "FS2500" \
-			"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
+			"DS3615xs" "DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
 	    2>${TMP_PATH}/resp
 
 	  else
@@ -237,7 +237,7 @@ function modelMenu() {
 	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
 	    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" "DS918+" "DS1019+" \
 			"DS923+" "DS723+" "DS920+" "DS1520+" "DVA1622" "DS1621+" "DS2422+" "FS2500" \
-			"DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
+			"DS3615xs" "DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
 	    2>${TMP_PATH}/resp
 
 	  fi
@@ -268,6 +268,7 @@ function setSuggest() {
     DS1621+)     platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD Ryzen), Max 16 Threads, any x86-64";;
     DS2422+)     platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD Ryzen), Max 16 Threads, any x86-64";;
     FS2500)      platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD Ryzen), Max 16 Threads, any x86-64";;
+    DS3615xs)    platform="bromolow";desc="[${MODEL}]:${platform}, Max 16 Threads, any x86-64";;
     DS3617xs)    platform="broadwell";desc="[${MODEL}]:${platform}, Max 24 Threads, any x86-64";;
     RS3618xs)    platform="broadwell";desc="[${MODEL}]:${platform}, Max 24 Threads, any x86-64";;
     DVA3221)     platform="denverton";desc="[${MODEL}]:${platform}, Max 16 Threads, Haswell or later, Nvidia GTX1650, Have a camera license";;
