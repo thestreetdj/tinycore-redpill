@@ -265,9 +265,6 @@ getvars()
         SYNOMODEL="ds923p_$TARGET_REVISION"                                                                                                                    
         sha256="e33b47df446ce0bd99c5613767c9dba977915e25acfb5ccb9f5650b14459458f"
     elif [ "${1}" = "DS723+" ] || [ "${1}" = "DS723+F" ]; then
-        echo "Synology model ${1} is still undergoing feature testing due to loader instability."    
-        exit 0       
-    
         DTC_BASE_MODEL="Y"    
         TARGET_PLATFORM="ds723p"
         ORIGIN_PLATFORM="r1000"
