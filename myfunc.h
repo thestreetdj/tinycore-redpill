@@ -92,7 +92,7 @@ set -u
 # 2022.11.17
 # Update : Added dual mac address make function to menu.sh
 # 2022.11.18
-# Update : Added ds923+
+# Update : Added ds923+ (r1000)
 # 2022.11.25
 # Update : Added gitee conversion function when github connection is not possible
 # 2022.12.03
@@ -111,7 +111,7 @@ set -u
 # Update : Separation and addition to menu_m.sh for real-time reflection after menu.sh update
 # 2023.01.30
 # Update : 7.0.1-42218 friend correspondence for DS918+,DS920+,DS1019+ transcoding
-# 2023.02.15
+# 2023.02.19
 
 showlastupdate() {
     cat <<EOF
@@ -122,11 +122,14 @@ showlastupdate() {
 # Update : Deploy menu.sh
 # 2022.11.14
 
-# Update : Added ds923+
+# Update : Added ds923+ (r1000)
 # 2022.11.25
 
+# Update : Added ds723+ (r1000)
+# 2023.01.15
+
 # Update : 7.0.1-42218 friend correspondence for DS918+,DS920+,DS1019+ transcoding
-# 2023.02.15
+# 2023.02.19
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
@@ -181,7 +184,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) RS3413xs+F (Not Suppoted, Testing...)
 ./$(basename ${0}) DS1019+F
 ./$(basename ${0}) DS923+F
-./$(basename ${0}) DS723+F (Not Suppoted, Testing...)
+./$(basename ${0}) DS723+F
 
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
