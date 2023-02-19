@@ -168,7 +168,7 @@ Please type Synology Model Name after ./$(basename ${0})
 
 ./$(basename ${0}) DS918+F
 ./$(basename ${0}) DS3617xsF                                                                                                    
-./$(basename ${0}) DS3615xsF (Temporarily limited functionality due to loader instability)
+./$(basename ${0}) DS3615xsF
 ./$(basename ${0}) DS3622xs+F                                                                                                   
 ./$(basename ${0}) DVA3221F                                                                                                     
 ./$(basename ${0}) DS920+F                                                                                                      
@@ -217,9 +217,6 @@ getvars()
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
         sha256="c1ffb1b48301fbcf1ccffae00062e95c8b5b18d50a70c3fbb79ea12a38a39bb7"
     elif [ "${1}" = "DS3615xs" ] || [ "${1}" = "DS3615xsF" ]; then                                                                                                                     
-        echo "Synology model ${1} temporarily limited functionality due to loader instability"        
-        exit 0        
-
         DTC_BASE_MODEL="N"    
         TARGET_PLATFORM="ds3615xs"
         ORIGIN_PLATFORM="bromolow"
