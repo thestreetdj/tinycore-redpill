@@ -402,7 +402,12 @@ function make() {
   usbidentify
   clear
 
-  ./my.sh "${MODEL}"F noconfig $1 | tee "/home/tc/zlastbuild.log"
+  if [ "$1" = "jun" ]; then
+      ./my.sh "${MODEL}"J noconfig | tee "/home/tc/zlastbuild.log"    
+  else
+      ./my.sh "${MODEL}"F noconfig $1 | tee "/home/tc/zlastbuild.log"  
+  fi
+
   if [ $? -ne 0 ]; then
     dialog --backtitle "`backtitle`" --title "Error loader building" 0 0 #--textbox "${LOG_FILE}" 0 0    
     return 1
@@ -548,7 +553,10 @@ while true; do
       fi
     fi
     echo "j \"Build the [TCRP JOT Mod] loader\""            >> "${TMP_PATH}/menu"   
-    echo "p \"Post Update for [TCRP JOT Mod]\""             >> "${TMP_PATH}/menu"       
+    echo "p \"Post Update for [TCRP JOT Mod]\""             >> "${TMP_PATH}/menu"   
+    if [ "${MODEL}" == "DS918+" ]||[ "${MODEL}" == "DS1019+" ]||[ "${MODEL}" == "DS920+" ]; then        
+    	echo "o \"Build the [TCRP FRIEND 7.0.1-42218] loader\""  >> "${TMP_PATH}/menu"    
+    fi	
   fi
   echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
   echo "k \"Choose a keymap\""                       >> "${TMP_PATH}/menu"
@@ -569,6 +577,7 @@ while true; do
     d) make ;             NEXT="r" ;;
     j) make "jot";        NEXT="r" ;;  
     p) postupdate ;       NEXT="r" ;;
+    o) make "jun";      NEXT="r" ;;
     u) editUserConfig;  NEXT="d" ;;
     k) keymapMenu ;;
     c) dialog --backtitle "`backtitle`" --title "Cleaning" --aspect 18 \
