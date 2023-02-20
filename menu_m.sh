@@ -555,7 +555,7 @@ while true; do
     fi
     echo "j \"Build the [TCRP JOT Mod] loader\""            >> "${TMP_PATH}/menu"   
     echo "p \"Post Update for [TCRP JOT Mod]\""             >> "${TMP_PATH}/menu"   
-    if [ "${MODEL}" == "DS918+" ]||[ "${MODEL}" == "DS1019+" ]||[ "${MODEL}" == "DS920+" ]; then        
+    if [ "${MODEL}" == "DS918+" ]||[ "${MODEL}" == "DS1019+" ]||[ "${MODEL}" == "DS920+" ]||[ "${MODEL}" == "DS1520+" ]; then        
     	echo "o \"Build the [TCRP FRIEND 7.0.1-42218] loader\""  >> "${TMP_PATH}/menu"    
     fi	
   fi
