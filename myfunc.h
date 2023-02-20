@@ -110,7 +110,7 @@ set -u
 # 2023.01.30
 # Update : Separation and addition to menu_m.sh for real-time reflection after menu.sh update
 # 2023.01.30
-# Update : 7.0.1-42218 friend correspondence for DS918+,DS920+,DS1019+ transcoding
+# Update : 7.0.1-42218 friend correspondence for DS918+,DS920+,DS1019+, DS1520+ transcoding
 # 2023.02.19
 
 showlastupdate() {
@@ -128,7 +128,7 @@ showlastupdate() {
 # Update : Added ds723+ (r1000)
 # 2023.01.15
 
-# Update : 7.0.1-42218 friend correspondence for DS918+,DS920+,DS1019+ transcoding
+# Update : 7.0.1-42218 friend correspondence for DS918+,DS920+,DS1019+, DS1520+ transcoding
 # 2023.02.19
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
