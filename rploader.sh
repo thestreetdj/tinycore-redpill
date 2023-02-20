@@ -3278,7 +3278,7 @@ function getredpillko() {
 
 #  if [ ${TARGET_REVISION} == "42218" ]; then
 #        echo "Downloading fabio's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-#        if [ $gitdomain == "develop.playstreet.kr" ]; then
+#        if [ $gitdomain == "giteas.duckdns.org" ]; then
 #            sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/redpill-lkm/raw/master/output/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz" --output /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
 #        else
 #            URLS=$(curl --insecure -s https://api.github.com/repos/fbelavenuto/redpill-lkm/releases/latest | jq -r ".assets[].browser_download_url")
@@ -3302,7 +3302,7 @@ function getredpillko() {
     elif [ $MODEL == "DS3615xs" ]; then
 
         echo "Downloading pocopico's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
-        if [ $gitdomain == "develop.playstreet.kr" ]; then
+        if [ $gitdomain == "giteas.duckdns.org" ]; then
             sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-3.10.108.tgz" --output /home/tc/custom-module/redpill.ko.tgz
         else
             sudo curl --location --progress-bar "https://$gitdomain/pocopico/rp-ext/raw/main/redpillprod/releases/redpill-3.10.108.tgz" --output /home/tc/custom-module/redpill.ko.tgz
@@ -3316,7 +3316,7 @@ function getredpillko() {
     else
     
         echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-        if [ $gitdomain == "develop.playstreet.kr" ]; then
+        if [ $gitdomain == "giteas.duckdns.org" ]; then
             sudo curl -k --location --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
         else
             if [ ${ORIGIN_PLATFORM} == "apollolake" ]; then
