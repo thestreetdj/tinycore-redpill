@@ -70,7 +70,7 @@ checkinternet() {
     else
         cecho g "Error: No internet found, or $gitdomain is not accessible"
         
-        gitdomain="develop.playstreet.kr"
+        gitdomain="giteas.duckdns.org"
         cecho p "Try to connect to $gitdomain......"
         nslookup $gitdomain 2>&1 >/dev/null
         if [ $? -eq 0 ]; then
