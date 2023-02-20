@@ -399,14 +399,14 @@ getvars()
 #        sha256="415c54934d483a2557500bc3a2e74588a0cec1266e1f0d9a82a7d3aace002471"
         
 # JUN MODE NEW MODEL SUCCESS
-#    elif [ "${1}" = "DS1520+J" ]; then
-#        DTC_BASE_MODEL="Y"    
-#        MSHELL_ONLY_MODEL="Y"    
-#        TARGET_REVISION="42218"
-#        TARGET_PLATFORM="ds1520p"
-#        ORIGIN_PLATFORM="geminilake"        
-#        SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
-#        sha256="06947c58f25bd591f7fa3c58ad9473777481bdd7a049b42d1cb585ca01b053ee"
+    elif [ "${1}" = "DS1520+J" ]; then
+        DTC_BASE_MODEL="Y"    
+        MSHELL_ONLY_MODEL="Y"    
+        TARGET_REVISION="42218"
+        TARGET_PLATFORM="ds1520p"
+        ORIGIN_PLATFORM="geminilake"        
+        SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
+        sha256="b8864e2becd8ce5a6083db993564c8c0b982df8300a006b56695a0495a670aa3"
 #    elif [ "${1}" = "DS1621xs+J" ]; then
 #        DTC_BASE_MODEL="N"    
 #        MSHELL_ONLY_MODEL="Y"    
