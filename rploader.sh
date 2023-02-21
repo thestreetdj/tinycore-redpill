@@ -2,12 +2,12 @@
 #
 # Author : pocopico 
 # Date : 221115
-# Version : 0.9.3.0
+# Version : 0.9.3.5
 #
 #
 # User Variables : 
 
-rploaderver="0.9.3.0"
+rploaderver="0.9.3.5"
 build="master"
 
 rploaderfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/rploader.sh"
@@ -1545,37 +1545,37 @@ function patchdtc() {
 
     if [ "${TARGET_PLATFORM}" = "apollolake" ]; then
         dtbfile="ds918p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds920p.dts" --output /home/tc/redpill-load/ds918p.dts
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds920p.dts" --output /home/tc/redpill-load/ds918p.dts
     elif [ "${TARGET_PLATFORM}" = "bromolow" ]; then
         dtbfile="ds3615xs"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds3615xs.dts
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/ds3615xs.dts
     elif [ "${TARGET_PLATFORM}" = "broadwell" ]; then
         dtbfile="ds3617xs"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds3617xs.dts
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/ds3617xs.dts
     elif [ "${TARGET_PLATFORM}" = "broadwellnk" ]; then
         dtbfile="ds3622xsp"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds3622xsp.dts
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/ds3622xsp.dts
     elif [ "${TARGET_PLATFORM}" = "v1000" ]; then
         dtbfile="ds1621p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds1621p.dts
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/ds1621p.dts
     elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
         dtbfile="dva3221"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/dva3221.dts
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/dva3221.dts
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
         dtbfile="ds920p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds920p.dts" --output /home/tc/redpill-load/ds920p.dts
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds920p.dts" --output /home/tc/redpill-load/ds920p.dts
     elif [ "${TARGET_PLATFORM}" = "ds923p" ]; then
         dtbfile="ds923p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds923p.dts" --output /home/tc/redpill-load/ds923p.dts
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds923p.dts" --output /home/tc/redpill-load/ds923p.dts
     elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
         dtbfile="dva1622"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds920p.dts" --output /home/tc/redpill-load/dva1622.dts
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds920p.dts" --output /home/tc/redpill-load/dva1622.dts
     elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
         dtbfile="ds2422p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds2422p.dts
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/ds2422p.dts
     elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
         dtbfile="ds1520p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/ds1621p.dts" --output /home/tc/redpill-load/ds1520p.dts
+        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/ds1520p.dts
     else
         echo "${TARGET_PLATFORM} does not require model.dtc patching "
         return
