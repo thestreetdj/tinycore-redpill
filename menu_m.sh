@@ -53,9 +53,9 @@ function checkcpu() {
     codename=`bash -c "$(curl "https://raw.githubusercontent.com/FOXBI/xpenlib/master/cpu_info.sh")" |grep Generation | cut -c 18-`
     
     if [ $(lscpu |grep fma |wc -l) -gt 0 ]; then    
-        AFTERHASWELL="ON" ;;
+        AFTERHASWELL="ON"
     else
-        AFTERHASWELL="OFF" ;;
+        AFTERHASWELL="OFF"
     fi
 
 }
