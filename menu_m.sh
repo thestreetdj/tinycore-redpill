@@ -51,6 +51,13 @@ function checkcpu() {
     threads="$(lscpu |grep CPU\(s\): | awk '{print $2}')"
     
     codename=`bash -c "$(curl "https://raw.githubusercontent.com/FOXBI/xpenlib/master/cpu_info.sh")" |grep Generation | cut -c 18-`
+    
+    case $codename in
+    Haswell | "Bay Trail" | Broadwell | Skylake | "Kaby Lake" | "Coffee Lake" | "Whiskey Lake" | "Ice Lake" | "Comet Lake" | "Tiger Lake" | "Alder Lake" | "Rapter Lake" )   
+        abovehaswell="ON" ;;
+    *)
+        abovehaswell="OFF" ;;       
+    esac
 
 }
 
@@ -194,6 +201,8 @@ function usbidentify() {
 ###############################################################################
 # Shows available models to user choose one
 function modelMenu() {
+
+#  if [ "${CPU}" == "INTEL" ]; then
 
   if [ "$HBADETECT" = "ON" ]; then
 	  if [ $threads -gt 16 ]; then
