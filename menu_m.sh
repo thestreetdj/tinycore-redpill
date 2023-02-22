@@ -52,12 +52,11 @@ function checkcpu() {
     
     codename=`bash -c "$(curl "https://raw.githubusercontent.com/FOXBI/xpenlib/master/cpu_info.sh")" |grep Generation | cut -c 18-`
     
-    case $codename in
-    Haswell | "Bay Trail" | Broadwell | Skylake | "Kaby Lake" | "Coffee Lake" | "Whiskey Lake" | "Ice Lake" | "Comet Lake" | "Tiger Lake" | "Alder Lake" | "Rapter Lake" )   
+    if [ $(lscpu |grep fma |wc -l) -gt 0 ]; then    
         AFTERHASWELL="ON" ;;
-    *)
+    else
         AFTERHASWELL="OFF" ;;
-    esac
+    fi
 
 }
 
