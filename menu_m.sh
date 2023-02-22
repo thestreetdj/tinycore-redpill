@@ -49,6 +49,8 @@ function checkcpu() {
     fi
 
     threads="$(lscpu |grep CPU\(s\): | awk '{print $2}')"
+    
+    codename=`bash -c "$(curl "https://raw.githubusercontent.com/FOXBI/xpenlib/master/cpu_info.sh")" |grep Generation | cut -c 18-`
 
 }
 
@@ -565,7 +567,7 @@ while true; do
   echo "r \"Reboot\""                                 >> "${TMP_PATH}/menu"
   echo "e \"Exit\""                                   >> "${TMP_PATH}/menu"
   dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
-    --menu "Choose the option\nDevice-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap\nDT models do not support HBAs\n${result}" 0 0 0 --file "${TMP_PATH}/menu" \
+    --menu "Choose the option [ CPU Code Name : ${codename} ]\nDevice-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap\nDT models do not support HBAs\n${result}" 0 0 0 --file "${TMP_PATH}/menu" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
   case `<"${TMP_PATH}/resp"` in
