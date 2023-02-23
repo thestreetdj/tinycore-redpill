@@ -211,7 +211,7 @@ function modelMenu() {
 
 	  elif [ $threads -gt 8 ]; then
 
-	      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
+	      if [ "${AFTERHASWELL}" == "OFF" ]; then
 		  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
 		    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
 				"DS3615xs" "DS3617xs" "RS3618xs" \
@@ -224,7 +224,7 @@ function modelMenu() {
               fi
 	  else
 	  
-	      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
+	      if [ "${AFTERHASWELL}" == "OFF" ]; then
 		  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
 		    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
 				"DS3615xs" "DS3617xs" "RS3618xs" \
@@ -246,7 +246,7 @@ function modelMenu() {
 
 	  elif [ $threads -gt 8 ]; then
 
-	      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
+	      if [ "${AFTERHASWELL}" == "OFF" ]; then
 		  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
 		    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
 				"DS923+" "DS723+" "DS1621+" "DS2422+" "FS2500" \
@@ -261,7 +261,7 @@ function modelMenu() {
 	      fi
 	  else
 
-	      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
+	      if [ "${AFTERHASWELL}" == "OFF" ]; then
 		  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
 		    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
 				"DS923+" "DS723+" "DS1621+" "DS2422+" "FS2500" \
