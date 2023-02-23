@@ -1,12 +1,12 @@
 # M Shell for tinycore-redpill
 
-<p align="center">
-  <img src="doc/스크린샷 2022-11-28 오후 5.21.53.png" width="100%" align=center alt="M SHELL for TCRP MENU">
-</p>
+<img width="1021" alt="스크린샷 2023-02-24 오전 7 22 38" src="https://user-images.githubusercontent.com/85427533/221044119-57826bd2-c47c-49fa-9e36-5d149636866f.png">
 
-This is a testing version. Do not use unless you are certain you have no data to lose.
 
-Please note that minimum recommended memory size for configuring the loader is 2GB
+### This is a testing version. Do not use unless you are certain you have no data to lose.
+
+### Please note that minimum recommended memory size for configuring the loader is 2GB
+
 
 # Instructions 
 
