@@ -10,7 +10,7 @@ source myfunc.h # my.sh / myv.sh common use
 gitdomain="github.com"
 
 mshellgz="my.sh.gz"
-mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/my.sh.gz"
+mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/my.sh.gz"
 
 # ==============================================================================          
 # Color Function                                                                          
