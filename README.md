@@ -22,9 +22,7 @@ A typical build process starts with:
 
 3. Loader Building
 
-<p align="center">
-  <img src="doc/스크린샷 2022-11-27 오후 8.13.34.png" width="100%" align=center alt="M SHELL for TCRP MENU">
-</p>
+<img width="1021" alt="스크린샷 2023-02-24 오전 7 13 46" src="https://user-images.githubusercontent.com/85427533/221043231-ef4bb607-a049-4820-bdc2-ff6854e31777.png">
 
         A. Choose one of the Synology models.
 
