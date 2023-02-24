@@ -500,9 +500,9 @@ function reboot() {
 sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" .dialogrc
 echo "insert aterm menu.sh in /home/tc/.xsession"
 sed -i "/aterm/d" .xsession
-echo "aterm -geometry 78x32+10+0 -fg yellow -title "TCRP Monitor" -e /home/tc/rploader.sh monitor &" >> .xsession
-echo "aterm -geometry 78x32+525+0 -title "M Shell for TCRP Menu" -e /home/tc/menu.sh &" >> .xsession
-echo "aterm -geometry 78x25+10+430 -fg green -title "TCRP Extra Terminal" &" >> .xsession
+echo "aterm -geometry 78x32+10+0 -fg yellow -title \"TCRP Monitor\" -e /home/tc/rploader.sh monitor &" >> .xsession
+echo "aterm -geometry 78x32+525+0 -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession
+echo "aterm -geometry 78x25+10+430 -fg green -title \"TCRP Extra Terminal\" &" >> .xsession
 
 if [ "${KEYMAP}" = "null" ]; then
     LAYOUT="qwerty"
