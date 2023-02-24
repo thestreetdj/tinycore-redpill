@@ -23,13 +23,12 @@ A typical build process starts with:
 
 3. Loader Building
 
-<img width="1021" alt="스크린샷 2023-02-24 오전 7 13 46" src="https://user-images.githubusercontent.com/85427533/221043231-ef4bb607-a049-4820-bdc2-ff6854e31777.png">
+<img width="1021" alt="스크린샷 2023-02-24 오후 6 32 05" src="https://user-images.githubusercontent.com/85427533/221143884-422fba85-9583-4572-b2e7-b154b593664f.png">
 
         A. Choose one of the Synology models.
 
-<p align="center">
-  <img src="doc/스크린샷 2022-11-27 오후 8.14.08.png" width="60%" align=center alt="M SHELL for TCRP MENU">
-</p>
+<img width="507" alt="스크린샷 2023-02-24 오후 6 32 42" src="https://user-images.githubusercontent.com/85427533/221143853-02cd5136-98be-422a-94f2-44a8d39cd8d7.png">
+
 
         B. Create a virtual serial number or enter a prepared serial number.
 
