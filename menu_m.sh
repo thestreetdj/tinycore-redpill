@@ -120,9 +120,9 @@ function backtitle() {
     BACKTITLE+=" (no IP)"
   fi
   if [ -n "${MACADDR1}" ]; then
-    BACKTITLE+="\n ${MACADDR1}"
+    BACKTITLE+="/n ${MACADDR1}"
   else
-    BACKTITLE+="\n (no MAC1)"
+    BACKTITLE+="/n (no MAC1)"
   fi
   if [ -n "${MACADDR2}" ]; then
     BACKTITLE+=" ${MACADDR2}"
