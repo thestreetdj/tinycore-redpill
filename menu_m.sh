@@ -98,7 +98,7 @@ function DeleteConfigKey() {
 ###############################################################################
 # Mounts backtitle dynamically
 function backtitle() {
-  BACKTITLE="TCRP 0.9.3.0"
+  BACKTITLE="TCRP 0.9.4.0"
   if [ -n "${MODEL}" ]; then
     BACKTITLE+=" ${MODEL}"
   else
