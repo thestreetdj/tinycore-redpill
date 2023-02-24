@@ -615,8 +615,6 @@ while true; do
     o) make "jun";      NEXT="r" ;;
     u) editUserConfig;  NEXT="d" ;;
     k) keymapMenu ;;
-    c) dialog --backtitle "`backtitle`" --title "Cleaning" --aspect 18 \
-      --prgbox "rm -rfv \"${CACHE_PATH}/dl\"" 0 0 ;;
     b) backup ;;      
     r) reboot ;;
     e) break ;;
