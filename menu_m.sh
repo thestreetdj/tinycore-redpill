@@ -57,6 +57,10 @@ function checkcpu() {
     else
         AFTERHASWELL="OFF"
     fi
+    
+    if [ "$MACHINE" = "VIRTUAL" ]; then    
+        AFTERHASWELL="ON"    
+    fi
 
 }
 
