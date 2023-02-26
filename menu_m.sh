@@ -44,13 +44,13 @@ function checkcpu() {
 
     if [ $(lscpu |grep Intel |wc -l) -gt 0 ]; then
         CPU="INTEL"
+	codename=`bash -c "$(curl "https://raw.githubusercontent.com/FOXBI/xpenlib/master/cpu_info.sh")" |grep Generation | cut -c 18-`	
     else	
         CPU="AMD"    
+	codename=""
     fi
 
     threads="$(lscpu |grep CPU\(s\): | awk '{print $2}')"
-    
-    codename=`bash -c "$(curl "https://raw.githubusercontent.com/FOXBI/xpenlib/master/cpu_info.sh")" |grep Generation | cut -c 18-`
     
     if [ $(lscpu |grep movbe |wc -l) -gt 0 ]; then    
         AFTERHASWELL="ON"
