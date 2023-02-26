@@ -58,7 +58,7 @@ function checkcpu() {
         AFTERHASWELL="OFF"
     fi
     
-    if [ "$MACHINE" = "VIRTUAL" ] && [ "$HYPERVISOR" = "QEMU" ]; then
+    if [ "$MACHINE" = "VIRTUAL" ] && [ "$HYPERVISOR" = "KVM" ]; then
         AFTERHASWELL="ON"    
     fi
 
