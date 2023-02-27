@@ -2444,7 +2444,7 @@ function checkinternet() {
 function gitdownload() {
 
     cd /home/tc
-
+    git config --global http.sslVerify false
     if [ -d redpill-lkm ]; then
         echo "Redpill sources already downloaded, pulling latest"
         cd redpill-lkm
