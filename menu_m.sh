@@ -558,11 +558,11 @@ if [ ! -n "$(which dialog)" ] && [ ! -n "$(which kmaps)" ]; then
     if [ $tcrppart == "mmc3" ]; then
         tcrppart="mmcblk0p3"
     fi    
-    sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz" --output /mnt/${tcrppart}/cde/optional/dialog.tcz
-    sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz.dep" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.dep
-    sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.md5.txt
-    sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz
-    sudo curl -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
+    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz" --output /mnt/${tcrppart}/cde/optional/dialog.tcz
+    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz.dep" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.dep
+    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.md5.txt
+    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz
+    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
 
     sudo echo "dialog.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
     sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
