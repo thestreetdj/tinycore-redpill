@@ -2826,9 +2826,9 @@ function bringoverfriend() {
     echo "Bringing over my friend from giteas.duckdns.org"
     [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
-    curl -k --insecure --location --progress-bar "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" -O
-    curl -k --insecure --location --progress-bar "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" -O
-    curl -k --insecure --location --progress-bar "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend" -O
+    curl --insecure --location --progress-bar "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" -O
+    curl --insecure --location --progress-bar "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" -O
+    curl --insecure --location --progress-bar "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend" -O
 
     # 2nd try
     if [ $? -ne 0 ]; then
@@ -2840,9 +2840,9 @@ function bringoverfriend() {
         # 3rd try
         if [ $? -ne 0 ]; then
            echo "Download failed from github.com, Tring gitee.com..."            
-            curl -k --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" -O
-            curl -k --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" -O
-            curl -k --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend" -O        
+            curl --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" -O
+            curl --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" -O
+            curl --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend" -O        
         fi        
     fi
 
@@ -3292,12 +3292,12 @@ function getredpillko() {
     if [ $MODEL == "FS2500" ]||[ $MODEL == "DS1019+" ]; then
     
         echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
-        sudo curl -k --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+        sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 
     elif [ $MODEL == "DS723+" ]; then
     
         echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
-        sudo curl -k --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/rp-r1000-4.4.180-prod.ko" --output /home/tc/custom-module/redpill.ko
+        sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/rp-r1000-4.4.180-prod.ko" --output /home/tc/custom-module/redpill.ko
        
     elif [ $MODEL == "DS3615xs" ]; then
 
@@ -3307,15 +3307,15 @@ function getredpillko() {
 
 #    elif [ $MODEL == "DVA3219" ]; then
 #        echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
-#        sudo curl -k --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-dva3219-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+#        sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-dva3219-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
        
     else
     
         echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
         if [ ${ORIGIN_PLATFORM} == "apollolake" ]; then
-            sudo curl --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus.tgz" --output /home/tc/custom-module/redpill.ko.tgz
         else
-            sudo curl --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz            
+            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz            
         fi
         sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
         
