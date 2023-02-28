@@ -13,6 +13,12 @@ for app in $(ls /volume$1/\@appstore); do
 
     echo
     echo "Stopping Package $app"
+    if [ $app = "Docker" ]; then
+        for cont in $(docker ps -q); do
+            echo "Stopping Docker Container $cont"
+            docker stop $cont 
+        done
+    fi    
     synopkg stop $app
     sleep 3
 
