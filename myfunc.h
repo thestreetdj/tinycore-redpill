@@ -530,10 +530,10 @@ getlatestmshell() {
     echo -n "Checking if a newer mshell version exists on the repo -> "
 
     if [ ! -f $mshellgz ]; then
-        curl -s --location "$mshtarfile" --output $mshellgz
+        curl --insecure -s --location "$mshtarfile" --output $mshellgz
     fi
 
-    curl -s --location "$mshtarfile" --output latest.mshell.gz
+    curl --insecure -s --location "$mshtarfile" --output latest.mshell.gz
 
     CURRENTSHA="$(sha256sum $mshellgz | awk '{print $1}')"
     REPOSHA="$(sha256sum latest.mshell.gz | awk '{print $1}')"
