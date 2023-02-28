@@ -2462,6 +2462,12 @@ function gitdownload() {
     else
         git clone -b $LD_BRANCH "$LD_SOURCE_URL"
     fi
+    
+#m shell only start
+    if [ ${ORIGIN_PLATFORM} == "denverton" ]; then
+        sudo sed -i '5d' /home/tc/redpill-load/bundled-exts.json
+    fi    
+#m shell only end    
 
 }
 
