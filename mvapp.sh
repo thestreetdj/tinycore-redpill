@@ -26,6 +26,11 @@ done
 
 for app in $(ls /volume$1/\@appstore); do
 
+#    if [ $app = "Docker" ]; then
+#        echo "=>coping docker folder..."
+#        rsync -av /volume$1/\@docker /volume$2/\@docker
+#    fi
+
     echo
     echo "Moving $app from volume$1 to volume$2"    
     echo "=>moving appstore for $app"
