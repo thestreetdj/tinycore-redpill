@@ -527,12 +527,6 @@ function reboot() {
 }
 
 # Main loop
-
-# Set DateTime
-    [[ "$(which ntpclient)_" == "_" ]] && tce-load -iw ntpclient 2>&1 >/dev/null
-    export TZ="${timezone}"
-    sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
-
 sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" .dialogrc
 echo "insert aterm menu.sh in /home/tc/.xsession"
 sed -i "/aterm/d" .xsession
@@ -588,25 +582,46 @@ fi
 checkmachine
 checkcpu
 
-if [ ! -n "$(which dialog)" ] && [ ! -n "$(which kmaps)" ]; then
-    tce-load -wi dialog
-    tce-load -wi kmaps
+tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
+if [ $tcrppart == "mmc3" ]; then
+    tcrppart="mmcblk0p3"
+fi    
 
-    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
-    if [ $tcrppart == "mmc3" ]; then
-        tcrppart="mmcblk0p3"
-    fi    
+# Download dialog
+if [ "$(which dialog)_" == "_" ]; then
     sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz" --output /mnt/${tcrppart}/cde/optional/dialog.tcz
     sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz.dep" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.dep
     sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.md5.txt
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
-
+    if [ $? -eq 0 ]; then
+        echo "Download dialog OK !!!"
+    else
+        tce-load -iw dialog
+    fi
     sudo echo "dialog.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-    sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 fi
 
+# Download kmaps
+if [ "$(which kmaps)_" == "_" ]; then
+    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz
+    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
+    if [ $? -eq 0 ]; then
+        echo "Download kmaps OK !!!"
+    else
+        tce-load -iw kmaps
+    fi
+    sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+fi
 loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
+
+# Set DateTime
+timezone="UTC"
+ntpserver="pool.ntp.org"
+if [ "$(which ntpclient)_" == "_" ]; then
+    tce-load -iw ntpclient 2>&1 >/dev/null
+fi    
+export TZ="${timezone}"
+sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
+
 
 NEXT="m"
 
