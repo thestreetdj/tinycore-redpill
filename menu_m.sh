@@ -44,7 +44,7 @@ function checkcpu() {
 
     if [ $(lscpu |grep Intel |wc -l) -gt 0 ]; then
         CPU="INTEL"
-	codename=`bash -c "$(curl "https://raw.githubusercontent.com/FOXBI/xpenlib/master/cpu_info.sh")" |grep Generation | cut -c 18-`	
+	codename=`bash -c "$(curl -s "https://raw.githubusercontent.com/FOXBI/xpenlib/master/cpu_info.sh")" |grep Generation | cut -c 18-`	
     else	
         CPU="AMD"    
 	codename=""
