@@ -601,7 +601,7 @@ if [ "$(which dialog)_" == "_" ]; then
 fi
 
 # Download kmaps
-if [ "$(which kmaps)_" == "_" ]; then
+if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep kmaps | wc -w) -eq 0 ]; then
     sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz
     sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
     if [ $? -eq 0 ]; then
