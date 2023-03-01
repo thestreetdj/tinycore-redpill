@@ -104,7 +104,7 @@ function DeleteConfigKey() {
 function backtitle() {
   BACKTITLE="TCRP 0.9.4.0"
   if [ -n "${DMPM}" ]; then
-    echo "DMPM Exist"
+    DMPM=${DMPM}
   else 
     DMPM="EUDEV"
     writeConfigKey "general" "devmod" "${DMPM}"          
