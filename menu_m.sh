@@ -527,6 +527,12 @@ function reboot() {
 }
 
 # Main loop
+
+# Set DateTime
+    [[ "$(which ntpclient)_" == "_" ]] && tce-load -iw ntpclient 2>&1 >/dev/null
+    export TZ="${timezone}"
+    sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
+
 sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" .dialogrc
 echo "insert aterm menu.sh in /home/tc/.xsession"
 sed -i "/aterm/d" .xsession
