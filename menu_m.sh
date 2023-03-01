@@ -4,8 +4,6 @@
 #source /home/tc/menufunc.h
 #####################################################################################################
 
-# Get actual IP
-
 TMP_PATH=/tmp
 LOG_FILE="${TMP_PATH}/log.txt"
 USER_CONFIG_FILE="/home/tc/user_config.json"
@@ -19,7 +17,7 @@ NETNUM="1"
 LAYOUT="$(jq -r -e '.general.layout' $USER_CONFIG_FILE)"
 KEYMAP="$(jq -r -e '.general.keymap' $USER_CONFIG_FILE)"
 
-DMPM="EUDEV"
+DMPM="$(jq -r -e '.general.devmod' $USER_CONFIG_FILE)"
 
 ###############################################################################
 # check VM or baremetal
@@ -32,7 +30,7 @@ function checkmachine() {
     fi
     
     if [ $(lspci -nn | grep -ie "\[0107\]" | wc -l) -gt 0 ]; then
-        echo "Found SAS HBAs, We need to block DT Models"
+        echo "Found SAS HBAs, Restrict use of DT Models."
         HBADETECT="ON"
     else
         HBADETECT="OFF"    
@@ -105,7 +103,14 @@ function DeleteConfigKey() {
 # Mounts backtitle dynamically
 function backtitle() {
   BACKTITLE="TCRP 0.9.4.0"
-  BACKTITLE+=" ${DMPM}"  
+  if [ -n "${DMPM}" ]; then
+    echo "DMPM Exist"
+  else 
+    DMPM="EUDEV"
+    writeConfigKey "general" "devmod" "${DMPM}"          
+  fi
+  BACKTITLE+=" ${DMPM}"
+    
   if [ -n "${MODEL}" ]; then
     BACKTITLE+=" ${MODEL}"
   else
@@ -202,6 +207,31 @@ function usbidentify() {
             rm /tmp/lsusb.out
         fi
     fi      
+}
+
+###############################################################################
+# Shows available between EUDEV and DDSML
+function seleudev() {
+  while true; do
+    dialog --clear --backtitle "`backtitle`" \
+      --menu "Choose a option" 0 0 0 \
+      e "EUDEV (enhanced user-space device)" \
+      d "DDSML (Detected Device Static Module Loading)" \
+    2>${TMP_PATH}/resp
+    [ $? -ne 0 ] && return
+    resp=$(<${TMP_PATH}/resp)
+    [ -z "${resp}" ] && return
+    if [ "${resp}" = "e" ]; then
+      DMPM="EUDEV"
+      break
+    elif [ "${resp}" = "d" ]; then
+      DMPM="DDSML"
+      break
+    fi
+  done
+
+  writeConfigKey "general" "devmod" "${DMPM}"
+
 }
 
 ###############################################################################
@@ -518,6 +548,7 @@ if [ "${KEYMAP}" = "null" ]; then
     writeConfigKey "general" "keymap" "${KEYMAP}"
 fi
 
+# Get actual IP
 IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}' | cut -c 6- )"
 
 if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
@@ -576,7 +607,8 @@ loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 NEXT="m"
 
 while true; do
-  echo "m \"Choose a Synology Model\""                          > "${TMP_PATH}/menu"
+  echo "c \"Choose a EUDEV / DDSML \""            	        > "${TMP_PATH}/menu"       
+  echo "m \"Choose a Synology Model\""                         >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     echo "s \"Choose a Synology Serial Number\""               >> "${TMP_PATH}/menu"
     echo "a \"Choose a mac address 1\""               >> "${TMP_PATH}/menu"
@@ -612,6 +644,7 @@ while true; do
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
   case `<"${TMP_PATH}/resp"` in
+    c) seleudev;        NEXT="m" ;;  
     m) modelMenu;       NEXT="s" ;;
     s) serialMenu;      NEXT="a" ;;
     a) macMenu "eth0";  NEXT="d" ;;
