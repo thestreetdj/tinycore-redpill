@@ -12,6 +12,8 @@ gitdomain="github.com"
 mshellgz="my.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/my.sh.gz"
 
+USER_CONFIG_FILE="/home/tc/user_config.json"
+
 # ==============================================================================          
 # Color Function                                                                          
 # ==============================================================================          
@@ -208,7 +210,7 @@ elif [ $poco == "Y" ] ; then
 fi
 
 if [ $noconfig == "Y" ] && [ $realmac == "Y" ] ; then 
-    cecho p "The noconfig option and the realmac option cannot be used together, shell exit..."
+    cecho p "The noconfig option and the realmac option cannot be used together, program exit..."
     exit 0
 fi
 
@@ -256,8 +258,20 @@ cecho y "If fullupgrade is required, please handle it separately."
 
 cecho g "Downloading Peter Suh's custom configuration files.................."
 
-curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
-#curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O
+DMPM="$(jq -r -e '.general.devmod' $USER_CONFIG_FILE)"
+if [ "${DMPM}" = "null" ]; then
+    DMPM="EUDEV"
+    writeConfigKey "general" "devmod" "${DMPM}"
+fi
+cecho p "Device Module Processing Method is ${DMPM}"
+if [ "${DMPM}" = "EUDEV" ]; then
+    curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_eudev.json" -O /home/tc/custom_config.json
+elif [ "${DMPM}" = "DDSML" ]; then
+    curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
+else
+    cecho p "Device Module Processing Method is Undefined, Program Exit!!!!!!!!"
+    exit 0
+fi
 curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
 curl -k -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O  
 
