@@ -19,6 +19,8 @@ NETNUM="1"
 LAYOUT="$(jq -r -e '.general.layout' $USER_CONFIG_FILE)"
 KEYMAP="$(jq -r -e '.general.keymap' $USER_CONFIG_FILE)"
 
+DMPM="EUDEV"
+
 ###############################################################################
 # check VM or baremetal
 function checkmachine() {
@@ -103,6 +105,7 @@ function DeleteConfigKey() {
 # Mounts backtitle dynamically
 function backtitle() {
   BACKTITLE="TCRP 0.9.4.0"
+  BACKTITLE+=" ${DMPM}"  
   if [ -n "${MODEL}" ]; then
     BACKTITLE+=" ${MODEL}"
   else
@@ -515,7 +518,7 @@ if [ "${KEYMAP}" = "null" ]; then
     writeConfigKey "general" "keymap" "${KEYMAP}"
 fi
 
-IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}')"
+IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}' | cut -c 6- )"
 
 if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
   MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
