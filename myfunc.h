@@ -114,6 +114,11 @@ set -u
 # 2023.02.19
 # Update : Inspection of FMA3 command support (Haswell or higher) and model restriction function added to menu.sh
 # 2023.02.22
+# Update :  menu.sh Added new function DDSML / EUDEV selection
+#           DDSML ( Detected Device Static Module Loading with modprobe / insmod command )
+#           EUDEV (Enhanced Userspace Device with eudev deamon)
+# 2023.03.01
+
 
 showlastupdate() {
     cat <<EOF
@@ -135,6 +140,11 @@ showlastupdate() {
 
 # Update : Inspection of FMA3 command support (Haswell or higher) and model restriction function added to menu.sh
 # 2023.02.22
+
+# Update :  menu.sh Added new function DDSML / EUDEV selection
+#           DDSML ( Detected Device Static Module Loading with modprobe / insmod command )
+#           EUDEV (Enhanced Userspace Device with eudev deamon)
+# 2023.03.01
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
