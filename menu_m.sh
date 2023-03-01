@@ -576,9 +576,9 @@ loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 NEXT="m"
 
 while true; do
-  echo "m \"Choose a model\""                          > "${TMP_PATH}/menu"
+  echo "m \"Choose a Synology Model\""                          > "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
-    echo "s \"Choose a serial number\""               >> "${TMP_PATH}/menu"
+    echo "s \"Choose a Synology Serial Number\""               >> "${TMP_PATH}/menu"
     echo "a \"Choose a mac address 1\""               >> "${TMP_PATH}/menu"
     if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
       echo "f \"Choose a mac address 2\""               >> "${TMP_PATH}/menu"
