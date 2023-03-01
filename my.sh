@@ -65,7 +65,7 @@ checkinternet() {
 
     echo -n "Checking Internet Access -> "
 #    nslookup $gitdomain 2>&1 >/dev/null
-    curl --insecure -L https://github.com/about.html -O 2>&1 >/dev/null
+    curl --insecure -L -s https://github.com/about.html -O 2>&1 >/dev/null
 
     if [ $? -eq 0 ]; then
         echo "OK"
