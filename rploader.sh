@@ -201,11 +201,6 @@ function getgrubconf() {
 
 function monitor() {
 
-# Set DateTime
-    [[ "$(which ntpclient)_" == "_" ]] && tce-load -iw ntpclient 2>&1 >/dev/null
-    export TZ="${timezone}"
-    sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
-
 #    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
     mount /dev/${loaderdisk}1
     mount /dev/${loaderdisk}2
