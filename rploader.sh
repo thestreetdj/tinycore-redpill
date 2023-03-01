@@ -238,7 +238,6 @@ function monitor() {
         echo -e "CPU Usage:\t\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
         echo -e "-------------------------------Disk Usage >80%-------------------------------"
         df -Ph | grep -v loop
-        [ $(lscpu | grep Hypervisor | wc -l) -gt 0 ] && echo "$(hostname) is a VM"
 
         echo "Press ctrl-c to exit"
         sleep 10
