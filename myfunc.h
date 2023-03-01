@@ -566,6 +566,11 @@ getlatestmshell() {
             source myfunc.h
             showlastupdate
             echo "y"|./rploader.sh backup
+            kill -9 $(ps | grep {rploader.sh} | head -1 | awk '{print $1}')
+            sleep 1            
+            curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
+            sleep 1
+            aterm -geometry 78x32+10+0 -fg yellow -title 'TCRP Monitor' -e /home/tc/rploader.sh monitor
             exit
         else
             rm -f /home/tc/latest.mshell.gz
