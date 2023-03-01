@@ -103,14 +103,7 @@ function DeleteConfigKey() {
 # Mounts backtitle dynamically
 function backtitle() {
   BACKTITLE="TCRP 0.9.4.0"
-  if [ -n "${DMPM}" ]; then
-    DMPM=${DMPM}
-  else 
-    DMPM="EUDEV"
-    writeConfigKey "general" "devmod" "${DMPM}"          
-  fi
   BACKTITLE+=" ${DMPM}"
-    
   if [ -n "${MODEL}" ]; then
     BACKTITLE+=" ${MODEL}"
   else
@@ -546,6 +539,11 @@ if [ "${KEYMAP}" = "null" ]; then
     KEYMAP="us"
     writeConfigKey "general" "layout" "${LAYOUT}"
     writeConfigKey "general" "keymap" "${KEYMAP}"
+fi
+
+if [ "${DMPM}" = "null" ]; then
+    DMPM="EUDEV"
+    writeConfigKey "general" "devmod" "${DMPM}"          
 fi
 
 # Get actual IP
