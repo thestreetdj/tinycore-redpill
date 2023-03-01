@@ -605,7 +605,7 @@ loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 NEXT="m"
 
 while true; do
-  echo "c \"Choose a EUDEV / DDSML \""            	        > "${TMP_PATH}/menu"       
+  echo "c \"Choose a Dev Mod handling method, EUDEV/DDSML\""            	        > "${TMP_PATH}/menu"       
   echo "m \"Choose a Synology Model\""                         >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     echo "s \"Choose a Synology Serial Number\""               >> "${TMP_PATH}/menu"
