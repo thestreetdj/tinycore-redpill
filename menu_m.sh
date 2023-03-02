@@ -462,18 +462,30 @@ function editUserConfig() {
 }
 
 function checkUserConfig() {
-  netif_num="$(jq -r -e '.extra_cmdline.netif_num' $USER_CONFIG_FILE)"
-  netif_num_cnt ="$(cat $USER_CONFIG_FILE | grep \"mac1\": | wc -l)"
-  netif_num_cnt+="$(cat $USER_CONFIG_FILE | grep \"mac2\": | wc -l)"
-  netif_num_cnt+="$(cat $USER_CONFIG_FILE | grep \"mac3\": | wc -l)"
-  netif_num_cnt+="$(cat $USER_CONFIG_FILE | grep \"mac4\": | wc -l)"  
 
-  if [ netif_num != netif_num_cnt ]; then
-    echo "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!! "
-    echo "press any key to continue..."
-    read answer
-    return 1
+  netif_num="$(jq -r -e '.extra_cmdline.netif_num' $USER_CONFIG_FILE)"
+  if [ $(cat $USER_CONFIG_FILE | grep \"mac1\": | wc -l) -gt 0 ]; then
+    netif_num_cnt="1"
+  fi                                                             
+  if [ $(cat $USER_CONFIG_FILE | grep \"mac2\": | wc -l) -gt 0 ]; then
+    netif_num_cnt="2" 
+  fi    
+  if [ $(cat $USER_CONFIG_FILE | grep \"mac3\": | wc -l) -gt 0 ]; then
+    netif_num_cnt="3"
   fi
+  if [ $(cat $USER_CONFIG_FILE | grep \"mac4\": | wc -l) -gt 0 ]; then
+    netif_num_cnt="4"
+  fi                                                                           
+                    
+  if [ $netif_num != $netif_num_cnt ]; then
+    echo "netif_num = ${netif_num}"
+    echo "number of mac addresses = ${netif_num_cnt}"       
+    echo "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!! "
+    echo "press any key to continue..."                                                                                                   
+    read answer
+    return 1     
+  fi  
+
 }
 
 ###############################################################################
