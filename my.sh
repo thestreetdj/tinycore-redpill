@@ -17,7 +17,7 @@ USER_CONFIG_FILE="/home/tc/user_config.json"
 # ==============================================================================          
 # Color Function                                                                          
 # ==============================================================================          
-cecho () {                                                                                
+function cecho () {                                                                                
 #    if [ -n "$3" ]                                                                                                            
 #    then                                                                                  
 #        case "$3" in                                                                                 
@@ -61,7 +61,7 @@ function checkmachine() {
 
 }
 
-checkinternet() {
+function checkinternet() {
 
     echo -n "Checking Internet Access -> "
 #    nslookup $gitdomain 2>&1 >/dev/null
@@ -83,6 +83,22 @@ checkinternet() {
         fi
     fi
 
+}
+
+###############################################################################
+# Write to json config file
+function writeConfigKey() {
+
+    block="$1"
+    field="$2"
+    value="$3"
+
+    if [ -n "$1 " ] && [ -n "$2" ]; then
+        jsonfile=$(jq ".$block+={\"$field\":\"$value\"}" $USER_CONFIG_FILE)
+        echo $jsonfile | jq . >$USER_CONFIG_FILE
+    else
+        echo "No values to update"
+    fi
 }
 
 sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" .dialogrc
