@@ -463,16 +463,16 @@ function editUserConfig() {
 
 function checkUserConfig() {
   netif_num="$(jq -r -e '.extra_cmdline.netif_num' $USER_CONFIG_FILE)"
-  netif_num_cnt =$(cat $USER_CONFIG_FILE | grep \"mac1\": | wc -l)
-  netif_num_cnt+=$(cat $USER_CONFIG_FILE | grep \"mac2\": | wc -l)
-  netif_num_cnt+=$(cat $USER_CONFIG_FILE | grep \"mac3\": | wc -l)
-  netif_num_cnt+=$(cat $USER_CONFIG_FILE | grep \"mac4\": | wc -l)  
+  netif_num_cnt ="$(cat $USER_CONFIG_FILE | grep \"mac1\": | wc -l)"
+  netif_num_cnt+="$(cat $USER_CONFIG_FILE | grep \"mac2\": | wc -l)"
+  netif_num_cnt+="$(cat $USER_CONFIG_FILE | grep \"mac3\": | wc -l)"
+  netif_num_cnt+="$(cat $USER_CONFIG_FILE | grep \"mac4\": | wc -l)"  
 
   if [ netif_num != netif_num_cnt ]; then
     echo "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!! "
     echo "press any key to continue..."
     read answer
-    return 0
+    return 1
   fi
 }
 
@@ -481,6 +481,10 @@ function checkUserConfig() {
 function make() {
 
   checkUserConfig 
+  if [ $? -ne 0 ]; then
+    dialog --backtitle "`backtitle`" --title "Error loader building" 0 0 #--textbox "${LOG_FILE}" 0 0      
+    return 1  
+  fi
 
   usbidentify
   clear
