@@ -2256,7 +2256,7 @@ EOF
 function tcrpfriendentry() {
     
     cat <<EOF
-menuentry 'Tiny Core Friend $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update ${smallfixnumber}' {
+menuentry 'Tiny Core Friend $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update ${smallfixnumber} ${DMPM}' {
         savedefault
         search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
         echo Loading Linux...
@@ -2272,7 +2272,7 @@ EOF
 function tcrpfriendentrymmc() {
     
     cat <<EOF
-menuentry 'Tiny Core Friend $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update ${smallfixnumber}' {
+menuentry 'Tiny Core Friend $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update ${smallfixnumber} ${DMPM}' {
         savedefault
         search --set=root --fs-uuid $usbpart3uuid --hint hd1,msdos3
         echo Loading Linux...
@@ -2524,6 +2524,9 @@ function buildloader() {
     [ "$1" == "junmod" ] && JUNLOADER="YES"
 
     [ -d $local_cache ] && echo "Found tinycore cache folder, linking to home/tc/custom-module" && [ ! -d /home/tc/custom-module ] && ln -s $local_cache /home/tc/custom-module
+
+    DMPM="$(jq -r -e '.general.devmod' $userconfigfile)"
+    echo "Device Module Processing Method is ${DMPM}"
 
     cd /home/tc
 
