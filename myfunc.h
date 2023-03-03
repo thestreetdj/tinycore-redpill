@@ -118,6 +118,8 @@ set -u
 #           DDSML ( Detected Device Static Module Loading with modprobe / insmod command )
 #           EUDEV (Enhanced Userspace Device with eudev deamon)
 # 2023.03.01
+# Update : Added erase disk function to menu.sh
+# 2023.03.03
 
 
 showlastupdate() {
@@ -129,12 +131,6 @@ showlastupdate() {
 # Update : Deploy menu.sh
 # 2022.11.14
 
-# Update : Added ds923+ (r1000)
-# 2022.11.25
-
-# Update : Added ds723+ (r1000)
-# 2023.01.15
-
 # Update : 7.0.1-42218 friend correspondence for DS918+,DS920+,DS1019+, DS1520+ transcoding
 # 2023.02.19
 
@@ -145,6 +141,9 @@ showlastupdate() {
 #           DDSML ( Detected Device Static Module Loading with modprobe / insmod command )
 #           EUDEV (Enhanced Userspace Device with eudev deamon)
 # 2023.03.01
+
+# Update : Added erase disk function to menu.sh
+# 2023.03.03
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
