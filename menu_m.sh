@@ -700,10 +700,28 @@ while true; do
     c) seleudev;        NEXT="m" ;;  
     m) modelMenu;       NEXT="s" ;;
     s) serialMenu;      NEXT="a" ;;
-    a) macMenu "eth0";  NEXT="d" ;;
-    f) macMenu "eth1";  NEXT="g" ;;
-    g) macMenu "eth2";  NEXT="h" ;;
-    h) macMenu "eth3";  NEXT="d" ;;    
+    a) macMenu "eth0"
+        if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
+            NEXT="f" 
+	else
+            NEXT="d" 	
+	fi
+        ;;
+    f) macMenu "eth1"
+        if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
+            NEXT="g" 
+	else
+            NEXT="d" 	
+	fi
+        ;;
+    g) macMenu "eth2"
+        if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
+            NEXT="h" 
+	else
+            NEXT="d" 	
+	fi
+        ;;
+    h) macMenu "eth3"     NEXT="d" ;;    
     d) make ;             NEXT="r" ;;
     j) make "jot";        NEXT="r" ;;  
     p) postupdate ;       NEXT="r" ;;
