@@ -548,6 +548,10 @@ function keymapMenu() {
   cd ~
 }
 
+function erasedisk() {
+    ./edisk.sh
+}
+
 function backup() {
     echo "y"|./rploader.sh backup
 }
@@ -687,6 +691,7 @@ while true; do
   fi
   echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
   echo "k \"Choose a keymap\""                       >> "${TMP_PATH}/menu"
+  echo "i \"Erase Data DISK\""                      >> "${TMP_PATH}/menu"
   echo "b \"Backup TCRP\""                            >> "${TMP_PATH}/menu"  
   echo "r \"Reboot\""                                 >> "${TMP_PATH}/menu"
   echo "e \"Exit\""                                   >> "${TMP_PATH}/menu"
@@ -726,6 +731,7 @@ while true; do
     o) make "jun";      NEXT="r" ;;
     u) editUserConfig;  NEXT="d" ;;
     k) keymapMenu ;;
+    i) erasedisk ;;          
     b) backup ;;      
     r) reboot ;;
     e) break ;;
