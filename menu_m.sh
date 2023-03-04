@@ -578,6 +578,7 @@ sed -i "/aterm/d" .xsession
 echo "aterm -geometry 78x32+10+0 -fg yellow -title \"TCRP Monitor\" -e /home/tc/rploader.sh monitor &" >> .xsession
 echo "aterm -geometry 78x32+525+0 -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession
 echo "aterm -geometry 78x25+10+430 -fg green -title \"TCRP Extra Terminal\" &" >> .xsession
+echo "aterm -geometry 78x25+525+430 -title \"TCRP NTP Sync\" -e /home/tc/ntp.sh &" >> .xsession
 
 if [ "${KEYMAP}" = "null" ]; then
     LAYOUT="qwerty"
@@ -658,18 +659,8 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep kmaps | wc -w) -eq 0 ]; then
 fi
 loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 
-# Set DateTime
-timezone="UTC"
-ntpserver="pool.ntp.org"
-if [ "$(which ntpclient)_" == "_" ]; then
-    tce-load -iw ntpclient 2>&1 >/dev/null
-fi    
-export TZ="${timezone}"
-sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
-
-
 NEXT="m"
-
+setSuggest
 while true; do
   echo "c \"Choose a Dev Mod handling method, EUDEV/DDSML\""            	        > "${TMP_PATH}/menu"       
   echo "m \"Choose a Synology Model\""                         >> "${TMP_PATH}/menu"
