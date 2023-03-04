@@ -118,8 +118,8 @@ set -u
 #           DDSML ( Detected Device Static Module Loading with modprobe / insmod command )
 #           EUDEV (Enhanced Userspace Device with eudev deamon)
 # 2023.03.01
-# Update : Added erase disk function to menu.sh
-# 2023.03.03
+# Update : Added erase data disk function to menu.sh
+# 2023.03.04
 
 
 showlastupdate() {
@@ -142,8 +142,8 @@ showlastupdate() {
 #           EUDEV (Enhanced Userspace Device with eudev deamon)
 # 2023.03.01
 
-# Update : Added erase disk function to menu.sh
-# 2023.03.03
+# Update : Added erase data disk function to menu.sh
+# 2023.03.04
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
