@@ -520,6 +520,9 @@ function make() {
 # Post Update for jot mode 
 function postupdate() {
   ./my.sh "${MODEL}" postupdate | tee "/home/tc/zpostupdate.log"
+  echo "press any key to continue..."
+  read answer
+  return 0
 }
 
 ###############################################################################
@@ -549,11 +552,17 @@ function keymapMenu() {
 }
 
 function erasedisk() {
-    ./edisk.sh
+  ./edisk.sh
+  echo "press any key to continue..."
+  read answer
+  return 0
 }
 
 function backup() {
-    echo "y"|./rploader.sh backup
+  echo "y"|./rploader.sh backup
+  echo "press any key to continue..."
+  read answer
+  return 0
 }
 
 function reboot() {
