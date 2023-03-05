@@ -14,6 +14,7 @@ echo "DateTime synchronization complete!!!"
 
 while [ -z "$GATEWAY_INTERFACE" ]; do
     clear
+    echo -e "----------------------user_config.json extra_cmdline-----------------------"
     jq '.extra_cmdline' /home/tc/user_config.json
     echo "Press ctrl-c to exit"
     sleep 2
