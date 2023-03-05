@@ -11,7 +11,10 @@ echo "Synchronizing dateTime with ntp server $ntpserver ......"
 sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
 echo
 echo "DateTime synchronization complete!!!"
-echo
-echo "press any key to continue..."                                                                                                   
-read answer
-exit 0
+
+while [ -z "$GATEWAY_INTERFACE" ]; do
+    clear
+    jq '.extra_cmdline' /home/tc/user_config.json
+    echo "Press ctrl-c to exit"
+    sleep 2
+done
