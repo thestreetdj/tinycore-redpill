@@ -296,6 +296,7 @@ while true; do
         echo "${M_GRP7}" >> "${TMP_PATH}/mdl"		
         echo "${M_GRP6}" >> "${TMP_PATH}/mdl"	
         echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
+	RESTRICT=0
       fi
     fi
   fi	  
