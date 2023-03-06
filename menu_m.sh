@@ -302,7 +302,7 @@ while true; do
   fi	  
   
   if [ ${RESTRICT} -eq 1 ]; then
-        echo "m \"Release model restriction\"" >> "${TMP_PATH}/mdl"
+        echo "\"model restriction\"" >> "${TMP_PATH}/mdl"
   else  
         echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
         echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
@@ -317,6 +317,8 @@ while true; do
     --menu "Choose a model\n${msg}" 0 0 0 \
     --file "${TMP_PATH}/mdl" 2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
+  resp=$(<${TMP_PATH}/resp)
+  [ -z "${resp}" ] && return  
   
   if [ "${resp}" = "m" ]; then
     RESTRICT=0
