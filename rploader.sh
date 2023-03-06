@@ -95,6 +95,17 @@ EOF
 
 }
 
+function readanswer() {
+    while true; do
+        read answ
+        case $answ in
+            [Yy]* ) answer="$answ"; break;;
+            [Nn]* ) answer="$answ"; break;;
+            * ) echo "Please answer yY/nN.";;
+        esac
+    done
+}        
+
 function setnetwork() {
 
     if [ -f /opt/eth*.sh ] && [ "$(grep dhcp /opt/eth*.sh | wc -l)" -eq 0 ]; then
