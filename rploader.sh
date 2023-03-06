@@ -194,7 +194,7 @@ function getgrubconf() {
             else
                 echo "Grub var $var = ${!var} does not match your user_config.json variable which is set to : $(jq -r .extra_cmdline.$var user_config.json) "
                 echo "Should we populate user_config.json with these variables ? [Yy/Nn] "
-                read answer
+                readanswer
                 if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
                     json="$(jq --arg newvar "${!var}" '.extra_cmdline.'$var'= $newvar' user_config.json)" && echo -E "${json}" | jq . >user_config.json
                 else
@@ -358,7 +358,7 @@ function restoresession() {
     if [ -d $lastsessiondir ]; then
 
         echo -n "Found last user session :  , restore session ? [yY/nN] : "
-        read answer
+        readanswer
 
         if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
 
@@ -675,7 +675,7 @@ function removefriend() {
     echo "------------------------------------------------------------------------------------------------------------"
 
     echo -n "Do you still want to remove TCRP Friend, please answer [Yy/Nn]"
-    read answer
+    readanswer
 
     if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 
@@ -725,7 +725,7 @@ function bringfriend() {
 
     if [ -f /mnt/${loaderdisk}3/bzImage-friend ] && [ -f /mnt/${loaderdisk}3/initrd-friend ] && [ -f /mnt/${loaderdisk}3/zImage-dsm ] && [ -f /mnt/${loaderdisk}3/initrd-dsm ] && [ -f /mnt/${loaderdisk}3/user_config.json ] && [ $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ]; then
         echo "Your TCRP friend seems in place, do you want to re-run the process ?"
-        read answer
+        readanswer
         if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
             echo "OK re-running the TCRP Friend bring over process"
         else
@@ -741,7 +741,7 @@ function bringfriend() {
     echo "please leave the default to TCRR Friend"
 
     echo -n "If you agree with the above, please answer [Yy/Nn]"
-    read answer
+    readanswer
 
     if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 
@@ -890,7 +890,7 @@ function postupdate() {
     . ./etc.defaults/VERSION && echo "Found Version : ${productversion}-${buildnumber}-${smallfixnumber}"
 
 #    echo -n "Do you want to use this for the loader ? [yY/nN] : "
-#    read answer
+#    readanswer
 
 #    if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
 
@@ -906,7 +906,7 @@ function postupdate() {
         . ./etc.defaults/VERSION && echo "The new smallupdate version will be  : ${productversion}-${buildnumber}-${smallfixnumber}"
 
 #        echo -n "Do you want to use this for the loader ? [yY/nN] : "
-#        read answer
+#        readanswer
 
 #        if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
 
@@ -996,7 +996,7 @@ function postupdatev1() {
     echo "Found Platform : ${PLATFORM}  Model : $MODEL Version : ${major}.${minor}.${micro}-${buildnumber} "
 
     echo -n "Do you want to use this for the loader ? [yY/nN] : "
-    read answer
+    readanswer
 
     if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
         patfile="$(echo ${MODEL}_${buildnumber} | sed -e 's/\+/p/' | tr '[:upper:]' '[:lower:]').pat"
@@ -1100,7 +1100,7 @@ function postupdatev1() {
     tinyentry | sudo tee --append /mnt/${loaderdisk}1/boot/grub/grub.cfg
 
     echo "Do you want to overwrite your custom.gz as well ? [yY/nN] : "
-    read answer
+    readanswer
 
     if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
         echo "Copying custom.gz"
@@ -1426,7 +1426,7 @@ function restoreloader() {
             ls -ltr /mnt/${tcrppart}/backup/$restorefolder
 
             echo -n "Do you want to restore [yY/nN] : "
-            read answer
+            readanswer
 
             if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
                 echo restoring $restorefolder
@@ -1776,7 +1776,7 @@ function backup() {
     echo "Current /home/tc size is $homesize , try to keep it less than 1GB as it might not fit into your image"
 
     echo "Should i update the $loaderdisk with your current files [Yy/Nn]"
-    read answer
+    readanswer
     if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
         echo -n "Backing up home files to $loaderdisk : "
         if filetool.sh -b ${loaderdisk}3; then
@@ -1952,7 +1952,7 @@ function satamap() {
     [ "$badportfail" = true ] && echo -e "\nWARNING: Bad ports are mapped. The DSM installation will fail!"
 
     echo -en "\nShould i update the user_config.json with these values ? [Yy/Nn] "
-    read answer
+    readanswer
     if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
         json="$(jq --arg var "$sataportmap" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
         json="$(jq --arg var "$diskidxmap" '.extra_cmdline.DiskIdxMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
@@ -1978,7 +1978,7 @@ function usbidentify() {
         echo "Vendor ID : $vendorid Product ID : $productid"
 
         echo "Should i update the user_config.json with these values ? [Yy/Nn]"
-        read answer
+        readanswer
         if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
             sed -i "/\"pid\": \"/c\    \"pid\": \"$productid\"," user_config.json
             sed -i "/\"vid\": \"/c\    \"vid\": \"$vendorid\"," user_config.json
@@ -2014,7 +2014,7 @@ function usbidentify() {
         echo "Vendor ID : $vendorid Product ID : $productid"
 
         echo "Should i update the user_config.json with these values ? [Yy/Nn]"
-        read answer
+        readanswer
         if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
             #  sed -i "/\"pid\": \"/c\    \"pid\": \"$productid\"," user_config.json
             json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
@@ -2051,7 +2051,7 @@ function serialgen() {
         if [ -z "$GATEWAY_INTERFACE" ]; then
 
             echo "Should i update the user_config.json with these values ? [Yy/Nn]"
-            read answer
+            readanswer
         else
             answer="y"
         fi
@@ -2482,7 +2482,7 @@ function getstaticmodule() {
 
     if [ -d /home/tc/custom-module ] && [ -f /home/tc/custom-module/redpill.ko ]; then
         #echo "Found custom redpill module, do you want to use this instead ? [yY/nN] : "
-        #read answer
+        #readanswer
 
         #if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
             REDPILL_MOD_NAME="redpill-linux-v$(modinfo /home/tc/custom-module/redpill.ko | grep vermagic | awk '{print $2}').ko"
@@ -2580,7 +2580,7 @@ function buildloader() {
 
         if [ -d /home/tc/custom-module ]; then
             #echo "Want to use firmware files from /home/tc/custom-module/*.pat ? [yY/nN] : "
-            #read answer
+            #readanswer
 
             #if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
             sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
