@@ -236,12 +236,10 @@ function modelMenu() {
   M_GRP5="DS923+ DS723+"
   M_GRP6="DS1621+ DS2422+ FS2500"
   M_GRP7="DS920+ DS1520+ DVA1622"
-
-#  while true; do
-      echo "" > "${TMP_PATH}/mdl"
-      FLGNEX=0
-     
-#  done
+  
+RESTRICT=1
+while true; do
+  echo "" > "${TMP_PATH}/mdl"
   
   if [ "$HBADETECT" = "ON" ]; then
     msg="[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited"  
@@ -301,11 +299,31 @@ function modelMenu() {
       fi
     fi
   fi	  
-
+  
+  if [ ${RESTRICT} -eq 1 ]; then
+        echo "r \"\Z1Release model restriction\Zn\"" >> "${TMP_PATH}/mdl"
+  else  
+        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP4}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP5}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP7}" >> "${TMP_PATH}/mdl"		
+        echo "${M_GRP6}" >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
+  fi
+  
   dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
     --menu "Choose a model\n${msg}" 0 0 0 \
     --file "${TMP_PATH}/mdl" 2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
+  
+  if [ "${resp}" = "r" ]; then
+    RESTRICT=0
+    continue
+  fi
+  break
+done
+    
   MODEL="`<${TMP_PATH}/resp`"
   writeConfigKey "general" "model" "${MODEL}"
   setSuggest
