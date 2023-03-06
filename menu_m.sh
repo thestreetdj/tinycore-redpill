@@ -229,82 +229,80 @@ function seleudev() {
 # Shows available models to user choose one
 function modelMenu() {
 
+  M_GRP1="DS3622xs+\n DS1621xs+\n RS4021xs+\n DS3617xs\n RS3618xs"
+  M_GRP2="DS3615xs"
+  M_GRP3="DVA3221\n DVA3219"
+  M_GRP4="DS918+\n DS1019+"
+  M_GRP5="DS923+\n DS723+"
+  M_GRP6="DS1621+\n DS2422+\n FS2500"
+  M_GRP7="DS920+\n DS1520+\n DVA1622"
+
+#  while true; do
+      echo "" > "${TMP_PATH}/mdl"
+      FLGNEX=0
+     
+#  done
+  
   if [ "$HBADETECT" = "ON" ]; then
-	  if [ $threads -gt 16 ]; then
-
-	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-	    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
-			"DS3617xs" "RS3618xs" \
-	    2>${TMP_PATH}/resp
-
-	  elif [ $threads -gt 8 ]; then
-
-	      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
-		  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-		    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
-				"DS3615xs" "DS3617xs" "RS3618xs" \
-		    2>${TMP_PATH}/resp
-	      else  
-		  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-		    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
-				"DS3615xs" "DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
-		    2>${TMP_PATH}/resp
-              fi
-	  else
-	  
-	      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
-		  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-		    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
-				"DS3615xs" "DS3617xs" "RS3618xs" \
-		    2>${TMP_PATH}/resp
-	      else
-		  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-		    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" "DS918+" "DS1019+" \
-				"DS3615xs" "DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
-		    2>${TMP_PATH}/resp
-              fi
-	  fi
+    if [ $threads -gt 16 ]; then
+      echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+    elif [ $threads -gt 8 ]; then
+      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
+        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
+      else  
+        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
+      fi
+    else
+      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
+        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
+      else
+        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP4}" >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
+      fi
+    fi
   else
-	  if [ $threads -gt 16 ]; then
-
-	  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-	    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
-			"DS3617xs" "RS3618xs" \
-	    2>${TMP_PATH}/resp
-
-	  elif [ $threads -gt 8 ]; then
-
-	      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
-		  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-		    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
-				"DS923+" "DS723+" "DS1621+" "DS2422+" "FS2500" \
-				"DS3615xs" "DS3617xs" "RS3618xs" \
-		    2>${TMP_PATH}/resp
-	      else
-		  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-		    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
-				"DS923+" "DS723+" "DS1621+" "DS2422+" "FS2500" \
-				"DS3615xs" "DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
-		    2>${TMP_PATH}/resp
-	      fi
-	  else
-
-	      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
-		  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-		    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" \
-				"DS923+" "DS723+" "DS1621+" "DS2422+" "FS2500" \
-				"DS3615xs" "DS3617xs" "RS3618xs" \
-		    2>${TMP_PATH}/resp
-	      else
-		  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-		    --menu "Choose a model\n[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 0 0 0 "DS3622xs+" "DS1621xs+" "RS4021xs+" "DS918+" "DS1019+" \
-				"DS923+" "DS723+" "DS920+" "DS1520+" "DVA1622" "DS1621+" "DS2422+" "FS2500" \
-				"DS3615xs" "DS3617xs" "RS3618xs" "DVA3221" "DVA3219" \
-		    2>${TMP_PATH}/resp
-	      fi
-	  fi
+    if [ $threads -gt 16 ]; then
+      echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+    elif [ $threads -gt 8 ]; then
+      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
+        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP5}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP6}" >> "${TMP_PATH}/mdl"	
+      else
+        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP5}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP6}" >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
+      fi
+    else
+      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
+        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP5}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP6}" >> "${TMP_PATH}/mdl"	
+      else
+        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP4}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP5}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP7}" >> "${TMP_PATH}/mdl"		
+        echo "${M_GRP6}" >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
+      fi
+    fi
   fi	  
 
+  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
+    --menu "Choose a model" 0 0 0 \
+    --file "${TMP_PATH}/mdl" 2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
   MODEL="`<${TMP_PATH}/resp`"
   writeConfigKey "general" "model" "${MODEL}"
