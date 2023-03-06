@@ -302,8 +302,9 @@ while true; do
   fi	  
   
   if [ ${RESTRICT} -eq 1 ]; then
-        echo "\"model restriction\"" >> "${TMP_PATH}/mdl"
+        echo "m \"\Z1Release model restriction\Zn\"" >> "${TMP_PATH}/mdl"
   else  
+        echo "" > "${TMP_PATH}/mdl"
         echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
         echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
         echo "${M_GRP4}" >> "${TMP_PATH}/mdl"
