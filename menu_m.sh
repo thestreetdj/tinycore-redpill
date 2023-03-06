@@ -229,13 +229,13 @@ function seleudev() {
 # Shows available models to user choose one
 function modelMenu() {
 
-  M_GRP1="DS3622xs+\n DS1621xs+\n RS4021xs+\n DS3617xs\n RS3618xs"
+  M_GRP1="DS3622xs+ DS1621xs+ RS4021xs+ DS3617xs RS3618xs"
   M_GRP2="DS3615xs"
-  M_GRP3="DVA3221\n DVA3219"
-  M_GRP4="DS918+\n DS1019+"
-  M_GRP5="DS923+\n DS723+"
-  M_GRP6="DS1621+\n DS2422+\n FS2500"
-  M_GRP7="DS920+\n DS1520+\n DVA1622"
+  M_GRP3="DVA3221 DVA3219"
+  M_GRP4="DS918+ DS1019+"
+  M_GRP5="DS923+ DS723+"
+  M_GRP6="DS1621+ DS2422+ FS2500"
+  M_GRP7="DS920+ DS1520+ DVA1622"
 
 #  while true; do
       echo "" > "${TMP_PATH}/mdl"
