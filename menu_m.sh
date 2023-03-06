@@ -244,12 +244,13 @@ function modelMenu() {
 #  done
   
   if [ "$HBADETECT" = "ON" ]; then
+    msg="[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622\n[SAS HBA CONTROLLER DETECT]\nDT-based models are limited"  
     if [ $threads -gt 16 ]; then
       echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
     elif [ $threads -gt 8 ]; then
       if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
         echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
       else  
         echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
         echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
@@ -267,6 +268,7 @@ function modelMenu() {
       fi
     fi
   else
+    msg="[8 threads limit models]\nDS918+,DS920+,DS1019+,DS1520+,DVA1622" 
     if [ $threads -gt 16 ]; then
       echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
     elif [ $threads -gt 8 ]; then
@@ -301,7 +303,7 @@ function modelMenu() {
   fi	  
 
   dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
-    --menu "Choose a model" 0 0 0 \
+    --menu "Choose a model\n${msg}" 0 0 0 \
     --file "${TMP_PATH}/mdl" 2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
   MODEL="`<${TMP_PATH}/resp`"
