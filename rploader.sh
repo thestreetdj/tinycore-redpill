@@ -2627,9 +2627,9 @@ function buildloader() {
 #    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
 
     # Unmount to make sure you are able to mount properly
-
-    sudo umount /dev/${loaderdisk}1
-    sudo umount /dev/${loaderdisk}2
+# Remark from m shell
+#    sudo umount /dev/${loaderdisk}1
+#    sudo umount /dev/${loaderdisk}2
 
     mkdir -p localdiskp1
     sudo mount /dev/${loaderdisk}1 localdiskp1
