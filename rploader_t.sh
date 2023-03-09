@@ -493,8 +493,8 @@ function processpat() {
             else
                 echo "Copy encrypted pat file : ${patfile} to ${temp_dsmpat_folder}"
                 cp -f ${patfile} ${temp_dsmpat_folder}/${SYNOMODEL}.pat
-                echo "Extracting encrypted pat file : ${patfile} to ${temp_pat_folder}"
-                sudo /bin/syno_extract_system_patch ${temp_dsmpat_folder}/${patfile} ${temp_pat_folder} || echo "extract latest pat"
+                echo "Extracting encrypted pat file : ${temp_dsmpat_folder}/${SYNOMODEL}.pat to ${temp_pat_folder}"
+                sudo /bin/syno_extract_system_patch ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
                 echo "Creating unecrypted pat file ${SYNOMODEL}.pat to /home/tc/redpill-load/cache folder "
                 mkdir -p /home/tc/redpill-load/cache/
                 cd ${temp_pat_folder} && tar -czf ${temp_dsmpat_folder}/${SYNOMODEL}.pat ./ && cp -f ${temp_dsmpat_folder}/${SYNOMODEL}.pat /home/tc/redpill-load/cache/${SYNOMODEL}.pat
@@ -508,7 +508,6 @@ function processpat() {
         fi
 
         cd /home/tc/redpill-load/cache
-        pwd
         tar xvf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./VERSION && . ./VERSION && rm ./VERSION
         os_sha256=$(sha256sum ${patfile} | awk '{print $1}')
         echo "Pat file  sha256sum is : $os_sha256"
