@@ -466,8 +466,8 @@ function processpat() {
 
     if [ ! -d "${temp_pat_folder}" ]; then
         echo "Creating temp folder ${temp_pat_folder} "
-        mkdir ${temp_pat_folder} && sudo mount -t tmpfs -o size=400M tmpfs ${temp_pat_folder} && cd ${temp_pat_folder}
-        mkdir ${temp_dsmpat_folder} && sudo mount -t tmpfs -o size=400M tmpfs ${temp_dsmpat_folder}
+        mkdir ${temp_pat_folder} && sudo mount -t tmpfs -o size=2G tmpfs ${temp_pat_folder} && cd ${temp_pat_folder}
+        mkdir ${temp_dsmpat_folder} && sudo mount -t tmpfs -o size=2G tmpfs ${temp_dsmpat_folder}
     fi
 
     echo "Checking for cached pat file"
