@@ -243,7 +243,7 @@ function monitor() {
         echo -e "Swap Usage:\t\t"$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
         echo -e "CPU Usage:\t\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
         echo -e "-------------------------------Disk Usage >80%-------------------------------"
-        df -Ph | grep -v loop
+        df -Ph | grep -v loop | grep -v fs
 
         echo "Press ctrl-c to exit"
         sleep 10
@@ -454,18 +454,34 @@ function downloadextractor() {
 
 }
 
+function chkavail() {
+
+    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | grep G | wc -l) -gt 0 ]; then
+        avail_str=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/G//g' | cut -c 1-3)
+        avail=$(echo "$avail_str 1000" | awk '{print $1 * $2}')
+    else
+        avail=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' | cut -c 1-3)
+    fi
+
+    avail_num=$(($avail))
+    
+    echo "Avail space ${avail_num}M on /mnt/${tcrppart}"
+}
+
 function processpat() {
 
 #    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
     temp_pat_folder="/tmp/pat"
+    temp_dsmpat_folder="/tmp/dsmpat"
 
     setplatform
 
     if [ ! -d "${temp_pat_folder}" ]; then
         echo "Creating temp folder ${temp_pat_folder} "
-        mkdir ${temp_pat_folder} && cd ${temp_pat_folder}
+        mkdir ${temp_pat_folder} && sudo mount -t tmpfs -o size=512M tmpfs ${temp_pat_folder} && cd ${temp_pat_folder}
+        mkdir ${temp_dsmpat_folder} && sudo mount -t tmpfs -o size=512M tmpfs ${temp_dsmpat_folder}
     fi
 
     echo "Checking for cached pat file"
@@ -482,30 +498,30 @@ function processpat() {
         if [ ${isencrypted} = "no" ]; then
             echo "File ${patfile} is already unencrypted"
             echo "Copying file to /home/tc/redpill-load/cache folder"
-            cp ${patfile} /home/tc/redpill-load/cache/
+            mv -f ${patfile} /home/tc/redpill-load/cache/
         elif [ ${isencrypted} = "yes" ]; then
             [ -f /home/tc/redpill-load/cache/${SYNOMODEL}.pat ] && testarchive /home/tc/redpill-load/cache/${SYNOMODEL}.pat
             if [ -f /home/tc/redpill-load/cache/${SYNOMODEL}.pat ] && [ ${isencrypted} = "no" ]; then
                 echo "Unecrypted file is already cached in :  /home/tc/redpill-load/cache/${SYNOMODEL}.pat"
-                patfile="/home/tc/redpill-load/cache/${SYNOMODEL}.pat"
             else
-                echo "Extracting encrypted pat file : ${patfile} to ${temp_pat_folder}"
-                sudo /bin/syno_extract_system_patch ${patfile} ${temp_pat_folder} || echo "extract latest pat"
+                echo "Copy encrypted pat file : ${patfile} to ${temp_dsmpat_folder}"
+                mv -f ${patfile} ${temp_dsmpat_folder}/${SYNOMODEL}.pat
+                echo "Extracting encrypted pat file : ${temp_dsmpat_folder}/${SYNOMODEL}.pat to ${temp_pat_folder}"
+                sudo /bin/syno_extract_system_patch ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
                 echo "Creating unecrypted pat file ${SYNOMODEL}.pat to /home/tc/redpill-load/cache folder "
                 mkdir -p /home/tc/redpill-load/cache/
-                cd ${temp_pat_folder} && tar -czf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./
-                patfile="/home/tc/redpill-load/cache/${SYNOMODEL}.pat"
-
+                cd ${temp_pat_folder} && tar -czf ${temp_dsmpat_folder}/${SYNOMODEL}.pat ./ && cp -f ${temp_dsmpat_folder}/${SYNOMODEL}.pat /home/tc/redpill-load/cache/${SYNOMODEL}.pat
             fi
+            patfile="/home/tc/redpill-load/cache/${SYNOMODEL}.pat"            
 
         else
-
             echo "Something went wrong, please check cache files"
             exit 99
         fi
 
+        cd /home/tc/redpill-load/cache
         tar xvf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./VERSION && . ./VERSION && rm ./VERSION
-        os_sha256=$(sha256sum ${patfile} | awk '{print $1}')
+        os_sha256=$(sha256sum /home/tc/redpill-load/cache/${SYNOMODEL}.pat | awk '{print $1}')
         echo "Pat file  sha256sum is : $os_sha256"
 
         echo -n "Checking config file existence -> "
@@ -530,7 +546,8 @@ function processpat() {
         fi
 
         echo "Clearing temp folders"
-        sudo rm -rf ${temp_pat_folder}
+        sudo umount ${temp_pat_folder} && sudo rm -rf ${temp_pat_folder}
+        sudo umount ${temp_dsmpat_folder} && sudo rm -rf ${temp_dsmpat_folder}        
 
         return
 
@@ -543,7 +560,8 @@ function processpat() {
         echo -e "Configdir : $configdir \nConfigfile: $configfile \nPat URL : $pat_url"
         echo "Downloading pat file from URL : ${pat_url} "
 
-        if [ $(df -h /${local_cache} | grep mnt | awk '{print $4}' | sed -e 's/M//g' -e 's/G//g' | cut -c 1-3) -le 370 ]; then
+        chkavail
+        if [ $avail_num -le 370 ]; then
             echo "No adequate space on ${local_cache} to download file into cache folder, clean up the space and restart"
             exit 99
         fi
@@ -1358,8 +1376,8 @@ function backuploader() {
         return
     fi
 
-    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' -e 's/G//g' | cut -c 1-3) -le 50 ]; then
-        echo "No adequate space on TCRP loader partition  /mnt/${tcrppart} "
+    if [ $avail_num -le 50 ]; then
+        echo "No adequate space on TCRP loader partition  /mnt/${tcrppart} for backup"
         return
     fi
 
@@ -2456,7 +2474,7 @@ function gitdownload() {
         git pull
         cd /home/tc
     else
-        git clone -b $LKM_BRANCH "$LKM_SOURCE_URL"
+        git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-lkm.git"
     fi
 
     if [ -d redpill-load ]; then
@@ -2465,7 +2483,7 @@ function gitdownload() {
         git pull
         cd /home/tc
     else
-        git clone -b $LD_BRANCH "$LD_SOURCE_URL"
+        git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git"
     fi
     
 #m shell only start
@@ -2802,17 +2820,9 @@ function buildloader() {
     echo "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
 
-    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | grep G | wc -l) -gt 0 ]; then
-        avail_str=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/G//g' | cut -c 1-3)
-        avail=$(echo "$avail_str 1000" | awk '{print $1 * $2}')
-    else
-        avail=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' | cut -c 1-3)
-    fi
-
-    avail_num=$(($avail))
-
-    if [ $avail_num -le 400 ]; then
-        echo "No adequate space on TCRP loader partition /mnt/${tcrppart} to cache pat file"
+    chkavail
+    if [ $avail_num -le 360 ]; then
+        echo "No adequate space on TCRP loader partition /mnt/${tcrppart} to backup cache pat file"
         echo "Found $(ls /mnt/${tcrppart}/auxfiles/*pat) file"
         echo "Removing older cached pat files to cache current"
         rm -f /mnt/${tcrppart}/auxfiles/*.pat
@@ -2828,6 +2838,7 @@ function buildloader() {
     fi
 
 }
+
 
 function bringoverfriend() {
 
