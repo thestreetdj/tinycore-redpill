@@ -120,6 +120,8 @@ set -u
 # 2023.03.01
 # Update : Added erase data disk function to menu.sh
 # 2023.03.04
+# Update : Increased build processing speed by using RAMDISK when processing encrypted DSM PAT file decryption (baremetal)
+# 2023.03.09
 
 
 showlastupdate() {
@@ -144,6 +146,9 @@ showlastupdate() {
 
 # Update : Added erase data disk function to menu.sh
 # 2023.03.04
+
+# Update : Increased build processing speed by using RAMDISK when processing encrypted DSM PAT file decryption (baremetal)
+# 2023.03.09
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
