@@ -498,25 +498,23 @@ function processpat() {
         if [ ${isencrypted} = "no" ]; then
             echo "File ${patfile} is already unencrypted"
             echo "Copying file to /home/tc/redpill-load/cache folder"
-            cp ${patfile} /home/tc/redpill-load/cache/
+            mv -f ${patfile} /home/tc/redpill-load/cache/
         elif [ ${isencrypted} = "yes" ]; then
             [ -f /home/tc/redpill-load/cache/${SYNOMODEL}.pat ] && testarchive /home/tc/redpill-load/cache/${SYNOMODEL}.pat
             if [ -f /home/tc/redpill-load/cache/${SYNOMODEL}.pat ] && [ ${isencrypted} = "no" ]; then
                 echo "Unecrypted file is already cached in :  /home/tc/redpill-load/cache/${SYNOMODEL}.pat"
-                patfile="/home/tc/redpill-load/cache/${SYNOMODEL}.pat"
             else
                 echo "Copy encrypted pat file : ${patfile} to ${temp_dsmpat_folder}"
-                cp -f ${patfile} ${temp_dsmpat_folder}/${SYNOMODEL}.pat
+                mv -f ${patfile} ${temp_dsmpat_folder}/${SYNOMODEL}.pat
                 echo "Extracting encrypted pat file : ${temp_dsmpat_folder}/${SYNOMODEL}.pat to ${temp_pat_folder}"
                 sudo /bin/syno_extract_system_patch ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
                 echo "Creating unecrypted pat file ${SYNOMODEL}.pat to /home/tc/redpill-load/cache folder "
                 mkdir -p /home/tc/redpill-load/cache/
                 cd ${temp_pat_folder} && tar -czf ${temp_dsmpat_folder}/${SYNOMODEL}.pat ./ && cp -f ${temp_dsmpat_folder}/${SYNOMODEL}.pat /home/tc/redpill-load/cache/${SYNOMODEL}.pat
-                patfile="/home/tc/redpill-load/cache/${SYNOMODEL}.pat"
             fi
+            patfile="/home/tc/redpill-load/cache/${SYNOMODEL}.pat"            
 
         else
-
             echo "Something went wrong, please check cache files"
             exit 99
         fi
