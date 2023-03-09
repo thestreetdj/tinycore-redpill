@@ -115,7 +115,7 @@ if [ $gitdomain == "raw.githubusercontent.com" ]; then
     if [ $# -lt 1 ]; then
         getlatestmshell "ask"
     else
-        if [ "$1" == "update" ] ; then 
+        if [ "$1" == "update" ]; then 
             getlatestmshell "noask"
             exit 0
         else
@@ -198,7 +198,7 @@ jot="N"
             elif [ $1 = "FS2500" ]; then                                      
                 echo                                                          
             else                                                              
-                if [ "$(echo $1 | sed 's/J//g')" != "$MODEL" ] && [ "$(echo $1 | sed 's/F//g')" != "$MODEL" ] ; then
+                if [ "$(echo $1 | sed 's/J//g')" != "$MODEL" ] && [ "$(echo $1 | sed 's/F//g')" != "$MODEL" ]; then
                     echo "Syntax error, not valid arguments or not enough options"
                     exit 0                                                        
                 fi                                                                
@@ -218,15 +218,15 @@ jot="N"
 #echo $realmac
 #echo $frmyv
 
-if [ $jumkey == "Y" ] ; then 
+if [ $jumkey == "Y" ]; then 
     cecho p "The jumpkey option is deprecated, shell exit..."          
     exit 0
-elif [ $poco == "Y" ] ; then 
+elif [ $poco == "Y" ]; then 
     cecho p "The poco option is deprecated, shell exit..."
     exit 0
 fi
 
-if [ $noconfig == "Y" ] && [ $realmac == "Y" ] ; then 
+if [ $noconfig == "Y" ] && [ $realmac == "Y" ]; then 
     cecho p "The noconfig option and the realmac option cannot be used together, program exit..."
     exit 0
 fi
@@ -293,7 +293,7 @@ curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpi
 curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/master/rpext-index.json" -O  
 
 echo
-if [ $jot == "N" ] ; then    
+if [ $jot == "N" ]; then    
 cecho y "This is TCRP friend mode"
 else    
 cecho y "This is TCRP original jot mode"
@@ -315,12 +315,12 @@ else
     echo "${TARGET_PLATFORM} does not require model.dtc patching "    
 fi
 
-if [ -f /home/tc/custom-module/${dtbfile}.dts ] ; then
+if [ -f /home/tc/custom-module/${dtbfile}.dts ]; then
     sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config.json
     sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config_jun.json
 fi
 
-if [ $postupdate == "Y" ] ; then
+if [ $postupdate == "Y" ]; then
     cecho y "Postupdate in progress..."  
     sudo ./rploader.sh postupdate ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}
 
@@ -331,7 +331,7 @@ if [ $postupdate == "Y" ] ; then
     exit 0
 fi
 
-if [ $userdts == "Y" ] ; then
+if [ $userdts == "Y" ]; then
     
     cecho y "user-define dts file make in progress..."  
     echo
@@ -350,21 +350,21 @@ if [ $userdts == "Y" ] ; then
     exit 0
 fi
 
-if [ -d "/home/tc/redpill-load" ] && [ $frmyv == "N" ] ; then
+if [ -d "/home/tc/redpill-load" ] && [ $frmyv == "N" ]; then
     cecho y "Cleaning lkm and load directory ..." 
 #    cecho y "Do you want to clean redpill-load / lkm directory ? ( !!! Causion !!!, if you added ext from myv.sh, answer n )  [Yy/Nn]"
 #    read answer                                                                                                                                         
-#    if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ] ; then                                                                            
+#    if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then                                                                            
        ./rploader.sh clean
 #    fi
 fi
 
 echo
 
-if [ $noconfig == "Y" ] ; then                            
+if [ $noconfig == "Y" ]; then                            
     cecho r "SN Gen/Mac Gen/Vid/Pid/SataPortMap detection skipped!!"
     
-    if [ $DTC_BASE_MODEL == "Y" ] ; then
+    if [ $DTC_BASE_MODEL == "Y" ]; then
         cecho p "Device Tree based model does not need SataPortMap setting...."     
     else
         checkmachine
@@ -381,7 +381,7 @@ else
     cecho c "Before changing user_config.json" 
     cat user_config.json
 
-    if [ $realmac == "Y" ] ; then 
+    if [ $realmac == "Y" ]; then 
         echo "y"|./rploader.sh serialgen $MODEL realmac
     else
         echo "y"|./rploader.sh serialgen $MODEL
@@ -409,7 +409,7 @@ else
 
     echo "y"|./rploader.sh identifyusb
 
-    if  [ $DTC_BASE_MODEL == "Y" ] ; then
+    if  [ $DTC_BASE_MODEL == "Y" ]; then
         cecho p "Device Tree based model does not need SataPortMap setting...."     
     else
         ./rploader.sh satamap    
@@ -464,7 +464,7 @@ echo
 if [ $manual == "Y" ]; then    
     cecho r "Loader Manual Building in progress..." 
 
-    if [ $TARGET_REVISION == "42218" ] ; then
+    if [ $TARGET_REVISION == "42218" ]; then
 #        cecho y "Manual option is not allowed in jun mode build, It is built with the static option!!!  "  
         echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218 manual                                                                  
     else
@@ -473,14 +473,14 @@ if [ $manual == "Y" ]; then
     
 else                                                                                                                           
 
-    if [ $TARGET_REVISION == "42218" ] ; then
-        if [ $jot == "N" ] ; then
+    if [ $TARGET_REVISION == "42218" ]; then
+        if [ $jot == "N" ]; then
             echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218 withfriend
         else
             echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218
         fi
     else
-        if [ $jot == "N" ] ; then
+        if [ $jot == "N" ]; then
             echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} withfriend
         else
             echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}
@@ -489,7 +489,7 @@ else
     
 fi 
 
-if  [ -f /home/tc/custom-module/redpill.ko ] ; then  
+if  [ -f /home/tc/custom-module/redpill.ko ]; then
     cecho y "Removing redpill.ko ..."
     rm -rf /home/tc/custom-module/redpill.ko
 fi
@@ -501,14 +501,17 @@ echo
 rm -rf /home/tc/old                                                                                                                                                       
 rm -rf /home/tc/oldpat.tar.gz                                                                                                                                             
 
-if [ $noclean == "Y" ]  ; then                            
+if [ $noclean == "Y" ]; then      
     cecho r "Cleaning redpill-load directory and pat files in auxfiles directory skipped!!!"                 
     rm -f /home/tc/redpill-load/cache/*
     rm -f /home/tc/redpill-load/loader.img                                                                   
     rm -rf /home/tc/redpill-load/.git
 else                                                                                                         
-    ./rploader.sh clean                                                                                  
-    rm -f /mnt/${tcrppart}/auxfiles/*.pat                                                                    
+    ./rploader.sh clean    
+    cecho r "Delete all PAT files except for the final created PAT file (including decryption PAT)!"
+    if [$(ls /mnt/${tcrppart}/auxfiles/*.pat | grep -v ${SYNOMODEL}.pat | wc -l) -gt 0 ]; then
+        find /mnt/${tcrppart}/auxfiles -name "*.pat" ! -name "${SYNOMODEL}.pat" -type f -delete
+    fi    
 fi 
 
 rm -f /home/tc/custom-module                                                                                                                                             
