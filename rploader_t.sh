@@ -492,7 +492,7 @@ function processpat() {
                 patfile="/home/tc/redpill-load/cache/${SYNOMODEL}.pat"
             else
                 echo "Copy encrypted pat file : ${patfile} to ${temp_dsmpat_folder}"
-                cp -f /home/tc/redpill-load/cache/${SYNOMODEL}.pat ${temp_dsmpat_folder}/${patfile}
+                cp -f ${local_cache}/${SYNOMODEL}.pat ${temp_dsmpat_folder}/${patfile}
                 echo "Extracting encrypted pat file : ${patfile} to ${temp_pat_folder}"
                 sudo /bin/syno_extract_system_patch ${temp_dsmpat_folder}/${patfile} ${temp_pat_folder} || echo "extract latest pat"
                 echo "Creating unecrypted pat file ${SYNOMODEL}.pat to /home/tc/redpill-load/cache folder "
