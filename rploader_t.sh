@@ -454,6 +454,20 @@ function downloadextractor() {
 
 }
 
+function chkavail() {
+
+    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | grep G | wc -l) -gt 0 ]; then
+        avail_str=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/G//g' | cut -c 1-3)
+        avail=$(echo "$avail_str 1000" | awk '{print $1 * $2}')
+    else
+        avail=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' | cut -c 1-3)
+    fi
+
+    avail_num=$(($avail))
+    
+    echo "Avail space ${avail_num}M on /mnt/${tcrppart}"
+}
+
 function processpat() {
 
 #    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
@@ -548,7 +562,8 @@ function processpat() {
         echo -e "Configdir : $configdir \nConfigfile: $configfile \nPat URL : $pat_url"
         echo "Downloading pat file from URL : ${pat_url} "
 
-        if [ $(df -h /${local_cache} | grep mnt | awk '{print $4}' | sed -e 's/M//g' -e 's/G//g' | cut -c 1-3) -le 370 ]; then
+        chkavail
+        if [ $avail_num -le 370 ]; then
             echo "No adequate space on ${local_cache} to download file into cache folder, clean up the space and restart"
             exit 99
         fi
@@ -1363,8 +1378,8 @@ function backuploader() {
         return
     fi
 
-    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' -e 's/G//g' | cut -c 1-3) -le 50 ]; then
-        echo "No adequate space on TCRP loader partition  /mnt/${tcrppart} "
+    if [ $avail_num -le 50 ]; then
+        echo "No adequate space on TCRP loader partition  /mnt/${tcrppart} for backup"
         return
     fi
 
@@ -2807,17 +2822,9 @@ function buildloader() {
     echo "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
 
-    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | grep G | wc -l) -gt 0 ]; then
-        avail_str=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/G//g' | cut -c 1-3)
-        avail=$(echo "$avail_str 1000" | awk '{print $1 * $2}')
-    else
-        avail=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' | cut -c 1-3)
-    fi
-
-    avail_num=$(($avail))
-
-    if [ $avail_num -le 400 ]; then
-        echo "No adequate space on TCRP loader partition /mnt/${tcrppart} to cache pat file"
+    chkavail
+    if [ $avail_num -le 360 ]; then
+        echo "No adequate space on TCRP loader partition /mnt/${tcrppart} to backup cache pat file"
         echo "Found $(ls /mnt/${tcrppart}/auxfiles/*pat) file"
         echo "Removing older cached pat files to cache current"
         rm -f /mnt/${tcrppart}/auxfiles/*.pat
@@ -2833,6 +2840,7 @@ function buildloader() {
     fi
 
 }
+
 
 function bringoverfriend() {
 
