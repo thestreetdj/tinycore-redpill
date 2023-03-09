@@ -2456,7 +2456,7 @@ function gitdownload() {
         git pull
         cd /home/tc
     else
-        git clone -b $LKM_BRANCH "$LKM_SOURCE_URL"
+        git clone -b master "https://github.com/PeterSuh-Q3/redpill-lkm.git"
     fi
 
     if [ -d redpill-load ]; then
@@ -2465,7 +2465,7 @@ function gitdownload() {
         git pull
         cd /home/tc
     else
-        git clone -b $LD_BRANCH "$LD_SOURCE_URL"
+        git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"
     fi
     
 #m shell only start
