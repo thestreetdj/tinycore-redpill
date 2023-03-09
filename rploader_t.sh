@@ -531,7 +531,7 @@ function processpat() {
         fi
 
         echo "Clearing temp folders"
-        sudo rm -rf ${temp_pat_folder}
+        sudo umount ${temp_pat_folder} && sudo rm -rf ${temp_pat_folder}
 
         return
 
