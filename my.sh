@@ -7,7 +7,7 @@
 source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-gitdomain="github.com"
+gitdomain="raw.githubusercontent.com"
 
 mshellgz="my.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/my.sh.gz"
@@ -65,7 +65,7 @@ function checkinternet() {
 
     echo -n "Checking Internet Access -> "
 #    nslookup $gitdomain 2>&1 >/dev/null
-    curl --insecure -L -s https://github.com/about.html -O 2>&1 >/dev/null
+    curl --insecure -L -s https://raw.githubusercontent.com/about.html -O 2>&1 >/dev/null
 
     if [ $? -eq 0 ]; then
         echo "OK"
@@ -111,7 +111,7 @@ echo "aterm -geometry 78x25+525+430 -fg green -title \"TCRP Extra Terminal\" &" 
 
 checkinternet
 
-if [ $gitdomain == "github.com" ]; then
+if [ $gitdomain == "raw.githubusercontent.com" ]; then
     if [ $# -lt 1 ]; then
         getlatestmshell "ask"
     else
@@ -259,7 +259,7 @@ if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; t
 else
     cecho g "making directory  /mnt/${tcrppart}/auxfiles/extractor"  
     mkdir /mnt/${tcrppart}/auxfiles/extractor
-    sudo curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
+    sudo curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
     sudo tar -zxvf /mnt/${tcrppart}/auxfiles/extractor/extractor.gz -C /mnt/${tcrppart}/auxfiles/extractor
 fi
 
@@ -282,15 +282,15 @@ if [ "${DMPM}" = "null" ]; then
 fi
 cecho p "Device Module Processing Method is ${DMPM}"
 if [ "${DMPM}" = "EUDEV" ]; then
-    curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_eudev.json" --output /home/tc/custom_config.json
+    curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config_eudev.json" --output /home/tc/custom_config.json
 elif [ "${DMPM}" = "DDSML" ]; then
-    curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config.json" -O
+    curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json" -O
 else
     cecho p "Device Module Processing Method is Undefined, Program Exit!!!!!!!!"
     exit 0
 fi
-curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh" -O
-curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O  
+curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh" -O
+curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/master/rpext-index.json" -O  
 
 echo
 if [ $jot == "N" ] ; then    
