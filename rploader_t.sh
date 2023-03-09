@@ -508,6 +508,7 @@ function processpat() {
         fi
 
         cd /home/tc/redpill-load/cache
+        pwd
         tar xvf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./VERSION && . ./VERSION && rm ./VERSION
         os_sha256=$(sha256sum ${patfile} | awk '{print $1}')
         echo "Pat file  sha256sum is : $os_sha256"
