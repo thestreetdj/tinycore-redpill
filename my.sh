@@ -508,8 +508,8 @@ if [ $noclean == "Y" ]; then
     rm -rf /home/tc/redpill-load/.git
 else                                                                                                         
     ./rploader.sh clean    
-    cecho r "Delete all PAT files except for the final created PAT file (including decryption PAT)!"
-    if [$(ls /mnt/${tcrppart}/auxfiles/*.pat | grep -v ${SYNOMODEL}.pat | wc -l) -gt 0 ]; then
+    cecho y "Delete all PAT files except for the final created PAT file (including decryption PAT)!"
+    if [ $(ls /mnt/${tcrppart}/auxfiles/*.pat | grep -v ${SYNOMODEL}.pat | wc -l ) -gt 0 ]; then
         find /mnt/${tcrppart}/auxfiles -name "*.pat" ! -name "${SYNOMODEL}.pat" -type f -delete
     fi    
 fi 
