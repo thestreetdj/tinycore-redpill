@@ -460,12 +460,14 @@ function processpat() {
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
     temp_pat_folder="/tmp/pat"
+    temp_dsmpat_folder="/tmp/dsmpat"
 
     setplatform
 
     if [ ! -d "${temp_pat_folder}" ]; then
         echo "Creating temp folder ${temp_pat_folder} "
-        mkdir ${temp_pat_folder} && sudo mount -t tmpfs -o size=768M tmpfs ${temp_pat_folder} && cd ${temp_pat_folder}
+        mkdir ${temp_pat_folder} && sudo mount -t tmpfs -o size=400M tmpfs ${temp_pat_folder} && cd ${temp_pat_folder}
+        mkdir ${temp_dsmpat_folder} && sudo mount -t tmpfs -o size=400M tmpfs ${temp_dsmpat_folder}
     fi
 
     echo "Checking for cached pat file"
@@ -489,13 +491,14 @@ function processpat() {
                 echo "Unecrypted file is already cached in :  /home/tc/redpill-load/cache/${SYNOMODEL}.pat"
                 patfile="/home/tc/redpill-load/cache/${SYNOMODEL}.pat"
             else
+                echo "Copy encrypted pat file : ${patfile} to ${temp_dsmpat_folder}"
+                cp -f /home/tc/redpill-load/cache/${SYNOMODEL}.pat ${temp_dsmpat_folder}/${patfile}
                 echo "Extracting encrypted pat file : ${patfile} to ${temp_pat_folder}"
-                sudo /bin/syno_extract_system_patch ${patfile} ${temp_pat_folder} || echo "extract latest pat"
+                sudo /bin/syno_extract_system_patch ${temp_dsmpat_folder}/${patfile} ${temp_pat_folder} || echo "extract latest pat"
                 echo "Creating unecrypted pat file ${SYNOMODEL}.pat to /home/tc/redpill-load/cache folder "
                 mkdir -p /home/tc/redpill-load/cache/
-                cd ${temp_pat_folder} && tar -czf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./
+                cd ${temp_pat_folder} && tar -czf ${temp_dsmpat_folder}/${SYNOMODEL}.pat ./ && cp -f ${temp_dsmpat_folder}/${SYNOMODEL}.pat /home/tc/redpill-load/cache/${SYNOMODEL}.pat
                 patfile="/home/tc/redpill-load/cache/${SYNOMODEL}.pat"
-
             fi
 
         else
@@ -532,6 +535,7 @@ function processpat() {
 
         echo "Clearing temp folders"
         sudo umount ${temp_pat_folder} && sudo rm -rf ${temp_pat_folder}
+        sudo umount ${temp_dsmpat_folder} && sudo rm -rf ${temp_dsmpat_folder}        
 
         return
 
