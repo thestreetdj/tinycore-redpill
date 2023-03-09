@@ -521,7 +521,7 @@ function processpat() {
 
         cd /home/tc/redpill-load/cache
         tar xvf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./VERSION && . ./VERSION && rm ./VERSION
-        os_sha256=$(sha256sum ${patfile} | awk '{print $1}')
+        os_sha256=$(sha256sum /home/tc/redpill-load/cache/${SYNOMODEL}.pat | awk '{print $1}')
         echo "Pat file  sha256sum is : $os_sha256"
 
         echo -n "Checking config file existence -> "
