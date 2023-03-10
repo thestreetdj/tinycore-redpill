@@ -120,8 +120,10 @@ set -u
 # 2023.03.01
 # Update : Added erase data disk function to menu.sh
 # 2023.03.04
-# Update : Increased build processing speed by using RAMDISK when processing encrypted DSM PAT file decryption (baremetal)
-# 2023.03.09
+# Update : Increased build processing speed by using RAMDISK & pigz(multithreaded compression) when processing encrypted DSM PAT file decryption
+# 2023.03.10
+# Update : Added SA3600 (breadwellnk)
+# 2023.01.11
 
 
 showlastupdate() {
@@ -147,8 +149,11 @@ showlastupdate() {
 # Update : Added erase data disk function to menu.sh
 # 2023.03.04
 
-# Update : Increased build processing speed by using RAMDISK when processing encrypted DSM PAT file decryption (baremetal)
-# 2023.03.09
+# Update : Increased build processing speed by using RAMDISK & pigz(multithreaded compression) when processing encrypted DSM PAT file decryption
+# 2023.03.10
+
+# Update : Added SA3600 (breadwellnk)
+# 2023.01.11
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
@@ -228,7 +233,7 @@ getvars()
     DTC_BASE_MODEL="N"
     ORIGIN_PLATFORM=""
 
-# JOT MODE
+# JOT / FRIEND MODE
     if [ "${1}" = "DS918+" ] || [ "${1}" = "DS918+F" ]; then        
         DTC_BASE_MODEL="N"
         TARGET_PLATFORM="ds918p"
@@ -290,7 +295,7 @@ getvars()
         SYNOMODEL="ds723p_$TARGET_REVISION"                                                                                                                    
         sha256="e5a96f3b6c8e0535eea5fd585eb5aeca7f445f6fc976628875dc64b2cbb66180"
 
-# JOT MODE NEW MODEL SUCCESS
+# JOT / FRIEND MODE NEW MODEL SUCCESS
     elif [ "${1}" = "DS2422+" ] || [ "${1}" = "DS2422+F" ] ; then
         DTC_BASE_MODEL="Y"    
         MSHELL_ONLY_MODEL="Y"                
@@ -312,6 +317,13 @@ getvars()
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="rs4021xsp_$TARGET_REVISION"
         sha256="fd848be9336d8b5cc9b514e71d447c7612d0f542d373eef61a6d427430daa931"
+    elif [ "${1}" = "SA3600" ] || [ "${1}" = "SA3600F" ]; then
+        DTC_BASE_MODEL="N"
+        MSHELL_ONLY_MODEL="Y"    
+        TARGET_PLATFORM="sa3600"
+        ORIGIN_PLATFORM="broadwellnk"        
+        SYNOMODEL="sa3600_$TARGET_REVISION"
+        sha256="d4d6fcd5bb3b3c005f2fb199af90cb7f62162d9112127d06ebf5973aa645e0f8"
     elif [ "${1}" = "DVA3219" ] || [ "${1}" = "DVA3219F" ]; then
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"    
