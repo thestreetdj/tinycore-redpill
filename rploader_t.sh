@@ -436,9 +436,6 @@ function downloadextractor() {
 #m shell mofified
     echo "Copying required libraries to local lib directory"
     sudo cp /mnt/${tcrppart}/auxfiles/extractor/lib* /lib/
-    echo "Linking for libcurl4"
-    sudo ln -s /lib/libcurl.so.4.7.0 /lib/libcurl.so.4 
-    sudo ln -s /lib/libcurl.so.4.7.0 /lib/libcurl.so
     echo "Linking lib to lib64"    
     [ ! -h /lib64 ] && sudo ln -s /lib /lib64
     echo "Copying executable"
