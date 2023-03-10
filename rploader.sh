@@ -440,6 +440,8 @@ function downloadextractor() {
     [ ! -h /lib64 ] && sudo ln -s /lib /lib64
     echo "Copying executable"
     sudo cp /mnt/${tcrppart}/auxfiles/extractor/scemd /bin/syno_extract_system_patch
+    echo "Copying pigz for multithread compression"
+    sudo cp /mnt/${tcrppart}/auxfiles/extractor/pigz /usr/lobal/bin/pigz
 
     echo "Removing temp folder /tmp/synoesp"
     rm -rf $temp_folder
