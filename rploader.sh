@@ -3318,7 +3318,7 @@ function getredpillko() {
         echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
         sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 
-    elif [ $MODEL == "DS723+" ]; then
+    elif [ $MODEL == "DS723+" ]||[ $MODEL == "SA3600" ]; then
     
         echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
         sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/rp-r1000-4.4.180-prod.ko" --output /home/tc/custom-module/redpill.ko
