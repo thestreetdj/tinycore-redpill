@@ -510,7 +510,7 @@ function processpat() {
                 sudo /bin/syno_extract_system_patch ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
                 echo "Creating unecrypted pat file ${SYNOMODEL}.pat to /home/tc/redpill-load/cache folder "
                 mkdir -p /home/tc/redpill-load/cache/
-                cd ${temp_pat_folder} && tar -czf ${temp_dsmpat_folder}/${SYNOMODEL}.pat ./ && cp -f ${temp_dsmpat_folder}/${SYNOMODEL}.pat /home/tc/redpill-load/cache/${SYNOMODEL}.pat
+                cd ${temp_pat_folder} && tar -czf -1 ${temp_dsmpat_folder}/${SYNOMODEL}.pat ./ && cp -f ${temp_dsmpat_folder}/${SYNOMODEL}.pat /home/tc/redpill-load/cache/${SYNOMODEL}.pat
             fi
             patfile="/home/tc/redpill-load/cache/${SYNOMODEL}.pat"            
 
