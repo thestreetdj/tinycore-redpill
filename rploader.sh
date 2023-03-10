@@ -2984,6 +2984,8 @@ function setplatform() {
         SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+" && ORIGIN_PLATFORM="v1000"
     elif [ "${TARGET_PLATFORM}" = "rs4021xsp" ]; then
         SYNOMODEL="rs4021xsp_$TARGET_REVISION" && MODEL="RS4021xs+" && ORIGIN_PLATFORM="broadwellnk"
+    elif [ "${TARGET_PLATFORM}" = "sa3600" ]; then
+        SYNOMODEL="sa3600_$TARGET_REVISION" && MODEL="SA3600" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
         SYNOMODEL="ds1621xsp_$TARGET_REVISION" && MODEL="DS1621xs+" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "dva3219" ]; then
@@ -3070,7 +3072,7 @@ function getvars() {
         KERNEL_MAJOR="3"
         MODULE_ALIAS_FILE="modules.alias.3.json"
         ;;
-    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds1019p | ds2422p | ds1520p | fs2500 | ds1621xsp|  rs4021xsp | dva3219 | rs3618xs | *)
+    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds1019p | ds2422p | ds1520p | fs2500 | ds1621xsp| rs4021xsp | sa3600 | dva3219 | rs3618xs | *)
         KERNEL_MAJOR="4"
         MODULE_ALIAS_FILE="modules.alias.4.json"
         ;;
@@ -3272,14 +3274,14 @@ function listextension() {
         echo $extensionslist
 
 #m shell only
-        echo "Target Platform : ${TARGET_PLATFORM}"
-        if [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "rs4021xsp" ] || [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
-            if [ -d /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe ]; then
-                echo "Removing : PeterSuh-Q3.ixgbe"
-                echo "Reason : The Broadwellnk platform has a vanilla.ixgbe ext driver built into the DSM, so they conflict with each other if ixgbe is added separately."
-                sudo rm -rf /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe
-            fi
-        fi
+#        echo "Target Platform : ${TARGET_PLATFORM}"
+#        if [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "rs4021xsp" ] || [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
+#            if [ -d /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe ]; then
+#                echo "Removing : PeterSuh-Q3.ixgbe"
+#                echo "Reason : The Broadwellnk platform has a vanilla.ixgbe ext driver built into the DSM, so they conflict with each other if ixgbe is added separately."
+#                sudo rm -rf /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe
+#            fi
+#        fi
         
     else
         echo "No matching extension"
