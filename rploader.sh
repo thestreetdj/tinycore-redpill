@@ -2477,7 +2477,7 @@ function gitdownload() {
         git pull
         cd /home/tc
     else
-        git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-lkm.git"
+        git clone -b master "https://github.com/PeterSuh-Q3/redpill-lkm.git"
     fi
 
     if [ -d redpill-load ]; then
@@ -2486,7 +2486,7 @@ function gitdownload() {
         git pull
         cd /home/tc
     else
-        git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git"
+        git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"
     fi
     
 #m shell only start
