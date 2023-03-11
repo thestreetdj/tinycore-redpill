@@ -435,6 +435,9 @@ function downloadextractor() {
     fi
 
 #m shell mofified
+    sudo curl --insecure -L --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
+    sudo tar -zxvf /mnt/${tcrppart}/auxfiles/extractor/extractor.gz -C /mnt/${tcrppart}/auxfiles/extractor
+    
     echo "Copying required libraries to local lib directory"
     sudo cp /mnt/${tcrppart}/auxfiles/extractor/lib* /lib/
     echo "Linking lib to lib64"
