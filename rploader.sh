@@ -1796,6 +1796,13 @@ function mountshare() {
 
 function backup() {
 
+#Apply pigz for fast backup  
+    if [ $(cat /usr/bin/filetool.sh | grep pigz | wc -l ) -eq 0 ]; then
+        sudo sed -i 's/\-czvf/\-cvf \- \| pigz \>/g' /usr/bin/filetool.sh
+        sudo sed -i 's/\-czf/\-cf \- \| pigz \>/g' /usr/bin/filetool.sh
+    fi
+
+
 #    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
     homesize=$(du -sh /home/tc | awk '{print $1}')
 
@@ -2222,7 +2229,7 @@ function compileredpill() {
     cd /home/tc
     git config --global http.sslVerify false
     
-    if [ -d redpill-lkm ]; then
+    if [ -d /home/tc/redpill-lkm ]; then
         echo "Redpill sources already downloaded, pulling latest"
         cd redpill-lkm
         git pull
@@ -2485,16 +2492,15 @@ function checkinternet() {
 
 function gitdownload() {
 
-    cd /home/tc
-    git config --global http.sslVerify false
-
-    if [ -d redpill-load ]; then
+    if [ -d /home/tc/redpill-load ]; then
+        git config --global http.sslVerify false    
         echo "Loader sources already downloaded, pulling latest"
-        cd redpill-load
+        cd /home/tc/redpill-load
         git pull
         cd /home/tc
     else
-        git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"
+        git config --global http.sslVerify false    
+        git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"        
     fi
     
 #m shell only start
