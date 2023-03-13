@@ -86,6 +86,23 @@ function checkinternet() {
 }
 
 ###############################################################################
+# git clone redpill-load
+function gitdownload() {
+
+    git config --global http.sslVerify false   
+
+    if [ -d "/home/tc/redpill-load" ]; then
+        echo "Loader sources already downloaded, pulling latest"
+        cd /home/tc/redpill-load
+        git pull
+        cd /home/tc
+    else
+        git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"        
+    fi
+
+}
+
+###############################################################################
 # Write to json config file
 function writeConfigKey() {
 
@@ -110,6 +127,7 @@ echo "aterm -geometry 78x25+10+430 -fg orange -title \"TCRP NTP Sync\" -e /home/
 echo "aterm -geometry 78x25+525+430 -fg green -title \"TCRP Extra Terminal\" &" >> .xsession
 
 checkinternet
+gitdownload
 
 if [ $gitdomain == "raw.githubusercontent.com" ]; then
     if [ $# -lt 1 ]; then
@@ -348,15 +366,6 @@ if [ $userdts == "Y" ]; then
     echo                                                                                                                                        
     echo "y"|./rploader.sh backup    
     exit 0
-fi
-
-if [ -d "/home/tc/redpill-load" ] && [ $frmyv == "N" ]; then
-    cecho y "Cleaning lkm and load directory ..." 
-#    cecho y "Do you want to clean redpill-load / lkm directory ? ( !!! Causion !!!, if you added ext from myv.sh, answer n )  [Yy/Nn]"
-#    read answer                                                                                                                                         
-#    if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then                                                                            
-       ./rploader.sh clean
-#    fi
 fi
 
 echo
