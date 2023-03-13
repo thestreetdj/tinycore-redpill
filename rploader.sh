@@ -387,10 +387,10 @@ function downloadextractor() {
     temp_folder="/tmp/synoesp"
 
 #m shell mofified
-    echo "making directory  /mnt/${tcrppart}/auxfiles/extractor"  
-    [ ! -d /mnt/${tcrppart}/auxfiles/extractor ] && mkdir /mnt/${tcrppart}/auxfiles/extractor
-    sudo curl --insecure -L --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
-    sudo tar -zxvf /mnt/${tcrppart}/auxfiles/extractor/extractor.gz -C /mnt/${tcrppart}/auxfiles/extractor
+    echo "making directory ${local_cache}/extractor"  
+    [ ! -d ${local_cache}/extractor ] && mkdir ${local_cache}/extractor
+    sudo curl --insecure -L --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output ${local_cache}/extractor/extractor.gz
+    sudo tar -zxvf ${local_cache}/extractor/extractor.gz -C ${local_cache}/extractor
 
     if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then
 
