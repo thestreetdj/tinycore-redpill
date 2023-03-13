@@ -2492,16 +2492,15 @@ function checkinternet() {
 
 function gitdownload() {
 
-    cd /home/tc
-    git config --global http.sslVerify false
-
-    if [ ! -d /home/tc/redpill-load/ ]; then
-        git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"    
-    else
+    if [ -d /home/tc/redpill-load ]; then
+        git config --global http.sslVerify false    
         echo "Loader sources already downloaded, pulling latest"
-        cd redpill-load
+        cd /home/tc/redpill-load
         git pull
         cd /home/tc
+    else
+        git config --global http.sslVerify false    
+        git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"        
     fi
     
 #m shell only start
