@@ -253,15 +253,15 @@ if [ ! -h /home/tc/custom-module ]; then
 fi
 
 
-local_cache="/mnt/${tcrppart}/auxfiles"
-if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then
-    echo "Found extractor locally cached"
-else
-    cecho g "making directory  /mnt/${tcrppart}/auxfiles/extractor"  
-    mkdir /mnt/${tcrppart}/auxfiles/extractor
-    sudo curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
-    sudo tar -zxvf /mnt/${tcrppart}/auxfiles/extractor/extractor.gz -C /mnt/${tcrppart}/auxfiles/extractor
-fi
+#local_cache="/mnt/${tcrppart}/auxfiles"
+#if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then
+#    echo "Found extractor locally cached"
+#else
+#    cecho g "making directory  /mnt/${tcrppart}/auxfiles/extractor"  
+#    mkdir /mnt/${tcrppart}/auxfiles/extractor
+#    sudo curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output /mnt/${tcrppart}/auxfiles/extractor/extractor.gz
+#    sudo tar -zxvf /mnt/${tcrppart}/auxfiles/extractor/extractor.gz -C /mnt/${tcrppart}/auxfiles/extractor
+#fi
 
 echo
 cecho y "TARGET_PLATFORM is $TARGET_PLATFORM"
