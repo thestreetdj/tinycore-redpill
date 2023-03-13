@@ -2494,7 +2494,7 @@ function gitdownload() {
 
     git config --global http.sslVerify false   
 
-    if [ -d /home/tc/redpill-load ]; then
+    if [ -d "/home/tc/redpill-load" ]; then
         echo "Loader sources already downloaded, pulling latest"
         cd /home/tc/redpill-load
         git pull
