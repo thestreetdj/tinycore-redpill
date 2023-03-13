@@ -229,7 +229,7 @@ function seleudev() {
 # Shows available models to user choose one
 function modelMenu() {
 
-  M_GRP1="DS3622xs+ DS1621xs+ RS4021xs+ SA3600 DS3617xs RS3618xs"
+  M_GRP1="DS3622xs+ DS1621xs+ RS4021xs+ DS3617xs RS3618xs"
   M_GRP2="DS3615xs"
   M_GRP3="DVA3221 DVA3219"
   M_GRP4="DS918+ DS1019+"
