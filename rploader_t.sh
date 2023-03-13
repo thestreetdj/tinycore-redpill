@@ -2229,7 +2229,7 @@ function compileredpill() {
     cd /home/tc
     git config --global http.sslVerify false
     
-    if [ -d redpill-lkm ]; then
+    if [ -d /home/tc/redpill-lkm ]; then
         echo "Redpill sources already downloaded, pulling latest"
         cd redpill-lkm
         git pull
@@ -2495,7 +2495,7 @@ function gitdownload() {
     cd /home/tc
     git config --global http.sslVerify false
 
-    if [ -d redpill-load ]; then
+    if [ -d /home/tc/redpill-load ]; then
         echo "Loader sources already downloaded, pulling latest"
         cd redpill-load
         git pull
