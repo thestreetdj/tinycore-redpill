@@ -3385,7 +3385,7 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         getvars $2
         checkinternet
 #        getlatestrploader
-        gitdownload
+#        gitdownload     # When called from the parent my.sh, -d flag authority check is not possible, pre-downloaded in advance 
         getredpillko
 
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
