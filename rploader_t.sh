@@ -2493,7 +2493,7 @@ function checkinternet() {
 function gitdownload() {
 
     git config --global http.sslVerify false    
-    if [ -d /home/tc/redpill-load ]; then
+    if [ $(ls /home/tc/redpill-load 2>/dev/null | wc -l) -gt 0 ]; then
         echo "Loader sources already downloaded, pulling latest"
         cd /home/tc/redpill-load
         git pull
@@ -3384,7 +3384,7 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         getvars $2
         checkinternet
 #        getlatestrploader
-#        gitdownload    # When called from the parent my.sh, -d flag authority check is not possible, pre-downloaded in advance
+        gitdownload
         getredpillko
 
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
