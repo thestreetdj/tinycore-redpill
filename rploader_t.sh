@@ -2492,8 +2492,8 @@ function checkinternet() {
 
 function gitdownload() {
 
-    git config --global http.sslVerify false    
-    if [ $(ls /home/tc/redpill-load 2>/dev/null | wc -l) -gt 0 ]; then
+    git config --global http.sslVerify false   
+    if [ -d /home/tc/redpill-load ]; then    
         echo "Loader sources already downloaded, pulling latest"
         cd /home/tc/redpill-load
         git pull
@@ -3381,10 +3381,10 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
 
     build)
 
+        gitdownload
         getvars $2
         checkinternet
 #        getlatestrploader
-        gitdownload
         getredpillko
 
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
