@@ -2492,22 +2492,15 @@ function checkinternet() {
 
 function gitdownload() {
 
+    git config --global http.sslVerify false    
     if [ -d /home/tc/redpill-load ]; then
-        git config --global http.sslVerify false    
         echo "Loader sources already downloaded, pulling latest"
         cd /home/tc/redpill-load
         git pull
         cd /home/tc
     else
-        git config --global http.sslVerify false    
         git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"        
     fi
-    
-#m shell only start
-#    if [ ${ORIGIN_PLATFORM} == "denverton" ]; then
-#        sudo sed -i '5d' /home/tc/redpill-load/bundled-exts.json
-#    fi    
-#m shell only end    
 
 }
 
