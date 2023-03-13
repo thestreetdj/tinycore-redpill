@@ -3384,8 +3384,8 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         getvars $2
         checkinternet
 #        getlatestrploader
-        getredpillko
         gitdownload
+        getredpillko
 
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
 
