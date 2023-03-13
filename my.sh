@@ -141,7 +141,7 @@ echo "Multi-argument input variable assignment mapping"
 jumkey="N"
 postupdate="N"
 userdts="N"
-noclean="N"
+#noclean="N"
 noconfig="N"
 manual="N"
 poco="N"
@@ -168,9 +168,9 @@ jot="N"
             userdts="Y"
             ;;
 
-        noclean)
-            noclean="Y"
-            ;;
+#        noclean)
+#            noclean="Y"
+#            ;;
 
         noconfig)
             noconfig="Y"
@@ -501,17 +501,14 @@ echo
 rm -rf /home/tc/old                                                                                                                                                       
 rm -rf /home/tc/oldpat.tar.gz                                                                                                                                             
 
-if [ $noclean == "Y" ]; then      
-    cecho r "Cleaning redpill-load directory and pat files in auxfiles directory skipped!!!"                 
-    rm -f /home/tc/redpill-load/cache/*
-    rm -rf /home/tc/redpill-load/.git
-else                                                                                                         
-    ./rploader.sh clean    
-    cecho y "Delete all PAT files except for the final created PAT file (including decryption PAT)!"
-    if [ $(ls /mnt/${tcrppart}/auxfiles/*.pat | grep -v ${SYNOMODEL}.pat | wc -l ) -gt 0 ]; then
-        find /mnt/${tcrppart}/auxfiles -name "*.pat" ! -name "${SYNOMODEL}.pat" -type f -delete
-    fi    
-fi 
+cecho r "Cleaning redpill-load/cache and .git directory!"
+rm -f /home/tc/redpill-load/cache/*
+rm -rf /home/tc/redpill-load/.git
+
+cecho y "Delete all PAT files except for the final created PAT file (including decryption PAT)!"
+if [ $(ls /mnt/${tcrppart}/auxfiles/*.pat | grep -v ${SYNOMODEL}.pat | wc -l ) -gt 0 ]; then
+find /mnt/${tcrppart}/auxfiles -name "*.pat" ! -name "${SYNOMODEL}.pat" -type f -delete
+fi    
 
 rm -f /home/tc/custom-module                                                                                                                                             
 echo "y"|./rploader.sh backup                                                                                                                                         
