@@ -9,11 +9,12 @@
 
 rploaderver="0.9.3.5"
 build="master"
+redpillmake="prod"
 
 rploaderfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/rploader.sh"
 rploaderrepo="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/"
 
-redpillextension="https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/redpill/rpext-index.json"
+redpillextension="https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/redpill${redpillmake}/rpext-index.json"
 modextention="https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/rpext-index.json"
 modalias4="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/modules.alias.4.json.gz"
 modalias3="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/modules.alias.3.json.gz"
@@ -385,6 +386,12 @@ function downloadextractor() {
     local_cache="/mnt/${tcrppart}/auxfiles"
     temp_folder="/tmp/synoesp"
 
+#m shell mofified
+    echo "making directory ${local_cache}/extractor"  
+    [ ! -d ${local_cache}/extractor ] && mkdir ${local_cache}/extractor
+    sudo curl --insecure -L --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output ${local_cache}/extractor/extractor.gz
+    sudo tar -zxvf ${local_cache}/extractor/extractor.gz -C ${local_cache}/extractor
+
     if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then
 
         echo "Found extractor locally cached"
@@ -432,14 +439,14 @@ function downloadextractor() {
         done
 
     fi
-
-#m shell mofified
+    
     echo "Copying required libraries to local lib directory"
     sudo cp /mnt/${tcrppart}/auxfiles/extractor/lib* /lib/
-    echo "Linking lib to lib64"    
+    echo "Linking lib to lib64"
     [ ! -h /lib64 ] && sudo ln -s /lib /lib64
     echo "Copying executable"
     sudo cp /mnt/${tcrppart}/auxfiles/extractor/scemd /bin/syno_extract_system_patch
+    echo "pigz copy for multithreaded compression"
     sudo cp /mnt/${tcrppart}/auxfiles/extractor/pigz /usr/local/bin/pigz
 
     echo "Removing temp folder /tmp/synoesp"
@@ -512,7 +519,7 @@ function processpat() {
                 echo "Creating unecrypted pat file ${SYNOMODEL}.pat to /home/tc/redpill-load/cache folder (multithreaded comporession)"
                 mkdir -p /home/tc/redpill-load/cache/
                 thread=$(lscpu |grep CPU\(s\): | awk '{print $2}')
-                cd ${temp_pat_folder} && tar -cf - ./ | pigz -p $thread > ${temp_dsmpat_folder}/${SYNOMODEL}.pat && cp -f ${temp_dsmpat_folder}/${SYNOMODEL}.pat /home/tc/redpill-load/cache/${SYNOMODEL}.pat
+                cd ${temp_pat_folder} && tar -cf - ./ | pigz -p $thread > ${temp_dsmpat_folder}/${SYNOMODEL}.pat && cp -f ${temp_dsmpat_folder}/${SYNOMODEL}.pat /home/tc/redpill-load/cache/${SYNOMODEL}.pat                
             fi
             patfile="/home/tc/redpill-load/cache/${SYNOMODEL}.pat"            
 
@@ -2476,7 +2483,7 @@ function gitdownload() {
         git pull
         cd /home/tc
     else
-        git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-lkm.git"
+        git clone -b master "https://github.com/PeterSuh-Q3/redpill-lkm.git"
     fi
 
     if [ -d redpill-load ]; then
@@ -2485,7 +2492,7 @@ function gitdownload() {
         git pull
         cd /home/tc
     else
-        git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git"
+        git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"
     fi
     
 #m shell only start
@@ -2983,6 +2990,8 @@ function setplatform() {
         SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+" && ORIGIN_PLATFORM="v1000"
     elif [ "${TARGET_PLATFORM}" = "rs4021xsp" ]; then
         SYNOMODEL="rs4021xsp_$TARGET_REVISION" && MODEL="RS4021xs+" && ORIGIN_PLATFORM="broadwellnk"
+    elif [ "${TARGET_PLATFORM}" = "sa3600" ]; then
+        SYNOMODEL="sa3600_$TARGET_REVISION" && MODEL="SA3600" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
         SYNOMODEL="ds1621xsp_$TARGET_REVISION" && MODEL="DS1621xs+" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "dva3219" ]; then
@@ -3069,7 +3078,7 @@ function getvars() {
         KERNEL_MAJOR="3"
         MODULE_ALIAS_FILE="modules.alias.3.json"
         ;;
-    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds1019p | ds2422p | ds1520p | fs2500 | ds1621xsp|  rs4021xsp | dva3219 | rs3618xs | *)
+    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds1019p | ds2422p | ds1520p | fs2500 | ds1621xsp| rs4021xsp | sa3600 | dva3219 | rs3618xs | *)
         KERNEL_MAJOR="4"
         MODULE_ALIAS_FILE="modules.alias.4.json"
         ;;
@@ -3271,14 +3280,14 @@ function listextension() {
         echo $extensionslist
 
 #m shell only
-        echo "Target Platform : ${TARGET_PLATFORM}"
-        if [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "rs4021xsp" ] || [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
-            if [ -d /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe ]; then
-                echo "Removing : PeterSuh-Q3.ixgbe"
-                echo "Reason : The Broadwellnk platform has a vanilla.ixgbe ext driver built into the DSM, so they conflict with each other if ixgbe is added separately."
-                sudo rm -rf /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe
-            fi
-        fi
+#        echo "Target Platform : ${TARGET_PLATFORM}"
+#        if [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "rs4021xsp" ] || [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
+#            if [ -d /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe ]; then
+#                echo "Removing : PeterSuh-Q3.ixgbe"
+#                echo "Reason : The Broadwellnk platform has a vanilla.ixgbe ext driver built into the DSM, so they conflict with each other if ixgbe is added separately."
+#                sudo rm -rf /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe
+#            fi
+#        fi
         
     else
         echo "No matching extension"
@@ -3310,7 +3319,7 @@ function getredpillko() {
 #        sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko /home/tc/custom-module/redpill.ko
 #  else
 
-    if [ $MODEL == "FS2500" ]||[ $MODEL == "DS1019+" ]; then
+    if [ $MODEL == "FS2500" ]||[ $MODEL == "DS1019+" ]||[ $MODEL == "SA3600" ]; then
     
         echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
         sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
