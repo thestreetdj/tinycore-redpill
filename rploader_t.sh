@@ -2220,6 +2220,16 @@ function cleanloader() {
 function compileredpill() {
 
     cd /home/tc
+    git config --global http.sslVerify false
+    
+    if [ -d redpill-lkm ]; then
+        echo "Redpill sources already downloaded, pulling latest"
+        cd redpill-lkm
+        git pull
+        cd /home/tc
+    else
+        git clone -b master "https://github.com/PeterSuh-Q3/redpill-lkm.git"
+    fi
 
     export DSM_VERSION=${TARGET_VERSION}
     export REDPILL_LOAD_SRC=/home/tc/redpill-load
@@ -2477,14 +2487,6 @@ function gitdownload() {
 
     cd /home/tc
     git config --global http.sslVerify false
-    if [ -d redpill-lkm ]; then
-        echo "Redpill sources already downloaded, pulling latest"
-        cd redpill-lkm
-        git pull
-        cd /home/tc
-    else
-        git clone -b master "https://github.com/PeterSuh-Q3/redpill-lkm.git"
-    fi
 
     if [ -d redpill-load ]; then
         echo "Loader sources already downloaded, pulling latest"
