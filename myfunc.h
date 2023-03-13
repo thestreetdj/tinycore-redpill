@@ -122,9 +122,8 @@ set -u
 # 2023.03.04
 # Update : Increased build processing speed by using RAMDISK & pigz(multithreaded compression) when processing encrypted DSM PAT file decryption
 # 2023.03.10
-# Update : Added SA3600 (breadwellnk)
-# 2023.01.11
-
+# Update : Improved TCRP loader build process
+# 2023.03.14
 
 showlastupdate() {
     cat <<EOF
@@ -152,8 +151,8 @@ showlastupdate() {
 # Update : Increased build processing speed by using RAMDISK & pigz(multithreaded compression) when processing encrypted DSM PAT file decryption
 # 2023.03.10
 
-# Update : Added SA3600 (breadwellnk)
-# 2023.01.11
+# Update : Improved TCRP loader build process
+# 2023.03.14
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
