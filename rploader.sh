@@ -1815,8 +1815,9 @@ function backup() {
         fi
     else
         echo "pigz does not exist, bringing over from repo"
-        sudo curl -s --insecure --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/pigz" --output /usr/local/bin/pigz
-        chmod 777 /usr/local/bin/pigz
+        curl -s --insecure --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/pigz" -O
+        chmod 777 pigz
+        sudo mv pigz /usr/local/bin/
     fi
     
 #    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
