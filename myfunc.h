@@ -580,7 +580,6 @@ getlatestmshell() {
             echo "Updating m shell with latest updates"
             source myfunc.h
             showlastupdate
-            source rploader.sh
             echo "y"|./rploader.sh backup
             echo "press any key to continue..."                                                                                                   
             read answer            
