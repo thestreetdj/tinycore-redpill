@@ -1179,13 +1179,11 @@ function removebundledexts() {
     cd /home/tc/redpill-load/
 
     echo "Removing bundled exts directories"
-    for bundledext in $(grep ":" bundled-exts.json | awk '{print $2}' | sed -e 's/"//g' | sed -e 's/,/\n/g'); do
-        bundledextdir=$(curl --insecure --location -s "$bundledext" | jq -r -e '.id')
+    for bundledextdir in $(cat bundled-exts.json | jq 'keys[]' | sed -e 's/"//g'); do
         if [ -d /home/tc/redpill-load/custom/extensions/${bundledextdir} ]; then
             echo "Removing : ${bundledextdir}"
             sudo rm -rf /home/tc/redpill-load/custom/extensions/${bundledextdir}
         fi
-
     done
 
 }
