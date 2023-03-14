@@ -381,11 +381,13 @@ function restoresession() {
 }
 
 function copyextractor() {
-
-    local_cache="/mnt/${tcrppart}/auxfiles"
-    
 #m shell mofified
-    echo "making directory ${local_cache}/extractor"  
+    local_cache="/mnt/${tcrppart}/auxfiles"
+
+    echo "making directory ${local_cache}"
+    [ ! -d ${local_cache} ] && mkdir ${local_cache}
+
+    echo "making directory ${local_cache}/extractor"
     [ ! -d ${local_cache}/extractor ] && mkdir ${local_cache}/extractor
     sudo curl --insecure -L --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output ${local_cache}/extractor/extractor.gz
     sudo tar -zxvf ${local_cache}/extractor/extractor.gz -C ${local_cache}/extractor
