@@ -118,6 +118,20 @@ function writeConfigKey() {
     fi
 }
 
+function chkavail() {
+
+    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | grep G | wc -l) -gt 0 ]; then
+        avail_str=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/G//g' | cut -c 1-3)
+        avail=$(echo "$avail_str 1000" | awk '{print $1 * $2}')
+    else
+        avail=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' | cut -c 1-3)
+    fi
+
+    avail_num=$(($avail))
+    
+    echo "Avail space ${avail_num}M on /mnt/${tcrppart}"
+}
+
 sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" .dialogrc
 echo "insert aterm menu.sh in /home/tc/.xsession"
 sed -i "/aterm/d" .xsession
@@ -270,8 +284,8 @@ if [ ! -h /home/tc/custom-module ]; then
     sudo ln -s /mnt/${tcrppart}/auxfiles /home/tc/custom-module 
 fi
 
+local_cache="/mnt/${tcrppart}/auxfiles"
 
-#local_cache="/mnt/${tcrppart}/auxfiles"
 #if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then
 #    echo "Found extractor locally cached"
 #else
@@ -445,7 +459,14 @@ patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"
     if [ -f ${patfile} ]; then                                                               
         cecho r "Found locally cached pat file ${SYNOMODEL}.pat in /mnt/${tcrppart}/auxfiles"
         cecho b "Downloadng Skipped!!!"                                                     
-    else                                                                                    
+    else
+    
+        chkavail
+        if [ $avail_num -le 390 ]; then
+            echo "No adequate space on ${local_cache} to download file into cache folder, clean up PAT file now ....."
+            rm -f ${local_cache}/*.pat
+        fi
+        
         STATUS=`curl --insecure -w "%{http_code}" -L "${URL}" -o ${patfile} --progress-bar`
         if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
            echo  "Check internet or cache disk space"
