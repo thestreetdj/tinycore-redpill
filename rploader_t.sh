@@ -2856,18 +2856,17 @@ function bringoverfriend() {
     echo "Bringing over my friend from giteas.duckdns.org"
     [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
-#    curl -s --insecure -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
-#    -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
-#    -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
+    curl -s --insecure -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
+    -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
+    -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
 
     # 2nd try
-#    if [ $? -ne 0 ]; then
+    if [ $? -ne 0 ]; then
         echo "Download failed from giteas.duckdns.org, Tring github.com..."    
         #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")    
         URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
-        for file in $URLS; do filearr+=("-O" "\"${file}\"") ; done
-        echo ${filearr[@]}
-        curl -s --insecure -L "${filearr[@]}"
+        for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
+        for file in $URLS; do filearr+=("-O" "\"${file}\"") ; done ; curl -s --insecure -L "${filearr[@]}"
 
         # 3rd try
         if [ $? -ne 0 ]; then
@@ -2883,9 +2882,9 @@ function bringoverfriend() {
         else
             echo "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
         fi
- #   else
- #       echo "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
- #   fi
+    else
+        echo "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
+    fi
 
     if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
         FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
