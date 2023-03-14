@@ -380,6 +380,27 @@ function restoresession() {
     fi
 }
 
+function copyextractor() {
+
+    local_cache="/mnt/${tcrppart}/auxfiles"
+    
+#m shell mofified
+    echo "making directory ${local_cache}/extractor"  
+    [ ! -d ${local_cache}/extractor ] && mkdir ${local_cache}/extractor
+    sudo curl --insecure -L --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output ${local_cache}/extractor/extractor.gz
+    sudo tar -zxvf ${local_cache}/extractor/extractor.gz -C ${local_cache}/extractor
+
+    echo "Copying required libraries to local lib directory"
+    sudo cp /mnt/${tcrppart}/auxfiles/extractor/lib* /lib/
+    echo "Linking lib to lib64"
+    [ ! -h /lib64 ] && sudo ln -s /lib /lib64
+    echo "Copying executable"
+    sudo cp /mnt/${tcrppart}/auxfiles/extractor/scemd /bin/syno_extract_system_patch
+    echo "pigz copy for multithreaded compression"
+    sudo cp /mnt/${tcrppart}/auxfiles/extractor/pigz /usr/local/bin/pigz
+
+}
+
 function downloadextractor() {
 #    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
@@ -387,10 +408,7 @@ function downloadextractor() {
     temp_folder="/tmp/synoesp"
 
 #m shell mofified
-    echo "making directory ${local_cache}/extractor"  
-    [ ! -d ${local_cache}/extractor ] && mkdir ${local_cache}/extractor
-    sudo curl --insecure -L --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output ${local_cache}/extractor/extractor.gz
-    sudo tar -zxvf ${local_cache}/extractor/extractor.gz -C ${local_cache}/extractor
+    copyextractor
 
     if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then
 
@@ -439,15 +457,6 @@ function downloadextractor() {
         done
 
     fi
-    
-    echo "Copying required libraries to local lib directory"
-    sudo cp /mnt/${tcrppart}/auxfiles/extractor/lib* /lib/
-    echo "Linking lib to lib64"
-    [ ! -h /lib64 ] && sudo ln -s /lib /lib64
-    echo "Copying executable"
-    sudo cp /mnt/${tcrppart}/auxfiles/extractor/scemd /bin/syno_extract_system_patch
-    echo "pigz copy for multithreaded compression"
-    sudo cp /mnt/${tcrppart}/auxfiles/extractor/pigz /usr/local/bin/pigz
 
     echo "Removing temp folder /tmp/synoesp"
     rm -rf $temp_folder
@@ -1796,12 +1805,13 @@ function mountshare() {
 
 function backup() {
 
+    copyextractor
+
 #Apply pigz for fast backup  
     if [ $(cat /usr/bin/filetool.sh | grep pigz | wc -l ) -eq 0 ]; then
         sudo sed -i 's/\-czvf/\-cvf \- \| pigz \>/g' /usr/bin/filetool.sh
         sudo sed -i 's/\-czf/\-cf \- \| pigz \>/g' /usr/bin/filetool.sh
     fi
-
 
 #    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
     homesize=$(du -sh /home/tc | awk '{print $1}')
