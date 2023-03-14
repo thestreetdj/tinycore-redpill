@@ -639,8 +639,6 @@ function testarchive() {
 function addrequiredexts() {
 
     echo "Processing add_extensions entries found on custom_config.json file : ${EXTENSIONS}"
-    echo "======Mount the ramdisk for quick add processing of extensions.======="
-    sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
     for extension in ${EXTENSIONS_SOURCE_URL}; do
         echo "Adding extension ${extension} "
         cd /home/tc/redpill-load/ && ./ext-manager.sh add "$(echo $extension | sed -s 's/"//g' | sed -s 's/,//g')"
@@ -649,8 +647,6 @@ function addrequiredexts() {
         echo "Updating extension : ${extension} contents for model : ${SYNOMODEL}  "
         cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
     done
-    echo "======Unmount the ramdisk for add extensions.======="
-    sudo umount /home/tc/redpill-load/custom/extensions
 
 #m shell only
  #Use user define dts file instaed of dtbpatch ext now
@@ -2640,6 +2636,9 @@ function buildloader() {
 
     [ -d /home/tc/redpill-load ] && cd /home/tc/redpill-load
 
+    echo "======Mount the ramdisk for quick add processing of extensions.======="
+    sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
+
     addrequiredexts
 
     if [ "$JUNLOADER" == "YES" ]; then
@@ -2650,6 +2649,9 @@ function buildloader() {
     else
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
     fi
+
+    echo "======Unmount the ramdisk for add extensions.======="
+    sudo umount /home/tc/redpill-load/custom/extensions
 
     if [ $? -ne 0 ]; then
         echo "FAILED : Loader creation failed check the output for any errors"
