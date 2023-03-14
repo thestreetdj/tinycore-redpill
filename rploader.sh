@@ -1807,9 +1807,8 @@ function mountshare() {
 
 function backup() {
 
-    copyextractor
-
 #Apply pigz for fast backup  
+#    copyextractor
 #    if [ $(cat /usr/bin/filetool.sh | grep pigz | wc -l ) -eq 0 ]; then
 #        sudo sed -i 's/\-czvf/\-cvf \- \| pigz \>/g' /usr/bin/filetool.sh
 #        sudo sed -i 's/\-czf/\-cf \- \| pigz \>/g' /usr/bin/filetool.sh
