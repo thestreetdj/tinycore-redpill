@@ -1807,14 +1807,14 @@ function mountshare() {
 
 function backup() {
 
-    copyextractor
-
 #Apply pigz for fast backup  
-    if [ $(cat /usr/bin/filetool.sh | grep pigz | wc -l ) -eq 0 ]; then
-        sudo sed -i 's/\-czvf/\-cvf \- \| pigz \>/g' /usr/bin/filetool.sh
-        sudo sed -i 's/\-czf/\-cf \- \| pigz \>/g' /usr/bin/filetool.sh
+    if [ -n "$(which pigz)" ]; then
+        if [ $(cat /usr/bin/filetool.sh | grep pigz | wc -l ) -eq 0 ]; then
+            sudo sed -i 's/\-czvf/\-cvf \- \| pigz \>/g' /usr/bin/filetool.sh
+            sudo sed -i 's/\-czf/\-cf \- \| pigz \>/g' /usr/bin/filetool.sh
+        fi
     fi
-
+    
 #    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
     homesize=$(du -sh /home/tc | awk '{print $1}')
 
