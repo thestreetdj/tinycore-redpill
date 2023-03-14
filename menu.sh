@@ -25,5 +25,6 @@ done
 
 gitdownload
 
+source /home/tc/menu_m.sh
 /home/tc/menu_m.sh
 exit 0
