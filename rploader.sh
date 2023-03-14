@@ -2637,7 +2637,7 @@ function buildloader() {
     [ -d /home/tc/redpill-load ] && cd /home/tc/redpill-load
 
     echo "======Mount the ramdisk for quick add processing of extensions.======="
-    sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
+    sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom
 
     addrequiredexts
 
@@ -2651,7 +2651,7 @@ function buildloader() {
     fi
 
     echo "======Unmount the ramdisk for add extensions.======="
-    sudo umount /home/tc/redpill-load/custom/extensions
+    sudo umount /home/tc/redpill-load/custom
 
     if [ $? -ne 0 ]; then
         echo "FAILED : Loader creation failed check the output for any errors"
