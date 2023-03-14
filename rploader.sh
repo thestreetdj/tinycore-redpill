@@ -2492,22 +2492,16 @@ function checkinternet() {
 
 function gitdownload() {
 
-    if [ -d /home/tc/redpill-load ]; then
-        git config --global http.sslVerify false    
+    git config --global http.sslVerify false   
+
+    if [ -d "/home/tc/redpill-load" ]; then
         echo "Loader sources already downloaded, pulling latest"
         cd /home/tc/redpill-load
         git pull
         cd /home/tc
     else
-        git config --global http.sslVerify false    
         git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"        
     fi
-    
-#m shell only start
-#    if [ ${ORIGIN_PLATFORM} == "denverton" ]; then
-#        sudo sed -i '5d' /home/tc/redpill-load/bundled-exts.json
-#    fi    
-#m shell only end    
 
 }
 
@@ -2862,9 +2856,9 @@ function bringoverfriend() {
     echo "Bringing over my friend from giteas.duckdns.org"
     [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
-    curl --insecure --location --progress-bar "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" -O
-    curl --insecure --location --progress-bar "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" -O
-    curl --insecure --location --progress-bar "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend" -O
+    curl -s --insecure -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
+    -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
+    -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
 
     # 2nd try
     if [ $? -ne 0 ]; then
@@ -2872,14 +2866,24 @@ function bringoverfriend() {
         #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")    
         URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
         for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
-        
+        for file in $URLS; do filearr+=("-O" "\"${file}\"") ; done ; curl -s --insecure -L "${filearr[@]}"
+
         # 3rd try
         if [ $? -ne 0 ]; then
-           echo "Download failed from github.com, Tring gitee.com..."            
-            curl --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" -O
-            curl --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" -O
-            curl --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend" -O        
-        fi        
+            echo "Download failed from github.com, Tring gitee.com..."
+            curl -s --insecure -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
+            -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" \
+            -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend"
+            if [ $? -ne 0 ]; then
+                echo "Download failed from gitee.com... !!!!!!!!"
+            else
+                echo "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
+            fi
+        else
+            echo "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
+        fi
+    else
+        echo "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
     fi
 
     if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
@@ -3391,8 +3395,8 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         getvars $2
         checkinternet
 #        getlatestrploader
+#        gitdownload     # When called from the parent my.sh, -d flag authority check is not possible, pre-downloaded in advance 
         getredpillko
-        gitdownload
 
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
 
