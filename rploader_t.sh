@@ -2856,24 +2856,33 @@ function bringoverfriend() {
     echo "Bringing over my friend from giteas.duckdns.org"
     [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
-    curl --insecure --location --progress-bar "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" -O
-    curl --insecure --location --progress-bar "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" -O
-    curl --insecure --location --progress-bar "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend" -O
+    curl -s --insecure --location --progress-bar -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" 
+    curl -s --insecure --location --progress-bar -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend"
+    curl -s --insecure --location --progress-bar -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
 
     # 2nd try
     if [ $? -ne 0 ]; then
         echo "Download failed from giteas.duckdns.org, Tring github.com..."    
         #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")    
-        URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
+        URLS=$(curl -s --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
         for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
         
         # 3rd try
         if [ $? -ne 0 ]; then
-           echo "Download failed from github.com, Tring gitee.com..."            
-            curl --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" -O
-            curl --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" -O
-            curl --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend" -O        
-        fi        
+            echo "Download failed from github.com, Tring gitee.com..."
+            curl -s --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" -O
+            curl -s --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" -O
+            curl -s --insecure --location --progress-bar "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend" -O        
+            if [ $? -ne 0 ]; then
+                echo "Download failed from gitee.com... !!!!!!!!"
+            else
+                echo "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
+            fi
+        else
+            echo "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
+        fi
+    else
+        echo "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
     fi
 
     if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
