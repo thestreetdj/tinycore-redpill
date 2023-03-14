@@ -1813,6 +1813,8 @@ function backup() {
             sudo sed -i 's/\-czvf/\-cvf \- \| pigz \>/g' /usr/bin/filetool.sh
             sudo sed -i 's/\-czf/\-cf \- \| pigz \>/g' /usr/bin/filetool.sh
         fi
+    else
+        copyextractor
     fi
     
 #    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
