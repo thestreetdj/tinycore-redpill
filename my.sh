@@ -300,15 +300,15 @@ if [ "${DMPM}" = "null" ]; then
 fi
 cecho p "Device Module Processing Method is ${DMPM}"
 if [ "${DMPM}" = "EUDEV" ]; then
-    curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config_eudev.json" --output /home/tc/custom_config.json
+    curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config_eudev.json" --output /home/tc/custom_config.json
 elif [ "${DMPM}" = "DDSML" ]; then
-    curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json" -O
+    curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json" -O
 else
     cecho p "Device Module Processing Method is Undefined, Program Exit!!!!!!!!"
     exit 0
 fi
-curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh" -O
-curl --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/master/rpext-index.json" -O  
+curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh" -O
+#curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/master/rpext-index.json" -O
 
 echo
 if [ $jot == "N" ]; then    
