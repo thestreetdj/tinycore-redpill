@@ -639,7 +639,6 @@ function testarchive() {
 function addrequiredexts() {
 
     echo "Processing add_extensions entries found on custom_config.json file : ${EXTENSIONS}"
-
     for extension in ${EXTENSIONS_SOURCE_URL}; do
         echo "Adding extension ${extension} "
         cd /home/tc/redpill-load/ && ./ext-manager.sh add "$(echo $extension | sed -s 's/"//g' | sed -s 's/,//g')"
@@ -656,7 +655,7 @@ function addrequiredexts() {
         patchdtc
         echo "Patch dtc is superseded by fbelavenuto dtbpatch"
     fi
-
+    
 }
 
 function installapache() {
@@ -1180,13 +1179,11 @@ function removebundledexts() {
     cd /home/tc/redpill-load/
 
     echo "Removing bundled exts directories"
-    for bundledext in $(grep ":" bundled-exts.json | awk '{print $2}' | sed -e 's/"//g' | sed -e 's/,/\n/g'); do
-        bundledextdir=$(curl --insecure --location -s "$bundledext" | jq -r -e '.id')
+    for bundledextdir in $(cat bundled-exts.json | jq 'keys[]' | sed -e 's/"//g'); do
         if [ -d /home/tc/redpill-load/custom/extensions/${bundledextdir} ]; then
             echo "Removing : ${bundledextdir}"
             sudo rm -rf /home/tc/redpill-load/custom/extensions/${bundledextdir}
         fi
-
     done
 
 }
@@ -1813,6 +1810,11 @@ function backup() {
             sudo sed -i 's/\-czvf/\-cvf \- \| pigz \>/g' /usr/bin/filetool.sh
             sudo sed -i 's/\-czf/\-cf \- \| pigz \>/g' /usr/bin/filetool.sh
         fi
+    else
+        echo "pigz does not exist, bringing over from repo"
+        curl -s --insecure --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/pigz" -O
+        chmod 777 pigz
+        sudo mv pigz /usr/local/bin/
     fi
     
 #    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
@@ -2632,6 +2634,9 @@ function buildloader() {
 
     [ -d /home/tc/redpill-load ] && cd /home/tc/redpill-load
 
+    echo "======Mount the ramdisk for quick add processing of extensions.======="
+    sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom
+
     addrequiredexts
 
     if [ "$JUNLOADER" == "YES" ]; then
@@ -2642,6 +2647,9 @@ function buildloader() {
     else
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
     fi
+
+    echo "======Unmount the ramdisk for add extensions.======="
+    sudo umount /home/tc/redpill-load/custom
 
     if [ $? -ne 0 ]; then
         echo "FAILED : Loader creation failed check the output for any errors"
