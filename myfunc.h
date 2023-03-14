@@ -581,6 +581,8 @@ getlatestmshell() {
             source myfunc.h
             showlastupdate
             echo "y"|./rploader.sh backup
+            echo "press any key to continue..."                                                                                                   
+            read answer            
             exit
         else
             rm -f /home/tc/latest.mshell.gz
