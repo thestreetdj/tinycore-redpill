@@ -174,6 +174,10 @@ curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/
 curl --location --progress-bar "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/custom_config_jun.json" -O	
 curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/rpext-index.json" -O
 
+echo "======Mount the ramdisk for quick add processing of extensions frmo myv.sh.======="
+[ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir /home/tc/redpill-load/custom/extensions
+sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
+
 cecho y "Adding Ext in progress..."                                                                                                                                     
                                                                                                                                                                         
 EXDRIVER_FN
