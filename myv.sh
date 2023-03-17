@@ -14,7 +14,7 @@ mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/
 # ==============================================================================                                        
 # Color Function                                                                                                        
 # ==============================================================================                                        
-cecho () {                                                                                                              
+function cecho () {                                                                                                              
 #    if [ -n "$3" ]                                                                                                      
 #    then                                                                                                                
 #        case "$3" in                                                                                                    
@@ -127,7 +127,7 @@ function EXDRIVER_FN() {
     done
 }
 
-checkinternet() {
+function checkinternet() {
 
     echo -n "Checking Internet Access -> "
     curl -L https://github.com/about.html -O 2>&1 >/dev/null
@@ -141,6 +141,23 @@ checkinternet() {
 
 }
 
+###############################################################################
+# git clone redpill-load
+function gitdownload() {
+
+    git config --global http.sslVerify false   
+
+    if [ -d "/home/tc/redpill-load" ]; then
+        cecho y "Loader sources already downloaded, pulling latest !!!"
+        cd /home/tc/redpill-load
+        git pull
+        cd /home/tc
+    else
+        git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"        
+    fi
+
+}
+
 checkinternet
 getlatestmshell
 
@@ -148,6 +165,8 @@ if [ $# -lt 1 ]; then
     showhelp
     exit 99
 fi
+
+gitdownload
 
 getvars "$1"
 
