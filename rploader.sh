@@ -1,4 +1,4 @@
-#!/bin/bash
+/bin/bash
 #
 # Author : pocopico 
 # Date : 221115
@@ -2701,6 +2701,8 @@ function buildloader() {
             tinyentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg
         else
             sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" localdiskp1/boot/grub/grub.cfg
+            sudo sed -i "s/Verbose/Verbose, ${DMPM}/" localdiskp1/boot/grub/grub.cfg
+            sudo sed -i "s/Linux.../Linux... ${DMPM}/" localdiskp1/boot/grub/grub.cfg
             echo "Creating tinycore entry"
             tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
         fi    
