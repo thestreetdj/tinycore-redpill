@@ -541,11 +541,11 @@ function READ_YN () { # ${1}:question ${2}:default
     while true; do
         read -n1 -p "${1}" Y_N                                                                                                       
         case "$Y_N" in                                                                                                            
-        y) Y_N="y"                                                                                                                
-             echo -e "\n"; break ;;                                                                                                      
-        n) Y_N="n"                                                                                                                
-             echo -e "\n"; break ;;                                                                                                      
-        *) echo -e "Please answer with y or n.\n" ;;                                                                                                        
+            [Yy]* ) Y_N="y"                                                                                                                
+                 echo -e "\n"; break ;;                                                                                                      
+            [Nn]* ) Y_N="n"                                                                                                                
+                 echo -e "\n"; break ;;                                                                                                      
+            *) echo -e "Please answer in Y / y or N / n.\n" ;;                                                                                                        
         esac                                                                                                                      
     done        
 }                                                                                         
