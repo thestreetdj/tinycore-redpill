@@ -328,6 +328,12 @@ function checkmachine() {
         echo "Machine is $MACHINE Hypervisor=$HYPERVISOR"
     fi
 
+    if [ $(lscpu |grep Intel |wc -l) -gt 0 ]; then
+        CPU="INTEL"
+    else	
+        CPU="AMD"    
+    fi
+
 }
 
 function savesession() {
@@ -2707,6 +2713,12 @@ checkmachine
             sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" localdiskp1/boot/grub/grub.cfg
             sudo sed -i "s/Verbose/Verbose, ${DMPM}/" localdiskp1/boot/grub/grub.cfg
             sudo sed -i "s/Linux.../Linux... ${DMPM}/" localdiskp1/boot/grub/grub.cfg
+            
+            if [ "${CPU}" == "AMD" ]
+                echo "Add Jot configuration disable_mtrr_trim for AMD"            
+                sudo sed -i "s/withefi/withefi disable_mtrr_trim/" localdiskp1/boot/grub/grub.cfg            
+            fi
+            
             echo "Creating tinycore entry"
             tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
         fi    
@@ -2750,6 +2762,12 @@ checkmachine
 
     USB_LINE="$(grep -A 5 "USB," /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | grep linux | cut -c 16-999)"
     SATA_LINE="$(grep -A 5 "SATA," /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | grep linux | cut -c 16-999)"
+
+    if [ "${CPU}" == "AMD" ]
+        echo "Add FRIEND configuration disable_mtrr_trim for AMD"  
+        USB_LINE="$(echo $USB_LINE) disable_mtrr_trim"
+        SATA_LINE="$(echo $SATA_LINE) disable_mtrr_trim"
+    fi
 
     echo "Updated user_config with USB Command Line : $USB_LINE"
     json=$(jq --arg var "${USB_LINE}" '.general.usb_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
