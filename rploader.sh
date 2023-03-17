@@ -2594,7 +2594,11 @@ checkmachine
         exit 99
     fi
 
-    removebundledexts
+    if [ "$FROMMYV" = "YES" ]; then
+        echo "skip removebundledexts() for called from myv.sh"
+    else
+        removebundledexts
+    fi    
 
     if [ ! -d /lib64 ]; then
         sudo ln -s /lib /lib64
@@ -3424,6 +3428,8 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         getredpillko
 
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
+
+        [ "$4" = "frmyv" ] && echo "called from myv.sh option set, From Myv will be added" && FROMMYV="YES"
 
         case $3 in
 
