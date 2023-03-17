@@ -124,6 +124,10 @@ set -u
 # 2023.03.10
 # Update : Improved TCRP loader build process
 # 2023.03.14
+# Update : Automatic handling of grub.cfg disable_mtrr_trim=1 to unlock AMD Platform 3.5GB RAM limitation
+# 2023.03.16
+
+
 
 function showlastupdate() {
     cat <<EOF
@@ -153,6 +157,9 @@ function showlastupdate() {
 
 # Update : Improved TCRP loader build process
 # 2023.03.14
+
+# Update : Automatic handling of grub.cfg disable_mtrr_trim=1 to unlock AMD Platform 3.5GB RAM limitation
+# 2023.03.16
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
