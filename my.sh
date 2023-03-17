@@ -503,17 +503,23 @@ if [ $manual == "Y" ]; then
     
 else                                                                                                                           
 
+    if [ $frmyv == "Y" ]; then
+        parmfrmyv="frmyv"
+    else
+        parmfrmyv=""
+    fi
+
     if [ $TARGET_REVISION == "42218" ]; then
         if [ $jot == "N" ]; then
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218 withfriend
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218 withfriend ${parmfrmyv}
         else
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218 static ${parmfrmyv}
         fi
     else
         if [ $jot == "N" ]; then
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} withfriend
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} withfriend ${parmfrmyv}
         else
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} static ${parmfrmyv}
         fi
     fi
     
