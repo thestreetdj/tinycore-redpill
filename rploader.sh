@@ -2575,6 +2575,8 @@ function buildloader() {
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
 
+checkmachine
+
     [ "$1" == "junmod" ] && JUNLOADER="YES"
 
     [ -d $local_cache ] && echo "Found tinycore cache folder, linking to home/tc/custom-module" && [ ! -d /home/tc/custom-module ] && ln -s $local_cache /home/tc/custom-module
@@ -2841,8 +2843,6 @@ function buildloader() {
     cd /home/tc/redpill-load/
 
     ####
-
-    checkmachine
 
     sudo umount part1
     sudo umount part2
