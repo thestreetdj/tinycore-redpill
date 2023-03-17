@@ -2714,7 +2714,7 @@ checkmachine
             sudo sed -i "s/Verbose/Verbose, ${DMPM}/" localdiskp1/boot/grub/grub.cfg
             sudo sed -i "s/Linux.../Linux... ${DMPM}/" localdiskp1/boot/grub/grub.cfg
             
-            if [ "${CPU}" == "AMD" ]
+            if [ "${CPU}" == "AMD" ]; then
                 echo "Add Jot configuration disable_mtrr_trim for AMD"            
                 sudo sed -i "s/withefi/withefi disable_mtrr_trim/" localdiskp1/boot/grub/grub.cfg            
             fi
@@ -2763,7 +2763,7 @@ checkmachine
     USB_LINE="$(grep -A 5 "USB," /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | grep linux | cut -c 16-999)"
     SATA_LINE="$(grep -A 5 "SATA," /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | grep linux | cut -c 16-999)"
 
-    if [ "${CPU}" == "AMD" ]
+    if [ "${CPU}" == "AMD" ]; then
         echo "Add FRIEND configuration disable_mtrr_trim for AMD"  
         USB_LINE="$(echo $USB_LINE) disable_mtrr_trim"
         SATA_LINE="$(echo $SATA_LINE) disable_mtrr_trim"
