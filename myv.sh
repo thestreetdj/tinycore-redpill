@@ -176,7 +176,7 @@ curl --location --progress-bar "https://github.com/PeterSuh-Q3/rp-ext/raw/main/r
 
 echo "======Mount the ramdisk for quick add processing of extensions frmo myv.sh.======="
 [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir /home/tc/redpill-load/custom/extensions
-sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
+[ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 
 cecho y "Adding Ext in progress..."                                                                                                                                     
                                                                                                                                                                         
