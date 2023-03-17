@@ -2716,7 +2716,7 @@ checkmachine
             
             if [ "${CPU}" == "AMD" ]; then
                 echo "Add Jot configuration disable_mtrr_trim for AMD"            
-                sudo sed -i "s/withefi/withefi disable_mtrr_trim/" localdiskp1/boot/grub/grub.cfg            
+                sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" localdiskp1/boot/grub/grub.cfg            
             fi
             
             echo "Creating tinycore entry"
@@ -2765,8 +2765,8 @@ checkmachine
 
     if [ "${CPU}" == "AMD" ]; then
         echo "Add FRIEND configuration disable_mtrr_trim for AMD"  
-        USB_LINE="$(echo $USB_LINE) disable_mtrr_trim"
-        SATA_LINE="$(echo $SATA_LINE) disable_mtrr_trim"
+        USB_LINE="$(echo $USB_LINE) disable_mtrr_trim=1"
+        SATA_LINE="$(echo $SATA_LINE) disable_mtrr_trim=1"
     fi
 
     echo "Updated user_config with USB Command Line : $USB_LINE"
