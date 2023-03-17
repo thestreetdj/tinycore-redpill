@@ -125,7 +125,7 @@ set -u
 # Update : Improved TCRP loader build process
 # 2023.03.14
 
-showlastupdate() {
+function showlastupdate() {
     cat <<EOF
 
 # Update : Release TCRP FRIEND mode
@@ -160,7 +160,7 @@ Run ./menu.sh to use the menu.
 EOF
 }
 
-showhelp() {
+function showhelp() {
     cat <<EOF
 $(basename ${0})
 
@@ -224,7 +224,7 @@ EOF
 
 }
 
-getvars()
+function getvars()
 {
 
     TARGET_REVISION="42962"
@@ -531,26 +531,26 @@ getvars()
 }
 
 # Function READ_YN, cecho                                                                                        
-# Made by FOXBI                                                                                                               
+# Made by FOXBI
 # 2022.04.14                                                                                                                  
 #                                                                                                                             
 # ==============================================================================                                              
 # Y or N Function                                                                                                             
 # ==============================================================================                                              
-READ_YN () { # ${1}:question ${2}:default                                                                                         
-   read -n1 -p "${1}" Y_N                                                                                                       
-    case "$Y_N" in                                                                                                            
-    y) Y_N="y"                                                                                                                
-         echo -e "\n" ;;                                                                                                      
-    n) Y_N="n"                                                                                                                
-         echo -e "\n" ;;                                                                                                      
-    q) echo -e "\n"                                                                                                           
-       exit 0 ;;                                                                                                              
-    *) echo -e "\n" ;;                                                                                                        
-    esac                                                                                                                      
+function READ_YN () { # ${1}:question ${2}:default                                                                                         
+    while true; do
+        read -n1 -p "${1}" Y_N                                                                                                       
+        case "$Y_N" in                                                                                                            
+        y) Y_N="y"                                                                                                                
+             echo -e "\n"; break ;;                                                                                                      
+        n) Y_N="n"                                                                                                                
+             echo -e "\n"; break ;;                                                                                                      
+        *) echo -e "Please answer with y or n.\n" ;;                                                                                                        
+        esac                                                                                                                      
+    done        
 }                                                                                         
 
-getlatestmshell() {
+function getlatestmshell() {
 
     echo -n "Checking if a newer mshell version exists on the repo -> "
 
@@ -624,7 +624,7 @@ echo
 
 }
 
-generateMacAddress() {
+function generateMacAddress() {
     printf '00:11:32:%02X:%02X:%02X' $((RANDOM % 256)) $((RANDOM % 256)) $((RANDOM % 256))
 
 }
