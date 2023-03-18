@@ -2763,9 +2763,9 @@ checkmachine
                 cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
                 echo "Creating tinycore friend entry"
                 if [ $loaderdisk == "mmcblk0p" ]; then        
-                    tcrpfriendentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg                
+                    tcrpfriendentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg                
                 else
-                    tcrpfriendentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
+                    tcrpfriendentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
                 fi    
             fi
         else
@@ -2804,8 +2804,8 @@ checkmachine
     rdhash=$(sha256sum /home/tc/redpill-load/localdiskp2/rd.gz | awk '{print $1}')
     updateuserconfigfield "general" "rdhash" "$rdhash"
 
-    USB_LINE="$(grep -A 5 "USB," /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | grep linux | cut -c 16-999)"
-    SATA_LINE="$(grep -A 5 "SATA," /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | grep linux | cut -c 16-999)"
+    USB_LINE="$(grep -A 5 "USB," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
+    SATA_LINE="$(grep -A 5 "SATA," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
 
     echo "Updated user_config with USB Command Line : $USB_LINE"
     json=$(jq --arg var "${USB_LINE}" '.general.usb_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
