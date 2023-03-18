@@ -97,13 +97,13 @@ EOF
 }
 
 function msgalert() {
-    echo -en "\033[1;31m$1\033[0m"
+    echo -e "\033[1;31m$1\033[0m"
 }
 function msgwarning() {
-    echo -en "\033[1;33m$1\033[0m"
+    echo -e "\033[1;33m$1\033[0m"
 }
 function msgnormal() {
-    echo -en "\033[1;32m$1\033[0m"
+    echo -e "\033[1;32m$1\033[0m"
 } 
 
 function readanswer() {
@@ -245,7 +245,7 @@ function monitor() {
         echo -e "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
         msgnormal "CPU Threads:\t\t"$(lscpu |grep CPU\(s\): | awk '{print $2}')
         echo -e "Current Date Time:\t"$(date)
-        msgnormal "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
+        echo -e "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
         listpci
         echo -e "-------------------------------Loader boot entries---------------------------"
         grep -i menuentry /mnt/${loaderdisk}1/boot/grub/grub.cfg | awk -F \' '{print $2}'
