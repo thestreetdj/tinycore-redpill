@@ -2591,7 +2591,6 @@ function tinyjotfunc() {
     cat <<EOF
     echo -e "-----------={ M Shell for TinyCore RedPill JOT }=------------\n"
     echo "TCRP JOT Version : 0.9.4.0-1"
-}
 EOF
 
 }
@@ -2745,9 +2744,8 @@ checkmachine
                 sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
             fi
             
-            retext=tinyjotfunc
-            
-            sudo sed -i "s/msdos1/msdos1\\n        ${retext}/" /tmp/tempentry.txt
+            retext=$(tinyjotfunc)
+            sudo sed -i "s/grubenv saved_entry/grubenv saved_entry\\n        ${retext}/" /tmp/tempentry.txt
         fi    
 
         if [ "$WITHFRIEND" = "YES" ]; then
