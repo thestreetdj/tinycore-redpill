@@ -2594,7 +2594,7 @@ function savedefault {
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
     echo "TCRP JOT Version : 0.9.4.0-1"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq) With $(free -h | grep Mem | awk '{print $2}') Memory"
-    echo -e $(cat /tmp/tempentry.txt | grep earlyprintk)
+    echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | sed 's/linux \/zImage/cmdline :/' )"
 }    
 EOF
 }
