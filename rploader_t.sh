@@ -2296,6 +2296,22 @@ function checkfilechecksum() {
 
 }
 
+function tinycolorfunc() {
+
+    cat <<EOF
+function msgalert() {
+    echo -en "\033[1;31m$1\033[0m"
+}
+function msgwarning() {
+    echo -en "\033[1;33m$1\033[0m"
+}
+function msgnormal() {
+    echo -en "\033[1;32m$1\033[0m"
+}  
+EOF
+
+}
+
 function tinyentry() {
 
     cat <<EOF
@@ -2704,6 +2720,10 @@ checkmachine
     if [ $(mount | grep -i part1 | wc -l) -eq 1 ] && [ $(mount | grep -i part2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp1 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp2 | wc -l) -eq 1 ]; then
         sudo cp -rf part1/* localdiskp1/
         sudo cp -rf part2/* localdiskp2/
+
+        echo "Added various information for Jot mode"
+        tinycolorfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+        
         echo "Replacing set root with filesystem UUID instead"
         if [ $loaderdisk == "mmcblk0p" ]; then        
             sudo sed -i "s/set root=(hd1,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd1,msdos1/" localdiskp1/boot/grub/grub.cfg        
