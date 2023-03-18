@@ -2593,8 +2593,8 @@ function savedefault {
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
     echo "TCRP JOT Version : 0.9.4.0-1"
-    echo -ne "Running on \$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print \$2}' | wc -l) Processor \$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print \$2}' | uniq) With \$(free -h | grep Mem | awk '{print \$2}') Memory\n"
-#    cat (hd0,msdos1)/boot/grub/grub.cfg | grep earlyprintk
+#    echo -ne "Running on \$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print \$2}' | wc -l) Processor \$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print \$2}' | uniq) With \$(free -h | grep Mem | awk '{print \$2}') Memory\n"
+    cat (hd0,msdos1)/boot/grub/grub.cfg | grep earlyprintk
 }    
 EOF
 }
