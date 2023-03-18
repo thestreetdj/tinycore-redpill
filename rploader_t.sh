@@ -2587,16 +2587,14 @@ function getstaticmodule() {
 }
 
 function tinyjotfunc() {
-
     cat <<EOF
 function savedefault {
-    saved_entry="${chosen}"
-    save_env --file $prefix/grubenv saved_entry
+    saved_entry="\${chosen}"
+    save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------\n"
     echo "TCRP JOT Version : 0.9.4.0-1"
 }    
 EOF
-
 }
 
 function buildloader() {
