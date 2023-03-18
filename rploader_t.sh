@@ -2734,9 +2734,12 @@ checkmachine
         sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
         echo "$tempentry" > /tmp/tempentry.txt
         
-        sudo sed -i '31,34d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg        
-        tinyjotfunc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
-        
+        if [ "$WITHFRIEND" = "YES" ]; then
+            echo
+        else
+            sudo sed -i '31,34d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg        
+            tinyjotfunc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+        fi
 #m shell only end
 
         msgnormal "Replacing set root with filesystem UUID instead"
