@@ -2756,22 +2756,6 @@ checkmachine
             sudo sed -i "s/msdos1/msdos1\\n        source (hd0,msdos1)\/mshellfunc.h/" /tmp/tempentry.txt
         fi    
 
-        if [ $loaderdisk == "mmcblk0p" ]; then        
-            echo "Creating tinycore entry for mmc (sdcard)"
-            tinyentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg
-        else
-        
-            if [ "$WITHFRIEND" = "YES" ]; then
-                echo
-            else
-                echo "create m shell function header for Jot mode"
-                tinyjotfunc | sudo tee > localdiskp1/mshellfunc.h
-            fi
-        
-            echo "Creating tinycore entry"
-            tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
-        fi
-
         if [ "$WITHFRIEND" = "YES" ]; then
 
             [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ] && bringoverfriend
@@ -2792,6 +2776,22 @@ checkmachine
             echo "Creating tinycore Jot entry"
             echo "$(cat /tmp/tempentry.txt)" | sudo tee --append localdiskp1/boot/grub/grub.cfg
 
+        fi
+
+        if [ $loaderdisk == "mmcblk0p" ]; then        
+            echo "Creating tinycore entry for mmc (sdcard)"
+            tinyentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+        else
+            echo "Creating tinycore entry"
+            tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
+        
+            if [ "$WITHFRIEND" = "YES" ]; then
+                echo
+            else
+                echo "create m shell function header for Jot mode"
+                tinyjotfunc | sudo tee > localdiskp1/mshellfunc.h
+            fi
+        
         fi
 
     else
@@ -2855,7 +2855,7 @@ checkmachine
         fi
 
         echo "Setting default boot entry to TCRP Friend"
-        cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
+        cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"0\"" localdiskp1/boot/grub/grub.cfg
 
     else
         echo
