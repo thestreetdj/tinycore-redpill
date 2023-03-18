@@ -2749,7 +2749,7 @@ checkmachine
                 sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
             fi
             
-            sudo sed -i "s/msdos1/msdos1\\n        . (hd0,msdos1)\/mshellfunc.h\\n        welcome/" /tmp/tempentry.txt
+            sudo sed -i "s/msdos1/msdos1\\n        source (hd0,msdos1)\/mshellfunc.h\\n        welcome/" /tmp/tempentry.txt
         fi    
 
         if [ "$WITHFRIEND" = "YES" ]; then
