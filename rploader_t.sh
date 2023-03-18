@@ -2730,12 +2730,12 @@ checkmachine
 
 #m shell only start
         echo "Modify Jot Menu entry"
-        tempentry=$(cat localdiskp1/boot/grub/grub.cfg | head -n 80 | tail -n 20)
-        sudo sed -i '61,80d' localdiskp1/boot/grub/grub.cfg
+        tempentry=$(cat /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | head -n 80 | tail -n 20)
+        sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
         echo "$tempentry" > /tmp/tempentry.txt
         
-        sudo sed -i '31,34d' localdiskp1/boot/grub/grub.cfg        
-        tinyjotfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+        sudo sed -i '31,34d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg        
+        tinyjotfunc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
         
 #m shell only end
 
@@ -2771,16 +2771,16 @@ checkmachine
         else
 
             echo "Creating tinycore Jot entry"
-            echo "$(cat /tmp/tempentry.txt)" | sudo tee --append localdiskp1/boot/grub/grub.cfg
+            echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
 
         fi
 
         if [ $loaderdisk == "mmcblk0p" ]; then        
             echo "Creating tinycore entry for mmc (sdcard)"
-            tinyentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+            tinyentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
         else
             echo "Creating tinycore entry"
-            tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
+            tinyentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
         fi
 
     else
@@ -2791,7 +2791,7 @@ checkmachine
 
     echo "Entries in Localdisk bootloader : "
     echo "======================================================================="
-    grep menuentry localdiskp1/boot/grub/grub.cfg
+    grep menuentry /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
 
     ### Updating user_config.json
 
