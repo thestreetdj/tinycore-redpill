@@ -2589,11 +2589,7 @@ function getstaticmodule() {
 function tinyjotfunc() {
 
     cat <<EOF
-#!/bin/sh
-welcome() {
-    clear
-    echo -e "--------------------------------------={ M Shell for TinyCore RedPill JOT }=--------------------------------------\n"
-    # Echo Version
+    echo -e "-----------={ M Shell for TinyCore RedPill JOT }=------------\n"
     echo "TCRP JOT Version : 0.9.4.0-1"
 }
 EOF
@@ -2749,7 +2745,9 @@ checkmachine
                 sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
             fi
             
-            sudo sed -i "s/msdos1/msdos1\\n        source (hd0,msdos1)\/mshellfunc.h\\n        welcome/" /tmp/tempentry.txt
+            retext=tinyjotfunc
+            
+            sudo sed -i "s/msdos1/msdos1\\n        ${retext}/" /tmp/tempentry.txt
         fi    
 
         if [ "$WITHFRIEND" = "YES" ]; then
@@ -2780,14 +2778,6 @@ checkmachine
         else
             echo "Creating tinycore entry"
             tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
-        
-            if [ "$WITHFRIEND" = "YES" ]; then
-                echo
-            else
-                echo "create m shell function header for Jot mode"
-                tinyjotfunc | sudo tee > localdiskp1/mshellfunc.h
-            fi
-        
         fi
 
     else
