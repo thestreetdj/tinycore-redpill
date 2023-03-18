@@ -2766,6 +2766,8 @@ checkmachine
                 echo "Add configuration disable_mtrr_trim for AMD"            
                 sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
             fi
+            
+            sudo sed -i "s/msdos1/msdos1 && welcome/" /tmp/tempentry.txt
         fi    
 
         if [ $loaderdisk == "mmcblk0p" ]; then        
