@@ -2306,38 +2306,6 @@ function checkfilechecksum() {
 
 }
 
-function tinycolorfunc() {
-
-    cat <<EOF
-function msgalert() {
-    echo -en "\033[1;31m$1\033[0m"
-}
-function msgwarning() {
-    echo -en "\033[1;33m$1\033[0m"
-}
-function msgnormal() {
-    echo -en "\033[1;32m$1\033[0m"
-}  
-EOF
-
-}
-
-function tinyjotfunc() {
-
-    cat <<EOF
-function welcome() {
-
-    clear
-    echo -en "\033[7;32m--------------------------------------={ M Shell for TinyCore RedPill JOT }=--------------------------------------\033[0m\n"
-
-    # Echo Version
-    echo "TCRP JOT Version : 0.9.4.0-1"
-
-}
-EOF
-
-}
-
 function tinyentry() {
 
     cat <<EOF
@@ -2618,6 +2586,33 @@ function getstaticmodule() {
 
 }
 
+function tinyjotfunc() {
+
+    cat <<EOF
+#!/bin/sh
+
+function msgalert() {
+    echo -en "\033[1;31m$1\033[0m"
+}
+function msgwarning() {
+    echo -en "\033[1;33m$1\033[0m"
+}
+function msgnormal() {
+    echo -en "\033[1;32m$1\033[0m"
+}  
+function welcome() {
+
+    clear
+    echo -en "\033[7;32m--------------------------------------={ M Shell for TinyCore RedPill JOT }=--------------------------------------\033[0m\n"
+
+    # Echo Version
+    echo "TCRP JOT Version : 0.9.4.0-1"
+
+}
+EOF
+
+}
+
 function buildloader() {
 
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
@@ -2767,7 +2762,7 @@ checkmachine
                 sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
             fi
             
-            sudo sed -i "s/msdos1/msdos1\\n        function_call welcome/" /tmp/tempentry.txt
+            sudo sed -i "s/msdos1/msdos1\\n        source (hd0,msdos1)\/mshellfunc.h\\n        welcome/" /tmp/tempentry.txt
         fi    
 
         if [ $loaderdisk == "mmcblk0p" ]; then        
@@ -2778,9 +2773,8 @@ checkmachine
             if [ "$WITHFRIEND" = "YES" ]; then
                 echo
             else
-                echo "Added various information for Jot mode"
-                tinycolorfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
-                tinyjotfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+                echo "create m shell function header for Jot mode"
+                tinyjotfunc | sudo tee > localdiskp1/mshellfunc.h
             fi
         
             echo "Creating tinycore entry"
