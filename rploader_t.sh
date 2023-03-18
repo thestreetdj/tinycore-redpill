@@ -2774,6 +2774,15 @@ checkmachine
             echo "Creating tinycore entry for mmc (sdcard)"
             tinyentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg
         else
+        
+            if [ "$WITHFRIEND" = "YES" ]; then
+                echo
+            else
+                echo "Added various information for Jot mode"
+                tinycolorfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+                tinyjotfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+            fi
+        
             echo "Creating tinycore entry"
             tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
         fi
@@ -2794,10 +2803,6 @@ checkmachine
                 fi    
             fi
         else
-
-            echo "Added various information for Jot mode"
-            tinycolorfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
-            tinyjotfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
 
             echo "Creating tinycore Jot entry"
             echo "$(cat /tmp/tempentry.txt)" | sudo tee --append localdiskp1/boot/grub/grub.cfg
