@@ -2751,19 +2751,20 @@ checkmachine
         echo "Modify Jot Menu entry"
         tempentry=$(cat /mnt/sda1/boot/grub/grub.cfg | head -n 80 | tail -n 20)
         sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+        echo "$tempentry" > /tmp/tempentry.txt
 #m shell only end
 
         echo "Replacing set root with filesystem UUID instead"
         if [ $loaderdisk == "mmcblk0p" ]; then        
-            sudo sed -i "s/set root=(hd1,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd1,msdos1/" $tempentry
+            sudo sed -i "s/set root=(hd1,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd1,msdos1/" /tmp/tempentry.txt
         else
-            sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" $tempentry
-            sudo sed -i "s/Verbose/Verbose, ${DMPM}/" $tempentry
-            sudo sed -i "s/Linux.../Linux... ${DMPM}/" $tempentry
+            sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" /tmp/tempentry.txt
+            sudo sed -i "s/Verbose/Verbose, ${DMPM}/" /tmp/tempentry.txt
+            sudo sed -i "s/Linux.../Linux... ${DMPM}/" /tmp/tempentry.txt
             
             if [ "${CPU}" == "AMD" ]; then
                 echo "Add configuration disable_mtrr_trim for AMD"            
-                sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" $tempentry
+                sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
             fi
         fi    
 
@@ -2797,7 +2798,7 @@ checkmachine
             tinyjotfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
 
             echo "Creating tinycore Jot entry"
-            echo $tempentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
+            echo $(cat /tmp/tempentry.txt) | sudo tee --append localdiskp1/boot/grub/grub.cfg
 
         fi
 
