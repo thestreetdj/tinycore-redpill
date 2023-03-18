@@ -2,12 +2,12 @@
 #
 # Author : pocopico 
 # Date : 221115
-# Version : 0.9.3.5
+# Version : 0.9.4.0-1
 #
 #
 # User Variables : 
 
-rploaderver="0.9.3.5"
+rploaderver="0.9.4.0-1"
 build="master"
 redpillmake="prod"
 
@@ -2322,6 +2322,22 @@ EOF
 
 }
 
+function tinyjotfunc() {
+
+    cat <<EOF
+function welcome() {
+
+    clear
+    echo -en "\033[7;32m--------------------------------------={ M Shell for TinyCore RedPill JOT }=--------------------------------------\033[0m\n"
+
+    # Echo Version
+    echo "TCRP JOT Version : 0.9.4.0-1"
+
+}
+EOF
+
+}
+
 function tinyentry() {
 
     cat <<EOF
@@ -2731,27 +2747,33 @@ checkmachine
         sudo cp -rf part1/* localdiskp1/
         sudo cp -rf part2/* localdiskp2/
 
-        echo "Added various information for Jot mode"
-        tinycolorfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
-        
+#m shell only start
+        echo "Modify Jot Menu entry"
+        tempentry=$(cat /mnt/sda1/boot/grub/grub.cfg | head -n 80 | tail -n 20)
+        sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+#m shell only end
+
         echo "Replacing set root with filesystem UUID instead"
         if [ $loaderdisk == "mmcblk0p" ]; then        
-            sudo sed -i "s/set root=(hd1,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd1,msdos1/" localdiskp1/boot/grub/grub.cfg        
-            echo "Creating tinycore entry for mmc (sdcard)"
-            tinyentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+            sudo sed -i "s/set root=(hd1,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd1,msdos1/" $tempentry
         else
-            sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" localdiskp1/boot/grub/grub.cfg
-            sudo sed -i "s/Verbose/Verbose, ${DMPM}/" localdiskp1/boot/grub/grub.cfg
-            sudo sed -i "s/Linux.../Linux... ${DMPM}/" localdiskp1/boot/grub/grub.cfg
+            sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" $tempentry
+            sudo sed -i "s/Verbose/Verbose, ${DMPM}/" $tempentry
+            sudo sed -i "s/Linux.../Linux... ${DMPM}/" $tempentry
             
             if [ "${CPU}" == "AMD" ]; then
                 echo "Add configuration disable_mtrr_trim for AMD"            
-                sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" localdiskp1/boot/grub/grub.cfg            
+                sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" $tempentry
             fi
-            
+        fi    
+
+        if [ $loaderdisk == "mmcblk0p" ]; then        
+            echo "Creating tinycore entry for mmc (sdcard)"
+            tinyentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+        else
             echo "Creating tinycore entry"
             tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
-        fi    
+        fi
 
         if [ "$WITHFRIEND" = "YES" ]; then
 
@@ -2768,6 +2790,15 @@ checkmachine
                     tcrpfriendentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
                 fi    
             fi
+        else
+
+            echo "Added various information for Jot mode"
+            tinycolorfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+            tinyjotfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+
+            echo "Creating tinycore Jot entry"
+            echo $tempentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
+
         fi
 
     else
@@ -2802,10 +2833,6 @@ checkmachine
     cp $userconfigfile /mnt/${loaderdisk}3/
 
     if [ "$WITHFRIEND" = "YES" ]; then
-
-#m shell only start
-        sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
-#m shell only end
 
         cp localdiskp1/zImage /mnt/${loaderdisk}3/zImage-dsm
 
