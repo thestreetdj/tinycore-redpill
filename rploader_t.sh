@@ -2932,7 +2932,7 @@ checkmachine
 
 function bringoverfriend() {
 
-    echo "Bringing over my friend from giteas.duckdns.org"
+    msgnormal "Bringing over my friend from giteas.duckdns.org"
     [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
     curl -s --insecure -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
@@ -2941,7 +2941,7 @@ function bringoverfriend() {
 
     # 2nd try
     if [ $? -ne 0 ]; then
-        echo "Download failed from giteas.duckdns.org, Tring github.com..."    
+        msgwarning "Download failed from giteas.duckdns.org, Tring github.com..."    
         #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")    
         URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
         for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
@@ -2949,20 +2949,20 @@ function bringoverfriend() {
 
         # 3rd try
         if [ $? -ne 0 ]; then
-            echo "Download failed from github.com, Tring gitee.com..."
+            msgwarning "Download failed from github.com, Tring gitee.com..."
             curl -s --insecure -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
             -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" \
             -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend"
             if [ $? -ne 0 ]; then
-                echo "Download failed from gitee.com... !!!!!!!!"
+                msgalert "Download failed from gitee.com... !!!!!!!!"
             else
-                echo "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
+                msgnormal "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
             fi
         else
-            echo "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
+            msgnormal "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
         fi
     else
-        echo "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
+        msgnormal "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
     fi
 
     if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
@@ -2971,10 +2971,10 @@ function bringoverfriend() {
         INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
         cat chksum |grep VERSION
         echo
-        [ "$(sha256sum bzImage-friend | awk '{print $1}')" == "$BZIMAGESHA256" ] && echo "bzImage-friend checksum OK !" || echo "bzImage-friend checksum ERROR !" || exit 99
-        [ "$(sha256sum initrd-friend | awk '{print $1}')" == "$INITRDSHA256" ] && echo "initrd-friend checksum OK !" || echo "initrd-friend checksum ERROR !" || exit 99
+        [ "$(sha256sum bzImage-friend | awk '{print $1}')" == "$BZIMAGESHA256" ] && msgnormal "bzImage-friend checksum OK !" || msgalert "bzImage-friend checksum ERROR !" || exit 99
+        [ "$(sha256sum initrd-friend | awk '{print $1}')" == "$INITRDSHA256" ] && msgnormal "initrd-friend checksum OK !" || msgalert "initrd-friend checksum ERROR !" || exit 99
     else
-        echo "Could not find friend files !!!!!!!!!!!!!!!!!!!!!!!"
+        msgalert "Could not find friend files !!!!!!!!!!!!!!!!!!!!!!!"
     fi
 
 }
