@@ -2798,7 +2798,7 @@ checkmachine
             tinyjotfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
 
             echo "Creating tinycore Jot entry"
-            echo $(cat /tmp/tempentry.txt) | sudo tee --append localdiskp1/boot/grub/grub.cfg
+            echo "$(cat /tmp/tempentry.txt)" | sudo tee --append localdiskp1/boot/grub/grub.cfg
 
         fi
 
