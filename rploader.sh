@@ -2,12 +2,12 @@
 #
 # Author : pocopico 
 # Date : 221115
-# Version : 0.9.3.5
+# Version : 0.9.4.0-1
 #
 #
 # User Variables : 
 
-rploaderver="0.9.3.5"
+rploaderver="0.9.4.0-1"
 build="master"
 redpillmake="prod"
 
@@ -96,13 +96,23 @@ EOF
 
 }
 
+function msgalert() {
+    echo -e "\033[1;31m$1\033[0m"
+}
+function msgwarning() {
+    echo -e "\033[1;33m$1\033[0m"
+}
+function msgnormal() {
+    echo -e "\033[1;32m$1\033[0m"
+} 
+
 function readanswer() {
     while true; do
         read answ
         case $answ in
             [Yy]* ) answer="$answ"; break;;
             [Nn]* ) answer="$answ"; break;;
-            * ) echo "Please answer yY/nN.";;
+            * ) msgwarning "Please answer yY/nN.";;
         esac
     done
 }        
@@ -221,26 +231,26 @@ function monitor() {
         clear
         echo -e "-------------------------------System Information----------------------------"
         echo -e "Hostname:\t\t"$(hostname) 
-        echo -e "uptime:\t\t\t"$(uptime | awk '{print $3,$4}' | sed 's/,//')
+        echo -e "uptime:\t\t\t"$(uptime | awk '{print $3}' | sed 's/,//')" min"
         echo -e "Manufacturer:\t\t"$(cat /sys/class/dmi/id/chassis_vendor) 
         echo -e "Product Name:\t\t"$(cat /sys/class/dmi/id/product_name)
         echo -e "Version:\t\t"$(cat /sys/class/dmi/id/product_version)
         echo -e "Serial Number:\t\t"$(sudo cat /sys/class/dmi/id/product_serial)
+        echo -e "Operating System:\t"$(grep PRETTY_NAME /etc/os-release | awk -F \= '{print $2}')
+        echo -e "Kernel:\t\t\t"$(uname -r)
+        echo -e "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
         echo -e "Machine Type:\t\t"$(
             vserver=$(lscpu | grep Hypervisor | wc -l)
             if [ $vserver -gt 0 ]; then echo "VM"; else echo "Physical"; fi
         ) 
-        echo -e "Operating System:\t"$(grep PRETTY_NAME /etc/os-release | awk -F \= '{print $2}')
-        echo -e "Kernel:\t\t\t"$(uname -r)
-        echo -e "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
-        echo -e "CPU Threads:\t\t"$(lscpu |grep CPU\(s\): | awk '{print $2}')
+        msgnormal "CPU Threads:\t\t"$(lscpu |grep CPU\(s\): | awk '{print $2}')
         echo -e "Current Date Time:\t"$(date)
-        echo -e "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
+        msgnormal "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
         listpci
         echo -e "-------------------------------Loader boot entries---------------------------"
         grep -i menuentry /mnt/${loaderdisk}1/boot/grub/grub.cfg | awk -F \' '{print $2}'
         echo -e "-------------------------------CPU / Memory----------------------------------"
-        echo -e "Total Memory (MB):\t"$(cat /proc/meminfo |grep MemTotal | awk '{printf("%.2f%"), $2/1000}')
+        msgnormal "Total Memory (MB):\t"$(cat /proc/meminfo |grep MemTotal | awk '{printf("%.2f%"), $2/1000}')
         echo -e "Swap Usage:\t\t"$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
         echo -e "CPU Usage:\t\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
         echo -e "-------------------------------Disk Usage >80%-------------------------------"
@@ -420,7 +430,7 @@ function downloadextractor() {
 
     if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then
 
-        echo "Found extractor locally cached"
+        msgnormal "Found extractor locally cached"
 
     else
 
@@ -469,7 +479,7 @@ function downloadextractor() {
     echo "Removing temp folder /tmp/synoesp"
     rm -rf $temp_folder
 
-    echo "Checking if tool is accessible"
+    msgnormal "Checking if tool is accessible"
     if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then    
         /bin/syno_extract_system_patch 2>&1 >/dev/null
     else
@@ -504,25 +514,25 @@ function processpat() {
     setplatform
 
     if [ ! -d "${temp_pat_folder}" ]; then
-        echo "Creating temp folder ${temp_pat_folder} "
+        msgnormal "Creating temp folder ${temp_pat_folder} "
         mkdir ${temp_pat_folder} && sudo mount -t tmpfs -o size=512M tmpfs ${temp_pat_folder} && cd ${temp_pat_folder}
         mkdir ${temp_dsmpat_folder} && sudo mount -t tmpfs -o size=512M tmpfs ${temp_dsmpat_folder}
     fi
 
     echo "Checking for cached pat file"
-    [ -d $local_cache ] && echo "Found tinycore cache folder, linking to home/tc/custom-module" && [ ! -h /home/tc/custom-module ] && sudo ln -s $local_cache /home/tc/custom-module
+    [ -d $local_cache ] && msgnormal "Found tinycore cache folder, linking to home/tc/custom-module" && [ ! -h /home/tc/custom-module ] && sudo ln -s $local_cache /home/tc/custom-module
 
     if [ -d ${local_cache} ] && [ -f ${local_cache}/*${SYNOMODEL}*.pat ] || [ -f ${local_cache}/*${MODEL}*${TARGET_REVISION}*.pat ]; then
 
         [ -f /home/tc/custom-module/*${SYNOMODEL}*.pat ] && patfile=$(ls /home/tc/custom-module/*${SYNOMODEL}*.pat | head -1)
         [ -f ${local_cache}/*${MODEL}*${TARGET_REVISION}*.pat ] && patfile=$(ls /home/tc/custom-module/*${MODEL}*${TARGET_REVISION}*.pat | head -1)
 
-        echo "Found locally cached pat file ${patfile}"
+        msgnormal "Found locally cached pat file ${patfile}"
 
         testarchive "${patfile}"
         if [ ${isencrypted} = "no" ]; then
             echo "File ${patfile} is already unencrypted"
-            echo "Copying file to /home/tc/redpill-load/cache folder"
+            msgnormal "Copying file to /home/tc/redpill-load/cache folder"
             mv -f ${patfile} /home/tc/redpill-load/cache/
         elif [ ${isencrypted} = "yes" ]; then
             [ -f /home/tc/redpill-load/cache/${SYNOMODEL}.pat ] && testarchive /home/tc/redpill-load/cache/${SYNOMODEL}.pat
@@ -548,7 +558,7 @@ function processpat() {
         cd /home/tc/redpill-load/cache
         tar xvf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./VERSION && . ./VERSION && rm ./VERSION
         os_sha256=$(sha256sum /home/tc/redpill-load/cache/${SYNOMODEL}.pat | awk '{print $1}')
-        echo "Pat file  sha256sum is : $os_sha256"
+        msgnormal "Pat file  sha256sum is : $os_sha256"
 
         echo -n "Checking config file existence -> "
         if [ -f "/home/tc/redpill-load/config/$MODEL/${major}.${minor}.${micro}-${buildnumber}/config.json" ]; then
@@ -559,7 +569,7 @@ function processpat() {
             exit 99
         fi
 
-        echo -n "Editing config file -> "
+        msgnormal -n "Editing config file -> "
         sed -i "/\"os\": {/!b;n;n;n;c\"sha256\": \"$os_sha256\"" ${configfile}
         echo -n "Verifying config file -> "
         verifyid="$(cat ${configfile} | jq -r -e '.os .sha256')"
@@ -571,7 +581,7 @@ function processpat() {
             exit 99
         fi
 
-        echo "Clearing temp folders"
+        msgnormal "Clearing temp folders"
         sudo umount ${temp_pat_folder} && sudo rm -rf ${temp_pat_folder}
         sudo umount ${temp_dsmpat_folder} && sudo rm -rf ${temp_dsmpat_folder}        
 
@@ -2576,6 +2586,19 @@ function getstaticmodule() {
 
 }
 
+function tinyjotfunc() {
+    cat <<EOF
+function savedefault {
+    saved_entry="\${chosen}"
+    save_env --file \$prefix/grubenv saved_entry
+    echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
+    echo "TCRP JOT Version : 0.9.4.0-1"
+    echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
+    echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
+}    
+EOF
+}
+
 function buildloader() {
 
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
@@ -2588,7 +2611,7 @@ checkmachine
     [ -d $local_cache ] && echo "Found tinycore cache folder, linking to home/tc/custom-module" && [ ! -d /home/tc/custom-module ] && ln -s $local_cache /home/tc/custom-module
 
     DMPM="$(jq -r -e '.general.devmod' $userconfigfile)"
-    echo "Device Module Processing Method is ${DMPM}"
+    msgnormal "Device Module Processing Method is ${DMPM}"
 
     cd /home/tc
 
@@ -2620,7 +2643,7 @@ checkmachine
     cd /home/tc/redpill-load
 
     if [ -d cache ]; then
-        echo "Cache directory OK "
+        msgnormal "Cache directory OK "
     else
         mkdir cache
     fi
@@ -2646,7 +2669,7 @@ checkmachine
 
     [ -d /home/tc/redpill-load ] && cd /home/tc/redpill-load
 
-    echo "======Mount the ramdisk for quick add processing of extensions.======="
+    msgnormal "======Mount the ramdisk for quick add processing of extensions.======="
     [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir /home/tc/redpill-load/custom/extensions
     [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 
@@ -2661,7 +2684,7 @@ checkmachine
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
     fi
 
-    echo "======Unmount the ramdisk for add extensions.======="
+    msgnormal "======Unmount the ramdisk for add extensions.======="
     sudo umount /home/tc/redpill-load/custom/extensions
 
     if [ $? -ne 0 ]; then
@@ -2695,7 +2718,7 @@ checkmachine
 
     mkdir -p localdiskp1
     sudo mount /dev/${loaderdisk}1 localdiskp1
-    echo "Mounting /dev/${loaderdisk}1 to localdiskp1 "
+    msgnormal "Mounting /dev/${loaderdisk}1 to localdiskp1 "
 
     mkdir -p localdiskp2
     sudo mount /dev/${loaderdisk}2 localdiskp2
@@ -2704,23 +2727,33 @@ checkmachine
     if [ $(mount | grep -i part1 | wc -l) -eq 1 ] && [ $(mount | grep -i part2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp1 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp2 | wc -l) -eq 1 ]; then
         sudo cp -rf part1/* localdiskp1/
         sudo cp -rf part2/* localdiskp2/
-        echo "Replacing set root with filesystem UUID instead"
-        if [ $loaderdisk == "mmcblk0p" ]; then        
-            sudo sed -i "s/set root=(hd1,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd1,msdos1/" localdiskp1/boot/grub/grub.cfg        
-            echo "Creating tinycore entry for mmc (sdcard)"
-            tinyentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+
+#m shell only start
+        msgnormal "Modify Jot Menu entry"
+        tempentry=$(cat /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | head -n 80 | tail -n 20)
+        sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+        echo "$tempentry" > /tmp/tempentry.txt
+        
+        if [ "$WITHFRIEND" = "YES" ]; then
+            echo
         else
-            sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" localdiskp1/boot/grub/grub.cfg
-            sudo sed -i "s/Verbose/Verbose, ${DMPM}/" localdiskp1/boot/grub/grub.cfg
-            sudo sed -i "s/Linux.../Linux... ${DMPM}/" localdiskp1/boot/grub/grub.cfg
+            sudo sed -i '31,34d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg        
+            tinyjotfunc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+        fi
+#m shell only end
+
+        msgnormal "Replacing set root with filesystem UUID instead"
+        if [ $loaderdisk == "mmcblk0p" ]; then        
+            sudo sed -i "s/set root=(hd1,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd1,msdos1/" /tmp/tempentry.txt
+        else
+            sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" /tmp/tempentry.txt
+            sudo sed -i "s/Verbose/Verbose, ${DMPM}/" /tmp/tempentry.txt
+            sudo sed -i "s/Linux.../Linux... ${DMPM}/" /tmp/tempentry.txt
             
             if [ "${CPU}" == "AMD" ]; then
                 echo "Add configuration disable_mtrr_trim for AMD"            
-                sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" localdiskp1/boot/grub/grub.cfg            
+                sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
             fi
-            
-            echo "Creating tinycore entry"
-            tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
         fi    
 
         if [ "$WITHFRIEND" = "YES" ]; then
@@ -2731,12 +2764,26 @@ checkmachine
 
                 cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
                 cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
+                echo "Creating tinycore friend entry"
                 if [ $loaderdisk == "mmcblk0p" ]; then        
                     tcrpfriendentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg                
                 else
                     tcrpfriendentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
                 fi    
             fi
+        else
+
+            echo "Creating tinycore Jot entry"
+            echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+
+        fi
+
+        if [ $loaderdisk == "mmcblk0p" ]; then        
+            echo "Creating tinycore entry for mmc (sdcard)"
+            tinyentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+        else
+            echo "Creating tinycore entry"
+            tinyentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
         fi
 
     else
@@ -2745,9 +2792,9 @@ checkmachine
 
     cd /home/tc/redpill-load
 
-    echo "Entries in Localdisk bootloader : "
+    msgnormal "Entries in Localdisk bootloader : "
     echo "======================================================================="
-    grep menuentry localdiskp1/boot/grub/grub.cfg
+    grep menuentry /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
 
     ### Updating user_config.json
 
@@ -2760,21 +2807,17 @@ checkmachine
     rdhash=$(sha256sum /home/tc/redpill-load/localdiskp2/rd.gz | awk '{print $1}')
     updateuserconfigfield "general" "rdhash" "$rdhash"
 
-    USB_LINE="$(grep -A 5 "USB," /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | grep linux | cut -c 16-999)"
-    SATA_LINE="$(grep -A 5 "SATA," /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | grep linux | cut -c 16-999)"
+    USB_LINE="$(grep -A 5 "USB," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
+    SATA_LINE="$(grep -A 5 "SATA," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
 
-    echo "Updated user_config with USB Command Line : $USB_LINE"
+    msgwarning "Updated user_config with USB Command Line : $USB_LINE"
     json=$(jq --arg var "${USB_LINE}" '.general.usb_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
-    echo "Updated user_config with SATA Command Line : $SATA_LINE"
+    msgwarning "Updated user_config with SATA Command Line : $SATA_LINE"
     json=$(jq --arg var "${SATA_LINE}" '.general.sata_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
 
     cp $userconfigfile /mnt/${loaderdisk}3/
 
     if [ "$WITHFRIEND" = "YES" ]; then
-
-#m shell only start
-        sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
-#m shell only end
 
         cp localdiskp1/zImage /mnt/${loaderdisk}3/zImage-dsm
 
@@ -2803,13 +2846,13 @@ checkmachine
             (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
         fi
 
-        echo "Setting default boot entry to TCRP Friend"
-        cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
+        msgnormal "Setting default boot entry to TCRP Friend"
+        cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"0\"" localdiskp1/boot/grub/grub.cfg
 
     else
         echo
         if [ "$MACHINE" = "VIRTUAL" ]; then
-            echo "Setting default boot entry to JOT SATA"
+            msgnormal "Setting default boot entry to JOT SATA"
             cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
         fi
     fi
@@ -2867,7 +2910,7 @@ checkmachine
     echo "Cleaning up files"
     sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/redpill-load/loader.img /home/tc/cache/*pat
 
-    echo "Caching files for future use"
+    msgnormal "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
 
     chkavail
@@ -2892,7 +2935,7 @@ checkmachine
 
 function bringoverfriend() {
 
-    echo "Bringing over my friend from giteas.duckdns.org"
+    msgnormal "Bringing over my friend from giteas.duckdns.org"
     [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
     curl -s --insecure -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
@@ -2901,7 +2944,7 @@ function bringoverfriend() {
 
     # 2nd try
     if [ $? -ne 0 ]; then
-        echo "Download failed from giteas.duckdns.org, Tring github.com..."    
+        msgwarning "Download failed from giteas.duckdns.org, Tring github.com..."    
         #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")    
         URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
         for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
@@ -2909,20 +2952,20 @@ function bringoverfriend() {
 
         # 3rd try
         if [ $? -ne 0 ]; then
-            echo "Download failed from github.com, Tring gitee.com..."
+            msgwarning "Download failed from github.com, Tring gitee.com..."
             curl -s --insecure -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
             -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" \
             -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend"
             if [ $? -ne 0 ]; then
-                echo "Download failed from gitee.com... !!!!!!!!"
+                msgalert "Download failed from gitee.com... !!!!!!!!"
             else
-                echo "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
+                msgnormal "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
             fi
         else
-            echo "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
+            msgnormal "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
         fi
     else
-        echo "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
+        msgnormal "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
     fi
 
     if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
@@ -2931,10 +2974,10 @@ function bringoverfriend() {
         INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
         cat chksum |grep VERSION
         echo
-        [ "$(sha256sum bzImage-friend | awk '{print $1}')" == "$BZIMAGESHA256" ] && echo "bzImage-friend checksum OK !" || echo "bzImage-friend checksum ERROR !" || exit 99
-        [ "$(sha256sum initrd-friend | awk '{print $1}')" == "$INITRDSHA256" ] && echo "initrd-friend checksum OK !" || echo "initrd-friend checksum ERROR !" || exit 99
+        [ "$(sha256sum bzImage-friend | awk '{print $1}')" == "$BZIMAGESHA256" ] && msgnormal "bzImage-friend checksum OK !" || msgalert "bzImage-friend checksum ERROR !" || exit 99
+        [ "$(sha256sum initrd-friend | awk '{print $1}')" == "$INITRDSHA256" ] && msgnormal "initrd-friend checksum OK !" || msgalert "initrd-friend checksum ERROR !" || exit 99
     else
-        echo "Could not find friend files !!!!!!!!!!!!!!!!!!!!!!!"
+        msgalert "Could not find friend files !!!!!!!!!!!!!!!!!!!!!!!"
     fi
 
 }
@@ -3212,15 +3255,15 @@ function listpci() {
 #            echo "Found IDE Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
 #            ;;
         0104)
-            echo "RAID bus Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgalert "RAID bus Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0104/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 05)//'
             ;;
         0107)
-            echo "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgalert "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 03)//'
             ;;
         0200)
-            echo "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgalert "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             ;;
 #        0300)
 #            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
