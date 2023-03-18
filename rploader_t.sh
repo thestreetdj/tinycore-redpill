@@ -231,14 +231,14 @@ function monitor() {
         clear
         echo -e "-------------------------------System Information----------------------------"
         echo -e "Hostname:\t\t"$(hostname) 
-        echo -e "uptime:\t\t\t"$(uptime | awk '{print $3}' | sed 's/,//')
+        echo -e "uptime:\t\t\t"$(uptime | awk '{print $3}' | sed 's/,//')" min"
         echo -e "Manufacturer:\t\t"$(cat /sys/class/dmi/id/chassis_vendor) 
         echo -e "Product Name:\t\t"$(cat /sys/class/dmi/id/product_name)
         echo -e "Version:\t\t"$(cat /sys/class/dmi/id/product_version)
         echo -e "Serial Number:\t\t"$(sudo cat /sys/class/dmi/id/product_serial)
         echo -e "Operating System:\t"$(grep PRETTY_NAME /etc/os-release | awk -F \= '{print $2}')
         echo -e "Kernel:\t\t\t"$(uname -r)
-        msgnormal "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
+        echo -e "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
         echo -e "Machine Type:\t\t"$(
             vserver=$(lscpu | grep Hypervisor | wc -l)
             if [ $vserver -gt 0 ]; then echo "VM"; else echo "Physical"; fi
@@ -3243,15 +3243,15 @@ function listpci() {
 #            echo "Found IDE Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
 #            ;;
         0104)
-            echo "RAID bus Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgalert "RAID bus Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0104/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 05)//'
             ;;
         0107)
-            echo "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgalert "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 03)//'
             ;;
         0200)
-            msgwarning "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgalert "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             ;;
 #        0300)
 #            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
