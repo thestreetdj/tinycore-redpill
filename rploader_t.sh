@@ -2767,7 +2767,7 @@ checkmachine
                 sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
             fi
             
-            sudo sed -i "s/msdos1/msdos1/\\n         welcome/" /tmp/tempentry.txt
+            sudo sed -i "s/msdos1/msdos1\\n        welcome/" /tmp/tempentry.txt
         fi    
 
         if [ $loaderdisk == "mmcblk0p" ]; then        
