@@ -328,6 +328,12 @@ function checkmachine() {
         echo "Machine is $MACHINE Hypervisor=$HYPERVISOR"
     fi
 
+    if [ $(lscpu |grep Intel |wc -l) -gt 0 ]; then
+        CPU="INTEL"
+    else	
+        CPU="AMD"    
+    fi
+
 }
 
 function savesession() {
@@ -2575,6 +2581,8 @@ function buildloader() {
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
 
+checkmachine
+
     [ "$1" == "junmod" ] && JUNLOADER="YES"
 
     [ -d $local_cache ] && echo "Found tinycore cache folder, linking to home/tc/custom-module" && [ ! -d /home/tc/custom-module ] && ln -s $local_cache /home/tc/custom-module
@@ -2592,7 +2600,11 @@ function buildloader() {
         exit 99
     fi
 
-    removebundledexts
+    if [ "$FROMMYV" = "YES" ]; then
+        echo "skip removebundledexts() for called from myv.sh"
+    else
+        removebundledexts
+    fi    
 
     if [ ! -d /lib64 ]; then
         sudo ln -s /lib /lib64
@@ -2635,10 +2647,8 @@ function buildloader() {
     [ -d /home/tc/redpill-load ] && cd /home/tc/redpill-load
 
     echo "======Mount the ramdisk for quick add processing of extensions.======="
-    
     [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir /home/tc/redpill-load/custom/extensions
-    
-    sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
+    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 
     addrequiredexts
 
@@ -2701,6 +2711,14 @@ function buildloader() {
             tinyentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg
         else
             sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" localdiskp1/boot/grub/grub.cfg
+            sudo sed -i "s/Verbose/Verbose, ${DMPM}/" localdiskp1/boot/grub/grub.cfg
+            sudo sed -i "s/Linux.../Linux... ${DMPM}/" localdiskp1/boot/grub/grub.cfg
+            
+            if [ "${CPU}" == "AMD" ]; then
+                echo "Add configuration disable_mtrr_trim for AMD"            
+                sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" localdiskp1/boot/grub/grub.cfg            
+            fi
+            
             echo "Creating tinycore entry"
             tinyentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
         fi    
@@ -2839,8 +2857,6 @@ function buildloader() {
     cd /home/tc/redpill-load/
 
     ####
-
-    checkmachine
 
     sudo umount part1
     sudo umount part2
@@ -3422,6 +3438,8 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         getredpillko
 
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
+
+        [ "$4" = "frmyv" ] && echo "called from myv.sh option set, From Myv will be added" && FROMMYV="YES"
 
         case $3 in
 
