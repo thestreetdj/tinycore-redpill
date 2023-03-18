@@ -430,7 +430,7 @@ function downloadextractor() {
 
     if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then
 
-        echo "Found extractor locally cached"
+        msgnormal "Found extractor locally cached"
 
     else
 
@@ -479,7 +479,7 @@ function downloadextractor() {
     echo "Removing temp folder /tmp/synoesp"
     rm -rf $temp_folder
 
-    echo "Checking if tool is accessible"
+    msgnormal "Checking if tool is accessible"
     if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then    
         /bin/syno_extract_system_patch 2>&1 >/dev/null
     else
@@ -514,25 +514,25 @@ function processpat() {
     setplatform
 
     if [ ! -d "${temp_pat_folder}" ]; then
-        echo "Creating temp folder ${temp_pat_folder} "
+        msgnormal "Creating temp folder ${temp_pat_folder} "
         mkdir ${temp_pat_folder} && sudo mount -t tmpfs -o size=512M tmpfs ${temp_pat_folder} && cd ${temp_pat_folder}
         mkdir ${temp_dsmpat_folder} && sudo mount -t tmpfs -o size=512M tmpfs ${temp_dsmpat_folder}
     fi
 
     echo "Checking for cached pat file"
-    [ -d $local_cache ] && echo "Found tinycore cache folder, linking to home/tc/custom-module" && [ ! -h /home/tc/custom-module ] && sudo ln -s $local_cache /home/tc/custom-module
+    [ -d $local_cache ] && msgnormal "Found tinycore cache folder, linking to home/tc/custom-module" && [ ! -h /home/tc/custom-module ] && sudo ln -s $local_cache /home/tc/custom-module
 
     if [ -d ${local_cache} ] && [ -f ${local_cache}/*${SYNOMODEL}*.pat ] || [ -f ${local_cache}/*${MODEL}*${TARGET_REVISION}*.pat ]; then
 
         [ -f /home/tc/custom-module/*${SYNOMODEL}*.pat ] && patfile=$(ls /home/tc/custom-module/*${SYNOMODEL}*.pat | head -1)
         [ -f ${local_cache}/*${MODEL}*${TARGET_REVISION}*.pat ] && patfile=$(ls /home/tc/custom-module/*${MODEL}*${TARGET_REVISION}*.pat | head -1)
 
-        echo "Found locally cached pat file ${patfile}"
+        msgnormal "Found locally cached pat file ${patfile}"
 
         testarchive "${patfile}"
         if [ ${isencrypted} = "no" ]; then
             echo "File ${patfile} is already unencrypted"
-            echo "Copying file to /home/tc/redpill-load/cache folder"
+            msgnormal "Copying file to /home/tc/redpill-load/cache folder"
             mv -f ${patfile} /home/tc/redpill-load/cache/
         elif [ ${isencrypted} = "yes" ]; then
             [ -f /home/tc/redpill-load/cache/${SYNOMODEL}.pat ] && testarchive /home/tc/redpill-load/cache/${SYNOMODEL}.pat
@@ -558,7 +558,7 @@ function processpat() {
         cd /home/tc/redpill-load/cache
         tar xvf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./VERSION && . ./VERSION && rm ./VERSION
         os_sha256=$(sha256sum /home/tc/redpill-load/cache/${SYNOMODEL}.pat | awk '{print $1}')
-        echo "Pat file  sha256sum is : $os_sha256"
+        msgnormal "Pat file  sha256sum is : $os_sha256"
 
         echo -n "Checking config file existence -> "
         if [ -f "/home/tc/redpill-load/config/$MODEL/${major}.${minor}.${micro}-${buildnumber}/config.json" ]; then
@@ -569,7 +569,7 @@ function processpat() {
             exit 99
         fi
 
-        echo -n "Editing config file -> "
+        msgnormal -n "Editing config file -> "
         sed -i "/\"os\": {/!b;n;n;n;c\"sha256\": \"$os_sha256\"" ${configfile}
         echo -n "Verifying config file -> "
         verifyid="$(cat ${configfile} | jq -r -e '.os .sha256')"
@@ -581,7 +581,7 @@ function processpat() {
             exit 99
         fi
 
-        echo "Clearing temp folders"
+        msgnormal "Clearing temp folders"
         sudo umount ${temp_pat_folder} && sudo rm -rf ${temp_pat_folder}
         sudo umount ${temp_dsmpat_folder} && sudo rm -rf ${temp_dsmpat_folder}        
 
@@ -2611,7 +2611,7 @@ checkmachine
     [ -d $local_cache ] && echo "Found tinycore cache folder, linking to home/tc/custom-module" && [ ! -d /home/tc/custom-module ] && ln -s $local_cache /home/tc/custom-module
 
     DMPM="$(jq -r -e '.general.devmod' $userconfigfile)"
-    echo "Device Module Processing Method is ${DMPM}"
+    msgnormal "Device Module Processing Method is ${DMPM}"
 
     cd /home/tc
 
@@ -2643,7 +2643,7 @@ checkmachine
     cd /home/tc/redpill-load
 
     if [ -d cache ]; then
-        echo "Cache directory OK "
+        msgnormal "Cache directory OK "
     else
         mkdir cache
     fi
@@ -2669,7 +2669,7 @@ checkmachine
 
     [ -d /home/tc/redpill-load ] && cd /home/tc/redpill-load
 
-    echo "======Mount the ramdisk for quick add processing of extensions.======="
+    msgnormal "======Mount the ramdisk for quick add processing of extensions.======="
     [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir /home/tc/redpill-load/custom/extensions
     [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 
@@ -2684,7 +2684,7 @@ checkmachine
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
     fi
 
-    echo "======Unmount the ramdisk for add extensions.======="
+    msgnormal "======Unmount the ramdisk for add extensions.======="
     sudo umount /home/tc/redpill-load/custom/extensions
 
     if [ $? -ne 0 ]; then
@@ -2718,7 +2718,7 @@ checkmachine
 
     mkdir -p localdiskp1
     sudo mount /dev/${loaderdisk}1 localdiskp1
-    echo "Mounting /dev/${loaderdisk}1 to localdiskp1 "
+    msgnormal "Mounting /dev/${loaderdisk}1 to localdiskp1 "
 
     mkdir -p localdiskp2
     sudo mount /dev/${loaderdisk}2 localdiskp2
@@ -2729,7 +2729,7 @@ checkmachine
         sudo cp -rf part2/* localdiskp2/
 
 #m shell only start
-        echo "Modify Jot Menu entry"
+        msgnormal "Modify Jot Menu entry"
         tempentry=$(cat /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | head -n 80 | tail -n 20)
         sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
         echo "$tempentry" > /tmp/tempentry.txt
@@ -2739,7 +2739,7 @@ checkmachine
         
 #m shell only end
 
-        echo "Replacing set root with filesystem UUID instead"
+        msgnormal "Replacing set root with filesystem UUID instead"
         if [ $loaderdisk == "mmcblk0p" ]; then        
             sudo sed -i "s/set root=(hd1,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd1,msdos1/" /tmp/tempentry.txt
         else
@@ -2789,7 +2789,7 @@ checkmachine
 
     cd /home/tc/redpill-load
 
-    echo "Entries in Localdisk bootloader : "
+    msgnormal "Entries in Localdisk bootloader : "
     echo "======================================================================="
     grep menuentry /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
 
@@ -2807,9 +2807,9 @@ checkmachine
     USB_LINE="$(grep -A 5 "USB," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
     SATA_LINE="$(grep -A 5 "SATA," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
 
-    echo "Updated user_config with USB Command Line : $USB_LINE"
+    msgwarning "Updated user_config with USB Command Line : $USB_LINE"
     json=$(jq --arg var "${USB_LINE}" '.general.usb_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
-    echo "Updated user_config with SATA Command Line : $SATA_LINE"
+    msgwarning "Updated user_config with SATA Command Line : $SATA_LINE"
     json=$(jq --arg var "${SATA_LINE}" '.general.sata_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
 
     cp $userconfigfile /mnt/${loaderdisk}3/
@@ -2843,13 +2843,13 @@ checkmachine
             (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
         fi
 
-        echo "Setting default boot entry to TCRP Friend"
+        msgnormal "Setting default boot entry to TCRP Friend"
         cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"0\"" localdiskp1/boot/grub/grub.cfg
 
     else
         echo
         if [ "$MACHINE" = "VIRTUAL" ]; then
-            echo "Setting default boot entry to JOT SATA"
+            msgnormal "Setting default boot entry to JOT SATA"
             cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
         fi
     fi
@@ -2907,7 +2907,7 @@ checkmachine
     echo "Cleaning up files"
     sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/redpill-load/loader.img /home/tc/cache/*pat
 
-    echo "Caching files for future use"
+    msgnormal "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
 
     chkavail
