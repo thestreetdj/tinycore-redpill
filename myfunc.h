@@ -126,7 +126,7 @@ set -u
 # 2023.03.14
 # Update : Automatic handling of grub.cfg disable_mtrr_trim=1 to unlock AMD Platform 3.5GB RAM limitation
 # 2023.03.17
-# Update : Restrict use of AMD CPU FRIEND mode menu (except for HP N36L/N40L/N54L)
+# Update : AMD CPU FRIEND mode menu usage restriction release (except HP N36L/N40L/N54L)
 # 2023.03.18
 
 function showlastupdate() {
@@ -161,7 +161,7 @@ function showlastupdate() {
 # Update : Automatic handling of grub.cfg disable_mtrr_trim=1 to unlock AMD Platform 3.5GB RAM limitation
 # 2023.03.17
 
-# Update : Restrict use of AMD CPU FRIEND mode menu (except for HP N36L/N40L/N54L)
+# Update : AMD CPU FRIEND mode menu usage restriction release (except HP N36L/N40L/N54L)
 # 2023.03.18
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
