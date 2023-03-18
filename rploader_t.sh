@@ -2608,7 +2608,8 @@ function savedefault {
         fi
         sleep 1
     done
-    echo "IP Address : \${IP}")
+    echo "IP Address : \${IP}"
+    cat (hd0,msdos1)/boot/grub/grub.cfg | grep earlyprintk
 }    
 EOF
 }
