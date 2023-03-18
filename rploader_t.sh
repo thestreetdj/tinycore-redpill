@@ -2749,8 +2749,8 @@ checkmachine
 
 #m shell only start
         echo "Modify Jot Menu entry"
-        tempentry=$(cat /mnt/sda1/boot/grub/grub.cfg | head -n 80 | tail -n 20)
-        sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+        tempentry=$(cat localdiskp1/boot/grub/grub.cfg | head -n 80 | tail -n 20)
+        sudo sed -i '61,80d' localdiskp1/boot/grub/grub.cfg
         echo "$tempentry" > /tmp/tempentry.txt
 #m shell only end
 
