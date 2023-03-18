@@ -2593,6 +2593,22 @@ function savedefault {
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------\n"
     echo "TCRP JOT Version : 0.9.4.0-1"
+    echo -ne "Running on \$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq) With $(free -h | grep Mem | awk '{print $2}') Memory\n"
+    ethdev=\$(ip a | grep UP | grep -v LOOP | head -1 | awk '{print $2}' | sed -e 's/://g')
+    COUNT=0
+    while true; do
+        if [ \${COUNT} -eq 10 ]; then
+            msgalert "ERROR Could not get IP\n"
+            break
+        fi
+        COUNT=\$((${COUNT} + 1))
+        IP="\$(ip route get 1.1.1.1 2>/dev/null | grep $ethdev | awk '{print $7}')"
+        if [ -n "\$IP" ]; then
+            break
+        fi
+        sleep 1
+    done
+    echo "IP Address : \${IP}")
 }    
 EOF
 }
