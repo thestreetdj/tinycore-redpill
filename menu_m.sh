@@ -44,8 +44,12 @@ function checkcpu() {
 
     if [ $(lscpu |grep Intel |wc -l) -gt 0 ]; then
         CPU="INTEL"
-    else	
-        CPU="AMD"    
+    else
+        if [ $(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//' | grep -e N36L -e N40L -e N54L | wc -l) -gt 0 ]; then
+	    CPU="HP"
+	else
+            CPU="AMD"
+        fi	    
     fi
 
     threads="$(lscpu |grep CPU\(s\): | awk '{print $2}')"
@@ -246,7 +250,7 @@ while true; do
     if [ $threads -gt 16 ]; then
       echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
     elif [ $threads -gt 8 ]; then
-      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
+      if [ "${AFTERHASWELL}" == "OFF" ]; then
         echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
         echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
       else  
@@ -255,7 +259,7 @@ while true; do
         echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
       fi
     else
-      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
+      if [ "${AFTERHASWELL}" == "OFF" ]; then
         echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
         echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
       else
@@ -270,7 +274,7 @@ while true; do
     if [ $threads -gt 16 ]; then
       echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
     elif [ $threads -gt 8 ]; then
-      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
+      if [ "${AFTERHASWELL}" == "OFF" ]; then
         echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
         echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
         echo "${M_GRP5}" >> "${TMP_PATH}/mdl"
@@ -283,7 +287,7 @@ while true; do
         echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
       fi
     else
-      if [ "${CPU}" == "INTEL" ] && [ "${AFTERHASWELL}" == "OFF" ]; then
+      if [ "${AFTERHASWELL}" == "OFF" ]; then
         echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
         echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
         echo "${M_GRP5}" >> "${TMP_PATH}/mdl"
@@ -687,12 +691,8 @@ while true; do
     if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
       echo "h \"Choose a mac address 4\""               >> "${TMP_PATH}/menu"
     fi
-    if [ "${CPU}" == "INTEL" ]; then
+    if [ "${CPU}" != "HP" ]; then
       echo "d \"Build the [TCRP FRIEND] loader\""         >> "${TMP_PATH}/menu"    
-    else
-      if [ "${platform}" == "r1000" ]||[ "${platform}" == "v1000" ]; then    
-        echo "d \"Build the [TCRP FRIEND] loader\""         >> "${TMP_PATH}/menu"          
-      fi
     fi
     echo "j \"Build the [TCRP JOT Mod] loader\""            >> "${TMP_PATH}/menu"   
     echo "p \"Post Update for [TCRP JOT Mod]\""             >> "${TMP_PATH}/menu"   
