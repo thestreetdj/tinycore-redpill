@@ -2589,8 +2589,12 @@ function getstaticmodule() {
 function tinyjotfunc() {
 
     cat <<EOF
-    echo -e "-----------={ M Shell for TinyCore RedPill JOT }=------------\n"
+function savedefault {
+    saved_entry="${chosen}"
+    save_env --file $prefix/grubenv saved_entry
+    echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------\n"
     echo "TCRP JOT Version : 0.9.4.0-1"
+}    
 EOF
 
 }
@@ -2729,6 +2733,10 @@ checkmachine
         tempentry=$(cat localdiskp1/boot/grub/grub.cfg | head -n 80 | tail -n 20)
         sudo sed -i '61,80d' localdiskp1/boot/grub/grub.cfg
         echo "$tempentry" > /tmp/tempentry.txt
+        
+        sudo sed -i '31,34d' localdiskp1/boot/grub/grub.cfg        
+        tinyjotfunc | sudo tee --append localdiskp1/boot/grub/grub.cfg
+        
 #m shell only end
 
         echo "Replacing set root with filesystem UUID instead"
@@ -2743,9 +2751,6 @@ checkmachine
                 echo "Add configuration disable_mtrr_trim for AMD"            
                 sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
             fi
-            
-            retext=$(tinyjotfunc)
-            sudo sed -i "s/grubenv saved_entry/grubenv saved_entry\\n        ${retext}/" /tmp/tempentry.txt
         fi    
 
         if [ "$WITHFRIEND" = "YES" ]; then
@@ -2758,9 +2763,9 @@ checkmachine
                 cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
                 echo "Creating tinycore friend entry"
                 if [ $loaderdisk == "mmcblk0p" ]; then        
-                    tcrpfriendentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg                
+                    tcrpfriendentrymmc | sudo tee --append localdiskp1/boot/grub/grub.cfg                
                 else
-                    tcrpfriendentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+                    tcrpfriendentry | sudo tee --append localdiskp1/boot/grub/grub.cfg
                 fi    
             fi
         else
