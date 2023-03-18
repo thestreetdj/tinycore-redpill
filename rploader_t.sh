@@ -96,13 +96,23 @@ EOF
 
 }
 
+function msgalert() {
+    echo -en "\033[1;31m$1\033[0m"
+}
+function msgwarning() {
+    echo -en "\033[1;33m$1\033[0m"
+}
+function msgnormal() {
+    echo -en "\033[1;32m$1\033[0m"
+} 
+
 function readanswer() {
     while true; do
         read answ
         case $answ in
             [Yy]* ) answer="$answ"; break;;
             [Nn]* ) answer="$answ"; break;;
-            * ) echo "Please answer yY/nN.";;
+            * ) msgwarning "Please answer yY/nN.";;
         esac
     done
 }        
@@ -233,16 +243,16 @@ function monitor() {
         echo -e "Operating System:\t"$(grep PRETTY_NAME /etc/os-release | awk -F \= '{print $2}')
         echo -e "Kernel:\t\t\t"$(uname -r)
         echo -e "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
-        echo -e "CPU Threads:\t\t"$(lscpu |grep CPU\(s\): | awk '{print $2}')
+        msgnormal -e "CPU Threads:\t\t"$(lscpu |grep CPU\(s\): | awk '{print $2}')
         echo -e "Current Date Time:\t"$(date)
-        echo -e "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
+        msgnormal -e "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
         listpci
         echo -e "-------------------------------Loader boot entries---------------------------"
         grep -i menuentry /mnt/${loaderdisk}1/boot/grub/grub.cfg | awk -F \' '{print $2}'
         echo -e "-------------------------------CPU / Memory----------------------------------"
-        echo -e "Total Memory (MB):\t"$(cat /proc/meminfo |grep MemTotal | awk '{printf("%.2f%"), $2/1000}')
-        echo -e "Swap Usage:\t\t"$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
-        echo -e "CPU Usage:\t\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
+        msgnormal "Total Memory (MB):\t"$(cat /proc/meminfo |grep MemTotal | awk '{printf("%.2f%"), $2/1000}')
+        msgnormal "Swap Usage:\t\t"$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
+        msgnormal "CPU Usage:\t\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
         echo -e "-------------------------------Disk Usage >80%-------------------------------"
         df -Ph | grep -v loop | grep -v fs
 
@@ -2751,6 +2761,7 @@ checkmachine
 
                 cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
                 cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
+                echo "Creating tinycore friend entry"
                 if [ $loaderdisk == "mmcblk0p" ]; then        
                     tcrpfriendentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg                
                 else
@@ -3240,7 +3251,7 @@ function listpci() {
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 03)//'
             ;;
         0200)
-            echo "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             ;;
 #        0300)
 #            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
