@@ -7,6 +7,7 @@ function gitdownload() {
         echo "Loader sources already downloaded, pulling latest"
         cd /home/tc/redpill-load
         git pull
+        [ $? -ne 0 ] && ./rploader.sh clean && git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"
         cd /home/tc
     else
         git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"        
