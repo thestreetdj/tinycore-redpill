@@ -231,7 +231,7 @@ function monitor() {
         clear
         echo -e "-------------------------------System Information----------------------------"
         echo -e "Hostname:\t\t"$(hostname) 
-        echo -e "uptime:\t\t\t"$(uptime | awk '{print $3,$4}' | sed 's/,//')
+        echo -e "uptime:\t\t\t"$(uptime | awk '{print $3}' | sed 's/,//')
         echo -e "Manufacturer:\t\t"$(cat /sys/class/dmi/id/chassis_vendor) 
         echo -e "Product Name:\t\t"$(cat /sys/class/dmi/id/product_name)
         echo -e "Version:\t\t"$(cat /sys/class/dmi/id/product_version)
