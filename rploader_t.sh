@@ -236,23 +236,23 @@ function monitor() {
         echo -e "Product Name:\t\t"$(cat /sys/class/dmi/id/product_name)
         echo -e "Version:\t\t"$(cat /sys/class/dmi/id/product_version)
         echo -e "Serial Number:\t\t"$(sudo cat /sys/class/dmi/id/product_serial)
+        echo -e "Operating System:\t"$(grep PRETTY_NAME /etc/os-release | awk -F \= '{print $2}')
+        echo -e "Kernel:\t\t\t"$(uname -r)
+        msgnormal "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
         echo -e "Machine Type:\t\t"$(
             vserver=$(lscpu | grep Hypervisor | wc -l)
             if [ $vserver -gt 0 ]; then echo "VM"; else echo "Physical"; fi
         ) 
-        echo -e "Operating System:\t"$(grep PRETTY_NAME /etc/os-release | awk -F \= '{print $2}')
-        echo -e "Kernel:\t\t\t"$(uname -r)
-        echo -e "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
         msgnormal "CPU Threads:\t\t"$(lscpu |grep CPU\(s\): | awk '{print $2}')
         echo -e "Current Date Time:\t"$(date)
-        echo -e "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
+        msgnormal "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
         listpci
         echo -e "-------------------------------Loader boot entries---------------------------"
         grep -i menuentry /mnt/${loaderdisk}1/boot/grub/grub.cfg | awk -F \' '{print $2}'
         echo -e "-------------------------------CPU / Memory----------------------------------"
         msgnormal "Total Memory (MB):\t"$(cat /proc/meminfo |grep MemTotal | awk '{printf("%.2f%"), $2/1000}')
-        msgnormal "Swap Usage:\t\t"$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
-        msgnormal "CPU Usage:\t\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
+        echo -e "Swap Usage:\t\t"$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
+        echo -e "CPU Usage:\t\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
         echo -e "-------------------------------Disk Usage >80%-------------------------------"
         df -Ph | grep -v loop | grep -v fs
 
@@ -3251,7 +3251,7 @@ function listpci() {
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 03)//'
             ;;
         0200)
-            echo "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgwarning "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             ;;
 #        0300)
 #            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
