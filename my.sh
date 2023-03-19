@@ -498,9 +498,9 @@ else
         fi
     elif [ $TARGET_REVISION == "64216" ]; then    
         if [ $jot == "N" ]; then
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.2-${TARGET_REVISION} withfriend ${parmfrmyv}
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.2.0-${TARGET_REVISION} withfriend ${parmfrmyv}
         else
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.2-${TARGET_REVISION} static ${parmfrmyv}
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.2.0-${TARGET_REVISION} static ${parmfrmyv}
         fi
     else
         if [ $jot == "N" ]; then
