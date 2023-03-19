@@ -530,7 +530,7 @@ function getvars()
     tem="${1}"
 
     if [ $TARGET_REVISION == "42218" ] ; then
-        MODEL="$(echo $tem | sed 's/J//g')"
+        MODEL="$(echo $tem | sed 's/J//g' | sed 's/K//g')"
     else
         if [ $tem = "FS2500F" ]; then
             MODEL="FS2500"
