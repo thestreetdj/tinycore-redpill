@@ -232,7 +232,6 @@
                 {
                     "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
                     "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
-                    "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
                     "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
                 }
             ]
