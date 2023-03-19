@@ -204,8 +204,8 @@
             ]
         },
         {
-            "id": "ds918p-7.2-64216",
-            "platform_version": "ds918p-7.2-64216",
+            "id": "ds918p-7.2.0-64216",
+            "platform_version": "ds918p-7.2.0-64216",
             "user_config_json": "apollolake_user_config.json",
             "docker_base_image": "debian:8-slim",
             "compile_with": "toolkit_dev",
