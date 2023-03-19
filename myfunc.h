@@ -379,7 +379,17 @@ function getvars()
         ORIGIN_PLATFORM="bromolow"        
         SYNOMODEL="rs3413xsp_$TARGET_REVISION"
         sha256="de2425d55667a1c67763aeea1155bc6e336fb419148bb70f1ae1243d914d34ff"
-        
+
+#DSM 7.2
+    elif [ "${1}" = "DS918+K" ]; then           
+        DTC_BASE_MODEL="N"    
+        TARGET_REVISION="64216"                                                                                                                                
+        TARGET_PLATFORM="ds918p"
+        ORIGIN_PLATFORM="apollolake"
+        SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
+        sha256="2b0cbe8b78588ee797cfedd41a0ff11410ac95bc88c3ae981f758251992a52c4"                                                                              
+
+
 #JUN MODE
     elif [ "${1}" = "DS918+J" ]; then           
         DTC_BASE_MODEL="N"    
