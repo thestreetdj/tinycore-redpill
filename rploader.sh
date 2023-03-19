@@ -3435,11 +3435,11 @@ function getredpillko() {
        
     else
     
-        echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-        if [ ${ORIGIN_PLATFORM} == "apollolake" ]; then
-            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+        echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.X redpill.ko ..."
+        if [ ${TARGET_REVISION} == "64216" ]; then
+            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.302plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
         else
-            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz            
+            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
         fi
         sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
         
