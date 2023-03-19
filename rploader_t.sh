@@ -2754,9 +2754,6 @@ checkmachine
                 echo "Add configuration disable_mtrr_trim for AMD"            
                 sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
             fi
-            
-            # change seial Com1 IO address for test
-            sudo sed -i "s/x3f8/xf010/" /tmp/tempentry.txt            
         fi    
 
         if [ "$WITHFRIEND" = "YES" ]; then
