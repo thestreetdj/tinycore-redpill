@@ -3128,6 +3128,7 @@ function getvars() {
     COMPILE_METHOD="$(echo $platform_selected | jq -r -e '.compile_with')"
     TARGET_PLATFORM="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[0])"
     TARGET_VERSION="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[1])"
+    echo "TARGET_VERSION = ${TARGET_VERSION}"
     TARGET_REVISION="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[2])"
     REDPILL_LKM_MAKE_TARGET="$(echo $platform_selected | jq -r -e '.redpill_lkm_make_target')"
 #    tcrpdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
