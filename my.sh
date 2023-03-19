@@ -427,6 +427,8 @@ echo "DN_MODEL is $DN_MODEL"
 cecho p "DSM PAT file pre-downloading in progress..."
 if [ $TARGET_REVISION == "42218" ]; then
     URL="https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_${DN_MODEL}_$TARGET_REVISION.pat"
+elif [ $TARGET_REVISION == "64216" ]; then
+    URL="https://global.download.synology.com/download/DSM/beta/7.2/64216/DSM_${DN_MODEL}_$TARGET_REVISION.pat"  
 else
     URL="https://global.download.synology.com/download/DSM/release/7.1.1/42962/DSM_${DN_MODEL}_$TARGET_REVISION.pat"  
 fi
@@ -493,6 +495,12 @@ else
             echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218 withfriend ${parmfrmyv}
         else
             echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218 static ${parmfrmyv}
+        fi
+    elif [ $TARGET_REVISION == "64216" ]; then    
+        if [ $jot == "N" ]; then
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.2-${TARGET_REVISION} withfriend ${parmfrmyv}
+        else
+            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.2-${TARGET_REVISION} static ${parmfrmyv}
         fi
     else
         if [ $jot == "N" ]; then
