@@ -389,11 +389,10 @@ function getvars()
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
         sha256="2b0cbe8b78588ee797cfedd41a0ff11410ac95bc88c3ae981f758251992a52c4"                                                                              
 
-
 #JUN MODE
     elif [ "${1}" = "DS918+J" ]; then           
         DTC_BASE_MODEL="N"    
-        TARGET_REVISION="42218"                                                                                                                                
+        TARGET_REVISION="42218"
         TARGET_PLATFORM="ds918p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
@@ -531,8 +530,10 @@ function getvars()
 
     if [ $TARGET_REVISION == "42218" ] ; then
         MODEL="$(echo $tem | sed 's/J//g')"
+        TARGET_VERSION="7.0.1"
     elif [ $TARGET_REVISION == "64216" ] ; then    
         MODEL="$(echo $tem | sed 's/K//g')"
+        TARGET_VERSION="7.2.0"        
     else
         if [ $tem = "FS2500F" ]; then
             MODEL="FS2500"
@@ -544,8 +545,8 @@ function getvars()
             else
                 MODEL=$tem
             fi
-            
         fi    
+        TARGET_VERSION="7.1.1"        
     fi
 
     echo "MODEL is $MODEL"
