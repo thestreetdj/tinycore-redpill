@@ -255,6 +255,7 @@ local_cache="/mnt/${tcrppart}/auxfiles"
 echo
 cecho y "TARGET_PLATFORM is $TARGET_PLATFORM"
 cecho r "ORIGIN_PLATFORM is $ORIGIN_PLATFORM"
+cecho c "TARGET_VERSION is $TARGET_VERSION"
 cecho p "TARGET_REVISION is $TARGET_REVISION"
 cecho g "SYNOMODEL is $SYNOMODEL"  
 
@@ -377,47 +378,45 @@ DN_MODEL="$(echo $MODEL | sed 's/+/%2B/g')"
 echo "DN_MODEL is $DN_MODEL"
 
 cecho p "DSM PAT file pre-downloading in progress..."
-if [ $TARGET_REVISION == "42218" ]; then
-    URL="https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_${DN_MODEL}_$TARGET_REVISION.pat"
-elif [ $TARGET_REVISION == "64216" ]; then
-    URL="https://global.download.synology.com/download/DSM/beta/7.2/64216/DSM_${DN_MODEL}_$TARGET_REVISION.pat"  
+if [ $TARGET_REVISION == "64216" ]; then
+    URL="https://global.download.synology.com/download/DSM/beta/7.2/${$TARGET_REVISION}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"  
 else
-    URL="https://global.download.synology.com/download/DSM/release/7.1.1/42962/DSM_${DN_MODEL}_$TARGET_REVISION.pat"  
+    URL="https://global.download.synology.com/download/DSM/release/${TARGET_VERSION}/${$TARGET_REVISION}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"
 fi
 cecho y "$URL"
 
 patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"                                         
                                                                                              
-    if [ -f ${patfile} ]; then                                                               
-        cecho r "Found locally cached pat file ${SYNOMODEL}.pat in /mnt/${tcrppart}/auxfiles"
-        cecho b "Downloadng Skipped!!!"                                                     
-    else
+if [ -f ${patfile} ]; then                                                               
+    cecho r "Found locally cached pat file ${SYNOMODEL}.pat in /mnt/${tcrppart}/auxfiles"
+    cecho b "Downloadng Skipped!!!"                                                     
+else
     
-        chkavail
-        if [ $avail_num -le 390 ]; then
-            echo "No adequate space on ${local_cache} to download file into cache folder, clean up PAT file now ....."
-            rm -f ${local_cache}/*.pat
-        fi
-        
-        STATUS=`curl --insecure -w "%{http_code}" -L "${URL}" -o ${patfile} --progress-bar`
-        if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
-           echo  "Check internet or cache disk space"
-           exit 99
-        fi
-
-        os_sha256=$(sha256sum ${patfile} | awk '{print $1}')                                
-        cecho y "Pat file  sha256sum is : $os_sha256"                                       
-
-        verifyid="${sha256}"                                                                
-        cecho p "verifyid  sha256sum is : $verifyid"                                        
-
-        if [ "$os_sha256" == "$verifyid" ]; then                                            
-            cecho y "pat file sha256sum is OK ! "                                           
-        else                                                                                
-            cecho y "os sha256 verify FAILED, check ${patfile}  "                           
-            exit 99                                                                         
-        fi                                                                                  
+    chkavail
+    if [ $avail_num -le 390 ]; then
+        echo "No adequate space on ${local_cache} to download file into cache folder, clean up PAT file now ....."
+        rm -f ${local_cache}/*.pat
     fi
+        
+    STATUS=`curl --insecure -w "%{http_code}" -L "${URL}" -o ${patfile} --progress-bar`
+    if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
+       echo  "Check internet or cache disk space"
+       exit 99
+    fi
+
+    os_sha256=$(sha256sum ${patfile} | awk '{print $1}')                                
+    cecho y "Pat file  sha256sum is : $os_sha256"                                       
+
+    verifyid="${sha256}"                                                                
+    cecho p "verifyid  sha256sum is : $verifyid"                                        
+
+    if [ "$os_sha256" == "$verifyid" ]; then                                            
+        cecho y "pat file sha256sum is OK ! "                                           
+    else                                                                                
+        cecho y "os sha256 verify FAILED, check ${patfile}  "                           
+        exit 99                                                                         
+    fi                                                                                  
+fi
 
 echo
 cecho g "Loader Building in progress..."
@@ -429,26 +428,11 @@ else
     parmfrmyv=""
 fi
 
-    if [ $TARGET_REVISION == "42218" ]; then
-        if [ $jot == "N" ]; then
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218 withfriend ${parmfrmyv}
-        else
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218 static ${parmfrmyv}
-        fi
-    elif [ $TARGET_REVISION == "64216" ]; then    
-        if [ $jot == "N" ]; then
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.2.0-${TARGET_REVISION} withfriend ${parmfrmyv}
-        else
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.2.0-${TARGET_REVISION} static ${parmfrmyv}
-        fi
-    else
-        if [ $jot == "N" ]; then
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} withfriend ${parmfrmyv}
-        else
-            echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} static ${parmfrmyv}
-        fi
-    fi
-
+if [ $jot == "N" ]; then
+    echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend ${parmfrmyv}
+else
+    echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static ${parmfrmyv}
+fi
 
 if  [ -f /home/tc/custom-module/redpill.ko ]; then
     cecho y "Removing redpill.ko ..."
