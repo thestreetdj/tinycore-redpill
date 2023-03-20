@@ -14,7 +14,7 @@
           "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
           "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
         }
       },
@@ -29,15 +29,15 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
     },
     {
-      "id": "ds1019p-7.1.1-42962",
-      "platform_version": "ds1019p-7.1.1-42962",
+      "id": "ds1019p-7.2.0-64216",
+      "platform_version": "ds1019p-7.2.0-64216",
       "user_config_json": "ds1019p_user_config.json",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
@@ -48,7 +48,7 @@
           "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
           "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
         }
       },
@@ -64,7 +64,7 @@
         {
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
@@ -82,7 +82,7 @@
           "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
         }
       },
@@ -98,14 +98,14 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
     },
     {
-      "id": "ds1520p-7.1.1-42962",
-      "platform_version": "ds1520p-7.1.1-42962",
+      "id": "ds1520p-7.2.0-64216",
+      "platform_version": "ds1520p-7.2.0-64216",
       "user_config_json": "ds1520p_user_config.json",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
@@ -116,7 +116,7 @@
           "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
         }
       },
@@ -132,14 +132,14 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
     },
     {
-      "id": "ds1621p-7.1.1-42962",
-      "platform_version": "ds1621p-7.1.1-42962",
+      "id": "ds1621p-7.2.0-64216",
+      "platform_version": "ds1621p-7.2.0-64216",
       "user_config_json": "v1000_user_config-test.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -150,7 +150,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
         }
       },
@@ -166,14 +166,14 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://github.com/PeterSuh-Q3/tcrp-addons/raw/main/powersched/rpext-index.json"
         }
       ]
     },
     {
-      "id": "ds1621xsp-7.1.1-42962",
-      "platform_version": "ds1621xsp-7.1.1-42962",
+      "id": "ds1621xsp-7.2.0-64216",
+      "platform_version": "ds1621xsp-7.2.0-64216",
       "user_config_json": "ds1621xsp_user_config-test.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -184,7 +184,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
         }
       },
@@ -199,14 +199,14 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
     },
     {
-      "id": "ds2422p-7.1.1-42962",
-      "platform_version": "ds2422p-7.1.1-42962",
+      "id": "ds2422p-7.2.0-64216",
+      "platform_version": "ds2422p-7.2.0-64216",
       "user_config_json": "ds2422p_user_config.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -217,7 +217,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
         }
       },
@@ -233,14 +233,14 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
     },
     {
-      "id": "ds3615xs-7.1.1-42962",
-      "platform_version": "ds3615xs-7.1.1-42962",
+      "id": "ds3615xs-7.2.0-64216",
+      "platform_version": "ds3615xs-7.2.0-64216",
       "user_config_json": "bromolow_user_config.json",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
@@ -251,7 +251,7 @@
           "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.bromolow-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.bromolow-7.2.dev.txz/download",
           "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
         }
       },
@@ -266,13 +266,13 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json"
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
         }
       ]
     },
     {
-      "id": "ds3617xs-7.1.1-42962",
-      "platform_version": "ds3617xs-7.1.1-42962",
+      "id": "ds3617xs-7.2.0-64216",
+      "platform_version": "ds3617xs-7.2.0-64216",
       "user_config_json": "broadwell_user_config-test.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -283,7 +283,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwell-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwell-7.2.dev.txz/download",
           "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
         }
       },
@@ -298,14 +298,14 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
     },
     {
-      "id": "ds3622xsp-7.1.1-42962",
-      "platform_version": "ds3622xsp-7.1.1-42962",
+      "id": "ds3622xsp-7.2.0-64216",
+      "platform_version": "ds3622xsp-7.2.0-64216",
       "user_config_json": "broadwellnk_user_config-test.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -316,7 +316,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
         }
       },
@@ -331,14 +331,14 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
     },
     {
-      "id": "ds723p-7.1.1-42962",
-      "platform_version": "ds723p-7.1.1-42962",
+      "id": "ds723p-7.2.0-64216",
+      "platform_version": "ds723p-7.2.0-64216",
       "user_config_json": "ds723p_user_config.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -349,7 +349,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
         }
       },
@@ -365,7 +365,7 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json"
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
         }
       ]
     },
@@ -382,7 +382,7 @@
           "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
           "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
         }
       },
@@ -397,15 +397,15 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
     },
     {
-      "id": "ds918p-7.1.1-42962",
-      "platform_version": "ds918p-7.1.1-42962",
+      "id": "ds918p-7.2.0-64216",
+      "platform_version": "ds918p-7.2.0-64216",
       "user_config_json": "apollolake_user_config.json",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
@@ -416,7 +416,7 @@
           "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
           "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
         }
       },
@@ -431,7 +431,7 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
@@ -450,7 +450,7 @@
           "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
         }
       },
@@ -466,14 +466,14 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
     },
     {
-      "id": "ds920p-7.1.1-42962",
-      "platform_version": "ds920p-7.1.1-42962",
+      "id": "ds920p-7.2.0-64216",
+      "platform_version": "ds920p-7.2.0-64216",
       "user_config_json": "geminilake_user_config.json",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
@@ -484,7 +484,7 @@
           "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
         }
       },
@@ -500,14 +500,14 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
     },
     {
-      "id": "ds923p-7.1.1-42962",
-      "platform_version": "ds923p-7.1.1-42962",
+      "id": "ds923p-7.2.0-64216",
+      "platform_version": "ds923p-7.2.0-64216",
       "user_config_json": "ds923p_user_config.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -518,7 +518,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
         }
       },
@@ -535,13 +535,13 @@
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json"
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
         }
       ]
     },
     {
-      "id": "dva1622-7.1.1-42962",
-      "platform_version": "dva1622-7.1.1-42962",
+      "id": "dva1622-7.2.0-64216",
+      "platform_version": "dva1622-7.2.0-64216",
       "user_config_json": "dva1622_user_config.json",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
@@ -552,7 +552,7 @@
           "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
         }
       },
@@ -568,14 +568,14 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
     },
     {
-      "id": "dva3219-7.1.1-42962",
-      "platform_version": "dva3219-7.1.1-42962",
+      "id": "dva3219-7.2.0-64216",
+      "platform_version": "dva3219-7.2.0-64216",
       "user_config_json": "dva3219_user_config-test.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -586,7 +586,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
         }
       },
@@ -602,13 +602,13 @@
         {
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json"
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
         }
       ]
     },
     {
-      "id": "dva3221-7.1.1-42962",
-      "platform_version": "dva3221-7.1.1-42962",
+      "id": "dva3221-7.2.0-64216",
+      "platform_version": "dva3221-7.2.0-64216",
       "user_config_json": "denverton_user_config-test.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -619,7 +619,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
         }
       },
@@ -635,13 +635,13 @@
         {
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json"
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
         }
       ]
     },
     {
-      "id": "fs2500-7.1.1-42962",
-      "platform_version": "fs2500-7.1.1-42962",
+      "id": "fs2500-7.2.0-64216",
+      "platform_version": "fs2500-7.2.0-64216",
       "user_config_json": "fs2500_user_config.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -652,7 +652,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
         }
       },
@@ -668,14 +668,14 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
     },
     {
-      "id": "rs3413xsp-7.1.1-42962",
-      "platform_version": "rs3413xsp-7.1.1-42962",
+      "id": "rs3413xsp-7.2.0-64216",
+      "platform_version": "rs3413xsp-7.2.0-64216",
       "user_config_json": "rs3413xsp_user_config.json",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
@@ -686,7 +686,7 @@
           "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.bromolow-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.bromolow-7.2.dev.txz/download",
           "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
         }
       },
@@ -701,13 +701,13 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json"
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
         }
       ]
     },
     {
-      "id": "rs3618xs-7.1.1-42962",
-      "platform_version": "rs3618xs-7.1.1-42962",
+      "id": "rs3618xs-7.2.0-64216",
+      "platform_version": "rs3618xs-7.2.0-64216",
       "user_config_json": "rs3618xs_user_config-test.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -718,7 +718,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwell-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwell-7.2.dev.txz/download",
           "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
         }
       },
@@ -733,14 +733,14 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
     },
     {
-      "id": "rs4021xsp-7.1.1-42962",
-      "platform_version": "rs4021xsp-7.1.1-42962",
+      "id": "rs4021xsp-7.2.0-64216",
+      "platform_version": "rs4021xsp-7.2.0-64216",
       "user_config_json": "rs4021xsp_user_config-test.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -751,7 +751,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
         }
       },
@@ -766,13 +766,14 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json"
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
+          "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
     },
     {
-      "id": "sa3600-7.1.1-42962",
-      "platform_version": "sa3600-7.1.1-42962",
+      "id": "sa3600-7.2.0-64216",
+      "platform_version": "sa3600-7.2.0-64216",
       "user_config_json": "sa3600_user_config-test.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
@@ -783,7 +784,7 @@
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
         }
       },
@@ -798,8 +799,7 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "eudev": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/eudev/rpext-index.json",
-          "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
+          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
         }
       ]
     }
