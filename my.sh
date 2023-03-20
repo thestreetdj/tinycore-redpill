@@ -169,29 +169,15 @@ getvars "$1"
 #echo "$SYNOMODEL"                                      
 #echo "$sha256"
 
-echo "Multi-argument input variable assignment mapping"
-jumkey="N"
 postupdate="N"
 userdts="N"
-#noclean="N"
 noconfig="N"
-manual="N"
-poco="N"
-realmac="N"
 frmyv="N"
 jot="N"
 
     while [[ "$#" > 0 ]] ; do
 
         case $1 in
-        jumkey)
-            jumkey="Y"
-            ;;
-
-        poco)
-            poco="Y"
-            ;;
-
         postupdate)
             postupdate="Y"
             ;;
@@ -200,22 +186,10 @@ jot="N"
             userdts="Y"
             ;;
 
-#        noclean)
-#            noclean="Y"
-#            ;;
-
         noconfig)
             noconfig="Y"
             ;;
-
-        manual)
-            manual="Y"
-            ;;
-            
-        realmac)
-            realmac="Y"
-            ;;
-            
+         
         frmyv)
             frmyv="Y"
             ;;
@@ -241,27 +215,10 @@ jot="N"
         shift
     done
 
-#echo $jumkey
 #echo $postupdate
 #echo $userdts
-#echo $noclean
 #echo $noconfig
-#echo $manual
-#echo $realmac
 #echo $frmyv
-
-if [ $jumkey == "Y" ]; then 
-    cecho p "The jumpkey option is deprecated, shell exit..."          
-    exit 0
-elif [ $poco == "Y" ]; then 
-    cecho p "The poco option is deprecated, shell exit..."
-    exit 0
-fi
-
-if [ $noconfig == "Y" ] && [ $realmac == "Y" ]; then 
-    cecho p "The noconfig option and the realmac option cannot be used together, program exit..."
-    exit 0
-fi
 
 echo
 
@@ -404,11 +361,6 @@ else
     cecho c "Before changing user_config.json" 
     cat user_config.json
 
-    if [ $realmac == "Y" ]; then 
-        cecho p "The realmac option is no longer supported as a command method. Set it up using menu.sh, program exit..."
-        exit 0
-    fi
-
     echo "y"|./rploader.sh identifyusb
 
     if  [ $DTC_BASE_MODEL == "Y" ]; then
@@ -432,7 +384,6 @@ elif [ $TARGET_REVISION == "64216" ]; then
 else
     URL="https://global.download.synology.com/download/DSM/release/7.1.1/42962/DSM_${DN_MODEL}_$TARGET_REVISION.pat"  
 fi
-
 cecho y "$URL"
 
 patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"                                         
@@ -472,23 +423,11 @@ echo
 cecho g "Loader Building in progress..."
 echo
 
-if [ $manual == "Y" ]; then    
-    cecho r "Loader Manual Building in progress..." 
-
-    if [ $TARGET_REVISION == "42218" ]; then
-#        cecho y "Manual option is not allowed in jun mode build, It is built with the static option!!!  "  
-        echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.0.1-42218 manual                                                                  
-    else
-        echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} manual   
-    fi
-    
-else                                                                                                                           
-
-    if [ $frmyv == "Y" ]; then
-        parmfrmyv="frmyv"
-    else
-        parmfrmyv=""
-    fi
+if [ $frmyv == "Y" ]; then
+    parmfrmyv="frmyv"
+else
+    parmfrmyv=""
+fi
 
     if [ $TARGET_REVISION == "42218" ]; then
         if [ $jot == "N" ]; then
@@ -509,8 +448,7 @@ else
             echo "n"|./rploader.sh build ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION} static ${parmfrmyv}
         fi
     fi
-    
-fi 
+
 
 if  [ -f /home/tc/custom-module/redpill.ko ]; then
     cecho y "Removing redpill.ko ..."
