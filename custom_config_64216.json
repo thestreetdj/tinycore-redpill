@@ -2,40 +2,6 @@
   "docker": {},
   "build_configs": [
     {
-      "id": "ds1019p-7.0.1-42218",
-      "platform_version": "ds1019p-7.0.1-42218",
-      "user_config_json": "ds1019p_user_config.json",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
-          "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
-      "add_extensions": [
-        {
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
-          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
-          "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
-        }
-      ]
-    },
-    {
       "id": "ds1019p-7.2.0-64216",
       "platform_version": "ds1019p-7.2.0-64216",
       "user_config_json": "ds1019p_user_config.json",
@@ -63,40 +29,6 @@
       "add_extensions": [
         {
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json",
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
-          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
-        }
-      ]
-    },
-    {
-      "id": "ds1520p-7.0.1-42218",
-      "platform_version": "ds1520p-7.0.1-42218",
-      "user_config_json": "ds1520p_user_config.json",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
-      "add_extensions": [
-        {
-          "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
           "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
@@ -370,40 +302,6 @@
       ]
     },
     {
-      "id": "ds918p-7.0.1-42218",
-      "platform_version": "ds918p-7.0.1-42218",
-      "user_config_json": "apollolake_user_config.json",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
-          "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
-      "add_extensions": [
-        {
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
-          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
-          "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
-        }
-      ]
-    },
-    {
       "id": "ds918p-7.2.0-64216",
       "platform_version": "ds918p-7.2.0-64216",
       "user_config_json": "apollolake_user_config.json",
@@ -434,40 +332,6 @@
           "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
-        }
-      ]
-    },
-    {
-      "id": "ds920p-7.0.1-42218",
-      "platform_version": "ds920p-7.0.1-42218",
-      "user_config_json": "geminilake_user_config.json",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
-      "add_extensions": [
-        {
-          "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
-          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
     },
