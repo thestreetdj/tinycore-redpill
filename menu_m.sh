@@ -9,7 +9,7 @@ LOG_FILE="${TMP_PATH}/log.txt"
 USER_CONFIG_FILE="/home/tc/user_config.json"
 
 MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
-BUILD="42962"
+BUILD="$(jq -r -e '.general.version' $USER_CONFIG_FILE) | cut -c 7- "
 SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
 MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
 NETNUM="1"
