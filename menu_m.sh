@@ -506,7 +506,6 @@ function editUserConfig() {
   done
 
   MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
-  BUILD="42962"
   SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
   MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
   MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
@@ -730,7 +729,7 @@ while true; do
       echo "j \"Build the [TCRP JOT Mode] loader\""            >> "${TMP_PATH}/menu"       
     else 
       echo "z \"Choose a loader Mode Current (${LDRMODE})\""   >> "${TMP_PATH}/menu"
-      echo "d \"Build the [TCRP ${LDRMODE} ${BUILD}] loader\""  >> "${TMP_PATH}/menu"
+      echo "d \"Build the [TCRP ${LDRMODE} 7.1.1-42962] loader\""  >> "${TMP_PATH}/menu"
     fi
     if [ "${LDRMODE}" == "JOT" ]; then
       echo "p \"Post Update for [TCRP JOT Mod]\""             >> "${TMP_PATH}/menu"   
@@ -774,18 +773,19 @@ while true; do
             NEXT="z" 	
 	fi
         ;;
-    h) macMenu "eth3"     NEXT="z" ;;    
+    h) macMenu "eth3";    NEXT="z" ;;    
     z) selectldrmode ;    NEXT="d" ;;
-    d) if [ "${LDRMODE}" == "FRIEND" ]; then
+    d) BUILD="42962"
+       if [ "${LDRMODE}" == "FRIEND" ]; then
          make
        else
-         make "jot";
+         make "jot"
        fi
        NEXT="r" ;;
-    j) make "jot";        NEXT="r" ;;    
-    p) postupdate ;       NEXT="r" ;;
-    o) make "jun";      NEXT="r" ;;
-    u) editUserConfig;  NEXT="d" ;;
+    j) BUILD="42962"; make "jot";      NEXT="r" ;;    
+    p) postupdate ;                    NEXT="r" ;;
+    o) BUILD="42218"; make "jun";      NEXT="r" ;;
+    u) editUserConfig;                 NEXT="d" ;;
     k) keymapMenu ;;
     i) erasedisk ;;          
     b) backup ;;      
