@@ -8,17 +8,17 @@ TMP_PATH=/tmp
 LOG_FILE="${TMP_PATH}/log.txt"
 USER_CONFIG_FILE="/home/tc/user_config.json"
 
-MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
-BUILD="$(jq -r -e '.general.version' $USER_CONFIG_FILE) | cut -c 7- "
-SN="$(jq -r -e '.extra_cmdline.sn' $USER_CONFIG_FILE)"
-MACADDR1="$(jq -r -e '.extra_cmdline.mac1' $USER_CONFIG_FILE)"
+MODEL=$(jq -r -e '.general.model' "$USER_CONFIG_FILE")
+BUILD=$(jq -r -e '.general.version' "$USER_CONFIG_FILE" | cut -c 7-)
+SN=$(jq -r -e '.extra_cmdline.sn' "$USER_CONFIG_FILE")
+MACADDR1=$(jq -r -e '.extra_cmdline.mac1' "$USER_CONFIG_FILE")
 NETNUM="1"
 
-LAYOUT="$(jq -r -e '.general.layout' $USER_CONFIG_FILE)"
-KEYMAP="$(jq -r -e '.general.keymap' $USER_CONFIG_FILE)"
+LAYOUT=$(jq -r -e '.general.layout' "$USER_CONFIG_FILE")
+KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 
-DMPM="$(jq -r -e '.general.devmod' $USER_CONFIG_FILE)"
-LDRMODE="$(jq -r -e '.general.loadermode' $USER_CONFIG_FILE)"
+DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
+LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
 
 ###############################################################################
 # check VM or baremetal
