@@ -128,6 +128,8 @@ set -u
 # 2023.03.17
 # Update : AMD CPU FRIEND mode menu usage restriction release (except HP N36L/N40L/N54L)
 # 2023.03.18
+# Update : TCRP FRIEND / JOT menu selection method improvement
+# 2023.03.21
 
 function showlastupdate() {
     cat <<EOF
@@ -163,6 +165,9 @@ function showlastupdate() {
 
 # Update : AMD CPU FRIEND mode menu usage restriction release (except HP N36L/N40L/N54L)
 # 2023.03.18
+
+# Update : TCRP FRIEND / JOT menu selection method improvement
+# 2023.03.21
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
