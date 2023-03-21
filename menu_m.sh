@@ -18,6 +18,7 @@ LAYOUT="$(jq -r -e '.general.layout' $USER_CONFIG_FILE)"
 KEYMAP="$(jq -r -e '.general.keymap' $USER_CONFIG_FILE)"
 
 DMPM="$(jq -r -e '.general.devmod' $USER_CONFIG_FILE)"
+LDRMODE="$(jq -r -e '.general.loadermode' $USER_CONFIG_FILE)"
 
 ###############################################################################
 # check VM or baremetal
@@ -47,6 +48,8 @@ function checkcpu() {
     else
         if [ $(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//' | grep -e N36L -e N40L -e N54L | wc -l) -gt 0 ]; then
 	    CPU="HP"
+            LDRMODE="JOT"
+            writeConfigKey "general" "loadermode" "${LDRMODE}"          
 	else
             CPU="AMD"
         fi	    
@@ -104,8 +107,9 @@ function DeleteConfigKey() {
 ###############################################################################
 # Mounts backtitle dynamically
 function backtitle() {
-  BACKTITLE="TCRP 0.9.4.0"
+  BACKTITLE="TCRP 0.9.4.0-1"
   BACKTITLE+=" ${DMPM}"
+  BACKTITLE+=" ${LDRMODE}"
   if [ -n "${MODEL}" ]; then
     BACKTITLE+=" ${MODEL}"
   else
@@ -226,6 +230,32 @@ function seleudev() {
   done
 
   writeConfigKey "general" "devmod" "${DMPM}"
+
+}
+
+
+###############################################################################
+# Shows available between FRIEND and JOT
+function selectldrmode() {
+  while true; do
+    dialog --clear --backtitle "`backtitle`" \
+      --menu "Choose a option" 0 0 0 \
+      f "FRIEND (most recently stabilized)" \
+      j "JOT (The old way before friend)" \
+    2>${TMP_PATH}/resp
+    [ $? -ne 0 ] && return
+    resp=$(<${TMP_PATH}/resp)
+    [ -z "${resp}" ] && return
+    if [ "${resp}" = "f" ]; then
+      LDRMODE="FRIEND"
+      break
+    elif [ "${resp}" = "j" ]; then
+      LDRMODE="JOT"
+      break
+    fi
+  done
+
+  writeConfigKey "general" "loadermode" "${LDRMODE}"
 
 }
 
@@ -607,6 +637,11 @@ if [ "${DMPM}" = "null" ]; then
     writeConfigKey "general" "devmod" "${DMPM}"          
 fi
 
+if [ "${LDRMODE}" = "null" ]; then
+    LDRMODE="FRIEND"
+    writeConfigKey "general" "loadermode" "${LDRMODE}"          
+fi
+
 # Get actual IP
 IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}' | cut -c 6- )"
 
@@ -691,11 +726,15 @@ while true; do
     if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
       echo "h \"Choose a mac address 4\""               >> "${TMP_PATH}/menu"
     fi
-    if [ "${CPU}" != "HP" ]; then
-      echo "d \"Build the [TCRP FRIEND] loader\""         >> "${TMP_PATH}/menu"    
+    if [ "${CPU}" == "HP" ]; then
+      echo "j \"Build the [TCRP JOT Mode] loader\""            >> "${TMP_PATH}/menu"       
+    else 
+      echo "z \"Choose a loader Mode Current (${LDRMODE})\""   >> "${TMP_PATH}/menu"        
+      echo "d \"Build the [TCRP ${LDRMODE} ${BUILD}] loader\""  >> "${TMP_PATH}/menu"          
     fi
-    echo "j \"Build the [TCRP JOT Mod] loader\""            >> "${TMP_PATH}/menu"   
-    echo "p \"Post Update for [TCRP JOT Mod]\""             >> "${TMP_PATH}/menu"   
+    if [ "${LDRMODE}" == "JOT" ]; then
+      echo "p \"Post Update for [TCRP JOT Mod]\""             >> "${TMP_PATH}/menu"   
+    fi
     if [ "${MODEL}" == "DS918+" ]||[ "${MODEL}" == "DS1019+" ]||[ "${MODEL}" == "DS920+" ]||[ "${MODEL}" == "DS1520+" ]; then        
     	echo "o \"Build the [TCRP FRIEND 7.0.1-42218] loader\""  >> "${TMP_PATH}/menu"    
     fi	
@@ -736,8 +775,9 @@ while true; do
 	fi
         ;;
     h) macMenu "eth3"     NEXT="d" ;;    
+    j) make "jot";        NEXT="r" ;;    
+    z) selectldrmode ;    NEXT="d" ;;
     d) make ;             NEXT="r" ;;
-    j) make "jot";        NEXT="r" ;;  
     p) postupdate ;       NEXT="r" ;;
     o) make "jun";      NEXT="r" ;;
     u) editUserConfig;  NEXT="d" ;;
