@@ -729,8 +729,8 @@ while true; do
     if [ "${CPU}" == "HP" ]; then
       echo "j \"Build the [TCRP JOT Mode] loader\""            >> "${TMP_PATH}/menu"       
     else 
-      echo "z \"Choose a loader Mode Current (${LDRMODE})\""   >> "${TMP_PATH}/menu"        
-      echo "d \"Build the [TCRP ${LDRMODE} ${BUILD}] loader\""  >> "${TMP_PATH}/menu"          
+      echo "z \"Choose a loader Mode Current (${LDRMODE})\""   >> "${TMP_PATH}/menu"
+      echo "d \"Build the [TCRP ${LDRMODE} ${BUILD}] loader\""  >> "${TMP_PATH}/menu"
     fi
     if [ "${LDRMODE}" == "JOT" ]; then
       echo "p \"Post Update for [TCRP JOT Mod]\""             >> "${TMP_PATH}/menu"   
@@ -757,27 +757,32 @@ while true; do
         if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
             NEXT="f" 
 	else
-            NEXT="d" 	
+            NEXT="z" 	
 	fi
         ;;
     f) macMenu "eth1"
         if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
             NEXT="g" 
 	else
-            NEXT="d" 	
+            NEXT="z" 	
 	fi
         ;;
     g) macMenu "eth2"
         if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
             NEXT="h" 
 	else
-            NEXT="d" 	
+            NEXT="z" 	
 	fi
         ;;
-    h) macMenu "eth3"     NEXT="d" ;;    
-    j) make "jot";        NEXT="r" ;;    
+    h) macMenu "eth3"     NEXT="z" ;;    
     z) selectldrmode ;    NEXT="d" ;;
-    d) make ;             NEXT="r" ;;
+    d) if [ "${LDRMODE}" == "FRIEND" ]; then
+         make
+       else
+         make "jot";
+       fi
+       NEXT="r" ;;
+    j) make "jot";        NEXT="r" ;;    
     p) postupdate ;       NEXT="r" ;;
     o) make "jun";      NEXT="r" ;;
     u) editUserConfig;  NEXT="d" ;;
