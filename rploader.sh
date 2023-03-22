@@ -2945,10 +2945,9 @@ function bringoverfriend() {
     # 2nd try
     if [ $? -ne 0 ]; then
         msgwarning "Download failed from giteas.duckdns.org, Tring github.com..."    
-        #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")    
+
         URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
         for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
-        for file in $URLS; do filearr+=("-O" "\"${file}\"") ; done ; curl -s --insecure -L "${filearr[@]}"
 
         # 3rd try
         if [ $? -ne 0 ]; then
