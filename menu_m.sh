@@ -680,7 +680,8 @@ checkcpu
 #Get Timezone for Korean Langugae
 tz=$(curl -s  ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
 if [ tz=="\"Asia/Seoul\"" ]; then
-  export LANG="ko_KR.UTF-8"
+  export LANG=ko_KR.utf8
+  export NCURSES_NO_UTF8_ACS=1
 fi
 
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
@@ -720,7 +721,7 @@ setSuggest
 if [ tz=="\"Asia/Seoul\"" ]; then
 
 while true; do
-  echo "c \"커널모듈 처리 방법 EUDEV/DDSML 중 선택\""   	        > "${TMP_PATH}/menu"       
+  echo 'c \'커널모듈 처리 방법 EUDEV/DDSML 중 선택\''   	        > "${TMP_PATH}/menu"       
   echo "m \"Synology Model 선택\""                         >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     echo "s \"Synology S/N 선택\""               >> "${TMP_PATH}/menu"
