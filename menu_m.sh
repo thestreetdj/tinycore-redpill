@@ -721,7 +721,7 @@ setSuggest
 if [ tz=="\"Asia/Seoul\"" ]; then
 
 while true; do
-  echo 'c \'커널모듈 처리 방법 EUDEV/DDSML 중 선택\''   	        > "${TMP_PATH}/menu"       
+  echo 'c \"커널모듈 처리 방법 EUDEV/DDSML 중 선택\"'   	        > "${TMP_PATH}/menu"       
   echo "m \"Synology Model 선택\""                         >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     echo "s \"Synology S/N 선택\""               >> "${TMP_PATH}/menu"
