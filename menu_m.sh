@@ -679,6 +679,9 @@ checkcpu
 
 #Get Timezone for Korean Langugae
 tz=$(curl -s  ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
+if [ tz=="\"Asia/Seoul\"" ]; then
+  export LANG=ko_KR.UTF-8
+fi
 
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
 if [ $tcrppart == "mmc3" ]; then
@@ -750,7 +753,7 @@ while true; do
   echo "b \"TCRP 백업\""                            >> "${TMP_PATH}/menu"  
   echo "r \"재부팅\""                                 >> "${TMP_PATH}/menu"
   echo "e \"종료\""                                   >> "${TMP_PATH}/menu"
-  dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
+  dialog --no-collapse --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
     --menu "Device-Tree[DT] 기반의 모델 및 HBA는 SataPortMap,DiskIdxMap 설정이 필요하지 않습니다.\nDT 모델은 HBA를 지원하지 않습니다.\n${result}" 0 0 0 --file "${TMP_PATH}/menu" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
