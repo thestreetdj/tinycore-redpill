@@ -680,7 +680,7 @@ checkcpu
 #Get Timezone for Korean Langugae
 tz=$(curl -s  ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
 if [ tz=="\"Asia/Seoul\"" ]; then
-  export LANG=ko_KR.UTF-8
+  export LANG="ko_KR.UTF-8"
 fi
 
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
