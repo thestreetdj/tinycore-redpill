@@ -722,10 +722,21 @@ fi
 tz=$(curl -s  ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
 if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
 
-  tce-load -iw getlocale
-  sudo mkdir /usr/lib/locale && sudo localedef -c -i ko_KR -f UTF-8 ko_KR.UTF-8
-  export LANG=ko_KR.utf8
-  export LC_ALL=ko_KR.utf8
+  if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep mylocale | wc -w) -eq 0 ]; then
+    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/mylocale.tcz" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz
+    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/mylocale.tcz.dep" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz.dep
+    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/mylocale.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz.md5.txt
+    if [ $? -eq 0 ]; then
+      echo "Download mylocale.tcz OK !!!"
+      sudo echo "mylocale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst      
+      sudo mkdir /usr/lib/locale && sudo localedef -c -i ko_KR -f UTF-8 ko_KR.UTF-8
+      export LANG=ko_KR.utf8
+      export LC_ALL=ko_KR.utf8
+    else
+      echo "Download mylocale.tcz FAILE Backup locale C!!!"
+      tz="DoNotUseKorean"
+    fi
+  fi
   
 fi
 
