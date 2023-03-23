@@ -2,7 +2,23 @@
 
 # Set DateTime
 timezone="UTC"
-ntpserver="pool.ntp.org"
+
+while true; do
+  if [ $(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | wc -l) -gt 0 ]; then
+    break
+  fi
+  sleep 1
+  echo "Waiting for internet activation!!!"
+done
+
+#Get Timezone
+tz=$(curl -s ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
+if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
+    ntpserver="ntp.kriss.re.kr"
+else
+    ntpserver="pool.ntp.org"
+fi
+
 if [ "$(which ntpclient)_" == "_" ]; then
     tce-load -iw ntpclient 2>&1 >/dev/null
 fi    
