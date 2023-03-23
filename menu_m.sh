@@ -371,7 +371,28 @@ done
 function setSuggest() {
 
   line="-------------------------------------------------\n"
-   
+  if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then   
+  case $MODEL in
+    DS3622xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 자원, 인텔 x86-64";;
+    DS1621xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 자원, 인텔 x86-64";;
+    RS4021xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 자원, 인텔 x86-64";;
+    DS918+)      platform="apollolake";desc="[${MODEL}]:${platform}, 최대 8 스레드 자원, 인텔 4세대 하스웰 이후부터 지원,iGPU H/W 트랜스코딩, HBA 사용시 잘못된 디스크 S/N이 표시됨";;
+    DS1019+)     platform="apollolake";desc="[${MODEL}]:${platform}, 최대 8 스레드 자원, 인텔 4세대 하스웰 이후부터 지원,iGPU H/W 트랜스코딩, HBA 사용시 잘못된 디스크 S/N이 표시됨";;
+    DS923+)      platform="r1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 ? 스레드 자원, 인텔 x86-64";;
+    DS723+)      platform="r1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 ? 스레드 자원, 인텔 x86-64";;
+    DS920+)      platform="geminilake";desc="[${MODEL}]:${platform}(DT), 최대 8 스레드 자원, 인텔 4세대 하스웰 이후부터 지원, iGPU H/W 트랜스코딩";;
+    DS1520+)     platform="geminilake";desc="[${MODEL}]:${platform}(DT), 최대 8 스레드 자원, 인텔 4세대 하스웰 이후부터 지원, iGPU H/W 트랜스코딩";;
+    DVA1622)     platform="geminilake";desc="[${MODEL}]:${platform}(DT), 최대 8 스레드 자원, 인텔 4세대 하스웰 이후부터 지원, iGPU H/W 트랜스코딩, 카메라 라이센스 있음";;
+    DS1621+)     platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 16 스레드 자원, 인텔 x86-64";;
+    DS2422+)     platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 16 스레드 자원, 인텔 x86-64";;
+    FS2500)      platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 16 스레드 자원, 인텔 x86-64";;
+    DS3615xs)    platform="bromolow";desc="[${MODEL}]:${platform}, 최대 16 스레드 자원, 인텔 x86-64";;
+    DS3617xs)    platform="broadwell";desc="[${MODEL}]:${platform}, 최대 24 스레드 자원, 인텔 x86-64";;
+    RS3618xs)    platform="broadwell";desc="[${MODEL}]:${platform}, 최대 24 스레드 자원, 인텔 x86-64";;
+    DVA3221)     platform="denverton";desc="[${MODEL}]:${platform}, 최대 16 스레드 자원, 인텔 4세대 하스웰 이후부터 지원, Nvidia GTX1650 H/W 가속지원, 카메라 라이센스 있음";;
+    DVA3219)     platform="denverton";desc="[${MODEL}]:${platform}, 최대 16 스레드 자원, 인텔 4세대 하스웰 이후부터 지원, Nvidia GTX1050Ti H/W 가속지원, 카메라 라이센스 있음";;
+  esac
+  else
   case $MODEL in
     DS3622xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, Max 24 Threads, any x86-64";;
     DS1621xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, Max 24 Threads, any x86-64";;
@@ -392,6 +413,7 @@ function setSuggest() {
     DVA3221)     platform="denverton";desc="[${MODEL}]:${platform}, Max 16 Threads, Haswell or later, Nvidia GTX1650, Have a camera license";;
     DVA3219)     platform="denverton";desc="[${MODEL}]:${platform}, Max 16 Threads, Haswell or later, Nvidia GTX1050Ti, Have a camera license";;
   esac
+  fi
 
   result="${line}${desc}" 
 
@@ -691,17 +713,21 @@ fi
 checkmachine
 checkcpu
 
-#Get Timezone for Korean Langugae
-tz=$(curl -s  ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
-if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
-#  export LANG="ko_KR.UTF-8"
-tz="NotUseKorean"
-fi
-
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
 if [ $tcrppart == "mmc3" ]; then
     tcrppart="mmcblk0p3"
 fi    
+
+#Get Timezone for Korean Langugae
+tz=$(curl -s  ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
+if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
+
+  tce-load -iw getlocale
+  sudo mkdir /usr/lib/locale && sudo localedef -c -i ko_KR -f UTF-8 ko_KR.UTF-8
+  export LANG=ko_KR.utf8
+  export LC_ALL=ko_KR.utf8
+  
+fi
 
 # Download dialog
 if [ "$(which dialog)_" == "_" ]; then
@@ -735,8 +761,8 @@ setSuggest
 if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
 
 while true; do
-  echo "c \"커널모듈 처리 방법 EUDEV/DDSML 중 선택\""   	        > "${TMP_PATH}/menu"       
-  echo "m \"Synology Model 선택\""                         >> "${TMP_PATH}/menu"
+  echo "c \"커널모듈 처리방법 선택 EUDEV/DDSML\""   	        > "${TMP_PATH}/menu"       
+  echo "m \"Synology 모델 선택\""                         >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     echo "s \"Synology S/N 선택\""               >> "${TMP_PATH}/menu"
     echo "a \"Mac 주소 1 선택\""               >> "${TMP_PATH}/menu"
@@ -762,14 +788,14 @@ while true; do
       echo "p \"[TCRP JOT 모드]용 Post 업데이트\""             >> "${TMP_PATH}/menu"   
     fi
   fi
-  echo "u \"user_config.json 파일 수동 편집\""         >> "${TMP_PATH}/menu"
+  echo "u \"user_config.json 파일 편집\""         >> "${TMP_PATH}/menu"
   echo "k \"다국어 자판 지원용 키맵 선택\""                       >> "${TMP_PATH}/menu"
   echo "i \"디스크 데이터 지우기\""                      >> "${TMP_PATH}/menu"
   echo "b \"TCRP 백업\""                            >> "${TMP_PATH}/menu"  
   echo "r \"재부팅\""                                 >> "${TMP_PATH}/menu"
   echo "e \"종료\""                                   >> "${TMP_PATH}/menu"
   dialog --no-collapse --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
-    --menu "Device-Tree[DT] 기반의 모델 및 HBA는 SataPortMap,DiskIdxMap 설정이 필요하지 않습니다.\nDT 모델은 HBA를 지원하지 않습니다.\n${result}" 0 0 0 --file "${TMP_PATH}/menu" \
+    --menu "Device-Tree[DT]모델/HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다.\nDT모델은 HBA를 지원하지 않습니다.\n${result}" 0 0 0 --file "${TMP_PATH}/menu" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
   case `<"${TMP_PATH}/resp"` in
