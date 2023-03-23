@@ -693,7 +693,7 @@ checkcpu
 
 #Get Timezone for Korean Langugae
 tz=$(curl -s  ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
-if [ tz=="\"Asia/Seoul\"" ]; then
+if [ tz == "\"Asia/Seoul\"" ]; then
 #  export LANG="ko_KR.UTF-8"
 tz="NotUseKorean"
 fi
@@ -732,7 +732,7 @@ loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 NEXT="m"
 setSuggest
 
-if [ tz=="\"Asia/Seoul\"" ]; then
+if [ tz == "\"Asia/Seoul\"" ]; then
 
 while true; do
   echo "c \"커널모듈 처리 방법 EUDEV/DDSML 중 선택\""   	        > "${TMP_PATH}/menu"       
