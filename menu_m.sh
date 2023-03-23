@@ -729,14 +729,14 @@ if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
     if [ $? -eq 0 ]; then
       echo "Download mylocale.tcz OK !!!"
       sudo echo "mylocale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst      
-      sudo mkdir /usr/lib/locale && sudo localedef -c -i ko_KR -f UTF-8 ko_KR.UTF-8
-      export LANG=ko_KR.utf8
-      export LC_ALL=ko_KR.utf8
     else
       echo "Download mylocale.tcz FAILE Backup locale C!!!"
       tz="DoNotUseKorean"
     fi
   fi
+  sudo mkdir /usr/lib/locale && sudo localedef -c -i ko_KR -f UTF-8 ko_KR.UTF-8
+  export LANG=ko_KR.utf8
+  export LC_ALL=ko_KR.utf8
   
 fi
 
