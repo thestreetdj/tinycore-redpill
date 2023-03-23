@@ -516,6 +516,20 @@ function editUserConfig() {
 
 function checkUserConfig() {
 
+  if [ ! -n "${SN}" ]; then
+    echo "Synology serial number not set. Check user_config.json again. Abort the loader build !!!!!! "
+    echo "press any key to continue..."                                                                                                   
+    read answer
+    return 1     
+  fi
+  
+  if [ ! -n "${MACADDR1}" ]; then
+    echo "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!!!! "
+    echo "press any key to continue..."                                                                                                   
+    read answer
+    return 1     
+  fi
+
   netif_num=$(jq -r -e '.extra_cmdline.netif_num' $USER_CONFIG_FILE)
   netif_num_cnt=$(cat $USER_CONFIG_FILE | grep \"mac | wc -l)
                     
