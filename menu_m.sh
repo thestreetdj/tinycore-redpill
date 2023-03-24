@@ -934,8 +934,8 @@ else
 
 
 while true; do
-  echo "c \"${MSG"${tz}"01}\""            	        > "${TMP_PATH}/menu"       
-  echo "m \"${MSGUS02}\""                         >> "${TMP_PATH}/menu"
+  eval "echo \"c \"\${MSG${tz}01}\"\""     > "${TMP_PATH}/menu" 
+  echo "m \"${MSGUS02}\""                  >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     echo "s \"${MSGUS03}\""               >> "${TMP_PATH}/menu"
     echo "a \"${MSGUS04} 1\""               >> "${TMP_PATH}/menu"
