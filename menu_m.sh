@@ -720,7 +720,7 @@ fi
 
 #Get Timezone for Korean Langugae
 tz=$(curl -s  ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
-if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
+if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
 
   if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep glibc_apps | wc -w) -eq 0 ]; then
     tce-load -wi glibc_apps
@@ -774,7 +774,8 @@ loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 NEXT="m"
 setSuggest
 
-if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
+# Until urxtv is available, Korean menu is used only on remote terminals.
+if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
 
 while true; do
   echo "c \"커널모듈 처리방법 선택 EUDEV/DDSML\""   	        > "${TMP_PATH}/menu"       
