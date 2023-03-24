@@ -371,7 +371,7 @@ done
 function setSuggest() {
 
   line="-------------------------------------------------\n"
-  if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then   
+  if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then   
   case $MODEL in
     DS3622xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
     DS1621xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
