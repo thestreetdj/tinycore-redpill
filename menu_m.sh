@@ -934,7 +934,7 @@ else
 
 
 while true; do
-  eval "echo \"c \\\"\${MSG${tz}01}\\\"\\\"\""           > "${TMP_PATH}/menu" 
+  eval "echo \"c \\\"\${MSG${tz}01}\\\"\""               > "${TMP_PATH}/menu" 
   eval "echo \"m \\\"\${MSG${tz}02}\\\"\""               >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     eval "echo \"s \\\"\${MSG${tz}03}\\\"\""             >> "${TMP_PATH}/menu"
