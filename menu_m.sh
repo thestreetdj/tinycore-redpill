@@ -48,11 +48,21 @@ MSGUS22="Max 16 Threads, any x86-64"
 MSGUS23="Max 16 Threads, Haswell or later"
 MSGUS24="Nvidia GTX1650"
 MSGUS25="Nvidia GTX1050Ti"
-MSGUS26=""
-MSGUS27=""
-MSGUS28=""
-MSGUS29=""
-MSGUS30=""
+MSGUS26="EUDEV (enhanced user-space device)"
+MSGUS27="DDSML (Detected Device Static Module Loading)"
+MSGUS28="FRIEND (most recently stabilized)"
+MSGUS29="JOT (The old way before friend)"
+MSGUS30="Generate a random serial number"
+MSGUS31="Enter a serial number"
+MSGUS32="Get a real mac address"
+MSGUS33="Generate a random mac address"
+MSGUS34="Enter a mac address"
+MSGUS35="press any key to continue..."
+MSGUS36="Synology serial number not set. Check user_config.json again. Abort the loader build !!!!!!"
+MSGUS37="The first MAC address is not set. Check user_config.json again. Abort the loader build !!!!!!"
+MSGUS38="The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!!"
+MSGUS39=""
+MSGUS40=""
 
 ## KR
 MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다.\nDT모델은 HBA를 지원하지 않습니다.\n"
@@ -81,11 +91,21 @@ MSGKR22="최대 16 스레드 지원, 인텔 x86-64"
 MSGKR23="최대 16 스레드 지원, 인텔 4세대 하스웰 이후부터 지원"
 MSGKR24="Nvidia GTX1650 H/W 가속지원"
 MSGKR25="Nvidia GTX1050Ti H/W 가속지원"
-MSGKR26=""
-MSGKR27=""
-MSGKR28=""
-MSGKR29=""
-MSGKR30=""
+MSGKR26="EUDEV (향상된 사용자 공간 장치)"
+MSGKR27="DDSML (감지된 장치 정적 모듈 로드)"
+MSGKR28="FRIEND (가장 최근에 안정화된 로더모드)"
+MSGKR29="JOT (FRIEND 보다 옛날 로더모드)"
+MSGKR30="시놀로지 랜덤 S/N 생성"
+MSGKR31="시놀로지 S/N을 입력하세요"
+MSGKR32="실제 MAC 주소 가져오기"
+MSGKR33="랜덤 MAC 주소 생성"
+MSGKR34="시놀로지 MAC 주소를 입력하세요"
+MSGKR35="계속하려면 아무 키나 누르십시오..."
+MSGKR36="Synology 일련 번호가 설정되지 않았습니다. user_config.json을 다시 확인하십시오. 로더 빌드를 중단합니다!!!!!!"
+MSGKR37="첫 번째 MAC 주소가 설정되지 않았습니다. user_config.json을 다시 확인하십시오. 로더 빌드를 중단합니다!!!!!!"
+MSGKR38="netif_num과 mac 주소 갯수가 일치하지 않습니다. user_config.json을 다시 확인하십시오. 로더 빌드를 중단합니다!!!!!!"
+MSGKR39=""
+MSGKR40=""
 
 
 ###############################################################################
@@ -279,11 +299,13 @@ function usbidentify() {
 ###############################################################################
 # Shows available between EUDEV and DDSML
 function seleudev() {
+  eval "MSG26=\"\${MSG${tz}26}\""
+  eval "MSG27=\"\${MSG${tz}27}\""  
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
-      e "EUDEV (enhanced user-space device)" \
-      d "DDSML (Detected Device Static Module Loading)" \
+      e "${MSG26}" \
+      d "${MSG27}" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
@@ -305,11 +327,13 @@ function seleudev() {
 ###############################################################################
 # Shows available between FRIEND and JOT
 function selectldrmode() {
+  eval "MSG28=\"\${MSG${tz}28}\""
+  eval "MSG29=\"\${MSG${tz}29}\""  
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
-      f "FRIEND (most recently stabilized)" \
-      j "JOT (The old way before friend)" \
+      f "${MSG28}" \
+      j "${MSG29}" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
@@ -465,11 +489,13 @@ function setSuggest() {
 ###############################################################################
 # Shows menu to user type one or generate randomly
 function serialMenu() {
+  eval "MSG30=\"\${MSG${tz}30}\""
+  eval "MSG31=\"\${MSG${tz}31}\""  
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
-      a "Generate a random serial number" \
-      m "Enter a serial number" \
+      a "${MSG30}" \
+      m "${MSG31}" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
@@ -500,12 +526,15 @@ function serialMenu() {
 ###############################################################################
 # Shows menu to generate randomly or to get realmac
 function macMenu() {
+  eval "MSG32=\"\${MSG${tz}32}\""
+  eval "MSG33=\"\${MSG${tz}33}\""
+  eval "MSG34=\"\${MSG${tz}34}\""  
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
-      c "Get a real mac address" \
-      d "Generate a random mac address" \
-      m "Enter a mac address" \
+      c "${MSG32}" \
+      d "${MSG33}" \
+      m "${MSG34}" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
@@ -582,15 +611,15 @@ function editUserConfig() {
 function checkUserConfig() {
 
   if [ ! -n "${SN}" ]; then
-    echo "Synology serial number not set. Check user_config.json again. Abort the loader build !!!!!! "
-    echo "press any key to continue..."                                                                                                   
+    eval "echo \${MSG${tz}36}"
+    eval "echo \${MSG${tz}35}"
     read answer
     return 1     
   fi
   
   if [ ! -n "${MACADDR1}" ]; then
-    echo "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!!!! "
-    echo "press any key to continue..."                                                                                                   
+    eval "echo \${MSG${tz}37}"
+    eval "echo \${MSG${tz}35}"
     read answer
     return 1     
   fi
@@ -601,8 +630,8 @@ function checkUserConfig() {
   if [ $netif_num != $netif_num_cnt ]; then
     echo "netif_num = ${netif_num}"
     echo "number of mac addresses = ${netif_num_cnt}"       
-    echo "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!! "
-    echo "press any key to continue..."                                                                                                   
+    eval "echo \${MSG${tz}38}"
+    eval "echo \${MSG${tz}35}"
     read answer
     return 1     
   fi  
