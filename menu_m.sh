@@ -785,8 +785,8 @@ if [ $tcrppart == "mmc3" ]; then
 fi    
 
 #Get Timezone for Korean Langugae
-tz=$(curl -s  ipinfo.io | grep country | awk '{print $2}' | sed 's/,//')
-if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep KR | wc -l ) -gt 0 ]; then
+tz=$(curl -s  ipinfo.io | grep country | awk '{print $2}' | cut -c 2-3 )
+if [ -n "$SSH_TTY" ] && [ "$tz" == "KR" ]; then
 
   if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep glibc_apps | wc -w) -eq 0 ]; then
     tce-load -wi glibc_apps
@@ -806,7 +806,9 @@ if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep KR | wc -l ) -gt 0 ]; then
   sudo localedef -c -i ko_KR -f UTF-8 ko_KR.UTF-8
   export LANG=ko_KR.utf8
   export LC_ALL=ko_KR.utf8
-  
+
+else
+  tz="US"
 fi
 
 # Download dialog
@@ -932,7 +934,7 @@ else
 
 
 while true; do
-  echo "c \"${MSGUS01}\""            	        > "${TMP_PATH}/menu"       
+  echo "c \"${MSG"${tz}"01}\""            	        > "${TMP_PATH}/menu"       
   echo "m \"${MSGUS02}\""                         >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     echo "s \"${MSGUS03}\""               >> "${TMP_PATH}/menu"
