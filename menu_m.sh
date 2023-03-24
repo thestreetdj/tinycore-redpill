@@ -48,14 +48,14 @@ MSGUS22="Max 16 Threads, any x86-64"
 MSGUS23="Max 16 Threads, Haswell or later"
 MSGUS24="Nvidia GTX1650"
 MSGUS25="Nvidia GTX1050Ti"
-MSGUS26="(DT)"
+MSGUS26=""
 MSGUS27=""
 MSGUS28=""
 MSGUS29=""
 MSGUS30=""
 
 ## KR
-MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이\n필요없습니다. DT모델은 HBA를 지원하지 않습니다.\n"
+MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다.\nDT모델은 HBA를 지원하지 않습니다.\n"
 MSGKR01="커널모듈 처리방법 선택 EUDEV/DDSML"
 MSGKR02="Synology 모델 선택"
 MSGKR03="Synology S/N 선택"
@@ -81,7 +81,7 @@ MSGKR22="최대 16 스레드 지원, 인텔 x86-64"
 MSGKR23="최대 16 스레드 지원, 인텔 4세대 하스웰 이후부터 지원"
 MSGKR24="Nvidia GTX1650 H/W 가속지원"
 MSGKR25="Nvidia GTX1050Ti H/W 가속지원"
-MSGKR26="(DT)"
+MSGKR26=""
 MSGKR27=""
 MSGKR28=""
 MSGKR29=""
@@ -438,7 +438,7 @@ done
 # Set Describe model-specific requirements or suggested hardware
 function setSuggest() {
 
-  line="-------------------------------------------------\n"
+  line="-------------------------------------------------------\n"
   case $MODEL in
     DS3622xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
     DS1621xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
