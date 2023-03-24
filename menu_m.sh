@@ -934,39 +934,39 @@ else
 
 
 while true; do
-  eval "echo \"c \\\"\${MSG${tz}01}\\\"\"" > "${TMP_PATH}/menu" 
-  echo "m \"${MSGUS02}\""                  >> "${TMP_PATH}/menu"
+  eval "echo \"c \\\"\${MSG${tz}01}\\\"\\\"\""           > "${TMP_PATH}/menu" 
+  eval "echo \"m \\\"\${MSG${tz}02}\\\"\""               >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
-    echo "s \"${MSGUS03}\""               >> "${TMP_PATH}/menu"
-    echo "a \"${MSGUS04} 1\""               >> "${TMP_PATH}/menu"
+    eval "echo \"s \\\"\${MSG${tz}03}\\\"\""             >> "${TMP_PATH}/menu"
+    eval "echo \"a \\\"\${MSG${tz}04} 1\\\"\""           >> "${TMP_PATH}/menu"
     if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
-      echo "f \"${MSGUS04} 2\""               >> "${TMP_PATH}/menu"
+      eval "echo \"f \\\"\${MSG${tz}04} 2\\\"\""         >> "${TMP_PATH}/menu"
     fi  
     if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
-      echo "g \"${MSGUS04} 3\""               >> "${TMP_PATH}/menu"
+      eval "echo \"g \\\"\${MSG${tz}04} 3\\\"\""         >> "${TMP_PATH}/menu"
     fi  
     if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
-      echo "h \"${MSGUS04} 4\""               >> "${TMP_PATH}/menu"
+      eval "echo \"h \\\"\${MSG${tz}04} 4\\\"\""         >> "${TMP_PATH}/menu"
     fi
     if [ "${CPU}" == "HP" ]; then
-      echo "j \"${MSGUS05}\""            >> "${TMP_PATH}/menu"       
+      eval "echo \"j \\\"\${MSG${tz}05}\\\"\""           >> "${TMP_PATH}/menu"       
     else 
-      echo "z \"${MSGUS06} (${LDRMODE})\""   >> "${TMP_PATH}/menu"
-      echo "d \"${MSGUS07}\""  >> "${TMP_PATH}/menu"
+      eval "echo \"z \\\"\${MSG${tz}06} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
+      eval "echo \"d \\\"\${MSG${tz}07}\\\"\""                >> "${TMP_PATH}/menu"
       if [ "${MODEL}" == "DS918+" ]||[ "${MODEL}" == "DS1019+" ]||[ "${MODEL}" == "DS920+" ]||[ "${MODEL}" == "DS1520+" ]; then        
-        echo "o \"${MSGUS08}\""  >> "${TMP_PATH}/menu"
+        eval "echo \"o \\\"\${MSG${tz}08}\\\"\""         >> "${TMP_PATH}/menu"
       fi	
     fi
     if [ "${LDRMODE}" == "JOT" ]; then
-      echo "p \"${MSGUS09}\""             >> "${TMP_PATH}/menu"   
+      eval "echo \"p \\\"\${MSG${tz}09}\\\"\""           >> "${TMP_PATH}/menu"   
     fi
   fi
-  echo "u \"${MSGUS10}\""         >> "${TMP_PATH}/menu"
-  echo "k \"${MSGUS11}\""                       >> "${TMP_PATH}/menu"
-  echo "i \"${MSGUS12}\""                      >> "${TMP_PATH}/menu"
-  echo "b \"${MSGUS13}\""                            >> "${TMP_PATH}/menu"  
-  echo "r \"${MSGUS14}\""                                 >> "${TMP_PATH}/menu"
-  echo "e \"${MSGUS15}\""                                   >> "${TMP_PATH}/menu"
+  eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
+  eval "echo \"k \\\"\${MSG${tz}11}\\\"\""               >> "${TMP_PATH}/menu"
+  eval "echo \"i \\\"\${MSG${tz}12}\\\"\""               >> "${TMP_PATH}/menu"
+  eval "echo \"b \\\"\${MSG${tz}13}\\\"\""               >> "${TMP_PATH}/menu"  
+  eval "echo \"r \\\"\${MSG${tz}14}\\\"\""               >> "${TMP_PATH}/menu"
+  eval "echo \"e \\\"\${MSG${tz}15}\\\"\""               >> "${TMP_PATH}/menu"
   dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
     --menu "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap\nDT models do not support HBAs\n${result}" 0 0 0 --file "${TMP_PATH}/menu" \
     2>${TMP_PATH}/resp
