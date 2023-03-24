@@ -723,29 +723,29 @@ tz=$(curl -s  ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
 if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
 
   if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep getlocale | wc -w) -eq 0 ]; then
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/glibc_apps.tcz" --output /mnt/${tcrppart}/cde/optional/glibc_apps.tcz
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/glibc_apps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/glibc_apps.tcz.md5.txt
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/glibc_apps.tcz" --output /mnt/${tcrppart}/cde/optional/glibc_apps.tcz
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/glibc_apps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/glibc_apps.tcz.md5.txt
 
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/glibc_gconv.tcz" --output /mnt/${tcrppart}/cde/optional/glibc_gconv.tcz
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/glibc_gconv.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/glibc_gconv.tcz.md5.txt
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/glibc_gconv.tcz" --output /mnt/${tcrppart}/cde/optional/glibc_gconv.tcz
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/glibc_gconv.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/glibc_gconv.tcz.md5.txt
 
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/glibc_i18n_locale.tcz" --output /mnt/${tcrppart}/cde/optional/glibc_i18n_locale.tcz
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/glibc_i18n_locale.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/glibc_i18n_locale.tcz.md5.txt
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/glibc_i18n_locale.tcz" --output /mnt/${tcrppart}/cde/optional/glibc_i18n_locale.tcz
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/glibc_i18n_locale.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/glibc_i18n_locale.tcz.md5.txt
 
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/libzstd.tcz" --output /mnt/${tcrppart}/cde/optional/libzstd.tcz
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/libzstd.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/libzstd.tcz.md5.txt
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/libzstd.tcz" --output /mnt/${tcrppart}/cde/optional/libzstd.tcz
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/libzstd.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/libzstd.tcz.md5.txt
 
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/squashfs-tools.tcz" --output /mnt/${tcrppart}/cde/optional/squashfs-tools.tcz
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/squashfs-tools.tcz.dep" --output /mnt/${tcrppart}/cde/optional/squashfs-tools.tcz.dep
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/squashfs-tools.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/squashfs-tools.tcz.md5.txt
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/squashfs-tools.tcz" --output /mnt/${tcrppart}/cde/optional/squashfs-tools.tcz
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/squashfs-tools.tcz.dep" --output /mnt/${tcrppart}/cde/optional/squashfs-tools.tcz.dep
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/squashfs-tools.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/squashfs-tools.tcz.md5.txt
 
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/getlocale.tcz" --output /mnt/${tcrppart}/cde/optional/getlocale.tcz
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/getlocale.tcz.dep" --output /mnt/${tcrppart}/cde/optional/getlocale.tcz.dep
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/getlocale.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/getlocale.tcz.md5.txt
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/getlocale.tcz" --output /mnt/${tcrppart}/cde/optional/getlocale.tcz
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/getlocale.tcz.dep" --output /mnt/${tcrppart}/cde/optional/getlocale.tcz.dep
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/getlocale.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/getlocale.tcz.md5.txt
 
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/mylocale.tcz" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/mylocale.tcz.dep" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz.dep
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/mylocale.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz.md5.txt
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/mylocale.tcz" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/mylocale.tcz.dep" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz.dep
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/mylocale.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz.md5.txt
     if [ $? -eq 0 ]; then
       echo "Download getlocale.tcz OK !!!"
       sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
@@ -768,9 +768,9 @@ fi
 
 # Download dialog
 if [ "$(which dialog)_" == "_" ]; then
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz" --output /mnt/${tcrppart}/cde/optional/dialog.tcz
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz.dep" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.dep
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/dialog.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.md5.txt
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz" --output /mnt/${tcrppart}/cde/optional/dialog.tcz
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.dep" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.dep
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.md5.txt
     if [ $? -eq 0 ]; then
         echo "Download dialog OK !!!"
     else
@@ -781,8 +781,8 @@ fi
 
 # Download kmaps
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep kmaps | wc -w) -eq 0 ]; then
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz
-    sudo curl --insecure -L "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tce/optional/kmaps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz
+    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
     if [ $? -eq 0 ]; then
         echo "Download kmaps OK !!!"
     else
