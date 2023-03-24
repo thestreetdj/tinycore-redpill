@@ -371,7 +371,7 @@ done
 function setSuggest() {
 
   line="-------------------------------------------------\n"
-  if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then   
+  if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep KR | wc -l ) -gt 0 ]; then   
   case $MODEL in
     DS3622xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
     DS1621xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
@@ -719,8 +719,8 @@ if [ $tcrppart == "mmc3" ]; then
 fi    
 
 #Get Timezone for Korean Langugae
-tz=$(curl -s  ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
-if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
+tz=$(curl -s  ipinfo.io | grep country | awk '{print $2}' | sed 's/,//')
+if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep KR | wc -l ) -gt 0 ]; then
 
   if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep glibc_apps | wc -w) -eq 0 ]; then
     tce-load -wi glibc_apps
@@ -775,7 +775,7 @@ NEXT="m"
 setSuggest
 
 # Until urxtv is available, Korean menu is used only on remote terminals.
-if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
+if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep KR | wc -l ) -gt 0 ]; then
 
 while true; do
   echo "c \"커널모듈 처리방법 선택 EUDEV/DDSML\""   	        > "${TMP_PATH}/menu"       
