@@ -54,21 +54,21 @@ MSGUS29=""
 MSGUS30=""
 
 ## KR
-MSGKR01=""
-MSGKR02=""
-MSGKR03=""
-MSGKR04=""
-MSGKR05=""
-MSGKR06=""
-MSGKR07=""
-MSGKR08=""
-MSGKR09=""
-MSGKR10=""
-MSGKR11=""
-MSGKR12=""
-MSGKR13=""
-MSGKR14=""
-MSGKR15=""
+MSGKR01="커널모듈 처리방법 선택 EUDEV/DDSML"
+MSGKR02="Synology 모델 선택"
+MSGKR03="Synology S/N 선택"
+MSGKR04="선택 Mac 주소 "
+MSGKR05="[TCRP JOT Mode] 로더 빌드"
+MSGKR06="로더모드 선택 현재"
+MSGKR07="[TCRP ${LDRMODE} 7.1.1-42962] 로더 빌드"
+MSGKR08="[TCRP FRIEND 7.0.1-42218] 로더 빌드"
+MSGKR09="[TCRP JOT 모드]용 Post 업데이트"
+MSGKR10="user_config.json 파일 편집"
+MSGKR11="다국어 자판 지원용 키맵 선택"
+MSGKR12="디스크 데이터 지우기"
+MSGKR13="TCRP 백업"
+MSGKR14="재부팅"
+MSGKR15="종료"
 MSGKR16=""
 MSGKR17=""
 MSGKR18=""
@@ -843,96 +843,6 @@ NEXT="m"
 setSuggest
 
 # Until urxtv is available, Korean menu is used only on remote terminals.
-if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep KR | wc -l ) -gt 0 ]; then
-
-while true; do
-  echo "c \"커널모듈 처리방법 선택 EUDEV/DDSML\""   	        > "${TMP_PATH}/menu"       
-  echo "m \"Synology 모델 선택\""                         >> "${TMP_PATH}/menu"
-  if [ -n "${MODEL}" ]; then
-    echo "s \"Synology S/N 선택\""               >> "${TMP_PATH}/menu"
-    echo "a \"Mac 주소 1 선택\""               >> "${TMP_PATH}/menu"
-    if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
-      echo "f \"Mac 주소 2 선택\""               >> "${TMP_PATH}/menu"
-    fi  
-    if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
-      echo "g \"Mac 주소 3 선택\""               >> "${TMP_PATH}/menu"
-    fi  
-    if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
-      echo "h \"Mac 주소 4 선택\""               >> "${TMP_PATH}/menu"
-    fi
-    if [ "${CPU}" == "HP" ]; then
-      echo "j \"[TCRP JOT Mode] 로더 빌드\""            >> "${TMP_PATH}/menu"       
-    else 
-      echo "z \"로더모드 선택 현재 (${LDRMODE})\""   >> "${TMP_PATH}/menu"
-      echo "d \"[TCRP ${LDRMODE} 7.1.1-42962] 로더 빌드\""  >> "${TMP_PATH}/menu"
-      if [ "${MODEL}" == "DS918+" ]||[ "${MODEL}" == "DS1019+" ]||[ "${MODEL}" == "DS920+" ]||[ "${MODEL}" == "DS1520+" ]; then        
-        echo "o \"[TCRP FRIEND 7.0.1-42218] 로더 빌드\""  >> "${TMP_PATH}/menu"
-      fi	
-    fi
-    if [ "${LDRMODE}" == "JOT" ]; then
-      echo "p \"[TCRP JOT 모드]용 Post 업데이트\""             >> "${TMP_PATH}/menu"   
-    fi
-  fi
-  echo "u \"user_config.json 파일 편집\""         >> "${TMP_PATH}/menu"
-  echo "k \"다국어 자판 지원용 키맵 선택\""                       >> "${TMP_PATH}/menu"
-  echo "i \"디스크 데이터 지우기\""                      >> "${TMP_PATH}/menu"
-  echo "b \"TCRP 백업\""                            >> "${TMP_PATH}/menu"  
-  echo "r \"재부팅\""                                 >> "${TMP_PATH}/menu"
-  echo "e \"종료\""                                   >> "${TMP_PATH}/menu"
-  dialog --no-collapse --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
-    --menu "Device-Tree[DT]모델/HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다.\nDT모델은 HBA를 지원하지 않습니다.\n${result}" 0 0 0 --file "${TMP_PATH}/menu" \
-    2>${TMP_PATH}/resp
-  [ $? -ne 0 ] && break
-  case `<"${TMP_PATH}/resp"` in
-    c) seleudev;        NEXT="m" ;;  
-    m) modelMenu;       NEXT="s" ;;
-    s) serialMenu;      NEXT="a" ;;
-    a) macMenu "eth0"
-        if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
-            NEXT="f" 
-	else
-            NEXT="z" 	
-	fi
-        ;;
-    f) macMenu "eth1"
-        if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
-            NEXT="g" 
-	else
-            NEXT="z" 	
-	fi
-        ;;
-    g) macMenu "eth2"
-        if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
-            NEXT="h" 
-	else
-            NEXT="z" 	
-	fi
-        ;;
-    h) macMenu "eth3";    NEXT="z" ;;    
-    z) selectldrmode ;    NEXT="d" ;;
-    d) BUILD="42962"
-       if [ "${LDRMODE}" == "FRIEND" ]; then
-         make
-       else
-         make "jot"
-       fi
-       NEXT="r" ;;
-    j) BUILD="42962"; make "jot";      NEXT="r" ;;    
-    p) postupdate ;                    NEXT="r" ;;
-    o) BUILD="42218"; make "jun";      NEXT="r" ;;
-    u) editUserConfig;                 NEXT="d" ;;
-    k) keymapMenu ;;
-    i) erasedisk ;;          
-    b) backup ;;      
-    r) reboot ;;
-    e) break ;;
-  esac
-done
-
-
-else
-
-
 while true; do
   eval "echo \"c \\\"\${MSG${tz}01}\\\"\""               > "${TMP_PATH}/menu" 
   eval "echo \"m \\\"\${MSG${tz}02}\\\"\""               >> "${TMP_PATH}/menu"
@@ -1016,8 +926,6 @@ while true; do
     e) break ;;
   esac
 done
-
-fi
 
 clear
 echo -e "Call \033[1;32m./menu.sh\033[0m to return to menu"
