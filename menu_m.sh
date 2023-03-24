@@ -48,7 +48,7 @@ MSGUS22="Max 16 Threads, any x86-64"
 MSGUS23="Max 16 Threads, Haswell or later"
 MSGUS24="Nvidia GTX1650"
 MSGUS25="Nvidia GTX1050Ti"
-MSGUS26=""
+MSGUS26="(DT)"
 MSGUS27=""
 MSGUS28=""
 MSGUS29=""
@@ -81,7 +81,7 @@ MSGKR22="최대 16 스레드 지원, 인텔 x86-64"
 MSGKR23="최대 16 스레드 지원, 인텔 4세대 하스웰 이후부터 지원"
 MSGKR24="Nvidia GTX1650 H/W 가속지원"
 MSGKR25="Nvidia GTX1050Ti H/W 가속지원"
-MSGKR26=""
+MSGKR26="(DT)"
 MSGKR27=""
 MSGKR28=""
 MSGKR29=""
@@ -447,8 +447,8 @@ function setSuggest() {
     DS1019+)     platform="apollolake";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}17}, \${MSG${tz}18}\"";;
     DS923+)      platform="r1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}20}\"";;
     DS723+)      platform="r1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}20}\"";;
-    DS920+)      platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}"";;
-    DS1520+)     platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}"";;
+    DS920+)      platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}\"";;
+    DS1520+)     platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}\"";;
     DVA1622)     platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}, \${MSG${tz}21}\"";;
     DS1621+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}22}\"";;
     DS2422+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}22}\"";;
