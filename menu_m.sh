@@ -20,6 +20,72 @@ KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
 LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
 
+### Messages Contents
+## US
+MSGUS01="Choose a Dev Mod handling method, EUDEV/DDSML"
+MSGUS02="Choose a Synology Model"
+MSGUS03="Choose a Synology Serial Number"
+MSGUS04="Choose a mac address"
+MSGUS05="Build the [TCRP JOT Mode] loader"
+MSGUS06="Choose a loader Mode Current "
+MSGUS07="Build the [TCRP ${LDRMODE} 7.1.1-42962] loader"
+MSGUS08="Build the [TCRP FRIEND 7.0.1-42218] loader"
+MSGUS09="Post Update for [TCRP JOT Mod]"
+MSGUS10="Edit user config file manually"
+MSGUS11="Choose a keymap"
+MSGUS12="Erase Data DISK"
+MSGUS13="Backup TCRP"
+MSGUS14="Reboot"
+MSGUS15="Exit"
+MSGUS16=""
+MSGUS17=""
+MSGUS18=""
+MSGUS19=""
+MSGUS20=""
+MSGUS21=""
+MSGUS22=""
+MSGUS23=""
+MSGUS24=""
+MSGUS25=""
+MSGUS26=""
+MSGUS27=""
+MSGUS28=""
+MSGUS29=""
+MSGUS30=""
+
+## KR
+MSGKR01=""
+MSGKR02=""
+MSGKR03=""
+MSGKR04=""
+MSGKR05=""
+MSGKR06=""
+MSGKR07=""
+MSGKR08=""
+MSGKR09=""
+MSGKR10=""
+MSGKR11=""
+MSGKR12=""
+MSGKR13=""
+MSGKR14=""
+MSGKR15=""
+MSGKR16=""
+MSGKR17=""
+MSGKR18=""
+MSGKR19=""
+MSGKR20=""
+MSGKR21=""
+MSGKR22=""
+MSGKR23=""
+MSGKR24=""
+MSGKR25=""
+MSGKR26=""
+MSGKR27=""
+MSGKR28=""
+MSGKR29=""
+MSGKR30=""
+
+
 ###############################################################################
 # check VM or baremetal
 function checkmachine() {
@@ -866,39 +932,39 @@ else
 
 
 while true; do
-  echo "c \"Choose a Dev Mod handling method, EUDEV/DDSML\""            	        > "${TMP_PATH}/menu"       
-  echo "m \"Choose a Synology Model\""                         >> "${TMP_PATH}/menu"
+  echo "c \"${MSGUS01}\""            	        > "${TMP_PATH}/menu"       
+  echo "m \"${MSGUS02}\""                         >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
-    echo "s \"Choose a Synology Serial Number\""               >> "${TMP_PATH}/menu"
-    echo "a \"Choose a mac address 1\""               >> "${TMP_PATH}/menu"
+    echo "s \"${MSGUS03}\""               >> "${TMP_PATH}/menu"
+    echo "a \"${MSGUS04} 1\""               >> "${TMP_PATH}/menu"
     if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
-      echo "f \"Choose a mac address 2\""               >> "${TMP_PATH}/menu"
+      echo "f \"${MSGUS04} 2\""               >> "${TMP_PATH}/menu"
     fi  
     if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
-      echo "g \"Choose a mac address 3\""               >> "${TMP_PATH}/menu"
+      echo "g \"${MSGUS04} 3\""               >> "${TMP_PATH}/menu"
     fi  
     if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
-      echo "h \"Choose a mac address 4\""               >> "${TMP_PATH}/menu"
+      echo "h \"${MSGUS04} 4\""               >> "${TMP_PATH}/menu"
     fi
     if [ "${CPU}" == "HP" ]; then
-      echo "j \"Build the [TCRP JOT Mode] loader\""            >> "${TMP_PATH}/menu"       
+      echo "j \"${MSGUS05}\""            >> "${TMP_PATH}/menu"       
     else 
-      echo "z \"Choose a loader Mode Current (${LDRMODE})\""   >> "${TMP_PATH}/menu"
-      echo "d \"Build the [TCRP ${LDRMODE} 7.1.1-42962] loader\""  >> "${TMP_PATH}/menu"
+      echo "z \"${MSGUS06} (${LDRMODE})\""   >> "${TMP_PATH}/menu"
+      echo "d \"${MSGUS07}\""  >> "${TMP_PATH}/menu"
       if [ "${MODEL}" == "DS918+" ]||[ "${MODEL}" == "DS1019+" ]||[ "${MODEL}" == "DS920+" ]||[ "${MODEL}" == "DS1520+" ]; then        
-        echo "o \"Build the [TCRP FRIEND 7.0.1-42218] loader\""  >> "${TMP_PATH}/menu"
+        echo "o \"${MSGUS08}\""  >> "${TMP_PATH}/menu"
       fi	
     fi
     if [ "${LDRMODE}" == "JOT" ]; then
-      echo "p \"Post Update for [TCRP JOT Mod]\""             >> "${TMP_PATH}/menu"   
+      echo "p \"${MSGUS09}\""             >> "${TMP_PATH}/menu"   
     fi
   fi
-  echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
-  echo "k \"Choose a keymap\""                       >> "${TMP_PATH}/menu"
-  echo "i \"Erase Data DISK\""                      >> "${TMP_PATH}/menu"
-  echo "b \"Backup TCRP\""                            >> "${TMP_PATH}/menu"  
-  echo "r \"Reboot\""                                 >> "${TMP_PATH}/menu"
-  echo "e \"Exit\""                                   >> "${TMP_PATH}/menu"
+  echo "u \"${MSGUS10}\""         >> "${TMP_PATH}/menu"
+  echo "k \"${MSGUS11}\""                       >> "${TMP_PATH}/menu"
+  echo "i \"${MSGUS12}\""                      >> "${TMP_PATH}/menu"
+  echo "b \"${MSGUS13}\""                            >> "${TMP_PATH}/menu"  
+  echo "r \"${MSGUS14}\""                                 >> "${TMP_PATH}/menu"
+  echo "e \"${MSGUS15}\""                                   >> "${TMP_PATH}/menu"
   dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
     --menu "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap\nDT models do not support HBAs\n${result}" 0 0 0 --file "${TMP_PATH}/menu" \
     2>${TMP_PATH}/resp
