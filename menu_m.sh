@@ -858,7 +858,7 @@ while true; do
   eval "echo \"e \\\"\${MSG${tz}15}\\\"\""               >> "${TMP_PATH}/menu"
   eval "MSG00=\"\${MSG${tz}00}\""
   dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
-    --menu ${MSG00}${result}" 0 0 0 --file "${TMP_PATH}/menu" \
+    --menu "${MSG00}${result}" 0 0 0 --file "${TMP_PATH}/menu" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
   case `<"${TMP_PATH}/resp"` in
