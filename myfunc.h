@@ -130,6 +130,8 @@ set -u
 # 2023.03.18
 # Update : TCRP FRIEND / JOT menu selection method improvement
 # 2023.03.21
+# Update : Multilingual menu support started (remote terminal access as the first case, only Korean supported)
+# 2023.03.24
 
 function showlastupdate() {
     cat <<EOF
@@ -168,6 +170,9 @@ function showlastupdate() {
 
 # Update : TCRP FRIEND / JOT menu selection method improvement
 # 2023.03.21
+
+# Update : Multilingual menu support started (remote terminal access as the first case, only Korean supported)
+# 2023.03.24
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
