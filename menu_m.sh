@@ -22,6 +22,7 @@ LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
 
 ### Messages Contents
 ## US
+MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap\nDT models do not support HBAs\n"
 MSGUS01="Choose a Dev Mod handling method, EUDEV/DDSML"
 MSGUS02="Choose a Synology Model"
 MSGUS03="Choose a Synology Serial Number"
@@ -54,6 +55,7 @@ MSGUS29=""
 MSGUS30=""
 
 ## KR
+MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이\n필요없습니다. DT모델은 HBA를 지원하지 않습니다.\n"
 MSGKR01="커널모듈 처리방법 선택 EUDEV/DDSML"
 MSGKR02="Synology 모델 선택"
 MSGKR03="Synology S/N 선택"
@@ -437,50 +439,26 @@ done
 function setSuggest() {
 
   line="-------------------------------------------------\n"
-  if [ -n "$SSH_TTY" ] && [ $(echo $tz | grep KR | wc -l ) -gt 0 ]; then   
   case $MODEL in
-    DS3622xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
-    DS1621xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
-    RS4021xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
-    DS918+)      platform="apollolake";desc="[${MODEL}]:${platform}, 최대 8 스레드 지원, 인텔 4세대 하스웰 이후부터 지원,iGPU H/W 트랜스코딩, HBA 사용시 잘못된 디스크 S/N이 표시됨";;
-    DS1019+)     platform="apollolake";desc="[${MODEL}]:${platform}, 최대 8 스레드 지원, 인텔 4세대 하스웰 이후부터 지원,iGPU H/W 트랜스코딩, HBA 사용시 잘못된 디스크 S/N이 표시됨";;
-    DS923+)      platform="r1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 ? 스레드 지원, 인텔 x86-64";;
-    DS723+)      platform="r1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 ? 스레드 지원, 인텔 x86-64";;
-    DS920+)      platform="geminilake";desc="[${MODEL}]:${platform}(DT), 최대 8 스레드 지원, 인텔 4세대 하스웰 이후부터 지원, iGPU H/W 트랜스코딩";;
-    DS1520+)     platform="geminilake";desc="[${MODEL}]:${platform}(DT), 최대 8 스레드 지원, 인텔 4세대 하스웰 이후부터 지원, iGPU H/W 트랜스코딩";;
-    DVA1622)     platform="geminilake";desc="[${MODEL}]:${platform}(DT), 최대 8 스레드 지원, 인텔 4세대 하스웰 이후부터 지원, iGPU H/W 트랜스코딩, 카메라 라이센스 있음";;
-    DS1621+)     platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 16 스레드 지원, 인텔 x86-64";;
-    DS2422+)     platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 16 스레드 지원, 인텔 x86-64";;
-    FS2500)      platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 16 스레드 지원, 인텔 x86-64";;
-    DS3615xs)    platform="bromolow";desc="[${MODEL}]:${platform}, 최대 16 스레드 지원, 인텔 x86-64";;
-    DS3617xs)    platform="broadwell";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
-    RS3618xs)    platform="broadwell";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
-    DVA3221)     platform="denverton";desc="[${MODEL}]:${platform}, 최대 16 스레드 지원, 인텔 4세대 하스웰 이후부터 지원, Nvidia GTX1650 H/W 가속지원, 카메라 라이센스 있음";;
-    DVA3219)     platform="denverton";desc="[${MODEL}]:${platform}, 최대 16 스레드 지원, 인텔 4세대 하스웰 이후부터 지원, Nvidia GTX1050Ti H/W 가속지원, 카메라 라이센스 있음";;
+    DS3622xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
+    DS1621xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
+    RS4021xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
+    DS918+)      platform="apollolake";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}17}, \${MSG${tz}18}\"";;
+    DS1019+)     platform="apollolake";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}17}, \${MSG${tz}18}\"";;
+    DS923+)      platform="r1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}20}\"";;
+    DS723+)      platform="r1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}20}\"";;
+    DS920+)      platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}"";;
+    DS1520+)     platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}"";;
+    DVA1622)     platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}, \${MSG${tz}21}\"";;
+    DS1621+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}22}\"";;
+    DS2422+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}22}\"";;
+    FS2500)      platform="v1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}22}\"";;
+    DS3615xs)    platform="bromolow";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}22}\"";;
+    DS3617xs)    platform="broadwell";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
+    RS3618xs)    platform="broadwell";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
+    DVA3221)     platform="denverton";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}23}, \${MSG${tz}24}, \${MSG${tz}21}\"";;
+    DVA3219)     platform="denverton";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}23}, \${MSG${tz}25}, \${MSG${tz}21}\"";;
   esac
-  else
-  case $MODEL in
-    DS3622xs+)   platform="broadwellnk";eval desc="[${MODEL}]:${platform}, \${MSG${tz}16}";;  
-#    DS3622xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, Max 24 Threads, any x86-64";;
-    DS1621xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, Max 24 Threads, any x86-64";;
-    RS4021xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, Max 24 Threads, any x86-64";;
-    DS918+)      platform="apollolake";desc="[${MODEL}]:${platform}, Max 8 Threads, Haswell or later,iGPU Transcoding, HBA displays incorrect disk S/N";;
-    DS1019+)     platform="apollolake";desc="[${MODEL}]:${platform}, Max 8 Threads, Haswell or later,iGPU Transcoding, HBA displays incorrect disk S/N";;
-    DS923+)      platform="r1000";desc="[${MODEL}]:${platform}(DT,AMD Ryzen), Max ? Threads, any x86-64";;
-    DS723+)      platform="r1000";desc="[${MODEL}]:${platform}(DT,AMD Ryzen), Max ? Threads, any x86-64";;
-    DS920+)      platform="geminilake";desc="[${MODEL}]:${platform}(DT), Max 8 Threads,Haswell or later, iGPU Transcoding";;
-    DS1520+)     platform="geminilake";desc="[${MODEL}]:${platform}(DT), Max 8 Threads,Haswell or later, iGPU Transcoding";;
-    DVA1622)     platform="geminilake";desc="[${MODEL}]:${platform}(DT), Max 8 Threads,Haswell or later, iGPU Transcoding, Have a camera license";;
-    DS1621+)     platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD Ryzen), Max 16 Threads, any x86-64";;
-    DS2422+)     platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD Ryzen), Max 16 Threads, any x86-64";;
-    FS2500)      platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD Ryzen), Max 16 Threads, any x86-64";;
-    DS3615xs)    platform="bromolow";desc="[${MODEL}]:${platform}, Max 16 Threads, any x86-64";;
-    DS3617xs)    platform="broadwell";desc="[${MODEL}]:${platform}, Max 24 Threads, any x86-64";;
-    RS3618xs)    platform="broadwell";desc="[${MODEL}]:${platform}, Max 24 Threads, any x86-64";;
-    DVA3221)     platform="denverton";desc="[${MODEL}]:${platform}, Max 16 Threads, Haswell or later, Nvidia GTX1650, Have a camera license";;
-    DVA3219)     platform="denverton";desc="[${MODEL}]:${platform}, Max 16 Threads, Haswell or later, Nvidia GTX1050Ti, Have a camera license";;
-  esac
-  fi
 
   result="${line}${desc}" 
 
