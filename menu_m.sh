@@ -373,24 +373,24 @@ function setSuggest() {
   line="-------------------------------------------------\n"
   if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then   
   case $MODEL in
-    DS3622xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 자원, 인텔 x86-64";;
-    DS1621xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 자원, 인텔 x86-64";;
-    RS4021xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 자원, 인텔 x86-64";;
-    DS918+)      platform="apollolake";desc="[${MODEL}]:${platform}, 최대 8 스레드 자원, 인텔 4세대 하스웰 이후부터 지원,iGPU H/W 트랜스코딩, HBA 사용시 잘못된 디스크 S/N이 표시됨";;
-    DS1019+)     platform="apollolake";desc="[${MODEL}]:${platform}, 최대 8 스레드 자원, 인텔 4세대 하스웰 이후부터 지원,iGPU H/W 트랜스코딩, HBA 사용시 잘못된 디스크 S/N이 표시됨";;
-    DS923+)      platform="r1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 ? 스레드 자원, 인텔 x86-64";;
-    DS723+)      platform="r1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 ? 스레드 자원, 인텔 x86-64";;
-    DS920+)      platform="geminilake";desc="[${MODEL}]:${platform}(DT), 최대 8 스레드 자원, 인텔 4세대 하스웰 이후부터 지원, iGPU H/W 트랜스코딩";;
-    DS1520+)     platform="geminilake";desc="[${MODEL}]:${platform}(DT), 최대 8 스레드 자원, 인텔 4세대 하스웰 이후부터 지원, iGPU H/W 트랜스코딩";;
-    DVA1622)     platform="geminilake";desc="[${MODEL}]:${platform}(DT), 최대 8 스레드 자원, 인텔 4세대 하스웰 이후부터 지원, iGPU H/W 트랜스코딩, 카메라 라이센스 있음";;
-    DS1621+)     platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 16 스레드 자원, 인텔 x86-64";;
-    DS2422+)     platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 16 스레드 자원, 인텔 x86-64";;
-    FS2500)      platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 16 스레드 자원, 인텔 x86-64";;
-    DS3615xs)    platform="bromolow";desc="[${MODEL}]:${platform}, 최대 16 스레드 자원, 인텔 x86-64";;
-    DS3617xs)    platform="broadwell";desc="[${MODEL}]:${platform}, 최대 24 스레드 자원, 인텔 x86-64";;
-    RS3618xs)    platform="broadwell";desc="[${MODEL}]:${platform}, 최대 24 스레드 자원, 인텔 x86-64";;
-    DVA3221)     platform="denverton";desc="[${MODEL}]:${platform}, 최대 16 스레드 자원, 인텔 4세대 하스웰 이후부터 지원, Nvidia GTX1650 H/W 가속지원, 카메라 라이센스 있음";;
-    DVA3219)     platform="denverton";desc="[${MODEL}]:${platform}, 최대 16 스레드 자원, 인텔 4세대 하스웰 이후부터 지원, Nvidia GTX1050Ti H/W 가속지원, 카메라 라이센스 있음";;
+    DS3622xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
+    DS1621xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
+    RS4021xs+)   platform="broadwellnk";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
+    DS918+)      platform="apollolake";desc="[${MODEL}]:${platform}, 최대 8 스레드 지원, 인텔 4세대 하스웰 이후부터 지원,iGPU H/W 트랜스코딩, HBA 사용시 잘못된 디스크 S/N이 표시됨";;
+    DS1019+)     platform="apollolake";desc="[${MODEL}]:${platform}, 최대 8 스레드 지원, 인텔 4세대 하스웰 이후부터 지원,iGPU H/W 트랜스코딩, HBA 사용시 잘못된 디스크 S/N이 표시됨";;
+    DS923+)      platform="r1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 ? 스레드 지원, 인텔 x86-64";;
+    DS723+)      platform="r1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 ? 스레드 지원, 인텔 x86-64";;
+    DS920+)      platform="geminilake";desc="[${MODEL}]:${platform}(DT), 최대 8 스레드 지원, 인텔 4세대 하스웰 이후부터 지원, iGPU H/W 트랜스코딩";;
+    DS1520+)     platform="geminilake";desc="[${MODEL}]:${platform}(DT), 최대 8 스레드 지원, 인텔 4세대 하스웰 이후부터 지원, iGPU H/W 트랜스코딩";;
+    DVA1622)     platform="geminilake";desc="[${MODEL}]:${platform}(DT), 최대 8 스레드 지원, 인텔 4세대 하스웰 이후부터 지원, iGPU H/W 트랜스코딩, 카메라 라이센스 있음";;
+    DS1621+)     platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 16 스레드 지원, 인텔 x86-64";;
+    DS2422+)     platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 16 스레드 지원, 인텔 x86-64";;
+    FS2500)      platform="v1000";desc="[${MODEL}]:${platform}(DT,AMD 라이젠), 최대 16 스레드 지원, 인텔 x86-64";;
+    DS3615xs)    platform="bromolow";desc="[${MODEL}]:${platform}, 최대 16 스레드 지원, 인텔 x86-64";;
+    DS3617xs)    platform="broadwell";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
+    RS3618xs)    platform="broadwell";desc="[${MODEL}]:${platform}, 최대 24 스레드 지원, 인텔 x86-64";;
+    DVA3221)     platform="denverton";desc="[${MODEL}]:${platform}, 최대 16 스레드 지원, 인텔 4세대 하스웰 이후부터 지원, Nvidia GTX1650 H/W 가속지원, 카메라 라이센스 있음";;
+    DVA3219)     platform="denverton";desc="[${MODEL}]:${platform}, 최대 16 스레드 지원, 인텔 4세대 하스웰 이후부터 지원, Nvidia GTX1050Ti H/W 가속지원, 카메라 라이센스 있음";;
   esac
   else
   case $MODEL in
