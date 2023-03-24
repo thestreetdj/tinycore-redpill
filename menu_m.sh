@@ -746,6 +746,15 @@ if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
     sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/mylocale.tcz" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz
     sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/mylocale.tcz.dep" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz.dep
     sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/mylocale.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz.md5.txt
+
+    tce-load -i glibc_apps
+    tce-load -i glibc_gconv
+    tce-load -i glibc_i18n_locale
+    tce-load -i libzstd
+    tce-load -i squashfs-tools
+    tce-load -i getlocale
+    tce-load -i mylocale
+    
     if [ $? -eq 0 ]; then
       echo "Download getlocale.tcz OK !!!"
       sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
@@ -771,6 +780,7 @@ if [ "$(which dialog)_" == "_" ]; then
     sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz" --output /mnt/${tcrppart}/cde/optional/dialog.tcz
     sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.dep" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.dep
     sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.md5.txt
+    tce-load -i dialog
     if [ $? -eq 0 ]; then
         echo "Download dialog OK !!!"
     else
@@ -783,6 +793,7 @@ fi
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep kmaps | wc -w) -eq 0 ]; then
     sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz
     sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
+    tce-load -i kmaps
     if [ $? -eq 0 ]; then
         echo "Download kmaps OK !!!"
     else
