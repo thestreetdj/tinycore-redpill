@@ -722,7 +722,7 @@ fi
 tz=$(curl -s  ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
 if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
 
-  if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep getlocale | wc -w) -eq 0 ]; then
+  if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep glibc_apps | wc -w) -eq 0 ]; then
     tce-load -wi glibc_apps
     tce-load -wi glibc_i18n_locale
     if [ $? -eq 0 ]; then
