@@ -646,7 +646,7 @@ function backup() {
 }
 
 function reboot() {
-    clean
+    clear
     sudo reboot
     break
 }
