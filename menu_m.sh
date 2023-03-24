@@ -723,53 +723,21 @@ tz=$(curl -s  ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
 if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
 
   if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep getlocale | wc -w) -eq 0 ]; then
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/glibc_apps.tcz" --output /mnt/${tcrppart}/cde/optional/glibc_apps.tcz
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/glibc_apps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/glibc_apps.tcz.md5.txt
-
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/glibc_gconv.tcz" --output /mnt/${tcrppart}/cde/optional/glibc_gconv.tcz
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/glibc_gconv.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/glibc_gconv.tcz.md5.txt
-
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/glibc_i18n_locale.tcz" --output /mnt/${tcrppart}/cde/optional/glibc_i18n_locale.tcz
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/glibc_i18n_locale.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/glibc_i18n_locale.tcz.md5.txt
-
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/libzstd.tcz" --output /mnt/${tcrppart}/cde/optional/libzstd.tcz
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/libzstd.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/libzstd.tcz.md5.txt
-
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/squashfs-tools.tcz" --output /mnt/${tcrppart}/cde/optional/squashfs-tools.tcz
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/squashfs-tools.tcz.dep" --output /mnt/${tcrppart}/cde/optional/squashfs-tools.tcz.dep
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/squashfs-tools.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/squashfs-tools.tcz.md5.txt
-
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/getlocale.tcz" --output /mnt/${tcrppart}/cde/optional/getlocale.tcz
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/getlocale.tcz.dep" --output /mnt/${tcrppart}/cde/optional/getlocale.tcz.dep
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/getlocale.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/getlocale.tcz.md5.txt
-
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/mylocale.tcz" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/mylocale.tcz.dep" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz.dep
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/mylocale.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/mylocale.tcz.md5.txt
-
-    tce-load -i glibc_apps
-    tce-load -i glibc_gconv
-    tce-load -i glibc_i18n_locale
-    tce-load -i libzstd
-    tce-load -i squashfs-tools
-    tce-load -i getlocale
-    tce-load -i mylocale
-    
+    tce-load -wi glibc_apps
+    tce-load -wi glibc_i18n_locale
     if [ $? -eq 0 ]; then
-      echo "Download getlocale.tcz OK !!!"
+      echo "Download glibc_apps.tcz and glibc_i18n_locale.tcz OK, Permanent installation progress !!!"
+      sudo cp -f /tmp/tce/optional/glibc_apps.* /mnt/${tcrppart}/cde/optional
+      sudo cp -f /tmp/tce/optional/glibc_i18n_locale.* /mnt/${tcrppart}/cde/optional
       sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-      sudo echo "glibc_gconv.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
       sudo echo "glibc_i18n_locale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-      sudo echo "libzstd.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-      sudo echo "squashfs-tools.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-      sudo echo "getlocale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-      sudo echo "mylocale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
     else
-      echo "Download mylocale.tcz FAILE Backup locale C!!!"
+      echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
       tz="DoNotUseKorean"
     fi
   fi
-  sudo mkdir /usr/lib/locale && sudo localedef -c -i ko_KR -f UTF-8 ko_KR.UTF-8
+  [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
+  sudo localedef -c -i ko_KR -f UTF-8 ko_KR.UTF-8
   export LANG=ko_KR.utf8
   export LC_ALL=ko_KR.utf8
   
