@@ -772,7 +772,7 @@ tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq |
 #Get Langugae code & country code
 tz=$(curl -s  ipinfo.io | grep country | awk '{print $2}' | cut -c 2-3 )
 tz="FR"
-if [ tz=="KR" ] || [ tz=="RU" ]; then
+if [ "${tz}"=="KR" ] || [ "${tz}"=="RU" ]; then
 
   export country=$tz
   lang=$(curl -s https://restcountries.com/v2/all | jq -r 'map(select(.alpha2Code == env.country)) | .[0].languages | .[].iso639_1' | head -2)
