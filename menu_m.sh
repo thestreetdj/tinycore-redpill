@@ -793,7 +793,7 @@ fi
 
 #Get Timezone for Korean Langugae
 tz=$(curl -s  ipinfo.io | grep country | awk '{print $2}' | cut -c 2-3 )
-if [ -n "$SSH_TTY" ] && [ "$tz" == "KR" ]; then
+if [ "$tz" == "KR" ]; then
 
   if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
     tce-load -wi glibc_apps
