@@ -5,9 +5,9 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 
+# User Variables : 0.9.4.3-1
 
-rploaderver="0.9.4.0-1"
+rploaderver="0.9.4.3-1"
 build="master"
 redpillmake="prod"
 
@@ -91,6 +91,7 @@ function history() {
     0.9.2.8 Changed all curl calls to use the --insecure flag to avoid expired certificate issues
     0.9.2.9 Added the smallfixnumber key in user_config.json and changed the platform ids to model ids
     0.9.3.0 Changed set root entry to search for FS UUID
+    0.9.4.3-1 Multilingual menu support 
     --------------------------------------------------------------------------------------
 EOF
 
@@ -556,7 +557,7 @@ function processpat() {
         fi
 
         cd /home/tc/redpill-load/cache
-        tar xvf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./VERSION && . ./VERSION && rm ./VERSION
+        tar xvf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./VERSION && . ./VERSION && cat ./VERSION && rm ./VERSION
         os_sha256=$(sha256sum /home/tc/redpill-load/cache/${SYNOMODEL}.pat | awk '{print $1}')
         msgnormal "Pat file  sha256sum is : $os_sha256"
 
@@ -2592,7 +2593,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 0.9.4.0-1"
+    echo "TCRP JOT Version : 0.9.4.3-1"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
@@ -2945,10 +2946,9 @@ function bringoverfriend() {
     # 2nd try
     if [ $? -ne 0 ]; then
         msgwarning "Download failed from giteas.duckdns.org, Tring github.com..."    
-        #URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[] | select(.name | contains(\"${initrd-friend}\")) | .browser_download_url")    
+
         URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
         for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
-        for file in $URLS; do filearr+=("-O" "\"${file}\"") ; done ; curl -s --insecure -L "${filearr[@]}"
 
         # 3rd try
         if [ $? -ne 0 ]; then
@@ -3128,6 +3128,7 @@ function getvars() {
     COMPILE_METHOD="$(echo $platform_selected | jq -r -e '.compile_with')"
     TARGET_PLATFORM="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[0])"
     TARGET_VERSION="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[1])"
+    echo "TARGET_VERSION = ${TARGET_VERSION}"
     TARGET_REVISION="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[2])"
     REDPILL_LKM_MAKE_TARGET="$(echo $platform_selected | jq -r -e '.redpill_lkm_make_target')"
 #    tcrpdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
@@ -3435,11 +3436,11 @@ function getredpillko() {
        
     else
     
-        echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-        if [ ${ORIGIN_PLATFORM} == "apollolake" ]; then
-            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+        echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.X redpill.ko ..."
+        if [ ${TARGET_REVISION} == "64216" ]; then
+            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.302plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
         else
-            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz            
+            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
         fi
         sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
         
