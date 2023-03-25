@@ -130,7 +130,7 @@ set -u
 # 2023.03.18
 # Update : TCRP FRIEND / JOT menu selection method improvement
 # 2023.03.21
-# Update : Multilingual menu support started (Korean, Chinese, Japanese, Russian, French, German, Spanish, Portuguese supported)
+# Update : Multilingual menu support started (Korean, Chinese, Japanese, Russian, French, German, Spanish, Brazilian, Italian supported)
 # 2023.03.25
 
 function showlastupdate() {
@@ -171,7 +171,7 @@ function showlastupdate() {
 # Update : TCRP FRIEND / JOT menu selection method improvement
 # 2023.03.21
 
-# Update : Multilingual menu support started (Korean, Chinese, Japanese, Russian, French, German, Spanish, Portuguese supported)
+# Update : Multilingual menu support started (Korean, Chinese, Japanese, Russian, French, German, Spanish, Brazilian, Italian supported)
 # 2023.03.25
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
