@@ -771,13 +771,23 @@ tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq |
 
 #Get Langugae code & country code
 tz=$(curl -s  ipinfo.io | grep country | awk '{print $2}' | cut -c 2-3 )
-export country=$tz
-lang=$(curl -s https://restcountries.com/v2/all | jq -r 'map(select(.alpha2Code == env.country)) | .[0].languages | .[].iso639_1' | head -2)
-if [ $? -eq 0 ]; then
-  ucode=${lang}_${tz}
+tz="FR"
+if [ tz=="KR" ] || [ tz=="RU" ]; then
+
+  export country=$tz
+  lang=$(curl -s https://restcountries.com/v2/all | jq -r 'map(select(.alpha2Code == env.country)) | .[0].languages | .[].iso639_1' | head -2)
+  if [ $? -eq 0 ]; then
+    ucode=${lang}_${tz}
+  else
+    tz="US"  
+    ucode="en_US"
+  fi
+  
 else
+  tz="US"
   ucode="en_US"
 fi
+echo "tz = ${tz}"
 echo "ucode = ${ucode}"
 
 
@@ -790,43 +800,48 @@ sed -i "/UTF-8/d" .xsession
 sed -i "/aterm/d" .xsession
 sed -i "/urxvt/d" .xsession
 
-echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
-echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
-echo "export LANG=${ucode}.utf8" >> .xsession
-echo "export LC_ALL=${ucode}.utf8" >> .xsession
+if [ ucode!="en_US" ]; then
+  echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
+  echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
+  echo "export LANG=${ucode}.utf8" >> .xsession
+  echo "export LC_ALL=${ucode}.utf8" >> .xsession
+fi  
 echo "aterm -geometry 78x32+10+0 -fg yellow -title \"TCRP Monitor\" -e /home/tc/rploader.sh monitor &" >> .xsession
 echo "urxvt -geometry 78x32+525+0 -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession
 echo "aterm -geometry 78x25+10+430 -fg orange -title \"TCRP NTP Sync\" -e /home/tc/ntp.sh &" >> .xsession
 echo "aterm -geometry 78x25+525+430 -fg green -title \"TCRP Extra Terminal\" &" >> .xsession
 
-if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
-  tce-load -wi glibc_apps
-  tce-load -wi glibc_i18n_locale
-  tce-load -wi unifont
-  tce-load -wi rxvt
-  if [ $? -eq 0 ]; then
-    echo "Download glibc_apps.tcz and glibc_i18n_locale.tcz OK, Permanent installation progress !!!"
-    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
-    sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-    sudo echo "glibc_i18n_locale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-    sudo echo "unifont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-    sudo echo "rxvt.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-    echo 'Y'|./rploader.sh backup
-    
-    read answer
-    echo "You have finished installing TC Unicode package and urxvt. A reboot is required...."
-    
-    sudo reboot
-  else
-    echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
-  fi
-fi
+if [ ucode!="en_US" ]; then
 
-[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
-sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
-export LANG=${ucode}.utf8
-export LC_ALL=${ucode}.utf8
+	if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
+	  tce-load -wi glibc_apps
+	  tce-load -wi glibc_i18n_locale
+	  tce-load -wi unifont
+	  tce-load -wi rxvt
+	  if [ $? -eq 0 ]; then
+	    echo "Download glibc_apps.tcz and glibc_i18n_locale.tcz OK, Permanent installation progress !!!"
+	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
+	    sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+	    sudo echo "glibc_i18n_locale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+	    sudo echo "unifont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+	    sudo echo "rxvt.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+	    echo 'Y'|./rploader.sh backup
 
+	    echo
+	    echo "You have finished installing TC Unicode package and urxvt. A reboot is required. Press any key to reboot..."
+	    read answer
+
+	    sudo reboot
+	  else
+	    echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
+	  fi
+	fi
+	[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
+	sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
+	export LANG=${ucode}.utf8
+	export LC_ALL=${ucode}.utf8
+	
+fi	
 
 if [ "${KEYMAP}" = "null" ]; then
     LAYOUT="qwerty"
@@ -881,12 +896,9 @@ fi
 checkmachine
 checkcpu
 
-
 if [ $tcrppart == "mmc3" ]; then
     tcrppart="mmcblk0p3"
 fi    
-
-
 
 # Download dialog
 if [ "$(which dialog)_" == "_" ]; then
