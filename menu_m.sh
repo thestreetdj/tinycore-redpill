@@ -783,6 +783,9 @@ echo "ucode = ${ucode}"
 
 sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" .dialogrc
 echo "insert aterm menu.sh in /home/tc/.xsession"
+
+sed -i "/utf8/d" .xsession
+sed -i "/UTF-8/d" .xsession
 sed -i "/aterm/d" .xsession
 sed -i "/urxvt/d" .xsession
 
