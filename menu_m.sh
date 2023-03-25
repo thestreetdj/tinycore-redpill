@@ -727,8 +727,9 @@ function reboot() {
 sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" .dialogrc
 echo "insert aterm menu.sh in /home/tc/.xsession"
 sed -i "/aterm/d" .xsession
+sed -i "/urxvt/d" .xsession
 echo "aterm -geometry 78x32+10+0 -fg yellow -title \"TCRP Monitor\" -e /home/tc/rploader.sh monitor &" >> .xsession
-echo "aterm -geometry 78x32+525+0 -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession
+echo "urxvt -geometry 78x32+525+0 -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession
 echo "aterm -geometry 78x25+10+430 -fg orange -title \"TCRP NTP Sync\" -e /home/tc/ntp.sh &" >> .xsession
 echo "aterm -geometry 78x25+525+430 -fg green -title \"TCRP Extra Terminal\" &" >> .xsession
 
@@ -797,13 +798,16 @@ if [ -n "$SSH_TTY" ] && [ "$tz" == "KR" ]; then
   if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep glibc_apps | wc -w) -eq 0 ]; then
     tce-load -wi glibc_apps
     tce-load -wi glibc_i18n_locale
+    tce-load -wi unifont
+    tce-load -wi rxvt
     if [ $? -eq 0 ]; then
       echo "Download glibc_apps.tcz and glibc_i18n_locale.tcz OK, Permanent installation progress !!!"
-      sudo cp -f /tmp/tce/optional/glibc_apps.* /mnt/${tcrppart}/cde/optional
-      sudo cp -f /tmp/tce/optional/glibc_i18n_locale.* /mnt/${tcrppart}/cde/optional
+      sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
       sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
       sudo echo "glibc_i18n_locale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-    else
+      sudo echo "unifont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+      sudo echo "rxvt.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+  else
       echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
       tz="DoNotUseKorean"
     fi
