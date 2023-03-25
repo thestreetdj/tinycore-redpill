@@ -795,7 +795,7 @@ fi
 tz=$(curl -s  ipinfo.io | grep country | awk '{print $2}' | cut -c 2-3 )
 if [ -n "$SSH_TTY" ] && [ "$tz" == "KR" ]; then
 
-  if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep glibc_apps | wc -w) -eq 0 ]; then
+  if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
     tce-load -wi glibc_apps
     tce-load -wi glibc_i18n_locale
     tce-load -wi unifont
