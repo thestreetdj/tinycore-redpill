@@ -784,12 +784,14 @@ echo "ucode = ${ucode}"
 sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" .dialogrc
 echo "insert aterm menu.sh in /home/tc/.xsession"
 
+sed -i "/locale/d" .xsession
 sed -i "/utf8/d" .xsession
 sed -i "/UTF-8/d" .xsession
 sed -i "/aterm/d" .xsession
 sed -i "/urxvt/d" .xsession
 
-echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale & sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
+echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
+echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
 echo "export LANG=${ucode}.utf8" >> .xsession
 echo "export LC_ALL=${ucode}.utf8" >> .xsession
 echo "aterm -geometry 78x32+10+0 -fg yellow -title \"TCRP Monitor\" -e /home/tc/rploader.sh monitor &" >> .xsession
