@@ -841,11 +841,11 @@ if [ "${ucode}" != "en_US" ]; then
 	export LANG=${ucode}.utf8
 	export LC_ALL=${ucode}.utf8
 	
-        if [ $(cat ~/.Xdefaults|grep "URxvt.background: cyan" | wc -w) -eq 0 ]; then
-	  echo "URxvt.background: cyan"  >> ~/.Xdefaults
+        if [ $(cat ~/.Xdefaults|grep "URxvt.background: black" | wc -w) -eq 0 ]; then
+	  echo "URxvt.background: cyblackan"  >> ~/.Xdefaults
 	fi
-        if [ $(cat ~/.Xdefaults|grep "URxvt.foreground: blue" | wc -w) -eq 0 ]; then	
-   	  echo "URxvt.foreground: blue"  >> ~/.Xdefaults
+        if [ $(cat ~/.Xdefaults|grep "URxvt.foreground: white" | wc -w) -eq 0 ]; then	
+   	  echo "URxvt.foreground: white"  >> ~/.Xdefaults
         fi
 
 fi	
