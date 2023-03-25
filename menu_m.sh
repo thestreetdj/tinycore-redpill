@@ -791,7 +791,8 @@ echo "tz = ${tz}"
 echo "ucode = ${ucode}"
 
 
-sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" .dialogrc
+sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" ~/.dialogrc
+
 echo "insert aterm menu.sh in /home/tc/.xsession"
 
 sed -i "/locale/d" .xsession
@@ -841,6 +842,13 @@ if [ "${ucode}" != "en_US" ]; then
 	export LANG=${ucode}.utf8
 	export LC_ALL=${ucode}.utf8
 	
+        if [ $(cat ~/.Xdefaults|grep "URxvt.background: cyan" | wc -w) -eq 0 ]; then
+	  echo "URxvt.background: cyan"  >> ~/.Xdefaults
+	fi
+        if [ $(cat ~/.Xdefaults|grep "URxvt.foreground: blue" | wc -w) -eq 0 ]; then	
+   	  echo "URxvt.foreground: blue"  >> ~/.Xdefaults
+        fi
+
 fi	
 
 if [ "${KEYMAP}" = "null" ]; then
