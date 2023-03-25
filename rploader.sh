@@ -5,9 +5,9 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 
+# User Variables : 0.9.4.3-1
 
-rploaderver="0.9.4.0-1"
+rploaderver="0.9.4.3-1"
 build="master"
 redpillmake="prod"
 
@@ -91,6 +91,7 @@ function history() {
     0.9.2.8 Changed all curl calls to use the --insecure flag to avoid expired certificate issues
     0.9.2.9 Added the smallfixnumber key in user_config.json and changed the platform ids to model ids
     0.9.3.0 Changed set root entry to search for FS UUID
+    0.9.4.3-1 Multilingual menu support 
     --------------------------------------------------------------------------------------
 EOF
 
