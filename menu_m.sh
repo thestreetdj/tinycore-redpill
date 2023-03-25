@@ -842,7 +842,7 @@ if [ "${ucode}" != "en_US" ]; then
 	export LC_ALL=${ucode}.utf8
 	
         if [ $(cat ~/.Xdefaults|grep "URxvt.background: black" | wc -w) -eq 0 ]; then
-	  echo "URxvt.background: cyblackan"  >> ~/.Xdefaults
+	  echo "URxvt.background: black"  >> ~/.Xdefaults
 	fi
         if [ $(cat ~/.Xdefaults|grep "URxvt.foreground: white" | wc -w) -eq 0 ]; then	
    	  echo "URxvt.foreground: white"  >> ~/.Xdefaults
