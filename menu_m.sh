@@ -772,7 +772,7 @@ tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq |
 #Get Langugae code & country code
 tz=$(curl -s  ipinfo.io | grep country | awk '{print $2}' | cut -c 2-3 )
 tz="FR"
-if [ "${tz}"=="KR" ] || [ "${tz}"=="RU" ]; then
+if [ "${tz}" == "KR" ] || [ "${tz}" == "RU" ]; then
 
   export country=$tz
   lang=$(curl -s https://restcountries.com/v2/all | jq -r 'map(select(.alpha2Code == env.country)) | .[0].languages | .[].iso639_1' | head -2)
@@ -800,7 +800,7 @@ sed -i "/UTF-8/d" .xsession
 sed -i "/aterm/d" .xsession
 sed -i "/urxvt/d" .xsession
 
-if [ "${ucode}"!="en_US" ]; then
+if [ "${ucode}" != "en_US" ]; then
   echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
   echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
   echo "export LANG=${ucode}.utf8" >> .xsession
@@ -811,7 +811,7 @@ echo "urxvt -geometry 78x32+525+0 -title \"M Shell for TCRP Menu\" -e /home/tc/m
 echo "aterm -geometry 78x25+10+430 -fg orange -title \"TCRP NTP Sync\" -e /home/tc/ntp.sh &" >> .xsession
 echo "aterm -geometry 78x25+525+430 -fg green -title \"TCRP Extra Terminal\" &" >> .xsession
 
-if [ "${ucode}"!="en_US" ]; then
+if [ "${ucode}" != "en_US" ]; then
 
 	if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
 	  tce-load -wi glibc_apps
