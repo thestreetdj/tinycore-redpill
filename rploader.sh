@@ -2938,13 +2938,13 @@ function bringoverfriend() {
 
     [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
-#    msgnormal "Bringing over my friend from giteas.duckdns.org"
-#    curl -s --insecure -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
-#    -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
-#    -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
+    msgnormal "Bringing over my friend from giteas.duckdns.org"
+    curl -s --insecure -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
+    -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
+    -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
 
     # 2nd try
-#    if [ $? -ne 0 ]; then
+    if [ $? -ne 0 ]; then
         msgwarning "Download failed from giteas.duckdns.org, Tring github.com..."    
 
         URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
@@ -2964,9 +2964,9 @@ function bringoverfriend() {
         else
             msgnormal "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
         fi
- #   else
- #       msgnormal "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
- #   fi
+    else
+        msgnormal "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
+    fi
 
     if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
         FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
