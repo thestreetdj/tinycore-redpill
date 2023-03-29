@@ -1133,7 +1133,7 @@ if [ "${ucode}" == "null" ]; then
 else    
     ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
     [ $? -ne 0 ] && ucode="en_US"
-    tz=$(echo $ucode | cut -c -4)    
+    tz=$(echo $ucode | cut -c 4-)    
 fi
 
 echo "tz = ${tz}"
