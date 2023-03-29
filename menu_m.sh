@@ -1036,6 +1036,33 @@ function langMenu() {
   LANGUAGE=${resp}
   writeConfigKey "general" "language" "${LANGUAGE}"
   
+  case `<"${TMP_PATH}/resp"` in
+    English) tz="US";;
+    한국어) tz="KR";;
+    日本語) tz="JP";;
+    中文) tz="CN";;
+    Русский) tz="RU";;
+    Français) tz="FR";;
+    Deutsch) tz="DE";;
+    Español) tz="ES";;
+    Italiano) tz="IT";;
+    brasileiro) tz="BR";;
+  esac
+  
+  export country=$tz
+  lang=$(curl -s https://restcountries.com/v2/all | jq -r 'map(select(.alpha2Code == env.country)) | .[0].languages | .[].iso639_1' | head -2)
+  if [ $? -eq 0 ]; then
+    ucode=${lang}_${tz}
+  else
+    tz="US"  
+    ucode="en_US"
+  fi
+  
+  [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
+  sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
+  export LANG=${ucode}.utf8
+  export LC_ALL=${ucode}.utf8
+  
   cd ~
 
 }
