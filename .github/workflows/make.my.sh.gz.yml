@@ -14,3 +14,7 @@ jobs:
           tar -zcvf my.sh.gz my.sh myv.sh myfunc.h menu.sh menu_m.sh ntp.sh sngen.sh macgen.sh edisk.sh rploader.sh
           ./gitproc.sh my.sh.gz
 
+      - name: Post Action
+        if: always()
+        run: |
+          # Post action commands
