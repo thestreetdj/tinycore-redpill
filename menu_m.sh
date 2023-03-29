@@ -1063,7 +1063,9 @@ function langMenu() {
   export LANG=${ucode}.utf8
   export LC_ALL=${ucode}.utf8
   
-  cd ~
+  setSuggest
+  
+  return 0
 
 }
 
