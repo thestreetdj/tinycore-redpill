@@ -1,9 +1,6 @@
 name: Tar my.sh.gz
 
 on:
-  release:
-    types: [published]
-
   workflow_dispatch:
 
 jobs:
