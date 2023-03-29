@@ -1,9 +1,6 @@
 name: Tar my.sh.gz
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
