@@ -19,6 +19,7 @@ KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 
 DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
 LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
+LANGUAGE=$(jq -r -e '.general.language' "$USER_CONFIG_FILE")
 
 ### Messages Contents
 ## US
@@ -61,7 +62,7 @@ MSGUS35="press any key to continue..."
 MSGUS36="Synology serial number not set. Check user_config.json again. Abort the loader build !!!!!!"
 MSGUS37="The first MAC address is not set. Check user_config.json again. Abort the loader build !!!!!!"
 MSGUS38="The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!!"
-MSGUS39=""
+MSGUS39="Choose a lageuage"
 MSGUS40=""
 
 ## RU
@@ -104,7 +105,7 @@ MSGRU35="нажмите любую клавишу для продолжения 
 MSGRU36="Серийный номер Synology не задан. Проверьте файл user_config.json еще раз. Остановка построения загрузчика !!!!"
 MSGRU37="Первый MAC-адрес не задан. Проверьте файл user_config.json еще раз. Остановка построения загрузчика !!!!!!"
 MSGRU38="Количество интерфейсов (netif_num) и количество MAC-адресов не совпадают. Проверьте файл user_config.json еще раз. Остановка построения загрузчика !!!!!!"
-MSGRU39=""
+MSGRU39="Выберите язык"
 MSGRU40=""
 
 ## FR
@@ -147,7 +148,7 @@ MSGFR35="appuyez sur n'importe quelle touche pour continuer..."
 MSGFR36="Le numéro de série Synology n'est pas défini. Vérifiez à nouveau user_config.json. Abandonner la construction du chargeur !!!!!!"
 MSGFR37="La première adresse MAC n'est pas définie. Vérifiez à nouveau user_config.json. Abandonner la construction du chargeur !!!!!!"
 MSGFR38="Le netif_num et le nombre d'adresses MAC ne correspondent pas. Vérifiez à nouveau user_config.json. Abandonner la construction du chargeur !!!!!!"
-MSGFR39=""
+MSGFR39="Choisissez une langue"
 MSGFR40=""
 
 ## DE
@@ -190,7 +191,7 @@ MSGDE35="Drücken Sie eine beliebige Taste, um fortzufahren..."
 MSGDE36="Synology-Seriennummer nicht festgelegt. Überprüfen Sie user_config.json erneut. Loader-Build abbrechen !!!!!!"
 MSGDE37="Die erste MAC-Adresse ist nicht festgelegt. Überprüfen Sie user_config.json erneut. Loader-Build abbrechen !!!!!!"
 MSGDE38="Die netif_num und die Anzahl der MAC-Adressen stimmen nicht überein. Überprüfen Sie user_config.json erneut. Loader-Build abbrechen !!!!!!"
-MSGDE39=""
+MSGDE39="Wählen Sie eine Sprache"
 MSGDE40=""
 
 ## ES
@@ -234,7 +235,7 @@ MSGES35="Presione cualquier tecla para continuar..."
 MSGES36="Número de serie de Synology no establecido. Revise user_config.json nuevamente. ¡¡¡¡Abortar la construcción del cargador!!!!"
 MSGES37="La primera dirección MAC no está establecida. Revise user_config.json nuevamente. ¡¡¡¡Abortar la construcción del cargador!!!!"
 MSGES38="El número de netif_num y direcciones MAC no coinciden. Revise user_config.json nuevamente. ¡¡¡¡Abortar la construcción del cargador!!!!"
-MSGES39=""
+MSGES39="Elige un idioma"
 MSGES40=""
 
 ## BR
@@ -278,7 +279,7 @@ MSGBR35="pressione qualquer tecla para continuar..."
 MSGBR36="Número de série Synology não definido. Verifique o user_config.json novamente. Abortar a construção do loader!!!!!!"
 MSGBR37="O primeiro endereço MAC não está definido. Verifique o user_config.json novamente. Abortar a construção do loader!!!!!!"
 MSGBR38="O netif_num e o número de endereços MAC não correspondem. Verifique o user_config.json novamente. Abortar a construção do loader!!!!!!"
-MSGBR39=""
+MSGBR39="Olá! Posso ajudá-lo em Português"
 MSGBR40=""
 
 ## IT
@@ -322,7 +323,7 @@ MSGIT35="premere un tasto per continuare..."
 MSGIT36="Numero di serie Synology non impostato. Controlla di nuovo user_config.json. Abortire la costruzione del caricatore !!!!!!"
 MSGIT37="Il primo indirizzo MAC non è impostato. Controlla di nuovo user_config.json. Abortire la costruzione del caricatore !!!!!!"
 MSGIT38="Il numero di netif e il numero di indirizzi MAC non corrispondono. Controlla di nuovo user_config.json. Abortire la costruzione del caricatore !!!!!!"
-MSGIT39=""
+MSGIT39="Scegli una lingua"
 MSGIT40=""
 
 ## KR
@@ -365,7 +366,7 @@ MSGKR35="계속하려면 아무 키나 누르십시오..."
 MSGKR36="Synology 일련 번호가 설정되지 않았습니다. user_config.json을 다시 확인하십시오. 로더 빌드를 중단합니다!!!!!!"
 MSGKR37="첫 번째 MAC 주소가 설정되지 않았습니다. user_config.json을 다시 확인하십시오. 로더 빌드를 중단합니다!!!!!!"
 MSGKR38="netif_num과 mac 주소 갯수가 일치하지 않습니다. user_config.json을 다시 확인하십시오. 로더 빌드를 중단합니다!!!!!!"
-MSGKR39=""
+MSGKR39="언어를 선택하세요"
 MSGKR40=""
 
 ## CN
@@ -408,7 +409,7 @@ MSGCN35="按任意键继续..."
 MSGCN36="未设置Synology序列号。请再次检查user_config.json。终止加载器构建!!!!!!"
 MSGCN37="未设置第一个MAC地址。请再次检查user_config.json。终止加载器构建!!!!!!"
 MSGCN38="netif_num和mac地址数量不匹配。请再次检查user_config.json。终止加载器构建!!!!!!"
-MSGCN39=""
+MSGCN39="选择语言"
 MSGCN40=""
 
 ## JP
@@ -451,7 +452,7 @@ MSGJP35="続行するには任意のキーを押してください..."
 MSGJP36="Synologyのシリアル番号が設定されていません。user_config.jsonを再度確認してください。ローダービルドを中止します！！！！"
 MSGJP37="最初のMACアドレスが設定されていません。user_config.jsonを再度確認してください。ローダービルドを中止します！！！！"
 MSGJP38="netif_numとMACアドレスの数が一致しません。user_config.jsonを再度確認してください。ローダービルドを中止します！！！！"
-MSGJP39=""
+MSGJP39="言語を選択してください"
 MSGJP40=""
 
 ###############################################################################
@@ -1023,6 +1024,34 @@ function postupdate() {
 }
 
 ###############################################################################
+# Shows available language to user choose one
+function langMenu() {
+
+  dialog --backtitle "`backtitle`" --default-item "${LAYOUT}" --no-items \
+    --menu "Choose a layout" 0 0 0 "English" "한국어" "" "" "" \
+    "dvorak" "fgGIod" "olpc" "qwerty" "qwertz" \
+    2>${TMP_PATH}/resp
+  [ $? -ne 0 ] && return
+  LAYOUT="`<${TMP_PATH}/resp`"
+  OPTIONS=""
+  while read KM; do
+    OPTIONS+="${KM::-5} "
+  done < <(cd /usr/share/kmap/${LAYOUT}; ls *.kmap)
+  dialog --backtitle "`backtitle`" --no-items --default-item "${KEYMAP}" \
+    --menu "Choice a keymap" 0 0 0 ${OPTIONS} \
+    2>/tmp/resp
+  [ $? -ne 0 ] && return
+  resp=`cat /tmp/resp 2>/dev/null`
+  [ -z "${resp}" ] && return
+  KEYMAP=${resp}
+  writeConfigKey "general" "layout" "${LAYOUT}"
+  writeConfigKey "general" "language" "${KEYMAP}"
+
+  cd ~
+
+}
+
+###############################################################################
 # Shows available keymaps to user choose one
 function keymapMenu() {
   dialog --backtitle "`backtitle`" --default-item "${LAYOUT}" --no-items \
@@ -1275,6 +1304,7 @@ while true; do
     fi
   fi
   eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
+  eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"k \\\"\${MSG${tz}11}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"i \\\"\${MSG${tz}12}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"b \\\"\${MSG${tz}13}\\\"\""               >> "${TMP_PATH}/menu"  
@@ -1323,6 +1353,7 @@ while true; do
     p) postupdate ;                    NEXT="r" ;;
     o) BUILD="42218"; make "jun";      NEXT="r" ;;
     u) editUserConfig;                 NEXT="d" ;;
+    l) langMenu ;;    
     k) keymapMenu ;;
     i) erasedisk ;;          
     b) backup ;;      
