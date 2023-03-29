@@ -1032,7 +1032,11 @@ function langMenu() {
     --menu "Choose a language" 0 0 0 "English" "한국어" "日本語" "中文" "Русский" \
     "Français" "Deutsch" "Español" "Italiano" "brasileiro" \
     2>${TMP_PATH}/resp
+    
   [ $? -ne 0 ] && return
+  resp=$(<${TMP_PATH}/resp)
+  [ -z "${resp}" ] && return  
+  
   LANGUAGE=${resp}
   writeConfigKey "general" "language" "${LANGUAGE}"
   
