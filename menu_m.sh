@@ -1113,10 +1113,11 @@ function reboot() {
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
 
 #Get Langugae code & country code
-tz=$(curl -s  ipinfo.io | grep country | awk '{print $2}' | cut -c 2-3 )
-if [ "${tz}" == "KR" ]||[ "${tz}" == "RU" ]||[ "${tz}" == "FR" ]||[ "${tz}" == "DE" ]||[ "${tz}" == "IT" ]||[ "${tz}" == "JP" ]||[ "${tz}" == "CN" ]||[ "${tz}" == "ES" ]||[ "${tz}" == "BR" ]; then
-
+if [ "${ucode}" == "null" ]; then
+  tz=$(curl -s ipinfo.io | grep country | awk '{print $2}' | cut -c 2-3 )
+    
   case "$tz" in
+    US) ucode="en_US";;
     KR) ucode="ko_KR";;
     JP) ucode="ja_JP";;
     CN) ucode="zh_CN";;
@@ -1126,7 +1127,19 @@ if [ "${tz}" == "KR" ]||[ "${tz}" == "RU" ]||[ "${tz}" == "FR" ]||[ "${tz}" == "
     ES) ucode="es_ES";;
     IT) ucode="it_IT";;
     BR) ucode="pt_BR";;
+    *) tz="US"; ucode="en_US";;
   esac
+    
+else    
+    ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
+    [ $? -ne 0 ] && ucode="en_US"
+    tz=$(echo $ucode | cut -c -4)    
+fi
+
+echo "tz = ${tz}"
+echo "ucode = ${ucode}"
+
+writeConfigKey "general" "ucode" "${ucode}"
 
 #  export country=$tz
 #  lang=$(curl -s https://restcountries.com/v2/all | jq -r 'map(select(.alpha2Code == env.country)) | .[0].languages | .[].iso639_1' | head -2)
@@ -1136,14 +1149,6 @@ if [ "${tz}" == "KR" ]||[ "${tz}" == "RU" ]||[ "${tz}" == "FR" ]||[ "${tz}" == "
 #    tz="US"  
 #    ucode="en_US"
 #  fi
-  
-else
-  tz="US"
-  ucode="en_US"
-fi
-echo "tz = ${tz}"
-echo "ucode = ${ucode}"
-
 
 sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" ~/.dialogrc
 
@@ -1209,11 +1214,6 @@ if [ "${ucode}" != "en_US" ]; then
         fi
 
 fi	
-
-if [ "${ucode}" = "null" ]; then
-    ucode="en_US"
-    writeConfigKey "general" "ucode" "${ucode}"          
-fi
 
 if [ "${KEYMAP}" = "null" ]; then
     LAYOUT="qwerty"
