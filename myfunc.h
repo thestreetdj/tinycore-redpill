@@ -132,6 +132,8 @@ set -u
 # 2023.03.21
 # Update : Multilingual menu support started (Korean, Chinese, Japanese, Russian, French, German, Spanish, Brazilian, Italian supported)
 # 2023.03.25
+# Update : Add language selection menu
+# 2023.03.29
 
 function showlastupdate() {
     cat <<EOF
@@ -173,6 +175,9 @@ function showlastupdate() {
 
 # Update : Multilingual menu support started (Korean, Chinese, Japanese, Russian, French, German, Spanish, Brazilian, Italian supported)
 # 2023.03.25
+
+# Update : Add language selection menu
+# 2023.03.29
 
 There is a new distribution of menu.sh that looks like an APRL-style menu.
 Run ./menu.sh to use the menu.
