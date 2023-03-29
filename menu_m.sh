@@ -1038,26 +1038,17 @@ function langMenu() {
   [ -z "${resp}" ] && return  
   
   case `<"${TMP_PATH}/resp"` in
-    English) tz="US";;
-    한국어) tz="KR";;
-    日本語) tz="JP";;
-    中文) tz="CN";;
-    Русский) tz="RU";;
-    Français) tz="FR";;
-    Deutsch) tz="DE";;
-    Español) tz="ES";;
-    Italiano) tz="IT";;
-    brasileiro) tz="BR";;
+    English) tz="US"; ucode="en_US";;
+    한국어) tz="KR"; ucode="ko_KR";;
+    日本語) tz="JP"; ucode="ja_JP";;
+    中文) tz="CN"; ucode="zh_CN";;
+    Русский) tz="RU"; ucode="ru_RU";;
+    Français) tz="FR"; ucode="fr_FR";;
+    Deutsch) tz="DE"; ucode="de_DE";;
+    Español) tz="ES"; ucode="es_ES";;
+    Italiano) tz="IT"; ucode="it_IT";;
+    brasileiro) tz="BR"; ucode="pr_BR";;
   esac
-  
-  export country=$tz
-  lang=$(curl -s https://restcountries.com/v2/all | jq -r 'map(select(.alpha2Code == env.country)) | .[0].languages | .[].iso639_1' | head -2)
-  if [ $? -eq 0 ]; then
-    ucode=${lang}_${tz}
-  else
-    tz="US"  
-    ucode="en_US"
-  fi
   
   [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
   sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
@@ -1125,14 +1116,26 @@ tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq |
 tz=$(curl -s  ipinfo.io | grep country | awk '{print $2}' | cut -c 2-3 )
 if [ "${tz}" == "KR" ]||[ "${tz}" == "RU" ]||[ "${tz}" == "FR" ]||[ "${tz}" == "DE" ]||[ "${tz}" == "IT" ]||[ "${tz}" == "JP" ]||[ "${tz}" == "CN" ]||[ "${tz}" == "ES" ]||[ "${tz}" == "BR" ]; then
 
-  export country=$tz
-  lang=$(curl -s https://restcountries.com/v2/all | jq -r 'map(select(.alpha2Code == env.country)) | .[0].languages | .[].iso639_1' | head -2)
-  if [ $? -eq 0 ]; then
-    ucode=${lang}_${tz}
-  else
-    tz="US"  
-    ucode="en_US"
-  fi
+  case "$tz" in
+    KR) ucode="ko_KR";;
+    JP) ucode="ja_JP";;
+    CN) ucode="zh_CN";;
+    RU) ucode="ru_RU";;
+    FR) ucode="fr_FR";;
+    DE) ucode="de_DE";;
+    ES) ucode="es_ES";;
+    IT) ucode="it_IT";;
+    BR) ucode="pr_BR";;
+  esac
+
+#  export country=$tz
+#  lang=$(curl -s https://restcountries.com/v2/all | jq -r 'map(select(.alpha2Code == env.country)) | .[0].languages | .[].iso639_1' | head -2)
+#  if [ $? -eq 0 ]; then
+#    ucode=${lang}_${tz}
+#  else
+#    tz="US"  
+#    ucode="en_US"
+#  fi
   
 else
   tz="US"
