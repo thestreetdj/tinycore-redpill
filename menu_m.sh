@@ -543,6 +543,7 @@ function DeleteConfigKey() {
 function backtitle() {
   BACKTITLE="TCRP 0.9.4.3-1"
   BACKTITLE+=" ${DMPM}"
+  BACKTITLE+=" ${LANGUAGE}"  
   BACKTITLE+=" ${LDRMODE}"
   if [ -n "${MODEL}" ]; then
     BACKTITLE+=" ${MODEL}"
@@ -1043,9 +1044,8 @@ function langMenu() {
   [ $? -ne 0 ] && return
   resp=`cat /tmp/resp 2>/dev/null`
   [ -z "${resp}" ] && return
-  KEYMAP=${resp}
-  writeConfigKey "general" "layout" "${LAYOUT}"
-  writeConfigKey "general" "language" "${KEYMAP}"
+  LANGUAGE=${resp}
+  writeConfigKey "general" "language" "${LANGUAGE}"
 
   cd ~
 
