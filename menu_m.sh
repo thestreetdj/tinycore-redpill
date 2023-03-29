@@ -1037,9 +1037,6 @@ function langMenu() {
   resp=$(<${TMP_PATH}/resp)
   [ -z "${resp}" ] && return  
   
-  ucode=${resp}
-  writeConfigKey "general" "ucode" "${ucode}"
-  
   case `<"${TMP_PATH}/resp"` in
     English) tz="US";;
     한국어) tz="KR";;
@@ -1066,6 +1063,8 @@ function langMenu() {
   sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
   export LANG=${ucode}.utf8
   export LC_ALL=${ucode}.utf8
+  
+  writeConfigKey "general" "ucode" "${ucode}"  
   
   setSuggest
   
