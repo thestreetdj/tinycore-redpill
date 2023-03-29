@@ -19,7 +19,7 @@ KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 
 DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
 LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
-LANGUAGE=$(jq -r -e '.general.language' "$USER_CONFIG_FILE")
+ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
 
 ### Messages Contents
 ## US
@@ -543,7 +543,7 @@ function DeleteConfigKey() {
 function backtitle() {
   BACKTITLE="TCRP 0.9.4.3-1"
   BACKTITLE+=" ${DMPM}"
-  BACKTITLE+=" ${LANGUAGE}"  
+  BACKTITLE+=" ${ucode}"
   BACKTITLE+=" ${LDRMODE}"
   if [ -n "${MODEL}" ]; then
     BACKTITLE+=" ${MODEL}"
@@ -1037,8 +1037,8 @@ function langMenu() {
   resp=$(<${TMP_PATH}/resp)
   [ -z "${resp}" ] && return  
   
-  LANGUAGE=${resp}
-  writeConfigKey "general" "language" "${LANGUAGE}"
+  ucode=${resp}
+  writeConfigKey "general" "ucode" "${ucode}"
   
   case `<"${TMP_PATH}/resp"` in
     English) tz="US";;
@@ -1208,9 +1208,9 @@ if [ "${ucode}" != "en_US" ]; then
 
 fi	
 
-if [ "${LANGUAGE}" = "null" ]; then
-    LANGUAGE="english"
-    writeConfigKey "general" "language" "${LANGUAGE}"          
+if [ "${ucode}" = "null" ]; then
+    ucode="en_US"
+    writeConfigKey "general" "ucode" "${ucode}"          
 fi
 
 if [ "${KEYMAP}" = "null" ]; then
