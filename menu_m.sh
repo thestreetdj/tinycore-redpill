@@ -1382,10 +1382,10 @@ while true; do
     p) postupdate ;                    NEXT="r" ;;
     o) BUILD="42218"; make "jun";      NEXT="r" ;;
     u) editUserConfig;                 NEXT="d" ;;
-    l) langMenu ;;    
-    k) keymapMenu ;;
-    i) erasedisk ;;          
-    b) backup ;;      
+    l) langMenu ;                      NEXT="m" ;;
+    k) keymapMenu ;                    NEXT="m" ;;
+    i) erasedisk ;                     NEXT="m" ;;
+    b) backup ;                        NEXT="m" ;;
     r) reboot ;;
     e) break ;;
   esac
