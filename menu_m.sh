@@ -1028,8 +1028,8 @@ function postupdate() {
 function langMenu() {
 
   dialog --backtitle "`backtitle`" --default-item "${LAYOUT}" --no-items \
-    --menu "Choose a layout" 0 0 0 "English" "한국어" "" "" "" \
-    "dvorak" "fgGIod" "olpc" "qwerty" "qwertz" \
+    --menu "Choose a language" 0 0 0 "English" "한국어" "日本語" "中文" "Русский" \
+    "Français" "Deutsch" "Español" "Italiano" "brasileiro" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
   LAYOUT="`<${TMP_PATH}/resp`"
