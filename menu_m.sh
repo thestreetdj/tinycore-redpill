@@ -1047,7 +1047,7 @@ function langMenu() {
     Deutsch) tz="DE"; ucode="de_DE";;
     Español) tz="ES"; ucode="es_ES";;
     Italiano) tz="IT"; ucode="it_IT";;
-    brasileiro) tz="BR"; ucode="pr_BR";;
+    brasileiro) tz="BR"; ucode="pt_BR";;
   esac
   
   [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
@@ -1125,7 +1125,7 @@ if [ "${tz}" == "KR" ]||[ "${tz}" == "RU" ]||[ "${tz}" == "FR" ]||[ "${tz}" == "
     DE) ucode="de_DE";;
     ES) ucode="es_ES";;
     IT) ucode="it_IT";;
-    BR) ucode="pr_BR";;
+    BR) ucode="pt_BR";;
   esac
 
 #  export country=$tz
