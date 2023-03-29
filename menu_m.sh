@@ -1033,20 +1033,9 @@ function langMenu() {
     "Français" "Deutsch" "Español" "Italiano" "brasileiro" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
-  LAYOUT="`<${TMP_PATH}/resp`"
-  OPTIONS=""
-  while read KM; do
-    OPTIONS+="${KM::-5} "
-  done < <(cd /usr/share/kmap/${LAYOUT}; ls *.kmap)
-  dialog --backtitle "`backtitle`" --no-items --default-item "${KEYMAP}" \
-    --menu "Choice a keymap" 0 0 0 ${OPTIONS} \
-    2>/tmp/resp
-  [ $? -ne 0 ] && return
-  resp=`cat /tmp/resp 2>/dev/null`
-  [ -z "${resp}" ] && return
   LANGUAGE=${resp}
   writeConfigKey "general" "language" "${LANGUAGE}"
-
+  
   cd ~
 
 }
@@ -1185,6 +1174,11 @@ if [ "${ucode}" != "en_US" ]; then
         fi
 
 fi	
+
+if [ "${LANGUAGE}" = "null" ]; then
+    LANGUAGE="english"
+    writeConfigKey "general" "language" "${LANGUAGE}"          
+fi
 
 if [ "${KEYMAP}" = "null" ]; then
     LAYOUT="qwerty"
