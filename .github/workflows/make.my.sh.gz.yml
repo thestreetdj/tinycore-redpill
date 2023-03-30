@@ -1,20 +1,24 @@
 name: Tar my.sh.gz
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [main]
 
 jobs:
-  tar:
+  tar_compress_and_commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Tar modules
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Compress shell files
         run: |
           tar -zcvf my.sh.gz my.sh myv.sh myfunc.h menu.sh menu_m.sh ntp.sh sngen.sh macgen.sh edisk.sh rploader.sh
-          ./gitproc.sh my.sh.gz
 
-      - name: Post Action
-        if: always()
+      - name: Commit changes
         run: |
-          # Post action commands
+          git config --local user.name "PeterSuh-Q3"
+          git config --local user.email dante9000@gmail.com
+          git add my.sh.gz
+          git commit -m "Update my.sh.gz"
+          git push  
