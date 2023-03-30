@@ -1183,6 +1183,7 @@ if [ "${ucode}" != "en_US" ]; then
 	  if [ $? -eq 0 ]; then
 	    echo "Download glibc_apps.tcz and glibc_i18n_locale.tcz OK, Permanent installation progress !!!"
 	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
+	    sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst	    
 	    sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 	    sudo echo "glibc_i18n_locale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 	    sudo echo "unifont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
