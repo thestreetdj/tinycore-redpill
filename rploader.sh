@@ -3266,6 +3266,9 @@ function listpci() {
         0200)
             msgalert "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             ;;
+        0680)
+            msgalert "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            ;;
 #        0300)
 #            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
 #            ;;
