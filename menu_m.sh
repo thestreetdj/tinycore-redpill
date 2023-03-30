@@ -1212,7 +1212,23 @@ if [ "${ucode}" != "en_US" ]; then
         if [ $(cat ~/.Xdefaults|grep "URxvt.transparent: true" | wc -w) -eq 0 ]; then	
    	  echo "URxvt.transparent: true"  >> ~/.Xdefaults
         fi
-
+else
+        if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
+	  [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
+	  sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
+	  export LANG=${ucode}.utf8
+	  export LC_ALL=${ucode}.utf8
+	  
+          if [ $(cat ~/.Xdefaults|grep "URxvt.background: black" | wc -w) -eq 0 ]; then
+  	    echo "URxvt.background: black"  >> ~/.Xdefaults
+  	  fi
+          if [ $(cat ~/.Xdefaults|grep "URxvt.foreground: white" | wc -w) -eq 0 ]; then	
+   	    echo "URxvt.foreground: white"  >> ~/.Xdefaults
+          fi
+          if [ $(cat ~/.Xdefaults|grep "URxvt.transparent: true" | wc -w) -eq 0 ]; then	
+   	    echo "URxvt.transparent: true"  >> ~/.Xdefaults
+          fi
+	fi
 fi	
 
 if [ "${KEYMAP}" = "null" ]; then
