@@ -1232,6 +1232,17 @@ else
 	fi
 fi	
 
+if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -w) -gt 0 ]; then
+    sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst	
+    sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+    sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+    echo
+    echo "We have finished bug fix for /mnt/${tcrppart}/cde/onboot.lst. A reboot is required. Press any key to reboot..."
+    read answer
+
+    sudo reboot
+fi	
+
 if [ "${KEYMAP}" = "null" ]; then
     LAYOUT="qwerty"
     KEYMAP="us"
