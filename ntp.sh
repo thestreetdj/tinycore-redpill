@@ -14,7 +14,7 @@ done
 #Get Timezone
 tz=$(curl -s ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
 if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
-    ntpserver="time.bora.net"
+    ntpserver="asia.pool.ntp.org"
 else
     ntpserver="pool.ntp.org"
 fi
