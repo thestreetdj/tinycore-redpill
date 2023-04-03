@@ -24,7 +24,7 @@ ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
 ### Messages Contents
 ## US
 MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap\nDT models do not support HBAs\n"
-MSGUS01="Choose a Dev Mod handling method, EUDEV/DDSML"
+MSGUS01="Choose a Dev Mod handling method, DDSML/EUDEV"
 MSGUS02="Choose a Synology Model"
 MSGUS03="Choose a Synology Serial Number"
 MSGUS04="Choose a mac address"
@@ -67,7 +67,7 @@ MSGUS40=""
 
 ## RU
 MSGRU00="Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap \nDT модели не поддерживают HBAs\n"
-MSGRU01="Выберите метод обработки Dev Mod, EUDEV / DDSML"
+MSGRU01="Выберите метод обработки Dev Mod, DDSML/EUDEV"
 MSGRU02="Выберите модель Synology"
 MSGRU03="Выберите серийный номер Synology"
 MSGRU04="Выберите MAC-адрес"
@@ -110,7 +110,7 @@ MSGRU40=""
 
 ## FR
 MSGFR00="Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne nécessitent pas de SataPortMap, DiskIdxMap\nLes modèles DT ne prennent pas en charge les HBAs\n"
-MSGFR01="Choisissez une méthode de gestion des modèles de périphérique, EUDEV/DDSML"
+MSGFR01="Choisissez une méthode de gestion des modèles de périphérique, DDSML/EUDEV"
 MSGFR02="Choisissez un modèle Synology"
 MSGFR03="Choisissez un numéro de série Synology"
 MSGFR04="Choisissez une adresse MAC"
@@ -153,7 +153,7 @@ MSGFR40=""
 
 ## DE
 MSGDE00="Gerätebaum[DT] Basismodelle und HBAs benötigen kein SataPortMap,DiskIdxMap\nDT-Modelle unterstützen keine HBAs\n"
-MSGDE01="Wählen Sie eine Methode zur Verwaltung von Dev-Mods, EUDEV/DDSML"
+MSGDE01="Wählen Sie eine Methode zur Verwaltung von Dev-Mods, DDSML/EUDEV"
 MSGDE02="Wählen Sie ein Synology-Modell"
 MSGDE03="Wählen Sie eine Synology-Seriennummer"
 MSGDE04="Wählen Sie eine MAC-Adresse"
@@ -197,7 +197,7 @@ MSGDE40=""
 ## ES
 
 MSGES00="Los modelos base y HBAs de Device-Tree[DT] no requieren SataPortMap, DiskIdxMap\nLos modelos DT no admiten HBAs\n"
-MSGES01="Elija un método de manejo de Mod Dev, EUDEV/DDSML"
+MSGES01="Elija un método de manejo de Mod Dev, DDSML/EUDEV"
 MSGES02="Elija un modelo de Synology"
 MSGES03="Elija un número de serie de Synology"
 MSGES04="Elija una dirección MAC"
@@ -241,7 +241,7 @@ MSGES40=""
 ## BR
 
 MSGBR00="Modelos Base e HBAs do Device-Tree[DT] não requerem SataPortMap, DiskIdxMap\nModelos DT não suportam HBAs\n"
-MSGBR01="Escolha um método de manipulação de Dev Mod, EUDEV/DDSML"
+MSGBR01="Escolha um método de manipulação de Dev Mod, DDSML/EUDEV"
 MSGBR02="Escolha um modelo Synology"
 MSGBR03="Escolha um número de série Synology"
 MSGBR04="Escolha um endereço MAC"
@@ -285,7 +285,7 @@ MSGBR40=""
 ## IT
 
 MSGIT00="I modelli di base e gli HBA di Device-Tree [DT] non richiedono SataPortMap, DiskIdxMap\nI modelli DT non supportano gli HBA\n"
-MSGIT01="Scegli un metodo di gestione del Mod Dev, EUDEV/DDSML"
+MSGIT01="Scegli un metodo di gestione del Mod Dev, DDSML/EUDEV"
 MSGIT02="Scegli un modello Synology"
 MSGIT03="Scegli un numero di serie Synology"
 MSGIT04="Scegli un indirizzo MAC"
@@ -328,7 +328,7 @@ MSGIT40=""
 
 ## KR
 MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다.\nDT모델은 HBA를 지원하지 않습니다.\n"
-MSGKR01="커널모듈 처리방법 선택 EUDEV/DDSML"
+MSGKR01="커널모듈 처리방법 선택 DDSML/EUDEV"
 MSGKR02="Synology 모델 선택"
 MSGKR03="Synology S/N 선택"
 MSGKR04="선택 Mac 주소 "
@@ -371,7 +371,7 @@ MSGKR40=""
 
 ## CN
 MSGCN00="设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap\nDT模型不支持HBA\n"
-MSGCN01="选择Dev Mod处理方法，EUDEV/DDSML"
+MSGCN01="选择Dev Mod处理方法，DDSML/EUDEV"
 MSGCN02="选择一个Synology型号"
 MSGCN03="选择一个Synology序列号"
 MSGCN04="选择一个mac地址"
@@ -644,15 +644,15 @@ function usbidentify() {
 }
 
 ###############################################################################
-# Shows available between EUDEV and DDSML
+# Shows available between DDSML and EUDEV
 function seleudev() {
-  eval "MSG26=\"\${MSG${tz}26}\""
   eval "MSG27=\"\${MSG${tz}27}\""  
+  eval "MSG26=\"\${MSG${tz}26}\""
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
-      e "${MSG26}" \
       d "${MSG27}" \
+      e "${MSG26}" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
@@ -1251,7 +1251,7 @@ if [ "${KEYMAP}" = "null" ]; then
 fi
 
 if [ "${DMPM}" = "null" ]; then
-    DMPM="EUDEV"
+    DMPM="DDSML"
     writeConfigKey "general" "devmod" "${DMPM}"          
 fi
 
