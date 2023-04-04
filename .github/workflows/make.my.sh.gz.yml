@@ -2,7 +2,7 @@ name: Tar my.sh.gz
 
 on:
   push:
-#    branches: [main]
+    branches: [main]
 
 jobs:
   tar_compress_and_commit:
