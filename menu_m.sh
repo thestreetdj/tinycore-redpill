@@ -542,7 +542,6 @@ function DeleteConfigKey() {
 # Mounts backtitle dynamically
 function backtitle() {
   BACKTITLE="TCRP 0.9.4.3-1"
-  BACKTITLE+=" ${DMPM}"
   BACKTITLE+=" ${ucode}"
   BACKTITLE+=" ${LDRMODE}"
   if [ -n "${MODEL}" ]; then
@@ -645,30 +644,30 @@ function usbidentify() {
 
 ###############################################################################
 # Shows available between DDSML and EUDEV
-function seleudev() {
-  eval "MSG27=\"\${MSG${tz}27}\""  
-  eval "MSG26=\"\${MSG${tz}26}\""
-  while true; do
-    dialog --clear --backtitle "`backtitle`" \
-      --menu "Choose a option" 0 0 0 \
-      d "${MSG27}" \
-      e "${MSG26}" \
-    2>${TMP_PATH}/resp
-    [ $? -ne 0 ] && return
-    resp=$(<${TMP_PATH}/resp)
-    [ -z "${resp}" ] && return
-    if [ "${resp}" = "e" ]; then
-      DMPM="EUDEV"
-      break
-    elif [ "${resp}" = "d" ]; then
-      DMPM="DDSML"
-      break
-    fi
-  done
+#function seleudev() {
+#  eval "MSG27=\"\${MSG${tz}27}\""  
+#  eval "MSG26=\"\${MSG${tz}26}\""
+#  while true; do
+#    dialog --clear --backtitle "`backtitle`" \
+#      --menu "Choose a option" 0 0 0 \
+#      d "${MSG27}" \
+#      e "${MSG26}" \
+#    2>${TMP_PATH}/resp
+#    [ $? -ne 0 ] && return
+#    resp=$(<${TMP_PATH}/resp)
+#    [ -z "${resp}" ] && return
+#    if [ "${resp}" = "e" ]; then
+#      DMPM="EUDEV"
+#      break
+#    elif [ "${resp}" = "d" ]; then
+#      DMPM="DDSML"
+#      break
+#    fi
+#  done
 
-  writeConfigKey "general" "devmod" "${DMPM}"
+#  writeConfigKey "general" "devmod" "${DMPM}"
 
-}
+#}
 
 
 ###############################################################################
@@ -1250,10 +1249,8 @@ if [ "${KEYMAP}" = "null" ]; then
     writeConfigKey "general" "keymap" "${KEYMAP}"
 fi
 
-if [ "${DMPM}" = "null" ]; then
-    DMPM="DDSML"
-    writeConfigKey "general" "devmod" "${DMPM}"          
-fi
+DMPM="DDSML+EUDEV"
+writeConfigKey "general" "devmod" "${DMPM}"          
 
 if [ "${LDRMODE}" = "null" ]; then
     LDRMODE="FRIEND"
@@ -1333,8 +1330,8 @@ setSuggest
 
 # Until urxtv is available, Korean menu is used only on remote terminals.
 while true; do
-  eval "echo \"c \\\"\${MSG${tz}01}\\\"\""               > "${TMP_PATH}/menu" 
-  eval "echo \"m \\\"\${MSG${tz}02}\\\"\""               >> "${TMP_PATH}/menu"
+#  eval "echo \"c \\\"\${MSG${tz}01}\\\"\""               > "${TMP_PATH}/menu" 
+  eval "echo \"m \\\"\${MSG${tz}02}\\\"\""               > "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     eval "echo \"s \\\"\${MSG${tz}03}\\\"\""             >> "${TMP_PATH}/menu"
     eval "echo \"a \\\"\${MSG${tz}04} 1\\\"\""           >> "${TMP_PATH}/menu"
