@@ -134,15 +134,15 @@ set -u
 # 2023.03.25
 # Update : Add language selection menu
 # 2023.03.29
+# Update : Merging DDSML and EUDEV into one, Improved nic recognition speed by improving realtek firmware omission
+# 2023.04.04
+
 
 function showlastupdate() {
     cat <<EOF
 
 # Update : Release TCRP FRIEND mode
 # 2022.09.25
-
-# Update : Deploy menu.sh
-# 2022.11.14
 
 # Update : 7.0.1-42218 friend correspondence for DS918+,DS920+,DS1019+, DS1520+ transcoding
 # 2023.02.19
@@ -154,9 +154,6 @@ function showlastupdate() {
 #           DDSML ( Detected Device Static Module Loading with modprobe / insmod command )
 #           EUDEV (Enhanced Userspace Device with eudev deamon)
 # 2023.03.01
-
-# Update : Added erase data disk function to menu.sh
-# 2023.03.04
 
 # Update : Increased build processing speed by using RAMDISK & pigz(multithreaded compression) when processing encrypted DSM PAT file decryption
 # 2023.03.10
@@ -179,8 +176,8 @@ function showlastupdate() {
 # Update : Add language selection menu
 # 2023.03.29
 
-There is a new distribution of menu.sh that looks like an APRL-style menu.
-Run ./menu.sh to use the menu.
+# Update : Merging DDSML and EUDEV into one, Improved nic recognition speed by improving realtek firmware omission
+# 2023.04.04
 
 EOF
 }
