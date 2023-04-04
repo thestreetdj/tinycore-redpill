@@ -262,20 +262,22 @@ cecho y "If fullupgrade is required, please handle it separately."
 
 cecho g "Downloading Peter Suh's custom configuration files.................."
 
-DMPM="$(jq -r -e '.general.devmod' $USER_CONFIG_FILE)"
-if [ "${DMPM}" = "null" ]; then
-    DMPM="EUDEV"
+#DMPM="$(jq -r -e '.general.devmod' $USER_CONFIG_FILE)"
+#if [ "${DMPM}" = "null" ]; then
+    DMPM="DDSML+EUDEV"
     writeConfigKey "general" "devmod" "${DMPM}"
-fi
+#fi
 cecho p "Device Module Processing Method is ${DMPM}"
-if [ "${DMPM}" = "EUDEV" ]; then
-    curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config_eudev.json" --output /home/tc/custom_config.json
-elif [ "${DMPM}" = "DDSML" ]; then
-    curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json" -O
-else
-    cecho p "Device Module Processing Method is Undefined, Program Exit!!!!!!!!"
-    exit 0
-fi
+#if [ "${DMPM}" = "EUDEV" ]; then
+#    curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config_eudev.json" --output /home/tc/custom_config.json
+#elif [ "${DMPM}" = "DDSML" ]; then
+#    curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json" -O
+#else
+#    cecho p "Device Module Processing Method is Undefined, Program Exit!!!!!!!!"
+#    exit 0
+#fi
+
+curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json" -O
 curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh" -O
 #curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/master/rpext-index.json" -O
 
