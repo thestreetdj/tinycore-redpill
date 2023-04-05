@@ -1230,7 +1230,7 @@ else
           fi
 	fi
 fi	
-
+locale
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -w) -gt 0 ]; then
     sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst	
     sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
