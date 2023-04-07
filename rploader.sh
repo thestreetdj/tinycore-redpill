@@ -1192,7 +1192,7 @@ function postupdatev1() {
 
 function removebundledexts() {
 
-    echo "Entering redpill-load directory"
+    echo "Entering redpill-load directory to remove bundled exts"
     cd /home/tc/redpill-load/
 
     echo "Removing bundled exts directories"
@@ -1204,6 +1204,21 @@ function removebundledexts() {
     done
 
 }
+
+function removemodelexts() {                                                                             
+                                                                                        
+    echo "Entering redpill-load directory to remove model exts"                                                            
+    cd /home/tc/redpill-load/
+                                                                                                                              
+    echo "Removing model exts directories"
+    for modelextdir in ${EXTENSIONS}; do
+        if [ -d /home/tc/redpill-load/custom/extensions/${modelextdir} ]; then                                                         
+            echo "Removing : ${modelextdir}"
+            sudo rm -rf /home/tc/redpill-load/custom/extensions/${modelextdir}            
+        fi                                                                                            
+    done                                                           
+                                                                                                                              
+} 
 
 function downloadextractorv2() {
 
@@ -2627,7 +2642,7 @@ checkmachine
     if [ "$FROMMYV" = "YES" ]; then
         echo "skip removebundledexts() for called from myv.sh"
     else
-        removebundledexts
+        removemodelexts
     fi    
 
     if [ ! -d /lib64 ]; then
@@ -2670,9 +2685,9 @@ checkmachine
 
     [ -d /home/tc/redpill-load ] && cd /home/tc/redpill-load
 
-    msgnormal "======Mount the ramdisk for quick add processing of extensions.======="
     [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir /home/tc/redpill-load/custom/extensions
-    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
+#    msgnormal "======Mount the ramdisk for quick add processing of extensions.======="
+#    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 
     addrequiredexts
 
@@ -2685,8 +2700,8 @@ checkmachine
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
     fi
 
-    msgnormal "======Unmount the ramdisk for add extensions.======="
-    sudo umount /home/tc/redpill-load/custom/extensions
+#    msgnormal "======Unmount the ramdisk for add extensions.======="
+#    sudo umount /home/tc/redpill-load/custom/extensions
 
     if [ $? -ne 0 ]; then
         echo "FAILED : Loader creation failed check the output for any errors"
