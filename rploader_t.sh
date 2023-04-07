@@ -2936,49 +2936,69 @@ checkmachine
 
 function bringoverfriend() {
 
-    msgnormal "Bringing over my friend from giteas.duckdns.org"
-    [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
+  [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
-    curl -s --insecure -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
-    -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
-    -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
+  echo -n "Checking for latest friend -> "
+  URL=$(curl --connect-timeout 15 -s --insecure -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
+  [ -n "$URL" ] && curl -s --insecure -L $URL -O
 
-    # 2nd try
-    if [ $? -ne 0 ]; then
-        msgwarning "Download failed from giteas.duckdns.org, Tring github.com..."    
+  if [ -f chksum ]; then
+    FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
+    BZIMAGESHA256="$(grep bzImage-friend chksum | awk '{print $1}')"
+    INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
+    if [ "$(sha256sum /mnt/${tcrppart}/bzImage-friend | awk '{print $1}')" = "$BZIMAGESHA256" ] && [ "$(sha256sum /mnt/${tcrppart}/initrd-friend | awk '{print $1}')" = "$INITRDSHA256" ]; then
+        msgnormal "OK, latest \n"
+    else
+        msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
+        
+        msgnormal "Bringing over my friend from giteas.duckdns.org"
+        curl -s --insecure -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
+        -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
+        -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
 
-        URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
-        for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
-
-        # 3rd try
+        # 2nd try
         if [ $? -ne 0 ]; then
-            msgwarning "Download failed from github.com, Tring gitee.com..."
-            curl -s --insecure -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
-            -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" \
-            -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend"
+            msgwarning "Download failed from giteas.duckdns.org, Tring github.com..."    
+
+            URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
+            for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
+
+            # 3rd try
             if [ $? -ne 0 ]; then
-                msgalert "Download failed from gitee.com... !!!!!!!!"
+                msgwarning "Download failed from github.com, Tring gitee.com..."
+                curl -s --insecure -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
+                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" \
+                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend"
+                if [ $? -ne 0 ]; then
+                    msgalert "Download failed from gitee.com... !!!!!!!!"
+                else
+                    msgnormal "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
+                fi
             else
-                msgnormal "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
+                msgnormal "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
             fi
         else
-            msgnormal "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
+            msgnormal "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
         fi
-    else
-        msgnormal "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
-    fi
 
-    if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
-        FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
-        BZIMAGESHA256="$(grep bzImage-friend chksum | awk '{print $1}')"
-        INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
-        cat chksum |grep VERSION
-        echo
-        [ "$(sha256sum bzImage-friend | awk '{print $1}')" == "$BZIMAGESHA256" ] && msgnormal "bzImage-friend checksum OK !" || msgalert "bzImage-friend checksum ERROR !" || exit 99
-        [ "$(sha256sum initrd-friend | awk '{print $1}')" == "$INITRDSHA256" ] && msgnormal "initrd-friend checksum OK !" || msgalert "initrd-friend checksum ERROR !" || exit 99
-    else
-        msgalert "Could not find friend files !!!!!!!!!!!!!!!!!!!!!!!"
+        if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
+            FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
+            BZIMAGESHA256="$(grep bzImage-friend chksum | awk '{print $1}')"
+            INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
+            cat chksum |grep VERSION
+            echo
+            [ "$(sha256sum bzImage-friend | awk '{print $1}')" == "$BZIMAGESHA256" ] && msgnormal "bzImage-friend checksum OK !" || msgalert "bzImage-friend checksum ERROR !" || exit 99
+            [ "$(sha256sum initrd-friend | awk '{print $1}')" == "$INITRDSHA256" ] && msgnormal "initrd-friend checksum OK !" || msgalert "initrd-friend checksum ERROR !" || exit 99
+        else
+            msgalert "Could not find friend files !!!!!!!!!!!!!!!!!!!!!!!"
+        fi
+        
     fi
+    
+  else
+    msgalert "No IP yet to check for latest friend \n"
+  fi
+
 
 }
 
@@ -3256,15 +3276,18 @@ function listpci() {
 #            echo "Found IDE Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
 #            ;;
         0104)
-            msgalert "RAID bus Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgnormal "RAID bus Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0104/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 05)//'
             ;;
         0107)
-            msgalert "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgnormal "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 03)//'
             ;;
         0200)
-            msgalert "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            ;;
+        0680)
+            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             ;;
 #        0300)
 #            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
