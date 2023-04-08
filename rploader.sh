@@ -2950,6 +2950,7 @@ checkmachine
     sudo losetup -D
 
     echo "Cleaning up files"
+    removemodelexts    
     sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/redpill-load/loader.img /home/tc/cache/*pat
 
     msgnormal "Caching files for future use"
