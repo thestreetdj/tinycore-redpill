@@ -2610,12 +2610,6 @@ EOF
 
 function checkUserConfig() {
 
-## US
-MSGUS35="press any key to continue..."
-MSGUS36="Synology serial number not set. Check user_config.json again. Abort the loader build !!!!!!"
-MSGUS37="The first MAC address is not set. Check user_config.json again. Abort the loader build !!!!!!"
-MSGUS38="The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!!"
-
   SN=$(jq -r -e '.extra_cmdline.sn' "$userconfigfile")
   MACADDR1=$(jq -r -e '.extra_cmdline.mac1' "$userconfigfile")
   netif_num=$(jq -r -e '.extra_cmdline.netif_num' $userconfigfile)
@@ -2625,15 +2619,13 @@ MSGUS38="The netif_num and the number of mac addresses do not match. Check user_
 
   if [ ! -n "${SN}" ]; then
     eval "echo \${MSG${tz}36}"
-    eval "echo \${MSG${tz}35}"
-    read answer
+    msgalert "Synology serial number not set. Check user_config.json again. Abort the loader build !!!!!!"
     exit 99
   fi
   
   if [ ! -n "${MACADDR1}" ]; then
     eval "echo \${MSG${tz}37}"
-    eval "echo \${MSG${tz}35}"
-    read answer
+    msgalert "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!!!!"
     exit 99
   fi
                     
@@ -2641,8 +2633,7 @@ MSGUS38="The netif_num and the number of mac addresses do not match. Check user_
     echo "netif_num = ${netif_num}"
     echo "number of mac addresses = ${netif_num_cnt}"       
     eval "echo \${MSG${tz}38}"
-    eval "echo \${MSG${tz}35}"
-    read answer
+    msgalert "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!!"
     exit 99
   fi  
 
