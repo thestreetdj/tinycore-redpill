@@ -5,9 +5,9 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 0.9.4.3-1
+# User Variables : 0.9.4.3-2
 
-rploaderver="0.9.4.3-1"
+rploaderver="0.9.4.3-2"
 build="master"
 redpillmake="prod"
 
@@ -2395,7 +2395,7 @@ Version : $rploaderver
 
 Usage: ${0} <action> <platform version> <static or compile module> [extension manager arguments]
 
-Actions: build, ext, download, clean, update, fullupgrade, listmod, serialgen, identifyusb, patchdtc, 
+Actions: build, ext, download, clean, listmod, serialgen, identifyusb, patchdtc, 
 satamap, backup, backuploader, restoreloader, restoresession, mountdsmroot, postupdate,
 mountshare, version, monitor, getgrubconf, help
 
@@ -2416,7 +2416,7 @@ Version : $rploaderver
 ----------------------------------------------------------------------------------------
 Usage: ${0} <action> <platform version> <static or compile module> [extension manager arguments]
 
-Actions: build, ext, download, clean, update, listmod, serialgen, identifyusb, patchdtc, 
+Actions: build, ext, download, clean, listmod, serialgen, identifyusb, patchdtc, 
 satamap, backup, backuploader, restoreloader, restoresession, mountdsmroot, postupdate, 
 mountshare, version, monitor, bringfriend, downloadupgradepat, help 
 
@@ -2443,14 +2443,7 @@ mountshare, version, monitor, bringfriend, downloadupgradepat, help
   
 - clean :
   Removes all cached and downloaded files and starts over clean
-  
-- update : 
-  Checks github repo for latest version of rploader, and prompts you download and overwrite
-
-- fullupgrade : 
-  Performs a full upgrade of the local files to the latest available on the repo. It will
-  backup the current filed under /home/tc/old
-  
+ 
 - listmods <platform>:
   Tries to figure out any required extensions. This usually are device modules
   
@@ -3602,10 +3595,10 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         cleanloader
         ;;
 
-    update)
-        checkinternet
-        getlatestrploader
-        ;;
+#    update)
+#        checkinternet
+#        getlatestrploader
+#        ;;
 
     listmods)
         getvars $2
@@ -3666,9 +3659,9 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
     mountdsmroot)
         mountdsmroot
         ;;
-    fullupgrade)
-        fullupgrade
-        ;;
+#    fullupgrade)
+#        fullupgrade
+#        ;;
 
     mountshare)
         mountshare
