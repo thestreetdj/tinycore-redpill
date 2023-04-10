@@ -542,6 +542,7 @@ function DeleteConfigKey() {
 # Mounts backtitle dynamically
 function backtitle() {
   BACKTITLE="TCRP 0.9.4.3-1"
+  BACKTITLE+=" ${DMPM}"
   BACKTITLE+=" ${ucode}"
   BACKTITLE+=" ${LDRMODE}"
   if [ -n "${MODEL}" ]; then
@@ -1254,8 +1255,10 @@ if [ "${KEYMAP}" = "null" ]; then
     writeConfigKey "general" "keymap" "${KEYMAP}"
 fi
 
-DMPM="DDSML+EUDEV"
-writeConfigKey "general" "devmod" "${DMPM}"          
+if [ "${DMPM}" = "null" ]; then
+    DMPM="DDSML"
+    writeConfigKey "general" "devmod" "${DMPM}"          
+fi
 
 if [ "${LDRMODE}" = "null" ]; then
     LDRMODE="FRIEND"
