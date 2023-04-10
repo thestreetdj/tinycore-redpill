@@ -262,20 +262,22 @@ cecho y "If fullupgrade is required, please handle it separately."
 
 cecho g "Downloading Peter Suh's custom configuration files.................."
 
-#DMPM="$(jq -r -e '.general.devmod' $USER_CONFIG_FILE)"
-#if [ "${DMPM}" = "null" ]; then
-    DMPM="DDSML+EUDEV"
+DMPM="$(jq -r -e '.general.devmod' $USER_CONFIG_FILE)"
+if [ "${DMPM}" = "null" ]; then
+    DMPM="DDSML"
     writeConfigKey "general" "devmod" "${DMPM}"
-#fi
-cecho p "Device Module Processing Method is ${DMPM}"
-#if [ "${DMPM}" = "EUDEV" ]; then
-#    curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config_eudev.json" --output /home/tc/custom_config.json
-#elif [ "${DMPM}" = "DDSML" ]; then
-#    curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json" -O
-#else
-#    cecho p "Device Module Processing Method is Undefined, Program Exit!!!!!!!!"
-#    exit 0
-#fi
+fi
+cecho y "Device Module Processing Method is ${DMPM}"
+if [ "${DMPM}" = "DDSML" ]; then
+    jsonfile=$(jq 'del(.eudev)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
+elif [ "${DMPM}" = "EUDEV" ]; then
+    jsonfile=$(jq 'del(.ddsml)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
+elif [ "${DMPM}" = "DDSML+EUDEV" ]; then
+    cecho p "It uses both ddsml and eudev from /home/tc/redpill-load/bundled-exts.json file"
+else
+    cecho p "Device Module Processing Method is Undefined, Program Exit!!!!!!!!"
+    exit 0
+fi
 
 curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json" -O
 curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh" -O
