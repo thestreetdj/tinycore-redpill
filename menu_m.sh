@@ -63,7 +63,7 @@ MSGUS36="Synology serial number not set. Check user_config.json again. Abort the
 MSGUS37="The first MAC address is not set. Check user_config.json again. Abort the loader build !!!!!!"
 MSGUS38="The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!!"
 MSGUS39="Choose a lageuage"
-MSGUS40=""
+MSGUS40="DDSML+EUDEV"
 
 ## RU
 MSGRU00="Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap \nDT модели не поддерживают HBAs\n"
@@ -106,7 +106,7 @@ MSGRU36="Серийный номер Synology не задан. Проверьт�
 MSGRU37="Первый MAC-адрес не задан. Проверьте файл user_config.json еще раз. Остановка построения загрузчика !!!!!!"
 MSGRU38="Количество интерфейсов (netif_num) и количество MAC-адресов не совпадают. Проверьте файл user_config.json еще раз. Остановка построения загрузчика !!!!!!"
 MSGRU39="Выберите язык"
-MSGRU40=""
+MSGRU40="DDSML+EUDEV"
 
 ## FR
 MSGFR00="Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne nécessitent pas de SataPortMap, DiskIdxMap\nLes modèles DT ne prennent pas en charge les HBAs\n"
@@ -149,7 +149,7 @@ MSGFR36="Le numéro de série Synology n'est pas défini. Vérifiez à nouveau u
 MSGFR37="La première adresse MAC n'est pas définie. Vérifiez à nouveau user_config.json. Abandonner la construction du chargeur !!!!!!"
 MSGFR38="Le netif_num et le nombre d'adresses MAC ne correspondent pas. Vérifiez à nouveau user_config.json. Abandonner la construction du chargeur !!!!!!"
 MSGFR39="Choisissez une langue"
-MSGFR40=""
+MSGFR40="DDSML+EUDEV"
 
 ## DE
 MSGDE00="Gerätebaum[DT] Basismodelle und HBAs benötigen kein SataPortMap,DiskIdxMap\nDT-Modelle unterstützen keine HBAs\n"
@@ -192,7 +192,7 @@ MSGDE36="Synology-Seriennummer nicht festgelegt. Überprüfen Sie user_config.js
 MSGDE37="Die erste MAC-Adresse ist nicht festgelegt. Überprüfen Sie user_config.json erneut. Loader-Build abbrechen !!!!!!"
 MSGDE38="Die netif_num und die Anzahl der MAC-Adressen stimmen nicht überein. Überprüfen Sie user_config.json erneut. Loader-Build abbrechen !!!!!!"
 MSGDE39="Wählen Sie eine Sprache"
-MSGDE40=""
+MSGDE40="DDSML+EUDEV"
 
 ## ES
 
@@ -236,7 +236,7 @@ MSGES36="Número de serie de Synology no establecido. Revise user_config.json nu
 MSGES37="La primera dirección MAC no está establecida. Revise user_config.json nuevamente. ¡¡¡¡Abortar la construcción del cargador!!!!"
 MSGES38="El número de netif_num y direcciones MAC no coinciden. Revise user_config.json nuevamente. ¡¡¡¡Abortar la construcción del cargador!!!!"
 MSGES39="Elige un idioma"
-MSGES40=""
+MSGES40="DDSML+EUDEV"
 
 ## BR
 
@@ -280,7 +280,7 @@ MSGBR36="Número de série Synology não definido. Verifique o user_config.json 
 MSGBR37="O primeiro endereço MAC não está definido. Verifique o user_config.json novamente. Abortar a construção do loader!!!!!!"
 MSGBR38="O netif_num e o número de endereços MAC não correspondem. Verifique o user_config.json novamente. Abortar a construção do loader!!!!!!"
 MSGBR39="Olá! Posso ajudá-lo em Português"
-MSGBR40=""
+MSGBR40="DDSML+EUDEV"
 
 ## IT
 
@@ -324,7 +324,7 @@ MSGIT36="Numero di serie Synology non impostato. Controlla di nuovo user_config.
 MSGIT37="Il primo indirizzo MAC non è impostato. Controlla di nuovo user_config.json. Abortire la costruzione del caricatore !!!!!!"
 MSGIT38="Il numero di netif e il numero di indirizzi MAC non corrispondono. Controlla di nuovo user_config.json. Abortire la costruzione del caricatore !!!!!!"
 MSGIT39="Scegli una lingua"
-MSGIT40=""
+MSGIT40="DDSML+EUDEV"
 
 ## KR
 MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다.\nDT모델은 HBA를 지원하지 않습니다.\n"
@@ -367,7 +367,7 @@ MSGKR36="Synology 일련 번호가 설정되지 않았습니다. user_config.jso
 MSGKR37="첫 번째 MAC 주소가 설정되지 않았습니다. user_config.json을 다시 확인하십시오. 로더 빌드를 중단합니다!!!!!!"
 MSGKR38="netif_num과 mac 주소 갯수가 일치하지 않습니다. user_config.json을 다시 확인하십시오. 로더 빌드를 중단합니다!!!!!!"
 MSGKR39="언어를 선택하세요"
-MSGKR40=""
+MSGKR40="DDSML+EUDEV"
 
 ## CN
 MSGCN00="设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap\nDT模型不支持HBA\n"
@@ -410,7 +410,7 @@ MSGCN36="未设置Synology序列号。请再次检查user_config.json。终止�
 MSGCN37="未设置第一个MAC地址。请再次检查user_config.json。终止加载器构建!!!!!!"
 MSGCN38="netif_num和mac地址数量不匹配。请再次检查user_config.json。终止加载器构建!!!!!!"
 MSGCN39="选择语言"
-MSGCN40=""
+MSGCN40="DDSML+EUDEV"
 
 ## JP
 MSGJP00="Device-Tree[DT]ベースモデルとHBAsは、SataPortMap、DiskIdxMapが必要ありません\nDTモデルはHBAsをサポートしていません\n"
@@ -453,7 +453,7 @@ MSGJP36="Synologyのシリアル番号が設定されていません。user_conf
 MSGJP37="最初のMACアドレスが設定されていません。user_config.jsonを再度確認してください。ローダービルドを中止します！！！！"
 MSGJP38="netif_numとMACアドレスの数が一致しません。user_config.jsonを再度確認してください。ローダービルドを中止します！！！！"
 MSGJP39="言語を選択してください"
-MSGJP40=""
+MSGJP40="DDSML+EUDEV"
 
 ###############################################################################
 # check VM or baremetal
@@ -644,30 +644,35 @@ function usbidentify() {
 
 ###############################################################################
 # Shows available between DDSML and EUDEV
-#function seleudev() {
-#  eval "MSG27=\"\${MSG${tz}27}\""  
-#  eval "MSG26=\"\${MSG${tz}26}\""
-#  while true; do
-#    dialog --clear --backtitle "`backtitle`" \
-#      --menu "Choose a option" 0 0 0 \
-#      d "${MSG27}" \
-#      e "${MSG26}" \
-#    2>${TMP_PATH}/resp
-#    [ $? -ne 0 ] && return
-#    resp=$(<${TMP_PATH}/resp)
-#    [ -z "${resp}" ] && return
-#    if [ "${resp}" = "e" ]; then
-#      DMPM="EUDEV"
-#      break
-#    elif [ "${resp}" = "d" ]; then
-#      DMPM="DDSML"
-#      break
-#    fi
-#  done
+function seleudev() {
+  eval "MSG27=\"\${MSG${tz}27}\""  
+  eval "MSG26=\"\${MSG${tz}26}\""
+  eval "MSG40=\"\${MSG${tz}40}\""
+  while true; do
+    dialog --clear --backtitle "`backtitle`" \
+      --menu "Choose a option" 0 0 0 \
+      d "${MSG27}" \
+      e "${MSG26}" \
+      f "${MSG40}" \      
+    2>${TMP_PATH}/resp
+    [ $? -ne 0 ] && return
+    resp=$(<${TMP_PATH}/resp)
+    [ -z "${resp}" ] && return
+    if [ "${resp}" = "d" ]; then
+      DMPM="DDSML"
+      break
+    elif [ "${resp}" = "e" ]; then
+      DMPM="EUDEV"
+      break
+    elif [ "${resp}" = "f" ]; then
+      DMPM="DDSML+EUDEV"
+      break
+    fi
+  done
 
-#  writeConfigKey "general" "devmod" "${DMPM}"
+  writeConfigKey "general" "devmod" "${DMPM}"
 
-#}
+}
 
 
 ###############################################################################
@@ -1330,8 +1335,8 @@ setSuggest
 
 # Until urxtv is available, Korean menu is used only on remote terminals.
 while true; do
-#  eval "echo \"c \\\"\${MSG${tz}01}\\\"\""               > "${TMP_PATH}/menu" 
-  eval "echo \"m \\\"\${MSG${tz}02}\\\"\""               > "${TMP_PATH}/menu"
+  eval "echo \"c \\\"\${MSG${tz}01}\\\"\""               > "${TMP_PATH}/menu" 
+  eval "echo \"m \\\"\${MSG${tz}02}\\\"\""               >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     eval "echo \"s \\\"\${MSG${tz}03}\\\"\""             >> "${TMP_PATH}/menu"
     eval "echo \"a \\\"\${MSG${tz}04} 1\\\"\""           >> "${TMP_PATH}/menu"
