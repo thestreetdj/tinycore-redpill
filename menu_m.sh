@@ -648,13 +648,13 @@ function usbidentify() {
 function seleudev() {
   eval "MSG27=\"\${MSG${tz}27}\""  
   eval "MSG26=\"\${MSG${tz}26}\""
-  eval "MSG40=\"\${MSG${tz}40}\""
+#  eval "MSG40=\"\${MSG${tz}40}\""
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
       d "${MSG27}" \
       e "${MSG26}" \
-      f "${MSG40}" \      
+#      f "${MSG40}" \      
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
@@ -665,9 +665,9 @@ function seleudev() {
     elif [ "${resp}" = "e" ]; then
       DMPM="EUDEV"
       break
-    elif [ "${resp}" = "f" ]; then
-      DMPM="DDSML+EUDEV"
-      break
+#    elif [ "${resp}" = "f" ]; then
+#      DMPM="DDSML+EUDEV"
+#      break
     fi
   done
 
