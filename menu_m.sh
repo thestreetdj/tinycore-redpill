@@ -671,7 +671,7 @@ function seleudev() {
     fi
   done
 
-  rm -f /home/tc/redpill-load/bundled-exts.json
+  curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/bundled-exts.json" --output /home/tc/redpill-load/bundled-exts.json
   sudo rm -rf /home/tc/redpill-load/custom/extensions/ddsml
   sudo rm -rf /home/tc/redpill-load/custom/extensions/eudev  
   writeConfigKey "general" "devmod" "${DMPM}"
