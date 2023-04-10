@@ -645,30 +645,30 @@ function usbidentify() {
 
 ###############################################################################
 # Shows available between DDSML and EUDEV
-function seleudev() {
-  eval "MSG27=\"\${MSG${tz}27}\""  
-  eval "MSG26=\"\${MSG${tz}26}\""
-#  eval "MSG40=\"\${MSG${tz}40}\""
-  while true; do
-    dialog --clear --backtitle "`backtitle`" \
-      --menu "Choose a option" 0 0 0 \
-      d "${MSG27}" \
-      e "${MSG26}" \
-#      f "${MSG40}" \      
-    2>${TMP_PATH}/resp
-    [ $? -ne 0 ] && return
-    resp=$(<${TMP_PATH}/resp)
-    [ -z "${resp}" ] && return
-    if [ "${resp}" = "d" ]; then
-      DMPM="DDSML"
-      break
-    elif [ "${resp}" = "e" ]; then
-      DMPM="EUDEV"
-      break
-#    elif [ "${resp}" = "f" ]; then
-#      DMPM="DDSML+EUDEV"
-#      break
-    fi
+function seleudev() {                                                                                                                                                   
+  eval "MSG27=\"\${MSG${tz}27}\""                                                                                                                                       
+  eval "MSG26=\"\${MSG${tz}26}\""                                                                                                                                       
+  eval "MSG40=\"\${MSG${tz}40}\""                                                                                                                                       
+  while true; do                                                                                                                                                        
+    dialog --clear --backtitle "`backtitle`" \                                                                                                                          
+      --menu "Choose a option" 0 0 0 \                                                                                                                                  
+      d "${MSG27}" \                                                                                                                                                    
+      e "${MSG26}" \                                                                                                                                                    
+      f "${MSG40}" \                                                                                                                                                    
+    2>${TMP_PATH}/resp                                                                                                                                                  
+    [ $? -ne 0 ] && return                                                                                                                                              
+    resp=$(<${TMP_PATH}/resp)                                                                                                                                           
+    [ -z "${resp}" ] && return                                                                                                                                          
+    if [ "${resp}" = "d" ]; then                                                                                                                                        
+      DMPM="DDSML"                                                                                                                                                      
+      break                                                                                                                                                             
+    elif [ "${resp}" = "e" ]; then                                                                                                                                      
+      DMPM="EUDEV"                                                                                                                        
+      break                                                                                                                               
+    elif [ "${resp}" = "f" ]; then                                                                                                        
+      DMPM="DDSML+EUDEV"                                                                                                                  
+      break                                                                                                                               
+    fi                                                                                                                                    
   done
 
   curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/bundled-exts.json" --output /home/tc/redpill-load/bundled-exts.json
