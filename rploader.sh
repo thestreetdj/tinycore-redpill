@@ -406,8 +406,8 @@ function copyextractor() {
 
     echo "making directory ${local_cache}/extractor"
     [ ! -d ${local_cache}/extractor ] && mkdir ${local_cache}/extractor
-    sudo curl --insecure -L --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output ${local_cache}/extractor/extractor.gz
-    sudo tar -zxvf ${local_cache}/extractor/extractor.gz -C ${local_cache}/extractor
+    [ ! -f /home/tc/extractor.gz ] && sudo curl --insecure -L --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output /home/tc/extractor.gz
+    sudo tar -zxvf /home/tc/extractor.gz -C ${local_cache}/extractor
 
     echo "Copying required libraries to local lib directory"
     sudo cp /mnt/${tcrppart}/auxfiles/extractor/lib* /lib/
