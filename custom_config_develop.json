@@ -29,7 +29,6 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
@@ -64,7 +63,6 @@
         {
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
@@ -98,7 +96,6 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
@@ -132,7 +129,6 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
@@ -166,7 +162,6 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://github.com/PeterSuh-Q3/tcrp-addons/raw/main/powersched/rpext-index.json"
         }
       ]
@@ -199,7 +194,6 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
@@ -233,7 +227,6 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
@@ -265,8 +258,7 @@
       },
       "add_extensions": [
         {
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
+          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json"
         }
       ]
     },
@@ -298,7 +290,6 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
@@ -331,7 +322,6 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
@@ -364,8 +354,7 @@
       "add_extensions": [
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
+          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json"
         }
       ]
     },
@@ -397,7 +386,6 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
@@ -431,7 +419,6 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
@@ -466,7 +453,6 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
@@ -500,7 +486,6 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
@@ -534,8 +519,7 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
+          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json"
         }
       ]
     },
@@ -568,7 +552,6 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
@@ -601,8 +584,7 @@
       "add_extensions": [
         {
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json",
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
+          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json"
         }
       ]
     },
@@ -634,8 +616,7 @@
       "add_extensions": [
         {
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json",
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
+          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json"
         }
       ]
     },
@@ -668,7 +649,6 @@
         {
           "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json"
         }
       ]
@@ -700,8 +680,7 @@
       },
       "add_extensions": [
         {
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
+          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json"
         }
       ]
     },
@@ -733,7 +712,6 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
@@ -766,7 +744,6 @@
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
@@ -798,8 +775,7 @@
       },
       "add_extensions": [
         {
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "modprobe": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/modprobe/rpext-index.json"
+          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json"
         }
       ]
     }
