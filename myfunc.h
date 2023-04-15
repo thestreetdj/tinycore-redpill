@@ -136,6 +136,8 @@ set -u
 # 2023.03.29
 # Update : Merging DDSML and EUDEV into one, Improved nic recognition speed by improving realtek firmware omission
 # 2023.04.04
+# Update : DSM Smallupdateversion Path Management
+# 2023.04.15
 
 
 function showlastupdate() {
@@ -250,6 +252,7 @@ function getvars()
 {
 
     TARGET_REVISION="42962"
+    SUVP="-1"
     MSHELL_ONLY_MODEL="N"
     DTC_BASE_MODEL="N"
     ORIGIN_PLATFORM=""
@@ -309,12 +312,14 @@ function getvars()
         ORIGIN_PLATFORM="r1000"
         SYNOMODEL="ds923p_$TARGET_REVISION"                                                                                                                    
         sha256="e33b47df446ce0bd99c5613767c9dba977915e25acfb5ccb9f5650b14459458f"
+        SUVP="-5"
     elif [ "${1}" = "DS723+" ] || [ "${1}" = "DS723+F" ]; then
         DTC_BASE_MODEL="Y"    
         TARGET_PLATFORM="ds723p"
         ORIGIN_PLATFORM="r1000"
         SYNOMODEL="ds723p_$TARGET_REVISION"                                                                                                                    
         sha256="e5a96f3b6c8e0535eea5fd585eb5aeca7f445f6fc976628875dc64b2cbb66180"
+        SUVP="-5"
 
 # JOT / FRIEND MODE NEW MODEL SUCCESS
     elif [ "${1}" = "DS2422+" ] || [ "${1}" = "DS2422+F" ] ; then
@@ -338,6 +343,7 @@ function getvars()
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="rs4021xsp_$TARGET_REVISION"
         sha256="fd848be9336d8b5cc9b514e71d447c7612d0f542d373eef61a6d427430daa931"
+        SUVP="-5"
     elif [ "${1}" = "SA3600" ] || [ "${1}" = "SA3600F" ]; then
         DTC_BASE_MODEL="N"
         MSHELL_ONLY_MODEL="Y"    
