@@ -254,6 +254,7 @@ cecho y "TARGET_PLATFORM is $TARGET_PLATFORM"
 cecho r "ORIGIN_PLATFORM is $ORIGIN_PLATFORM"
 cecho c "TARGET_VERSION is $TARGET_VERSION"
 cecho p "TARGET_REVISION is $TARGET_REVISION"
+cecho y "SUVP is $SUVP"
 cecho g "SYNOMODEL is $SYNOMODEL"  
 
 #fullupgrade="Y"
@@ -382,7 +383,7 @@ cecho p "DSM PAT file pre-downloading in progress..."
 if [ $TARGET_REVISION == "64216" ]; then
     URL="https://global.download.synology.com/download/DSM/beta/7.2/${TARGET_REVISION}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"  
 else
-    URL="https://global.download.synology.com/download/DSM/release/${TARGET_VERSION}/${TARGET_REVISION}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"
+    URL="https://global.download.synology.com/download/DSM/release/${TARGET_VERSION}/${TARGET_REVISION}${SUVP}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"
 fi
 cecho y "$URL"
 
