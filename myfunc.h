@@ -342,7 +342,7 @@ function getvars()
         TARGET_PLATFORM="rs4021xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="rs4021xsp_$TARGET_REVISION"
-        sha256="fd848be9336d8b5cc9b514e71d447c7612d0f542d373eef61a6d427430daa931"
+        sha256="e2ddf670e54fe6b2b52b19125430dc82394df2722afd4f62128b95a63459ee3d"
         SUVP="-5"
     elif [ "${1}" = "SA3600" ] || [ "${1}" = "SA3600F" ]; then
         DTC_BASE_MODEL="N"
