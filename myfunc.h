@@ -318,7 +318,7 @@ function getvars()
         TARGET_PLATFORM="ds723p"
         ORIGIN_PLATFORM="r1000"
         SYNOMODEL="ds723p_$TARGET_REVISION"                                                                                                                    
-        sha256="e5a96f3b6c8e0535eea5fd585eb5aeca7f445f6fc976628875dc64b2cbb66180"
+        sha256="633a626f3dc31338eb41ca929d8f9927a7a63f646067372d02ac045aa768560f"
         SUVP="-5"
 
 # JOT / FRIEND MODE NEW MODEL SUCCESS
