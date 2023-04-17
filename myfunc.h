@@ -263,7 +263,8 @@ function getvars()
         TARGET_PLATFORM="ds918p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
-        sha256="c1ffb1b48301fbcf1ccffae00062e95c8b5b18d50a70c3fbb79ea12a38a39bb7"
+        sha256="9905e145f3bd88fcc938b00882be10281861867e5165ae98aefa37be0d5d34b5"
+        SUVP="-1"        
     elif [ "${1}" = "DS3615xs" ] || [ "${1}" = "DS3615xsF" ]; then                                                                                                                     
         DTC_BASE_MODEL="N"    
         TARGET_PLATFORM="ds3615xs"
