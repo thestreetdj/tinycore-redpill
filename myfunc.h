@@ -381,8 +381,8 @@ function getvars()
         TARGET_PLATFORM="ds1019p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
-        sha256="91bb367f501a3d86988211b7e35f68809a8f967e6e4e54ff31ed89bd50a66cc9"
-        SUVP=""
+        sha256="af2268388df9434679205ffd782ae5c17cd81d733cdcd94b13fc894748ffe321"
+        SUVP="-1"
     elif [ "${1}" = "DS1520+" ] || [ "${1}" = "DS1520+F" ]; then
         DTC_BASE_MODEL="Y"    
         MSHELL_ONLY_MODEL="Y"    
