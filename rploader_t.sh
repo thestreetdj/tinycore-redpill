@@ -5,9 +5,9 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 0.9.4.3-1
+# User Variables : 0.9.4.3-2
 
-rploaderver="0.9.4.3-1"
+rploaderver="0.9.4.3-2"
 build="master"
 redpillmake="prod"
 
@@ -406,8 +406,8 @@ function copyextractor() {
 
     echo "making directory ${local_cache}/extractor"
     [ ! -d ${local_cache}/extractor ] && mkdir ${local_cache}/extractor
-    sudo curl --insecure -L --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output ${local_cache}/extractor/extractor.gz
-    sudo tar -zxvf ${local_cache}/extractor/extractor.gz -C ${local_cache}/extractor
+    [ ! -f /home/tc/extractor.gz ] && sudo curl --insecure -L --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output /home/tc/extractor.gz
+    sudo tar -zxvf /home/tc/extractor.gz -C ${local_cache}/extractor
 
     echo "Copying required libraries to local lib directory"
     sudo cp /mnt/${tcrppart}/auxfiles/extractor/lib* /lib/
@@ -1192,7 +1192,7 @@ function postupdatev1() {
 
 function removebundledexts() {
 
-    echo "Entering redpill-load directory"
+    echo "Entering redpill-load directory to remove bundled exts"
     cd /home/tc/redpill-load/
 
     echo "Removing bundled exts directories"
@@ -1204,6 +1204,21 @@ function removebundledexts() {
     done
 
 }
+
+function removemodelexts() {                                                                             
+                                                                                        
+    echo "Entering redpill-load directory to remove model exts"                                                            
+    cd /home/tc/redpill-load/
+                                                                                                                              
+    echo "Removing model exts directories"
+    for modelextdir in ${EXTENSIONS}; do
+        if [ -d /home/tc/redpill-load/custom/extensions/${modelextdir} ]; then                                                         
+            echo "Removing : ${modelextdir}"
+            sudo rm -rf /home/tc/redpill-load/custom/extensions/${modelextdir}            
+        fi                                                                                            
+    done                                                           
+                                                                                                                              
+} 
 
 function downloadextractorv2() {
 
@@ -2380,7 +2395,7 @@ Version : $rploaderver
 
 Usage: ${0} <action> <platform version> <static or compile module> [extension manager arguments]
 
-Actions: build, ext, download, clean, update, fullupgrade, listmod, serialgen, identifyusb, patchdtc, 
+Actions: build, ext, download, clean, listmod, serialgen, identifyusb, patchdtc, 
 satamap, backup, backuploader, restoreloader, restoresession, mountdsmroot, postupdate,
 mountshare, version, monitor, getgrubconf, help
 
@@ -2401,7 +2416,7 @@ Version : $rploaderver
 ----------------------------------------------------------------------------------------
 Usage: ${0} <action> <platform version> <static or compile module> [extension manager arguments]
 
-Actions: build, ext, download, clean, update, listmod, serialgen, identifyusb, patchdtc, 
+Actions: build, ext, download, clean, listmod, serialgen, identifyusb, patchdtc, 
 satamap, backup, backuploader, restoreloader, restoresession, mountdsmroot, postupdate, 
 mountshare, version, monitor, bringfriend, downloadupgradepat, help 
 
@@ -2428,14 +2443,7 @@ mountshare, version, monitor, bringfriend, downloadupgradepat, help
   
 - clean :
   Removes all cached and downloaded files and starts over clean
-  
-- update : 
-  Checks github repo for latest version of rploader, and prompts you download and overwrite
-
-- fullupgrade : 
-  Performs a full upgrade of the local files to the latest available on the repo. It will
-  backup the current filed under /home/tc/old
-  
+ 
 - listmods <platform>:
   Tries to figure out any required extensions. This usually are device modules
   
@@ -2600,6 +2608,37 @@ function savedefault {
 EOF
 }
 
+function checkUserConfig() {
+
+  SN=$(jq -r -e '.extra_cmdline.sn' "$userconfigfile")
+  MACADDR1=$(jq -r -e '.extra_cmdline.mac1' "$userconfigfile")
+  netif_num=$(jq -r -e '.extra_cmdline.netif_num' $userconfigfile)
+  netif_num_cnt=$(cat $userconfigfile | grep \"mac | wc -l)
+  
+  tz="US"
+
+  if [ ! -n "${SN}" ]; then
+    eval "echo \${MSG${tz}36}"
+    msgalert "Synology serial number not set. Check user_config.json again. Abort the loader build !!!!!!"
+    exit 99
+  fi
+  
+  if [ ! -n "${MACADDR1}" ]; then
+    eval "echo \${MSG${tz}37}"
+    msgalert "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!!!!"
+    exit 99
+  fi
+                    
+  if [ $netif_num != $netif_num_cnt ]; then
+    echo "netif_num = ${netif_num}"
+    echo "number of mac addresses = ${netif_num_cnt}"       
+    eval "echo \${MSG${tz}38}"
+    msgalert "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!!"
+    exit 99
+  fi  
+
+}
+
 function buildloader() {
 
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
@@ -2627,7 +2666,7 @@ checkmachine
     if [ "$FROMMYV" = "YES" ]; then
         echo "skip removebundledexts() for called from myv.sh"
     else
-        removebundledexts
+        removemodelexts
     fi    
 
     if [ ! -d /lib64 ]; then
@@ -2670,9 +2709,9 @@ checkmachine
 
     [ -d /home/tc/redpill-load ] && cd /home/tc/redpill-load
 
-    msgnormal "======Mount the ramdisk for quick add processing of extensions.======="
     [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir /home/tc/redpill-load/custom/extensions
-    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
+#    msgnormal "======Mount the ramdisk for quick add processing of extensions.======="
+#    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 
     addrequiredexts
 
@@ -2685,8 +2724,8 @@ checkmachine
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
     fi
 
-    msgnormal "======Unmount the ramdisk for add extensions.======="
-    sudo umount /home/tc/redpill-load/custom/extensions
+#    msgnormal "======Unmount the ramdisk for add extensions.======="
+#    sudo umount /home/tc/redpill-load/custom/extensions
 
     if [ $? -ne 0 ]; then
         echo "FAILED : Loader creation failed check the output for any errors"
@@ -2765,13 +2804,15 @@ checkmachine
 
                 cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
                 cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
-                echo "Creating tinycore friend entry"
-                if [ $loaderdisk == "mmcblk0p" ]; then        
-                    tcrpfriendentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg                
-                else
-                    tcrpfriendentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
-                fi    
             fi
+            
+            echo "Creating tinycore friend entry"
+            if [ $loaderdisk == "mmcblk0p" ]; then        
+                tcrpfriendentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg                
+            else
+                tcrpfriendentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            fi    
+
         else
 
             echo "Creating tinycore Jot entry"
@@ -2909,6 +2950,7 @@ checkmachine
     sudo losetup -D
 
     echo "Cleaning up files"
+    removemodelexts    
     sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/redpill-load/loader.img /home/tc/cache/*pat
 
     msgnormal "Caching files for future use"
@@ -3437,10 +3479,15 @@ function getredpillko() {
 #        sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko /home/tc/custom-module/redpill.ko
 #  else
 
-    if [ $MODEL == "FS2500" ]||[ $MODEL == "DS1019+" ]||[ $MODEL == "SA3600" ]; then
+    if [ $MODEL == "FS2500" ]||[ $MODEL == "SA3600" ]; then
     
         echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
         sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+
+    elif [ $MODEL == "DS1019+" ]; then
+
+        echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill-linux-ds1019+-v4.4.180+.ko -> redpill.ko ..."
+        sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-ds1019+-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
 
     elif [ $MODEL == "DS723+" ]; then
     
@@ -3502,6 +3549,7 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         checkinternet
 #        getlatestrploader
 #        gitdownload     # When called from the parent my.sh, -d flag authority check is not possible, pre-downloaded in advance 
+        checkUserConfig
         getredpillko
 
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
@@ -3585,10 +3633,10 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         cleanloader
         ;;
 
-    update)
-        checkinternet
-        getlatestrploader
-        ;;
+#    update)
+#        checkinternet
+#        getlatestrploader
+#        ;;
 
     listmods)
         getvars $2
@@ -3649,9 +3697,9 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
     mountdsmroot)
         mountdsmroot
         ;;
-    fullupgrade)
-        fullupgrade
-        ;;
+#    fullupgrade)
+#        fullupgrade
+#        ;;
 
     mountshare)
         mountshare
