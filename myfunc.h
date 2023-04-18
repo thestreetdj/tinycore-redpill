@@ -270,7 +270,8 @@ function getvars()
         TARGET_PLATFORM="ds3615xs"
         ORIGIN_PLATFORM="bromolow"
         SYNOMODEL="ds3615xs_$TARGET_REVISION"                                                                                                                  
-        sha256="b79c129354c203b7340010573d16b2d6ebc6a676c946579a959c891a70b8bcfc"
+        sha256="f01a17d73e2594b0b31f134bfe023dccc0bb9389a462f9918080573134093023"
+        SUVP="-1"
     elif [ "${1}" = "DS3617xs" ] || [ "${1}" = "DS3617xsF" ]; then                                                                                                                     
         DTC_BASE_MODEL="N"    
         TARGET_PLATFORM="ds3617xs"
