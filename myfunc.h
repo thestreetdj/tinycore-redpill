@@ -277,13 +277,15 @@ function getvars()
         TARGET_PLATFORM="ds3617xs"
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="ds3617xs_$TARGET_REVISION"                                                                                                                  
-        sha256="2a556206201df10245dbcf4cf0366b2f32cb318cd705fbdd74412303d85e7267"
+        sha256="1b72bb24dc9d10d3784298e6df9d79a8f8c3555087e0de12f3359ce373f4e7c9"
+        SUVP="-1"
     elif [ "${1}" = "DS3622xs+" ] || [ "${1}" = "DS3622xs+F" ]; then
         DTC_BASE_MODEL="N"    
         TARGET_PLATFORM="ds3622xsp"
         ORIGIN_PLATFORM="broadwellnk"
         SYNOMODEL="ds3622xsp_$TARGET_REVISION"
-        sha256="b48aadaba7ff561b7d55aa9ed75f1f2f4c49c0c2f73ece4020f3ffd08f6bbfd0"
+        sha256="775933e32a9e04700fc10a155f5a26c0878c3cdec18b6ec6b1d5a4110e83d428"
+        SUVP="-1"
     elif [ "${1}" = "DS1621+" ] || [ "${1}" = "DS1621+F" ]; then
         DTC_BASE_MODEL="Y"    
         TARGET_PLATFORM="ds1621p"
