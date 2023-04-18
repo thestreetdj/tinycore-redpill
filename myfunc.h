@@ -310,7 +310,8 @@ function getvars()
         TARGET_PLATFORM="ds920p"
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
-        sha256="90b1bd215b85eb366b3d3b6bef6bb6bef657dd0caba032dae556717b58e44c06"
+        sha256="f58c15d4d83699884c30e4a4b04b1d2e0db19c477923d920327a897a73c741b6"
+        SUVP="-1"
     elif [ "${1}" = "DS923+" ] || [ "${1}" = "DS923+F" ]; then
         DTC_BASE_MODEL="Y"    
         TARGET_PLATFORM="ds923p"
