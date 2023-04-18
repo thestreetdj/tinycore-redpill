@@ -298,13 +298,15 @@ function getvars()
         TARGET_PLATFORM="dva3221"
         ORIGIN_PLATFORM="denverton"
         SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
-        sha256="d83044ff12c9ed81c5e7f5ba4b23b68d96c9a40c29a6a9e5c53ad807d1e27ed2"
+        sha256="7bd2fe270bc665cc859142b7c6462fe8137f047c4fbe2f87ed3d03c30c514766"
+        SUVP="-1"        
     elif [ "${1}" = "DVA1622" ] || [ "${1}" = "DVA1622F" ]; then
         DTC_BASE_MODEL="Y"    
         TARGET_PLATFORM="dva1622"
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="dva1622_$TARGET_REVISION"                                                                                                                   
-        sha256="9106f6bcc52b4bc2b4ce82748788ca353ddecf8b7552e7c6fb477eb4eca42e67"
+        sha256="ebebc3f1de22b789b386f1d52fbe0be3fcca23f83e0d34ed9c24e794701b4c3d"
+        SUVP="-1"        
     elif [ "${1}" = "DS920+" ] || [ "${1}" = "DS920+F" ]; then
         DTC_BASE_MODEL="Y"    
         TARGET_PLATFORM="ds920p"
@@ -365,7 +367,8 @@ function getvars()
         TARGET_PLATFORM="dva3219"
         ORIGIN_PLATFORM="denverton"        
         SYNOMODEL="dva3219_$TARGET_REVISION"                                                                                                                   
-        sha256="f03395fd9db108d2c5a684b6ba9b4fadc6b1ab05c4e227d401572c01ec4b3dca"                                                                              
+        sha256="9f8c6095235df2e2caebadf846f11e4244af6f1aada9a7dd5c2c60543f944aac"
+        SUVP="-1"        
     elif [ "${1}" = "FS2500" ] || [ "${1}" = "FS2500F" ]; then
         DTC_BASE_MODEL="Y"    
         MSHELL_ONLY_MODEL="Y"    
