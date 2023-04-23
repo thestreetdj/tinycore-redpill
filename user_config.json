@@ -11,7 +11,9 @@
     "friendautoupd" : "true",
     "hidesensitive" : "false",
     "layout": "qwerty",
-    "keymap": "us"
+    "keymap": "us",
+    "devmod": "DDSML",
+    "loadermode": "FRIEND"
   }, 
   "ipsettings": {
     "ipset": "",
