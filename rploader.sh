@@ -570,7 +570,7 @@ function processpat() {
             exit 99
         fi
 
-        msgnormal -n "Editing config file -> "
+        msgnormal "Editing config file !!!!!"
         sed -i "/\"os\": {/!b;n;n;n;c\"sha256\": \"$os_sha256\"" ${configfile}
         echo -n "Verifying config file -> "
         verifyid="$(cat ${configfile} | jq -r -e '.os .sha256')"
