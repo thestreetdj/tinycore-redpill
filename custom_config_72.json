@@ -2,8 +2,8 @@
   "docker": {},
   "build_configs": [
     {
-      "id": "ds918p-7.2-64551",
-      "platform_version": "ds918p-7.2-64551",
+      "id": "ds918p-7.2.0-64551",
+      "platform_version": "ds918p-7.2.0-64551",
       "user_config_json": "apollolake_user_config.json",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
