@@ -354,8 +354,8 @@ if [ $noconfig == "Y" ]; then
 
         if [ "$MACHINE" = "VIRTUAL" ]; then
             cecho p "Sataportmap,DiskIdxMap to blank for VIRTUAL MACHINE"
-            json="$(jq --arg var "" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-            json="$(jq --arg var "" '.extra_cmdline.DiskIdxMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json        
+            json="$(jq --arg var "18" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+            json="$(jq --arg var "1000" '.extra_cmdline.DiskIdxMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json        
             cat user_config.json
         fi
         
