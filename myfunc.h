@@ -416,11 +416,11 @@ function getvars()
 #DSM 7.2
     elif [ "${1}" = "DS918+K" ]; then           
         DTC_BASE_MODEL="N"    
-        TARGET_REVISION="64216"                                                                                                                                
+        TARGET_REVISION="64551"                                                                                                                                
         TARGET_PLATFORM="ds918p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
-        sha256="2b0cbe8b78588ee797cfedd41a0ff11410ac95bc88c3ae981f758251992a52c4"                                                                              
+        sha256="3603a03212b440e15aceb9d825a52639b086d260adf0e1deac2c4a574f2005a5"                                                                              
 
 #JUN MODE
     elif [ "${1}" = "DS918+J" ]; then           
@@ -564,7 +564,7 @@ function getvars()
     if [ $TARGET_REVISION == "42218" ] ; then
         MODEL="$(echo $tem | sed 's/J//g')"
         TARGET_VERSION="7.0.1"
-    elif [ $TARGET_REVISION == "64216" ] ; then    
+    elif [ $TARGET_REVISION == "64551" ] ; then    
         MODEL="$(echo $tem | sed 's/K//g')"
         TARGET_VERSION="7.2.0"        
     else
