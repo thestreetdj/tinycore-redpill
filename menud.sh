@@ -30,7 +30,7 @@ done
 
 gitdownload
 sed -i 's/master\/all-modules/develop\/all-modules/' /home/tc/redpill-load/bundled-exts.json
-sed -i 's/gitdownload\(\) \{/itdownload\(\) \{ return/' /home/tc/my.sh
+sed -i 's/git config/return;#git config/' /home/tc/my.sh
 
 /home/tc/menu_m.sh
 exit 0
