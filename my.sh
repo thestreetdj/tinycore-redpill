@@ -428,6 +428,10 @@ else
     parmfrmyv=""
 fi
 
+if [ "$TARGET_VERSION" == "7.2" ]; then
+    TARGET_VERSION="7.2.0"
+fi
+
 if [ $jot == "N" ]; then
     echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend ${parmfrmyv}
 else
