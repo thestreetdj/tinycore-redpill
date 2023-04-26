@@ -380,8 +380,8 @@ DN_MODEL="$(echo $MODEL | sed 's/+/%2B/g')"
 echo "DN_MODEL is $DN_MODEL"
 
 cecho p "DSM PAT file pre-downloading in progress..."
-if [ $TARGET_REVISION == "64216" ]; then
-    URL="https://global.download.synology.com/download/DSM/beta/7.2/${TARGET_REVISION}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"  
+if [ $TARGET_REVISION == "64551" ]; then
+    URL="https://global.synologydownload.com/download/DSM/release/7.2/${TARGET_REVISION}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"
 else
     URL="https://global.download.synology.com/download/DSM/release/${TARGET_VERSION}/${TARGET_REVISION}${SUVP}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"
 fi
