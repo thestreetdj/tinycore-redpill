@@ -566,7 +566,7 @@ function getvars()
         TARGET_VERSION="7.0.1"
     elif [ $TARGET_REVISION == "64551" ] ; then    
         MODEL="$(echo $tem | sed 's/K//g')"
-        TARGET_VERSION="7.2.0"        
+        TARGET_VERSION="7.2"
     else
         if [ $tem = "FS2500F" ]; then
             MODEL="FS2500"
