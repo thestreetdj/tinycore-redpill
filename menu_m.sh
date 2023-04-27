@@ -1120,10 +1120,7 @@ function reboot() {
 function checkupgrade() {
 
     loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
-
-    echo "Mounting partition ${loaderdisk}2" && sudo mount /dev/${loaderdisk}2
-
-    origrdhash=$(sha256sum /dev/${loaderdisk}2/rd.gz | awk '{print $1}')
+    origrdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
     rdhash="$(jq -r -e '.general .rdhash' $USER_CONFIG_FILE)"
 
     echo -n "Detecting upgrade : "
@@ -1134,8 +1131,6 @@ function checkupgrade() {
         echo "Ramdisk upgrade has been detected "
         postupdate
     fi
-    
-    sudo umount /dev/${loaderdisk}2
 
 }
 
