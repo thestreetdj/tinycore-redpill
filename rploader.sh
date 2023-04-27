@@ -2765,7 +2765,9 @@ checkmachine
     echo /dev/${loaderdisk}2 localdiskp2
 
     if [ $(mount | grep -i part1 | wc -l) -eq 1 ] && [ $(mount | grep -i part2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp1 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp2 | wc -l) -eq 1 ]; then
+        sudo rm -rf localdiskp1/*
         sudo cp -rf part1/* localdiskp1/
+        sudo rm -rf localdiskp2/*
         sudo cp -rf part2/* localdiskp2/
 
 #m shell only start
