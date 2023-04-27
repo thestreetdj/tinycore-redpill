@@ -1117,6 +1117,28 @@ function reboot() {
     break
 }
 
+function checkupgrade() {
+
+    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
+
+    echo "Mounting partition ${loaderdisk}2" && sudo mount /dev/${loaderdisk}2
+
+    origrdhash=$(sha256sum /dev/${loaderdisk}2/rd.gz | awk '{print $1}')
+    rdhash="$(jq -r -e '.general .rdhash' $USER_CONFIG_FILE)"
+
+    echo -n "Detecting upgrade : "
+
+    if [ "$rdhash" = "$origrdhash" ]; then
+        echo "Ramdisk OK ! "
+    else
+        echo "Ramdisk upgrade has been detected "
+        postupdate
+    fi
+    
+    sudo umount /dev/${loaderdisk}2
+
+}
+
 # Main loop
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
 
@@ -1338,6 +1360,10 @@ loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 
 NEXT="m"
 setSuggest
+
+if [ "${LDRMODE}" == "JOT" ]; then
+    checkupgrade
+fi
 
 # Until urxtv is available, Korean menu is used only on remote terminals.
 while true; do
