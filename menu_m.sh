@@ -1093,7 +1093,7 @@ function keymapMenu() {
   KEYMAP=${resp}
   writeConfigKey "general" "layout" "${LAYOUT}"
   writeConfigKey "general" "keymap" "${KEYMAP}"
-  loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
+  sudo loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
   cd ~
 }
 
@@ -1351,13 +1351,13 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep kmaps | wc -w) -eq 0 ]; then
     fi
     sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 fi
-loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
+sudo loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 
 NEXT="m"
 setSuggest
 
 if [ "${LDRMODE}" == "JOT" ]; then
-    checkupgrade
+    echo "checkupgrade"
 fi
 
 # Until urxtv is available, Korean menu is used only on remote terminals.
