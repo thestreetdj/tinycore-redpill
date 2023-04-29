@@ -991,6 +991,26 @@ function checkUserConfig() {
     return 1     
   fi  
 
+  if [ "$netif_num" == "2" ]; then
+    if [ "$MACADDR1" == "$MACADDR2" ]; then
+      echo "mac1 and mac2 cannot be set identically"
+      read answer    
+      return 1
+    fi
+  elif [ "$netif_num" == "3" ]; then
+    if [ "$MACADDR1" == "$MACADDR2" ]||[ "$MACADDR1" == "$MACADDR3" ]||[ "$MACADDR2" == "$MACADDR3" ]; then
+      echo "mac1, mac2 and mac3 cannot have the same value"
+      read answer    
+      return 1
+    fi
+  elif [ "$netif_num" == "4" ]; then
+    if [ "$MACADDR1" == "$MACADDR2" ]||[ "$MACADDR1" == "$MACADDR3" ]||[ "$MACADDR1" == "$MACADDR4" ]||[ "$MACADDR2" == "$MACADDR3" ]||[ "$MACADDR2" == "$MACADDR4" ]||[ "$MACADDR3" == "$MACADDR4" ]; then
+      echo "mac1, mac2, mac3 and mac4 cannot have the same value"
+      read answer    
+      return 1
+    fi
+  fi
+
 }
 
 ###############################################################################
