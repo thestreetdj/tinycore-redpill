@@ -1095,6 +1095,8 @@ function keymapMenu() {
   writeConfigKey "general" "keymap" "${KEYMAP}"
   sed -i "/loadkmap/d" /opt/bootsync.sh
   echo "loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap &" >> /opt/bootsync.sh
+  echo 'Y'|./rploader.sh backup
+  
   echo
   echo "Since the keymap has been changed, X window needs to be restarted. Press any key to restart x window..."
   read answer
@@ -1271,6 +1273,8 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -
     sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst	
     sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
     sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+    echo 'Y'|./rploader.sh backup
+    
     echo
     echo "We have finished bug fix for /mnt/${tcrppart}/cde/onboot.lst. X window needs to be restarted. Press any key to restart x window..."
     read answer
