@@ -1125,8 +1125,8 @@ function restart() {
 
 function restartx() {
     clear
-    sudo reboot
-#    { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) && { sleep 1 ; startx ; } >/dev/tty0 ; } &
+    #sudo reboot
+    { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) ; sleep 2 >/dev/tty0 ; startx >/dev/tty0 ; } &
 }
 
 function checkupgrade() {
