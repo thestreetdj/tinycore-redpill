@@ -1118,15 +1118,15 @@ function backup() {
   return 0
 }
 
-function reboot() {
+function restart() {
     clear
     sudo reboot
-    break
 }
 
 function restartx() {
     clear
-    { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) && { sleep 1 ; startx ; } >/dev/tty0 ; } &
+    sudo reboot
+#    { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) && { sleep 1 ; startx ; } >/dev/tty0 ; } &
 }
 
 function checkupgrade() {
@@ -1456,7 +1456,7 @@ while true; do
     k) keymapMenu ;                    NEXT="m" ;;
     i) erasedisk ;                     NEXT="m" ;;
     b) backup ;                        NEXT="m" ;;
-    r) reboot ;;
+    r) restart ;;
     e) break ;;
   esac
 done
