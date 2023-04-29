@@ -1126,7 +1126,7 @@ function reboot() {
 
 function restartx() {
     clear
-    nohup { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) && { sleep 1 ; startx ; } >/dev/tty0 ; } &
+    { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) && { sleep 1 ; startx ; } >/dev/tty0 ; } &
 }
 
 function checkupgrade() {
