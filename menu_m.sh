@@ -1098,10 +1098,8 @@ function keymapMenu() {
   echo 'Y'|./rploader.sh backup
   
   echo
-  echo "Since the keymap has been changed, X window needs to be restarted. Press any key to restart x window..."
-  read answer
-
-  restartx
+  echo "Since the keymap has been changed,"
+  restart
 }
 
 function erasedisk() {
@@ -1119,13 +1117,16 @@ function backup() {
 }
 
 function restart() {
+    echo "A reboot is required. Press any key to reboot..."
+    read answer
     clear
     sudo reboot
 }
 
 function restartx() {
+    echo "X window needs to be restarted. Press any key to restart x window..."
+    read answer
     clear
-    #sudo reboot
     { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) ; sleep 2 >/dev/tty0 ; startx >/dev/tty0 ; } &
 }
 
@@ -1228,10 +1229,8 @@ if [ "${ucode}" != "en_US" ]; then
 	    echo 'Y'|./rploader.sh backup
 
 	    echo
-	    echo "You have finished installing TC Unicode package and urxvt. X window needs to be restarted. Press any key to restart x window..."
-	    read answer
-
-	    restartx
+	    echo "You have finished installing TC Unicode package and urxvt."
+	    restart
 	  else
 	    echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
 	  fi
@@ -1276,10 +1275,8 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -
     echo 'Y'|./rploader.sh backup
     
     echo
-    echo "We have finished bug fix for /mnt/${tcrppart}/cde/onboot.lst. X window needs to be restarted. Press any key to restart x window..."
-    read answer
-
-    restartx
+    echo "We have finished bug fix for /mnt/${tcrppart}/cde/onboot.lst."
+    restart
 fi	
 
 if [ "${KEYMAP}" = "null" ]; then
