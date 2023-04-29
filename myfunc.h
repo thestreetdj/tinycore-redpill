@@ -138,6 +138,8 @@ set -u
 # 2023.04.04
 # Update : DSM Smallupdateversion Path Management
 # 2023.04.15
+# Update : Keymap now actually works. (Thanks Orphée)
+# 2023.04.29
 
 
 function showlastupdate() {
@@ -145,9 +147,6 @@ function showlastupdate() {
 
 # Update : Release TCRP FRIEND mode
 # 2022.09.25
-
-# Update : 7.0.1-42218 friend correspondence for DS918+,DS920+,DS1019+, DS1520+ transcoding
-# 2023.02.19
 
 # Update : Inspection of FMA3 command support (Haswell or higher) and model restriction function added to menu.sh
 # 2023.02.22
@@ -157,29 +156,17 @@ function showlastupdate() {
 #           EUDEV (Enhanced Userspace Device with eudev deamon)
 # 2023.03.01
 
-# Update : Increased build processing speed by using RAMDISK & pigz(multithreaded compression) when processing encrypted DSM PAT file decryption
-# 2023.03.10
-
 # Update : Improved TCRP loader build process
 # 2023.03.14
-
-# Update : Automatic handling of grub.cfg disable_mtrr_trim=1 to unlock AMD Platform 3.5GB RAM limitation
-# 2023.03.17
 
 # Update : AMD CPU FRIEND mode menu usage restriction release (except HP N36L/N40L/N54L)
 # 2023.03.18
 
-# Update : TCRP FRIEND / JOT menu selection method improvement
-# 2023.03.21
-
 # Update : Multilingual menu support started (Korean, Chinese, Japanese, Russian, French, German, Spanish, Brazilian, Italian supported)
 # 2023.03.25
 
-# Update : Add language selection menu
-# 2023.03.29
-
-# Update : Merging DDSML and EUDEV into one, Improved nic recognition speed by improving realtek firmware omission
-# 2023.04.04
+# Update : Keymap now actually works. (Thanks Orphée)
+# 2023.04.29
 
 EOF
 }
