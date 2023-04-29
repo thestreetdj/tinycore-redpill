@@ -1093,8 +1093,13 @@ function keymapMenu() {
   KEYMAP=${resp}
   writeConfigKey "general" "layout" "${LAYOUT}"
   writeConfigKey "general" "keymap" "${KEYMAP}"
-  sudo loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
-  cd ~
+  sed -i "/loadkmap/d" /opt/bootsync.sh
+  echo "loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap &" >> /opt/bootsync.sh
+  echo
+  echo "Since the keymap has been changed, X window needs to be restarted. Press any key to restart x window..."
+  read answer
+
+  restartx
 }
 
 function erasedisk() {
@@ -1115,6 +1120,11 @@ function reboot() {
     clear
     sudo reboot
     break
+}
+
+function restartx() {
+    clear
+    { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) && { sleep 1 ; startx ; } >/dev/tty0 ; } &
 }
 
 function checkupgrade() {
@@ -1216,10 +1226,10 @@ if [ "${ucode}" != "en_US" ]; then
 	    echo 'Y'|./rploader.sh backup
 
 	    echo
-	    echo "You have finished installing TC Unicode package and urxvt. A reboot is required. Press any key to reboot..."
+	    echo "You have finished installing TC Unicode package and urxvt. X window needs to be restarted. Press any key to restart x window..."
 	    read answer
 
-	    sudo reboot
+	    restartx
 	  else
 	    echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
 	  fi
@@ -1262,10 +1272,10 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -
     sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
     sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
     echo
-    echo "We have finished bug fix for /mnt/${tcrppart}/cde/onboot.lst. A reboot is required. Press any key to reboot..."
+    echo "We have finished bug fix for /mnt/${tcrppart}/cde/onboot.lst. X window needs to be restarted. Press any key to restart x window..."
     read answer
 
-    sudo reboot
+    restartx
 fi	
 
 if [ "${KEYMAP}" = "null" ]; then
@@ -1351,7 +1361,6 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep kmaps | wc -w) -eq 0 ]; then
     fi
     sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 fi
-sudo loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap
 
 NEXT="m"
 setSuggest
