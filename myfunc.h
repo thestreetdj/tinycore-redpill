@@ -140,6 +140,8 @@ set -u
 # 2023.04.15
 # Update : Keymap now actually works. (Thanks Orphée)
 # 2023.04.29
+# Update : Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk Update
+# 2023.05.01
 
 
 function showlastupdate() {
@@ -167,6 +169,9 @@ function showlastupdate() {
 
 # Update : Keymap now actually works. (Thanks Orphée)
 # 2023.04.29
+
+# Update : Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk Update
+# 2023.05.01
 
 EOF
 }
