@@ -2798,16 +2798,17 @@ checkmachine
             fi
         fi    
 
+        # Share RD of friend kernel with JOT 2023.05.01
+        [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ] && bringoverfriend
+
+        if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
+
+            cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
+            cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
+        fi
+
         if [ "$WITHFRIEND" = "YES" ]; then
 
-            [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ] && bringoverfriend
-
-            if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
-
-                cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
-                cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
-            fi
-            
             echo "Creating tinycore friend entry"
             if [ $loaderdisk == "mmcblk0p" ]; then        
                 tcrpfriendentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg                
@@ -2861,35 +2862,36 @@ checkmachine
 
     cp $userconfigfile /mnt/${loaderdisk}3/
 
+    # Share RD of friend kernel with JOT 2023.05.01
+    cp localdiskp1/zImage /mnt/${loaderdisk}3/zImage-dsm
+
+    # Compining rd.gz and custom.gz
+
+    [ ! -d /home/tc/rd.temp ] && mkdir /home/tc/rd.temp
+    [ -d /home/tc/rd.temp ] && cd /home/tc/rd.temp
+    RD_COMPRESSED=$(cat /home/tc/redpill-load/config/$MODEL/${TARGET_VERSION}-${TARGET_REVISION}/config.json | jq -r -e ' .extra .compress_rd')
+
+    if [ "$RD_COMPRESSED" = "false" ]; then
+        echo "Ramdisk in not compressed "
+        cat /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
+        cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
+#m shell only start
+#        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
+#m shell only end
+        sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+        (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
+    else
+        unlzma -dc /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
+        cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
+#m shell only start
+#        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
+#m shell only end
+        sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+        (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
+    fi
+
     if [ "$WITHFRIEND" = "YES" ]; then
-
-        cp localdiskp1/zImage /mnt/${loaderdisk}3/zImage-dsm
-
-        # Compining rd.gz and custom.gz
-
-        [ ! -d /home/tc/rd.temp ] && mkdir /home/tc/rd.temp
-        [ -d /home/tc/rd.temp ] && cd /home/tc/rd.temp
-        RD_COMPRESSED=$(cat /home/tc/redpill-load/config/$MODEL/${TARGET_VERSION}-${TARGET_REVISION}/config.json | jq -r -e ' .extra .compress_rd')
-
-        if [ "$RD_COMPRESSED" = "false" ]; then
-            echo "Ramdisk in not compressed "
-            cat /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
-            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
-#m shell only start
-#            cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
-#m shell only end
-            sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
-            (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
-        else
-            unlzma -dc /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
-            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
-#m shell only start
-#            cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
-#m shell only end
-            sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
-            (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
-        fi
-
+    
         msgnormal "Setting default boot entry to TCRP Friend"
         cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"0\"" localdiskp1/boot/grub/grub.cfg
 
