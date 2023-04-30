@@ -2386,6 +2386,23 @@ EOF
 
 }
 
+function postupdateentry() {
+    
+    cat <<EOF
+menuentry 'Tiny Core PostUpdate (RamDisk Update) $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update ${smallfixnumber} ${DMPM}' {
+        savedefault
+        search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
+        echo Loading Linux...
+        linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 
+        echo Loading initramfs...
+        initrd /initrd-friend
+        echo Booting TinyCore Friend
+}
+EOF
+
+}
+
+
 function showsyntax() {
     cat <<EOF
 $(basename ${0})
@@ -2820,6 +2837,8 @@ checkmachine
 
             echo "Creating tinycore Jot entry"
             echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            echo "Creating tinycore Jot postupdate entry"            
+            postupdateentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
 
         fi
 
