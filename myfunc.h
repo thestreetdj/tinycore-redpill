@@ -412,7 +412,7 @@ function getvars()
         TARGET_PLATFORM="ds918p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
-        sha256="3603a03212b440e15aceb9d825a52639b086d260adf0e1deac2c4a574f2005a5"                                                                              
+        sha256="13b7d6dfb371bbf9b75ffbefbad07d514e42aaeefb868796bf0990ce26744a83"                                                                              
 
 #JUN MODE
     elif [ "${1}" = "DS918+J" ]; then           
