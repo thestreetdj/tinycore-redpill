@@ -3537,8 +3537,8 @@ function getredpillko() {
             sudo rm -f /home/tc/custom-module/*.gz
             sudo rm -f /home/tc/custom-module/*.ko
             sudo unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-4.4.302-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
-            sudo gunzip /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-4.4.302-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
-            sudo mv /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-4.4.302-prod.ko /home/tc/custom-module/redpill.ko
+            gunzip /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-4.4.302-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
+            mv /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-4.4.302-prod.ko /home/tc/custom-module/redpill.ko
         else
             echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.X redpill.ko ..."        
             sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
