@@ -430,6 +430,7 @@ fi
 
 if [ "$TARGET_VERSION" == "7.2" ]; then
     TARGET_VERSION="7.2.0"
+    jsonfile=$(jq 'del(.cgetty)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
 fi
 
 if [ $jot == "N" ]; then
