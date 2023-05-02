@@ -520,7 +520,7 @@ function getvars()
         TARGET_PLATFORM="dva3221"
         ORIGIN_PLATFORM="denverton"
         SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
-        sha256="5932206a55e77807659d32d232d91578e6961e613dd8f584ea1ed2c977d4591d"
+        sha256="ca3483040c8cabab6774c83b0d09083876ead6a55d1697ece379d674f0c87f80"
                 
     elif [ "${1}" = "FS2500K" ]; then
         DTC_BASE_MODEL="Y"    
