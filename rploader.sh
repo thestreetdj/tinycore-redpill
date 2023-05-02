@@ -3530,10 +3530,10 @@ function getredpillko() {
     else
     
         if [ ${TARGET_REVISION} == "64551" ]; then
-            echo "Downloading wjz304's ${ORIGIN_PLATFORM} 4.4.X redpill.ko ..."
+            echo "Downloading wjz304's ${ORIGIN_PLATFORM} 4.4.302+ redpill.ko ..."
             LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/wjz304/redpill-lkm/releases/latest"`"
             TAG="${LATESTURL##*/}"
-            STATUS=`curl -kL -w "%{http_code}" "${PROXY}https://github.com/wjz304/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+            STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/wjz304/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
             sudo rm -f /home/tc/custom-module/*.gz
             sudo rm -f /home/tc/custom-module/*.ko
             sudo unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-4.4.302-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
@@ -3541,7 +3541,7 @@ function getredpillko() {
             mv /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-4.4.302-prod.ko /home/tc/custom-module/redpill.ko
         else
             echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.X redpill.ko ..."        
-            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+            sudo curl -skL "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
             sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
         fi
         
