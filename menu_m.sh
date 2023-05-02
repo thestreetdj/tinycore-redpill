@@ -32,7 +32,7 @@ MSGUS05="Build the [TCRP JOT Mode] loader"
 MSGUS06="Choose a loader Mode Current "
 MSGUS07="Build the [TCRP 7.1.1-42962] loader"
 MSGUS08="Build the [TCRP 7.0.1-42218] loader (FRIEND)"
-MSGUS09="Post Update for [TCRP JOT Mod]"
+MSGUS09="Build the [TCRP 7.2.0-64551 RC] loader"
 MSGUS10="Edit user config file manually"
 MSGUS11="Choose a keymap"
 MSGUS12="Erase Data DISK"
@@ -75,7 +75,7 @@ MSGRU05="Соберите загрузчик [TCRP JOT Mode]"
 MSGRU06="Выберите текущий режим загрузчика"
 MSGRU07="Соберите загрузчик [TCRP 7.1.1-42962]"
 MSGRU08="Соберите загрузчик [TCRP 7.0.1-42218] (FRIEND)"
-MSGRU09="После обновления для [TCRP JOT Mod]"
+MSGRU09="Соберите загрузчик [TCRP 7.2.0-64551 RC]"
 MSGRU10="Отредактируйте файл конфигурации пользователя вручную"
 MSGRU11="Выберите раскладку клавиатуры"
 MSGRU12="Стереть данные с диска"
@@ -118,7 +118,7 @@ MSGFR05="Construisez le chargeur [TCRP JOT Mode]"
 MSGFR06="Choisissez un mode de chargeur actuel"
 MSGFR07="Construisez le chargeur [TCRP 7.1.1-42962]"
 MSGFR08="Construisez le chargeur [TCRP 7.0.1-42218] (FRIEND)"
-MSGFR09="Post-Update pour [TCRP JOT Mod]"
+MSGFR09="Construisez le chargeur [TCRP 7.2.0-64551 RC]"
 MSGFR10="Modifier manuellement le fichier de configuration de l'utilisateur"
 MSGFR11="Choisissez une disposition de clavier"
 MSGFR12="Effacer le disque de données"
@@ -161,7 +161,7 @@ MSGDE05="Erstellen Sie den [TCRP JOT-Modus] Loader"
 MSGDE06="Wählen Sie einen Loader-Modus Current"
 MSGDE07="Erstellen Sie den [TCRP 7.1.1-42962] Loader"
 MSGDE08="Erstellen Sie den [TCRP 7.0.1-42218] Loader (FRIEND)"
-MSGDE09="Post-Update für [TCRP JOT-Mod]"
+MSGDE09="Erstellen Sie den [TCRP 7.2.0-64551 RC] Loader"
 MSGDE10="Bearbeiten Sie die Benutzerkonfigurationsdatei manuell"
 MSGDE11="Wählen Sie eine Tastenkarte"
 MSGDE12="Löschen Sie die Datendiskette"
@@ -205,7 +205,7 @@ MSGES05="Construir el cargador [TCRP JOT Mode]"
 MSGES06="Elija un modo de cargador Actual"
 MSGES07="Construir el cargador [TCRP 7.1.1-42962]"
 MSGES08="Construir el cargador [TCRP 7.0.1-42218] (FRIEND)"
-MSGES09="Actualización posterior para [TCRP JOT Mod]"
+MSGES09="Construir el cargador [TCRP 7.2.0-64551 RC]"
 MSGES10="Editar manualmente el archivo de configuración del usuario"
 MSGES11="Elija un mapa de teclas"
 MSGES12="Borrar disco de datos"
@@ -249,7 +249,7 @@ MSGBR05="Construa o loader [TCRP JOT Mode]"
 MSGBR06="Escolha o modo de loader Atual"
 MSGBR07="Construa o loader [TCRP 7.1.1-42962]"
 MSGBR08="Construa o loader [TCRP 7.0.1-42218] (FRIEND)"
-MSGBR09="Atualização pós [TCRP JOT Mod]"
+MSGBR09="Construa o loader [TCRP 7.2.0-64551 RC]"
 MSGBR10="Edite manualmente o arquivo de configuração do usuário"
 MSGBR11="Escolha um mapa de teclado"
 MSGBR12="Apague o DISK de dados"
@@ -293,7 +293,7 @@ MSGIT05="Costruisci il caricatore [TCRP JOT Mode]"
 MSGIT06="Scegli una modalità di caricatore corrente"
 MSGIT07="Costruisci il caricatore [TCRP 7.1.1-42962]"
 MSGIT08="Costruisci il caricatore [TCRP 7.0.1-42218] (FRIEND)"
-MSGIT09="Post Update per [TCRP JOT Mod]"
+MSGIT09="Costruisci il caricatore [TCRP 7.2.0-64551 RC]"
 MSGIT10="Modifica manualmente il file di configurazione dell'utente"
 MSGIT11="Scegli una mappatura dei tasti"
 MSGIT12="Cancella il disco dati"
@@ -336,7 +336,7 @@ MSGKR05="[TCRP JOT Mode] 로더 빌드"
 MSGKR06="로더모드 선택 현재"
 MSGKR07="[TCRP 7.1.1-42962] 로더 빌드"
 MSGKR08="[TCRP 7.0.1-42218] 로더 빌드 (FRIEND)"
-MSGKR09="[TCRP JOT 모드]용 Post 업데이트"
+MSGKR09="[TCRP 7.2.0-64551 RC] 로더 빌드"
 MSGKR10="user_config.json 파일 편집"
 MSGKR11="다국어 자판 지원용 키맵 선택"
 MSGKR12="디스크 데이터 지우기"
@@ -379,7 +379,7 @@ MSGCN05="构建[TCRP JOT模式]加载器"
 MSGCN06="选择加载器模式 Current"
 MSGCN07="构建[TCRP 7.1.1-42962]加载器"
 MSGCN08="构建[TCRP 7.0.1-42218]加载器 (FRIEND)"
-MSGCN09="[TCRP JOT Mod]后更新"
+MSGCN09="构建[TCRP 7.2.0-64551 RC]加载器"
 MSGCN10="手动编辑用户配置文件"
 MSGCN11="选择一个键盘映射"
 MSGCN12="擦除数据磁盘"
@@ -422,7 +422,7 @@ MSGJP05="[TCRP JOT Mode]ローダーをビルドする"
 MSGJP06="現在のローダーモードを選択してください"
 MSGJP07="[TCRP 7.1.1-42962]ローダーをビルドする"
 MSGJP08="[TCRP 7.0.1-42218]ローダーをビルドする（FRIEND）"
-MSGJP09="[TCRP JOT Mod]のアップデートを投稿する"
+MSGJP09="[TCRP 7.2.0-64551 RC]ローダーをビルドする"
 MSGJP10="ユーザー設定ファイルを手動で編集する"
 MSGJP11="キーマップを選択してください"
 MSGJP12="データDISKを消去する"
@@ -1028,6 +1028,10 @@ function make() {
 
   if [ "$1" = "jun" ]; then
       ./my.sh "${MODEL}"J noconfig | tee "/home/tc/zlastbuild.log"    
+  elif [ "$1" = "rc" ]; then
+      ./my.sh "${MODEL}"K noconfig | tee "/home/tc/zlastbuild.log"    
+  elif [ "$1" = "rcjot" ]; then
+      ./my.sh "${MODEL}"K noconfig "jot" | tee "/home/tc/zlastbuild.log"    
   else
       ./my.sh "${MODEL}"F noconfig $1 | tee "/home/tc/zlastbuild.log"  
   fi
@@ -1148,23 +1152,6 @@ function restartx() {
     read answer
     clear
     { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) ; sleep 2 >/dev/tty0 ; startx >/dev/tty0 ; } &
-}
-
-function checkupgrade() {
-
-    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
-    origrdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
-    rdhash="$(jq -r -e '.general .rdhash' $USER_CONFIG_FILE)"
-
-    echo -n "Detecting upgrade : "
-
-    if [ "$rdhash" = "$origrdhash" ]; then
-        echo "Ramdisk OK ! "
-    else
-        echo "Ramdisk upgrade has been detected "
-        postupdate
-    fi
-
 }
 
 # Main loop
@@ -1386,10 +1373,6 @@ fi
 NEXT="m"
 setSuggest
 
-if [ "${LDRMODE}" == "JOT" ]; then
-    echo "checkupgrade"
-fi
-
 # Until urxtv is available, Korean menu is used only on remote terminals.
 while true; do
   eval "echo \"c \\\"\${MSG${tz}01}\\\"\""               > "${TMP_PATH}/menu" 
@@ -1411,12 +1394,10 @@ while true; do
     else 
       eval "echo \"z \\\"\${MSG${tz}06} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
       eval "echo \"d \\\"\${MSG${tz}07} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
+      eval "echo \"p \\\"\${MSG${tz}09} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
       if [ "${MODEL}" == "DS918+" ]||[ "${MODEL}" == "DS1019+" ]||[ "${MODEL}" == "DS920+" ]||[ "${MODEL}" == "DS1520+" ]; then        
         eval "echo \"o \\\"\${MSG${tz}08}\\\"\""         >> "${TMP_PATH}/menu"
       fi	
-    fi
-    if [ "${LDRMODE}" == "JOT" ]; then
-      eval "echo \"p \\\"\${MSG${tz}09}\\\"\""           >> "${TMP_PATH}/menu"   
     fi
   fi
   eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
@@ -1466,7 +1447,13 @@ while true; do
        fi
        NEXT="r" ;;
     j) BUILD="42962"; make "jot";      NEXT="r" ;;    
-    p) postupdate ;                    NEXT="r" ;;
+    p) BUILD="64551"
+       if [ "${LDRMODE}" == "FRIEND" ]; then
+         make "rc"
+       else
+         make "rcjot"
+       fi
+       NEXT="r" ;;
     o) BUILD="42218"; make "jun";      NEXT="r" ;;
     u) editUserConfig;                 NEXT="d" ;;
     l) langMenu ;                      NEXT="m" ;;
