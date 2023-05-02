@@ -1195,7 +1195,7 @@
       ]
     },
     {
-      "id": "dva3219-7.2.0-64551",
+      "id": "dva3219-7.2.0-64550",
       "platform_version": "dva3219-7.2.0-64551",
       "user_config_json": "dva3219_user_config-test.json",
       "docker_base_image": "debian:8-slim",
@@ -1227,7 +1227,7 @@
       ]
     },
     {
-      "id": "dva3221-7.2.0-64551",
+      "id": "dva3221-7.2.0-64550",
       "platform_version": "dva3221-7.2.0-64551",
       "user_config_json": "denverton_user_config-test.json",
       "docker_base_image": "debian:8-slim",
