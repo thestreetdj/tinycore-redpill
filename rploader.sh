@@ -3534,6 +3534,10 @@ function getredpillko() {
             LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/wjz304/redpill-lkm/releases/latest"`"
             TAG="${LATESTURL##*/}"
             STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/wjz304/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+            if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
+                echo "Error downloading last version of wjz304's ${ORIGIN_PLATFORM} 4.4.302+ rp-lkms.zip"
+                exit 99
+            fi
             sudo rm -f /home/tc/custom-module/*.gz
             sudo rm -f /home/tc/custom-module/*.ko
             sudo unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-4.4.302-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
