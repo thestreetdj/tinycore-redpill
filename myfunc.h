@@ -504,7 +504,7 @@ function getvars()
         TARGET_PLATFORM="dva1622"
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="dva1622_$TARGET_REVISION"                                                                                                                   
-        sha256="cf8658ac9501045c59c6a6b0af29774cdab684b71ee96e760a91c4981a89a6fb"
+        sha256="8dac8f4d94961f602a34b3f6a4e5e14004166485c8f50016a3f9061ae0c126a8"
                 
     elif [ "${1}" = "DVA3219K" ]; then
         DTC_BASE_MODEL="N"    
@@ -512,7 +512,7 @@ function getvars()
         TARGET_PLATFORM="dva3219"
         ORIGIN_PLATFORM="denverton"        
         SYNOMODEL="dva3219_$TARGET_REVISION"                                                                                                                   
-        sha256="8f8c96053d1ebf9d2f68934b19175c53a15725e8278dfff80c72390f46067b7f"
+        sha256="d484a2b74ed59703fd6c407fd5898f096675cb97416ec52f0bbb44c3b6c3d02d"
         
     elif [ "${1}" = "DVA3221K" ]; then                                                                                                                      
         DTC_BASE_MODEL="N"
@@ -528,7 +528,7 @@ function getvars()
         TARGET_PLATFORM="fs2500"
         ORIGIN_PLATFORM="v1000"        
         SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
-        sha256="d31746f6f99e0e16df4d48c1d46e18701e8bef78199478d37169ef227401fc2d"
+        sha256="a871d5d35ba110c315c5a73a665de2178a620a617ac096beab1d0812b7be8741"
         
     elif [ "${1}" = "RS3618xsK" ]; then                                                                                                                     
         DTC_BASE_MODEL="N"    
@@ -536,7 +536,7 @@ function getvars()
         TARGET_PLATFORM="rs3618xs"
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
-        sha256="be35633cd368aeede2f5f6e309b936cd849d6a80975622e6155a2fe1f72d2e60"
+        sha256="63b41dd4940e81c933b3493dd648fcaa750a165b6dbd9fcee96ee87acad4bbab"
         
     elif [ "${1}" = "RS4021xs+K" ]; then
         DTC_BASE_MODEL="N"    
@@ -544,7 +544,7 @@ function getvars()
         TARGET_PLATFORM="rs4021xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="rs4021xsp_$TARGET_REVISION"
-        sha256="9e51c8853d03497c7e61db98499397030c341e263fa814ccdd42b3680075a31d"
+        sha256="c233ee6e90fd9b4d9c86e8d779f18859becff2d2423516e46b7d9a2a10f6938c"
 
 #JUN MODE
     elif [ "${1}" = "DS918+J" ]; then           
