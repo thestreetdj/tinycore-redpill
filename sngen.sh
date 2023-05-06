@@ -91,6 +91,10 @@ function beginArray() {
         permanent="S7R"
         serialstart="2080"
         ;;
+    SA6400)
+        permanent="TQR"
+        serialstart="2270"
+        ;;        
     esac
 
 }
@@ -200,6 +204,9 @@ function generateSerial() {
     RS3413xs+)
         serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
         ;;
+    SA6400)
+        serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
+        ;;
     esac
 
     echo $serialnum
@@ -217,7 +224,7 @@ Usage: ${0} <platform>
 Available platforms :
 ----------------------------------------------------------------------------------------
 DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DVA1622
-DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+ DS723+ DS1522+
+DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+ DS723+ DS1522+ SA6400
 
 e.g. $(basename ${0}) DS3615xs
 ----------------------------------------------------------------------------------------
