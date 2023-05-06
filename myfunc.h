@@ -357,6 +357,13 @@ function getvars()
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="sa3600_$TARGET_REVISION"
         sha256="d4d6fcd5bb3b3c005f2fb199af90cb7f62162d9112127d06ebf5973aa645e0f8"
+    elif [ "${1}" = "SA6400" ] || [ "${1}" = "SA6400F" ]; then
+        DTC_BASE_MODEL="Y"
+        MSHELL_ONLY_MODEL="Y"    
+        TARGET_PLATFORM="sa6400"
+        ORIGIN_PLATFORM="epyc7002"        
+        SYNOMODEL="sa6400_$TARGET_REVISION"
+        sha256="83fc408380ebb1381224261de6220b873d7b62a99e715557509ae9553f618a71"
     elif [ "${1}" = "DVA3219" ] || [ "${1}" = "DVA3219F" ]; then
         DTC_BASE_MODEL="N"    
         MSHELL_ONLY_MODEL="Y"    
