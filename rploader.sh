@@ -3526,7 +3526,23 @@ function getredpillko() {
 #    elif [ $MODEL == "DVA3219" ]; then
 #        echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
 #        sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-dva3219-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
-       
+
+    elif [ $MODEL == "SA6400" ]; then
+
+        echo "Downloading wjz304's ${ORIGIN_PLATFORM} 5.10.55+ redpill.ko ..."
+        LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/wjz304/redpill-lkm/releases/latest"`"
+        TAG="${LATESTURL##*/}"
+        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/wjz304/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+        if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
+            echo "Error downloading last version of wjz304's ${ORIGIN_PLATFORM} 5.10.55+ rp-lkms.zip"
+            exit 99
+        fi
+        sudo rm -f /home/tc/custom-module/*.gz
+        sudo rm -f /home/tc/custom-module/*.ko
+        sudo unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-5.10.55-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
+        gunzip /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-5.10.55-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
+        mv /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-5.10.55-prod.ko /home/tc/custom-module/redpill.ko
+
     else
     
         if [ ${TARGET_REVISION} == "64551" ]; then
