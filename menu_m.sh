@@ -671,7 +671,7 @@ function seleudev() {
     fi
   done
 
-  curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/bundled-exts.json" --output /home/tc/redpill-load/bundled-exts.json
+  curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/bundled-exts.json -o /home/tc/redpill-load/bundled-exts.json
   sudo rm -rf /home/tc/redpill-load/custom/extensions/ddsml
   sudo rm -rf /home/tc/redpill-load/custom/extensions/eudev
   writeConfigKey "general" "devmod" "${DMPM}"
@@ -715,7 +715,7 @@ function modelMenu() {
   M_GRP3="DVA3221 DVA3219"
   M_GRP4="DS918+ DS1019+"
   M_GRP5="DS923+ DS723+"
-  M_GRP6="DS1621+ DS2422+ FS2500"
+  M_GRP6="DS1621+ DS2422+ FS2500 SA6400"
   M_GRP7="DS920+ DS1520+ DVA1622"
   
 RESTRICT=1
@@ -835,6 +835,7 @@ function setSuggest() {
     RS3618xs)    platform="broadwell";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
     DVA3221)     platform="denverton";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}23}, \${MSG${tz}24}, \${MSG${tz}21}\"";;
     DVA3219)     platform="denverton";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}23}, \${MSG${tz}25}, \${MSG${tz}21}\"";;
+    SA6400)      platform="epyc7002";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}19}\"";;
   esac
 
   result="${line}${desc}" 
@@ -1345,9 +1346,9 @@ fi
 
 # Download dialog
 if [ "$(which dialog)_" == "_" ]; then
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz" --output /mnt/${tcrppart}/cde/optional/dialog.tcz
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.dep" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.dep
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/dialog.tcz.md5.txt
+    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz -o /mnt/${tcrppart}/cde/optional/dialog.tcz
+    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.dep -o /mnt/${tcrppart}/cde/optional/dialog.tcz.dep
+    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.md5.txt -o /mnt/${tcrppart}/cde/optional/dialog.tcz.md5.txt
     tce-load -i dialog
     if [ $? -eq 0 ]; then
         echo "Download dialog OK !!!"
@@ -1359,8 +1360,8 @@ fi
 
 # Download kmaps
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep kmaps | wc -w) -eq 0 ]; then
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz
-    sudo curl --insecure -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz.md5.txt" --output /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
+    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz -o /mnt/${tcrppart}/cde/optional/kmaps.tcz
+    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz.md5.txt -o /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
     tce-load -i kmaps
     if [ $? -eq 0 ]; then
         echo "Download kmaps OK !!!"
