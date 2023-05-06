@@ -230,21 +230,22 @@ Usage: ${0} <platform>
 
 Available platforms :
 ----------------------------------------------------------------------------------------
-DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DVA1622
-DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+ DS723+ DS1522+ SA6400
+${MODELS}"
 
-e.g. $(basename ${0}) DS3615xs
+e.g. $(basename ${0}) DS3622xs+
 ----------------------------------------------------------------------------------------
 EOF
 
 }
 
+MODELS="DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DVA1622 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+ DS723+ DS1522+ SA6400"
+
 if [ -z "$1" ]; then
     showhelp
 else
-    if [ $(generateSerial $1) == "" ]; then
+    if [ $(echo ${MODELS} | grep $1 | wc -l ) -eq 0 ]; then
         echo "Error : $1 is not an available model for serial number generation. "
-        echo "Available Models : DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DVA1622 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+ DS723+ DS1522+ SA6400"
+        echo "Available Models : ${MODELS}"
     else
         echo $(generateSerial $1)
     fi
