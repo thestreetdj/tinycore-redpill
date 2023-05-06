@@ -95,6 +95,10 @@ function beginArray() {
         permanent="TQR"
         serialstart="2270"
         ;;        
+    *)
+        permanent=""
+        serialstart=""
+        ;;        
     esac
 
 }
