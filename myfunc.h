@@ -144,6 +144,8 @@ set -u
 # 2023.05.01
 # Update : Add Support DSM 7.2-64551 RC
 # 2023.05.02
+# Update : Added sa6400 (epyc7002)
+# 2023.05.06
 
 function showlastupdate() {
     cat <<EOF
@@ -176,6 +178,9 @@ function showlastupdate() {
 
 # Update : Add Support DSM 7.2-64551 RC
 # 2023.05.02
+
+# Update : Added sa6400 (epyc7002)
+# 2023.05.06
 
 EOF
 }
