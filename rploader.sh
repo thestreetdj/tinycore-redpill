@@ -6,6 +6,9 @@
 #
 #
 # User Variables : 0.9.4.3-2
+##### INCLUDES #########################################################################################################
+source myfunc.h # my.sh / myv.sh common use 
+########################################################################################################################
 
 rploaderver="0.9.4.3-2"
 build="master"
@@ -3287,6 +3290,7 @@ function getvars() {
     echo "MODULE_ALIAS_FILE :  $MODULE_ALIAS_FILE"
     echo "SYNOMODEL : $SYNOMODEL "
     echo "MODEL : $MODEL "
+    echo "KERNEL VERSION is $KVER "
     echo "Local Cache Folder : $local_cache"
     echo "DATE Internet : $INTERNETDATE Local : $LOCALDATE"
 
