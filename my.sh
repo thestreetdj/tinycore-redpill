@@ -436,6 +436,17 @@ if [ "$TARGET_VERSION" == "7.2" ]; then
 #    fi   
 fi
 
+if [ "$MODEL" == "SA6400" ]; then
+    cecho g "Remove Exts for SA6400 test (cgetty,acpid,smb3-multi ) ..."
+    jsonfile=$(jq 'del(.cgetty)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
+    sudo rm -rf /home/tc/redpill-load/custom/extensions/cgetty
+    jsonfile=$(jq 'del(.acpid)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
+    sudo rm -rf /home/tc/redpill-load/custom/extensions/acpid
+    jsonfile=$(jq 'del(.smb3-multi)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
+    sudo rm -rf /home/tc/redpill-load/custom/extensions/smb3-multi
+fi
+
+
 if [ $jot == "N" ]; then
     echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend ${parmfrmyv}
 else
