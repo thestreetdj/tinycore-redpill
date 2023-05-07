@@ -256,6 +256,7 @@ cecho c "TARGET_VERSION is $TARGET_VERSION"
 cecho p "TARGET_REVISION is $TARGET_REVISION"
 cecho y "SUVP is $SUVP"
 cecho g "SYNOMODEL is $SYNOMODEL"  
+cecho c "KERNEL VERSION is $KVER"  
 
 #fullupgrade="Y"
 
@@ -346,32 +347,23 @@ echo
 
 if [ $noconfig == "Y" ]; then                            
     cecho r "SN Gen/Mac Gen/Vid/Pid/SataPortMap detection skipped!!"
-    
-    if [ $DTC_BASE_MODEL == "Y" ]; then
-        cecho p "Device Tree based model does not need SataPortMap setting...."     
-    else
-        checkmachine
-
-        if [ "$MACHINE" = "VIRTUAL" ]; then
-            cecho p "Sataportmap,DiskIdxMap to blank for VIRTUAL MACHINE"
-            json="$(jq --arg var "" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-            json="$(jq --arg var "" '.extra_cmdline.DiskIdxMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json        
-            cat user_config.json
-        fi
-        
-    fi    
+    checkmachine
+    if [ "$MACHINE" = "VIRTUAL" ]; then
+        cecho p "Sataportmap,DiskIdxMap to blank for VIRTUAL MACHINE"
+        json="$(jq --arg var "" '.extra_cmdline.SataPortMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+        json="$(jq --arg var "" '.extra_cmdline.DiskIdxMap = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json        
+        cat user_config.json
+    fi
 else 
     cecho c "Before changing user_config.json" 
     cat user_config.json
 
     echo "y"|./rploader.sh identifyusb
 
-    if  [ $DTC_BASE_MODEL == "Y" ]; then
-        cecho p "Device Tree based model does not need SataPortMap setting...."     
-    else
-        ./rploader.sh satamap    
-        cat user_config.json        
-    fi
+    cecho p "Device Tree based model does not need SataPortMap setting...."     
+
+    ./rploader.sh satamap    
+    cat user_config.json        
 fi
 
 echo
@@ -440,12 +432,7 @@ if [ "$MODEL" == "SA6400" ]; then
     cecho g "Remove Exts for SA6400 test (cgetty,acpid,smb3-multi ) ..."
     jsonfile=$(jq 'del(.cgetty)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
     sudo rm -rf /home/tc/redpill-load/custom/extensions/cgetty
-    jsonfile=$(jq 'del(.acpid)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
-    sudo rm -rf /home/tc/redpill-load/custom/extensions/acpid
-    jsonfile=$(jq 'del(.smb3-multi)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
-    sudo rm -rf /home/tc/redpill-load/custom/extensions/smb3-multi
 fi
-
 
 if [ $jot == "N" ]; then
     echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend ${parmfrmyv}
