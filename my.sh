@@ -264,6 +264,8 @@ cecho y "If fullupgrade is required, please handle it separately."
 
 cecho g "Downloading Peter Suh's custom configuration files.................."
 
+writeConfigKey "general" "kver" "${KVER}"
+
 DMPM="$(jq -r -e '.general.devmod' $USER_CONFIG_FILE)"
 if [ "${DMPM}" = "null" ]; then
     DMPM="DDSML"
