@@ -147,8 +147,6 @@ set -u
 # Update : Added sa6400 (epyc7002)
 # 2023.05.06
 
-GATEWAY_INTERFACE=$(echo "${GATEWAY_INTERFACE}")
-
 function showlastupdate() {
     cat <<EOF
 
