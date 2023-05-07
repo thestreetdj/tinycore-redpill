@@ -3193,6 +3193,8 @@ function setplatform() {
 
 function getvars() {
 
+    KVER="$(jq -r -e '.general.kver' $userconfigfile)"
+
     CONFIG=$(readConfig)
     selectPlatform $1
 
@@ -3496,7 +3498,6 @@ function ext_manager() {
 
 function getredpillko() {
 
-    KVER="$(jq -r -e '.general.kver' $userconfigfile)"
     echo "KERNEL VERSION of getredpillko() is ${KVER}"
 
     echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."
