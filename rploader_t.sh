@@ -88,7 +88,7 @@ function history() {
     0.9.2.5 Adding experimental RS4021xs+ support
     0.9.2.6 Added the downloadupgradepat action **experimental
     0.9.2.7 Added setting the static network configuration for TCRP Friend
-    0.9.2.8 Changed all curl calls to use the --insecure flag to avoid expired certificate issues
+    0.9.2.8 Changed all curl calls to use the -k flag to avoid expired certificate issues
     0.9.2.9 Added the smallfixnumber key in user_config.json and changed the platform ids to model ids
     0.9.3.0 Changed set root entry to search for FS UUID
     0.9.4.3-1 Multilingual menu support 
@@ -406,7 +406,7 @@ function copyextractor() {
 
     echo "making directory ${local_cache}/extractor"
     [ ! -d ${local_cache}/extractor ] && mkdir ${local_cache}/extractor
-    [ ! -f /home/tc/extractor.gz ] && sudo curl --insecure -L --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" --output /home/tc/extractor.gz
+    [ ! -f /home/tc/extractor.gz ] && sudo curl -kL -# "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" -o /home/tc/extractor.gz
     sudo tar -zxvf /home/tc/extractor.gz -C ${local_cache}/extractor
 
     echo "Copying required libraries to local lib directory"
@@ -452,7 +452,7 @@ function downloadextractor() {
             echo "Processing old pat file to extract required files for extraction"
             tar -C${temp_folder} -xf /${patfile} rd.gz
         else
-            curl --insecure --location https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat --output /home/tc/oldpat.tar.gz
+            curl -kL https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat -o /home/tc/oldpat.tar.gz
             [ -f /home/tc/oldpat.tar.gz ] && tar -C${temp_folder} -xf /home/tc/oldpat.tar.gz rd.gz
         fi
 
@@ -570,7 +570,7 @@ function processpat() {
             exit 99
         fi
 
-        msgnormal -n "Editing config file -> "
+        msgnormal "Editing config file !!!!!"
         sed -i "/\"os\": {/!b;n;n;n;c\"sha256\": \"$os_sha256\"" ${configfile}
         echo -n "Verifying config file -> "
         verifyid="$(cat ${configfile} | jq -r -e '.os .sha256')"
@@ -603,7 +603,7 @@ function processpat() {
             exit 99
         fi
 
-        [ -n $pat_url ] && curl --insecure --location ${pat_url} -o "/${local_cache}/${SYNOMODEL}.pat"
+        [ -n $pat_url ] && curl -kL ${pat_url} -o "/${local_cache}/${SYNOMODEL}.pat"
         patfile="/${local_cache}/${SYNOMODEL}.pat"
         if [ -f ${patfile} ]; then
             testarchive ${patfile}
@@ -1028,7 +1028,7 @@ function postupdatev1() {
 
         echo "bspatch does not exist, bringing over from repo"
 
-        curl --insecure --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
+        curl -kL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
 
         chmod 777 bspatch
         sudo mv bspatch /usr/local/bin/
@@ -1226,7 +1226,7 @@ function downloadextractorv2() {
 
     cd /home/tc/patch-extractor/
 
-    [ -f /home/tc/oldpat.tar.gz ] || curl --insecure --location https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat --output /home/tc/oldpat.tar.gz
+    [ -f /home/tc/oldpat.tar.gz ] || curl -kL https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat -o /home/tc/oldpat.tar.gz
 
     tar xf ../oldpat.tar.gz hda1.tgz
     tar xf hda1.tgz usr/lib
@@ -1268,7 +1268,7 @@ function downloadextractorv2() {
     sudo rm -rf ../oldpat.tar.gz
     sudo rm -rf hda1.tgz
 
-    curl --insecure --silent --location https://github.com/PeterSuh-Q3/tinycore-redpill/blob/main/tools/xxd?raw=true --output xxd
+    curl -k -s -L https://github.com/PeterSuh-Q3/tinycore-redpill/blob/main/tools/xxd?raw=true -o xxd
 
     chmod +x xxd
 
@@ -1311,11 +1311,11 @@ function downloadupgradepat() {
         echo "Selected model : ${model} "
 
         PS3="Select update version : "
-        select version in $(curl --insecure --silent https://archive.synology.com/download/Os/DSM/ | grep "/download/Os/DSM/7" | awk '{print $2}' | awk -F\/ '{print $5}' | sed -s 's/"//g'); do
+        select version in $(curl -k -s https://archive.synology.com/download/Os/DSM/ | grep "/download/Os/DSM/7" | awk '{print $2}' | awk -F\/ '{print $5}' | sed -s 's/"//g'); do
             echo "Selected version : $version"
             selectedmodel=$(echo $model | sed -e 's/DS//g' | sed -e 's/RS//g' | sed -e 's/DVA//g' | sed -e 's/+//g')
             PS3="Select pat file URL : "
-            select patfile in $(curl --insecure --silent "https://archive.synology.com/download/Os/DSM/${version}" | grep href | grep -i $selectedmodel | awk '{print $2}' | sed -e 's/href=//g'); do
+            select patfile in $(curl -k -s "https://archive.synology.com/download/Os/DSM/${version}" | grep href | grep -i $selectedmodel | awk '{print $2}' | sed -e 's/href=//g'); do
 
                 patfile="$(echo $patfile | sed -e 's/"//g')"
                 echo "Selected patfile :  $patfile "
@@ -1323,7 +1323,7 @@ function downloadupgradepat() {
                 updatepat="/home/tc/${model}_${patfilever}.pat"
 
                 echo "Downloading PAT file "
-                curl --insecure --progress-bar -L "$patfile" -o $updatepat
+                curl -k -# -L "$patfile" -o $updatepat
 
                 [ -f $updatepat ] && echo "Downloaded Patfile $updatepat "
 
@@ -1400,7 +1400,7 @@ function fullupgrade() {
         echo "Updating ${updatefile}"
 
         [ -f ${updatefile} ] && sudo mv $updatefile old/${updatefile}.${backupdate}
-        sudo curl --insecure --silent --location "${rploaderrepo}/${updatefile}" -O
+        sudo curl -k -s -L "${rploaderrepo}/${updatefile}" -O
         [ ! -f ${updatefile} ] && mv old/${updatefile}.${backupdate} $updatefile
 
     done
@@ -1617,37 +1617,37 @@ function patchdtc() {
 
     if [ "${TARGET_PLATFORM}" = "apollolake" ]; then
         dtbfile="ds918p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds920p.dts" --output /home/tc/redpill-load/ds918p.dts
+        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds920p.dts" -o /home/tc/redpill-load/ds918p.dts
     elif [ "${TARGET_PLATFORM}" = "bromolow" ]; then
         dtbfile="ds3615xs"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/ds3615xs.dts
+        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/ds3615xs.dts
     elif [ "${TARGET_PLATFORM}" = "broadwell" ]; then
         dtbfile="ds3617xs"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/ds3617xs.dts
+        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/ds3617xs.dts
     elif [ "${TARGET_PLATFORM}" = "broadwellnk" ]; then
         dtbfile="ds3622xsp"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/ds3622xsp.dts
+        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/ds3622xsp.dts
     elif [ "${TARGET_PLATFORM}" = "v1000" ]; then
         dtbfile="ds1621p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/ds1621p.dts
+        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/ds1621p.dts
     elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
         dtbfile="dva3221"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/dva3221.dts
+        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/dva3221.dts
     elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
         dtbfile="ds920p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds920p.dts" --output /home/tc/redpill-load/ds920p.dts
+        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds920p.dts" -o /home/tc/redpill-load/ds920p.dts
     elif [ "${TARGET_PLATFORM}" = "ds923p" ]; then
         dtbfile="ds923p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds923p.dts" --output /home/tc/redpill-load/ds923p.dts
+        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds923p.dts" -o /home/tc/redpill-load/ds923p.dts
     elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
         dtbfile="dva1622"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds920p.dts" --output /home/tc/redpill-load/dva1622.dts
+        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds920p.dts" -o /home/tc/redpill-load/dva1622.dts
     elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
         dtbfile="ds2422p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/ds2422p.dts
+        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/ds2422p.dts
     elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
         dtbfile="ds1520p"
-        curl --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" --output /home/tc/redpill-load/ds1520p.dts
+        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/ds1520p.dts
     else
         echo "${TARGET_PLATFORM} does not require model.dtc patching "
         return
@@ -1658,7 +1658,7 @@ function patchdtc() {
     fi
 
     echo "Downloading dtc binary"
-    curl --insecure --location --progress-bar "$dtcbin" -O
+    curl -kL -# "$dtcbin" -O
     chmod 700 dtc
 
     if [ -f /home/tc/custom-module/${dtbfile}.dts ] && [ ! -f /home/tc/custom-module/${dtbfile}.dtb ]; then
@@ -1704,7 +1704,7 @@ function dont_use_patchdtc() {
 
     if [ ! -f ${dtbfile}.dts ]; then
         echo "dts file for ${dtbfile} not found, trying to download"
-        curl --insecure --location --progress-bar -O "${dtsfiles}/${dtbfile}.dts"
+        curl -kL -# -O "${dtsfiles}/${dtbfile}.dts"
     fi
 
     echo "Found $(echo $localdisks | wc -w) disks and $(echo $localnvme | wc -w) nvme"
@@ -1844,7 +1844,7 @@ function backup() {
         fi
     else
         echo "pigz does not exist, bringing over from repo"
-        curl -s --insecure --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/pigz" -O
+        curl -s -k -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/pigz" -O
         chmod 777 pigz
         sudo mv pigz /usr/local/bin/
     fi
@@ -2181,7 +2181,7 @@ function gettoolchain() {
         echo "File already cached"
     else
         echo "Downloading and caching toolchain"
-        curl --insecure --progress-bar --location "${TOOLKIT_URL}" --output dsm-toolchain.7.0.txz
+        curl -k -# -L "${TOOLKIT_URL}" -o dsm-toolchain.7.0.txz
     fi
 
     echo -n "Checking file -> "
@@ -2250,7 +2250,7 @@ function getsynokernel() {
         rm -rf synokernel.txz
     else
         echo "Downloading and caching synokernel"
-        cd /home/tc && curl --insecure --progress-bar --location ${SYNOKERNEL_URL} --output synokernel.txz
+        cd /home/tc && curl -k -# -L ${SYNOKERNEL_URL} -o synokernel.txz
         checkfilechecksum synokernel.txz ${SYNOKERNEL_SHA}
         echo "OK, file matches sha256sum, extracting"
         echo "Extracting synokernel"
@@ -2385,6 +2385,23 @@ menuentry 'Tiny Core Friend $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update $
 EOF
 
 }
+
+function postupdateentry() {
+    
+    cat <<EOF
+menuentry 'Tiny Core PostUpdate (RamDisk Update) $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update ${smallfixnumber} ${DMPM}' {
+        savedefault
+        search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
+        echo Loading Linux...
+        linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 
+        echo Loading initramfs...
+        initrd /initrd-friend
+        echo Booting TinyCore Friend
+}
+EOF
+
+}
+
 
 function showsyntax() {
     cat <<EOF
@@ -2564,7 +2581,7 @@ function getstaticmodule() {
     echo "Removing any old redpill.ko modules"
     [ -f /home/tc/redpill.ko ] && rm -f /home/tc/redpill.ko
 
-    extension=$(curl --insecure -s --location "$redpillextension")
+    extension=$(curl -k -s -L "$redpillextension")
 
     setplatform
 
@@ -2572,11 +2589,11 @@ function getstaticmodule() {
 
     #release=`echo $extension |  jq -r '.releases .${SYNOMODEL}_{$TARGET_REVISION}'`
     release=$(echo $extension | jq -r -e --arg SYNOMODEL $SYNOMODEL '.releases[$SYNOMODEL]')
-    files=$(curl --insecure -s --location "$release" | jq -r '.files[] .url')
+    files=$(curl -k -s -L "$release" | jq -r '.files[] .url')
 
     for file in $files; do
         echo "Getting file $file"
-        curl --insecure -s -O $file
+        curl -k -s -O $file
         if [ -f redpill*.tgz ]; then
             echo "Extracting module"
             tar xf redpill*.tgz
@@ -2765,7 +2782,9 @@ checkmachine
     echo /dev/${loaderdisk}2 localdiskp2
 
     if [ $(mount | grep -i part1 | wc -l) -eq 1 ] && [ $(mount | grep -i part2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp1 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp2 | wc -l) -eq 1 ]; then
+        sudo rm -rf localdiskp1/*
         sudo cp -rf part1/* localdiskp1/
+        sudo rm -rf localdiskp2/*
         sudo cp -rf part2/* localdiskp2/
 
 #m shell only start
@@ -2796,16 +2815,17 @@ checkmachine
             fi
         fi    
 
+        # Share RD of friend kernel with JOT 2023.05.01
+        [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ] && bringoverfriend
+
+        if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
+
+            cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
+            cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
+        fi
+
         if [ "$WITHFRIEND" = "YES" ]; then
 
-            [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ] && bringoverfriend
-
-            if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
-
-                cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
-                cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
-            fi
-            
             echo "Creating tinycore friend entry"
             if [ $loaderdisk == "mmcblk0p" ]; then        
                 tcrpfriendentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg                
@@ -2817,6 +2837,8 @@ checkmachine
 
             echo "Creating tinycore Jot entry"
             echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            echo "Creating tinycore Jot postupdate entry"            
+            postupdateentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
 
         fi
 
@@ -2859,35 +2881,36 @@ checkmachine
 
     cp $userconfigfile /mnt/${loaderdisk}3/
 
+    # Share RD of friend kernel with JOT 2023.05.01
+    cp localdiskp1/zImage /mnt/${loaderdisk}3/zImage-dsm
+
+    # Compining rd.gz and custom.gz
+
+    [ ! -d /home/tc/rd.temp ] && mkdir /home/tc/rd.temp
+    [ -d /home/tc/rd.temp ] && cd /home/tc/rd.temp
+    RD_COMPRESSED=$(cat /home/tc/redpill-load/config/$MODEL/${TARGET_VERSION}-${TARGET_REVISION}/config.json | jq -r -e ' .extra .compress_rd')
+
+    if [ "$RD_COMPRESSED" = "false" ]; then
+        echo "Ramdisk in not compressed "
+        cat /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
+        cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
+#m shell only start
+#        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
+#m shell only end
+        sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+        (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
+    else
+        unlzma -dc /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
+        cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
+#m shell only start
+#        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
+#m shell only end
+        sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+        (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
+    fi
+
     if [ "$WITHFRIEND" = "YES" ]; then
-
-        cp localdiskp1/zImage /mnt/${loaderdisk}3/zImage-dsm
-
-        # Compining rd.gz and custom.gz
-
-        [ ! -d /home/tc/rd.temp ] && mkdir /home/tc/rd.temp
-        [ -d /home/tc/rd.temp ] && cd /home/tc/rd.temp
-        RD_COMPRESSED=$(cat /home/tc/redpill-load/config/$MODEL/${TARGET_VERSION}-${TARGET_REVISION}/config.json | jq -r -e ' .extra .compress_rd')
-
-        if [ "$RD_COMPRESSED" = "false" ]; then
-            echo "Ramdisk in not compressed "
-            cat /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
-            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
-#m shell only start
-#            cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
-#m shell only end
-            sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
-            (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
-        else
-            unlzma -dc /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
-            cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
-#m shell only start
-#            cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
-#m shell only end
-            sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
-            (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
-        fi
-
+    
         msgnormal "Setting default boot entry to TCRP Friend"
         cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"0\"" localdiskp1/boot/grub/grub.cfg
 
@@ -2981,8 +3004,8 @@ function bringoverfriend() {
   [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
   echo -n "Checking for latest friend -> "
-  URL=$(curl --connect-timeout 15 -s --insecure -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
-  [ -n "$URL" ] && curl -s --insecure -L $URL -O
+  URL=$(curl --connect-timeout 15 -s -k -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
+  [ -n "$URL" ] && curl -s -k -L $URL -O
 
   if [ -f chksum ]; then
     FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
@@ -2994,7 +3017,7 @@ function bringoverfriend() {
         msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
         
         msgnormal "Bringing over my friend from giteas.duckdns.org"
-        curl -s --insecure -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
+        curl -s -k -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
         -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
         -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
 
@@ -3002,13 +3025,13 @@ function bringoverfriend() {
         if [ $? -ne 0 ]; then
             msgwarning "Download failed from giteas.duckdns.org, Tring github.com..."    
 
-            URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
-            for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
+            URLS=$(curl -k -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
+            for file in $URLS; do curl -kL -# "$file" -O; done
 
             # 3rd try
             if [ $? -ne 0 ]; then
                 msgwarning "Download failed from github.com, Tring gitee.com..."
-                curl -s --insecure -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
+                curl -s -k -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
                 -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" \
                 -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend"
                 if [ $? -ne 0 ]; then
@@ -3086,10 +3109,10 @@ function getlatestrploader() {
 
     echo -n "Checking if a newer version exists on the $build repo -> "
 
-    curl --insecure -s --location "$rploaderfile" --output latestrploader.sh
-    curl --insecure -s --location "$modalias3" --output modules.alias.3.json.gz
+    curl -k -s -L "$rploaderfile" -o latestrploader.sh
+    curl -k -s -L "$modalias3" -o modules.alias.3.json.gz
     [ -f modules.alias.3.json.gz ] && gunzip -f modules.alias.3.json.gz
-    curl --insecure -s --location "$modalias4" --output modules.alias.4.json.gz
+    curl -k -s -L "$modalias4" -o modules.alias.4.json.gz
     [ -f modules.alias.4.json.gz ] && gunzip -f modules.alias.4.json.gz
 
     CURRENTSHA="$(sha256sum rploader.sh | awk '{print $1}')"
@@ -3148,6 +3171,8 @@ function setplatform() {
         SYNOMODEL="rs4021xsp_$TARGET_REVISION" && MODEL="RS4021xs+" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "sa3600" ]; then
         SYNOMODEL="sa3600_$TARGET_REVISION" && MODEL="SA3600" && ORIGIN_PLATFORM="broadwellnk"
+    elif [ "${TARGET_PLATFORM}" = "sa6400" ]; then
+        SYNOMODEL="sa6400_$TARGET_REVISION" && MODEL="SA6400" && ORIGIN_PLATFORM="epyc7002"
     elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
         SYNOMODEL="ds1621xsp_$TARGET_REVISION" && MODEL="DS1621xs+" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "dva3219" ]; then
@@ -3171,7 +3196,7 @@ function getvars() {
     CONFIG=$(readConfig)
     selectPlatform $1
 
-    GETTIME=$(curl --insecure -v --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+    GETTIME=$(curl -k -v -s https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
     INTERNETDATE=$(date +"%d%m%Y" -d "$GETTIME")
     LOCALDATE=$(date +"%d%m%Y")
 
@@ -3207,7 +3232,7 @@ function getvars() {
 
         echo "bspatch does not exist, bringing over from repo"
 
-        curl --insecure --location "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
+        curl -kL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
 
         chmod 777 bspatch
         sudo mv bspatch /usr/local/bin/
@@ -3216,7 +3241,7 @@ function getvars() {
     
     echo "Redownload the latest module.alias.4.json file ..."    
     echo
-    curl --insecure -s --location "$modalias4" --output modules.alias.4.json.gz
+    curl -k -s -L "$modalias4" -o modules.alias.4.json.gz
     [ -f modules.alias.4.json.gz ] && gunzip -f modules.alias.4.json.gz    
 
     [ ! -d ${local_cache} ] && sudo mkdir -p ${local_cache}
@@ -3420,7 +3445,7 @@ function listmodules() {
 function listextension() {
 
     if [ ! -f rpext-index.json ]; then
-        curl --insecure --progress-bar --location "${modextention}" --output rpext-index.json
+        curl -k -# -L "${modextention}" -o rpext-index.json
     fi
 
     ## Get extension author rpext-index.json and then parse for extension download with :
@@ -3472,47 +3497,80 @@ function getredpillko() {
 
 #  if [ ${TARGET_REVISION} == "42218" ]; then
 #        echo "Downloading fabio's ${ORIGIN_PLATFORM} 4.4.180 redpill.ko ..."
-#            URLS=$(curl --insecure -s https://api.github.com/repos/fbelavenuto/redpill-lkm/releases/latest | jq -r ".assets[].browser_download_url")
-#            sudo curl --location --progress-bar "$URLS" --output /home/tc/custom-module/rp-lkms.zip
+#            URLS=$(curl -k -s https://api.github.com/repos/fbelavenuto/redpill-lkm/releases/latest | jq -r ".assets[].browser_download_url")
+#            sudo curl -L -# "$URLS" -o /home/tc/custom-module/rp-lkms.zip
 #            unzip  /home/tc/custom-module/rp-lkms.zip rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz -d /home/tc/custom-module
 #        gunzip /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko.gz
 #        sudo mv /home/tc/custom-module/rp-$ORIGIN_PLATFORM-4.4.180-prod.ko /home/tc/custom-module/redpill.ko
 #  else
 
-    if [ $MODEL == "FS2500" ]||[ $MODEL == "SA3600" ]; then
+    if [ $MODEL == "FS2500" ]; then
     
         echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
-        sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+        sudo curl -kL -# https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko -o /home/tc/custom-module/redpill.ko
+
+    elif [ $MODEL == "SA3600" ]; then
+    
+        echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
+        sudo curl -kL -# https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-v4.4.180+.ko -o /home/tc/custom-module/redpill.ko
 
     elif [ $MODEL == "DS1019+" ]; then
 
         echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill-linux-ds1019+-v4.4.180+.ko -> redpill.ko ..."
-        sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-ds1019+-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
+        sudo curl -kL -# https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-ds1019+-v4.4.180+.ko -o /home/tc/custom-module/redpill.ko
 
     elif [ $MODEL == "DS723+" ]; then
     
         echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
-        sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/rp-r1000-4.4.180-prod.ko" --output /home/tc/custom-module/redpill.ko
+        sudo curl -kL -# https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/rp-r1000-4.4.180-prod.ko -o /home/tc/custom-module/redpill.ko
        
     elif [ $MODEL == "DS3615xs" ]; then
 
         echo "Downloading pocopico's ${ORIGIN_PLATFORM} 3.10.108 redpill.ko ..."
-        sudo curl --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-3.10.108.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+        sudo curl -kL -# https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-3.10.108.tgz -o /home/tc/custom-module/redpill.ko.tgz
         sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/    
 
 #    elif [ $MODEL == "DVA3219" ]; then
 #        echo "Downloading peter's ${ORIGIN_PLATFORM} 4.4.180 ${MODEL} redpill.ko ..."
-#        sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-dva3219-v4.4.180+.ko" --output /home/tc/custom-module/redpill.ko
-       
+#        sudo curl -kL -# https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/ext/rp-lkm/redpill-linux-dva3219-v4.4.180+.ko -o /home/tc/custom-module/redpill.ko
+
+    elif [ $MODEL == "SA6400" ]; then
+
+        echo "Downloading wjz304's ${ORIGIN_PLATFORM} 5.10.55+ redpill.ko ..."
+        LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/wjz304/redpill-lkm/releases/latest"`"
+        TAG="${LATESTURL##*/}"
+        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/wjz304/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+        if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
+            echo "Error downloading last version of wjz304's ${ORIGIN_PLATFORM} 5.10.55+ rp-lkms.zip"
+            exit 99
+        fi
+        sudo rm -f /home/tc/custom-module/*.gz
+        sudo rm -f /home/tc/custom-module/*.ko
+        sudo unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-5.10.55-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
+        gunzip /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-5.10.55-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
+        mv /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-5.10.55-prod.ko /home/tc/custom-module/redpill.ko
+
     else
     
-        echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.X redpill.ko ..."
-        if [ ${TARGET_REVISION} == "64216" ]; then
-            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.302plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+        if [ ${TARGET_REVISION} == "64551" ]; then
+            echo "Downloading wjz304's ${ORIGIN_PLATFORM} 4.4.302+ redpill.ko ..."
+            LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/wjz304/redpill-lkm/releases/latest"`"
+            TAG="${LATESTURL##*/}"
+            STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/wjz304/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+            if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
+                echo "Error downloading last version of wjz304's ${ORIGIN_PLATFORM} 4.4.302+ rp-lkms.zip"
+                exit 99
+            fi
+            sudo rm -f /home/tc/custom-module/*.gz
+            sudo rm -f /home/tc/custom-module/*.ko
+            sudo unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-4.4.302-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
+            gunzip /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-4.4.302-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
+            mv /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-4.4.302-prod.ko /home/tc/custom-module/redpill.ko
         else
-            sudo curl --insecure --location --progress-bar "https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz" --output /home/tc/custom-module/redpill.ko.tgz
+            echo "Downloading pocopico's ${ORIGIN_PLATFORM} 4.4.X redpill.ko ..."        
+            sudo curl -skL https://raw.githubusercontent.com/pocopico/rp-ext/master/redpillprod/releases/redpill-4.4.180plus-$ORIGIN_PLATFORM.tgz -o /home/tc/custom-module/redpill.ko.tgz
+            sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
         fi
-        sudo tar -zxvf /home/tc/custom-module/redpill.ko.tgz -C /home/tc/custom-module/
         
     fi
 
@@ -3654,7 +3712,7 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         if [ -f interactive.sh ]; then
             . ./interactive.sh
         else
-            curl --insecure --location --progress-bar "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/interactive.sh" --output interactive.sh
+            curl -kL -# "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/interactive.sh" -o interactive.sh
             . ./interactive.sh
             exit 99
         fi
