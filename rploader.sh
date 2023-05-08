@@ -3511,10 +3511,10 @@ function getredpillko() {
     echo "KERNEL VERSION of getredpillko() is ${KVER}"
 
     echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."
-    if [ "${KVER}"=="5.10.55" ]; then
+    if [ "${ORIGIN_PLATFORM}"=="epyc7002" ]; then
         LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/latest"`"
         TAG="${LATESTURL##*/}"
-        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms5.zip"`
+        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
     else
         LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/latest"`"
         TAG="${LATESTURL##*/}"
@@ -3522,16 +3522,12 @@ function getredpillko() {
     fi    
     echo "TAG is ${TAG}"
     if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
-        echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip or rp-lkms5.zip"
+        echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip"
         exit 99
     fi
     sudo rm -f /home/tc/custom-module/*.gz
     sudo rm -f /home/tc/custom-module/*.ko
-    if [ "${KVER}"=="5.10.55" ]; then    
-        sudo unzip /tmp/rp-lkms5.zip       rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
-    else
-        sudo unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
-    fi    
+    sudo unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
     gunzip /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
     mv /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
 
