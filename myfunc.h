@@ -146,6 +146,8 @@ set -u
 # 2023.05.02
 # Update : Added sa6400 (epyc7002)
 # 2023.05.06
+# Update : Add 5 models DS720+,RS1221+,RS1619xs+,RS3621xs+,SA3400
+# 2023.05.08
 
 function showlastupdate() {
     cat <<EOF
@@ -181,6 +183,9 @@ function showlastupdate() {
 
 # Update : Added sa6400 (epyc7002)
 # 2023.05.06
+
+# Update : Add 5 models DS720+,RS1221+,RS1619xs+,RS3621xs+,SA3400
+# 2023.05.08
 
 EOF
 }
@@ -233,6 +238,11 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) DS923+F
 ./$(basename ${0}) DS723+F
 ./$(basename ${0}) SA6400F
+./$(basename ${0}) DS720+F
+./$(basename ${0}) RS1221+F
+./$(basename ${0}) RS1619xs+F
+./$(basename ${0}) RS3621xs+F
+./$(basename ${0}) SA3400F
 
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
@@ -331,7 +341,6 @@ function getvars()
 # JOT / FRIEND MODE NEW MODEL SUCCESS
     elif [ "${1}" = "DS2422+" ] || [ "${1}" = "DS2422+F" ] ; then
         KVER="4.4.180"
-                        
         TARGET_PLATFORM="ds2422p"
         ORIGIN_PLATFORM="v1000"
         SYNOMODEL="ds2422p_$TARGET_REVISION"                                                                                                                   
@@ -339,7 +348,6 @@ function getvars()
         SUVP="-1"
     elif [ "${1}" = "DS1621xs+" ] || [ "${1}" = "DS1621xs+F" ]; then
         KVER="4.4.180"
-            
         TARGET_PLATFORM="ds1621xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="ds1621xsp_$TARGET_REVISION"
@@ -347,7 +355,6 @@ function getvars()
         SUVP="-1"
     elif [ "${1}" = "RS4021xs+" ] || [ "${1}" = "RS4021xs+F" ]; then
         KVER="4.4.180"
-            
         TARGET_PLATFORM="rs4021xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="rs4021xsp_$TARGET_REVISION"
@@ -355,21 +362,18 @@ function getvars()
         SUVP="-5"
     elif [ "${1}" = "SA3600" ] || [ "${1}" = "SA3600F" ]; then
         KVER="4.4.180"
-            
         TARGET_PLATFORM="sa3600"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="sa3600_$TARGET_REVISION"
         sha256="d4d6fcd5bb3b3c005f2fb199af90cb7f62162d9112127d06ebf5973aa645e0f8"
     elif [ "${1}" = "SA6400" ] || [ "${1}" = "SA6400F" ]; then
         KVER="5.10.55"
-            
         TARGET_PLATFORM="sa6400"
         ORIGIN_PLATFORM="epyc7002"        
         SYNOMODEL="sa6400_$TARGET_REVISION"
         sha256="83fc408380ebb1381224261de6220b873d7b62a99e715557509ae9553f618a71"
     elif [ "${1}" = "DVA3219" ] || [ "${1}" = "DVA3219F" ]; then
         KVER="4.4.180"
-            
         TARGET_PLATFORM="dva3219"
         ORIGIN_PLATFORM="denverton"        
         SYNOMODEL="dva3219_$TARGET_REVISION"                                                                                                                   
@@ -377,7 +381,6 @@ function getvars()
         SUVP="-1"
     elif [ "${1}" = "FS2500" ] || [ "${1}" = "FS2500F" ]; then
         KVER="4.4.180"
-            
         TARGET_PLATFORM="fs2500"
         ORIGIN_PLATFORM="v1000"        
         SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
@@ -385,7 +388,6 @@ function getvars()
         SUVP="-1"
     elif [ "${1}" = "RS3618xs" ] || [ "${1}" = "RS3618xsF" ]; then                                                                                                                     
         KVER="4.4.180"
-                
         TARGET_PLATFORM="rs3618xs"
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
@@ -400,11 +402,46 @@ function getvars()
         SUVP="-1"
     elif [ "${1}" = "DS1520+" ] || [ "${1}" = "DS1520+F" ]; then
         KVER="4.4.180"
-            
         TARGET_PLATFORM="ds1520p"
         ORIGIN_PLATFORM="geminilake"        
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
         sha256="edcacbab10b77e2a6862d31173f5369c6e3c1720b8f0ec4fd41786609017c39b"
+        SUVP="-1"
+        
+    elif [ "${1}" = "DS720+" ] || [ "${1}" = "DS720+F" ]; then
+        KVER="4.4.180"
+        TARGET_PLATFORM="ds720p"
+        ORIGIN_PLATFORM="geminilake"
+        SYNOMODEL="ds720p_$TARGET_REVISION"                                                                                                                    
+        sha256="914641e4885d0a465a46c35e3c271ca5e8cf7f1564591110c762c3ab11d0f202"
+        SUVP="-1"
+    elif [ "${1}" = "RS1221+" ] || [ "${1}" = "RS1221+F" ]; then
+        KVER="4.4.180"
+        TARGET_PLATFORM="rs1221p"
+        ORIGIN_PLATFORM="v1000"        
+        SYNOMODEL="rs1221p_$TARGET_REVISION"                                                                                                                    
+        sha256="8a06aea176eb5f227675c1b75acd02875c2e0a2d3f4e227e87dc85b663bdbe33"
+        SUVP="-1"
+    elif [ "${1}" = "RS1619xs+" ] || [ "${1}" = "RS1619xs+F" ]; then
+        KVER="4.4.180"
+        TARGET_PLATFORM="rs1619xsp"
+        ORIGIN_PLATFORM="broadwellnk"        
+        SYNOMODEL="rs1619xsp_$TARGET_REVISION"
+        sha256="4cd9b66fcf56d8d8cedd1435267a18c0b1cb7894462bdaf4db1bd9bb8f1ac0e1"
+        SUVP="-1"
+    elif [ "${1}" = "RS3621xs+" ] || [ "${1}" = "RS3621xs+F" ]; then
+        KVER="4.4.180"
+        TARGET_PLATFORM="rs3621xsp"
+        ORIGIN_PLATFORM="broadwellnk"        
+        SYNOMODEL="rs3621xsp_$TARGET_REVISION"
+        sha256="8cd926bb3becd30d61d93770c050f102c294e96cab208d4a4f0ffa4f50006067"
+        SUVP="-5"
+    elif [ "${1}" = "SA3400" ] || [ "${1}" = "SA3400F" ]; then
+        KVER="4.4.180"
+        TARGET_PLATFORM="sa3400"
+        ORIGIN_PLATFORM="broadwellnk"        
+        SYNOMODEL="sa3400_$TARGET_REVISION"
+        sha256="df1e1d2d32113419a5d5a0ba0213a35dc3ac6ad462ebe885ccf86a06c057fe1c"
         SUVP="-1"
         
 # JOT MODE NEW MODEL TESTTING                
