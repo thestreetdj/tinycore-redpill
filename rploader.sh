@@ -3167,8 +3167,16 @@ function setplatform() {
         SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622" && ORIGIN_PLATFORM="geminilake"
     elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
         SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+" && ORIGIN_PLATFORM="v1000"
+    elif [ "${TARGET_PLATFORM}" = "rs1221p" ]; then
+        SYNOMODEL="rs1221p_$TARGET_REVISION" && MODEL="RS1221+" && ORIGIN_PLATFORM="v1000"
+    elif [ "${TARGET_PLATFORM}" = "rs1619xsp" ]; then
+        SYNOMODEL="ds1619xsp_$TARGET_REVISION" && MODEL="DS1619xs+" && ORIGIN_PLATFORM="broadwellnk"
+    elif [ "${TARGET_PLATFORM}" = "rs3621xsp" ]; then
+        SYNOMODEL="rs3621xsp_$TARGET_REVISION" && MODEL="RS3621xs+" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "rs4021xsp" ]; then
         SYNOMODEL="rs4021xsp_$TARGET_REVISION" && MODEL="RS4021xs+" && ORIGIN_PLATFORM="broadwellnk"
+    elif [ "${TARGET_PLATFORM}" = "sa3400" ]; then
+        SYNOMODEL="sa3400_$TARGET_REVISION" && MODEL="SA3400" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "sa3600" ]; then
         SYNOMODEL="sa3600_$TARGET_REVISION" && MODEL="SA3600" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "sa6400" ]; then
@@ -3179,6 +3187,8 @@ function setplatform() {
         SYNOMODEL="dva3219_$TARGET_REVISION" && MODEL="DVA3219" && ORIGIN_PLATFORM="denverton"
     elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
         SYNOMODEL="ds1520p_$TARGET_REVISION" && MODEL="DS1520+" && ORIGIN_PLATFORM="geminilake"
+    elif [ "${TARGET_PLATFORM}" = "ds720p" ]; then
+        SYNOMODEL="ds720p_$TARGET_REVISION" && MODEL="DS720+" && ORIGIN_PLATFORM="geminilake"
     elif [ "${TARGET_PLATFORM}" = "fs2500" ]; then
         SYNOMODEL="fs2500_$TARGET_REVISION" && MODEL="FS2500" && ORIGIN_PLATFORM="v1000"
     elif [ "${TARGET_PLATFORM}" = "rs3618xs" ]; then
