@@ -3514,19 +3514,24 @@ function getredpillko() {
     if [ "${KVER}"=="5.10.55" ]; then
         LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/latest"`"
         TAG="${LATESTURL##*/}"
-        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms5.zip"`
     else
         LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/latest"`"
         TAG="${LATESTURL##*/}"
         STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
     fi    
+    echo "TAG is ${TAG}"
     if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
-        echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip"
+        echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip or rp-lkms5.zip"
         exit 99
     fi
     sudo rm -f /home/tc/custom-module/*.gz
     sudo rm -f /home/tc/custom-module/*.ko
-    sudo unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
+    if [ "${KVER}"=="5.10.55" ]; then    
+        sudo unzip /tmp/rp-lkms5.zip       rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
+    else
+        sudo unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
+    fi    
     gunzip /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
     mv /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
 
