@@ -593,6 +593,30 @@ function getvars()
         SYNOMODEL="rs4021xsp_$TARGET_REVISION"
         sha256="c233ee6e90fd9b4d9c86e8d779f18859becff2d2423516e46b7d9a2a10f6938c"
 
+    elif [ "${1}" = "DS720+K" ]; then
+        KVER="4.4.302"
+        TARGET_REVISION="64551"
+        TARGET_PLATFORM="ds720p"
+        ORIGIN_PLATFORM="geminilake"
+        SYNOMODEL="ds720p_$TARGET_REVISION"                                                                                                                    
+        sha256="65750f46ebb3e829e1d9f27cfcc7f3508ae7efb9c35f8f123533d907bbaa5f8f"
+
+    elif [ "${1}" = "RS1221+K" ]; then
+        KVER="4.4.302"
+        TARGET_REVISION="64551"
+        TARGET_PLATFORM="rs1221p"
+        ORIGIN_PLATFORM="v1000"        
+        SYNOMODEL="rs1221p_$TARGET_REVISION"                                                                                                                    
+        sha256="a3cbff0146eecb0f44f6dad53172986e5e4fdd256be5a00b606eecefd08710a6"
+
+    elif [ "${1}" = "RS3621xs+K" ]; then
+        KVER="4.4.302"
+        TARGET_REVISION="64551"
+        TARGET_PLATFORM="rs3621xsp"
+        ORIGIN_PLATFORM="broadwellnk"        
+        SYNOMODEL="rs3621xsp_$TARGET_REVISION"
+        sha256="d26a3397824f8baea79927924a2033f3d1a034486cfffac26fdd3d690224fa47"
+        
 #JUN MODE
     elif [ "${1}" = "DS918+J" ]; then           
         KVER="4.4.180"
