@@ -3170,7 +3170,7 @@ function setplatform() {
     elif [ "${TARGET_PLATFORM}" = "rs1221p" ]; then
         SYNOMODEL="rs1221p_$TARGET_REVISION" && MODEL="RS1221+" && ORIGIN_PLATFORM="v1000"
     elif [ "${TARGET_PLATFORM}" = "rs1619xsp" ]; then
-        SYNOMODEL="ds1619xsp_$TARGET_REVISION" && MODEL="DS1619xs+" && ORIGIN_PLATFORM="broadwellnk"
+        SYNOMODEL="rs1619xsp_$TARGET_REVISION" && MODEL="RS1619xs+" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "rs3621xsp" ]; then
         SYNOMODEL="rs3621xsp_$TARGET_REVISION" && MODEL="RS3621xs+" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "rs4021xsp" ]; then
