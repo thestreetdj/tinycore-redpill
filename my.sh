@@ -359,12 +359,14 @@ if [ $noconfig == "Y" ]; then
 else 
     cecho c "Before changing user_config.json" 
     cat user_config.json
-
     echo "y"|./rploader.sh identifyusb
 
-    cecho p "Device Tree based model does not need SataPortMap setting...."     
-
-    ./rploader.sh satamap    
+    if [ "${TARGET_PLATFORM}" = "v1000" ]||[ "${TARGET_PLATFORM}" = "r1000" ]||[ "${TARGET_PLATFORM}" = "geminilake" ]; then
+        cecho p "Device Tree based model does not need SataPortMap setting...."     
+    else    
+        ./rploader.sh satamap    
+    fi    
+    cecho y "After changing user_config.json"     
     cat user_config.json        
 fi
 
