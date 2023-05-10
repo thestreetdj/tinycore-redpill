@@ -361,7 +361,7 @@ else
     cat user_config.json
     echo "y"|./rploader.sh identifyusb
 
-    if [ "${TARGET_PLATFORM}" = "v1000" ]||[ "${TARGET_PLATFORM}" = "r1000" ]||[ "${TARGET_PLATFORM}" = "geminilake" ]; then
+    if [ "$ORIGIN_PLATFORM" = "v1000" ]||[ "$ORIGIN_PLATFORM" = "r1000" ]||[ "$ORIGIN_PLATFORM" = "geminilake" ]; then
         cecho p "Device Tree based model does not need SataPortMap setting...."     
     else    
         ./rploader.sh satamap    
