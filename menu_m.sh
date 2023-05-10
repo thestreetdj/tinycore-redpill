@@ -1085,11 +1085,11 @@ function langMenu() {
     Italiano) tz="IT"; ucode="it_IT";;
     brasileiro) tz="BR"; ucode="pt_BR";;
   esac
-  
-  [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
-  sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
+
   export LANG=${ucode}.utf8
   export LC_ALL=${ucode}.utf8
+  [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
+  sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
   
   writeConfigKey "general" "ucode" "${ucode}"  
   
