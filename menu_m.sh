@@ -1060,6 +1060,28 @@ function postupdate() {
   return 0
 }
 
+function writexsession() {
+
+  echo "insert aterm menu.sh in /home/tc/.xsession"
+
+  sed -i "/locale/d" .xsession
+  sed -i "/utf8/d" .xsession
+  sed -i "/UTF-8/d" .xsession
+  sed -i "/aterm/d" .xsession
+  sed -i "/urxvt/d" .xsession
+
+  if [ "${ucode}" != "en_US" ]; then
+    echo "export LANG=${ucode}.utf8" >> .xsession
+    echo "export LC_ALL=${ucode}.utf8" >> .xsession
+    echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
+    echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
+  fi
+  echo "urxvt -geometry 78x32+525+0 -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession  
+  echo "aterm -geometry 78x32+10+0 -fg yellow -title \"TCRP Monitor\" -e /home/tc/rploader.sh monitor &" >> .xsession
+  echo "aterm -geometry 78x25+10+430 -fg orange -title \"TCRP NTP Sync\" -e /home/tc/ntp.sh &" >> .xsession
+  echo "aterm -geometry 78x25+525+430 -fg green -title \"TCRP Extra Terminal\" &" >> .xsession
+}
+
 ###############################################################################
 # Shows available language to user choose one
 function langMenu() {
@@ -1092,6 +1114,7 @@ function langMenu() {
   sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
   
   writeConfigKey "general" "ucode" "${ucode}"  
+  writexsession
   
   setSuggest
   
@@ -1201,24 +1224,7 @@ writeConfigKey "general" "ucode" "${ucode}"
 
 sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" ~/.dialogrc
 
-echo "insert aterm menu.sh in /home/tc/.xsession"
-
-sed -i "/locale/d" .xsession
-sed -i "/utf8/d" .xsession
-sed -i "/UTF-8/d" .xsession
-sed -i "/aterm/d" .xsession
-sed -i "/urxvt/d" .xsession
-
-if [ "${ucode}" != "en_US" ]; then
-  echo "export LANG=${ucode}.utf8" >> .xsession
-  echo "export LC_ALL=${ucode}.utf8" >> .xsession
-  echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
-  echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
-fi
-echo "urxvt -geometry 78x32+525+0 -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession  
-echo "aterm -geometry 78x32+10+0 -fg yellow -title \"TCRP Monitor\" -e /home/tc/rploader.sh monitor &" >> .xsession
-echo "aterm -geometry 78x25+10+430 -fg orange -title \"TCRP NTP Sync\" -e /home/tc/ntp.sh &" >> .xsession
-echo "aterm -geometry 78x25+525+430 -fg green -title \"TCRP Extra Terminal\" &" >> .xsession
+writexsession
 
 if [ "${ucode}" != "en_US" ]; then
 
