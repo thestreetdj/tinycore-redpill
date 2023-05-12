@@ -371,7 +371,8 @@ function getvars()
         TARGET_PLATFORM="sa6400"
         ORIGIN_PLATFORM="epyc7002"        
         SYNOMODEL="sa6400_$TARGET_REVISION"
-        sha256="83fc408380ebb1381224261de6220b873d7b62a99e715557509ae9553f618a71"
+        sha256="97413b95fff07f3482dead55cd9a81eb6cbbf4d56c5e283d684c340a13ba3ac4"
+        SUVP="-5"        
     elif [ "${1}" = "DVA3219" ] || [ "${1}" = "DVA3219F" ]; then
         KVER="4.4.180"
         TARGET_PLATFORM="dva3219"
