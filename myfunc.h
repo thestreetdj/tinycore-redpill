@@ -148,6 +148,8 @@ set -u
 # 2023.05.06
 # Update : Add 5 models DS720+,RS1221+,RS1619xs+,RS3621xs+,SA3400
 # 2023.05.08
+# Update : 7.0.1-42218 menu open for all models
+# 2023.05.12
 
 function showlastupdate() {
     cat <<EOF
@@ -186,6 +188,9 @@ function showlastupdate() {
 
 # Update : Add 5 models DS720+,RS1221+,RS1619xs+,RS3621xs+,SA3400
 # 2023.05.08
+
+# Update : 7.0.1-42218 menu open for all models
+# 2023.05.12
 
 EOF
 }
