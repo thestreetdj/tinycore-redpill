@@ -3511,15 +3511,15 @@ function getredpillko() {
     echo "KERNEL VERSION of getredpillko() is ${KVER}"
 
     echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."
-#    if [ "${ORIGIN_PLATFORM}"=="epyc7002" ]; then
-#        LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/latest"`"
-#        TAG="${LATESTURL##*/}"
-#        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
-#    else
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/latest"`"
+        TAG="${LATESTURL##*/}"
+        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+    else
         LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/latest"`"
         TAG="${LATESTURL##*/}"
         STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
-#    fi    
+    fi    
     echo "TAG is ${TAG}"
     if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
         echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip"
