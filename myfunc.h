@@ -268,70 +268,60 @@ function getvars()
 
 # JOT / FRIEND MODE
     if [ "${1}" = "DS918+" ] || [ "${1}" = "DS918+F" ]; then        
-        KVER="4.4.180"
         TARGET_PLATFORM="ds918p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
         sha256="9905e145f3bd88fcc938b00882be10281861867e5165ae98aefa37be0d5d34b5"
         SUVP="-1"
     elif [ "${1}" = "DS3615xs" ] || [ "${1}" = "DS3615xsF" ]; then                                                                                                                     
-        KVER="3.10.108"
         TARGET_PLATFORM="ds3615xs"
         ORIGIN_PLATFORM="bromolow"
         SYNOMODEL="ds3615xs_$TARGET_REVISION"                                                                                                                  
         sha256="f01a17d73e2594b0b31f134bfe023dccc0bb9389a462f9918080573134093023"
         SUVP="-1"
     elif [ "${1}" = "DS3617xs" ] || [ "${1}" = "DS3617xsF" ]; then                                                                                                                     
-        KVER="4.4.180"
         TARGET_PLATFORM="ds3617xs"
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="ds3617xs_$TARGET_REVISION"                                                                                                                  
         sha256="1b72bb24dc9d10d3784298e6df9d79a8f8c3555087e0de12f3359ce373f4e7c9"
         SUVP="-1"
     elif [ "${1}" = "DS3622xs+" ] || [ "${1}" = "DS3622xs+F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="ds3622xsp"
         ORIGIN_PLATFORM="broadwellnk"
         SYNOMODEL="ds3622xsp_$TARGET_REVISION"
         sha256="775933e32a9e04700fc10a155f5a26c0878c3cdec18b6ec6b1d5a4110e83d428"
         SUVP="-1"
     elif [ "${1}" = "DS1621+" ] || [ "${1}" = "DS1621+F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="ds1621p"
         ORIGIN_PLATFORM="v1000"
         SYNOMODEL="ds1621p_$TARGET_REVISION"                                                                                                                   
         sha256="41a4b80ef58f3ff5ee924329ff59bd4ac0abb7676561847a84e98bc6bb225003"
         SUVP="-1"
     elif [ "${1}" = "DVA3221" ] || [ "${1}" = "DVA3221F" ]; then                                                                                                                      
-        KVER="4.4.180"
         TARGET_PLATFORM="dva3221"
         ORIGIN_PLATFORM="denverton"
         SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
         sha256="7bd2fe270bc665cc859142b7c6462fe8137f047c4fbe2f87ed3d03c30c514766"
         SUVP="-1"        
     elif [ "${1}" = "DVA1622" ] || [ "${1}" = "DVA1622F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="dva1622"
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="dva1622_$TARGET_REVISION"                                                                                                                   
         sha256="ebebc3f1de22b789b386f1d52fbe0be3fcca23f83e0d34ed9c24e794701b4c3d"
         SUVP="-1"        
     elif [ "${1}" = "DS920+" ] || [ "${1}" = "DS920+F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="ds920p"
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
         sha256="f58c15d4d83699884c30e4a4b04b1d2e0db19c477923d920327a897a73c741b6"
         SUVP="-1"
     elif [ "${1}" = "DS923+" ] || [ "${1}" = "DS923+F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="ds923p"
         ORIGIN_PLATFORM="r1000"
         SYNOMODEL="ds923p_$TARGET_REVISION"                                                                                                                    
         sha256="8fe1232e26661dd9e6db2a8e132bd8869b23b2887d77d298cd8e0b7cb2f9e2d6"
         SUVP="-5"
     elif [ "${1}" = "DS723+" ] || [ "${1}" = "DS723+F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="ds723p"
         ORIGIN_PLATFORM="r1000"
         SYNOMODEL="ds723p_$TARGET_REVISION"                                                                                                                    
@@ -340,69 +330,59 @@ function getvars()
 
 # JOT / FRIEND MODE NEW MODEL SUCCESS
     elif [ "${1}" = "DS2422+" ] || [ "${1}" = "DS2422+F" ] ; then
-        KVER="4.4.180"
         TARGET_PLATFORM="ds2422p"
         ORIGIN_PLATFORM="v1000"
         SYNOMODEL="ds2422p_$TARGET_REVISION"                                                                                                                   
         sha256="69f02c4636ff2593e5feb393e13ed82791fa6457d61874368a0b6f93ee11f164"
         SUVP="-1"
     elif [ "${1}" = "DS1621xs+" ] || [ "${1}" = "DS1621xs+F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="ds1621xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="ds1621xsp_$TARGET_REVISION"
         sha256="d2272ab531f0f68f8008106dd75b4e303c71db8d95093d186a22c1cf2d970402"
         SUVP="-1"
     elif [ "${1}" = "RS4021xs+" ] || [ "${1}" = "RS4021xs+F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="rs4021xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="rs4021xsp_$TARGET_REVISION"
         sha256="e2ddf670e54fe6b2b52b19125430dc82394df2722afd4f62128b95a63459ee3d"
         SUVP="-5"
     elif [ "${1}" = "SA3600" ] || [ "${1}" = "SA3600F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="sa3600"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="sa3600_$TARGET_REVISION"
         sha256="d4d6fcd5bb3b3c005f2fb199af90cb7f62162d9112127d06ebf5973aa645e0f8"
     elif [ "${1}" = "SA6400" ] || [ "${1}" = "SA6400F" ]; then
-        KVER="5.10.55"
         TARGET_PLATFORM="sa6400"
         ORIGIN_PLATFORM="epyc7002"        
         SYNOMODEL="sa6400_$TARGET_REVISION"
         sha256="97413b95fff07f3482dead55cd9a81eb6cbbf4d56c5e283d684c340a13ba3ac4"
         SUVP="-5"        
     elif [ "${1}" = "DVA3219" ] || [ "${1}" = "DVA3219F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="dva3219"
         ORIGIN_PLATFORM="denverton"        
         SYNOMODEL="dva3219_$TARGET_REVISION"                                                                                                                   
         sha256="9f8c6095235df2e2caebadf846f11e4244af6f1aada9a7dd5c2c60543f944aac"
         SUVP="-1"
     elif [ "${1}" = "FS2500" ] || [ "${1}" = "FS2500F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="fs2500"
         ORIGIN_PLATFORM="v1000"        
         SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
         sha256="e74ff783b5ca6fbdec1a0eb950b366b74b27c0288fb72baaf86db8a31d68b985"
         SUVP="-1"
     elif [ "${1}" = "RS3618xs" ] || [ "${1}" = "RS3618xsF" ]; then                                                                                                                     
-        KVER="4.4.180"
         TARGET_PLATFORM="rs3618xs"
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
         sha256="2851af89ca0ec287ff47ab265412b67c4fba5848cedb51486a8f6ed2baca3062"
         SUVP="-1"
     elif [ "${1}" = "DS1019+" ] || [ "${1}" = "DS1019+F" ]; then        
-        KVER="4.4.180"
         TARGET_PLATFORM="ds1019p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
         sha256="af2268388df9434679205ffd782ae5c17cd81d733cdcd94b13fc894748ffe321"
         SUVP="-1"
     elif [ "${1}" = "DS1520+" ] || [ "${1}" = "DS1520+F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="ds1520p"
         ORIGIN_PLATFORM="geminilake"        
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
@@ -410,35 +390,30 @@ function getvars()
         SUVP="-1"
         
     elif [ "${1}" = "DS720+" ] || [ "${1}" = "DS720+F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="ds720p"
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="ds720p_$TARGET_REVISION"                                                                                                                    
         sha256="914641e4885d0a465a46c35e3c271ca5e8cf7f1564591110c762c3ab11d0f202"
         SUVP="-1"
     elif [ "${1}" = "RS1221+" ] || [ "${1}" = "RS1221+F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="rs1221p"
         ORIGIN_PLATFORM="v1000"        
         SYNOMODEL="rs1221p_$TARGET_REVISION"                                                                                                                    
         sha256="8a06aea176eb5f227675c1b75acd02875c2e0a2d3f4e227e87dc85b663bdbe33"
         SUVP="-1"
     elif [ "${1}" = "RS1619xs+" ] || [ "${1}" = "RS1619xs+F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="rs1619xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="rs1619xsp_$TARGET_REVISION"
         sha256="4cd9b66fcf56d8d8cedd1435267a18c0b1cb7894462bdaf4db1bd9bb8f1ac0e1"
         SUVP="-1"
     elif [ "${1}" = "RS3621xs+" ] || [ "${1}" = "RS3621xs+F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="rs3621xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="rs3621xsp_$TARGET_REVISION"
         sha256="8cd926bb3becd30d61d93770c050f102c294e96cab208d4a4f0ffa4f50006067"
         SUVP="-5"
     elif [ "${1}" = "SA3400" ] || [ "${1}" = "SA3400F" ]; then
-        KVER="4.4.180"
         TARGET_PLATFORM="sa3400"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="sa3400_$TARGET_REVISION"
@@ -449,8 +424,6 @@ function getvars()
     elif [ "${1}" = "RS3413xs+" ] || [ "${1}" = "RS3413xs+F" ]; then
         echo "Synology model ${1} jot mode not supported by m shell, Testing..."        
         exit 0        
-    
-        KVER="4.4.180"
             
         TARGET_PLATFORM="rs3413xsp"
         ORIGIN_PLATFORM="bromolow"        
@@ -459,7 +432,6 @@ function getvars()
 
 #DSM 7.2
     elif [ "${1}" = "DS1019+K" ]; then        
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="ds1019p"
         ORIGIN_PLATFORM="apollolake"
@@ -467,7 +439,6 @@ function getvars()
         sha256="41d300ce3ca7482dd610aa0b540ea2a27896cc1d62ea8edd594ba19bd2a23a1d"
         
     elif [ "${1}" = "DS1520+K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="ds1520p"
         ORIGIN_PLATFORM="geminilake"        
@@ -475,7 +446,6 @@ function getvars()
         sha256="f42ca1bd75e88154623dba5dbbd08bcf8a00936ab178885b24d4d8429b6fb0a4"
 
     elif [ "${1}" = "DS1621+K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="ds1621p"
         ORIGIN_PLATFORM="v1000"
@@ -483,7 +453,6 @@ function getvars()
         sha256="c18a720858eecfbab820b03d15f28ab9d21d7c022be289a208735869c5de84fb"
 
     elif [ "${1}" = "DS1621xs+K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="ds1621xsp"
         ORIGIN_PLATFORM="broadwellnk"        
@@ -491,7 +460,6 @@ function getvars()
         sha256="3556bd6ca5c1d6cab93bf1c5b011ef461a5b4353ba35c16b061ecf42bed2d492"
 
     elif [ "${1}" = "DS2422+K" ] ; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="ds2422p"
         ORIGIN_PLATFORM="v1000"
@@ -499,7 +467,6 @@ function getvars()
         sha256="07227bf230bd56ead2905d6e47bedb1a38f341a088d5b2c355db01be54457e7b"
 
     elif [ "${1}" = "DS3617xsK" ]; then                                                                                                                     
-        KVER="4.4.302"
         TARGET_REVISION="64551"    
         TARGET_PLATFORM="ds3617xs"
         ORIGIN_PLATFORM="broadwell"
@@ -507,7 +474,6 @@ function getvars()
         sha256="17785c8dab0cc2faf4c0ac3d6ddca3c38c782fc57586004182ae09e443410db4"
         
     elif [ "${1}" = "DS3622xs+K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"    
         TARGET_PLATFORM="ds3622xsp"
         ORIGIN_PLATFORM="broadwellnk"
@@ -515,7 +481,6 @@ function getvars()
         sha256="c20985c298af3906f8199cdb4d8b66a38f80c335496262956a774f81de50fb0a"
 
     elif [ "${1}" = "DS723+K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"    
         TARGET_PLATFORM="ds723p"
         ORIGIN_PLATFORM="r1000"
@@ -523,7 +488,6 @@ function getvars()
         sha256="d1262257740f5c2e9c676f4642d772b8e556d7f1ab21b3df2254a12d97a314fd"
 
     elif [ "${1}" = "DS918+K" ]; then           
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="ds918p"
         ORIGIN_PLATFORM="apollolake"
@@ -531,7 +495,6 @@ function getvars()
         sha256="13b7d6dfb371bbf9b75ffbefbad07d514e42aaeefb868796bf0990ce26744a83"      
         
     elif [ "${1}" = "DS920+K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"    
         TARGET_PLATFORM="ds920p"
         ORIGIN_PLATFORM="geminilake"
@@ -539,7 +502,6 @@ function getvars()
         sha256="d5dc4f98cfbf9b8b9bf77c607a6f0acd2cc2a4ee0651bf50b12a79e3de74204b"
         
     elif [ "${1}" = "DS923+K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"    
         TARGET_PLATFORM="ds923p"
         ORIGIN_PLATFORM="r1000"
@@ -547,7 +509,6 @@ function getvars()
         sha256="9e4e1d59c8cf1a8a96f7d2d00fa51a2c9b9a01ad2ec13a72b5bc1d0bd6723ee8"
 
     elif [ "${1}" = "DVA1622K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"    
         TARGET_PLATFORM="dva1622"
         ORIGIN_PLATFORM="geminilake"
@@ -555,7 +516,6 @@ function getvars()
         sha256="8dac8f4d94961f602a34b3f6a4e5e14004166485c8f50016a3f9061ae0c126a8"
                 
     elif [ "${1}" = "DVA3219K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="dva3219"
         ORIGIN_PLATFORM="denverton"        
@@ -563,7 +523,6 @@ function getvars()
         sha256="d484a2b74ed59703fd6c407fd5898f096675cb97416ec52f0bbb44c3b6c3d02d"
         
     elif [ "${1}" = "DVA3221K" ]; then                                                                                                                      
-        KVER="4.4.302"
         TARGET_REVISION="64551"    
         TARGET_PLATFORM="dva3221"
         ORIGIN_PLATFORM="denverton"
@@ -571,7 +530,6 @@ function getvars()
         sha256="ca3483040c8cabab6774c83b0d09083876ead6a55d1697ece379d674f0c87f80"
                 
     elif [ "${1}" = "FS2500K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="fs2500"
         ORIGIN_PLATFORM="v1000"        
@@ -579,7 +537,6 @@ function getvars()
         sha256="a871d5d35ba110c315c5a73a665de2178a620a617ac096beab1d0812b7be8741"
         
     elif [ "${1}" = "RS3618xsK" ]; then                                                                                                                     
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="rs3618xs"
         ORIGIN_PLATFORM="broadwell"
@@ -587,7 +544,6 @@ function getvars()
         sha256="63b41dd4940e81c933b3493dd648fcaa750a165b6dbd9fcee96ee87acad4bbab"
         
     elif [ "${1}" = "RS4021xs+K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="rs4021xsp"
         ORIGIN_PLATFORM="broadwellnk"        
@@ -595,7 +551,6 @@ function getvars()
         sha256="c233ee6e90fd9b4d9c86e8d779f18859becff2d2423516e46b7d9a2a10f6938c"
 
     elif [ "${1}" = "DS720+K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="ds720p"
         ORIGIN_PLATFORM="geminilake"
@@ -603,7 +558,6 @@ function getvars()
         sha256="65750f46ebb3e829e1d9f27cfcc7f3508ae7efb9c35f8f123533d907bbaa5f8f"
 
     elif [ "${1}" = "RS1221+K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="rs1221p"
         ORIGIN_PLATFORM="v1000"        
@@ -611,7 +565,6 @@ function getvars()
         sha256="a3cbff0146eecb0f44f6dad53172986e5e4fdd256be5a00b606eecefd08710a6"
 
     elif [ "${1}" = "RS3621xs+K" ]; then
-        KVER="4.4.302"
         TARGET_REVISION="64551"
         TARGET_PLATFORM="rs3621xsp"
         ORIGIN_PLATFORM="broadwellnk"        
@@ -619,7 +572,6 @@ function getvars()
         sha256="d26a3397824f8baea79927924a2033f3d1a034486cfffac26fdd3d690224fa47"
 
     elif [ "${1}" = "SA6400K" ]; then
-        KVER="5.10.55"
         TARGET_REVISION="64551"        
         TARGET_PLATFORM="sa6400"
         ORIGIN_PLATFORM="epyc7002"        
@@ -628,127 +580,103 @@ function getvars()
         
 #JUN MODE
     elif [ "${1}" = "DS918+J" ]; then           
-        KVER="4.4.180"
         TARGET_REVISION="42218"
         TARGET_PLATFORM="ds918p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
         sha256="a662d11999c266dfa86c54f7ba01045c6644c191124195a22d056d618790dffe"                                                                              
-#    elif [ "${1}" = "DS3615xsJ" ]; then
-#        KVER="3.10.108"
-#        TARGET_REVISION="42218"               
-#        TARGET_PLATFORM="ds3615xs"
-#        ORIGIN_PLATFORM="bromolow"
-#        SYNOMODEL="ds3615xs_$TARGET_REVISION"                                   
-#        sha256="dddd26891815ddca02d0d53c1d42e8b39058b398a4cc7b49b80c99f851cf0ef7"                             
-#    elif [ "${1}" = "DS3617xsJ" ]; then
-#        KVER="4.4.180"
-#        TARGET_REVISION="42218"               
-#        TARGET_PLATFORM="ds3617xs"
-#        ORIGIN_PLATFORM="broadwell"
-#        SYNOMODEL="ds3617xs_$TARGET_REVISION" 
-#        sha256="d65ee4ed5971e38f6cdab00e1548183435b53ba49a5dca7eaed6f56be939dcd2"
-#    elif [ "${1}" = "DS3622xs+J" ]; then
-#        KVER="4.4.180"
-#        TARGET_REVISION="42218"               
-#        TARGET_PLATFORM="ds3622xsp"
-#        ORIGIN_PLATFORM="broadwellnk"
-#        SYNOMODEL="ds3622xsp_$TARGET_REVISION"
-#        sha256="f38329b8cdc5824a8f01fb1e377d3b1b6bd23da365142a01e2158beff5b8a424"
-#    elif [ "${1}" = "DS1621+J" ]; then
-#        KVER="4.4.180"
-#        TARGET_REVISION="42218"                                                  
-#        TARGET_PLATFORM="ds1621p"
-#        ORIGIN_PLATFORM="v1000"
-#        SYNOMODEL="ds1621p_$TARGET_REVISION"                                     
-#        sha256="19f56827ba8bf0397d42cd1d6f83c447f092c2c1bbb70d8a2ad3fbd427e866df"
-#    elif [ "${1}" = "DVA3221J" ]; then
-#        KVER="4.4.180"
-#        TARGET_REVISION="42218"                                                  
-#        TARGET_PLATFORM="dva3221"
-#        ORIGIN_PLATFORM="denverton"
-#        SYNOMODEL="dva3221_$TARGET_REVISION"                                     
-#        sha256="01f101d7b310c857e54b0177068fb7250ff722dc9fa2472b1a48607ba40897ee"
+    elif [ "${1}" = "DS3615xsJ" ]; then
+        TARGET_REVISION="42218"               
+        TARGET_PLATFORM="ds3615xs"
+        ORIGIN_PLATFORM="bromolow"
+        SYNOMODEL="ds3615xs_$TARGET_REVISION"                                   
+        sha256="ae1aca3b178a00689b93e97cca680b56af3f453174b852e0047496120dee2ee3"                             
+    elif [ "${1}" = "DS3617xsJ" ]; then
+        TARGET_REVISION="42218"               
+        TARGET_PLATFORM="ds3617xs"
+        ORIGIN_PLATFORM="broadwell"
+        SYNOMODEL="ds3617xs_$TARGET_REVISION" 
+        sha256="f7e846e2a22b62613ac5e9d6e154df0213ba4ae64a6556297af627cd1e643e5c"
+    elif [ "${1}" = "DS3622xs+J" ]; then
+        TARGET_REVISION="42218"               
+        TARGET_PLATFORM="ds3622xsp"
+        ORIGIN_PLATFORM="broadwellnk"
+        SYNOMODEL="ds3622xsp_$TARGET_REVISION"
+        sha256="a222d37f369d71042057ccb592f40c7c81e9b988a95d69fa166c7c2a611da99c"
+    elif [ "${1}" = "DS1621+J" ]; then
+        TARGET_REVISION="42218"                                                  
+        TARGET_PLATFORM="ds1621p"
+        ORIGIN_PLATFORM="v1000"
+        SYNOMODEL="ds1621p_$TARGET_REVISION"                                     
+        sha256="396144fdcd94d441b4ad665099395cf24a14606742bee9438745ea30bf12b9ef"
+    elif [ "${1}" = "DVA3221J" ]; then
+        TARGET_REVISION="42218"                                                  
+        TARGET_PLATFORM="dva3221"
+        ORIGIN_PLATFORM="denverton"
+        SYNOMODEL="dva3221_$TARGET_REVISION"                                     
+        sha256="6722c73c51070dde2f542659d7728c497fc846256da2c9cf017177476de0bb09"
     elif [ "${1}" = "DS920+J" ]; then
-        KVER="4.4.180"
         TARGET_REVISION="42218"
         TARGET_PLATFORM="ds920p"
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
         sha256="b9b77846e0983f50496276bec6bcdfcfadd4c1f9f0db8ed2ca5766f131ddf97f"
-#    elif [ "${1}" = "DS2422+J" ]; then
-#        KVER="4.4.180"
-#        TARGET_REVISION="42218"                                                  
-#        TARGET_PLATFORM="ds2422p"
-#        ORIGIN_PLATFORM="v1000"        
-#        SYNOMODEL="ds2422p_$TARGET_REVISION"                                     
-#        sha256="415c54934d483a2557500bc3a2e74588a0cec1266e1f0d9a82a7d3aace002471"
+    elif [ "${1}" = "DS2422+J" ]; then
+        TARGET_REVISION="42218"                                                  
+        TARGET_PLATFORM="ds2422p"
+        ORIGIN_PLATFORM="v1000"        
+        SYNOMODEL="ds2422p_$TARGET_REVISION"                                     
+        sha256="5a6cfbc690facdfaef9fbcc55215eac38c73ca6a85965a910af11cede5e2cd5d"
         
 # JUN MODE NEW MODEL SUCCESS
     elif [ "${1}" = "DS1520+J" ]; then
-        KVER="4.4.180"
-            
         TARGET_REVISION="42218"
         TARGET_PLATFORM="ds1520p"
         ORIGIN_PLATFORM="geminilake"        
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
         sha256="b8864e2becd8ce5a6083db993564c8c0b982df8300a006b56695a0495a670aa3"
-#    elif [ "${1}" = "DS1621xs+J" ]; then
-#        KVER="4.4.180"
-#            
-#        TARGET_REVISION="42218"               
-#        TARGET_PLATFORM="ds1621xsp"
-#        ORIGIN_PLATFORM="broadwellnk"        
-#        SYNOMODEL="ds1621xsp_$TARGET_REVISION"
-#        sha256="5db4e5943d246b1a2414942ae19267adc94d2a6ab167ba3e2fc10b42aefded23"
-#    elif [ "${1}" = "FS2500J" ]; then
-#        KVER="4.4.180"
-#            
-#        TARGET_REVISION="42218"
-#        TARGET_PLATFORM="fs2500"
-#        ORIGIN_PLATFORM="v1000"        
-#        SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
-#        sha256="4d060be8afec548fdb042bc8095524f10ff200033cab74df37ae07f3de5eaa69"
-#    elif [ "${1}" = "RS4021xs+J" ]; then
-#        KVER="4.4.180"
-#            
-#        TARGET_REVISION="42218"               
-#        TARGET_PLATFORM="rs4021xsp"
-#        ORIGIN_PLATFORM="broadwellnk"        
-#        SYNOMODEL="rs4021xsp_$TARGET_REVISION"
-#        sha256="7afca3970ac7324d7431c1484d4249939bedd4c18ac34187f894c43119edf3a1"
-#    elif [ "${1}" = "RS3618xsJ" ]; then                                                                                                                     
-#        KVER="4.4.180"
-#        
-#        TARGET_REVISION="42218"        
-#        TARGET_PLATFORM="rs3618xs"
-#        ORIGIN_PLATFORM="broadwell"
-#        SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
-#        sha256="2b7623a6781fe10e0eface1665d41dfe2e5adb033b26e50e27c3449aee5fe4b0"
+    elif [ "${1}" = "DS1621xs+J" ]; then
+        TARGET_REVISION="42218"               
+        TARGET_PLATFORM="ds1621xsp"
+        ORIGIN_PLATFORM="broadwellnk"        
+        SYNOMODEL="ds1621xsp_$TARGET_REVISION"
+        sha256="12bcfd44b4aaa6c3439b1404b7f07760373d816724ef672884d5187f27ccd70f"
+    elif [ "${1}" = "FS2500J" ]; then
+        TARGET_REVISION="42218"
+        TARGET_PLATFORM="fs2500"
+        ORIGIN_PLATFORM="v1000"        
+        SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
+        sha256="3fbd5defbc0fef0d152494033f3e817c330525b70e356a9e9acd2b72d9806b59"
+    elif [ "${1}" = "RS4021xs+J" ]; then
+        TARGET_REVISION="42218"               
+        TARGET_PLATFORM="rs4021xsp"
+        ORIGIN_PLATFORM="broadwellnk"        
+        SYNOMODEL="rs4021xsp_$TARGET_REVISION"
+        sha256="2a32266b7bcf0b2582b5afd9e39dc444e7cb40eaf4ccfdbfedf4743af821f11c"
+    elif [ "${1}" = "RS3618xsJ" ]; then                                                                                                                     
+        TARGET_REVISION="42218"        
+        TARGET_PLATFORM="rs3618xs"
+        ORIGIN_PLATFORM="broadwell"
+        SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
+        sha256="941886bee9a0929c6bd078c5f2c465d9599721fc885a1e3835d6b60631f419af"
     elif [ "${1}" = "DS1019+J" ]; then
-        KVER="4.4.180"
-                
         TARGET_REVISION="42218"                                                                                                                                
         TARGET_PLATFORM="ds1019p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
         sha256="e782ad4ce5e0505e7981a5a3fa7ca986a4575240f645ec2c64f92def1774556f"         
-#    elif [ "${1}" = "DVA3219J" ]; then
-#        KVER="4.4.180"
-#            
-#        TARGET_REVISION="42218"                                                  
-#        TARGET_PLATFORM="dva3219"
-#        ORIGIN_PLATFORM="denverton"        
-#        SYNOMODEL="dva3219_$TARGET_REVISION"                                     
-#        sha256="3557df23ff6af9bbb0cf46872ba2fc09c344eb303a38e8283dbc9a46e5eae979"
+    elif [ "${1}" = "DVA3219J" ]; then
+        TARGET_REVISION="42218"                                                  
+        TARGET_PLATFORM="dva3219"
+        ORIGIN_PLATFORM="denverton"        
+        SYNOMODEL="dva3219_$TARGET_REVISION"                                     
+        sha256="b3498a20aeb7c7c36deca0f4393172d4db7b51aa4fb87eaace83fe224d935e3b"
 
 # JUN MODE NEW MODEL TESTTING
 #    elif [ "${1}" = "RS3413xs+J" ]; then
 #        echo "Synology model ${1} jun mode not supported by m shell, Testing..."
 #        exit 0        
 #        
-#        KVER="4.4.180"
-#            
 #        TARGET_REVISION="42218"        
 #        TARGET_PLATFORM="rs3413xsp"
 #        ORIGIN_PLATFORM="bromolow"        
@@ -765,13 +693,15 @@ function getvars()
 
     tem="${1}"
 
-    if [ $TARGET_REVISION == "42218" ]; then
+    if [ "$TARGET_REVISION" == "42218" ]; then
         MODEL="$(echo $tem | sed 's/J//g')"
         TARGET_VERSION="7.0.1"
-    elif [ $TARGET_REVISION == "64551" ]; then
+        KVER="4.4.180"
+    elif [ "$TARGET_REVISION" == "64551" ]; then
         MODEL="$(echo $tem | sed 's/K//g')"
         TARGET_VERSION="7.2"
-    elif [ $TARGET_REVISION == "42962" ]; then
+        KVER="4.4.302"        
+    elif [ "$TARGET_REVISION" == "42962" ]; then
         if [ $tem = "FS2500F" ]; then
             MODEL="FS2500"
         elif [ $tem = "FS2500" ]; then    
@@ -784,6 +714,7 @@ function getvars()
             fi
         fi    
         TARGET_VERSION="7.1.1"
+        KVER="4.4.180"                
     else
         echo "Synology model revesion not supported by TCRP."                                                         
         exit 0                                                                                               
@@ -791,6 +722,12 @@ function getvars()
 
     echo "MODEL is $MODEL"
 
+    if [ "$MODEL" = "SA6400" ]; then    
+        KVER="5.10.55"
+    elif [ "$MODEL" = "DS3615xs" ]; then    
+        KVER="3.10.108"        
+    fi    
+        
 }
 
 # Function READ_YN, cecho                                                                                        
