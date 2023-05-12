@@ -617,6 +617,14 @@ function getvars()
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="rs3621xsp_$TARGET_REVISION"
         sha256="d26a3397824f8baea79927924a2033f3d1a034486cfffac26fdd3d690224fa47"
+
+    elif [ "${1}" = "SA6400K" ]; then
+        KVER="5.10.55"
+        TARGET_REVISION="64551"        
+        TARGET_PLATFORM="sa6400"
+        ORIGIN_PLATFORM="epyc7002"        
+        SYNOMODEL="sa6400_$TARGET_REVISION"
+        sha256="1ef25a47a1007382f7a3c6e740427ecaca50efa99e77308f076202fdffdad2cb"
         
 #JUN MODE
     elif [ "${1}" = "DS918+J" ]; then           
@@ -757,13 +765,13 @@ function getvars()
 
     tem="${1}"
 
-    if [ $TARGET_REVISION == "42218" ] ; then
+    if [ $TARGET_REVISION == "42218" ]; then
         MODEL="$(echo $tem | sed 's/J//g')"
         TARGET_VERSION="7.0.1"
-    elif [ $TARGET_REVISION == "64551" ] ; then    
+    elif [ $TARGET_REVISION == "64551" ]; then
         MODEL="$(echo $tem | sed 's/K//g')"
         TARGET_VERSION="7.2"
-    else
+    elif [ $TARGET_REVISION == "42962" ]; then
         if [ $tem = "FS2500F" ]; then
             MODEL="FS2500"
         elif [ $tem = "FS2500" ]; then    
@@ -775,7 +783,10 @@ function getvars()
                 MODEL=$tem
             fi
         fi    
-        TARGET_VERSION="7.1.1"        
+        TARGET_VERSION="7.1.1"
+    else
+        echo "Synology model revesion not supported by TCRP."                                                         
+        exit 0                                                                                               
     fi
 
     echo "MODEL is $MODEL"
