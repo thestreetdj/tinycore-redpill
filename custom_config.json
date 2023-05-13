@@ -59,6 +59,7 @@
         },
         "add_extensions": [
             {
+              "disks": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/disks/rpext-index.json",
               "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json"
             }
         ]
