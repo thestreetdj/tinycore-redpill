@@ -9,6 +9,7 @@
     "sata_line": "",
     "redpillmake" : "",
     "friendautoupd" : "true",
+    "staticboot" : "false",    
     "hidesensitive" : "false",
     "layout": "qwerty",
     "keymap": "us",
