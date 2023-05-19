@@ -666,6 +666,25 @@ function addrequiredexts() {
     done
 
 #m shell only
+
+    echo "KERNEL VERSION of addrequiredexts() is ${KVER}"
+
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        echo "Downloading pocopico's ${ORIGIN_PLATFORM} ${KVER}+ all-modules(epyc7002-5.10.55.tgz) ..."    
+        LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/pocopico/redpill-modules/releases/latest"`"
+        TAG="${LATESTURL##*/}"
+        echo "TAG is ${TAG}"        
+        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/epyc7002-5.10.55.tgz" -o "/home/tc/redpill-load/custom/extensions/all-modules/$MODEL/$TARGET_VERSION-$TARGET_REVISION/epyc7002-5.10.55.tgz"`
+        if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
+            echo "Error downloading last version of ${ORIGIN_PLATFORM}-${KVER}.tgz"
+            exit 99
+        fi
+        tgz_sha256=$(sha256sum /home/tc/redpill-load/custom/extensions/all-modules/$MODEL/$TARGET_VERSION-$TARGET_REVISION/epyc7002-5.10.55.tgz | awk '{print $1}')
+        msgnormal "all-modules tgz file sha256sum is : $tgz_sha256"
+        msgnormal "Editing config file !!!!!"
+#        sed -i "/\"os\": {/!b;n;n;n;c\"sha256\": \"$tgz_sha256\"" ${configfile}
+    fi    
+
  #Use user define dts file instaed of dtbpatch ext now
     if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] || [ ${TARGET_PLATFORM} = "dva1622" ] || [ ${TARGET_PLATFORM} = "ds2422p" ] || [ ${TARGET_PLATFORM} = "ds1520p" ] ; then
         echo "For user define dts file instaed of dtbpatch ext"
