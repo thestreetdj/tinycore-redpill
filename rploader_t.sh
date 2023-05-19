@@ -674,7 +674,7 @@ function addrequiredexts() {
         LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/pocopico/redpill-modules/releases/latest"`"
         TAG="${LATESTURL##*/}"
         echo "TAG is ${TAG}"        
-        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/epyc7002-5.10.55.tgz" -o "/home/tc/redpill-load/custom/extensions/all-modules/$SYNOMODEL/epyc7002-5.10.55.tgz"`
+        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/pocopico/redpill-modules/releases/download/${TAG}/epyc7002-5.10.55.tgz" -o "/home/tc/redpill-load/custom/extensions/all-modules/$SYNOMODEL/epyc7002-5.10.55.tgz"`
         if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
             echo "Error downloading last version of ${ORIGIN_PLATFORM}-${KVER}.tgz"
             exit 99
