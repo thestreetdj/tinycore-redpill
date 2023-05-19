@@ -679,7 +679,7 @@ function addrequiredexts() {
             echo "Error downloading last version of ${ORIGIN_PLATFORM}-${KVER}.tgz"
             exit 99
         fi
-        tgz_sha256=$(sha256sum /home/tc/redpill-load/custom/extensions/all-modules/$MODEL/$TARGET_VERSION-$TARGET_REVISION/epyc7002-5.10.55.tgz | awk '{print $1}')
+        tgz_sha256=$(sha256sum /home/tc/redpill-load/custom/extensions/all-modules/$SYNOMODEL/epyc7002-5.10.55.tgz | awk '{print $1}')
         msgnormal "all-modules tgz file sha256sum is : $tgz_sha256"
         msgnormal "Editing config file !!!!!"
         modeljson="/home/tc/redpill-load/custom/extensions/all-modules/$SYNOMODEL/$SYNOMODEL.json"
