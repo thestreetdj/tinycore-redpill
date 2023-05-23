@@ -32,7 +32,7 @@ MSGUS05="Build the [TCRP JOT Mode] loader"
 MSGUS06="Choose a loader Mode Current "
 MSGUS07="Build the [TCRP 7.1.1-42962] loader"
 MSGUS08="Build the [TCRP 7.0.1-42218] loader (FRIEND)"
-MSGUS09="Build the [TCRP 7.2.0-64551 RC] loader"
+MSGUS09="Build the [TCRP 7.2.0-64561] loader"
 MSGUS10="Edit user config file manually"
 MSGUS11="Choose a keymap"
 MSGUS12="Erase Data DISK"
@@ -75,7 +75,7 @@ MSGRU05="Соберите загрузчик [TCRP JOT Mode]"
 MSGRU06="Выберите текущий режим загрузчика"
 MSGRU07="Соберите загрузчик [TCRP 7.1.1-42962]"
 MSGRU08="Соберите загрузчик [TCRP 7.0.1-42218] (FRIEND)"
-MSGRU09="Соберите загрузчик [TCRP 7.2.0-64551 RC]"
+MSGRU09="Соберите загрузчик [TCRP 7.2.0-64561]"
 MSGRU10="Отредактируйте файл конфигурации пользователя вручную"
 MSGRU11="Выберите раскладку клавиатуры"
 MSGRU12="Стереть данные с диска"
@@ -118,7 +118,7 @@ MSGFR05="Construisez le chargeur [TCRP JOT Mode]"
 MSGFR06="Choisissez un mode de chargeur actuel"
 MSGFR07="Construisez le chargeur [TCRP 7.1.1-42962]"
 MSGFR08="Construisez le chargeur [TCRP 7.0.1-42218] (FRIEND)"
-MSGFR09="Construisez le chargeur [TCRP 7.2.0-64551 RC]"
+MSGFR09="Construisez le chargeur [TCRP 7.2.0-64561]"
 MSGFR10="Modifier manuellement le fichier de configuration de l'utilisateur"
 MSGFR11="Choisissez une disposition de clavier"
 MSGFR12="Effacer le disque de données"
@@ -161,7 +161,7 @@ MSGDE05="Erstellen Sie den [TCRP JOT-Modus] Loader"
 MSGDE06="Wählen Sie einen Loader-Modus Current"
 MSGDE07="Erstellen Sie den [TCRP 7.1.1-42962] Loader"
 MSGDE08="Erstellen Sie den [TCRP 7.0.1-42218] Loader (FRIEND)"
-MSGDE09="Erstellen Sie den [TCRP 7.2.0-64551 RC] Loader"
+MSGDE09="Erstellen Sie den [TCRP 7.2.0-64561] Loader"
 MSGDE10="Bearbeiten Sie die Benutzerkonfigurationsdatei manuell"
 MSGDE11="Wählen Sie eine Tastenkarte"
 MSGDE12="Löschen Sie die Datendiskette"
@@ -205,7 +205,7 @@ MSGES05="Construir el cargador [TCRP JOT Mode]"
 MSGES06="Elija un modo de cargador Actual"
 MSGES07="Construir el cargador [TCRP 7.1.1-42962]"
 MSGES08="Construir el cargador [TCRP 7.0.1-42218] (FRIEND)"
-MSGES09="Construir el cargador [TCRP 7.2.0-64551 RC]"
+MSGES09="Construir el cargador [TCRP 7.2.0-64561]"
 MSGES10="Editar manualmente el archivo de configuración del usuario"
 MSGES11="Elija un mapa de teclas"
 MSGES12="Borrar disco de datos"
@@ -249,7 +249,7 @@ MSGBR05="Construa o loader [TCRP JOT Mode]"
 MSGBR06="Escolha o modo de loader Atual"
 MSGBR07="Construa o loader [TCRP 7.1.1-42962]"
 MSGBR08="Construa o loader [TCRP 7.0.1-42218] (FRIEND)"
-MSGBR09="Construa o loader [TCRP 7.2.0-64551 RC]"
+MSGBR09="Construa o loader [TCRP 7.2.0-64561]"
 MSGBR10="Edite manualmente o arquivo de configuração do usuário"
 MSGBR11="Escolha um mapa de teclado"
 MSGBR12="Apague o DISK de dados"
@@ -293,7 +293,7 @@ MSGIT05="Costruisci il caricatore [TCRP JOT Mode]"
 MSGIT06="Scegli una modalità di caricatore corrente"
 MSGIT07="Costruisci il caricatore [TCRP 7.1.1-42962]"
 MSGIT08="Costruisci il caricatore [TCRP 7.0.1-42218] (FRIEND)"
-MSGIT09="Costruisci il caricatore [TCRP 7.2.0-64551 RC]"
+MSGIT09="Costruisci il caricatore [TCRP 7.2.0-64561]"
 MSGIT10="Modifica manualmente il file di configurazione dell'utente"
 MSGIT11="Scegli una mappatura dei tasti"
 MSGIT12="Cancella il disco dati"
@@ -336,7 +336,7 @@ MSGKR05="[TCRP JOT Mode] 로더 빌드"
 MSGKR06="로더모드 선택 현재"
 MSGKR07="[TCRP 7.1.1-42962] 로더 빌드"
 MSGKR08="[TCRP 7.0.1-42218] 로더 빌드 (FRIEND)"
-MSGKR09="[TCRP 7.2.0-64551 RC] 로더 빌드"
+MSGKR09="[TCRP 7.2.0-64561] 로더 빌드"
 MSGKR10="user_config.json 파일 편집"
 MSGKR11="다국어 자판 지원용 키맵 선택"
 MSGKR12="디스크 데이터 지우기"
@@ -379,7 +379,7 @@ MSGCN05="构建[TCRP JOT模式]加载器"
 MSGCN06="选择加载器模式 Current"
 MSGCN07="构建[TCRP 7.1.1-42962]加载器"
 MSGCN08="构建[TCRP 7.0.1-42218]加载器 (FRIEND)"
-MSGCN09="构建[TCRP 7.2.0-64551 RC]加载器"
+MSGCN09="构建[TCRP 7.2.0-64561]加载器"
 MSGCN10="手动编辑用户配置文件"
 MSGCN11="选择一个键盘映射"
 MSGCN12="擦除数据磁盘"
@@ -422,7 +422,7 @@ MSGJP05="[TCRP JOT Mode]ローダーをビルドする"
 MSGJP06="現在のローダーモードを選択してください"
 MSGJP07="[TCRP 7.1.1-42962]ローダーをビルドする"
 MSGJP08="[TCRP 7.0.1-42218]ローダーをビルドする（FRIEND）"
-MSGJP09="[TCRP 7.2.0-64551 RC]ローダーをビルドする"
+MSGJP09="[TCRP 7.2.0-64561]ローダーをビルドする"
 MSGJP10="ユーザー設定ファイルを手動で編集する"
 MSGJP11="キーマップを選択してください"
 MSGJP12="データDISKを消去する"
@@ -1032,10 +1032,10 @@ function make() {
 
   if [ "$1" = "jun" ]; then
       ./my.sh "${MODEL}"J noconfig | tee "/home/tc/zlastbuild.log"    
-  elif [ "$1" = "rc" ]; then
-      ./my.sh "${MODEL}"K noconfig | tee "/home/tc/zlastbuild.log"    
-  elif [ "$1" = "rcjot" ]; then
-      ./my.sh "${MODEL}"K noconfig "jot" | tee "/home/tc/zlastbuild.log"    
+  elif [ "$1" = "of" ]; then
+      ./my.sh "${MODEL}"G noconfig | tee "/home/tc/zlastbuild.log"    
+  elif [ "$1" = "ofjot" ]; then
+      ./my.sh "${MODEL}"G noconfig "jot" | tee "/home/tc/zlastbuild.log"    
   else
       ./my.sh "${MODEL}"F noconfig $1 | tee "/home/tc/zlastbuild.log"  
   fi
@@ -1444,7 +1444,8 @@ while true; do
 	fi
         ;;
     h) macMenu "eth3";    NEXT="z" ;;    
-    z) selectldrmode ;    NEXT="d" ;;
+    z) selectldrmode ;    NEXT="p" ;;
+    o) BUILD="42218"; make "jun";      NEXT="r" ;;    
     d) BUILD="42962"
        if [ "${LDRMODE}" == "FRIEND" ]; then
          make
@@ -1453,14 +1454,13 @@ while true; do
        fi
        NEXT="r" ;;
     j) BUILD="42962"; make "jot";      NEXT="r" ;;    
-    p) BUILD="64551"
+    p) BUILD="64561"
        if [ "${LDRMODE}" == "FRIEND" ]; then
-         make "rc"
+         make "of"
        else
-         make "rcjot"
+         make "ofjot"
        fi
        NEXT="r" ;;
-    o) BUILD="42218"; make "jun";      NEXT="r" ;;
     u) editUserConfig;                 NEXT="d" ;;
     l) langMenu ;                      NEXT="m" ;;
     k) keymapMenu ;                    NEXT="m" ;;
