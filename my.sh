@@ -49,6 +49,11 @@ function cecho () {
     echo -e "$text"                                                                                                                                                 
 }   
 
+function st() {
+echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
+echo "------------------------------------------------------------------------------------"
+}
+
 function checkmachine() {
 
     if grep -q ^flags.*\ hypervisor\  /proc/cpuinfo; then
@@ -258,7 +263,7 @@ cecho y "SUVP is $SUVP"
 cecho g "SYNOMODEL is $SYNOMODEL"  
 cecho c "KERNEL VERSION is $KVER"  
 
-echo -e "\e[35mbuildstatus\e[0m	\e[36mBuilding started\e[0m	Model :$MODEL-$TARGET_VERSION-$TARGET_REVISION" >> /home/tc/buildstatus
+st "buildstatus" "Building started" "Model :$MODEL-$TARGET_VERSION-$TARGET_REVISION"
 
 #fullupgrade="Y"
 
@@ -388,7 +393,7 @@ patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"
 if [ -f ${patfile} ]; then                                                               
     cecho r "Found locally cached pat file ${SYNOMODEL}.pat in /mnt/${tcrppart}/auxfiles"
     cecho b "Downloadng Skipped!!!"
-echo -e "\e[35mdownload pat\e[0m	\e[36mFound pat\e[0m		Found ${SYNOMODEL}.pat" >> /home/tc/buildstatus    
+st "download pat" "Found pat" "Found ${SYNOMODEL}.pat"
 else
     
     chkavail
@@ -415,7 +420,7 @@ else
         cecho y "os sha256 verify FAILED, check ${patfile}  "                           
         exit 99                                                                         
     fi
-echo -e "\e[35mdownload pat\e[0m	\e[36mDownloading pat\e[0m		${SYNOMODEL}.pat" >> /home/tc/buildstatus
+st "download pat" "Downloading pat" "${SYNOMODEL}.pat"
 fi
 
 
@@ -461,7 +466,7 @@ echo
                                                                                                                                                                            
 rm -rf /home/tc/old                                                                                                                                                       
 rm -rf /home/tc/oldpat.tar.gz
-echo -e "\e[35mcleanbuild\e[0m	\e[36mCleaning build dir\e[0m	Build directory cleaned" >> /home/tc/buildstatus
+st "cleanbuild" "Cleaning build dir" "Build directory cleaned"
 cecho r "Cleaning redpill-load/cache directory!"
 rm -f /home/tc/redpill-load/cache/*
 
@@ -470,7 +475,8 @@ if [ $(ls /mnt/${tcrppart}/auxfiles/*.pat | grep -v ${SYNOMODEL}.pat | wc -l ) -
 find /mnt/${tcrppart}/auxfiles -name "*.pat" ! -name "${SYNOMODEL}.pat" -type f -delete
 fi    
 
-rm -f /home/tc/custom-module                                                                                                                                             
+rm -f /home/tc/custom-module
+st "backuploader" "Making changes persistent to the Loader Backup File" ""
 echo "y"|./rploader.sh backup                                                                                                                                         
-echo -e "\e[35mfinishloader\e[0m	\e[36mLoader build status\e[0m	Finished building the loader" >> /home/tc/buildstatus
+st "finishloader" "Loader build status" "Finished building the loader"
 exit 0
