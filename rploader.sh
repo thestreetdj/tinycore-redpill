@@ -108,7 +108,7 @@ function msgnormal() {
 } 
 function st() {
 echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
-echo "------------------------------------------------------------------------------------"
+echo -e "----------------------------------------------------------------------------" >> /home/tc/buildstatus
 }
 
 function readanswer() {
@@ -2931,7 +2931,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         fi
     fi
 
-st "gengrub" "Gen GRUB entries" "Finished generating GRUB entries : ${MODEL}"
+st "gengrub      " "Gen GRUB entries" "Finished generating GRUB entries : ${MODEL}"
 
 #m shell only start
 #    if [ "$JUNLOADER" == "YES" ]; then
