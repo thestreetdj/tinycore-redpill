@@ -529,7 +529,7 @@ function processpat() {
         [ -f ${local_cache}/*${MODEL}*${TARGET_REVISION}*.pat ] && patfile=$(ls /home/tc/custom-module/*${MODEL}*${TARGET_REVISION}*.pat | head -1)
 
         msgnormal "Found locally cached pat file ${patfile}"
-
+echo "iscached	Caching pat file	Patfile ${patfile} is cached" >> /home/tc/buildstatus
         testarchive "${patfile}"
         if [ ${isencrypted} = "no" ]; then
             echo "File ${patfile} is already unencrypted"
@@ -558,6 +558,7 @@ function processpat() {
 
         cd /home/tc/redpill-load/cache
         tar xvf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./VERSION && . ./VERSION && cat ./VERSION && rm ./VERSION
+echo "patextraction	Pat file extracted	Extracted PAT file, VERSION Found : ${TARGET_VERSION}-${TARGET_REVISION}" >> /home/tc/buildstatus        
         os_sha256=$(sha256sum /home/tc/redpill-load/cache/${SYNOMODEL}.pat | awk '{print $1}')
         msgnormal "Pat file  sha256sum is : $os_sha256"
 
@@ -2660,7 +2661,7 @@ function buildloader() {
 
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
-
+echo "buildstatus	Building started	Started building the loader from Model :$MODEL-$TARGET_VERSION-$TARGET_REVISION" > /home/tc/buildstatus
 checkmachine
 
     [ "$1" == "junmod" ] && JUNLOADER="YES"
@@ -2709,6 +2710,7 @@ checkmachine
 
         echo "Found build request for revision greater than 42218"
         downloadextractor
+echo "downloadtools	Downloading extraction tools	Tools downloaded" >> /home/tc/buildstatus        
         processpat
 
     else
@@ -2731,7 +2733,7 @@ checkmachine
 #    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 
     addrequiredexts
-
+echo "extadd	Extensions collection	Completed extensions" >> /home/tc/buildstatus
     if [ "$JUNLOADER" == "YES" ]; then
         echo "jun build option has been specified, so JUN MOD loader will be created"
         # jun's mod must patch using custom.gz from the first partition, so you need to fix the partition.
@@ -2740,7 +2742,7 @@ checkmachine
     else
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
     fi
-
+echo "copyfilestodisk	Copying all files to disk	Copied all boot files to the loader disk" >> /home/tc/buildstatus
 #    msgnormal "======Unmount the ramdisk for add extensions.======="
 #    sudo umount /home/tc/redpill-load/custom/extensions
 
@@ -2816,7 +2818,10 @@ checkmachine
         fi    
 
         # Share RD of friend kernel with JOT 2023.05.01
-        [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ] && bringoverfriend
+        if [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ]; then
+            bringoverfriend
+echo "frienddownload	TCRP Friend downloading	TCRP friend copied to /mnt/${loaderdisk}3" >> /home/tc/buildstatus
+        fi
 
         if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
 
@@ -2922,6 +2927,8 @@ checkmachine
         fi
     fi
 
+echo "gengrub	Generating GRUB entries	Finished generating GRUB entries for model : ${MODEL}" >> /home/tc/buildstatus
+
 #m shell only start
 #    if [ "$JUNLOADER" == "YES" ]; then
 #        echo "Don't move file in jun's mod"
@@ -2995,6 +3002,7 @@ checkmachine
             cp -f ${patfile} ${local_cache}
         fi
     fi
+echo "cachingpat	Caching pat file to disk	Cached file to: ${local_cache}" >> /home/tc/buildstatus
 
 }
 
