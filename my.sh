@@ -137,8 +137,6 @@ function chkavail() {
     echo "Avail space ${avail_num}M on /mnt/${tcrppart}"
 }
 
-echo -e "\e[35mbuildstatus\e[0m	\e[34mBuilding started\e[0m	Model :$MODEL-$TARGET_VERSION-$TARGET_REVISION" >> /home/tc/buildstatus
-
 checkinternet
 gitdownload
 
@@ -259,6 +257,8 @@ cecho p "TARGET_REVISION is $TARGET_REVISION"
 cecho y "SUVP is $SUVP"
 cecho g "SYNOMODEL is $SYNOMODEL"  
 cecho c "KERNEL VERSION is $KVER"  
+
+echo -e "\e[35mbuildstatus\e[0m	\e[34mBuilding started\e[0m	Model :$MODEL-$TARGET_VERSION-$TARGET_REVISION" >> /home/tc/buildstatus
 
 #fullupgrade="Y"
 
