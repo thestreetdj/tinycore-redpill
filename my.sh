@@ -258,7 +258,7 @@ cecho y "SUVP is $SUVP"
 cecho g "SYNOMODEL is $SYNOMODEL"  
 cecho c "KERNEL VERSION is $KVER"  
 
-echo -e "\e[35mbuildstatus\e[0m	\e[34mBuilding started\e[0m	Model :$MODEL-$TARGET_VERSION-$TARGET_REVISION" >> /home/tc/buildstatus
+echo -e "\e[35mbuildstatus\e[0m	\e[36mBuilding started\e[0m	Model :$MODEL-$TARGET_VERSION-$TARGET_REVISION" >> /home/tc/buildstatus
 
 #fullupgrade="Y"
 
@@ -388,7 +388,7 @@ patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"
 if [ -f ${patfile} ]; then                                                               
     cecho r "Found locally cached pat file ${SYNOMODEL}.pat in /mnt/${tcrppart}/auxfiles"
     cecho b "Downloadng Skipped!!!"
-echo -e "\e[35mdownload pat\e[0m	\e[34mFound pat\e[0m	Found locally cached ${SYNOMODEL}.pat" >> /home/tc/buildstatus    
+echo -e "\e[35mdownload pat\e[0m	\e[36mFound pat\e[0m	Found locally cached ${SYNOMODEL}.pat" >> /home/tc/buildstatus    
 else
     
     chkavail
@@ -415,7 +415,7 @@ else
         cecho y "os sha256 verify FAILED, check ${patfile}  "                           
         exit 99                                                                         
     fi
-echo -e "\e[35mdownload pat\e[0m	\e[34mDownloading pat\e[0m	${SYNOMODEL}.pat" >> /home/tc/buildstatus
+echo -e "\e[35mdownload pat\e[0m	\e[36mDownloading pat\e[0m	${SYNOMODEL}.pat" >> /home/tc/buildstatus
 fi
 
 
@@ -461,7 +461,7 @@ echo
                                                                                                                                                                            
 rm -rf /home/tc/old                                                                                                                                                       
 rm -rf /home/tc/oldpat.tar.gz
-echo -e "\e[35mcleanbuild\e[0m	\e[34mCleaning build dir\e[0m	Build directory cleaned" >> /home/tc/buildstatus
+echo -e "\e[35mcleanbuild\e[0m	\e[36mCleaning build dir\e[0m	Build directory cleaned" >> /home/tc/buildstatus
 cecho r "Cleaning redpill-load/cache directory!"
 rm -f /home/tc/redpill-load/cache/*
 
@@ -472,5 +472,5 @@ fi
 
 rm -f /home/tc/custom-module                                                                                                                                             
 echo "y"|./rploader.sh backup                                                                                                                                         
-echo -e "\e[35mfinishloader\e[0m	\e[34mLoader build status\e[0m	Finished building the loader" >> /home/tc/buildstatus
+echo -e "\e[35mfinishloader\e[0m	\e[36mLoader build status\e[0m	Finished building the loader" >> /home/tc/buildstatus
 exit 0
