@@ -387,8 +387,8 @@ patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"
                                                                                              
 if [ -f ${patfile} ]; then                                                               
     cecho r "Found locally cached pat file ${SYNOMODEL}.pat in /mnt/${tcrppart}/auxfiles"
-    cecho b "Downloadng Skipped!!!"                                                     
-echo "downloadingpat	Downloading pat file	Found locally cached pat file ${SYNOMODEL}.pat in /mnt/${tcrppart}/auxfiles" >> /home/tc/buildstatus
+    cecho b "Downloadng Skipped!!!"
+echo -e "\e[35mdownload pat\e[0m	\e[34mFound pat\e[0m	Found locally cached ${SYNOMODEL}.pat" >> /home/tc/buildstatus    
 else
     
     chkavail
@@ -414,8 +414,8 @@ else
     else                                                                                
         cecho y "os sha256 verify FAILED, check ${patfile}  "                           
         exit 99                                                                         
-    fi                                                                                  
-echo "downloadingpat	Downloading pat file	Downloaded PAT file ${patfile} succesfully" >> /home/tc/buildstatus    
+    fi
+echo -e "\e[35mdownload pat\e[0m	\e[34mDownloading pat\e[0m	${SYNOMODEL}.pat" >> /home/tc/buildstatus
 fi
 
 
@@ -460,8 +460,8 @@ cecho y "Backup in progress..."
 echo
                                                                                                                                                                            
 rm -rf /home/tc/old                                                                                                                                                       
-rm -rf /home/tc/oldpat.tar.gz                                                                                                                                             
-echo "cleanbuild	Cleaning build directory	Build directory cleaned" >> /home/tc/buildstatus
+rm -rf /home/tc/oldpat.tar.gz
+echo -e "\e[35mcleanbuild\e[0m	\e[34mCleaning build dir\e[0m	Build directory cleaned" >> /home/tc/buildstatus
 cecho r "Cleaning redpill-load/cache directory!"
 rm -f /home/tc/redpill-load/cache/*
 
@@ -472,5 +472,5 @@ fi
 
 rm -f /home/tc/custom-module                                                                                                                                             
 echo "y"|./rploader.sh backup                                                                                                                                         
-echo "finishloader	Loader build status	Finished building the loader" >> /home/tc/buildstatus
+echo -e "\e[35mfinishloader\e[0m	\e[34mLoader build status\e[0m	Finished building the loader" >> /home/tc/buildstatus
 exit 0
