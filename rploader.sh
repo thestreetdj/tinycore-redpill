@@ -561,8 +561,8 @@ st "iscached" "Caching pat file" "Patfile ${SYNOMODEL}.pat is cached"
         fi
 
         cd /home/tc/redpill-load/cache
+st "patextraction" "Pat file extracted" "VERSION:${TARGET_VERSION}-${TARGET_REVISION}"        
         tar xvf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./VERSION && . ./VERSION && cat ./VERSION && rm ./VERSION
-st "patextraction" "Pat file extracted" "VERSION:${TARGET_VERSION}-${TARGET_REVISION}"
         os_sha256=$(sha256sum /home/tc/redpill-load/cache/${SYNOMODEL}.pat | awk '{print $1}')
         msgnormal "Pat file  sha256sum is : $os_sha256"
 
@@ -2713,8 +2713,8 @@ checkmachine
     if [ ${TARGET_REVISION} -gt 42218 ]; then
 
         echo "Found build request for revision greater than 42218"
+st "downloadtools" "Extraction tools" "Tools downloaded"        
         downloadextractor
-st "downloadtools" "Extraction tools" "Tools downloaded"
         processpat
 
     else
@@ -2735,9 +2735,9 @@ st "downloadtools" "Extraction tools" "Tools downloaded"
     [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir /home/tc/redpill-load/custom/extensions
 #    msgnormal "======Mount the ramdisk for quick add processing of extensions.======="
 #    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
-
+st "extensions" "Extensions collection" "Extensions collection..."
     addrequiredexts
-st "extensions" "Extensions collection" "Completed extensions"
+
     if [ "$JUNLOADER" == "YES" ]; then
         echo "jun build option has been specified, so JUN MOD loader will be created"
         # jun's mod must patch using custom.gz from the first partition, so you need to fix the partition.
@@ -2823,8 +2823,8 @@ st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
 
         # Share RD of friend kernel with JOT 2023.05.01
         if [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ]; then
+st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdisk}3"        
             bringoverfriend
-st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdisk}3"
         fi
 
         if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
