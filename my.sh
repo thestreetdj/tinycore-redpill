@@ -386,6 +386,7 @@ patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"
 if [ -f ${patfile} ]; then                                                               
     cecho r "Found locally cached pat file ${SYNOMODEL}.pat in /mnt/${tcrppart}/auxfiles"
     cecho b "Downloadng Skipped!!!"                                                     
+echo "downloadingpat	Downloading pat file	Found locally cached pat file ${SYNOMODEL}.pat in /mnt/${tcrppart}/auxfiles" >> /home/tc/buildstatus
 else
     
     chkavail
@@ -412,7 +413,10 @@ else
         cecho y "os sha256 verify FAILED, check ${patfile}  "                           
         exit 99                                                                         
     fi                                                                                  
+echo "downloadingpat	Downloading pat file	Downloaded PAT file ${patfile} succesfully" >> /home/tc/buildstatus    
 fi
+
+
 
 echo
 cecho g "Loader Building in progress..."
