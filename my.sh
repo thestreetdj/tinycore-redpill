@@ -393,7 +393,7 @@ patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"
 if [ -f ${patfile} ]; then                                                               
     cecho r "Found locally cached pat file ${SYNOMODEL}.pat in /mnt/${tcrppart}/auxfiles"
     cecho b "Downloadng Skipped!!!"
-st "download pat" "Found pat" "Found ${SYNOMODEL}.pat"
+st "download pat" "Found pat    " "Found ${SYNOMODEL}.pat"
 else
     
     chkavail
