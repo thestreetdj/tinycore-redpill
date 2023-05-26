@@ -108,6 +108,7 @@ function msgnormal() {
 } 
 function st() {
 echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
+echo "------------------------------------------------------------------------------------"
 }
 
 function readanswer() {
@@ -561,7 +562,7 @@ st "iscached" "Caching pat file" "Patfile ${SYNOMODEL}.pat is cached"
 
         cd /home/tc/redpill-load/cache
         tar xvf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./VERSION && . ./VERSION && cat ./VERSION && rm ./VERSION
-echo "patextraction	Pat file extracted	Extracted PAT file, VERSION Found : ${TARGET_VERSION}-${TARGET_REVISION}" >> /home/tc/buildstatus        
+st "patextraction" "Pat file extracted" "VERSION:${TARGET_VERSION}-${TARGET_REVISION}"
         os_sha256=$(sha256sum /home/tc/redpill-load/cache/${SYNOMODEL}.pat | awk '{print $1}')
         msgnormal "Pat file  sha256sum is : $os_sha256"
 
@@ -1839,7 +1840,7 @@ function mountshare() {
 }
 
 function backup() {
-echo "backuploader	Making changes persistent to the Loader	Backup File" >> /home/tc/buildstatus
+
 #Apply pigz for fast backup  
     if [ -n "$(which pigz)" ]; then
         if [ $(cat /usr/bin/filetool.sh | grep pigz | wc -l ) -eq 0 ]; then
@@ -2713,7 +2714,7 @@ checkmachine
 
         echo "Found build request for revision greater than 42218"
         downloadextractor
-echo "downloadtools	Downloading extraction tools	Tools downloaded" >> /home/tc/buildstatus        
+st "downloadtools" "Extraction tools" "Tools downloaded"
         processpat
 
     else
@@ -2736,7 +2737,7 @@ echo "downloadtools	Downloading extraction tools	Tools downloaded" >> /home/tc/b
 #    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 
     addrequiredexts
-echo "extadd	Extensions collection	Completed extensions" >> /home/tc/buildstatus
+st "extensions" "Extensions collection" "Completed extensions"
     if [ "$JUNLOADER" == "YES" ]; then
         echo "jun build option has been specified, so JUN MOD loader will be created"
         # jun's mod must patch using custom.gz from the first partition, so you need to fix the partition.
@@ -2745,7 +2746,7 @@ echo "extadd	Extensions collection	Completed extensions" >> /home/tc/buildstatus
     else
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
     fi
-echo "copyfilestodisk	Copying all files to disk	Copied all boot files to the loader disk" >> /home/tc/buildstatus
+st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
 #    msgnormal "======Unmount the ramdisk for add extensions.======="
 #    sudo umount /home/tc/redpill-load/custom/extensions
 
@@ -2823,7 +2824,7 @@ echo "copyfilestodisk	Copying all files to disk	Copied all boot files to the loa
         # Share RD of friend kernel with JOT 2023.05.01
         if [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ]; then
             bringoverfriend
-echo "frienddownload	TCRP Friend downloading	TCRP friend copied to /mnt/${loaderdisk}3" >> /home/tc/buildstatus
+st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdisk}3"
         fi
 
         if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
@@ -2930,7 +2931,7 @@ echo "frienddownload	TCRP Friend downloading	TCRP friend copied to /mnt/${loader
         fi
     fi
 
-echo "gengrub	Generating GRUB entries	Finished generating GRUB entries for model : ${MODEL}" >> /home/tc/buildstatus
+st "gengrub" "Gen GRUB entries" "Finished generating GRUB entries : ${MODEL}"
 
 #m shell only start
 #    if [ "$JUNLOADER" == "YES" ]; then
@@ -3005,7 +3006,7 @@ echo "gengrub	Generating GRUB entries	Finished generating GRUB entries for model
             cp -f ${patfile} ${local_cache}
         fi
     fi
-echo "cachingpat	Caching pat file to disk	Cached file to: ${local_cache}" >> /home/tc/buildstatus
+st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
 
 }
 
