@@ -1048,6 +1048,7 @@ function make() {
   echo "Ready!"
   echo "press any key to continue..."
   read answer
+  rm -f /home/tc/buildstatus  
   return 0
 }
 
