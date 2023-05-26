@@ -152,6 +152,9 @@ set -u
 # 2023.05.12
 # Update : Add Support DSM 7.2-64561 Official Version
 # 2023.05.23
+# Update : Add Getty Console to DSM 7.2
+# 2023.05.26
+
 
 function showlastupdate() {
     cat <<EOF
@@ -196,6 +199,9 @@ function showlastupdate() {
 
 # Update : Add Support DSM 7.2-64561 Official Version
 # 2023.05.23
+
+# Update : Add Getty Console to DSM 7.2
+# 2023.05.26
 
 EOF
 }
