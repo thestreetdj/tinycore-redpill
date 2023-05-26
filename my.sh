@@ -426,10 +426,10 @@ fi
 
 if [ "$TARGET_VERSION" == "7.2" ]; then
     TARGET_VERSION="7.2.0"
-#    if [ "$ORIGIN_PLATFORM" == "geminilake" ]; then
-#       jsonfile=$(jq 'del(.cgetty)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
-#       sudo rm -rf /home/tc/redpill-load/custom/extensions/cgetty
-#    fi   
+    if [ "$ORIGIN_PLATFORM" == "apollolake" ]||[ "$ORIGIN_PLATFORM" == "geminilake" ]; then
+       jsonfile=$(jq 'del(.cgetty)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
+       sudo rm -rf /home/tc/redpill-load/custom/extensions/cgetty
+    fi   
 fi
 
 if [ "$MODEL" == "SA6400" ]; then
