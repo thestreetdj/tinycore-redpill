@@ -137,6 +137,8 @@ function chkavail() {
     echo "Avail space ${avail_num}M on /mnt/${tcrppart}"
 }
 
+echo " buildstatus	Building started	 Model :$MODEL-$TARGET_VERSION-$TARGET_REVISION" >> /home/tc/buildstatus
+
 checkinternet
 gitdownload
 
