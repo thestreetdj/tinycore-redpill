@@ -455,7 +455,7 @@ echo
                                                                                                                                                                            
 rm -rf /home/tc/old                                                                                                                                                       
 rm -rf /home/tc/oldpat.tar.gz                                                                                                                                             
-
+echo "cleanbuild	Cleaning build directory	Build directory cleaned" >> /home/tc/buildstatus
 cecho r "Cleaning redpill-load/cache directory!"
 rm -f /home/tc/redpill-load/cache/*
 
