@@ -401,7 +401,7 @@ else
         echo "No adequate space on ${local_cache} to download file into cache folder, clean up PAT file now ....."
         rm -f ${local_cache}/*.pat
     fi
-        
+st "download pat" "Downloading pat  " "${SYNOMODEL}.pat"        
     STATUS=`curl --insecure -w "%{http_code}" -L "${URL}" -o ${patfile} --progress-bar`
     if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
        echo  "Check internet or cache disk space"
@@ -420,7 +420,7 @@ else
         cecho y "os sha256 verify FAILED, check ${patfile}  "                           
         exit 99                                                                         
     fi
-st "download pat" "Downloading pat  " "${SYNOMODEL}.pat"
+
 fi
 
 
