@@ -51,7 +51,7 @@ function cecho () {
 
 function st() {
 echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
-echo "------------------------------------------------------------------------------------"
+echo -e "----------------------------------------------------------------------------" >> /home/tc/buildstatus
 }
 
 function checkmachine() {
@@ -420,7 +420,7 @@ else
         cecho y "os sha256 verify FAILED, check ${patfile}  "                           
         exit 99                                                                         
     fi
-st "download pat" "Downloading pat" "${SYNOMODEL}.pat"
+st "download pat" "Downloading pat  " "${SYNOMODEL}.pat"
 fi
 
 
