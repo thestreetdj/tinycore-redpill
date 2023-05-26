@@ -466,5 +466,5 @@ fi
 
 rm -f /home/tc/custom-module                                                                                                                                             
 echo "y"|./rploader.sh backup                                                                                                                                         
-
+echo "finishloader	Loader build status	Finished building the loader" >> /home/tc/buildstatus
 exit 0
