@@ -106,6 +106,9 @@ function msgwarning() {
 function msgnormal() {
     echo -e "\033[1;32m$1\033[0m"
 } 
+function st() {
+echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$2" >> /home/tc/buildstatus
+}
 
 function readanswer() {
     while true; do
@@ -529,7 +532,7 @@ function processpat() {
         [ -f ${local_cache}/*${MODEL}*${TARGET_REVISION}*.pat ] && patfile=$(ls /home/tc/custom-module/*${MODEL}*${TARGET_REVISION}*.pat | head -1)
 
         msgnormal "Found locally cached pat file ${patfile}"
-echo "iscached	Caching pat file	Patfile ${patfile} is cached" >> /home/tc/buildstatus
+st "iscached" "Caching pat file" "Patfile ${SYNOMODEL}.pat is cached"
         testarchive "${patfile}"
         if [ ${isencrypted} = "no" ]; then
             echo "File ${patfile} is already unencrypted"
