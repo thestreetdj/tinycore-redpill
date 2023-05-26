@@ -1836,7 +1836,7 @@ function mountshare() {
 }
 
 function backup() {
-
+echo "backuploader	Making changes persistent to the Loader	Backup File" >> /home/tc/buildstatus
 #Apply pigz for fast backup  
     if [ -n "$(which pigz)" ]; then
         if [ $(cat /usr/bin/filetool.sh | grep pigz | wc -l ) -eq 0 ]; then
