@@ -3201,6 +3201,27 @@ function setplatform() {
 
 }
 
+function synctime() {
+
+    #Get Timezone
+    tz=$(curl -s ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
+    if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
+        ntpserver="asia.pool.ntp.org"
+    else
+        ntpserver="pool.ntp.org"
+    fi
+
+    if [ "$(which ntpclient)_" == "_" ]; then
+        tce-load -iw ntpclient 2>&1 >/dev/null
+    fi    
+    export TZ="${timezone}"
+    echo "Synchronizing dateTime with ntp server $ntpserver ......"
+    sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
+    echo
+    echo "DateTime synchronization complete!!!"
+
+}
+
 function getvars() {
 
     KVER="$(jq -r -e '.general.kver' $userconfigfile)"
@@ -3305,10 +3326,7 @@ function getvars() {
 
     if [ "$INTERNETDATE" != "$LOCALDATE" ]; then
         echo "ERROR ! System DATE is not correct"
-        echo "Downloading ntpclient to assist"
-        tce-load -iw ntpclient 2>&1 >/dev/null
-        export TZ="${timezone}"
-        sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
+        synctime
         echo "Current time after communicating with NTP server ${ntpserver} :  $(date) "
     fi
 
