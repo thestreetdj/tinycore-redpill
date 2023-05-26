@@ -2931,7 +2931,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         fi
     fi
 
-st "gengrub      " "Gen GRUB entries" "Finished generating GRUB entries : ${MODEL}"
+st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
 
 #m shell only start
 #    if [ "$JUNLOADER" == "YES" ]; then
