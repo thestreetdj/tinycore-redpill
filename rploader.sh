@@ -2661,7 +2661,7 @@ function buildloader() {
 
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
-echo "buildstatus	Building started	Started building the loader from Model :$MODEL-$TARGET_VERSION-$TARGET_REVISION" >> /home/tc/buildstatus
+
 checkmachine
 
     [ "$1" == "junmod" ] && JUNLOADER="YES"
