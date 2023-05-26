@@ -4,7 +4,7 @@ while [ -z "$GATEWAY_INTERFACE" ]; do
     clear
     if [ -f /home/tc/buildstatus ]; then
       echo -e "\e[33m-------------------M-Shell for TCRP Loader Build Staus---------------------\e[0m"
-      echo -e "\e[33mStage\e[0m		\e[32mStatus\e[0m		Message"
+      echo -e "\e[33mStage\e[0m		\e[32mStatus\e[0m			Message"
       echo -e "\e[33m---------------------------------------------------------------------------\e[0m"      
       cat /home/tc/buildstatus
     else
