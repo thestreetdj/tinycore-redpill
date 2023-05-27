@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[ -f /home/tc/buildstatus ] && rm -f /home/tc/buildstatus
+
 while [ -z "$GATEWAY_INTERFACE" ]; do
     clear
     if [ -f /home/tc/buildstatus ]; then
