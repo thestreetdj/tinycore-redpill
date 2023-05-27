@@ -814,27 +814,27 @@ function setSuggest() {
 
   line="-------------------------------------------------------\n"
   case $MODEL in
+    DS1019+)     platform="apollolake";eval "desc=\"[${MODEL}]:${platform}, x19 Series, Intel Celeron J3455, Quad Core, 4 Threads, DDR3L SODIMM 8 GB\"";;
+    DS1520+)     platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}\"";;    
+    DS1621+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}22}\"";;    
+    DS1621xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;    
+    DS2422+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}22}\"";;    
+    DS3615xs)    platform="bromolow";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}22}\"";;    
+    DS3617xs)    platform="broadwell";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;    
     DS3622xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
-    DS1621xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
-    RS3621xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;    
-    RS4021xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
-    DS918+)      platform="apollolake";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}17}, \${MSG${tz}18}\"";;
-    DS1019+)     platform="apollolake";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}17}, \${MSG${tz}18}\"";;
-    DS923+)      platform="r1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}20}\"";;
+    DS720+)      platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}\"";;        
     DS723+)      platform="r1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}20}\"";;
-    DS720+)      platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}\"";;    
+    DS918+)      platform="apollolake";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}17}, \${MSG${tz}18}\"";;    
     DS920+)      platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}\"";;
-    DS1520+)     platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}\"";;
+    DS923+)      platform="r1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}20}\"";;
     DVA1622)     platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), \${MSG${tz}17}, \${MSG${tz}21}\"";;
-    DS1621+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}22}\"";;
-    DS2422+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}22}\"";;
+    DVA3219)     platform="denverton";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}23}, \${MSG${tz}25}, \${MSG${tz}21}\"";;    
+    DVA3221)     platform="denverton";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}23}, \${MSG${tz}24}, \${MSG${tz}21}\"";;    
     FS2500)      platform="v1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}22}\"";;
     RS1221+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}\${MSG${tz}19}, \${MSG${tz}22}\"";;    
-    DS3615xs)    platform="bromolow";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}22}\"";;
-    DS3617xs)    platform="broadwell";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
     RS3618xs)    platform="broadwell";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
-    DVA3221)     platform="denverton";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}23}, \${MSG${tz}24}, \${MSG${tz}21}\"";;
-    DVA3219)     platform="denverton";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}23}, \${MSG${tz}25}, \${MSG${tz}21}\"";;
+    RS3621xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;    
+    RS4021xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}16}\"";;
     SA6400)      platform="epyc7002";eval "desc=\"[${MODEL}]:${platform}, \${MSG${tz}19}\"";;
   esac
 
