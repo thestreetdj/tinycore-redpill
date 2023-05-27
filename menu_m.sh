@@ -23,7 +23,7 @@ ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
 
 ### Messages Contents
 ## US
-MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap\nDT models do not support HBAs\n"
+MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs\n"
 MSGUS01="Choose a Dev Mod handling method, DDSML/EUDEV"
 MSGUS02="Choose a Synology Model"
 MSGUS03="Choose a Synology Serial Number"
@@ -66,7 +66,7 @@ MSGUS39="Choose a lageuage"
 MSGUS40="DDSML+EUDEV"
 
 ## RU
-MSGRU00="Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap \nDT модели не поддерживают HBAs\n"
+MSGRU00="Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap. DT модели не поддерживают HBAs\n"
 MSGRU01="Выберите метод обработки Dev Mod, DDSML/EUDEV"
 MSGRU02="Выберите модель Synology"
 MSGRU03="Выберите серийный номер Synology"
@@ -109,7 +109,7 @@ MSGRU39="Выберите язык"
 MSGRU40="DDSML+EUDEV"
 
 ## FR
-MSGFR00="Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne nécessitent pas de SataPortMap, DiskIdxMap\nLes modèles DT ne prennent pas en charge les HBAs\n"
+MSGFR00="Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne nécessitent pas de SataPortMap, DiskIdxMap. Les modèles DT ne prennent pas en charge les HBAs\n"
 MSGFR01="Choisissez une méthode de gestion des modèles de périphérique, DDSML/EUDEV"
 MSGFR02="Choisissez un modèle Synology"
 MSGFR03="Choisissez un numéro de série Synology"
@@ -152,7 +152,7 @@ MSGFR39="Choisissez une langue"
 MSGFR40="DDSML+EUDEV"
 
 ## DE
-MSGDE00="Gerätebaum[DT] Basismodelle und HBAs benötigen kein SataPortMap,DiskIdxMap\nDT-Modelle unterstützen keine HBAs\n"
+MSGDE00="Gerätebaum[DT] Basismodelle und HBAs benötigen kein SataPortMap,DiskIdxMap. DT-Modelle unterstützen keine HBAs\n"
 MSGDE01="Wählen Sie eine Methode zur Verwaltung von Dev-Mods, DDSML/EUDEV"
 MSGDE02="Wählen Sie ein Synology-Modell"
 MSGDE03="Wählen Sie eine Synology-Seriennummer"
@@ -195,8 +195,7 @@ MSGDE39="Wählen Sie eine Sprache"
 MSGDE40="DDSML+EUDEV"
 
 ## ES
-
-MSGES00="Los modelos base y HBAs de Device-Tree[DT] no requieren SataPortMap, DiskIdxMap\nLos modelos DT no admiten HBAs\n"
+MSGES00="Los modelos base y HBAs de Device-Tree[DT] no requieren SataPortMap, DiskIdxMap. Los modelos DT no admiten HBAs\n"
 MSGES01="Elija un método de manejo de Mod Dev, DDSML/EUDEV"
 MSGES02="Elija un modelo de Synology"
 MSGES03="Elija un número de serie de Synology"
@@ -239,8 +238,7 @@ MSGES39="Elige un idioma"
 MSGES40="DDSML+EUDEV"
 
 ## BR
-
-MSGBR00="Modelos Base e HBAs do Device-Tree[DT] não requerem SataPortMap, DiskIdxMap\nModelos DT não suportam HBAs\n"
+MSGBR00="Modelos Base e HBAs do Device-Tree[DT] não requerem SataPortMap, DiskIdxMap. Modelos DT não suportam HBAs\n"
 MSGBR01="Escolha um método de manipulação de Dev Mod, DDSML/EUDEV"
 MSGBR02="Escolha um modelo Synology"
 MSGBR03="Escolha um número de série Synology"
@@ -283,8 +281,7 @@ MSGBR39="Olá! Posso ajudá-lo em Português"
 MSGBR40="DDSML+EUDEV"
 
 ## IT
-
-MSGIT00="I modelli di base e gli HBA di Device-Tree [DT] non richiedono SataPortMap, DiskIdxMap\nI modelli DT non supportano gli HBA\n"
+MSGIT00="I modelli di base e gli HBA di Device-Tree [DT] non richiedono SataPortMap, DiskIdxMap. I modelli DT non supportano gli HBA\n"
 MSGIT01="Scegli un metodo di gestione del Mod Dev, DDSML/EUDEV"
 MSGIT02="Scegli un modello Synology"
 MSGIT03="Scegli un numero di serie Synology"
@@ -327,7 +324,7 @@ MSGIT39="Scegli una lingua"
 MSGIT40="DDSML+EUDEV"
 
 ## KR
-MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다.\nDT모델은 HBA를 지원하지 않습니다.\n"
+MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다. DT모델은 HBA를 지원하지 않습니다.\n"
 MSGKR01="커널모듈 처리방법 선택 DDSML/EUDEV"
 MSGKR02="Synology 모델 선택"
 MSGKR03="Synology S/N 선택"
@@ -370,7 +367,7 @@ MSGKR39="언어를 선택하세요"
 MSGKR40="DDSML+EUDEV"
 
 ## CN
-MSGCN00="设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap\nDT模型不支持HBA\n"
+MSGCN00="设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap. DT模型不支持HBA\n"
 MSGCN01="选择Dev Mod处理方法，DDSML/EUDEV"
 MSGCN02="选择一个Synology型号"
 MSGCN03="选择一个Synology序列号"
@@ -413,7 +410,7 @@ MSGCN39="选择语言"
 MSGCN40="DDSML+EUDEV"
 
 ## JP
-MSGJP00="Device-Tree[DT]ベースモデルとHBAsは、SataPortMap、DiskIdxMapが必要ありません\nDTモデルはHBAsをサポートしていません\n"
+MSGJP00="Device-Tree[DT]ベースモデルとHBAsは、SataPortMap、DiskIdxMapが必要ありません. DTモデルはHBAsをサポートしていません\n"
 MSGJP01="Dev Mod処理方法を選択してください、EUDEV / DDSML"
 MSGJP02="Synologyモデルを選択してください"
 MSGJP03="Synologyシリアル番号を選択してください"
