@@ -835,7 +835,7 @@ function setSuggest() {
     RS3618xs)    platform="broadwell";eval "desc=\"[${MODEL}]:${platform}, Intel Xeon D-1521, \${MSG${tz}16}\"";;
     RS3621xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, Intel Xeon D-1541, \${MSG${tz}16}\"";;    
     RS4021xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, Intel Xeon D-1541, \${MSG${tz}16}\"";;
-    SA6400)      platform="epyc7002";eval "desc=\"[${MODEL}]:${platform}(DT), AMD EPYC 7272 "";;
+    SA6400)      platform="epyc7002";eval "desc=\"[${MODEL}]:${platform}(DT), AMD EPYC 7272 \"";;
   esac
 
   result="${line}${desc}" 
