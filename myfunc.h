@@ -847,7 +847,7 @@ function getvars()
         TARGET_PLATFORM="sa6400"
         ORIGIN_PLATFORM="epyc7002"        
         SYNOMODEL="sa6400_$TARGET_REVISION"
-        sha256=""
+        sha256="6123f757507edb67c3b03909a30f1c539947af4e1789c6d02b87ace46fddcfdc"
        
     else                                                                                                     
         echo "Synology model not supported by TCRP."                                                         
