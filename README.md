@@ -1,8 +1,7 @@
 # M Shell for tinycore-redpill
 
 
-<img width="1022" alt="스크린샷 2023-03-22 오전 12 50 30" src="https://user-images.githubusercontent.com/85427533/226664725-0669b127-f3c8-4c4f-8486-a4734f09db69.png">
-
+![스크린샷 2023-05-28 오후 2 39 15](https://github.com/PeterSuh-Q3/tinycore-redpill/assets/85427533/d3ca93b7-1f0e-4988-b4e7-a5af61d668ff)
 
 
 ### This is a testing version. Do not use unless you are certain you have no data to lose.
