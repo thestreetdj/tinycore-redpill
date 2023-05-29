@@ -6,9 +6,9 @@
           echo "::set-output name=patfile::$patfile"
           
           # install bsdiff
-          sudo apt-get install -y bsdiff cpio xz-utils
+          apt-get install -y bsdiff cpio xz-utils
           # install libelf-dev
-          sudo apt-get install libelf-dev
+          apt-get install libelf-dev
 
           #ls -al $GITHUB_WORKSPACE/
           mkdir /opt/build
@@ -34,7 +34,7 @@
           mkdir pat
           #tar xf ds.pat -C pat
           ls -lh ./
-          sudo LD_LIBRARY_PATH=synoesp/extract synoesp/extract/syno_extract_system_patch ds.pat pat || echo "extract latest pat"
+          LD_LIBRARY_PATH=synoesp/extract synoesp/extract/syno_extract_system_patch ds.pat pat || echo "extract latest pat"
           echo "test4"
           # is update_pack
           if [ ! -f "pat/zImage" ]; then
