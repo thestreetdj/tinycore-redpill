@@ -14,20 +14,21 @@
           mkdir /opt/build
           mkdir /opt/dist
           cd /opt/build
-          curl --insecure -L ${pataddress} -o ds.pat
-          curl --insecure -L ${toolchain} -o toolchain.txz
-          curl --insecure -L ${linuxsrc} -o linux.tar.xz
+          [ ! -f /opt/build/ds.pat ] && curl -kL ${pataddress} -o ds.pat
+          [ ! -f /opt/build/toolchain.txz ] && curl -kL ${toolchain} -o toolchain.txz
+          [ ! -f /opt/build/linux.tar.xz ] && curl -kL ${linuxsrc} -o linux.tar.xz
           
           # download old pat for syno_extract_system_patch # thanks for jumkey's idea.
           mkdir synoesp
-          curl --insecure --location https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat --output oldpat.tar.gz
+          [ ! -f /opt/build/oldpat.tar.gz ] && curl -kL https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_DS3622xs%2B_42218.pat -o oldpat.tar.gz
           tar -C./synoesp/ -xf oldpat.tar.gz rd.gz
 
           cd synoesp
           xz -dc < rd.gz >rd 2>/dev/null || echo "extract rd.gz"
           echo "finish"
           cpio -idm <rd 2>&1 || echo "extract rd"
-          mkdir extract && cd extract
+          mkdir extract 
+          cd extract
           cp ../usr/lib/libcurl.so.4 ../usr/lib/libmbedcrypto.so.5 ../usr/lib/libmbedtls.so.13 ../usr/lib/libmbedx509.so.1 ../usr/lib/libmsgpackc.so.2 ../usr/lib/libsodium.so ../usr/lib/libsynocodesign-ng-virtual-junior-wins.so.7 ../usr/syno/bin/scemd ./
           ln -s scemd syno_extract_system_patch
           cd ../..
