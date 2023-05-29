@@ -70,8 +70,10 @@
           curl -kLO https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tools/kpatch
           curl -kLO https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tools/vmlinux-to-bzImage.sh
           curl -kLO https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tools/bzImage-template-v5.gz
+          curl -kLO https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tools/calc_run_size.sh
            
           chmod 777 kpatch
+          chmod 777 calc_run_size.sh
           chmod 777 bzImage-to-vmlinux.sh
           chmod 777 vmlinux-to-bzImage.sh
            
