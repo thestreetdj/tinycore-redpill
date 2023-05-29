@@ -66,10 +66,10 @@
           #php patch-ramdisk-check.php vmlinux-mod vmlinux_mod.bin
           # New fabio patching method 
           echo "Patching Kernel"
-          curl -kLO https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tools/bzImage-to-vmlinux.sh
-          curl -kLO https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tools/kpatch
-          curl -kLO https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tools/vmlinux-to-bzImage.sh
-          curl -kLO https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tools/bzImage-template-v5.gz
+          #curl -kLO https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tools/bzImage-to-vmlinux.sh
+          #curl -kLO https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tools/kpatch
+          #curl -kLO https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tools/vmlinux-to-bzImage.sh
+          #curl -kLO https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/tools/bzImage-template-v5.gz
            
           chmod 777 kpatch
           chmod 777 bzImage-to-vmlinux.sh
