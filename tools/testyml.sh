@@ -1,7 +1,6 @@
-
-      pat-address='https://global.download.synology.com/download/DSM/release/7.2/64561/DSM_SA6400_64561.pat'
-      toolchain='https://global.download.synology.com/download/ToolChain/toolchain/7.1-42661/AMD%20x86%20Linux%20Linux%205.10.55%20%28epyc7002%29/epyc7002-gcc850_glibc226_x86_64-GPL.txz'
-      linux-src='https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.10.55.tar.xz'
+      pat-address="https://global.download.synology.com/download/DSM/release/7.2/64561/DSM_SA6400_64561.pat"
+      toolchain="https://global.download.synology.com/download/ToolChain/toolchain/7.1-42661/AMD%20x86%20Linux%20Linux%205.10.55%20%28epyc7002%29/epyc7002-gcc850_glibc226_x86_64-GPL.txz"
+      linux-src="https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.10.55.tar.xz"
 
           patfile=$(basename ${pat-address} | while read; do echo -e ${REPLY//%/\\x}; done)
           echo "::set-output name=patfile::$patfile"
