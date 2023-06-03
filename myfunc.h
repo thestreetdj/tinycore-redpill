@@ -154,7 +154,8 @@ set -u
 # 2023.05.23
 # Update : Add Getty Console to DSM 7.2
 # 2023.05.26
-
+# Update : Added ds916+ (braswell)
+# 2023.06.03
 
 function showlastupdate() {
     cat <<EOF
@@ -162,16 +163,10 @@ function showlastupdate() {
 # Update : Release TCRP FRIEND mode
 # 2022.09.25
 
-# Update : Inspection of FMA3 command support (Haswell or higher) and model restriction function added to menu.sh
-# 2023.02.22
-
 # Update :  menu.sh Added new function DDSML / EUDEV selection
 #           DDSML ( Detected Device Static Module Loading with modprobe / insmod command )
 #           EUDEV (Enhanced Userspace Device with eudev deamon)
 # 2023.03.01
-
-# Update : Improved TCRP loader build process
-# 2023.03.14
 
 # Update : AMD CPU FRIEND mode menu usage restriction release (except HP N36L/N40L/N54L)
 # 2023.03.18
@@ -185,23 +180,14 @@ function showlastupdate() {
 # Update : Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk Update
 # 2023.05.01
 
-# Update : Add Support DSM 7.2-64551 RC
-# 2023.05.02
-
-# Update : Added sa6400 (epyc7002)
-# 2023.05.06
-
-# Update : Add 5 models DS720+,RS1221+,RS1619xs+,RS3621xs+,SA3400
-# 2023.05.08
-
-# Update : 7.0.1-42218 menu open for all models
-# 2023.05.12
-
 # Update : Add Support DSM 7.2-64561 Official Version
 # 2023.05.23
 
 # Update : Add Getty Console to DSM 7.2
 # 2023.05.26
+
+# Update : Added ds916+ (braswell)
+# 2023.06.03
 
 EOF
 }
@@ -235,30 +221,31 @@ Please type Synology Model Name after ./$(basename ${0})
 
 - for friend mode
 
-./$(basename ${0}) DS918+F
-./$(basename ${0}) DS3617xsF                                                                                                    
-./$(basename ${0}) DS3615xsF
-./$(basename ${0}) DS3622xs+F                                                                                                   
-./$(basename ${0}) DVA3221F                                                                                                     
-./$(basename ${0}) DS920+F                                                                                                      
-./$(basename ${0}) DS1621+F 
-./$(basename ${0}) DS2422+F  
-./$(basename ${0}) DVA1622F
-./$(basename ${0}) DS1520+F
-./$(basename ${0}) FS2500F
-./$(basename ${0}) DS1621xs+F
-./$(basename ${0}) RS4021xs+F 
-./$(basename ${0}) DVA3219F
-./$(basename ${0}) RS3618xsF
-./$(basename ${0}) DS1019+F
-./$(basename ${0}) DS923+F
-./$(basename ${0}) DS723+F
-./$(basename ${0}) SA6400F
-./$(basename ${0}) DS720+F
-./$(basename ${0}) RS1221+F
-./$(basename ${0}) RS1619xs+F
-./$(basename ${0}) RS3621xs+F
-./$(basename ${0}) SA3400F
+./$(basename ${0}) DS918+G
+./$(basename ${0}) DS3617xsG
+./$(basename ${0}) DS3615xsG
+./$(basename ${0}) DS3622xs+G                                                                                                   
+./$(basename ${0}) DVA3221G
+./$(basename ${0}) DS920+G                                                                                                      
+./$(basename ${0}) DS1621+G 
+./$(basename ${0}) DS2422+G  
+./$(basename ${0}) DVA1622G
+./$(basename ${0}) DS1520+G
+./$(basename ${0}) FS2500G
+./$(basename ${0}) DS1621xs+G
+./$(basename ${0}) RS4021xs+G 
+./$(basename ${0}) DVA3219G
+./$(basename ${0}) RS3618xsG
+./$(basename ${0}) DS1019+G
+./$(basename ${0}) DS923+G
+./$(basename ${0}) DS723+G
+./$(basename ${0}) SA6400G
+./$(basename ${0}) DS720+G
+./$(basename ${0}) RS1221+G
+./$(basename ${0}) RS1619xs+G
+./$(basename ${0}) RS3621xs+G
+./$(basename ${0}) SA6400G
+./$(basename ${0}) DS916+G
 
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
@@ -766,6 +753,13 @@ function getvars()
         SYNOMODEL="ds723p_$TARGET_REVISION"                                                                                                                    
         sha256="543b9d6b23cb42b306e62f1e9b286888c66284e25f3505b81c8b25e827e49da3"
 
+    elif [ "${1}" = "DS916+G" ]; then           
+        TARGET_REVISION="64561"
+        TARGET_PLATFORM="ds916p"
+        ORIGIN_PLATFORM="braswell"
+        SYNOMODEL="ds916p_$TARGET_REVISION"                                                                                                                    
+        sha256="0c4a8e7db8dfce88634b175670ba21b9107e0e5600cdb5154afc5cd77acaca33"      
+
     elif [ "${1}" = "DS918+G" ]; then           
         TARGET_REVISION="64561"
         TARGET_PLATFORM="ds918p"
@@ -891,7 +885,7 @@ function getvars()
 
     if [ "$MODEL" = "SA6400" ]; then    
         KVER="5.10.55"
-    elif [ "$MODEL" = "DS3615xs" ]; then    
+    elif [ "$MODEL" = "DS3615xs" ]||[ "$MODEL" = "DS916+" ]; then
         KVER="3.10.108"        
     fi    
         
