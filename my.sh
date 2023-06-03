@@ -455,14 +455,14 @@ else
     echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static ${parmfrmyv}
 fi
 
-if  [ -f /home/tc/custom-module/redpill.ko ]; then
-    cecho y "Removing redpill.ko ..."
-    rm -rf /home/tc/custom-module/redpill.ko
-fi
-
 if [ $? -ne 0 ]; then
     cecho r "An error occurred while building the loader!!! Clean the redpill-load directory!!! "
     ./rploader.sh clean
+fi
+
+if  [ -f /home/tc/custom-module/redpill.ko ]; then
+    cecho y "Removing redpill.ko ..."
+    rm -rf /home/tc/custom-module/redpill.ko
 fi
 
 echo                                                                                                                                                                           
