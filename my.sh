@@ -460,6 +460,11 @@ if  [ -f /home/tc/custom-module/redpill.ko ]; then
     rm -rf /home/tc/custom-module/redpill.ko
 fi
 
+if [ $? -ne 0 ]; then
+    cecho r "An error occurred while building the loader!!! Clean the redpill-load directory!!! "
+    ./rploader.sh clean
+fi
+
 echo                                                                                                                                                                           
 cecho y "Backup in progress..."                                                                                                                                                
 echo
