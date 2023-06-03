@@ -154,7 +154,7 @@ set -u
 # 2023.05.23
 # Update : Add Getty Console to DSM 7.2
 # 2023.05.26
-# Update : Added ds916+ (braswell)
+# Update : Added ds916+ (braswell), 7.2.0 Jot Menu Creation for HP PCs
 # 2023.06.03
 
 function showlastupdate() {
@@ -186,7 +186,7 @@ function showlastupdate() {
 # Update : Add Getty Console to DSM 7.2
 # 2023.05.26
 
-# Update : Added ds916+ (braswell)
+# Update : Added ds916+ (braswell), 7.2.0 Jot Menu Creation for HP PCs
 # 2023.06.03
 
 EOF
