@@ -2991,6 +2991,37 @@
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json"
         }
       ]
-    }
+    },
+    {
+      "id": "ds916p-7.2.0-64561",
+      "platform_version": "ds916p-7.2.0-64561",
+      "user_config_json": "braswell_user_config.json",
+      "docker_base_image": "debian:8-slim",
+      "compile_with": "toolkit_dev",
+      "redpill_lkm_make_target": "test-v7",
+      "downloads": {
+        "kernel": {
+          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/bromolow-source/linux-3.10.x.txz/download",
+          "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
+        },
+        "toolkit_dev": {
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.bromolow-7.2.dev.txz/download",
+          "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
+        }
+      },
+      "redpill_lkm": {
+        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
+        "branch": "master"
+      },
+      "redpill_load": {
+        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
+        "branch": "master"
+      },
+      "add_extensions": [
+        {
+          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json"
+        }
+      ]
+    }    
   ]
 }
