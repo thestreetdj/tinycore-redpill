@@ -3209,6 +3209,8 @@ function setplatform() {
         SYNOMODEL="rs3413xsp_$TARGET_REVISION" && MODEL="RS3413xs+" && ORIGIN_PLATFORM="bromolow"
     elif [ "${TARGET_PLATFORM}" = "ds1019p" ]; then
         SYNOMODEL="ds1019p_$TARGET_REVISION" && MODEL="DS1019+" && ORIGIN_PLATFORM="apollolake"
+    elif [ "${TARGET_PLATFORM}" = "ds916p" ]; then
+        SYNOMODEL="ds916p_$TARGET_REVISION" && MODEL="DS916+" && ORIGIN_PLATFORM="braswell"
     fi
 
 }
