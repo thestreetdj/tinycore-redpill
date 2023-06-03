@@ -2193,6 +2193,37 @@
       ]
     },
     {
+      "id": "ds916p-7.2.0-64561",
+      "platform_version": "ds916p-7.2.0-64561",
+      "user_config_json": "braswell_user_config.json",
+      "docker_base_image": "debian:8-slim",
+      "compile_with": "toolkit_dev",
+      "redpill_lkm_make_target": "test-v7",
+      "downloads": {
+        "kernel": {
+          "url": "",
+          "sha256": ""
+        },
+        "toolkit_dev": {
+          "url": "",
+          "sha256": ""
+        }
+      },
+      "redpill_lkm": {
+        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
+        "branch": "master"
+      },
+      "redpill_load": {
+        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
+        "branch": "master"
+      },
+      "add_extensions": [
+        {
+          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
+        }
+      ]
+    },
+    {
       "id": "ds918p-7.2.0-64561",
       "platform_version": "ds918p-7.2.0-64561",
       "user_config_json": "apollolake_user_config.json",
