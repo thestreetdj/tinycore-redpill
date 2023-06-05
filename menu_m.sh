@@ -1073,6 +1073,7 @@ function writexsession() {
     echo "export LC_ALL=${ucode}.UTF-8" >> .xsession
     echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
     echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
+    echo "sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8" >> .xsession
   fi
   echo "urxvt -im utf8 -geometry 78x32+10+0 -fg orange -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession  
   echo "aterm -geometry 78x32+525+0 -fg yellow -title \"TCRP Monitor\" -e /home/tc/rploader.sh monitor &" >> .xsession
@@ -1110,6 +1111,7 @@ function langMenu() {
   export LC_ALL=${ucode}.UTF-8
   [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
   sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
+  sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8
   
   writeConfigKey "general" "ucode" "${ucode}"  
   writexsession
@@ -1256,6 +1258,7 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
   export LC_ALL=${ucode}.UTF-8
   [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
   sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
+  sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8
 
   if [ $(cat ~/.Xdefaults|grep "URxvt.background: black" | wc -w) -eq 0 ]; then
     echo "URxvt.background: black"  >> ~/.Xdefaults
