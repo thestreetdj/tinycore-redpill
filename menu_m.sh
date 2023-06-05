@@ -363,7 +363,7 @@ MSGKR35="계속하려면 아무 키나 누르십시오..."
 MSGKR36="Synology 일련 번호가 설정되지 않았습니다. user_config.json을 다시 확인하십시오. 로더 빌드를 중단합니다!!!!!!"
 MSGKR37="첫 번째 MAC 주소가 설정되지 않았습니다. user_config.json을 다시 확인하십시오. 로더 빌드를 중단합니다!!!!!!"
 MSGKR38="netif_num과 mac 주소 갯수가 일치하지 않습니다. user_config.json을 다시 확인하십시오. 로더 빌드를 중단합니다!!!!!!"
-MSGKR39="언어를 선택하세요"
+MSGKR39="언어를 선택하세요(Choose a lageuage)"
 MSGKR40="DDSML+EUDEV"
 
 ## CN
