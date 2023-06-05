@@ -1254,9 +1254,15 @@ else
 fi	
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
+# for 2Byte Language
+  [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
+  export LANG=ko_KR.UTF-8
+  export LC_ALL=ko_KR.UTF-8
+  sudo localedef -c -i ko_KR -f UTF-8 ko_KR.UTF-8
+  sudo localedef -f UTF-8 -i ko_KR ko_KR.UTF-8
+
   export LANG=${ucode}.UTF-8
   export LC_ALL=${ucode}.UTF-8
-  [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
   sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
   sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8
 
