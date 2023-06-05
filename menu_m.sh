@@ -1075,7 +1075,7 @@ function writexsession() {
     echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
     echo "sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8" >> .xsession
   fi
-  echo "urxvt -im utf8 -geometry 78x32+10+0 -fg orange -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession  
+  echo "urxvt -geometry 78x32+10+0 -fg orange -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession  
   echo "aterm -geometry 78x32+525+0 -fg yellow -title \"TCRP Monitor\" -e /home/tc/rploader.sh monitor &" >> .xsession
   echo "aterm -geometry 78x25+10+430 -title \"TCRP Build Status\" -e /home/tc/ntp.sh &" >> .xsession
   echo "aterm -geometry 78x25+525+430 -fg green -title \"TCRP Extra Terminal\" &" >> .xsession
@@ -1275,11 +1275,14 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
   if [ $(cat ~/.Xdefaults|grep "URxvt.transparent: true" | wc -w) -eq 0 ]; then	
     echo "URxvt.transparent: true"  >> ~/.Xdefaults
   fi
-  if [ $(cat ~/.Xdefaults|grep "URxvt.utf8: 2" | wc -w) -eq 0 ]; then	
-    echo "URxvt.utf8: 2"  >> ~/.Xdefaults
+  if [ $(cat ~/.Xdefaults|grep "URxvt*encoding: UTF-8" | wc -w) -eq 0 ]; then	
+    echo "URxvt*encoding: UTF-8"  >> ~/.Xdefaults
   fi
-  if [ $(cat ~/.Xdefaults|grep "URxvt.locale: true" | wc -w) -eq 0 ]; then	
-    echo "URxvt.locale: true"  >> ~/.Xdefaults
+  if [ $(cat ~/.Xdefaults|grep "URxvt*locale:" | wc -w) -eq 0 ]; then	
+    echo "URxvt*locale: ${ucode}.UTF-8"  >> ~/.Xdefaults
+  else
+    sed -i "/URxvt*locale:/d" ~/.Xdefaults
+    echo "URxvt*locale: ${ucode}.UTF-8"  >> ~/.Xdefaults
   fi
 fi
 
