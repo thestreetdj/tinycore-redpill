@@ -1227,12 +1227,12 @@ sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" ~/.dia
 writexsession
 
 if [ "${ucode}" != "en_US" ]; then
-	if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
-	  tce-load -wi glibc_apps
-	  tce-load -wi glibc_i18n_locale
-	  tce-load -wi unifont
-	  tce-load -wi rxvt
-	  if [ $? -eq 0 ]; then
+    if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
+	tce-load -wi glibc_apps
+	tce-load -wi glibc_i18n_locale
+	tce-load -wi unifont
+	tce-load -wi rxvt
+	if [ $? -eq 0 ]; then
 	    echo "Download glibc_apps.tcz and glibc_i18n_locale.tcz OK, Permanent installation progress !!!"
 	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
 	    sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst	    
@@ -1245,12 +1245,12 @@ if [ "${ucode}" != "en_US" ]; then
 	    echo
 	    echo "You have finished installing TC Unicode package and urxvt."
 	    restart
-	  else
+	else
 	    echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
-	  fi
 	fi
+    fi
 else
-    echo "ucode is not en_US , ucode is ${ucode}"
+    echo "ucode is en_US , ucode is ${ucode}"
 fi	
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
