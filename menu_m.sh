@@ -1069,8 +1069,8 @@ function writexsession() {
   sed -i "/urxvt/d" .xsession
 
   if [ "${ucode}" != "en_US" ]; then
-    echo "export LANG=${ucode}.utf8" >> .xsession
-    echo "export LC_ALL=${ucode}.utf8" >> .xsession
+    echo "export LANG=${ucode}.UTF-8" >> .xsession
+    echo "export LC_ALL=${ucode}.UTF-8" >> .xsession
     echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
     echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
   fi
@@ -1106,8 +1106,8 @@ function langMenu() {
     brasileiro) tz="BR"; ucode="pt_BR";;
   esac
 
-  export LANG=${ucode}.utf8
-  export LC_ALL=${ucode}.utf8
+  export LANG=${ucode}.UTF-8
+  export LC_ALL=${ucode}.UTF-8
   [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
   sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
   
@@ -1248,8 +1248,8 @@ if [ "${ucode}" != "en_US" ]; then
 	    echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
 	  fi
 	fi
-	export LANG=${ucode}.utf8
-	export LC_ALL=${ucode}.utf8
+	export LANG=${ucode}.UTF-8
+	export LC_ALL=${ucode}.UTF-8
 	[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
 	sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
 	
@@ -1264,8 +1264,8 @@ if [ "${ucode}" != "en_US" ]; then
         fi
 else
         if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
-  	  export LANG=${ucode}.utf8
-	  export LC_ALL=${ucode}.utf8
+  	  export LANG=${ucode}.UTF-8
+	  export LC_ALL=${ucode}.UTF-8
 	  [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
 	  sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
 	  
