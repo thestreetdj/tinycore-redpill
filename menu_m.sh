@@ -1074,7 +1074,7 @@ function writexsession() {
     echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
     echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
   fi
-  echo "urxvt -geometry 78x32+10+0 -fg orange -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession  
+  echo "urxvt -im utf8 -geometry 78x32+10+0 -fg orange -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession  
   echo "aterm -geometry 78x32+525+0 -fg yellow -title \"TCRP Monitor\" -e /home/tc/rploader.sh monitor &" >> .xsession
   echo "aterm -geometry 78x25+10+430 -title \"TCRP Build Status\" -e /home/tc/ntp.sh &" >> .xsession
   echo "aterm -geometry 78x25+525+430 -fg green -title \"TCRP Extra Terminal\" &" >> .xsession
@@ -1225,7 +1225,6 @@ sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" ~/.dia
 writexsession
 
 if [ "${ucode}" != "en_US" ]; then
-
 	if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
 	  tce-load -wi glibc_apps
 	  tce-load -wi glibc_i18n_locale
@@ -1248,38 +1247,33 @@ if [ "${ucode}" != "en_US" ]; then
 	    echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
 	  fi
 	fi
-	export LANG=${ucode}.UTF-8
-	export LC_ALL=${ucode}.UTF-8
-	[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
-	sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
-	
-        if [ $(cat ~/.Xdefaults|grep "URxvt.background: black" | wc -w) -eq 0 ]; then
-	  echo "URxvt.background: black"  >> ~/.Xdefaults
-	fi
-        if [ $(cat ~/.Xdefaults|grep "URxvt.foreground: white" | wc -w) -eq 0 ]; then	
-   	  echo "URxvt.foreground: white"  >> ~/.Xdefaults
-        fi
-        if [ $(cat ~/.Xdefaults|grep "URxvt.transparent: true" | wc -w) -eq 0 ]; then	
-   	  echo "URxvt.transparent: true"  >> ~/.Xdefaults
-        fi
 else
-        if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
-  	  export LANG=${ucode}.UTF-8
-	  export LC_ALL=${ucode}.UTF-8
-	  [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
-	  sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
-	  
-          if [ $(cat ~/.Xdefaults|grep "URxvt.background: black" | wc -w) -eq 0 ]; then
-  	    echo "URxvt.background: black"  >> ~/.Xdefaults
-  	  fi
-          if [ $(cat ~/.Xdefaults|grep "URxvt.foreground: white" | wc -w) -eq 0 ]; then	
-   	    echo "URxvt.foreground: white"  >> ~/.Xdefaults
-          fi
-          if [ $(cat ~/.Xdefaults|grep "URxvt.transparent: true" | wc -w) -eq 0 ]; then	
-   	    echo "URxvt.transparent: true"  >> ~/.Xdefaults
-          fi
-	fi
+    echo "ucode is not en_US , ucode is ${ucode}"
 fi	
+
+if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
+  export LANG=${ucode}.UTF-8
+  export LC_ALL=${ucode}.UTF-8
+  [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
+  sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
+
+  if [ $(cat ~/.Xdefaults|grep "URxvt.background: black" | wc -w) -eq 0 ]; then
+    echo "URxvt.background: black"  >> ~/.Xdefaults
+  fi
+  if [ $(cat ~/.Xdefaults|grep "URxvt.foreground: white" | wc -w) -eq 0 ]; then	
+    echo "URxvt.foreground: white"  >> ~/.Xdefaults
+  fi
+  if [ $(cat ~/.Xdefaults|grep "URxvt.transparent: true" | wc -w) -eq 0 ]; then	
+    echo "URxvt.transparent: true"  >> ~/.Xdefaults
+  fi
+  if [ $(cat ~/.Xdefaults|grep "URxvt.utf8: 2" | wc -w) -eq 0 ]; then	
+    echo "URxvt.utf8: 2"  >> ~/.Xdefaults
+  fi
+  if [ $(cat ~/.Xdefaults|grep "URxvt.locale: true" | wc -w) -eq 0 ]; then	
+    echo "URxvt.locale: true"  >> ~/.Xdefaults
+  fi
+fi
+
 locale
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -w) -gt 0 ]; then
     sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst	
