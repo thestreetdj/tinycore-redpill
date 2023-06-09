@@ -700,63 +700,63 @@ function getvars()
         TARGET_PLATFORM="ds1019p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds1019p_$TARGET_REVISION"                                                                                                                    
-        sha256="08cddab3f256091ec33f6d07ad320ee5c6d2264eab66add071f8119fc389931a"
+        sha256="025ebe49bc6149044f417bff7fb3b7355b8b2d231d88ab70229354b32ff9ac37"
         
     elif [ "${1}" = "DS1520+G" ]; then
         TARGET_REVISION="64570"
         TARGET_PLATFORM="ds1520p"
         ORIGIN_PLATFORM="geminilake"        
         SYNOMODEL="ds1520p_$TARGET_REVISION"                                                                                                                    
-        sha256="49455e77b7c8a05492b08a0558bb13108cf6c628f06eee65b5861c653a8b31af"
+        sha256="eb961b9b9970d66f62e846005877495efabe46df5e8f7a2be466872b291c1817"
 
     elif [ "${1}" = "DS1621+G" ]; then
         TARGET_REVISION="64570"
         TARGET_PLATFORM="ds1621p"
         ORIGIN_PLATFORM="v1000"
         SYNOMODEL="ds1621p_$TARGET_REVISION"                                                                                                                   
-        sha256="21cd3941aab30bf035006fd48242b28f3bb3d487f505cda72fc261d3ddad440e"
+        sha256="3e383d74eff0ded894bfbfb210cae46aac28f2f869a4057302ce64a4611b26cc"
 
     elif [ "${1}" = "DS1621xs+G" ]; then
         TARGET_REVISION="64570"
         TARGET_PLATFORM="ds1621xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="ds1621xsp_$TARGET_REVISION"
-        sha256="3084e68333821ea14b3f6a2b4f0efce426359fb07aafb12cc6a48de150455829"
+        sha256="844f3c4d182c9d10257cfac224b32a36f3594f583f2608962dacf2601bee6eb7"
 
     elif [ "${1}" = "DS2422+G" ] ; then
         TARGET_REVISION="64570"
         TARGET_PLATFORM="ds2422p"
         ORIGIN_PLATFORM="v1000"
         SYNOMODEL="ds2422p_$TARGET_REVISION"                                                                                                                   
-        sha256="3d5b4ff6e7d54710cc48914684a6fd0d489a1ab62a8ec7a3e999f057f06bfceb"
+        sha256="94bc34da4d805825fa1038bda2e10d61a547d07d7b0f9f035ebe90922744ef22"
 
     elif [ "${1}" = "DS3617xsG" ]; then                                                                                                                     
         TARGET_REVISION="64570"    
         TARGET_PLATFORM="ds3617xs"
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="ds3617xs_$TARGET_REVISION"                                                                                                                  
-        sha256="f8ddc1f0218b41ddbe345eaf5eaa4392b3744ab5893eddad799e42b014100158"
+        sha256="8c347dfd7ab50b7633f66fe03b519c6c545a9838db33f31880678c3bb76b557a"
         
     elif [ "${1}" = "DS3622xs+G" ]; then
         TARGET_REVISION="64570"    
         TARGET_PLATFORM="ds3622xsp"
         ORIGIN_PLATFORM="broadwellnk"
         SYNOMODEL="ds3622xsp_$TARGET_REVISION"
-        sha256="b96f85f058a8f5144f73cbfabf89982868cbfc625d05e65e65d230e2b7f09c47"
+        sha256="ebfa88f2c1c30f42937af7187468a333df8e1c4e6e72faa3baa604f7b0eda8f0"
 
     elif [ "${1}" = "DS720+G" ]; then
         TARGET_REVISION="64570"
         TARGET_PLATFORM="ds720p"
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="ds720p_$TARGET_REVISION"                                                                                                                    
-        sha256="7fbb1e166459f00c6b08258d9913a9fb437470e08c4f8e6f9becc850f93b88ac"
+        sha256="4170810f47171b989211ee111a90cbfd649e836cd78b8a88a3f3eee01415b751"
 
     elif [ "${1}" = "DS723+G" ]; then
         TARGET_REVISION="64570"    
         TARGET_PLATFORM="ds723p"
         ORIGIN_PLATFORM="r1000"
         SYNOMODEL="ds723p_$TARGET_REVISION"                                                                                                                    
-        sha256="543b9d6b23cb42b306e62f1e9b286888c66284e25f3505b81c8b25e827e49da3"
+        sha256="05a248cf43868dec265ae31c6baf6b2b0b3315af022bd489792b4fd3f18b28eb"
 
     elif [ "${1}" = "DS916+G" ]; then           
         TARGET_REVISION="64570"
@@ -770,79 +770,80 @@ function getvars()
         TARGET_PLATFORM="ds918p"
         ORIGIN_PLATFORM="apollolake"
         SYNOMODEL="ds918p_$TARGET_REVISION"                                                                                                                    
-        sha256="18baccf23ac8f860f96d4accbe0bfc8fd27f60966ff31a5e4a71a452c4c4ec61"      
+        sha256="5ba4c08f3968eddb7ec909b1e46b5e4e9037b604b0b8b4ac131a954b163e17a3"      
         
     elif [ "${1}" = "DS920+G" ]; then
         TARGET_REVISION="64570"    
         TARGET_PLATFORM="ds920p"
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="ds920p_$TARGET_REVISION"                                                                                                                    
-        sha256="047654b35e9f464b367ddbbac280ea355e1548c6e314fe538e5d6b2752e627ad"
+        sha256="7f73f4502340c4334deafd565dd654653909ffc0c22586df6676e76804e9362b"
         
     elif [ "${1}" = "DS923+G" ]; then
         TARGET_REVISION="64570"    
         TARGET_PLATFORM="ds923p"
         ORIGIN_PLATFORM="r1000"
         SYNOMODEL="ds923p_$TARGET_REVISION"                                                                                                                    
-        sha256="3165233b48d1958090ef86d63361f850b8165aae86540915d89f9621f6f17fec"
+        sha256="e206e8d9a2b7e48955bc14a0e00322afddec5b760224a21b3cd9b8f15df3f907"
 
     elif [ "${1}" = "DVA1622G" ]; then
         TARGET_REVISION="64570"    
         TARGET_PLATFORM="dva1622"
         ORIGIN_PLATFORM="geminilake"
         SYNOMODEL="dva1622_$TARGET_REVISION"                                                                                                                   
-        sha256="ae4cc66e95f71e89e458a75784131ec8bccfab1a87eecd70fbdc11b563252021"
+        sha256="b42f9bcab64fb8390eba459c0b2de6e02f2721399ea6ea22cc299b395e704bef"
                 
     elif [ "${1}" = "DVA3219G" ]; then
         TARGET_REVISION="64570"
         TARGET_PLATFORM="dva3219"
         ORIGIN_PLATFORM="denverton"        
         SYNOMODEL="dva3219_$TARGET_REVISION"                                                                                                                   
-        sha256="6381b31ff852c487dc5bc093e86887f1155427571b6e2511bc08ae8de031d793"
+        sha256="b5347bc9479c909c6adcbc27a40f53a65bf7303a5e471ea1893640b1323b923f"
         
     elif [ "${1}" = "DVA3221G" ]; then                                                                                                                      
         TARGET_REVISION="64570"    
         TARGET_PLATFORM="dva3221"
         ORIGIN_PLATFORM="denverton"
         SYNOMODEL="dva3221_$TARGET_REVISION"                                                                                                                   
-        sha256="5990e460da1268fb06037ab99bdf5ea886ca5e7c6d6cf4e31c04e7888b2647d1"
+        sha256="6627c30284f7f3da10774ad308070a53a7bc0286c0c130a18f071a53c5fcda18"
                 
     elif [ "${1}" = "FS2500G" ]; then
         TARGET_REVISION="64570"
         TARGET_PLATFORM="fs2500"
         ORIGIN_PLATFORM="v1000"        
         SYNOMODEL="fs2500_$TARGET_REVISION"                                                                                                                    
-        sha256="b4b239338c660f35cdd70b0edcfa24967c28d9651382b182307ffa3c305d6897"
+        sha256="d7580239b37ae49a7f2e760734b50085a103190fa4c8fc52594984339a28035e"
+        
     elif [ "${1}" = "RS1221+G" ]; then
         TARGET_REVISION="64570"
         TARGET_PLATFORM="rs1221p"
         ORIGIN_PLATFORM="v1000"        
         SYNOMODEL="rs1221p_$TARGET_REVISION"                                                                                                                    
-        sha256="6a6b461dbbb6f96ab90c5972f5e646fac19346917fe482ddc14bfa4f2b41db93"
+        sha256="e3f391cc3f331c085fab3f1614091e5450f3c652d142560729021f2d2f9c1413"
        
     elif [ "${1}" = "RS3618xsG" ]; then                                                                                                                     
         TARGET_REVISION="64570"
         TARGET_PLATFORM="rs3618xs"
         ORIGIN_PLATFORM="broadwell"
         SYNOMODEL="rs3618xs_$TARGET_REVISION"                                                                                                                  
-        sha256="c63091a6eb7b50d759b3ee4fcd641566857fb5c11ed6084ea5d038eb5d575cdb"
+        sha256="0fb1ba341e1fd6ede0fe7e98f7f371a972533bf905ccbe5643e2c04593b06246"
 
     elif [ "${1}" = "RS3621xs+G" ]; then
         TARGET_REVISION="64570"
         TARGET_PLATFORM="rs3621xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="rs3621xsp_$TARGET_REVISION"
-        sha256="71c22296d6248730bf88db2778a122b958febacb8ae686adb6610ff8ef520575"
+        sha256="11ba1a28370e5b5be402809b8f6d4a86e7ee287c53f84e114de023a05335fb12"
        
     elif [ "${1}" = "RS4021xs+G" ]; then
         TARGET_REVISION="64570"
         TARGET_PLATFORM="rs4021xsp"
         ORIGIN_PLATFORM="broadwellnk"        
         SYNOMODEL="rs4021xsp_$TARGET_REVISION"
-        sha256="95a9310ad8ad319dbd0462f7a1ae12d403d6fb2d1e64664857d337356ba10afd"
+        sha256="7502ad1b8022381931c7633c75ebbdcf369388b6f42f63e81121e72745ad068f"
 
     elif [ "${1}" = "SA6400G" ]; then
-        TARGET_REVISION="64570"        
+        TARGET_REVISION="64561"        
         TARGET_PLATFORM="sa6400"
         ORIGIN_PLATFORM="epyc7002"        
         SYNOMODEL="sa6400_$TARGET_REVISION"
