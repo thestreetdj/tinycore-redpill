@@ -389,7 +389,15 @@ URL="https://global.download.synology.com/download/DSM/release/${TARGET_VERSION}
 cecho y "$URL"
 
 patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"                                         
-                                                                                             
+        
+if [ "$TARGET_VERSION" == "7.2" ]; then
+    TARGET_VERSION="7.2.0"
+#    if [ "$ORIGIN_PLATFORM" == "apollolake" ]||[ "$ORIGIN_PLATFORM" == "geminilake" ]; then
+#       jsonfile=$(jq 'del(.cgetty)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
+#       sudo rm -rf /home/tc/redpill-load/custom/extensions/cgetty
+#    fi   
+fi
+        
 if [ -f ${patfile} ]; then                                                               
     cecho r "Found locally cached pat file ${SYNOMODEL}.pat in /mnt/${tcrppart}/auxfiles"
     cecho b "Downloadng Skipped!!!"
@@ -411,7 +419,10 @@ st "download pat" "Downloading pat  " "${SYNOMODEL}.pat"
     os_sha256=$(sha256sum ${patfile} | awk '{print $1}')                                
     cecho y "Pat file  sha256sum is : $os_sha256"                                       
 
-    verifyid="${sha256}"                                                                
+    #verifyid="${sha256}"
+    id="${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION}"
+    platform_selected=$(jq -s '.[0].build_configs=(.[1].build_configs + .[0].build_configs | unique_by(.id)) | .[0]' custom_config.json | jq ".build_configs[] | select(.id==\"${id}\")")
+    verifyid="$(echo $platform_selected | jq -r -e '.downloads .os .sha256')"
     cecho p "verifyid  sha256sum is : $verifyid"                                        
 
     if [ "$os_sha256" == "$verifyid" ]; then                                            
@@ -433,14 +444,6 @@ if [ $frmyv == "Y" ]; then
     parmfrmyv="frmyv"
 else
     parmfrmyv=""
-fi
-
-if [ "$TARGET_VERSION" == "7.2" ]; then
-    TARGET_VERSION="7.2.0"
-#    if [ "$ORIGIN_PLATFORM" == "apollolake" ]||[ "$ORIGIN_PLATFORM" == "geminilake" ]; then
-#       jsonfile=$(jq 'del(.cgetty)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
-#       sudo rm -rf /home/tc/redpill-load/custom/extensions/cgetty
-#    fi   
 fi
 
 if [ "$MODEL" == "SA6400" ]; then
