@@ -16,6 +16,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.bromolow-7.0.dev.txz/download",
           "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
+        },
+        "os": {
+          "sha256": "ae1aca3b178a00689b93e97cca680b56af3f453174b852e0047496120dee2ee3"
         }
       },
       "redpill_lkm": {
@@ -81,6 +84,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwell-7.0.dev.txz/download",
           "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
+        },
+        "os": {
+          "sha256": "f7e846e2a22b62613ac5e9d6e154df0213ba4ae64a6556297af627cd1e643e5c"
         }
       },
       "redpill_lkm": {
@@ -114,6 +120,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwell-7.0.dev.txz/download",
           "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
+        },
+        "os": {
+          "sha256": "941886bee9a0929c6bd078c5f2c465d9599721fc885a1e3835d6b60631f419af"
         }
       },
       "redpill_lkm": {
@@ -147,6 +156,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
+        },
+        "os": {
+          "sha256": "a222d37f369d71042057ccb592f40c7c81e9b988a95d69fa166c7c2a611da99c"
         }
       },
       "redpill_lkm": {
@@ -180,6 +192,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
+        },
+        "os": {
+          "sha256": "12bcfd44b4aaa6c3439b1404b7f07760373d816724ef672884d5187f27ccd70f"
         }
       },
       "redpill_lkm": {
@@ -213,6 +228,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
+        },
+        "os": {
+          "sha256": "2a32266b7bcf0b2582b5afd9e39dc444e7cb40eaf4ccfdbfedf4743af821f11c"
         }
       },
       "redpill_lkm": {
@@ -246,6 +264,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
+        },
+        "os": {
+          "sha256": "6722c73c51070dde2f542659d7728c497fc846256da2c9cf017177476de0bb09"
         }
       },
       "redpill_lkm": {
@@ -279,6 +300,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
+        },
+        "os": {
+          "sha256": "b3498a20aeb7c7c36deca0f4393172d4db7b51aa4fb87eaace83fe224d935e3b"
         }
       },
       "redpill_lkm": {
@@ -312,6 +336,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
+        },
+        "os": {
+          "sha256": "396144fdcd94d441b4ad665099395cf24a14606742bee9438745ea30bf12b9ef"
         }
       },
       "redpill_lkm": {
@@ -346,6 +373,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
+        },
+        "os": {
+          "sha256": "5a6cfbc690facdfaef9fbcc55215eac38c73ca6a85965a910af11cede5e2cd5d"
         }
       },
       "redpill_lkm": {
@@ -380,6 +410,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
+        },
+        "os": {
+          "sha256": "3fbd5defbc0fef0d152494033f3e817c330525b70e356a9e9acd2b72d9806b59"
         }
       },
       "redpill_lkm": {
@@ -414,6 +447,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
           "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
+        },
+        "os": {
+          "sha256": "e782ad4ce5e0505e7981a5a3fa7ca986a4575240f645ec2c64f92def1774556f"
         }
       },
       "redpill_lkm": {
@@ -448,6 +484,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
           "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
+        },
+        "os": {
+          "sha256": "af2268388df9434679205ffd782ae5c17cd81d733cdcd94b13fc894748ffe321"
         }
       },
       "redpill_lkm": {
@@ -482,6 +521,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
+        },
+        "os": {
+          "sha256": "b8864e2becd8ce5a6083db993564c8c0b982df8300a006b56695a0495a670aa3"
         }
       },
       "redpill_lkm": {
@@ -516,6 +558,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
+        },
+        "os": {
+          "sha256": "edcacbab10b77e2a6862d31173f5369c6e3c1720b8f0ec4fd41786609017c39b"
         }
       },
       "redpill_lkm": {
@@ -550,6 +595,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
+        },
+        "os": {
+          "sha256": "41a4b80ef58f3ff5ee924329ff59bd4ac0abb7676561847a84e98bc6bb225003"
         }
       },
       "redpill_lkm": {
@@ -584,6 +632,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
+        },
+        "os": {
+          "sha256": "d2272ab531f0f68f8008106dd75b4e303c71db8d95093d186a22c1cf2d970402"
         }
       },
       "redpill_lkm": {
@@ -617,6 +668,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
+        },
+        "os": {
+          "sha256": "69f02c4636ff2593e5feb393e13ed82791fa6457d61874368a0b6f93ee11f164"
         }
       },
       "redpill_lkm": {
@@ -651,6 +705,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.bromolow-7.0.dev.txz/download",
           "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
+        },
+        "os": {
+          "sha256": "f01a17d73e2594b0b31f134bfe023dccc0bb9389a462f9918080573134093023"
         }
       },
       "redpill_lkm": {
@@ -683,6 +740,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwell-7.0.dev.txz/download",
           "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
+        },
+        "os": {
+          "sha256": "1b72bb24dc9d10d3784298e6df9d79a8f8c3555087e0de12f3359ce373f4e7c9"
         }
       },
       "redpill_lkm": {
@@ -716,6 +776,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
+        },
+        "os": {
+          "sha256": "775933e32a9e04700fc10a155f5a26c0878c3cdec18b6ec6b1d5a4110e83d428"
         }
       },
       "redpill_lkm": {
@@ -749,6 +812,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
+        },
+        "os": {
+          "sha256": "633a626f3dc31338eb41ca929d8f9927a7a63f646067372d02ac045aa768560f"
         }
       },
       "redpill_lkm": {
@@ -783,6 +849,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
           "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
+        },
+        "os": {
+          "sha256": "a662d11999c266dfa86c54f7ba01045c6644c191124195a22d056d618790dffe"
         }
       },
       "redpill_lkm": {
@@ -817,6 +886,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
           "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
+        },
+        "os": {
+          "sha256": "9905e145f3bd88fcc938b00882be10281861867e5165ae98aefa37be0d5d34b5"
         }
       },
       "redpill_lkm": {
@@ -851,6 +923,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
+        },
+        "os": {
+          "sha256": "b9b77846e0983f50496276bec6bcdfcfadd4c1f9f0db8ed2ca5766f131ddf97f"
         }
       },
       "redpill_lkm": {
@@ -885,6 +960,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
+        },
+        "os": {
+          "sha256": "f58c15d4d83699884c30e4a4b04b1d2e0db19c477923d920327a897a73c741b6"
         }
       },
       "redpill_lkm": {
@@ -919,6 +997,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
+        },
+        "os": {
+          "sha256": "8fe1232e26661dd9e6db2a8e132bd8869b23b2887d77d298cd8e0b7cb2f9e2d6"
         }
       },
       "redpill_lkm": {
@@ -953,6 +1034,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
+        },
+        "os": {
+          "sha256": "ebebc3f1de22b789b386f1d52fbe0be3fcca23f83e0d34ed9c24e794701b4c3d"
         }
       },
       "redpill_lkm": {
@@ -987,6 +1071,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
+        },
+        "os": {
+          "sha256": "9f8c6095235df2e2caebadf846f11e4244af6f1aada9a7dd5c2c60543f944aac"
         }
       },
       "redpill_lkm": {
@@ -1020,6 +1107,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
+        },
+        "os": {
+          "sha256": "7bd2fe270bc665cc859142b7c6462fe8137f047c4fbe2f87ed3d03c30c514766"
         }
       },
       "redpill_lkm": {
@@ -1053,6 +1143,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
+        },
+        "os": {
+          "sha256": "e74ff783b5ca6fbdec1a0eb950b366b74b27c0288fb72baaf86db8a31d68b985"
         }
       },
       "redpill_lkm": {
@@ -1119,6 +1212,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwell-7.0.dev.txz/download",
           "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
+        },
+        "os": {
+          "sha256": "2851af89ca0ec287ff47ab265412b67c4fba5848cedb51486a8f6ed2baca3062"
         }
       },
       "redpill_lkm": {
@@ -1152,6 +1248,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
+        },
+        "os": {
+          "sha256": "e2ddf670e54fe6b2b52b19125430dc82394df2722afd4f62128b95a63459ee3d"
         }
       },
       "redpill_lkm": {
@@ -1217,6 +1316,9 @@
         "toolkit_dev": {
           "url": "https://global.synologydownload.com/download/ToolChain/toolkit/7.1/epyc7002/ds.epyc7002-7.1.dev.txz",
           "sha256": "26eec2a0fa76d55500d4c40644c2b9958e6a914a1740a4593a4562f9a1e453a4"
+        },
+        "os": {
+          "sha256": "83fc408380ebb1381224261de6220b873d7b62a99e715557509ae9553f618a71"
         }
       },
       "redpill_lkm": {
@@ -1250,6 +1352,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
+        },
+        "os": {
+          "sha256": "914641e4885d0a465a46c35e3c271ca5e8cf7f1564591110c762c3ab11d0f202"
         }
       },
       "redpill_lkm": {
@@ -1284,6 +1389,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
+        },
+        "os": {
+          "sha256": "8a06aea176eb5f227675c1b75acd02875c2e0a2d3f4e227e87dc85b663bdbe33"
         }
       },
       "redpill_lkm": {
@@ -1351,6 +1459,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
+        },
+        "os": {
+          "sha256": "8cd926bb3becd30d61d93770c050f102c294e96cab208d4a4f0ffa4f50006067"
         }
       },
       "redpill_lkm": {
@@ -2207,6 +2318,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
           "sha256": "ffc43c663f1707eba57d2d50786c0666e4ea7a77ea4ee389f42dfb0a0d6c5dad"
+        },
+        "os": {
+          "sha256": "5ba4c08f3968eddb7ec909b1e46b5e4e9037b604b0b8b4ac131a954b163e17a3"
         }
       },
       "redpill_lkm": {
@@ -2241,6 +2355,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
           "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
+        },
+        "os": {
+          "sha256": "025ebe49bc6149044f417bff7fb3b7355b8b2d231d88ab70229354b32ff9ac37"
         }
       },
       "redpill_lkm": {
@@ -2275,6 +2392,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
+        },
+        "os": {
+          "sha256": "eb961b9b9970d66f62e846005877495efabe46df5e8f7a2be466872b291c1817"
         }
       },
       "redpill_lkm": {
@@ -2309,6 +2429,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
+        },
+        "os": {
+          "sha256": "3e383d74eff0ded894bfbfb210cae46aac28f2f869a4057302ce64a4611b26cc"
         }
       },
       "redpill_lkm": {
@@ -2343,6 +2466,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
+        },
+        "os": {
+          "sha256": "844f3c4d182c9d10257cfac224b32a36f3594f583f2608962dacf2601bee6eb7"
         }
       },
       "redpill_lkm": {
@@ -2376,6 +2502,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
+        },
+        "os": {
+          "sha256": "94bc34da4d805825fa1038bda2e10d61a547d07d7b0f9f035ebe90922744ef22"
         }
       },
       "redpill_lkm": {
@@ -2442,6 +2571,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwell-7.2.dev.txz/download",
           "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
+        },
+        "os": {
+          "sha256": "8c347dfd7ab50b7633f66fe03b519c6c545a9838db33f31880678c3bb76b557a"
         }
       },
       "redpill_lkm": {
@@ -2475,6 +2607,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
+        },
+        "os": {
+          "sha256": "ebfa88f2c1c30f42937af7187468a333df8e1c4e6e72faa3baa604f7b0eda8f0"
         }
       },
       "redpill_lkm": {
@@ -2508,6 +2643,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
+        },
+        "os": {
+          "sha256": "05a248cf43868dec265ae31c6baf6b2b0b3315af022bd489792b4fd3f18b28eb"
         }
       },
       "redpill_lkm": {
@@ -2542,6 +2680,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
+        },
+        "os": {
+          "sha256": "7f73f4502340c4334deafd565dd654653909ffc0c22586df6676e76804e9362b"
         }
       },
       "redpill_lkm": {
@@ -2576,6 +2717,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
+        },
+        "os": {
+          "sha256": "e206e8d9a2b7e48955bc14a0e00322afddec5b760224a21b3cd9b8f15df3f907"
         }
       },
       "redpill_lkm": {
@@ -2610,6 +2754,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
+        },
+        "os": {
+          "sha256": "b42f9bcab64fb8390eba459c0b2de6e02f2721399ea6ea22cc299b395e704bef"
         }
       },
       "redpill_lkm": {
@@ -2643,6 +2790,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
+        },
+        "os": {
+          "sha256": "b5347bc9479c909c6adcbc27a40f53a65bf7303a5e471ea1893640b1323b923f"
         }
       },
       "redpill_lkm": {
@@ -2676,6 +2826,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
+        },
+        "os": {
+          "sha256": "6627c30284f7f3da10774ad308070a53a7bc0286c0c130a18f071a53c5fcda18"
         }
       },
       "redpill_lkm": {
@@ -2709,6 +2862,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
+        },
+        "os": {
+          "sha256": "d7580239b37ae49a7f2e760734b50085a103190fa4c8fc52594984339a28035e"
         }
       },
       "redpill_lkm": {
@@ -2775,6 +2931,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwell-7.2.dev.txz/download",
           "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
+        },
+        "os": {
+          "sha256": "0fb1ba341e1fd6ede0fe7e98f7f371a972533bf905ccbe5643e2c04593b06246"
         }
       },
       "redpill_lkm": {
@@ -2808,6 +2967,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
+        },
+        "os": {
+          "sha256": "7502ad1b8022381931c7633c75ebbdcf369388b6f42f63e81121e72745ad068f"
         }
       },
       "redpill_lkm": {
@@ -2873,6 +3035,9 @@
         "toolkit_dev": {
           "url": "https://global.synologydownload.com/download/ToolChain/toolkit/7.2/epyc7002/ds.epyc7002-7.2.dev.txz",
           "sha256": "26eec2a0fa76d55500d4c40644c2b9958e6a914a1740a4593a4562f9a1e453a4"
+        },
+        "os": {
+          "sha256": ""
         }
       },
       "redpill_lkm": {
@@ -2906,6 +3071,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
+        },
+        "os": {
+          "sha256": "4170810f47171b989211ee111a90cbfd649e836cd78b8a88a3f3eee01415b751"
         }
       },
       "redpill_lkm": {
@@ -2940,6 +3108,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
           "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
+        },
+        "os": {
+          "sha256": "e3f391cc3f331c085fab3f1614091e5450f3c652d142560729021f2d2f9c1413"
         }
       },
       "redpill_lkm": {
@@ -2974,6 +3145,9 @@
         "toolkit_dev": {
           "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
           "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
+        },
+        "os": {
+          "sha256": "11ba1a28370e5b5be402809b8f6d4a86e7ee287c53f84e114de023a05335fb12"
         }
       },
       "redpill_lkm": {
@@ -3022,6 +3196,6 @@
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json"
         }
       ]
-    }    
+    }
   ]
 }
