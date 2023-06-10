@@ -269,165 +269,33 @@ EOF
 
 function getvars()
 {
-
-    TARGET_REVISION="42962"
+    
     SUVP=""
     ORIGIN_PLATFORM=""
 
-# JOT / FRIEND MODE
-    if [ "${1}" = "DS918+F" ]; then        
-        SUVP="-1"
-    elif [ "${1}" = "DS3615xsF" ]; then                                                                                                                     
-        SUVP="-1"
-    elif [ "${1}" = "DS3617xsF" ]; then                                                                                                                     
-        SUVP="-1"
-    elif [ "${1}" = "DS3622xs+F" ]; then
-        SUVP="-1"
-    elif [ "${1}" = "DS1621+F" ]; then
-        SUVP="-1"
-    elif [ "${1}" = "DVA3221F" ]; then                                                                                                                      
-        SUVP="-1"        
-    elif [ "${1}" = "DVA1622F" ]; then
-        SUVP="-1"        
-    elif [ "${1}" = "DS920+F" ]; then
-        SUVP="-1"
-    elif [ "${1}" = "DS923+F" ]; then
-        SUVP="-5"
-    elif [ "${1}" = "DS723+F" ]; then
-        SUVP="-5"
-# JOT / FRIEND MODE NEW MODEL SUCCESS
-    elif [ "${1}" = "DS2422+F" ] ; then
-        SUVP="-1"
-    elif [ "${1}" = "DS1621xs+F" ]; then
-        SUVP="-1"
-    elif [ "${1}" = "RS4021xs+F" ]; then
-        SUVP="-5"
-    elif [ "${1}" = "SA3600F" ]; then
-        SUVP="-1"    
-    elif [ "${1}" = "SA6400F" ]; then
-        SUVP="-1"    
-    elif [ "${1}" = "DVA3219F" ]; then
-        SUVP="-1"
-    elif [ "${1}" = "FS2500F" ]; then
-        SUVP="-1"
-    elif [ "${1}" = "RS3618xsF" ]; then                                                                                                                     
-        SUVP="-1"
-    elif [ "${1}" = "DS1019+F" ]; then        
-        SUVP="-1"
-    elif [ "${1}" = "DS1520+F" ]; then
-        SUVP="-1"
-    elif [ "${1}" = "DS720+F" ]; then
-        SUVP="-1"
-    elif [ "${1}" = "RS1221+F" ]; then
-        SUVP="-1"
-    elif [ "${1}" = "RS1619xs+F" ]; then
-        SUVP="-1"
-    elif [ "${1}" = "RS3621xs+F" ]; then
-        SUVP="-5"
-    elif [ "${1}" = "SA3400F" ]; then
-        SUVP="-1"
-# JOT MODE NEW MODEL TESTTING                
-    elif [ "${1}" = "RS3413xs+" ] || [ "${1}" = "RS3413xs+F" ]; then
-        echo "Synology model ${1} jot mode not supported by m shell, Testing..."        
-        exit 0        
-        
-#JUN MODE
-    elif [ "${1}" = "DS918+J" ]; then           
-        TARGET_REVISION="42218"
-    elif [ "${1}" = "DS3615xsJ" ]; then
-        TARGET_REVISION="42218"               
-    elif [ "${1}" = "DS3617xsJ" ]; then
-        TARGET_REVISION="42218"               
-    elif [ "${1}" = "DS3622xs+J" ]; then
-        TARGET_REVISION="42218"               
-    elif [ "${1}" = "DS1621+J" ]; then
-        TARGET_REVISION="42218"                                                  
-    elif [ "${1}" = "DVA3221J" ]; then
-        TARGET_REVISION="42218"                                                  
-    elif [ "${1}" = "DS920+J" ]; then
-        TARGET_REVISION="42218"
-    elif [ "${1}" = "DS2422+J" ]; then
-        TARGET_REVISION="42218"                                                  
-# JUN MODE NEW MODEL SUCCESS
-    elif [ "${1}" = "DS1520+J" ]; then
-        TARGET_REVISION="42218"
-    elif [ "${1}" = "DS1621xs+J" ]; then
-        TARGET_REVISION="42218"               
-    elif [ "${1}" = "FS2500J" ]; then
-        TARGET_REVISION="42218"
-    elif [ "${1}" = "RS4021xs+J" ]; then
-        TARGET_REVISION="42218"               
-    elif [ "${1}" = "RS3618xsJ" ]; then                                                                                                                     
-        TARGET_REVISION="42218"        
-    elif [ "${1}" = "DS1019+J" ]; then
-        TARGET_REVISION="42218"                                                                                                                                
-    elif [ "${1}" = "DVA3219J" ]; then
-        TARGET_REVISION="42218"                                                  
+#7.1.1-42962
+    MODELS="DS3615xsF DS3617xsF DS916+F DS918+F DS1019+F DS920+F DS3622xs+F FS6400F DVA3219F DVA3221F DVA1622F DS1621+F DS1621xs+F DS2422+F DS1520+F FS2500F RS3618xsF RS3413xs+F DS1522+F SA6400F DS720+F RS1221+F RS1619xs+F SA3400F"
+    if [ $(echo ${MODELS} | grep ${1} | wc -l ) -eq 0 ]; then
+       TARGET_REVISION="42962"
+       SUVP="-1"
+    fi
+    MODELS="DS923+F DS723+F RS4021xs+F RS3621xs+F"
+    if [ $(echo ${MODELS} | grep ${1} | wc -l ) -eq 0 ]; then
+       TARGET_REVISION="42962"
+       SUVP="-5"
+    fi
 
-# JUN MODE NEW MODEL TESTTING
-#    elif [ "${1}" = "RS3413xs+J" ]; then
-#        echo "Synology model ${1} jun mode not supported by m shell, Testing..."
-#        exit 0        
-#        
-#        TARGET_REVISION="42218"        
-#        TARGET_PLATFORM="rs3413xsp"
-#        ORIGIN_PLATFORM="bromolow"        
-#        SYNOMODEL="rs3413xsp_$TARGET_REVISION"
-#        sha256="9796536979407817ca96aef07aaabb3f03252a8e54df0f64ff7caf3c737f0da9"        
-#    elif [ "${1}" = "DVA1622J" ]; then
-#        KVER="Y"    
-#        echo "Synology model ${1} jun mode not supported by m shell"
-#        exit 0     
+#7.0.1-42218
+    MODELS="DS3615xsJ DS3617xsJ DS916+J DS918+J DS1019+J DS920+J DS3622xs+J FS6400J DVA3219J DVA3221J DS1621+J DS1621xs+J RS4021xs+J DS2422+J DS1520+J FS2500J RS3618xsJ RS3413xs+J DS923+J DS723+J DS1522+J DS720+J RS1221+J RS1619xs+J RS3621xs+J SA3400J"
+    if [ $(echo ${MODELS} | grep ${1} | wc -l ) -eq 0 ]; then
+       TARGET_REVISION="42218"
+    fi
         
-#DSM 7.2 Official
-    elif [ "${1}" = "DS1019+G" ]; then        
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "DS1520+G" ]; then
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "DS1621+G" ]; then
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "DS1621xs+G" ]; then
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "DS2422+G" ] ; then
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "DS3617xsG" ]; then                                                                                                                     
-        TARGET_REVISION="64570"    
-    elif [ "${1}" = "DS3622xs+G" ]; then
-        TARGET_REVISION="64570"    
-    elif [ "${1}" = "DS720+G" ]; then
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "DS723+G" ]; then
-        TARGET_REVISION="64570"    
-    elif [ "${1}" = "DS916+G" ]; then           
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "DS918+G" ]; then           
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "DS920+G" ]; then
-        TARGET_REVISION="64570"    
-    elif [ "${1}" = "DS923+G" ]; then
-        TARGET_REVISION="64570"    
-    elif [ "${1}" = "DVA1622G" ]; then
-        TARGET_REVISION="64570"    
-    elif [ "${1}" = "DVA3219G" ]; then
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "DVA3221G" ]; then                                                                                                                      
-        TARGET_REVISION="64570"    
-    elif [ "${1}" = "FS2500G" ]; then
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "RS1221+G" ]; then
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "RS3618xsG" ]; then                                                                                                                     
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "RS3621xs+G" ]; then
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "RS4021xs+G" ]; then
-        TARGET_REVISION="64570"
-    elif [ "${1}" = "SA6400G" ]; then
-        TARGET_REVISION="64561"        
-    else                                                                                                     
-        echo "Synology model not supported by TCRP."                                                         
-        exit 0                                                                                               
-    fi    
+#7.2.0-64570 Official
+    MODELS="DS3617xsG DS916+G DS918+G DS1019+G DS920+G DS3622xs+G FS6400G DVA3219G DVA3221G DVA1622G DS1621+G DS1621xs+G RS4021xs+G DS2422+G DS1520+G FS2500G RS3618xsG RS3413xs+G DS923+G DS723+G DS1522+G SA6400G DS720+G RS1221+G RS1619xs+G RS3621xs+G SA3400G"
+    if [ $(echo ${MODELS} | grep ${1} | wc -l ) -eq 0 ]; then
+       TARGET_REVISION="64570"
+    fi
 
     tem="${1}"
 
@@ -435,14 +303,6 @@ function getvars()
         MODEL="$(echo $tem | sed 's/J//g')"
         TARGET_VERSION="7.0.1"
         KVER="4.4.180"
-    elif [ "$TARGET_REVISION" == "64551" ]; then
-        MODEL="$(echo $tem | sed 's/K//g')"
-        TARGET_VERSION="7.2"
-        KVER="4.4.302"        
-    elif [ "$TARGET_REVISION" == "64570" ]; then
-        MODEL="$(echo $tem | sed 's/G//g')"
-        TARGET_VERSION="7.2"
-        KVER="4.4.302"        
     elif [ "$TARGET_REVISION" == "42962" ]; then
         if [ $tem = "FS2500F" ]; then
             MODEL="FS2500"
@@ -457,6 +317,10 @@ function getvars()
         fi    
         TARGET_VERSION="7.1.1"
         KVER="4.4.180"                
+    elif [ "$TARGET_REVISION" == "64570" ]; then
+        MODEL="$(echo $tem | sed 's/G//g')"
+        TARGET_VERSION="7.2"
+        KVER="4.4.302"        
     else
         echo "Synology model revesion not supported by TCRP."                                                         
         exit 0                                                                                               
