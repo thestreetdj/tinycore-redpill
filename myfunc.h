@@ -272,6 +272,7 @@ function getvars()
     
     SUVP=""
     ORIGIN_PLATFORM=""
+    TARGET_REVISION=""
 
     tem="${1}"
 
@@ -320,7 +321,7 @@ function getvars()
         TARGET_VERSION="7.2"
         KVER="4.4.302"        
     else
-        echo "Synology model revesion not supported by TCRP."                                                         
+        echo "Synology model revesion not supported by TCRP."
         exit 0                                                                                               
     fi
 
