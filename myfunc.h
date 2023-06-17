@@ -158,6 +158,8 @@ set -u
 # 2023.06.03
 # Update : Add Support DSM 7.2-64570 Official Version
 # 2023.06.09
+# 2023.06.17
+# Update : Added ds1821+ (v1000)
 
 function showlastupdate() {
     cat <<EOF
@@ -193,6 +195,9 @@ function showlastupdate() {
 
 # Update : Add Support DSM 7.2-64570 Official Version
 # 2023.06.09
+
+# 2023.06.17
+# Update : Added ds1821+ (v1000)
 
 EOF
 }
@@ -251,6 +256,7 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) RS3621xs+G
 ./$(basename ${0}) SA6400G
 ./$(basename ${0}) DS916+G
+./$(basename ${0}) DS1821+G
 
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
@@ -277,7 +283,7 @@ function getvars()
     tem="${1}"
 
 #7.1.1-42962
-    MODELS="DS3615xsF DS1019+F DS1520+F DS1621+F DS1621xs+F DS2422+F DS3617xsF DS3622xs+F DS720+F DS918+F DS920+F DVA1622F DVA3219F DVA3221F FS2500F RS1221+F RS3618xsF SA6400F"
+    MODELS="DS3615xsF DS1019+F DS1520+F DS1621+F DS1821+F DS1621xs+F DS2422+F DS3617xsF DS3622xs+F DS720+F DS918+F DS920+F DVA1622F DVA3219F DVA3221F FS2500F RS1221+F RS3618xsF SA6400F"
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
        TARGET_REVISION="42962"
        SUVP="-1"
@@ -289,13 +295,13 @@ function getvars()
     fi
 
 #7.0.1-42218
-    MODELS="DS3615xsJ DS1019+J DS1520+J DS1621+J DS1621xs+J DS2422+J DS3617xsJ DS3622xs+J DS720+J DS723+J DS918+J DS920+J DS923+J DVA3219J DVA3221J FS2500J RS1221+J RS3618xsJ RS3621xs+J RS4021xs+J SA6400J"
+    MODELS="DS3615xsJ DS1019+J DS1520+J DS1621+J DS1821+J DS1621xs+J DS2422+J DS3617xsJ DS3622xs+J DS720+J DS723+J DS918+J DS920+J DS923+J DVA3219J DVA3221J FS2500J RS1221+J RS3618xsJ RS3621xs+J RS4021xs+J SA6400J"
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
        TARGET_REVISION="42218"
     fi
         
 #7.2.0-64570 Official
-    MODELS="DS1019+G DS1520+G DS1621+G DS1621xs+G DS2422+G DS3617xsG DS3622xs+G DS720+G DS723+G DS918+G DS920+G DS923+G DVA1622G DVA3219G DVA3221G FS2500G RS1221+G RS3618xsG RS3621xs+G RS4021xs+G SA6400G"
+    MODELS="DS1019+G DS1520+G DS1621+G DS1821+G DS1621xs+G DS2422+G DS3617xsG DS3622xs+G DS720+G DS723+G DS918+G DS920+G DS923+G DVA1622G DVA3219G DVA3221G FS2500G RS1221+G RS3618xsG RS3621xs+G RS4021xs+G SA6400G"
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
        TARGET_REVISION="64570"
     fi
@@ -343,7 +349,7 @@ function getvars()
         ORIGIN_PLATFORM="geminilake"
     elif [ "${MODEL}" = "DS923+" ]||[ "${MODEL}" = "DS723+" ]; then
         ORIGIN_PLATFORM="r1000"
-    elif [ "${MODEL}" = "DS1621+" ]||[ "${MODEL}" = "DS2422+" ]||[ "${MODEL}" = "FS2500" ]||[ "${MODEL}" = "RS1221+" ]; then
+    elif [ "${MODEL}" = "DS1621+" ]||[ "${MODEL}" = "DS1821+" ]||[ "${MODEL}" = "DS2422+" ]||[ "${MODEL}" = "FS2500" ]||[ "${MODEL}" = "RS1221+" ]; then
         ORIGIN_PLATFORM="v1000"
     elif [ "${MODEL}" = "SA6400" ]; then
         ORIGIN_PLATFORM="epyc7002"        
