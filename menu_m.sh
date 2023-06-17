@@ -712,7 +712,7 @@ function modelMenu() {
   M_GRP3="DVA3221 DVA3219"
   M_GRP4="DS918+ DS1019+"
   M_GRP5="DS923+ DS723+ SA6400"
-  M_GRP6="DS1621+ DS2422+ FS2500 RS1221+"
+  M_GRP6="DS1621+ DS1821+ DS2422+ FS2500 RS1221+"
   M_GRP7="DS720+ DS920+ DS1520+ DVA1622"
   
 RESTRICT=1
@@ -817,6 +817,7 @@ function setSuggest() {
     DS1019+)     platform="apollolake";eval "desc=\"[${MODEL}]:${platform}, Intel Celeron J3455, \${MSG${tz}17}, \${MSG${tz}18}\"";;
     DS1520+)     platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT), Intel Celeron J4125, \${MSG${tz}17}\"";;    
     DS1621+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT), AMD Ryzen V1500B, \${MSG${tz}22}\"";;    
+    DS1821+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT), AMD Ryzen V1500B, \${MSG${tz}22}\"";;        
     DS1621xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform}, Intel Xeon D-1527, \${MSG${tz}16}\"";;
     DS2422+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT), AMD Ryzen V1500B, \${MSG${tz}22}\"";;    
     DS3615xs)    platform="bromolow";eval "desc=\"[${MODEL}]:${platform}, Intel Core i3-4130, \${MSG${tz}22}\"";;    
