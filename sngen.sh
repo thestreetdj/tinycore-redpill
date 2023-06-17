@@ -59,6 +59,10 @@ function beginArray() {
         permanent="S7R"
         serialstart="2080"
         ;;
+    DS1821+)
+        permanent="S7R"
+        serialstart="2080"
+        ;;
     DS2422+)
         permanent="S7R"
         serialstart="2080"
@@ -210,6 +214,9 @@ function generateSerial() {
     DS1621+)
         serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
         ;;
+    DS1821+)
+        serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
+        ;;
     DS2422+)
         serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
         ;;
@@ -273,7 +280,7 @@ EOF
 
 }
 
-MODELS="DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DVA1622 DS1621+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+ DS723+ DS1522+ SA6400 DS720+ RS1221+ RS1619xs+ RS3621xs+ SA3400"
+MODELS="DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DVA1622 DS1621+ DS1821+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+ DS723+ DS1522+ SA6400 DS720+ RS1221+ RS1619xs+ RS3621xs+ SA3400"
 
 if [ -z "$1" ]; then
     showhelp
