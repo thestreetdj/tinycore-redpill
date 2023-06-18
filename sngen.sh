@@ -19,6 +19,10 @@ function beginArray() {
         permanent="PDN"
         serialstart="1780 1790 1860 1980"
         ;;
+    DS620slim)
+        permanent="PDN"
+        serialstart="1780 1790 1860 1980"
+        ;;
     DS1019+)
         permanent="PDN"
         serialstart="1780 1790 1860 1980"
@@ -59,7 +63,15 @@ function beginArray() {
         permanent="S7R"
         serialstart="2080"
         ;;
+    DS1819+)
+        permanent="RFR"
+        serialstart="1930 1940"
+        ;;
     DS1821+)
+        permanent="S7R"
+        serialstart="2080"
+        ;;
+    DS1823xs+)
         permanent="S7R"
         serialstart="2080"
         ;;
@@ -175,6 +187,9 @@ function generateSerial() {
     DS916+)
         serialnum="$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(random)
         ;;
+    DS620slim)
+        serialnum="$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(random)
+        ;;
     DS918+)
         serialnum="$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(random)
         ;;
@@ -214,7 +229,13 @@ function generateSerial() {
     DS1621+)
         serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
         ;;
+    DS1819+)
+        serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
+        ;;
     DS1821+)
+        serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
+        ;;
+    DS1823xs+)
         serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
         ;;
     DS2422+)
@@ -280,7 +301,7 @@ EOF
 
 }
 
-MODELS="DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DVA1622 DS1621+ DS1821+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+ DS723+ DS1522+ SA6400 DS720+ RS1221+ RS1619xs+ RS3621xs+ SA3400"
+MODELS="DS3615xs DS3617xs DS916+ DS918+ DS1019+ DS620slim DS920+ DS3622xs+ FS6400 DVA3219 DVA3221 DVA1622 DS1621+ DS1819+ DS1821+ DS1823xs+ DS1621xs+ RS4021xs+ DS2422+ DS1520+ FS2500 RS3618xs RS3413xs+ DS923+ DS723+ DS1522+ SA6400 DS720+ RS1221+ RS1619xs+ RS3621xs+ SA3400"
 
 if [ -z "$1" ]; then
     showhelp
