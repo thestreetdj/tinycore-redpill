@@ -3213,6 +3213,12 @@ function setplatform() {
         SYNOMODEL="ds916p_$TARGET_REVISION" && MODEL="DS916+" && ORIGIN_PLATFORM="braswell"
     elif [ "${TARGET_PLATFORM}" = "ds1821p" ]; then
         SYNOMODEL="ds1821p_$TARGET_REVISION" && MODEL="DS1821+" && ORIGIN_PLATFORM="v1000"
+    elif [ "${TARGET_PLATFORM}" = "ds1823xsp" ]; then
+        SYNOMODEL="ds1823xsp_$TARGET_REVISION" && MODEL="DS1823xs+" && ORIGIN_PLATFORM="v1000"
+    elif [ "${TARGET_PLATFORM}" = "ds620slim" ]; then
+        SYNOMODEL="ds620slim_$TARGET_REVISION" && MODEL="DS620slim" && ORIGIN_PLATFORM="apollolake"
+    elif [ "${TARGET_PLATFORM}" = "ds1819p" ]; then
+        SYNOMODEL="ds1819p_$TARGET_REVISION" && MODEL="DS1819+" && ORIGIN_PLATFORM="denverton"
     fi
 
 }
