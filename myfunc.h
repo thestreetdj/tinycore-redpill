@@ -160,6 +160,8 @@ set -u
 # 2023.06.09
 # 2023.06.17
 # Update : Added ds1821+ (v1000)
+# 2023.06.18
+# Update : Added ds1823xs+ (v1000), ds620slim (apollokale), ds1819+ (denverton)
 
 function showlastupdate() {
     cat <<EOF
@@ -198,6 +200,9 @@ function showlastupdate() {
 
 # 2023.06.17
 # Update : Added ds1821+ (v1000)
+
+# 2023.06.18
+# Update : Added ds1823xs+ (v1000), ds620slim (apollokale), ds1819+ (denverton)
 
 EOF
 }
