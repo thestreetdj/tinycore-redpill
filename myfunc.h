@@ -262,6 +262,9 @@ Please type Synology Model Name after ./$(basename ${0})
 ./$(basename ${0}) SA6400G
 ./$(basename ${0}) DS916+G
 ./$(basename ${0}) DS1821+G
+./$(basename ${0}) DS1819+G
+./$(basename ${0}) DS1823xs+G
+./$(basename ${0}) DS620slim+G
 
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
@@ -288,15 +291,15 @@ function getvars()
     tem="${1}"
 
 #7.1.1-42962
-    MODELS="DS3615xsF DS1019+F DS1520+F DS1621+F DS1821+F DS1621xs+F DS2422+F DS3617xsF DS3622xs+F DS720+F DS918+F DS620slimF DS920+F DVA1622F DS1819+F DVA3219F DVA3221F FS2500F RS1221+F RS3618xsF SA6400F"
+    MODELS="DS3615xsF DS1019+F DS1520+F DS1621+F DS1821+F DS1621xs+F DS2422+F DS3617xsF DS3622xs+F DS720+F DS918+F DS620slimF DS920+F DVA1622F DS1819+F DVA3219F DVA3221F FS2500F RS1221+F"
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
        TARGET_REVISION="42962"
        SUVP="-1"
     fi
-    MODELS="DS723+F DS923+F DS1823xs+F RS3621xs+F RS4021xs+F"
+    MODELS="DS723+F DS923+F DS1823xs+F RS3621xs+F RS4021xs+F RS3618xsF SA6400F"
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
        TARGET_REVISION="42962"
-       SUVP="-5"
+       SUVP="-6"
     fi
 
 #7.0.1-42218
