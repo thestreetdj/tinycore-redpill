@@ -798,7 +798,7 @@ while true; do
     echo "$model \"\Zb$suggestion\Zn\"" >> "${TMP_PATH}/mdl_final"
   done <<< "$model_list"
   
-  dialog --backtitle "`backtitle`" --colors \
+  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --colors \
     --menu "Choose a model\n" 0 0 0 \
     --file "${TMP_PATH}/mdl_final" 2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
