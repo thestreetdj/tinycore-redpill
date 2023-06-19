@@ -794,8 +794,7 @@ while true; do
   line_number=2
   model_list=$(tail -n +$line_number "${TMP_PATH}/mdl")
   while read -r model; do
-    MODEL="$model"
-    suggestion=$(setSuggest)
+    suggestion=$(setSuggest $model)
     echo "$model \"\Zb$suggestion\Zn\"" >> "${TMP_PATH}/mdl_final"
   done <<< "$model_list"
   
@@ -815,14 +814,14 @@ done
     
   MODEL="`<${TMP_PATH}/resp`"
   writeConfigKey "general" "model" "${MODEL}"
-  setSuggest
+  setSuggest $MODEL
 }
 
 # Set Describe model-specific requirements or suggested hardware
 function setSuggest() {
 
   line="-------------------------------------------------------\n"
-  case $MODEL in
+  case $1 in
     DS620slim)   platform="apollolake";bay="6bay:Intel Celeron J3355";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}17}, \${MSG${tz}18}\"";;  
     DS1019+)     platform="apollolake";bay="5bay:Intel Celeron J3455";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}17}, \${MSG${tz}18}\"";;
     DS1520+)     platform="geminilake(DT)";bay="5bay:Intel Celeron J4125";eval "desc=\"[${MODEL}]:${platform},($bay) , \${MSG${tz}17}\"";;    
@@ -1129,7 +1128,7 @@ function langMenu() {
   writeConfigKey "general" "ucode" "${ucode}"  
   writexsession
   
-  setSuggest
+  setSuggest $MODEL
   
   return 0
 
@@ -1391,7 +1390,7 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep kmaps | wc -w) -eq 0 ]; then
 fi
 
 NEXT="m"
-setSuggest
+setSuggest $MODEL
 
 # Until urxtv is available, Korean menu is used only on remote terminals.
 while true; do
