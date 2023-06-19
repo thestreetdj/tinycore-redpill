@@ -793,7 +793,8 @@ while true; do
   line_number=2
   model_list=$(tail -n +$line_number "${TMP_PATH}/mdl")
   while read -r model; do
-    suggestion=$(setSuggest "$model")
+    MODEL="$model"
+    suggestion=$(setSuggest)
     echo "$model \"\Zb$suggestion\Zn\"" >> "${TMP_PATH}/mdl_final"
   done <<< "$model_list"
   
@@ -850,7 +851,7 @@ function setSuggest() {
   esac
 
   result="${desc}" 
-
+  echo "${desc}"
 }
 
 ###############################################################################
