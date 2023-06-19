@@ -790,9 +790,16 @@ while true; do
         echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
   fi
   
+  line_number=2
+  model_list=$(tail -n +$line_number "${TMP_PATH}/mdl")
+  while read -r model; do
+    suggestion=$(setSuggest "$model")
+    echo "$model \"\Zb$suggestion\Zn\"" >> "${TMP_PATH}/mdl_final"
+  done <<< "$model_list"
+  
   dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
     --menu "Choose a model\n" 0 0 0 \
-    --file "${TMP_PATH}/mdl" 2>${TMP_PATH}/resp
+    --file "${TMP_PATH}/mdl_final" 2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
   resp=$(<${TMP_PATH}/resp)
   [ -z "${resp}" ] && return  
@@ -812,7 +819,7 @@ done
 # Set Describe model-specific requirements or suggested hardware
 function setSuggest() {
 
-  line="-------------------------------------------------------\n"
+  #line="-------------------------------------------------------\n"
   case $MODEL in
     DS620slim)   platform="apollolake";eval "desc=\"[${MODEL}]:${platform},(6bay) Intel Celeron J3355, \${MSG${tz}17}, \${MSG${tz}18}\"";;  
     DS1019+)     platform="apollolake";eval "desc=\"[${MODEL}]:${platform},(5bay) Intel Celeron J3455, \${MSG${tz}17}, \${MSG${tz}18}\"";;
@@ -842,7 +849,7 @@ function setSuggest() {
     SA6400)      platform="epyc7002";eval "desc=\"[${MODEL}]:${platform}(DT),(12bay) AMD EPYC 7272 \"";;
   esac
 
-  result="${line}${desc}" 
+  result="${desc}" 
 
 }
 
