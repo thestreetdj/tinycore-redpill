@@ -799,7 +799,7 @@ while true; do
     echo "$model \"\Zb$suggestion\Zn\"" >> "${TMP_PATH}/mdl_final"
   done <<< "$model_list"
   
-  dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
+  dialog --backtitle "`backtitle`" --colors \
     --menu "Choose a model\n" 0 0 0 \
     --file "${TMP_PATH}/mdl_final" 2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
@@ -821,38 +821,38 @@ done
 # Set Describe model-specific requirements or suggested hardware
 function setSuggest() {
 
-  #line="-------------------------------------------------------\n"
+  line="-------------------------------------------------------\n"
   case $MODEL in
-    DS620slim)   platform="apollolake";eval "desc=\"[${MODEL}]:${platform},(6bay) Intel Celeron J3355, \${MSG${tz}17}, \${MSG${tz}18}\"";;  
-    DS1019+)     platform="apollolake";eval "desc=\"[${MODEL}]:${platform},(5bay) Intel Celeron J3455, \${MSG${tz}17}, \${MSG${tz}18}\"";;
-    DS1520+)     platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT),(5bay) Intel Celeron J4125, \${MSG${tz}17}\"";;    
-    DS1621+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT),(6bay) AMD Ryzen V1500B, \${MSG${tz}22}\"";;    
-    DS1821+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT),(8bay) AMD Ryzen V1500B, \${MSG${tz}22}\"";;
-    DS1823xs+)   platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT),(8bay) AMD Ryzen V1780B, \${MSG${tz}22}\"";;            
-    DS1621xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform},(6bay) Intel Xeon D-1527, \${MSG${tz}16}\"";;
-    DS2422+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT),(12bay) AMD Ryzen V1500B, \${MSG${tz}22}\"";;    
-    DS3615xs)    platform="bromolow";eval "desc=\"[${MODEL}]:${platform},(12bay) Intel Core i3-4130, \${MSG${tz}22}\"";;    
-    DS3617xs)    platform="broadwell";eval "desc=\"[${MODEL}]:${platform},(12bay) Intel Xeon D-1527, \${MSG${tz}16}\"";;    
-    DS3622xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform},(12bay) Intel Xeon D-1531, \${MSG${tz}16}\"";;
-    DS720+)      platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT),(2bay) Intel Celeron J4125, \${MSG${tz}17}\"";;        
-    DS723+)      platform="r1000";eval "desc=\"[${MODEL}]:${platform}(DT),(2bay) AMD Ryzen R1600, \${MSG${tz}20}\"";;
-    DS918+)      platform="apollolake";eval "desc=\"[${MODEL}]:${platform},(4bay) Intel Celeron J3455, \${MSG${tz}17}, \${MSG${tz}18}\"";;    
-    DS920+)      platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT),(4bay) Intel Celeron J4125, \${MSG${tz}17}\"";;
-    DS923+)      platform="r1000";eval "desc=\"[${MODEL}]:${platform}(DT),(4bay) AMD Ryzen R1600, \${MSG${tz}20}\"";;
-    DVA1622)     platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT),(2bay) Intel Celeron J4125, \${MSG${tz}17}, \${MSG${tz}21}\"";;
-    DS1819+)     platform="denverton";eval "desc=\"[${MODEL}]:${platform},(8bay) Intel Atom C3538, \${MSG${tz}23}, \${MSG${tz}25}, \${MSG${tz}21}\"";;
-    DVA3219)     platform="denverton";eval "desc=\"[${MODEL}]:${platform},(4bay) Intel Atom C3538, \${MSG${tz}23}, \${MSG${tz}25}, \${MSG${tz}21}\"";;    
-    DVA3221)     platform="denverton";eval "desc=\"[${MODEL}]:${platform},(4bay) Intel Atom C3538, \${MSG${tz}23}, \${MSG${tz}24}, \${MSG${tz}21}\"";;    
-    FS2500)      platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT),(12bay) AMD Ryzen V1780B, \${MSG${tz}22}\"";;
-    RS1221+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT),(8bay) AMD Ryzen V1500B, \${MSG${tz}22}\"";;    
-    RS3618xs)    platform="broadwell";eval "desc=\"[${MODEL}]:${platform},(12bay) Intel Xeon D-1521, \${MSG${tz}16}\"";;
-    RS3621xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform},(12bay) Intel Xeon D-1541, \${MSG${tz}16}\"";;    
-    RS4021xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform},(16bay) Intel Xeon D-1541, \${MSG${tz}16}\"";;
-    SA6400)      platform="epyc7002";eval "desc=\"[${MODEL}]:${platform}(DT),(12bay) AMD EPYC 7272 \"";;
+    DS620slim)   platform="apollolake";bay="6bay:Intel Celeron J3355";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}17}, \${MSG${tz}18}\"";;  
+    DS1019+)     platform="apollolake";bay="5bay:Intel Celeron J3455";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}17}, \${MSG${tz}18}\"";;
+    DS1520+)     platform="geminilake(DT)";bay="5bay:Intel Celeron J4125";eval "desc=\"[${MODEL}]:${platform},($bay) , \${MSG${tz}17}\"";;    
+    DS1621+)     platform="v1000(DT)";bay="6bay:AMD Ryzen V1500B";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}22}\"";;    
+    DS1821+)     platform="v1000(DT)";bay="8bay:AMD Ryzen V1500B";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}22}\"";;
+    DS1823xs+)   platform="v1000(DT)";bay="8bay:AMD Ryzen V1780B";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}22}\"";;            
+    DS1621xs+)   platform="broadwellnk";bay="6bay:Intel Xeon D-1527";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}16}\"";;
+    DS2422+)     platform="v1000(DT)";bay="12bay:AMD Ryzen V1500B";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}22}\"";;    
+    DS3615xs)    platform="bromolow";bay="12bay:Intel Core i3-4130";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}22}\"";;    
+    DS3617xs)    platform="broadwell";bay="12bay:Intel Xeon D-1527";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}16}\"";;    
+    DS3622xs+)   platform="broadwellnk";bay="12bay:Intel Xeon D-1531";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}16}\"";;
+    DS720+)      platform="geminilake(DT)";bay="2bay:Intel Celeron J4125";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}17}\"";;        
+    DS723+)      platform="r1000(DT)";bay="2bay:AMD Ryzen R1600";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}20}\"";;
+    DS918+)      platform="apollolake";bay="4bay:Intel Celeron J3455";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}17}, \${MSG${tz}18}\"";;    
+    DS920+)      platform="geminilake(DT)";bay="4bay:Intel Celeron J4125";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}17}\"";;
+    DS923+)      platform="r1000(DT)";bay="4bay:AMD Ryzen R1600";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}20}\"";;
+    DVA1622)     platform="geminilake(DT)";bay="2bay:Intel Celeron J4125";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}17}, \${MSG${tz}21}\"";;
+    DS1819+)     platform="denverton";bay="8bay:Intel Atom C3538";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}23}, \${MSG${tz}25}, \${MSG${tz}21}\"";;
+    DVA3219)     platform="denverton";bay="4bay:Intel Atom C3538";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}23}, \${MSG${tz}25}, \${MSG${tz}21}\"";;    
+    DVA3221)     platform="denverton";bay="4bay:Intel Atom C3538";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}23}, \${MSG${tz}24}, \${MSG${tz}21}\"";;    
+    FS2500)      platform="v1000(DT)";bay="12bay:AMD Ryzen V1780B";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}22}\"";;
+    RS1221+)     platform="v1000(DT)";bay="8bay:AMD Ryzen V1500B";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}22}\"";;    
+    RS3618xs)    platform="broadwell";bay="12bay:Intel Xeon D-1521";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}16}\"";;
+    RS3621xs+)   platform="broadwellnk";bay="12bay:Intel Xeon D-1541";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}16}\"";;    
+    RS4021xs+)   platform="broadwellnk";bay="16bay:Intel Xeon D-1541";eval "desc=\"[${MODEL}]:${platform},($bay), \${MSG${tz}16}\"";;
+    SA6400)      platform="epyc7002(DT)";bay="12bay:AMD EPYC 7272";eval "desc=\"[${MODEL}]:${platform},($bay) \"";;
   esac
 
-  result="${desc}" 
-  echo "${desc}"
+  result="${line}${desc}"
+  echo "${platform}:${bay}"
 }
 
 ###############################################################################
