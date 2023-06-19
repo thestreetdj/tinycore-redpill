@@ -721,57 +721,57 @@ while true; do
   
   if [ "$HBADETECT" = "ON" ]; then
     if [ $threads -gt 16 ]; then
-      echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+      echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
     elif [ $threads -gt 8 ]; then
       if [ "${AFTERHASWELL}" == "OFF" ]; then
-        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
       else  
-        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
       fi
     else
       if [ "${AFTERHASWELL}" == "OFF" ]; then
-        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
       else
-        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP4}" >> "${TMP_PATH}/mdl"	
-        echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP4}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
       fi
     fi
   else
     if [ $threads -gt 16 ]; then
-      echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
+      echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
     elif [ $threads -gt 8 ]; then
       if [ "${AFTERHASWELL}" == "OFF" ]; then
-        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
-        echo "${M_GRP5}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP6}" >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP5}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
       else
-        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
-        echo "${M_GRP5}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP6}" >> "${TMP_PATH}/mdl"	
-        echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP5}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
       fi
     else
       if [ "${AFTERHASWELL}" == "OFF" ]; then
-        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"	
-        echo "${M_GRP5}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP6}" >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP5}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
       else
-        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP4}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP5}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP7}" >> "${TMP_PATH}/mdl"		
-        echo "${M_GRP6}" >> "${TMP_PATH}/mdl"	
-        echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP4}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP5}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP7}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"		
+        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
 	RESTRICT=0
       fi
     fi
@@ -781,13 +781,13 @@ while true; do
         echo "Release-model-restriction" >> "${TMP_PATH}/mdl"
   else  
         echo "" > "${TMP_PATH}/mdl"
-        echo "${M_GRP1}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP4}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP5}" >> "${TMP_PATH}/mdl"
-        echo "${M_GRP7}" >> "${TMP_PATH}/mdl"		
-        echo "${M_GRP6}" >> "${TMP_PATH}/mdl"	
-        echo "${M_GRP3}" >> "${TMP_PATH}/mdl"
+        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP4}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP5}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
+        echo "${M_GRP7}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"		
+        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
   fi
   
   dialog --backtitle "`backtitle`" --default-item "${MODEL}" --no-items \
