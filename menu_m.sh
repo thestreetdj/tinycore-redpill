@@ -814,12 +814,12 @@ function setSuggest() {
 
   line="-------------------------------------------------------\n"
   case $MODEL in
-    DS620slim)   platform="apollolake";eval "desc=\"[${MODEL}]:${platform},(6bay) Intel Celeron J3455, \${MSG${tz}17}, \${MSG${tz}18}\"";;  
+    DS620slim)   platform="apollolake";eval "desc=\"[${MODEL}]:${platform},(6bay) Intel Celeron J3355, \${MSG${tz}17}, \${MSG${tz}18}\"";;  
     DS1019+)     platform="apollolake";eval "desc=\"[${MODEL}]:${platform},(5bay) Intel Celeron J3455, \${MSG${tz}17}, \${MSG${tz}18}\"";;
     DS1520+)     platform="geminilake";eval "desc=\"[${MODEL}]:${platform}(DT),(5bay) Intel Celeron J4125, \${MSG${tz}17}\"";;    
     DS1621+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT),(6bay) AMD Ryzen V1500B, \${MSG${tz}22}\"";;    
     DS1821+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT),(8bay) AMD Ryzen V1500B, \${MSG${tz}22}\"";;
-    DS1823xs+)   platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT),(8bay) AMD Ryzen V1500B, \${MSG${tz}22}\"";;            
+    DS1823xs+)   platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT),(8bay) AMD Ryzen V1780B, \${MSG${tz}22}\"";;            
     DS1621xs+)   platform="broadwellnk";eval "desc=\"[${MODEL}]:${platform},(6bay) Intel Xeon D-1527, \${MSG${tz}16}\"";;
     DS2422+)     platform="v1000";eval "desc=\"[${MODEL}]:${platform}(DT),(12bay) AMD Ryzen V1500B, \${MSG${tz}22}\"";;    
     DS3615xs)    platform="bromolow";eval "desc=\"[${MODEL}]:${platform},(12bay) Intel Core i3-4130, \${MSG${tz}22}\"";;    
