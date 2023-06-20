@@ -162,6 +162,9 @@ set -u
 # Update : Added ds1821+ (v1000)
 # 2023.06.18
 # Update : Added ds1823xs+ (v1000), ds620slim (apollokale), ds1819+ (denverton)
+# 2023.06.20
+# Update : Add Support DSM 7.2-64570-1 Official Version
+
 
 function showlastupdate() {
     cat <<EOF
@@ -169,34 +172,17 @@ function showlastupdate() {
 # Update : Release TCRP FRIEND mode
 # 2022.09.25
 
-# Update :  menu.sh Added new function DDSML / EUDEV selection
-#           DDSML ( Detected Device Static Module Loading with modprobe / insmod command )
-#           EUDEV (Enhanced Userspace Device with eudev deamon)
-# 2023.03.01
-
 # Update : AMD CPU FRIEND mode menu usage restriction release (except HP N36L/N40L/N54L)
 # 2023.03.18
 
 # Update : Multilingual menu support started (Korean, Chinese, Japanese, Russian, French, German, Spanish, Brazilian, Italian supported)
 # 2023.03.25
 
-# Update : Keymap now actually works. (Thanks Orphée)
-# 2023.04.29
-
 # Update : Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk Update
 # 2023.05.01
 
-# Update : Add Support DSM 7.2-64570 Official Version
-# 2023.05.23
-
 # Update : Add Getty Console to DSM 7.2
 # 2023.05.26
-
-# Update : Added ds916+ (braswell), 7.2.0 Jot Menu Creation for HP PCs
-# 2023.06.03
-
-# Update : Add Support DSM 7.2-64570 Official Version
-# 2023.06.09
 
 # 2023.06.17
 # Update : Added ds1821+ (v1000)
@@ -204,6 +190,9 @@ function showlastupdate() {
 # 2023.06.18
 # Update : Added ds1823xs+ (v1000), ds620slim (apollokale), ds1819+ (denverton)
 
+# 2023.06.20
+# Update : Add Support DSM 7.2-64570-1 Official Version
+        
 EOF
 }
 
