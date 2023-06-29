@@ -961,7 +961,7 @@
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
         },
         "os": {
-          "sha256": "f6fe369af9a8a43cad0a34df769afae8abf466551f7e7599a44646ca75486968"
+          "sha256": "93b849708801d6efdf3e6ab9ca01e8e22dd8abd2e21bd90a0532e231cfa86d12"
         }
       },
       "redpill_lkm": {
@@ -1146,7 +1146,7 @@
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
         },
         "os": {
-          "sha256": "56a9ec3b747062b391163e766ce0e23875a0e25bd1080e59168f38eb1c1075d6"
+          "sha256": "17e2ef183233175cea392eff69158780d8c3521d1710d504533524351175cba0"
         }
       },
       "redpill_lkm": {
