@@ -548,12 +548,6 @@ st "iscached" "Caching pat file" "Patfile ${SYNOMODEL}.pat is cached"
                 mv -f ${patfile} ${temp_dsmpat_folder}/${SYNOMODEL}.pat
                 echo "Extracting encrypted pat file : ${temp_dsmpat_folder}/${SYNOMODEL}.pat to ${temp_pat_folder}"
                 sudo /bin/syno_extract_system_patch ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
-
-                # patch smallfixversion for 7.2.0-64570-1
-                if [ ${TARGET_REVISION} = "64570" ]; then
-                    sed -i 's#smallfixnumber="0"#smallfixnumber="1"#' ${temp_pat_folder}/VERSION
-                fi
-                
                 echo "Creating unecrypted pat file ${SYNOMODEL}.pat to /home/tc/redpill-load/cache folder (multithreaded comporession)"
                 mkdir -p /home/tc/redpill-load/cache/
                 thread=$(lscpu |grep CPU\(s\): | awk '{print $2}')
