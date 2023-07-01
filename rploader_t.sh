@@ -106,6 +106,10 @@ function msgwarning() {
 function msgnormal() {
     echo -e "\033[1;32m$1\033[0m"
 } 
+function st() {
+echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
+echo -e "----------------------------------------------------------------------------" >> /home/tc/buildstatus
+}
 
 function readanswer() {
     while true; do
@@ -529,7 +533,7 @@ function processpat() {
         [ -f ${local_cache}/*${MODEL}*${TARGET_REVISION}*.pat ] && patfile=$(ls /home/tc/custom-module/*${MODEL}*${TARGET_REVISION}*.pat | head -1)
 
         msgnormal "Found locally cached pat file ${patfile}"
-
+st "iscached" "Caching pat file" "Patfile ${SYNOMODEL}.pat is cached"
         testarchive "${patfile}"
         if [ ${isencrypted} = "no" ]; then
             echo "File ${patfile} is already unencrypted"
@@ -557,6 +561,7 @@ function processpat() {
         fi
 
         cd /home/tc/redpill-load/cache
+st "patextraction" "Pat file extracted" "VERSION:${TARGET_VERSION}-${TARGET_REVISION}"        
         tar xvf /home/tc/redpill-load/cache/${SYNOMODEL}.pat ./VERSION && . ./VERSION && cat ./VERSION && rm ./VERSION
         os_sha256=$(sha256sum /home/tc/redpill-load/cache/${SYNOMODEL}.pat | awk '{print $1}')
         msgnormal "Pat file  sha256sum is : $os_sha256"
@@ -666,26 +671,6 @@ function addrequiredexts() {
     done
 
 #m shell only
-
-    echo "KERNEL VERSION of addrequiredexts() is ${KVER}"
-
-    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
-        echo "Downloading pocopico's ${ORIGIN_PLATFORM} ${KVER}+ all-modules(epyc7002-5.10.55.tgz) ..."    
-        LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/pocopico/redpill-modules/releases/latest"`"
-        TAG="${LATESTURL##*/}"
-        echo "TAG is ${TAG}"        
-        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/pocopico/redpill-modules/releases/download/${TAG}/epyc7002-5.10.55.tgz" -o "/home/tc/redpill-load/custom/extensions/all-modules/$SYNOMODEL/epyc7002-5.10.55.tgz"`
-        if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
-            echo "Error downloading last version of ${ORIGIN_PLATFORM}-${KVER}.tgz"
-            exit 99
-        fi
-        tgz_sha256=$(sha256sum /home/tc/redpill-load/custom/extensions/all-modules/$SYNOMODEL/epyc7002-5.10.55.tgz | awk '{print $1}')
-        msgnormal "all-modules tgz file sha256sum is : $tgz_sha256"
-        msgnormal "Editing config file !!!!!"
-        modeljson="/home/tc/redpill-load/custom/extensions/all-modules/$SYNOMODEL/$SYNOMODEL.json"
-        jsonfile=$(jq '(.files[] | select(.name == "epyc7002-5.10.55.tgz").sha256) |= "$tgz_sha256"' ${modeljson}) && echo $jsonfile | jq . > ${modeljson}
-    fi    
-
  #Use user define dts file instaed of dtbpatch ext now
     if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] || [ ${TARGET_PLATFORM} = "dva1622" ] || [ ${TARGET_PLATFORM} = "ds2422p" ] || [ ${TARGET_PLATFORM} = "ds1520p" ] ; then
         echo "For user define dts file instaed of dtbpatch ext"
@@ -2728,6 +2713,7 @@ checkmachine
     if [ ${TARGET_REVISION} -gt 42218 ]; then
 
         echo "Found build request for revision greater than 42218"
+st "downloadtools" "Extraction tools" "Tools downloaded"        
         downloadextractor
         processpat
 
@@ -2749,7 +2735,7 @@ checkmachine
     [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir /home/tc/redpill-load/custom/extensions
 #    msgnormal "======Mount the ramdisk for quick add processing of extensions.======="
 #    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
-
+st "extensions" "Extensions collection" "Extensions collection..."
     addrequiredexts
 
     if [ "$JUNLOADER" == "YES" ]; then
@@ -2760,7 +2746,7 @@ checkmachine
     else
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
     fi
-
+st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
 #    msgnormal "======Unmount the ramdisk for add extensions.======="
 #    sudo umount /home/tc/redpill-load/custom/extensions
 
@@ -2836,7 +2822,10 @@ checkmachine
         fi    
 
         # Share RD of friend kernel with JOT 2023.05.01
-        [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ] && bringoverfriend
+        if [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ]; then
+st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdisk}3"        
+            bringoverfriend
+        fi
 
         if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
 
@@ -2942,6 +2931,8 @@ checkmachine
         fi
     fi
 
+st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
+
 #m shell only start
 #    if [ "$JUNLOADER" == "YES" ]; then
 #        echo "Don't move file in jun's mod"
@@ -3015,6 +3006,7 @@ checkmachine
             cp -f ${patfile} ${local_cache}
         fi
     fi
+st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
 
 }
 
@@ -3217,7 +3209,38 @@ function setplatform() {
         SYNOMODEL="rs3413xsp_$TARGET_REVISION" && MODEL="RS3413xs+" && ORIGIN_PLATFORM="bromolow"
     elif [ "${TARGET_PLATFORM}" = "ds1019p" ]; then
         SYNOMODEL="ds1019p_$TARGET_REVISION" && MODEL="DS1019+" && ORIGIN_PLATFORM="apollolake"
+    elif [ "${TARGET_PLATFORM}" = "ds916p" ]; then
+        SYNOMODEL="ds916p_$TARGET_REVISION" && MODEL="DS916+" && ORIGIN_PLATFORM="braswell"
+    elif [ "${TARGET_PLATFORM}" = "ds1821p" ]; then
+        SYNOMODEL="ds1821p_$TARGET_REVISION" && MODEL="DS1821+" && ORIGIN_PLATFORM="v1000"
+    elif [ "${TARGET_PLATFORM}" = "ds1823xsp" ]; then
+        SYNOMODEL="ds1823xsp_$TARGET_REVISION" && MODEL="DS1823xs+" && ORIGIN_PLATFORM="v1000"
+    elif [ "${TARGET_PLATFORM}" = "ds620slim" ]; then
+        SYNOMODEL="ds620slim_$TARGET_REVISION" && MODEL="DS620slim" && ORIGIN_PLATFORM="apollolake"
+    elif [ "${TARGET_PLATFORM}" = "ds1819p" ]; then
+        SYNOMODEL="ds1819p_$TARGET_REVISION" && MODEL="DS1819+" && ORIGIN_PLATFORM="denverton"
     fi
+
+}
+
+function synctime() {
+
+    #Get Timezone
+    tz=$(curl -s ipinfo.io | grep timezone | awk '{print $2}' | sed 's/,//')
+    if [ $(echo $tz | grep Seoul | wc -l ) -gt 0 ]; then
+        ntpserver="asia.pool.ntp.org"
+    else
+        ntpserver="pool.ntp.org"
+    fi
+
+    if [ "$(which ntpclient)_" == "_" ]; then
+        tce-load -iw ntpclient 2>&1 >/dev/null
+    fi    
+    export TZ="${timezone}"
+    echo "Synchronizing dateTime with ntp server $ntpserver ......"
+    sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
+    echo
+    echo "DateTime synchronization complete!!!"
 
 }
 
@@ -3325,10 +3348,7 @@ function getvars() {
 
     if [ "$INTERNETDATE" != "$LOCALDATE" ]; then
         echo "ERROR ! System DATE is not correct"
-        echo "Downloading ntpclient to assist"
-        tce-load -iw ntpclient 2>&1 >/dev/null
-        export TZ="${timezone}"
-        sudo ntpclient -s -h ${ntpserver} 2>&1 >/dev/null
+        synctime
         echo "Current time after communicating with NTP server ${ntpserver} :  $(date) "
     fi
 
@@ -3538,6 +3558,7 @@ function getredpillko() {
     else
         LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/latest"`"
         TAG="${LATESTURL##*/}"
+        #TAG="23.5.4"
         STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
     fi    
     echo "TAG is ${TAG}"
