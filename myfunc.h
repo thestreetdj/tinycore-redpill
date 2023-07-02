@@ -270,7 +270,7 @@ EOF
 
 }
 
-function getvars()
+function getvarsmshell()
 {
     
     SUVP=""
