@@ -6,6 +6,9 @@
 #
 #
 # User Variables : 0.9.4.3-2
+##### INCLUDES #########################################################################################################
+#source myfunc.h # my.sh / myv.sh common use 
+########################################################################################################################
 
 rploaderver="0.9.4.3-2"
 build="master"
@@ -3351,6 +3354,8 @@ function getvars() {
         synctime
         echo "Current time after communicating with NTP server ${ntpserver} :  $(date) "
     fi
+
+    #getvarsmshell "$MODEL"
 
 }
 
