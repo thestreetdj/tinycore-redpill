@@ -163,7 +163,7 @@ if [ $# -lt 1 ]; then
     exit 99
 fi
 
-getvars "$1"
+getvarsmshell "$1"
 
 #echo "$TARGET_REVISION"                                                      
 #echo "$MSHELL_ONLY_MODEL"                                                        
