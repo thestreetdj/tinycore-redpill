@@ -3032,7 +3032,7 @@ function bringoverfriend() {
         msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
         
         msgnormal "Bringing over my friend from giteas.duckdns.org"
-        curl -s -k -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
+        curl -m 30 -s -k -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
         -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
         -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
 
