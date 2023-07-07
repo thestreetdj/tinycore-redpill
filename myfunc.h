@@ -164,7 +164,8 @@ set -u
 # Update : Added ds1823xs+ (v1000), ds620slim (apollokale), ds1819+ (denverton)
 # 2023.06.20
 # Update : Add Support DSM 7.2-64570-1 Official Version
-
+# 2023.07.07
+# Update : Fix Bug for userdts option
 
 function showlastupdate() {
     cat <<EOF
@@ -192,6 +193,9 @@ function showlastupdate() {
 
 # 2023.06.20
 # Update : Add Support DSM 7.2-64570-1 Official Version
+
+# 2023.07.07
+# Update : Fix Bug for userdts option
         
 EOF
 }
