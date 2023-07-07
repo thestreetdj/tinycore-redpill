@@ -301,23 +301,7 @@ else
 cecho y "This is TCRP original jot mode"
 fi
 
-dtbfile=""     
-
-if [ "${TARGET_PLATFORM}" = "v1000" ]; then
-    dtbfile="ds1621p"
-elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
-    dtbfile="ds920p"
-elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
-    dtbfile="dva1622"
-elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
-    dtbfile="ds2422p"
-elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
-    dtbfile="ds1520p"
-else
-    echo "${TARGET_PLATFORM} does not require model.dtc patching "    
-fi
-
-if [ -f /home/tc/custom-module/${dtbfile}.dts ]; then
+if [ -f /home/tc/custom-module/${TARGET_PLATFORM}.dts ]; then
     sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config.json
     sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config_jun.json
 fi
@@ -340,7 +324,7 @@ if [ $userdts == "Y" ]; then
     
     cecho g "copy and paste user dts contents here, press any key to continue..."      
     read answer
-    sudo vi /home/tc/custom-module/$dtbfile.dts
+    sudo vi /home/tc/custom-module/${TARGET_PLATFORM}.dts
 
     cecho p "press any key to continue..."
     read answer
