@@ -675,7 +675,7 @@ function addrequiredexts() {
 
 #m shell only
  #Use user define dts file instaed of dtbpatch ext now
-    if [ ${TARGET_PLATFORM} = "geminilake" ] || [ ${TARGET_PLATFORM} = "v1000" ] || [ ${TARGET_PLATFORM} = "dva1622" ] || [ ${TARGET_PLATFORM} = "ds2422p" ] || [ ${TARGET_PLATFORM} = "ds1520p" ] ; then
+    if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "v1000" ] || [ ${ORIGIN_PLATFORM} = "r1000" ]; then
         echo "For user define dts file instaed of dtbpatch ext"
         patchdtc
         echo "Patch dtc is superseded by fbelavenuto dtbpatch"
@@ -1623,43 +1623,7 @@ function patchdtc() {
     usbvid=$(cat user_config.json | jq '.extra_cmdline .vid' | sed -e 's/"//g' | sed -e 's/0x//g')
     loaderusb=$(lsusb | grep "${usbvid}:${usbpid}" | awk '{print $2 "-"  $4 }' | sed -e 's/://g' | sed -s 's/00//g')
 
-    if [ "${TARGET_PLATFORM}" = "apollolake" ]; then
-        dtbfile="ds918p"
-        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds920p.dts" -o /home/tc/redpill-load/ds918p.dts
-    elif [ "${TARGET_PLATFORM}" = "bromolow" ]; then
-        dtbfile="ds3615xs"
-        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/ds3615xs.dts
-    elif [ "${TARGET_PLATFORM}" = "broadwell" ]; then
-        dtbfile="ds3617xs"
-        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/ds3617xs.dts
-    elif [ "${TARGET_PLATFORM}" = "broadwellnk" ]; then
-        dtbfile="ds3622xsp"
-        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/ds3622xsp.dts
-    elif [ "${TARGET_PLATFORM}" = "v1000" ]; then
-        dtbfile="ds1621p"
-        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/ds1621p.dts
-    elif [ "${TARGET_PLATFORM}" = "denverton" ]; then
-        dtbfile="dva3221"
-        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/dva3221.dts
-    elif [ "${TARGET_PLATFORM}" = "geminilake" ]; then
-        dtbfile="ds920p"
-        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds920p.dts" -o /home/tc/redpill-load/ds920p.dts
-    elif [ "${TARGET_PLATFORM}" = "ds923p" ]; then
-        dtbfile="ds923p"
-        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds923p.dts" -o /home/tc/redpill-load/ds923p.dts
-    elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
-        dtbfile="dva1622"
-        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds920p.dts" -o /home/tc/redpill-load/dva1622.dts
-    elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
-        dtbfile="ds2422p"
-        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/ds2422p.dts
-    elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
-        dtbfile="ds1520p"
-        curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/ds1621p.dts" -o /home/tc/redpill-load/ds1520p.dts
-    else
-        echo "${TARGET_PLATFORM} does not require model.dtc patching "
-        return
-    fi
+    curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/${TARGET_PLATFORM}.dts" -o /home/tc/redpill-load/${TARGET_PLATFORM}.dts
 
     if [ ! -d /lib64 ]; then
         [ ! -h /lib64 ] && sudo ln -s /lib /lib64
@@ -1669,23 +1633,23 @@ function patchdtc() {
     curl -kL -# "$dtcbin" -O
     chmod 700 dtc
 
-    if [ -f /home/tc/custom-module/${dtbfile}.dts ] && [ ! -f /home/tc/custom-module/${dtbfile}.dtb ]; then
-        echo "Found locally cached dts file ${dtbfile}.dts and dtb file does not exist in cache, converting dts to dtb"
-        ./dtc -q -I dts -O dtb /home/tc/custom-module/${dtbfile}.dts >/home/tc/custom-module/${dtbfile}.dtb
+    if [ -f /home/tc/custom-module/${TARGET_PLATFORM}.dts ] && [ ! -f /home/tc/custom-module/${TARGET_PLATFORM}.dtb ]; then
+        echo "Found locally cached dts file ${TARGET_PLATFORM}.dts and dtb file does not exist in cache, converting dts to dtb"
+        ./dtc -q -I dts -O dtb /home/tc/custom-module/${TARGET_PLATFORM}.dts >/home/tc/custom-module/${TARGET_PLATFORM}.dtb
     fi
 
-    if [ -f /home/tc/custom-module/${dtbfile}.dtb ]; then
+    if [ -f /home/tc/custom-module/${TARGET_PLATFORM}.dtb ]; then
 
         echo "Fould locally cached dtb file"
 #        read -p "Should i use that file ? [Yy/Nn]" answer
 #        if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
             echo "OK copying over the cached dtb file"
 
-            dtbextfile="$(find /home/tc/redpill-load/custom -name model_${dtbfile}.dtb)"
+            dtbextfile="$(find /home/tc/redpill-load/custom -name model_${TARGET_PLATFORM}.dtb)"
             if [ ! -z ${dtbextfile} ] && [ -f ${dtbextfile} ]; then
-                echo -n "Copying patched dtb file ${dtbfile}.dtb to ${dtbextfile} -> "
-                sudo cp /home/tc/custom-module/${dtbfile}.dtb ${dtbextfile}
-                if [ $(sha256sum /home/tc/custom-module/${dtbfile}.dtb | awk '{print $1}') = $(sha256sum ${dtbextfile} | awk '{print $1}') ]; then
+                echo -n "Copying patched dtb file ${TARGET_PLATFORM}.dtb to ${dtbextfile} -> "
+                sudo cp /home/tc/custom-module/${TARGET_PLATFORM}.dtb ${dtbextfile}
+                if [ $(sha256sum /home/tc/custom-module/${TARGET_PLATFORM}.dtb | awk '{print $1}') = $(sha256sum ${dtbextfile} | awk '{print $1}') ]; then
                     echo -e "OK ! File copied and verified !"
                     return
                 else
@@ -1694,16 +1658,16 @@ function patchdtc() {
                 fi
             else
                 [ -z ${dtbextfile} ] && echo "dtb extension is not loaded and its required for DSM to find disks on ${SYNOMODEL}"
-                echo "Copy of the DTB file ${dtbfile}.dtb to ${dtbextfile} was not succesfull."
+                echo "Copy of the DTB file ${TARGET_PLATFORM}.dtb to ${dtbextfile} was not succesfull."
                 echo "Please remember to replace the dtb extension model file ..."
-                echo "execute manually : cp ${dtbfile}.dtb ${dtbextfile} and re-run"
+                echo "execute manually : cp ${TARGET_PLATFORM}.dtb ${dtbextfile} and re-run"
                 exit 99
             fi
 #        else
 #            echo "OK lets continue patching"
 #        fi
     else
-        echo "No cached dtb file found in /home/tc/custom-module/${dtbfile}.dtb"
+        echo "No cached dtb file found in /home/tc/custom-module/${TARGET_PLATFORM}.dtb"
     fi
 
 }
