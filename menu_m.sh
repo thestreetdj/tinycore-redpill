@@ -20,6 +20,7 @@ KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
 LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
 ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
+BLOCK_EUDEV="N"
 
 ### Messages Contents
 ## US
@@ -452,6 +453,25 @@ MSGJP38="netif_numとMACアドレスの数が一致しません。user_config.js
 MSGJP39="言語を選択してください"
 MSGJP40="DDSML+EUDEV"
 
+
+###############################################################################
+# check for Sas module
+function checkforsas() {
+
+    sasmods="mpt3sas hpsa mvsas"
+    for sasmodule in $sasmods
+    do
+        echo "Checking existense of $sasmodule"
+        for alias in `depmod -n 2>/dev/null |grep -i $sasmodule |grep pci|cut -d":" -f 2 | cut -c 6-9,15-18`
+	do
+	    if [ `grep -i $alias /proc/bus/pci/devices |wc -l` -gt 0 ] ; then
+	        echo "  => $sasmodule, device found, block eudev mode" 
+	        BLOCK_EUDEV="Y"
+	    fi
+	done
+    done 
+}
+
 ###############################################################################
 # check VM or baremetal
 function checkmachine() {
@@ -643,30 +663,52 @@ function usbidentify() {
 ###############################################################################
 # Shows available between DDSML and EUDEV
 function seleudev() {
+  checkforsas
   eval "MSG27=\"\${MSG${tz}27}\""
   eval "MSG26=\"\${MSG${tz}26}\""
   eval "MSG40=\"\${MSG${tz}40}\""
-  while true; do
-    dialog --clear --backtitle "`backtitle`" \
-      --menu "Choose a option" 0 0 0 \
-      d "${MSG27}" \
-      e "${MSG26}" \
-      f "${MSG40}" \
-    2>${TMP_PATH}/resp
-    [ $? -ne 0 ] && return
-    resp=$(<${TMP_PATH}/resp)
-    [ -z "${resp}" ] && return
-    if [ "${resp}" = "d" ]; then
-      DMPM="DDSML"
-      break
-    elif [ "${resp}" = "e" ]; then
-      DMPM="EUDEV"
-      break
-    elif [ "${resp}" = "f" ]; then
-      DMPM="DDSML+EUDEV"
-      break
-    fi
-  done
+
+  if [ ${BLOCK_EUDEV} = "Y" ]; then
+  	  while true; do
+	    dialog --clear --backtitle "`backtitle`" \
+	      --menu "Choose a option" 0 0 0 \
+	      d "${MSG27}" \
+	      f "${MSG40}" \
+	    2>${TMP_PATH}/resp
+	    [ $? -ne 0 ] && return
+	    resp=$(<${TMP_PATH}/resp)
+	    [ -z "${resp}" ] && return
+	    if [ "${resp}" = "d" ]; then
+	      DMPM="DDSML"
+	      break
+	    elif [ "${resp}" = "f" ]; then
+	      DMPM="DDSML+EUDEV"
+	      break
+	    fi
+	  done
+  else
+  	  while true; do
+	    dialog --clear --backtitle "`backtitle`" \
+	      --menu "Choose a option" 0 0 0 \
+	      d "${MSG27}" \
+	      e "${MSG26}" \
+	      f "${MSG40}" \
+	    2>${TMP_PATH}/resp
+	    [ $? -ne 0 ] && return
+	    resp=$(<${TMP_PATH}/resp)
+	    [ -z "${resp}" ] && return
+	    if [ "${resp}" = "d" ]; then
+	      DMPM="DDSML"
+	      break
+	    elif [ "${resp}" = "e" ]; then
+	      DMPM="EUDEV"
+	      break
+	    elif [ "${resp}" = "f" ]; then
+	      DMPM="DDSML+EUDEV"
+	      break
+	    fi
+	  done
+  fi
 
   curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/bundled-exts.json -o /home/tc/redpill-load/bundled-exts.json
   sudo rm -rf /home/tc/redpill-load/custom/extensions/ddsml
