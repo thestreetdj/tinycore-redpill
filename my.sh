@@ -370,7 +370,7 @@ echo "DN_MODEL is $DN_MODEL"
 
 cecho p "DSM PAT file pre-downloading in progress..."
 
-URL="https://global.download.synology.com/download/DSM/release/${TARGET_VERSION}/${TARGET_REVISION}${SUVP}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"
+URL="https://global.synologydownload.com/download/DSM/release/${TARGET_VERSION}/${TARGET_REVISION}${SUVP}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"
 
 cecho y "$URL"
 
