@@ -667,10 +667,20 @@ function addrequiredexts() {
     for extension in ${EXTENSIONS_SOURCE_URL}; do
         echo "Adding extension ${extension} "
         cd /home/tc/redpill-load/ && ./ext-manager.sh add "$(echo $extension | sed -s 's/"//g' | sed -s 's/,//g')"
+        if [ $? -ne 0 ]; then
+            echo "FAILED : Processing add_extensions failed check the output for any errors"
+            ./rploader.sh clean
+            exit 99
+        fi
     done
     for extension in ${EXTENSIONS}; do
         echo "Updating extension : ${extension} contents for model : ${SYNOMODEL}  "
         cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
+        if [ $? -ne 0 ]; then
+            echo "FAILED : Processing add_extensions failed check the output for any errors"
+            ./rploader.sh clean
+            exit 99
+        fi
     done
 
 #m shell only
