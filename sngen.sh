@@ -72,8 +72,8 @@ function beginArray() {
         serialstart="2080"
         ;;
     DS1823xs+)
-        permanent="S7R"
-        serialstart="2080"
+        permanent="V5R"
+        serialstart="22B0"
         ;;
     DS2422+)
         permanent="S7R"
