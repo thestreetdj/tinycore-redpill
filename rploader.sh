@@ -673,11 +673,10 @@ function addrequiredexts() {
             exit 99
         fi
     done
-    
-    BAYSIZE=$(jq -r -e '.general.bay' "$userconfigfile")
+
     for extension in ${EXTENSIONS}; do
         echo "Updating extension : ${extension} contents for model : ${SYNOMODEL}  "
-        cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension} ${BAYSIZE}
+        cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
         if [ $? -ne 0 ]; then
             echo "FAILED : Processing add_extensions failed check the output for any errors"
             ./rploader.sh clean
