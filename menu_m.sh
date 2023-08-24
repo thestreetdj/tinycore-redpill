@@ -893,7 +893,7 @@ function setSuggest() {
   esac
 
   result="${line}${desc}"
-  echo "${platform} : ${bay}"
+  echo "${platform} : ${bay} : ${mcpu}"
 }
 
 ###############################################################################
