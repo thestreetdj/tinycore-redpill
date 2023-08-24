@@ -908,9 +908,8 @@ function setSuggest() {
 
 # Set Storage Panel Size
 function storagepanel() {
-
+  echo "${bay}"
 }
-
 
 ###############################################################################
 # Shows menu to user type one or generate randomly
