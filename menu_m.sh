@@ -65,6 +65,7 @@ MSGUS37="The first MAC address is not set. Check user_config.json again. Abort t
 MSGUS38="The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!!"
 MSGUS39="Choose a lageuage"
 MSGUS40="DDSML+EUDEV"
+MSGUS41="Choose a Storage Panel Size"
 
 ## RU
 MSGRU00="Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap. DT модели не поддерживают HBAs\n"
@@ -108,6 +109,7 @@ MSGRU37="Первый MAC-адрес не задан. Проверьте фай�
 MSGRU38="Количество интерфейсов (netif_num) и количество MAC-адресов не совпадают. Проверьте файл user_config.json еще раз. Остановка построения загрузчика !!!!!!"
 MSGRU39="Выберите язык"
 MSGRU40="DDSML+EUDEV"
+MSGRU41="Выберите размер панели хранения"
 
 ## FR
 MSGFR00="Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne nécessitent pas de SataPortMap, DiskIdxMap. Les modèles DT ne prennent pas en charge les HBAs\n"
@@ -151,6 +153,7 @@ MSGFR37="La première adresse MAC n'est pas définie. Vérifiez à nouveau user_
 MSGFR38="Le netif_num et le nombre d'adresses MAC ne correspondent pas. Vérifiez à nouveau user_config.json. Abandonner la construction du chargeur !!!!!!"
 MSGFR39="Choisissez une langue"
 MSGFR40="DDSML+EUDEV"
+MSGFR41="Choisissez une taille de panneau de stockage"
 
 ## DE
 MSGDE00="Gerätebaum[DT] Basismodelle und HBAs benötigen kein SataPortMap,DiskIdxMap. DT-Modelle unterstützen keine HBAs\n"
@@ -194,6 +197,7 @@ MSGDE37="Die erste MAC-Adresse ist nicht festgelegt. Überprüfen Sie user_confi
 MSGDE38="Die netif_num und die Anzahl der MAC-Adressen stimmen nicht überein. Überprüfen Sie user_config.json erneut. Loader-Build abbrechen !!!!!!"
 MSGDE39="Wählen Sie eine Sprache"
 MSGDE40="DDSML+EUDEV"
+MSGDE41="Wählen Sie eine Größe des Speicherpaneels"
 
 ## ES
 MSGES00="Los modelos base y HBAs de Device-Tree[DT] no requieren SataPortMap, DiskIdxMap. Los modelos DT no admiten HBAs\n"
@@ -237,6 +241,7 @@ MSGES37="La primera dirección MAC no está establecida. Revise user_config.json
 MSGES38="El número de netif_num y direcciones MAC no coinciden. Revise user_config.json nuevamente. ¡¡¡¡Abortar la construcción del cargador!!!!"
 MSGES39="Elige un idioma"
 MSGES40="DDSML+EUDEV"
+MSGES41="Elija un tamaño de panel de almacenamiento"
 
 ## BR
 MSGBR00="Modelos Base e HBAs do Device-Tree[DT] não requerem SataPortMap, DiskIdxMap. Modelos DT não suportam HBAs\n"
@@ -280,6 +285,7 @@ MSGBR37="O primeiro endereço MAC não está definido. Verifique o user_config.j
 MSGBR38="O netif_num e o número de endereços MAC não correspondem. Verifique o user_config.json novamente. Abortar a construção do loader!!!!!!"
 MSGBR39="Olá! Posso ajudá-lo em Português"
 MSGBR40="DDSML+EUDEV"
+MSGBR41="Escolha um tamanho de painel de armazenamento"
 
 ## IT
 MSGIT00="I modelli di base e gli HBA di Device-Tree [DT] non richiedono SataPortMap, DiskIdxMap. I modelli DT non supportano gli HBA\n"
@@ -323,6 +329,7 @@ MSGIT37="Il primo indirizzo MAC non è impostato. Controlla di nuovo user_config
 MSGIT38="Il numero di netif e il numero di indirizzi MAC non corrispondono. Controlla di nuovo user_config.json. Abortire la costruzione del caricatore !!!!!!"
 MSGIT39="Scegli una lingua"
 MSGIT40="DDSML+EUDEV"
+MSGIT41="Scegli una dimensione del pannello di archiviazione"
 
 ## KR
 MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다. DT모델은 HBA를 지원하지 않습니다.\n"
@@ -366,6 +373,7 @@ MSGKR37="첫 번째 MAC 주소가 설정되지 않았습니다. user_config.json
 MSGKR38="netif_num과 mac 주소 갯수가 일치하지 않습니다. user_config.json을 다시 확인하십시오. 로더 빌드를 중단합니다!!!!!!"
 MSGKR39="언어를 선택하세요(Choose a lageuage)"
 MSGKR40="DDSML+EUDEV"
+MSGKR41="저장소 패널 크기를 선택하세요"
 
 ## CN
 MSGCN00="设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap. DT模型不支持HBA\n"
@@ -409,6 +417,7 @@ MSGCN37="未设置第一个MAC地址。请再次检查user_config.json。终止�
 MSGCN38="netif_num和mac地址数量不匹配。请再次检查user_config.json。终止加载器构建!!!!!!"
 MSGCN39="选择语言"
 MSGCN40="DDSML+EUDEV"
+MSGCN41="选择存储面板尺寸"
 
 ## JP
 MSGJP00="Device-Tree[DT]ベースモデルとHBAsは、SataPortMap、DiskIdxMapが必要ありません. DTモデルはHBAsをサポートしていません\n"
@@ -452,6 +461,7 @@ MSGJP37="最初のMACアドレスが設定されていません。user_config.js
 MSGJP38="netif_numとMACアドレスの数が一致しません。user_config.jsonを再度確認してください。ローダービルドを中止します！！！！"
 MSGJP39="言語を選択してください"
 MSGJP40="DDSML+EUDEV"
+MSGJP41="ストレージパネルのサイズを選択してください"
 
 
 ###############################################################################
@@ -895,6 +905,12 @@ function setSuggest() {
   result="${line}${desc}"
   echo "${platform} : ${bay} : ${mcpu}"
 }
+
+# Set Storage Panel Size
+function storagepanel() {
+
+}
+
 
 ###############################################################################
 # Shows menu to user type one or generate randomly
@@ -1460,6 +1476,7 @@ while true; do
       eval "echo \"o \\\"\${MSG${tz}08}\\\"\""         >> "${TMP_PATH}/menu"
     fi
   fi
+  eval "echo \"y \\\"\${MSG${tz}41}\\\"\""               >> "${TMP_PATH}/menu"  
   eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"k \\\"\${MSG${tz}11}\\\"\""               >> "${TMP_PATH}/menu"
@@ -1516,6 +1533,7 @@ while true; do
          make "ofjot"
        fi
        NEXT="r" ;;
+    y) storagepanel;                   NEXT="p" ;;
     u) editUserConfig;                 NEXT="d" ;;
     l) langMenu ;                      NEXT="m" ;;
     k) keymapMenu ;                    NEXT="m" ;;
