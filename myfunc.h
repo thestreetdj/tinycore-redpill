@@ -166,6 +166,8 @@ set -u
 # Update : Add Support DSM 7.2-64570-1 Official Version
 # 2023.07.07
 # Update : Fix Bug for userdts option
+# 2023.08.24
+# Update : Add storage panel size selection menu
 
 function showlastupdate() {
     cat <<EOF
@@ -173,17 +175,11 @@ function showlastupdate() {
 # Update : Release TCRP FRIEND mode
 # 2022.09.25
 
-# Update : AMD CPU FRIEND mode menu usage restriction release (except HP N36L/N40L/N54L)
-# 2023.03.18
-
 # Update : Multilingual menu support started (Korean, Chinese, Japanese, Russian, French, German, Spanish, Brazilian, Italian supported)
 # 2023.03.25
 
 # Update : Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk Update
 # 2023.05.01
-
-# Update : Add Getty Console to DSM 7.2
-# 2023.05.26
 
 # 2023.06.17
 # Update : Added ds1821+ (v1000)
@@ -196,7 +192,10 @@ function showlastupdate() {
 
 # 2023.07.07
 # Update : Fix Bug for userdts option
-        
+
+# 2023.08.24
+# Update : Add storage panel size selection menu
+    
 EOF
 }
 
