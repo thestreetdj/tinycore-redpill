@@ -683,8 +683,15 @@ function addrequiredexts() {
         fi
     done
 
-#m shell only
- #Use user define dts file instaed of dtbpatch ext now
+# m shell only
+ # Modify storagepanel addon scripts & sha256
+    sudo sed -i 's/storagepanel.sh TOWER_12_Bay 1X2/storagepanel.sh TOWER_5_Bay 1X5/g' /home/tc/redpill-load/custom/extensions/storagepanel/${SYNOMODEL}/install.sh
+    shell_sha256=$(sha256sum /home/tc/redpill-load/custom/extensions/storagepanel/${SYNOMODEL}/install.sh | awk '{print $1}')
+    msgnormal "storagepanel install.sh file  sha256sum is : $shell_sha256"
+    msgnormal "Editing ${SYNOMODEL}.json file !!!!!"
+    sudo sed -i "s/45d05b576dfb614798291e1cec97d1795814de536fcc4c3ea7e854b37d7bf7be/$shell_sha256/g" /home/tc/redpill-load/custom/extensions/storagepanel/${SYNOMODEL}/${SYNOMODEL}.json
+   
+ # Use user define dts file instaed of dtbpatch ext now
     if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "v1000" ] || [ ${ORIGIN_PLATFORM} = "r1000" ]; then
         echo "For user define dts file instaed of dtbpatch ext"
         patchdtc
