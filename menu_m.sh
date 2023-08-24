@@ -922,7 +922,8 @@ function storagepanel() {
 
   BAYSIZE="`<${TMP_PATH}/resp`"
   writeConfigKey "general" "bay" "${BAYSIZE}"
-
+  bay="${BAYSIZE}"
+  
 }
 
 ###############################################################################
