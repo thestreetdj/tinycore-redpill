@@ -910,6 +910,7 @@ function setSuggest() {
 function storagepanel() {
   storage_options="TOWER_1_Bay TOWER_2_Bay TOWER_4_Bay TOWER_4_Bay_J TOWER_4_Bay_S TOWER_5_Bay TOWER_6_Bay TOWER_8_Bay TOWER_12_Bay RACK_2_Bay RACK_4_Bay RACK_8_Bay RACK_10_Bay RACK_12_Bay RACK_12_Bay_2 RACK_16_Bay RACK_20_Bay RACK_24_Bay RACK_60_Bay"
 
+  BAYSIZE="${bay}"
   while true; do
     echo "" > "${TMP_PATH}/size"
     echo "${storage_options}" | tr ' ' '\n' >> "${TMP_PATH}/size"
