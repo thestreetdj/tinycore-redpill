@@ -166,7 +166,7 @@ set -u
 # Update : Add Support DSM 7.2-64570-1 Official Version
 # 2023.07.07
 # Update : Fix Bug for userdts option
-# 2023.08.24
+# 2023.08.24 (M-SHELL for TCRP, v0.9.5.0 release)
 # Update : Add storage panel size selection menu
 
 function showlastupdate() {
@@ -193,7 +193,7 @@ function showlastupdate() {
 # 2023.07.07
 # Update : Fix Bug for userdts option
 
-# 2023.08.24
+# 2023.08.24 (M-SHELL for TCRP, v0.9.5.0 release)
 # Update : Add storage panel size selection menu
     
 EOF
