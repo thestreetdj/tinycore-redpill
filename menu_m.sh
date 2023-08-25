@@ -1463,6 +1463,7 @@ fi
 
 NEXT="m"
 setSuggest $MODEL
+writeConfigKey "general" "bay" "${bay}"
 
 # Until urxtv is available, Korean menu is used only on remote terminals.
 while true; do
