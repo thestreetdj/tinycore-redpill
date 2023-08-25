@@ -63,7 +63,7 @@ MSGUS35="press any key to continue..."
 MSGUS36="Synology serial number not set. Check user_config.json again. Abort the loader build !!!!!!"
 MSGUS37="The first MAC address is not set. Check user_config.json again. Abort the loader build !!!!!!"
 MSGUS38="The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!!"
-MSGUS39="Choose a lageuage"
+MSGUS39="Choose a language"
 MSGUS40="DDSML+EUDEV"
 MSGUS41="Choose a Storage Panel Size"
 
