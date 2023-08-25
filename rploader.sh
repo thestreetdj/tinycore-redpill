@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 0.9.4.3-2
+# User Variables : 0.9.5.0
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="0.9.4.3-2"
+rploaderver="0.9.5.0"
 build="master"
 redpillmake="prod"
 
@@ -95,6 +95,7 @@ function history() {
     0.9.2.9 Added the smallfixnumber key in user_config.json and changed the platform ids to model ids
     0.9.3.0 Changed set root entry to search for FS UUID
     0.9.4.3-1 Multilingual menu support 
+    0.9.5.0 Add storage panel size selection menu
     --------------------------------------------------------------------------------------
 EOF
 
@@ -2601,7 +2602,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 0.9.4.3-1"
+    echo "TCRP JOT Version : 0.9.5.0"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
