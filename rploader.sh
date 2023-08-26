@@ -3550,9 +3550,9 @@ function getredpillko() {
     fi
     sudo rm -f /home/tc/custom-module/*.gz
     sudo rm -f /home/tc/custom-module/*.ko
-    sudo unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
-    gunzip /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
-    mv /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
+    unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
+    gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
+    mv -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
 
 }
 
