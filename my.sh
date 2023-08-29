@@ -434,13 +434,11 @@ echo
 if [ "$frmyv" = "Y" ]; then
     parmfrmyv="frmyv"
 else
-    parmfrmyv=""
-fi
-
-if [ "$makeimg" = "Y" ]; then
-    parmmakeimg="makeimg"
-else
-    parmmakeimg=""
+    if [ "$makeimg" = "Y" ]; then
+        parmfrmyv="makeimg"
+    else
+        parmfrmyv=""
+    fi
 fi
 
 if [ "$MODEL" = "SA6400" ]; then
@@ -450,9 +448,9 @@ if [ "$MODEL" = "SA6400" ]; then
 fi
 
 if [ "$jot" = "N" ]; then
-    echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend ${parmfrmyv} ${parmmakeimg}
+    echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend ${parmfrmyv}
 else
-    echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static ${parmfrmyv} ${parmmakeimg}
+    echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static ${parmfrmyv}
 fi
 
 if [ $? -ne 0 ]; then
