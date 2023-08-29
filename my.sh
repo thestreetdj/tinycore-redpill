@@ -298,8 +298,9 @@ else
 fi
 
 curl -skLO https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json                          
-#curl -skLO https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh                                
-curl -skL https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader_t.sh -o rploader.sh                
+curl -skLO https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh                                
+#curl -skL https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader_t.sh -o rploader.sh
+
 #curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/master/rpext-index.json" -O
 
 echo
@@ -464,6 +465,15 @@ if  [ -f /home/tc/custom-module/redpill.ko ]; then
     rm -rf /home/tc/custom-module/redpill.ko
 fi
 
+if [ "$makeimg" = "Y" ]; then
+    cecho y "Delete all PAT files except for the final created PAT file (including decryption PAT)!"
+    if [ $(ls /mnt/${tcrppart}/auxfiles/*.pat | grep -v ${SYNOMODEL}.pat | wc -l ) -gt 0 ]; then
+        find /mnt/${tcrppart}/auxfiles -name "*.pat" ! -name "${SYNOMODEL}.pat" -type f -delete
+    fi    
+st "finishloader" "Loader build status" "Finished building the loader"    
+    exit 0
+fi
+
 echo                                                                                                                                                                           
 cecho y "Backup in progress..."                                                                                                                                                
 echo
@@ -476,7 +486,7 @@ rm -f /home/tc/redpill-load/cache/*
 
 cecho y "Delete all PAT files except for the final created PAT file (including decryption PAT)!"
 if [ $(ls /mnt/${tcrppart}/auxfiles/*.pat | grep -v ${SYNOMODEL}.pat | wc -l ) -gt 0 ]; then
-find /mnt/${tcrppart}/auxfiles -name "*.pat" ! -name "${SYNOMODEL}.pat" -type f -delete
+    find /mnt/${tcrppart}/auxfiles -name "*.pat" ! -name "${SYNOMODEL}.pat" -type f -delete
 fi    
 
 rm -f /home/tc/custom-module
