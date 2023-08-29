@@ -2738,11 +2738,9 @@ st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
         echo "Stop creating loader and keep loader.img for 7.2"
         sudo cp -vf loader.img /mnt/${loaderdisk}3/loader72.img
 
-    echo "Cleaning up files"
-    removemodelexts    
-    sudo rm -rf /home/tc/cache/*pat /home/tc/redpill-load/loader.img
-
-st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
+        echo "Cleaning up files"
+        removemodelexts    
+        sudo rm -rf /home/tc/cache/*pat /home/tc/redpill-load/loader.img
         
         exit 0
     fi
