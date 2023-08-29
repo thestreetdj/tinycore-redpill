@@ -2740,7 +2740,7 @@ st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
 
     echo "Cleaning up files"
     removemodelexts    
-    sudo rm -rf /home/tc/cache/*pat
+    sudo rm -rf /home/tc/cache/*pat /home/tc/redpill-load/loader.img
 
 st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
         
