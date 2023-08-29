@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 0.9.4.3-2
+# User Variables : 0.9.5.0
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="0.9.4.3-2"
+rploaderver="0.9.5.0"
 build="master"
 redpillmake="prod"
 
@@ -95,6 +95,7 @@ function history() {
     0.9.2.9 Added the smallfixnumber key in user_config.json and changed the platform ids to model ids
     0.9.3.0 Changed set root entry to search for FS UUID
     0.9.4.3-1 Multilingual menu support 
+    0.9.5.0 Add storage panel size selection menu
     --------------------------------------------------------------------------------------
 EOF
 
@@ -673,6 +674,7 @@ function addrequiredexts() {
             exit 99
         fi
     done
+
     for extension in ${EXTENSIONS}; do
         echo "Updating extension : ${extension} contents for model : ${SYNOMODEL}  "
         cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
@@ -683,15 +685,8 @@ function addrequiredexts() {
         fi
     done
 
-# m shell only
- # Modify storagepanel addon scripts & sha256
-    sudo sed -i 's/storagepanel.sh TOWER_12_Bay 1X2/storagepanel.sh TOWER_5_Bay 1X5/g' /home/tc/redpill-load/custom/extensions/storagepanel/${SYNOMODEL}/install.sh
-    shell_sha256=$(sha256sum /home/tc/redpill-load/custom/extensions/storagepanel/${SYNOMODEL}/install.sh | awk '{print $1}')
-    msgnormal "storagepanel install.sh file  sha256sum is : $shell_sha256"
-    msgnormal "Editing ${SYNOMODEL}.json file !!!!!"
-    sudo sed -i "s/45d05b576dfb614798291e1cec97d1795814de536fcc4c3ea7e854b37d7bf7be/$shell_sha256/g" /home/tc/redpill-load/custom/extensions/storagepanel/${SYNOMODEL}/${SYNOMODEL}.json
-   
- # Use user define dts file instaed of dtbpatch ext now
+#m shell only
+ #Use user define dts file instaed of dtbpatch ext now
     if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "v1000" ] || [ ${ORIGIN_PLATFORM} = "r1000" ]; then
         echo "For user define dts file instaed of dtbpatch ext"
         patchdtc
@@ -2607,7 +2602,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 0.9.4.3-1"
+    echo "TCRP JOT Version : 0.9.5.0"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
@@ -3555,9 +3550,9 @@ function getredpillko() {
     fi
     sudo rm -f /home/tc/custom-module/*.gz
     sudo rm -f /home/tc/custom-module/*.ko
-    sudo unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
-    gunzip /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /home/tc/custom-module >/dev/null 2>&1
-    mv /home/tc/custom-module/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
+    unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
+    gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
+    cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
 
 }
 
