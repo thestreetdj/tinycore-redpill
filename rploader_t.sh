@@ -2734,6 +2734,12 @@ st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
         exit 99
     fi
 
+    if [ "$MAKEIMG" = "YES" ]; then
+        echo "Stop creating loader and keep loader.img for 7.2"
+        mv -f loader.img /mnt/${loaderdisk}3/loader72.img
+        exit 0
+    if
+
     sudo losetup -fP ./loader.img
     loopdev=$(losetup -j loader.img | awk '{print $1}' | sed -e 's/://')
 
@@ -3592,6 +3598,8 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
 
         [ "$4" = "frmyv" ] && echo "called from myv.sh option set, From Myv will be added" && FROMMYV="YES"
+
+        [ "$5" = "makeimg" ] && echo "makeimg option set, keep loader.img for 7.2" && MAKEIMG="YES"
 
         case $3 in
 
