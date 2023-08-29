@@ -3620,7 +3620,8 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
 #        gitdownload     # When called from the parent my.sh, -d flag authority check is not possible, pre-downloaded in advance 
         checkUserConfig
         getredpillko
-
+echo "$3"
+echo "$4"
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
 
         [ "$4" = "frmyv" ] && echo "called from myv.sh option set, From Myv will be added" && FROMMYV="YES"
