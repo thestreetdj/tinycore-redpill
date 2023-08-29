@@ -2738,7 +2738,7 @@ st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
         echo "Stop creating loader and keep loader.img for 7.2"
         mv -f loader.img /mnt/${loaderdisk}3/loader72.img
         exit 0
-    if
+    fi
 
     sudo losetup -fP ./loader.img
     loopdev=$(losetup -j loader.img | awk '{print $1}' | sed -e 's/://')
