@@ -147,11 +147,11 @@ function chkavail() {
 checkinternet
 gitdownload
 
-if [ $gitdomain == "raw.githubusercontent.com" ]; then
+if [ "$gitdomain" = "raw.githubusercontent.com" ]; then
     if [ $# -lt 1 ]; then
         getlatestmshell "ask"
     else
-        if [ "$1" == "update" ]; then 
+        if [ "$1" = "update" ]; then 
             getlatestmshell "noask"
             exit 0
         else
@@ -233,7 +233,7 @@ echo
 
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
 
-if [ $tcrppart == "mmc3" ]; then
+if [ "$tcrppart" = "mmc3" ]; then
     tcrppart="mmcblk0p3"
 fi
 
@@ -302,7 +302,7 @@ curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-re
 #curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/master/rpext-index.json" -O
 
 echo
-if [ $jot == "N" ]; then    
+if [ "$jot" = "N" ]; then    
 cecho y "This is TCRP friend mode"
 else    
 cecho y "This is TCRP original jot mode"
@@ -313,7 +313,7 @@ if [ -f /home/tc/custom-module/${TARGET_PLATFORM}.dts ]; then
     sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config_jun.json
 fi
 
-if [ $postupdate == "Y" ]; then
+if [ "$postupdate" = "Y" ]; then
     cecho y "Postupdate in progress..."  
     sudo ./rploader.sh postupdate ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}
 
@@ -324,7 +324,7 @@ if [ $postupdate == "Y" ]; then
     exit 0
 fi
 
-if [ $userdts == "Y" ]; then
+if [ "$userdts" = "Y" ]; then
     
     cecho y "user-define dts file make in progress..."  
     echo
@@ -345,7 +345,7 @@ fi
 
 echo
 
-if [ $noconfig == "Y" ]; then                            
+if [ "$noconfig" = "Y" ]; then                            
     cecho r "SN Gen/Mac Gen/Vid/Pid/SataPortMap detection skipped!!"
     checkmachine
     if [ "$MACHINE" = "VIRTUAL" ]; then
@@ -381,9 +381,9 @@ cecho y "$URL"
 
 patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"                                         
         
-if [ "$TARGET_VERSION" == "7.2" ]; then
+if [ "$TARGET_VERSION" = "7.2" ]; then
     TARGET_VERSION="7.2.0"
-#    if [ "$ORIGIN_PLATFORM" == "apollolake" ]||[ "$ORIGIN_PLATFORM" == "geminilake" ]; then
+#    if [ "$ORIGIN_PLATFORM" = "apollolake" ]||[ "$ORIGIN_PLATFORM" = "geminilake" ]; then
 #       jsonfile=$(jq 'del(.cgetty)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
 #       sudo rm -rf /home/tc/redpill-load/custom/extensions/cgetty
 #    fi   
@@ -416,7 +416,7 @@ st "download pat" "Downloading pat  " "${SYNOMODEL}.pat"
     verifyid="$(echo $platform_selected | jq -r -e '.downloads .os .sha256')"
     cecho p "verifyid  sha256sum is : $verifyid"                                        
 
-    if [ "$os_sha256" == "$verifyid" ]; then                                            
+    if [ "$os_sha256" = "$verifyid" ]; then                                            
         cecho y "pat file sha256sum is OK ! "                                           
     else                                                                                
         cecho y "os sha256 verify FAILED, check ${patfile}  "                           
@@ -431,25 +431,25 @@ echo
 cecho g "Loader Building in progress..."
 echo
 
-if [ $frmyv == "Y" ]; then
+if [ "$frmyv" = "Y" ]; then
     parmfrmyv="frmyv"
 else
     parmfrmyv=""
 fi
 
-if [ $makeimg == "Y" ]; then
+if [ "$makeimg" = "Y" ]; then
     parmmakeimg="makeimg"
 else
     parmmakeimg=""
 fi
 
-if [ "$MODEL" == "SA6400" ]; then
+if [ "$MODEL" = "SA6400" ]; then
     cecho g "Remove Exts for SA6400 test (cgetty,acpid,smb3-multi ) ..."
     jsonfile=$(jq 'del(.cgetty)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
     sudo rm -rf /home/tc/redpill-load/custom/extensions/cgetty
 fi
 
-if [ $jot == "N" ]; then
+if [ "$jot" = "N" ]; then
     echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend ${parmfrmyv} ${parmmakeimg}
 else
     echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static ${parmfrmyv} ${parmmakeimg}
