@@ -2655,7 +2655,7 @@ checkmachine
     msgnormal "Device Module Processing Method is ${DMPM}"
 
     cd /home/tc
-echo "MAKEIMG = $MAKEIMG"
+
     echo -n "Checking user_config.json : "
     if jq -s . user_config.json >/dev/null; then
         echo "Done"
@@ -2736,31 +2736,12 @@ st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
 
     if [ "$MAKEIMG" = "YES" ]; then
         echo "Stop creating loader and keep loader.img for 7.2"
-        mv -f loader.img /mnt/${loaderdisk}3/loader72.img
+        sudo mv -f loader.img /mnt/${loaderdisk}3/loader72.img
 
     echo "Cleaning up files"
     removemodelexts    
     sudo rm -rf /home/tc/cache/*pat
 
-    msgnormal "Caching files for future use"
-    [ ! -d ${local_cache} ] && mkdir ${local_cache}
-
-    chkavail
-    if [ $avail_num -le 360 ]; then
-        echo "No adequate space on TCRP loader partition /mnt/${tcrppart} to backup cache pat file"
-        echo "Found $(ls /mnt/${tcrppart}/auxfiles/*pat) file"
-        echo "Removing older cached pat files to cache current"
-        rm -f /mnt/${tcrppart}/auxfiles/*.pat
-        patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
-        echo "Found ${patfile}, copying to cache directory : ${local_cache} "
-        cp -f ${patfile} ${local_cache} && rm /home/tc/redpill-load/cache/*.pat
-    else
-        if [ -f "$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)" ]; then
-            patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
-            echo "Found ${patfile}, copying to cache directory : ${local_cache} "
-            cp -f ${patfile} ${local_cache}
-        fi
-    fi
 st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
         
         exit 0
