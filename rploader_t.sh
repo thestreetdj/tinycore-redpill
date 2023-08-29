@@ -2655,7 +2655,7 @@ checkmachine
     msgnormal "Device Module Processing Method is ${DMPM}"
 
     cd /home/tc
-
+echo "MAKEIMG = $MAKEIMG"
     echo -n "Checking user_config.json : "
     if jq -s . user_config.json >/dev/null; then
         echo "Done"
@@ -3625,7 +3625,7 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
 
         [ "$4" = "frmyv" ] && echo "called from myv.sh option set, From Myv will be added" && FROMMYV="YES"
 
-        [ "$5" = "makeimg" ] && echo "makeimg option set, keep loader.img for 7.2" && MAKEIMG="YES" && echo "$MAKEIMG"
+        [ "$5" = "makeimg" ] && echo "makeimg option set, keep loader.img for 7.2" && MAKEIMG="YES"
 
         case $3 in
 
