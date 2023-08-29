@@ -157,7 +157,6 @@ set -u
 # Update : Added ds916+ (braswell), 7.2.0 Jot Menu Creation for HP PCs
 # 2023.06.03
 # Update : Add Support DSM 7.2-64570 Official Version
-# 2023.06.09
 # 2023.06.17
 # Update : Added ds1821+ (v1000)
 # 2023.06.18
@@ -168,7 +167,10 @@ set -u
 # Update : Fix Bug for userdts option
 # 2023.08.24 (M-SHELL for TCRP, v0.9.5.0 release)
 # Update : Add storage panel size selection menu
+# 2023.08.29
+# Update : Added a function to store loader.img for DSM 7.2 for 7.2 automatic loader build of 7.0.1, 7.1.1
 
+    
 function showlastupdate() {
     cat <<EOF
 
@@ -181,9 +183,6 @@ function showlastupdate() {
 # Update : Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk Update
 # 2023.05.01
 
-# 2023.06.17
-# Update : Added ds1821+ (v1000)
-
 # 2023.06.18
 # Update : Added ds1823xs+ (v1000), ds620slim (apollokale), ds1819+ (denverton)
 
@@ -195,6 +194,9 @@ function showlastupdate() {
 
 # 2023.08.24 (M-SHELL for TCRP, v0.9.5.0 release)
 # Update : Add storage panel size selection menu
+
+# 2023.08.29
+# Update : Added a function to store loader.img for DSM 7.2 for 7.2 automatic loader build of 7.0.1, 7.1.1
     
 EOF
 }
