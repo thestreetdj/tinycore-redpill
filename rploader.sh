@@ -2734,6 +2734,17 @@ st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
         exit 99
     fi
 
+    if [ "$MAKEIMG" = "YES" ]; then
+        echo "Stop creating loader and keep loader.img for 7.2"
+        sudo cp -vf loader.img /mnt/${loaderdisk}3/loader72.img
+
+        echo "Cleaning up files"
+        removemodelexts    
+        sudo rm -rf /home/tc/cache/*pat /home/tc/redpill-load/loader.img
+        
+        exit 0
+    fi
+
     sudo losetup -fP ./loader.img
     loopdev=$(losetup -j loader.img | awk '{print $1}' | sed -e 's/://')
 
@@ -3588,10 +3599,13 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
 #        gitdownload     # When called from the parent my.sh, -d flag authority check is not possible, pre-downloaded in advance 
         checkUserConfig
         getredpillko
-
+echo "$3"
+echo "$4"
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
 
         [ "$4" = "frmyv" ] && echo "called from myv.sh option set, From Myv will be added" && FROMMYV="YES"
+
+        [ "$4" = "makeimg" ] && echo "makeimg option set, keep loader.img for 7.2" && MAKEIMG="YES"
 
         case $3 in
 
