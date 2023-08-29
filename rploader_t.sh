@@ -2736,7 +2736,7 @@ st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
 
     if [ "$MAKEIMG" = "YES" ]; then
         echo "Stop creating loader and keep loader.img for 7.2"
-        sudo mv -f loader.img /mnt/${loaderdisk}3/loader72.img
+        sudo cp -vf loader.img /mnt/${loaderdisk}3/loader72.img
 
     echo "Cleaning up files"
     removemodelexts    
