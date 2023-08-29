@@ -3625,7 +3625,7 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
 
         [ "$4" = "frmyv" ] && echo "called from myv.sh option set, From Myv will be added" && FROMMYV="YES"
 
-        [ "$5" = "makeimg" ] && echo "makeimg option set, keep loader.img for 7.2" && MAKEIMG="YES"
+        [ "$4" = "makeimg" ] && echo "makeimg option set, keep loader.img for 7.2" && MAKEIMG="YES"
 
         case $3 in
 
