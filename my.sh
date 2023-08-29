@@ -178,6 +178,7 @@ userdts="N"
 noconfig="N"
 frmyv="N"
 jot="N"
+makeimg="N"
 
     while [[ "$#" > 0 ]] ; do
 
@@ -201,7 +202,10 @@ jot="N"
         jot)
             jot="Y"
             ;;
-
+            
+        makeimg)
+            makeimg="Y"
+            ;;
         *)
             if [ $1 = "FS2500F" ]; then                                       
                 echo                                                          
@@ -223,6 +227,7 @@ jot="N"
 #echo $userdts
 #echo $noconfig
 #echo $frmyv
+echo "makeimg = $makeimg"
 
 echo
 
@@ -432,6 +437,12 @@ else
     parmfrmyv=""
 fi
 
+if [ $makeimg == "Y" ]; then
+    parmmakeimg="makeimg"
+else
+    parmmakeimg=""
+fi
+
 if [ "$MODEL" == "SA6400" ]; then
     cecho g "Remove Exts for SA6400 test (cgetty,acpid,smb3-multi ) ..."
     jsonfile=$(jq 'del(.cgetty)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
@@ -439,9 +450,9 @@ if [ "$MODEL" == "SA6400" ]; then
 fi
 
 if [ $jot == "N" ]; then
-    echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend ${parmfrmyv}
+    echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend ${parmfrmyv} ${parmmakeimg}
 else
-    echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static ${parmfrmyv}
+    echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static ${parmfrmyv} ${parmmakeimg}
 fi
 
 if [ $? -ne 0 ]; then
