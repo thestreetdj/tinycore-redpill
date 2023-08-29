@@ -297,8 +297,9 @@ else
     exit 0
 fi
 
-curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json" -O
-curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh" -O
+curl -skLO https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json                          
+#curl -skLO https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh                                
+curl -skL https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader_t.sh -o rploader.sh                
 #curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/master/rpext-index.json" -O
 
 echo
