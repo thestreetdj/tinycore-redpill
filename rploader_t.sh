@@ -2737,6 +2737,32 @@ st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
     if [ "$MAKEIMG" = "YES" ]; then
         echo "Stop creating loader and keep loader.img for 7.2"
         mv -f loader.img /mnt/${loaderdisk}3/loader72.img
+
+    echo "Cleaning up files"
+    removemodelexts    
+    sudo rm -rf /home/tc/cache/*pat
+
+    msgnormal "Caching files for future use"
+    [ ! -d ${local_cache} ] && mkdir ${local_cache}
+
+    chkavail
+    if [ $avail_num -le 360 ]; then
+        echo "No adequate space on TCRP loader partition /mnt/${tcrppart} to backup cache pat file"
+        echo "Found $(ls /mnt/${tcrppart}/auxfiles/*pat) file"
+        echo "Removing older cached pat files to cache current"
+        rm -f /mnt/${tcrppart}/auxfiles/*.pat
+        patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
+        echo "Found ${patfile}, copying to cache directory : ${local_cache} "
+        cp -f ${patfile} ${local_cache} && rm /home/tc/redpill-load/cache/*.pat
+    else
+        if [ -f "$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)" ]; then
+            patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
+            echo "Found ${patfile}, copying to cache directory : ${local_cache} "
+            cp -f ${patfile} ${local_cache}
+        fi
+    fi
+st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
+        
         exit 0
     fi
 
@@ -3599,7 +3625,7 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
 
         [ "$4" = "frmyv" ] && echo "called from myv.sh option set, From Myv will be added" && FROMMYV="YES"
 
-        [ "$5" = "makeimg" ] && echo "makeimg option set, keep loader.img for 7.2" && MAKEIMG="YES"
+        [ "$5" = "makeimg" ] && echo "makeimg option set, keep loader.img for 7.2" && MAKEIMG="YES" && echo "$MAKEIMG"
 
         case $3 in
 
