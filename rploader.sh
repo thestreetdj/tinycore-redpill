@@ -2966,6 +2966,7 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
         echo "Bakcup loader.img and grub.cfg file for update to 7.2"
         sudo cp -vf /home/tc/redpill-load/loader.img /mnt/${loaderdisk}3/loader72.img
         sudo cp -vf /mnt/${loaderdisk}1/boot/GRUB/grub.cfg /mnt/${loaderdisk}3/grub72.cfg
+        sudo cp -vf /mnt/${loaderdisk}3/initrd-dsm /mnt/${loaderdisk}3/initrd-dsm72
     fi
 
     echo "Cleaning up files"
