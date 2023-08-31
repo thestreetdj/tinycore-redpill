@@ -2734,17 +2734,6 @@ st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
         exit 99
     fi
 
-    if [ "$MAKEIMG" = "YES" ]; then
-        echo "Stop creating loader and keep loader.img for 7.2"
-        sudo cp -vf loader.img /mnt/${loaderdisk}3/loader72.img
-
-        echo "Cleaning up files"
-        removemodelexts    
-        sudo rm -rf /home/tc/cache/*pat /home/tc/redpill-load/loader.img
-        
-        exit 0
-    fi
-
     sudo losetup -fP ./loader.img
     loopdev=$(losetup -j loader.img | awk '{print $1}' | sed -e 's/://')
 
@@ -2972,6 +2961,12 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
     sudo umount localdiskp1
     sudo umount localdiskp2
     sudo losetup -D
+
+    if [ ${TARGET_REVISION} -gt 64569 ]; then
+        echo "Bakcup loader.img and grub.cfg file for update to 7.2"
+        sudo cp -vf /home/tc/redpill-load/loader.img /mnt/${loaderdisk}3/loader72.img
+        sudo cp -vf /mnt/${loaderdisk}1/boot/GRUB/grub.cfg /mnt/${loaderdisk}3/grub72.cfg
+    fi
 
     echo "Cleaning up files"
     removemodelexts    
