@@ -11,12 +11,16 @@ function gitdownload() {
            cd /home/tc    
            /home/tc/rploader.sh clean 
            git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"
-           #git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git"
+           if [ $? -ne 0 ]; then
+               git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git"
+           fi    
         fi   
         cd /home/tc
     else
         git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"
-        #git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git"
+        if [ $? -ne 0 ]; then
+            git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git"
+        fi    
     fi
 
 }
