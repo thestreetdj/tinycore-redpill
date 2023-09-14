@@ -3555,10 +3555,10 @@ function getredpillko() {
     if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
         echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
         curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm/master/rp-lkms.zip -o /tmp/rp-lkms.zip
-        #if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
-        #    echo "Error downloading https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm/master/rp-lkms.zip"
-        #    exit 99
-        #fi    
+        if [ $? -ne 0 ]; then
+            echo "Error downloading https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm/master/rp-lkms.zip"
+            exit 99
+        fi    
     fi
     sudo rm -f /home/tc/custom-module/*.gz
     sudo rm -f /home/tc/custom-module/*.ko
