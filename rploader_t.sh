@@ -2966,6 +2966,7 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
         echo "Bakcup loader.img and grub.cfg file for update to 7.2"
         sudo cp -vf /home/tc/redpill-load/loader.img /mnt/${loaderdisk}3/loader72.img
         sudo cp -vf /mnt/${loaderdisk}1/boot/GRUB/grub.cfg /mnt/${loaderdisk}3/grub72.cfg
+        sudo cp -vf /mnt/${loaderdisk}3/initrd-dsm /mnt/${loaderdisk}3/initrd-dsm72
     fi
 
     echo "Cleaning up files"
@@ -3001,7 +3002,8 @@ function bringoverfriend() {
   [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
   echo -n "Checking for latest friend -> "
-  URL=$(curl --connect-timeout 15 -s -k -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
+  #URL=$(curl --connect-timeout 15 -s -k -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
+  URL="https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum"
   [ -n "$URL" ] && curl -s -k -L $URL -O
 
   if [ -f chksum ]; then
@@ -3551,8 +3553,12 @@ function getredpillko() {
     fi    
     echo "TAG is ${TAG}"
     if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
-        echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip"
-        exit 99
+        echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
+        curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm/master/rp-lkms.zip -o /tmp/rp-lkms.zip
+        if [ $? -ne 0 ]; then
+            echo "Error downloading https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm/master/rp-lkms.zip"
+            exit 99
+        fi    
     fi
     sudo rm -f /home/tc/custom-module/*.gz
     sudo rm -f /home/tc/custom-module/*.ko
