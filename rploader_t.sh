@@ -2886,6 +2886,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 #        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
 #m shell only end
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/raw/main/geminilake-4.4.302/sd_mod.ko -o /home/tc/rd.temp/lib/modules/sd_mod.ko
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     else
         unlzma -dc /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
@@ -2894,6 +2895,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 #        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
 #m shell only end
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/raw/main/geminilake-4.4.302/sd_mod.ko -o /home/tc/rd.temp/lib/modules/sd_mod.ko
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     fi
 
