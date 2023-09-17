@@ -3003,7 +3003,8 @@ function bringoverfriend() {
 
   echo -n "Checking for latest friend -> "
   #URL=$(curl --connect-timeout 15 -s -k -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
-  URL="https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum"
+  #URL="https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum"
+  URL="https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest/download/chksum"
   [ -n "$URL" ] && curl -s -k -L $URL -O
 
   if [ -f chksum ]; then
