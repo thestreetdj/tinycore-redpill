@@ -50,7 +50,7 @@ MSGUS14="Reboot"
 MSGUS15="Exit"
 MSGUS16="Max 24 Threads, any x86-64"
 MSGUS17="Max 8 Threads, Haswell or later,iGPU Transcoding"
-MSGUS18=" "
+MSGUS18="Build the [TCRP 7.2.1-69057] loader"
 MSGUS19="Build the [TCRP 7.2.0-64570 JOT Mode] loader"
 MSGUS20="Max ? Threads, any x86-64"
 MSGUS21="Have a camera license"
@@ -358,7 +358,7 @@ MSGKR14="재부팅"
 MSGKR15="종료"
 MSGKR16="최대 24 스레드 지원, 인텔 x86-64"
 MSGKR17="최대 8 스레드 지원, 인텔 4세대 하스웰 이후부터 지원,iGPU H/W 트랜스코딩"
-MSGKR18=" "
+MSGKR18="[TCRP 7.2.1-69057] 로더 빌드"
 MSGKR19="[TCRP 7.2.0-64570 JOT Mode] 로더 빌드"
 MSGKR20="최대 ? 스레드 지원, 인텔 x86-64"
 MSGKR21="카메라 라이센스 있음"
@@ -1494,7 +1494,8 @@ while true; do
       eval "echo \"n \\\"\${MSG${tz}19}\\\"\""           >> "${TMP_PATH}/menu"      
     else 
       eval "echo \"z \\\"\${MSG${tz}06} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
-      eval "echo \"p \\\"\${MSG${tz}09} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
+      eval "echo \"p \\\"\${MSG${tz}18} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
+      eval "echo \"y \\\"\${MSG${tz}09} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
       eval "echo \"d \\\"\${MSG${tz}07} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
       eval "echo \"o \\\"\${MSG${tz}08}\\\"\""         >> "${TMP_PATH}/menu"
     fi
@@ -1549,7 +1550,14 @@ while true; do
        NEXT="r" ;;
     j) BUILD="42962"; make "jot";      NEXT="r" ;;    
     n) BUILD="64570"; make "ofjot";    NEXT="r" ;;    
-    p) BUILD="64570"
+    y) BUILD="64570"
+       if [ "${LDRMODE}" == "FRIEND" ]; then
+         make "of"
+       else
+         make "ofjot"
+       fi
+       NEXT="r" ;;
+    p) BUILD="69057"
        if [ "${LDRMODE}" == "FRIEND" ]; then
          make "of"
        else
