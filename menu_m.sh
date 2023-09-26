@@ -1122,9 +1122,17 @@ function make() {
   if [ "$1" = "jun" ]; then
       ./my.sh "${MODEL}"J noconfig | tee "/home/tc/zlastbuild.log"    
   elif [ "$1" = "of" ]; then
-      ./my.sh "${MODEL}"G noconfig | tee "/home/tc/zlastbuild.log"    
+      if [ ${BUILD} = "64570" ]; then
+          ./my.sh "${MODEL}"G noconfig | tee "/home/tc/zlastbuild.log"    
+      elif [ ${BUILD} = "69057" ]; then
+          ./my.sh "${MODEL}"H noconfig | tee "/home/tc/zlastbuild.log"
+      fi
   elif [ "$1" = "ofjot" ]; then
-      ./my.sh "${MODEL}"G noconfig "jot" | tee "/home/tc/zlastbuild.log"    
+      if [ ${BUILD} = "64570" ]; then  
+          ./my.sh "${MODEL}"G noconfig "jot" | tee "/home/tc/zlastbuild.log"    
+      elif [ ${BUILD} = "69057" ]; then
+          ./my.sh "${MODEL}"H noconfig "jot" | tee "/home/tc/zlastbuild.log"
+      fi
   else
       ./my.sh "${MODEL}"F noconfig $1 | tee "/home/tc/zlastbuild.log"  
   fi
