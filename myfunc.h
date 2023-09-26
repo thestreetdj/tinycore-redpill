@@ -305,7 +305,7 @@ function getvarsmshell()
     fi
 
 #7.2.1-69057 Official
-    MODELS="DS1019+G DS620slimG DS1520+G DS1621+G DS1821+G DS1823xs+G DS1621xs+G DS2422+G DS3617xsG DS3622xs+G DS720+G DS723+G DS918+G DS920+G DS923+G DVA1622G DS1819+G DVA3219G DVA3221G FS2500G RS1221+G RS3618xsG RS3621xs+G RS4021xs+G SA6400G"
+    MODELS="DS1019+H DS620slimH DS1520+H DS1621+H DS1821+H DS1823xs+H DS1621xs+H DS2422+H DS3617xsH DS3622xs+H DS720+H DS723+H DS918+H DS920+H DS923+H DVA1622H DS1819+H DVA3219H DVA3221H FS2500H RS1221+H RS3618xsH RS3621xs+H RS4021xs+H SA6400H"
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
        TARGET_REVISION="69057"
     fi
@@ -335,7 +335,7 @@ function getvarsmshell()
         TARGET_VERSION="7.2.1"
         KVER="4.4.302"
     else
-        echo "Synology model revesion not supported by TCRP."
+        echo "Synology model revision not supported by TCRP."
         exit 0                                                                                               
     fi
 
