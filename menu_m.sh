@@ -1502,9 +1502,7 @@ while true; do
       eval "echo \"n \\\"\${MSG${tz}19}\\\"\""           >> "${TMP_PATH}/menu"      
     else 
       eval "echo \"z \\\"\${MSG${tz}06} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
-      if [ "$MACHINE" != "VIRTUAL" ]; then
-        eval "echo \"p \\\"\${MSG${tz}18} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
-      fi      
+      eval "echo \"p \\\"\${MSG${tz}18} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
       eval "echo \"y \\\"\${MSG${tz}09} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
       eval "echo \"d \\\"\${MSG${tz}07} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
       eval "echo \"o \\\"\${MSG${tz}08}\\\"\""         >> "${TMP_PATH}/menu"
