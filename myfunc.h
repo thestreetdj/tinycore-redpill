@@ -169,19 +169,11 @@ set -u
 # Update : Add storage panel size selection menu
 # 2023.08.29
 # Update : Added a function to store loader.img for DSM 7.2 for 7.2 automatic loader build of 7.0.1, 7.1.1
-
+# 2023.09.26
+# Update : Add Support DSM 7.2.1-69057 Official Version
     
 function showlastupdate() {
     cat <<EOF
-
-# Update : Release TCRP FRIEND mode
-# 2022.09.25
-
-# Update : Multilingual menu support started (Korean, Chinese, Japanese, Russian, French, German, Spanish, Brazilian, Italian supported)
-# 2023.03.25
-
-# Update : Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk Update
-# 2023.05.01
 
 # 2023.06.18
 # Update : Added ds1823xs+ (v1000), ds620slim (apollokale), ds1819+ (denverton)
@@ -197,6 +189,9 @@ function showlastupdate() {
 
 # 2023.08.29
 # Update : Added a function to store loader.img for DSM 7.2 for 7.2 automatic loader build of 7.0.1, 7.1.1
+
+# 2023.09.26
+# Update : Add Support DSM 7.2.1-69057 Official Version
     
 EOF
 }
@@ -309,6 +304,12 @@ function getvarsmshell()
        SUVP="-1" 
     fi
 
+#7.2.1-69057 Official
+    MODELS="DS1019+G DS620slimG DS1520+G DS1621+G DS1821+G DS1823xs+G DS1621xs+G DS2422+G DS3617xsG DS3622xs+G DS720+G DS723+G DS918+G DS920+G DS923+G DVA1622G DS1819+G DVA3219G DVA3221G FS2500G RS1221+G RS3618xsG RS3621xs+G RS4021xs+G SA6400G"
+    if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
+       TARGET_REVISION="69057"
+    fi
+        
     if [ "$TARGET_REVISION" == "42218" ]; then
         MODEL="$(echo $tem | sed 's/J//g')"
         TARGET_VERSION="7.0.1"
@@ -328,7 +329,11 @@ function getvarsmshell()
     elif [ "$TARGET_REVISION" == "64570" ]; then
         MODEL="$(echo $tem | sed 's/G//g')"
         TARGET_VERSION="7.2"
-        KVER="4.4.302"        
+        KVER="4.4.302"
+    elif [ "$TARGET_REVISION" == "69057" ]; then
+        MODEL="$(echo $tem | sed 's/H//g')"
+        TARGET_VERSION="7.2.1"
+        KVER="4.4.302"
     else
         echo "Synology model revesion not supported by TCRP."
         exit 0                                                                                               
