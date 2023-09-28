@@ -1370,14 +1370,11 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
   if [ $(cat ~/.Xdefaults|grep "URxvt.transparent: true" | wc -w) -eq 0 ]; then	
     echo "URxvt.transparent: true"  >> ~/.Xdefaults
   fi
-  if [ $(cat ~/.Xdefaults|grep "URxvt*encoding: UTF-8" | wc -w) -eq 0 ]; then	
+  if [ $(cat ~/.Xdefaults|grep "URxvt\*encoding: UTF-8" | wc -w) -eq 0 ]; then	
     echo "URxvt*encoding: UTF-8"  >> ~/.Xdefaults
   fi
-  if [ $(cat ~/.Xdefaults|grep "URxvt*locale:" | wc -w) -eq 0 ]; then	
-    echo "URxvt*locale: ${ucode}.UTF-8"  >> ~/.Xdefaults
-  else
-    sed -i "/URxvt*locale:/d" ~/.Xdefaults
-    echo "URxvt*locale: ${ucode}.UTF-8"  >> ~/.Xdefaults
+  if [ $(cat ~/.Xdefaults|grep "URxvt\*locale:" | wc -w) -eq 0 ]; then	
+    echo "URxvt*locale: ko_KR.UTF-8"  >> ~/.Xdefaults
   fi
 fi
 
