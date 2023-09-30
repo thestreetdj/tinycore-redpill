@@ -15,7 +15,7 @@ function readanswer() {
         case $answ in
             [Yy]* ) answer="$answ"; break;;
             [Nn]* ) answer="$answ"; break;;
-            * ) msgwarning "Please answer yY/nN.";;
+            * ) echo "Please answer yY/nN.";;
         esac
     done
 }
