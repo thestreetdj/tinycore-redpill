@@ -171,6 +171,8 @@ set -u
 # Update : Added a function to store loader.img for DSM 7.2 for 7.2 automatic loader build of 7.0.1, 7.1.1
 # 2023.09.26
 # Update : Add Support DSM 7.2.1-69057 Official Version
+# 2023.09.30
+# Update : Fixed locale selection issue, modified build menu selection method
     
 function showlastupdate() {
     cat <<EOF
@@ -192,7 +194,10 @@ function showlastupdate() {
 
 # 2023.09.26
 # Update : Add Support DSM 7.2.1-69057 Official Version
-    
+
+# 2023.09.30
+# Update : Fixed locale selection issue, modified build menu selection method
+        
 EOF
 }
 
