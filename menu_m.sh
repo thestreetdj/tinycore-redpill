@@ -9,6 +9,17 @@ function ctrl_c() {
   echo ", Ctrl+C detected. Press Enter to return menu..."
 }
 
+function readanswer() {
+    while true; do
+        read answ
+        case $answ in
+            [Yy]* ) answer="$answ"; break;;
+            [Nn]* ) answer="$answ"; break;;
+            * ) msgwarning "Please answer yY/nN.";;
+        esac
+    done
+}
+
 # Trap Ctrl+C and call ctrl_c function
 trap ctrl_c INT
 
@@ -28,6 +39,7 @@ KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
 LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
 ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
+tz=$(echo $ucode | cut -c 4-)
 BLOCK_EUDEV="N"
 
 ### Messages Contents
@@ -1160,7 +1172,7 @@ function postupdate() {
 
 function writexsession() {
 
-  echo "Inject urxvt and aterm menu.sh into /home/tc/.xsession."
+  echo "Inject urxvt menu.sh into /home/tc/.xsession."
 
   sed -i "/locale/d" .xsession
   sed -i "/utf8/d" .xsession
@@ -1168,18 +1180,13 @@ function writexsession() {
   sed -i "/aterm/d" .xsession
   sed -i "/urxvt/d" .xsession
 
-  # Fix Unicode with ko_KR
   echo "export LANG=${ucode}.UTF-8" >> .xsession
   echo "export LC_ALL=${ucode}.UTF-8" >> .xsession
   echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
   echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
   echo "sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8" >> .xsession
 
-#  if [ "${ucode}" != "en_US" ]; then  
-    echo "urxvt -geometry 78x32+10+0 -fg orange -title \"TCRP-mshell urxvt Menu\" -e /home/tc/menu.sh &" >> .xsession  
-#  else
-#    echo "aterm -geometry 78x32+10+0 -fg orange -title \"TCRP-mshell aterm Menu\" -e /home/tc/menu.sh &" >> .xsession   
-#  fi
+  echo "urxvt -geometry 78x32+10+0 -fg orange -title \"TCRP-mshell urxvt Menu\" -e /home/tc/menu.sh &" >> .xsession  
   echo "aterm -geometry 78x32+525+0 -fg yellow -title \"TCRP Monitor\" -e /home/tc/rploader.sh monitor &" >> .xsession
   echo "aterm -geometry 78x25+10+430 -title \"TCRP Build Status\" -e /home/tc/ntp.sh &" >> .xsession
   echo "aterm -geometry 78x25+525+430 -fg green -title \"TCRP Extra Terminal\" &" >> .xsession
@@ -1288,49 +1295,44 @@ function restartx() {
 # Main loop
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
 
+#Start Locale Setting process
 #Get Langugae code & country code
-if [ "${ucode}" == "null" ]; then
-  tz=$(curl -s ipinfo.io | grep country | awk '{print $2}' | cut -c 2-3 )
-    
-  case "$tz" in
-    US) ucode="en_US";;
-    KR) ucode="ko_KR";;
-    JP) ucode="ja_JP";;
-    CN) ucode="zh_CN";;
-    RU) ucode="ru_RU";;
-    FR) ucode="fr_FR";;
-    DE) ucode="de_DE";;
-    ES) ucode="es_ES";;
-    IT) ucode="it_IT";;
-    BR) ucode="pt_BR";;
-    *) tz="US"; ucode="en_US";;
-  esac
-    
-else    
-    ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
-    [ $? -ne 0 ] && ucode="en_US"
-    tz=$(echo $ucode | cut -c 4-)    
+echo "current ucode = ${ucode}"
+echo "current tz = ${tz}"
+
+country=$(curl -s ipinfo.io | grep country | awk '{print $2}' | cut -c 2-3 )
+
+if [ "${ucode}" == "null" ]; then 
+  tz="${country}"
+else
+  if [ "${tz}" != "${country}" ]; then
+    echo -n "Country code ${tz} has been detected. Do you want to change your locale settings to ${tz}? [yY/nN] : "
+    readanswer    
+    if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
+      tz="${country}"
+    fi
+  fi    
 fi
 
-echo "tz = ${tz}"
-echo "ucode = ${ucode}"
-
+case "${tz}" in
+US) ucode="en_US";;
+KR) ucode="ko_KR";;
+JP) ucode="ja_JP";;
+CN) ucode="zh_CN";;
+RU) ucode="ru_RU";;
+FR) ucode="fr_FR";;
+DE) ucode="de_DE";;
+ES) ucode="es_ES";;
+IT) ucode="it_IT";;
+BR) ucode="pt_BR";;
+*) tz="US"; ucode="en_US";;
+esac
 writeConfigKey "general" "ucode" "${ucode}"
-
-#  export country=$tz
-#  lang=$(curl -s https://restcountries.com/v2/all | jq -r 'map(select(.alpha2Code == env.country)) | .[0].languages | .[].iso639_1' | head -2)
-#  if [ $? -eq 0 ]; then
-#    ucode=${lang}_${tz}
-#  else
-#    tz="US"  
-#    ucode="en_US"
-#  fi
 
 sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" ~/.dialogrc
 
 writexsession
 
-if [ "${ucode}" != "en_US" ]; then
     if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
 	tce-load -wi glibc_apps
 	tce-load -wi glibc_i18n_locale
@@ -1353,9 +1355,6 @@ if [ "${ucode}" != "en_US" ]; then
 	    echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
 	fi
     fi
-else
-    echo "ucode is en_US , ucode is ${ucode}"
-fi	
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
 # for 2Byte Language
@@ -1387,8 +1386,9 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
     echo "URxvt*locale: ${ucode}.UTF-8"  >> ~/.Xdefaults
   fi
 fi
-
 locale
+#End Locale Setting process
+
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -w) -gt 0 ]; then
     sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst	
     sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
