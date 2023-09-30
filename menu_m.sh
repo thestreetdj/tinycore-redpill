@@ -1169,8 +1169,8 @@ function writexsession() {
   sed -i "/urxvt/d" .xsession
 
   # Fix Unicode with ko_KR
-  echo "export LANG=ko_KR.UTF-8" >> .xsession
-  echo "export LC_ALL=ko_KR.UTF-8" >> .xsession
+  echo "export LANG=${ucode}.UTF-8" >> .xsession
+  echo "export LC_ALL=${ucode}.UTF-8" >> .xsession
   echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
   echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
   echo "sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8" >> .xsession
@@ -1211,9 +1211,8 @@ function langMenu() {
     brasileiro) tz="BR"; ucode="pt_BR";;
   esac
 
-  # Fix Unicode with ko_KR
-  export LANG=ko_KR.UTF-8
-  export LC_ALL=ko_KR.UTF-8
+  export LANG=${ucode}.UTF-8
+  export LC_ALL=${ucode}.UTF-8
   [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
   sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
   sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8
