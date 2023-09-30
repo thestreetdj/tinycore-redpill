@@ -922,7 +922,13 @@ function setSuggest() {
     SA6400)      platform="epyc7002(DT)";bay="RACK_12_Bay";mcpu="AMD EPYC 7272";eval "desc=\"[${MODEL}]:${platform},${bay},${mcpu} \"";;
   esac
 
-  result="${line}${desc}"
+  if [ $(echo ${platform} | grep "(DT)" | wc -l) -gt 0 ]; then
+    eval "MSG00=\"\${MSG${tz}00}\""
+  else
+    MSG00=""
+  fi  
+  
+  result="${line}${MSG00}${desc}"
   echo "${platform} : ${bay} : ${mcpu}"
 }
 
@@ -1490,7 +1496,7 @@ writeConfigKey "general" "bay" "${bay}"
 
 # Until urxtv is available, Korean menu is used only on remote terminals.
 while true; do
-  eval "echo \"c \\\"\${MSG${tz}01}\\\"\""               > "${TMP_PATH}/menu" 
+  eval "echo \"c \\\"\${MSG${tz}01}, (${DMPM})\\\"\""               > "${TMP_PATH}/menu" 
   eval "echo \"m \\\"\${MSG${tz}02}\\\"\""               >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     eval "echo \"s \\\"\${MSG${tz}03}\\\"\""             >> "${TMP_PATH}/menu"
@@ -1523,9 +1529,8 @@ while true; do
   eval "echo \"b \\\"\${MSG${tz}13}\\\"\""               >> "${TMP_PATH}/menu"  
   eval "echo \"r \\\"\${MSG${tz}14}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"e \\\"\${MSG${tz}15}\\\"\""               >> "${TMP_PATH}/menu"
-  eval "MSG00=\"\${MSG${tz}00}\""
   dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
-    --menu "${MSG00}${result}" 0 0 0 --file "${TMP_PATH}/menu" \
+    --menu "${result}" 0 0 0 --file "${TMP_PATH}/menu" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
   case `<"${TMP_PATH}/resp"` in
