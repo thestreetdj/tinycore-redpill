@@ -172,7 +172,7 @@ set -u
 # 2023.09.26
 # Update : Add Support DSM 7.2.1-69057 Official Version
 # 2023.09.30
-# Update : Fixed locale selection issue, modified build menu selection method
+# Update : Fixed locale selection issue, modified some menu guidance text
     
 function showlastupdate() {
     cat <<EOF
@@ -196,7 +196,7 @@ function showlastupdate() {
 # Update : Add Support DSM 7.2.1-69057 Official Version
 
 # 2023.09.30
-# Update : Fixed locale selection issue, modified build menu selection method
+# Update : Fixed locale selection issue, modified some menu guidance text
         
 EOF
 }
