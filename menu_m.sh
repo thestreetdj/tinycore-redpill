@@ -1306,7 +1306,7 @@ if [ "${ucode}" == "null" ]; then
   tz="${country}"
 else
   if [ "${tz}" != "${country}" ]; then
-    echo -n "Country code ${tz} has been detected. Do you want to change your locale settings to ${tz}? [yY/nN] : "
+    echo -n "Country code ${country} has been detected. Do you want to change your locale settings to ${country}? [yY/nN] : "
     readanswer    
     if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
       tz="${country}"
