@@ -576,7 +576,7 @@ function DeleteConfigKey() {
 ###############################################################################
 # Mounts backtitle dynamically
 function backtitle() {
-  BACKTITLE="TCRP 0.9.5.0"
+  BACKTITLE="TCRP-mshell 0.9.5.0"
   BACKTITLE+=" ${DMPM}"
   BACKTITLE+=" ${ucode}"
   BACKTITLE+=" ${LDRMODE}"
@@ -1160,7 +1160,7 @@ function postupdate() {
 
 function writexsession() {
 
-  echo "insert aterm menu.sh in /home/tc/.xsession"
+  echo "Inject urxvt and aterm menu.sh into /home/tc/.xsession."
 
   sed -i "/locale/d" .xsession
   sed -i "/utf8/d" .xsession
@@ -1168,14 +1168,18 @@ function writexsession() {
   sed -i "/aterm/d" .xsession
   sed -i "/urxvt/d" .xsession
 
-  if [ "${ucode}" != "en_US" ]; then
-    echo "export LANG=${ucode}.UTF-8" >> .xsession
-    echo "export LC_ALL=${ucode}.UTF-8" >> .xsession
-    echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
-    echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
-    echo "sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8" >> .xsession
-  fi
-  echo "urxvt -geometry 78x32+10+0 -fg orange -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh || aterm -geometry 78x32+10+0 -fg orange -title \"M Shell for TCRP Menu\" -e /home/tc/menu.sh &" >> .xsession
+  # Fix Unicode with ko_KR
+  echo "export LANG=ko_KR.UTF-8" >> .xsession
+  echo "export LC_ALL=ko_KR.UTF-8" >> .xsession
+  echo "[ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale &" >> .xsession
+  echo "sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8" >> .xsession
+  echo "sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8" >> .xsession
+
+#  if [ "${ucode}" != "en_US" ]; then  
+    echo "urxvt -geometry 78x32+10+0 -fg orange -title \"TCRP-mshell urxvt Menu\" -e /home/tc/menu.sh &" >> .xsession  
+#  else
+#    echo "aterm -geometry 78x32+10+0 -fg orange -title \"TCRP-mshell aterm Menu\" -e /home/tc/menu.sh &" >> .xsession   
+#  fi
   echo "aterm -geometry 78x32+525+0 -fg yellow -title \"TCRP Monitor\" -e /home/tc/rploader.sh monitor &" >> .xsession
   echo "aterm -geometry 78x25+10+430 -title \"TCRP Build Status\" -e /home/tc/ntp.sh &" >> .xsession
   echo "aterm -geometry 78x25+525+430 -fg green -title \"TCRP Extra Terminal\" &" >> .xsession
@@ -1207,8 +1211,9 @@ function langMenu() {
     brasileiro) tz="BR"; ucode="pt_BR";;
   esac
 
-  export LANG=${ucode}.UTF-8
-  export LC_ALL=${ucode}.UTF-8
+  # Fix Unicode with ko_KR
+  export LANG=ko_KR.UTF-8
+  export LC_ALL=ko_KR.UTF-8
   [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
   sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
   sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8
@@ -1373,10 +1378,13 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
   if [ $(cat ~/.Xdefaults|grep "URxvt\*encoding: UTF-8" | wc -w) -eq 0 ]; then	
     echo "URxvt*encoding: UTF-8"  >> ~/.Xdefaults
   fi
+  if [ $(cat ~/.Xdefaults|grep "URxvt\*inputMethod: ibus" | wc -w) -eq 0 ]; then	
+    echo "URxvt*inputMethod: ibus"  >> ~/.Xdefaults
+  fi
   if [ $(cat ~/.Xdefaults|grep "URxvt\*locale:" | wc -w) -eq 0 ]; then	
     echo "URxvt*locale: ${ucode}.UTF-8"  >> ~/.Xdefaults
   else
-    sed -i "/URxvt*locale:/d" ~/.Xdefaults
+    sed -i "/URxvt\*locale:/d" ~/.Xdefaults
     echo "URxvt*locale: ${ucode}.UTF-8"  >> ~/.Xdefaults
   fi
 fi
