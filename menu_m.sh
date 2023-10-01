@@ -1521,7 +1521,7 @@ while true; do
       eval "echo \"o \\\"\${MSG${tz}08}\\\"\""         >> "${TMP_PATH}/menu"
     fi
   fi
-  echo "x \"$(TEXT "Show SATA(s) # ports and drives")\"" >> "${TMP_PATH}/menu"  
+  echo "x \"Show SATA(s) # ports and drives\""           >> "${TMP_PATH}/menu"  
   eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"
   eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
@@ -1634,9 +1634,9 @@ while true; do
         NUMPORTS=$((${NUMPORTS} + ${PORTNUM}))
       done
       MSG+="\n"
-      MSG+="$(printf "$(TEXT "\nTotal of ports: %s\n")" "${NUMPORTS}")"
-      MSG+="$(TEXT "\nPorts with color \Z1red\Zn as DUMMY, color \Z2\Zbgreen\Zn has drive connected.")"
-      dialog --backtitle "$(backtitle)" --colors --title "$(TEXT "Show SATA(s) # ports and drives")" \
+      MSG+="$(printf "\nTotal of ports: %s\n")" "${NUMPORTS}"
+      MSG+="\nPorts with color \Z1red\Zn as DUMMY, color \Z2\Zbgreen\Zn has drive connected."
+      dialog --backtitle "$(backtitle)" --colors --title "Show SATA(s) # ports and drives" \
         --msgbox "${MSG}" 0 0
       ;;    
     q) storagepanel;                   NEXT="p" ;;
