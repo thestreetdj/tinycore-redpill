@@ -1521,12 +1521,13 @@ while true; do
       eval "echo \"o \\\"\${MSG${tz}08}\\\"\""         >> "${TMP_PATH}/menu"
     fi
   fi
+  echo "x \"$(TEXT "Show SATA(s) # ports and drives")\"" >> "${TMP_PATH}/menu"  
   eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"
   eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"k \\\"\${MSG${tz}11}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"i \\\"\${MSG${tz}12}\\\"\""               >> "${TMP_PATH}/menu"
-  eval "echo \"b \\\"\${MSG${tz}13}\\\"\""               >> "${TMP_PATH}/menu"  
+  eval "echo \"b \\\"\${MSG${tz}13}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"r \\\"\${MSG${tz}14}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"e \\\"\${MSG${tz}15}\\\"\""               >> "${TMP_PATH}/menu"
   dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
@@ -1584,6 +1585,60 @@ while true; do
          make "ofjot"
        fi
        NEXT="r" ;;
+    x) 
+      MSG=""
+      NUMPORTS=0
+      [ $(lspci -d ::106 | wc -l) -gt 0 ] && MSG+="\nATA:\n"
+      for PCI in $(lspci -d ::106 | awk '{print $1}'); do
+        NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
+        MSG+="\Zb${NAME}\Zn\nPorts: "
+        PORTS=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
+        for P in ${PORTS}; do
+          if lsscsi -b | grep -v - | grep -q "\[${P}:"; then
+            DUMMY="$([ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ] && echo 1 || echo 2)"
+            if [ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ]; then
+              MSG+="\Z1$(printf "%02d" ${P})\Zn "
+            else
+              MSG+="\Z2$(printf "%02d" ${P})\Zn "
+            fi
+          else
+            MSG+="$(printf "%02d" ${P}) "
+          fi
+          NUMPORTS=$((${NUMPORTS} + 1))
+        done
+        MSG+="\n"
+      done
+      [ $(lspci -d ::107 | wc -l) -gt 0 ] && MSG+="\nLSI:\n"
+      for PCI in $(lspci -d ::107 | awk '{print $1}'); do
+        NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
+        PORT=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
+        PORTNUM=$(lsscsi -b | grep -v - | grep "\[${PORT}:" | wc -l)
+        MSG+="\Zb${NAME}\Zn\nNumber: ${PORTNUM}\n"
+        NUMPORTS=$((${NUMPORTS} + ${PORTNUM}))
+      done
+      [ $(ls -l /sys/class/scsi_host | grep usb | wc -l) -gt 0 ] && MSG+="\nUSB:\n"
+      for PCI in $(lspci -d ::c03 | awk '{print $1}'); do
+        NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
+        PORT=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
+        PORTNUM=$(lsscsi -b | grep -v - | grep "\[${PORT}:" | wc -l)
+        [ ${PORTNUM} -eq 0 ] && continue
+        MSG+="\Zb${NAME}\Zn\nNumber: ${PORTNUM}\n"
+        NUMPORTS=$((${NUMPORTS} + ${PORTNUM}))
+      done
+      [ $(lspci -d ::108 | wc -l) -gt 0 ] && MSG+="\nNVME:\n"
+      for PCI in $(lspci -d ::108 | awk '{print $1}'); do
+        NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
+        PORT=$(ls -l /sys/class/nvme | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/nvme//' | sort -n)
+        PORTNUM=$(lsscsi -b | grep -v - | grep "\[N:${PORT}:" | wc -l)
+        MSG+="\Zb${NAME}\Zn\nNumber: ${PORTNUM}\n"
+        NUMPORTS=$((${NUMPORTS} + ${PORTNUM}))
+      done
+      MSG+="\n"
+      MSG+="$(printf "$(TEXT "\nTotal of ports: %s\n")" "${NUMPORTS}")"
+      MSG+="$(TEXT "\nPorts with color \Z1red\Zn as DUMMY, color \Z2\Zbgreen\Zn has drive connected.")"
+      dialog --backtitle "$(backtitle)" --colors --title "$(TEXT "Show SATA(s) # ports and drives")" \
+        --msgbox "${MSG}" 0 0
+      ;;    
     q) storagepanel;                   NEXT="p" ;;
     u) editUserConfig;                 NEXT="d" ;;
     l) langMenu ;                      NEXT="m" ;;
