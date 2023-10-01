@@ -173,6 +173,8 @@ set -u
 # Update : Add Support DSM 7.2.1-69057 Official Version
 # 2023.09.30
 # Update : Fixed locale selection issue, modified some menu guidance text
+# 2023.10.01
+# Update : Add "Show SATA(s) # ports and drives" menu
     
 function showlastupdate() {
     cat <<EOF
@@ -197,6 +199,9 @@ function showlastupdate() {
 
 # 2023.09.30
 # Update : Fixed locale selection issue, modified some menu guidance text
+
+# 2023.10.01
+# Update : Add "Show SATA(s) # ports and drives" menu
         
 EOF
 }
