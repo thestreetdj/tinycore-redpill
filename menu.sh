@@ -27,7 +27,7 @@ function gitdownload() {
 
 while true; do
   if [ $(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | wc -l) -gt 0 ]; then
-    /home/tc/my.sh update
+    /home/tc/my update
     break
   fi
   sleep 1
