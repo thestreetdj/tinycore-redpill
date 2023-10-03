@@ -182,14 +182,14 @@ cecho y "Adding Ext in progress..."
                                                                                                                                                                         
 EXDRIVER_FN
 
-if [ ! -f my.sh ]; then
-    echo "my.sh file not found, trying to download"
+if [ ! -f my ]; then
+    echo "my file not found, trying to download"
     curl --location "https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/my.sh.gz" --output my.sh.gz
     tar -zxvf my.sh.gz
 fi
 
 
-cecho g "Call my.sh now..."
-./my.sh $@ frmyv
+cecho g "Call my now..."
+./my $@ frmyv
 
 exit 0
