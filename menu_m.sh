@@ -1604,16 +1604,16 @@ while true; do
         MSG+="\Zb${NAME}\Zn\nPorts: "
         PORTS=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
         for P in ${PORTS}; do
-          if lsscsi -b | grep -v - | grep -q "\[${P}:"; then
-            DUMMY="$([ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ] && echo 1 || echo 2)"
-            if [ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ]; then
-              MSG+="\Z1$(printf "%02d" ${P})\Zn "
+	  DUMMY="$([ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ] && echo 1 || echo 2)"
+	  if [ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ]; then
+	    MSG+="\Z1$(printf "%02d" ${P})\Zn "
+	  else
+            if lsscsi -b | grep -v - | grep -q "\[${P}:"; then
+	      MSG+="\Z2$(printf "%02d" ${P})\Zn "
             else
-              MSG+="\Z2$(printf "%02d" ${P})\Zn "
+              MSG+="$(printf "%02d" ${P}) "
             fi
-          else
-            MSG+="$(printf "%02d" ${P}) "
-          fi
+	  fi
           NUMPORTS=$((${NUMPORTS} + 1))
         done
         MSG+="\n"
