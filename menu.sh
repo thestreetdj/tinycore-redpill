@@ -36,12 +36,5 @@ done
 
 gitdownload
 
-if [ -f /home/tc/my.sh ]; then
-  rm /home/tc/my.sh
-fi
-if [ -f /home/tc/myv.sh ]; then
-  rm /home/tc/myv.sh
-fi
-
 /home/tc/menu_m.sh
 exit 0
