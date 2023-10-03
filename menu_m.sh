@@ -1605,7 +1605,7 @@ while true; do
         PORTS=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
         for P in ${PORTS}; do
 	  # Skip for Unused Port
-          if [ "$(dmesg | grep 'SATA link down' | grep ata$((${P} + 1)) | wc -l)" -eq 0 ]; then          
+          if [ "$(dmesg | grep 'SATA link down' | grep ata$((${P} + 1)): | wc -l)" -eq 0 ]; then          
   	    DUMMY="$([ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ] && echo 1 || echo 2)"
 	    if [ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ]; then
 	      MSG+="\Z1$(printf "%02d" ${P})\Zn "
@@ -1616,7 +1616,7 @@ while true; do
                 MSG+="$(printf "%02d" ${P}) "
               fi
 	    fi  
-	  fi
+          fi
           NUMPORTS=$((${NUMPORTS} + 1))
         done
         MSG+="\n"
