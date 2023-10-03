@@ -390,6 +390,10 @@ fi
 #if [ "$ORIGIN_PLATFORM" = "apollolake" ]||[ "$ORIGIN_PLATFORM" = "geminilake" ]; then
 #   jsonfile=$(jq 'del(.drivedatabase)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
 #   sudo rm -rf /home/tc/redpill-load/custom/extensions/drivedatabase
+#   jsonfile=$(jq 'del(.reboottotcrp)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
+#   sudo rm -rf /home/tc/redpill-load/custom/extensions/reboottotcrp
+#   jsonfile=$(jq 'del(.storagepanel)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
+#   sudo rm -rf /home/tc/redpill-load/custom/extensions/storagepanel
 #fi   
         
 if [ -f ${patfile} ]; then                                                               
