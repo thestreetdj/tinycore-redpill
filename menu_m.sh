@@ -1138,21 +1138,21 @@ function make() {
   clear
 
   if [ "$1" = "jun" ]; then
-      ./my.sh "${MODEL}"J noconfig | tee "/home/tc/zlastbuild.log"    
+      ./my "${MODEL}"J noconfig | tee "/home/tc/zlastbuild.log"    
   elif [ "$1" = "of" ]; then
       if [ ${BUILD} = "64570" ]; then
-          ./my.sh "${MODEL}"G noconfig | tee "/home/tc/zlastbuild.log"    
+          ./my "${MODEL}"G noconfig | tee "/home/tc/zlastbuild.log"    
       elif [ ${BUILD} = "69057" ]; then
-          ./my.sh "${MODEL}"H noconfig | tee "/home/tc/zlastbuild.log"
+          ./my "${MODEL}"H noconfig | tee "/home/tc/zlastbuild.log"
       fi
   elif [ "$1" = "ofjot" ]; then
       if [ ${BUILD} = "64570" ]; then  
-          ./my.sh "${MODEL}"G noconfig "jot" | tee "/home/tc/zlastbuild.log"    
+          ./my "${MODEL}"G noconfig "jot" | tee "/home/tc/zlastbuild.log"    
       elif [ ${BUILD} = "69057" ]; then
-          ./my.sh "${MODEL}"H noconfig "jot" | tee "/home/tc/zlastbuild.log"
+          ./my "${MODEL}"H noconfig "jot" | tee "/home/tc/zlastbuild.log"
       fi
   else
-      ./my.sh "${MODEL}"F noconfig $1 | tee "/home/tc/zlastbuild.log"  
+      ./my "${MODEL}"F noconfig $1 | tee "/home/tc/zlastbuild.log"  
   fi
 
   if [ $? -ne 0 ]; then
@@ -1170,7 +1170,7 @@ function make() {
 ###############################################################################
 # Post Update for jot mode 
 function postupdate() {
-  ./my.sh "${MODEL}" postupdate | tee "/home/tc/zpostupdate.log"
+  ./my "${MODEL}" postupdate | tee "/home/tc/zpostupdate.log"
   echo "press any key to continue..."
   read answer
   return 0
