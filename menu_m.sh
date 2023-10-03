@@ -20,6 +20,13 @@ function readanswer() {
     done
 }
 
+if [ -f /home/tc/my.sh ]; then
+  rm /home/tc/my.sh
+fi
+if [ -f /home/tc/myv.sh ]; then
+  rm /home/tc/myv.sh
+fi
+
 # Trap Ctrl+C and call ctrl_c function
 trap ctrl_c INT
 
