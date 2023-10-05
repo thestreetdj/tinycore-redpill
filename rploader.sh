@@ -2962,11 +2962,20 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
     sudo umount localdiskp2
     sudo losetup -D
 
-    if [ ${TARGET_REVISION} -gt 64569 ]; then
-        echo "Bakcup loader.img and grub.cfg file for update to 7.2"
-        sudo cp -vf /home/tc/redpill-load/loader.img /mnt/${loaderdisk}3/loader72.img
-        sudo cp -vf /mnt/${loaderdisk}1/boot/GRUB/grub.cfg /mnt/${loaderdisk}3/grub72.cfg
-        sudo cp -vf /mnt/${loaderdisk}3/initrd-dsm /mnt/${loaderdisk}3/initrd-dsm72
+#    if [ ${TARGET_REVISION} -gt 64569 ]; then
+#        echo "Bakcup loader.img and grub.cfg file for update to 7.2"
+#        sudo cp -vf /home/tc/redpill-load/loader.img /mnt/${loaderdisk}3/loader72.img
+#        sudo cp -vf /mnt/${loaderdisk}1/boot/GRUB/grub.cfg /mnt/${loaderdisk}3/grub72.cfg
+#        sudo cp -vf /mnt/${loaderdisk}3/initrd-dsm /mnt/${loaderdisk}3/initrd-dsm72
+#    fi
+    if [ -f /mnt/${loaderdisk}3/loader72.img ]; then
+      rm /mnt/${loaderdisk}3/loader72.img
+    fi  
+    if [ -f /mnt/${loaderdisk}3/grub72.cfg ]; then
+      rm /mnt/${loaderdisk}3/grub72.cfg
+    fi  
+    if [ -f /mnt/${loaderdisk}3/initrd-dsm72 ]; then
+      rm /mnt/${loaderdisk}3/initrd-dsm72
     fi
 
     echo "Cleaning up files"
