@@ -1305,6 +1305,37 @@ function restartx() {
     { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) ; sleep 2 >/dev/tty0 ; startx >/dev/tty0 ; } &
 }
 
+function recordloader() {
+
+  tcrpdev=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
+  listusb=$(ll /sys/block/sd* | grep usb | awk -F / '{print $4}' | cut -c 1-3)
+  echo "${listusb}"
+
+  dialog --backtitle "`backtitle`" --no-items \
+    --menu "Choose a USB Stick for New Loader" 0 0 0 ${listusb} \
+    2>${TMP_PATH}/resp
+  [ $? -ne 0 ] && return
+  resp=$(<${TMP_PATH}/resp)
+  [ -z "${resp}" ] && return 
+
+  usbletter="`<${TMP_PATH}/resp`"
+
+  if [ -f /dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img ]; then
+    echo "TCRP-mshell img file already exists. Skip download..."  
+  else
+    curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v0.9.5.0/tinycore-redpill.v0.9.5.0.m-shell.img.gz -o /dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img.gz --progress-bar
+    gunzip /dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img.gz
+  fi
+  
+  echo "Please wait a moment. Burning is in progress..."  
+  
+  sudo dd bs=4M status=progress if=/dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img of=/dev/${usbletter}
+
+  echo "Burning completed, press any key to continue..."
+  read answer
+  return 0
+}
+
 # Main loop
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
 
@@ -1533,6 +1564,7 @@ while true; do
   fi
   eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"
   echo "x \"Show SATA(s) # ports and drives\""           >> "${TMP_PATH}/menu"
+  echo "t \"Another TCPP Bootloader Burning\""           >> "${TMP_PATH}/menu"
   eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"k \\\"\${MSG${tz}11}\\\"\""               >> "${TMP_PATH}/menu"
@@ -1595,6 +1627,7 @@ while true; do
          make "ofjot"
        fi
        NEXT="r" ;;
+    q) storagepanel;                   NEXT="p" ;;
     x) 
       MSG=""
       NUMPORTS=0
@@ -1652,7 +1685,7 @@ while true; do
       dialog --backtitle "$(backtitle)" --colors --title "Show SATA(s) # ports and drives" \
         --msgbox "${MSG}" 0 0
       ;;    
-    q) storagepanel;                   NEXT="p" ;;
+    t) recordloader;                   NEXT="e" ;;
     u) editUserConfig;                 NEXT="d" ;;
     l) langMenu ;                      NEXT="m" ;;
     k) keymapMenu ;                    NEXT="m" ;;
