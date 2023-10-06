@@ -1308,11 +1308,11 @@ function restartx() {
 function recordloader() {
 
   tcrpdev=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
-  listusb=$(ll /sys/block/sd* | grep usb | awk -F / '{print $4}' | cut -c 1-3)
-  echo "${listusb}"
+  listusb=()                                          
+  listusb+=( $(ls -l /sys/block/sd* | grep usb | grep -v ${tcrpdev} | awk -F / '{print $4}' | cut -c 1-3) )
 
   dialog --backtitle "`backtitle`" --no-items \
-    --menu "Choose a USB Stick for New Loader" 0 0 0 ${listusb} \
+    --menu "Choose a USB Stick for New Loader" 0 0 0 "${listusb[@]}" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
   resp=$(<${TMP_PATH}/resp)
