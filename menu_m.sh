@@ -1327,7 +1327,7 @@ function recordloader() {
     gunzip /dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img.gz
   fi
 
-  echo "Please wait a moment. Burning is in progress."  
+  echo "Please wait a moment. Burning is in progress..."  
   dd if=/dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img of=/dev/${usbletter} status=progress bs=4M
   echo "Burning completed, press any key to continue..."
   read answer
