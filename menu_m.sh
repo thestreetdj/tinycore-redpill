@@ -1326,22 +1326,9 @@ function recordloader() {
     curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v0.9.5.0/tinycore-redpill.v0.9.5.0.m-shell.img.gz -o /dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img.gz --progress-bar
     gunzip /dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img.gz
   fi
-  
-  sudo dd bs=4M if=/dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img of=/dev/${usbletter}
 
-  dd_pid=$!
-
-  show_message=true
-  
-  while kill -0 $dd_pid 2>/dev/null; do
-    if [ "$show_message" = true ]; then
-        echo -n "Please wait a moment. Burning is in progress."
-        show_message=false
-    fi
-    sleep 1
-    echo -n "."
-  done
-
+  echo "Please wait a moment. Burning is in progress."  
+  dd if=/dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img of=/dev/${usbletter} status=progress bs=4M
   echo "Burning completed, press any key to continue..."
   read answer
   return 0
