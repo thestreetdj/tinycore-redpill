@@ -1320,6 +1320,7 @@ function recordloader() {
 
   usbletter="`<${TMP_PATH}/resp`"
 
+  echo "Downloading TCRP-mshell img file..."  
   if [ -f /dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img ]; then
     echo "TCRP-mshell img file already exists. Skip download..."  
   else
