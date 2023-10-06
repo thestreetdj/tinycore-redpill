@@ -175,6 +175,8 @@ set -u
 # Update : Fixed locale selection issue, modified some menu guidance text
 # 2023.10.01
 # Update : Add "Show SATA(s) # ports and drives" menu
+# 2023.10.07
+# Update : Add "Another TCPP Bootloader Burning" menu
     
 function showlastupdate() {
     cat <<EOF
@@ -182,17 +184,8 @@ function showlastupdate() {
 # 2023.06.18
 # Update : Added ds1823xs+ (v1000), ds620slim (apollokale), ds1819+ (denverton)
 
-# 2023.06.20
-# Update : Add Support DSM 7.2-64570-1 Official Version
-
-# 2023.07.07
-# Update : Fix Bug for userdts option
-
 # 2023.08.24 (M-SHELL for TCRP, v0.9.5.0 release)
 # Update : Add storage panel size selection menu
-
-# 2023.08.29
-# Update : Added a function to store loader.img for DSM 7.2 for 7.2 automatic loader build of 7.0.1, 7.1.1
 
 # 2023.09.26
 # Update : Add Support DSM 7.2.1-69057 Official Version
@@ -202,6 +195,9 @@ function showlastupdate() {
 
 # 2023.10.01
 # Update : Add "Show SATA(s) # ports and drives" menu
+
+# 2023.10.07
+# Update : Add "Another TCPP Bootloader Burning" menu
         
 EOF
 }
