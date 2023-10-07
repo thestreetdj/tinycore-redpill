@@ -1309,7 +1309,8 @@ function recordloader() {
 
   tcrpdev=/dev/$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
   listusb=()
-  listusb+=( $(lsblk -o PATH,ROTA,TRAN | grep '/dev/sd' | grep -v ${tcrpdev} | grep -E '(1 usb|0 sata)' | awk '{print $1}' ) )
+  #listusb+=( $(lsblk -o PATH,ROTA,TRAN | grep '/dev/sd' | grep -v ${tcrpdev} | grep -E '(1 usb|0 sata)' | awk '{print $1}' ) )
+  listusb+=( $(lsblk -o PATH,MODEL,ROTA,TRAN | grep '/dev/sd' | grep -v ${tcrpdev} | grep -E '(1 usb|0 sata)' | awk '{print $1, "\"" $2,$3,$4,$5,$6,$7,$8,$9 "\""}') )
 
   if [ ${#listusb[@]} -eq 0 ]; then 
     echo "No Available USB or SSD, press any key continue..."
