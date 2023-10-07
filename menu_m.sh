@@ -1307,24 +1307,24 @@ function restartx() {
 
 function recordloader() {
 
-  tcrpdev=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
-  listusb=()                                          
-  listusb+=( $(ls -l /sys/block/sd* | grep usb | grep -v ${tcrpdev} | awk -F / '{print $4}' | cut -c 1-3) )
+  tcrpdev=/dev/$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
+  listusb=()
+  listusb+=( $(lsblk -o PATH,ROTA,TRAN | grep '/dev/sd' | grep -v ${tcrpdev} | grep -E '(1 usb|0 sata)' | awk '{print $1}' ) )
 
   if [ ${#listusb[@]} -eq 0 ]; then 
-    echo "No Available USB or Disk, press any key continue..."
+    echo "No Available USB or SSD, press any key continue..."
     read answer                       
     return 0   
   fi
 
   dialog --backtitle "`backtitle`" --no-items \
-    --menu "Choose a USB Stick for New Loader" 0 0 0 "${listusb[@]}" \
+    --menu "Choose a USB Stick or SSD for New Loader" 0 0 0 "${listusb[@]}" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
   resp=$(<${TMP_PATH}/resp)
   [ -z "${resp}" ] && return 
 
-  usbletter="`<${TMP_PATH}/resp`"
+  loaderdev="`<${TMP_PATH}/resp`"
 
   echo "Downloading TCRP-mshell img file..."  
   if [ -f /dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img ]; then
@@ -1335,7 +1335,7 @@ function recordloader() {
   fi
 
   echo "Please wait a moment. Burning is in progress..."  
-  dd if=/dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img of=/dev/${usbletter} status=progress bs=4M
+  dd if=/dev/shm/tinycore-redpill.v0.9.5.0.m-shell.img of=${loaderdev} status=progress bs=4M
   echo "Burning completed, press any key to continue..."
   read answer
   return 0
