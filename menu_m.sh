@@ -1311,6 +1311,12 @@ function recordloader() {
   listusb=()                                          
   listusb+=( $(ls -l /sys/block/sd* | grep usb | grep -v ${tcrpdev} | awk -F / '{print $4}' | cut -c 1-3) )
 
+  if [ ${#listusb[@]} -eq 0 ]; then 
+    echo "No Available USB or Disk, press any key continue..."
+    read answer                       
+    return 0   
+  fi
+
   dialog --backtitle "`backtitle`" --no-items \
     --menu "Choose a USB Stick for New Loader" 0 0 0 "${listusb[@]}" \
     2>${TMP_PATH}/resp
