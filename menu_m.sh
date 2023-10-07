@@ -1318,7 +1318,7 @@ function recordloader() {
   fi
 
   dialog --backtitle "`backtitle`" --no-items \
-    --menu "Choose a USB Stick or SSD for New Loader" 0 0 0 "${listusb[@]}" \
+    --menu "Choose a USB Stick or SSD for New Loader\n \Z1(Caution!) In the case of SSD, be sure to check whether it is a cache or data disk.\Zn" 0 0 0 "${listusb[@]}" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
   resp=$(<${TMP_PATH}/resp)
