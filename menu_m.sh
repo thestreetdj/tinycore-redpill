@@ -1318,7 +1318,8 @@ function recordloader() {
     return 0   
   fi
 
-  echo "${listusb[@]}" > "${TMP_PATH}/usb_list"
+  echo "" > "${TMP_PATH}/usb_list"
+  echo "${listusb[@]}" >> "${TMP_PATH}/usb_list"
   
   dialog --backtitle "`backtitle`" --no-items --colors \
     --menu "Choose a USB Stick or SSD for New Loader\n\Z1(Caution!) In the case of SSD, be sure to check whether it is a cache or data disk.\Zn" 0 0 0 \
