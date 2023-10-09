@@ -202,6 +202,10 @@ makeimg="N"
         jot)
             jot="Y"
             ;;
+
+        fri)
+            jot="N"
+            ;;
             
         makeimg)
             makeimg="Y"
@@ -227,7 +231,7 @@ makeimg="N"
 #echo $userdts
 #echo $noconfig
 #echo $frmyv
-echo "makeimg = $makeimg"
+#echo "makeimg = $makeimg"
 
 echo
 
