@@ -1595,7 +1595,7 @@ if [ "$(which dialog)_" == "_" ]; then
     sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.md5.txt -o /mnt/${tcrppart}/cde/optional/dialog.tcz.md5.txt
     tce-load -i dialog
     if [ $? -eq 0 ]; then
-        echo "Download dialog OK !!!"
+        echo "Install dialog OK !!!"
     else
         tce-load -iw dialog
     fi
@@ -1608,11 +1608,24 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep kmaps | wc -w) -eq 0 ]; then
     sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz.md5.txt -o /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
     tce-load -i kmaps
     if [ $? -eq 0 ]; then
-        echo "Download kmaps OK !!!"
+        echo "Install kmaps OK !!!"
     else
         tce-load -iw kmaps
     fi
     sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+fi
+
+# Download firmware-broadcom_bnx2x
+if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep firmware-broadcom_bnx2x | wc -w) -eq 0 ]; then
+    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/firmware-broadcom_bnx2x.tcz -o /mnt/${tcrppart}/cde/optional/firmware-broadcom_bnx2x.tcz
+    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/firmware-broadcom_bnx2x.tcz.md5.txt -o /mnt/${tcrppart}/cde/optional/firmware-broadcom_bnx2x.tcz.md5.txt
+    tce-load -i firmware-broadcom_bnx2x
+    if [ $? -eq 0 ]; then
+        echo "Install firmware-broadcom_bnx2x OK !!!"
+    else
+        tce-load -iw firmware-broadcom_bnx2x
+    fi
+    sudo echo "firmware-broadcom_bnx2x.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 fi
 
 NEXT="m"
