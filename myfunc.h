@@ -176,9 +176,9 @@ set -u
 # 2023.10.01
 # Update : Add "Show SATA(s) # ports and drives" menu
 # 2023.10.07
-# Update : Add "Burn TCRP Bootloader" menu
+# Update : Add "Burn Anither TCRP Bootloader to USB or SSD" menu
 # 2023.10.09
-# Update : Add "Clone TCRP Bootloader" menu
+# Update : Add "Clone TCRP Bootloader to USB or SSD" menu
     
 function showlastupdate() {
     cat <<EOF
@@ -199,10 +199,10 @@ function showlastupdate() {
 # Update : Add "Show SATA(s) # ports and drives" menu
 
 # 2023.10.07
-# Update : Add "Another TCRP Bootloader Burning" menu
-
+# Update : Add "Burn Anither TCRP Bootloader to USB or SSD" menu
+        
 # 2023.10.09
-# Update : Add "Clone TCRP Bootloader" menu
+# Update : Add "Clone TCRP Bootloader to USB or SSD" menu
         
 EOF
 }
