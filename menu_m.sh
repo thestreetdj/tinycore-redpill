@@ -1178,20 +1178,14 @@ function make() {
   usbidentify
   clear
 
-  if [ "$1" = "fri" ]; then
-    BUILDMODE=""
-  elif [ "$1" = "jot" ]; then
-    BUILDMODE="jot"
-  fi
-
   if [ ${BUILD} = "7.2.1-69057" ]; then
-    ./my "${MODEL}"H noconfig "${BUILDMODE}" | tee "/home/tc/zlastbuild.log"
+    ./my "${MODEL}"H noconfig "${1}" | tee "/home/tc/zlastbuild.log"
   elif [ ${BUILD} = "7.2.0-64570" ]; then  
-    ./my "${MODEL}"G noconfig "${BUILDMODE}" | tee "/home/tc/zlastbuild.log"    
+    ./my "${MODEL}"G noconfig "${1}" | tee "/home/tc/zlastbuild.log"    
   elif [ ${BUILD} = "7.1.1-42962" ]; then
-    ./my "${MODEL}"F noconfig "${BUILDMODE}" | tee "/home/tc/zlastbuild.log"
+    ./my "${MODEL}"F noconfig "${1}" | tee "/home/tc/zlastbuild.log"
   elif [ ${BUILD} = "7.0.1-42218" ]; then
-    ./my "${MODEL}"J noconfig "${BUILDMODE}" | tee "/home/tc/zlastbuild.log"
+    ./my "${MODEL}"J noconfig "${1}" | tee "/home/tc/zlastbuild.log"
   fi
 
   if [ $? -ne 0 ]; then
