@@ -1368,9 +1368,9 @@ function cloneloader() {
   dd if=${tcrpdev}3 of=/dev/shm/tinycore-redpill.backup_p3.img status=progress bs=4M
   
   echo "Please wait a moment. Cloning is in progress..."  
-  dd if=/dev/shm//dev/shm/tinycore-redpill.backup_p1.img of=${loaderdev}1 status=progress bs=4M
-  dd if=/dev/shm//dev/shm/tinycore-redpill.backup_p2.img of=${loaderdev}2 status=progress bs=4M
-  dd if=/dev/shm//dev/shm/tinycore-redpill.backup_p3.img of=${loaderdev}3 status=progress bs=4M
+  dd if=/dev/shm/tinycore-redpill.backup_p1.img of=${loaderdev}1 status=progress bs=4M
+  dd if=/dev/shm/tinycore-redpill.backup_p2.img of=${loaderdev}2 status=progress bs=4M
+  dd if=/dev/shm/tinycore-redpill.backup_p3.img of=${loaderdev}3 status=progress bs=4M
   
   echo "Cloning completed, press any key to continue..."
   read answer
