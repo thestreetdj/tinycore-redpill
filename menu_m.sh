@@ -35,7 +35,7 @@ LOG_FILE="${TMP_PATH}/log.txt"
 USER_CONFIG_FILE="/home/tc/user_config.json"
 
 MODEL=$(jq -r -e '.general.model' "$USER_CONFIG_FILE")
-BUILD=$(jq -r -e '.general.version' "$USER_CONFIG_FILE" | cut -c 7-)
+BUILD=$(jq -r -e '.general.version' "$USER_CONFIG_FILE")
 SN=$(jq -r -e '.extra_cmdline.sn' "$USER_CONFIG_FILE")
 MACADDR1=$(jq -r -e '.extra_cmdline.mac1' "$USER_CONFIG_FILE")
 NETNUM="1"
@@ -789,16 +789,27 @@ function selectversion () {
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
-      "7.2.1-69057" \
-      "7.2.0-64570" \
-      "7.1.1-42962" \
-      "7.0.1-42218" \
+      a "7.2.1-69057" \
+      b "7.2.0-64570" \
+      c "7.1.1-42962" \
+      d "7.0.1-42218" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
-    BUILD="${resp}"
-    break
+    if [ "${resp}" = "a" ]; then
+      BUILD="7.2.1-69057"
+      break
+    elif [ "${resp}" = "b" ]; then
+      BUILD="7.2.0-64570"
+      break
+    elif [ "${resp}" = "c" ]; then
+      BUILD="7.1.1-42962"
+      break
+    elif [ "${resp}" = "d" ]; then
+      BUILD="7.0.1-42218"
+      break
+    fi
   done
 
   writeConfigKey "general" "version" "${BUILD}"
