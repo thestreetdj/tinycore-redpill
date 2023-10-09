@@ -199,7 +199,7 @@ function showlastupdate() {
 # Update : Add "Show SATA(s) # ports and drives" menu
 
 # 2023.10.07
-# Update : Add "Another TCPP Bootloader Burning" menu
+# Update : Add "Another TCRP Bootloader Burning" menu
 
 # 2023.10.09
 # Update : Add "Clone TCRP Bootloader" menu
