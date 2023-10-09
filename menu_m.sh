@@ -622,30 +622,22 @@ function backtitle() {
   if [ -n "${MACADDR1}" ]; then
     BACKTITLE+=" ${MACADDR1}"
   else
-    MACADDR1=`./macgen.sh "realmac" "eth0" ${MODEL}`
-    writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"  
-    BACKTITLE+=" ${MACADDR1}"
+    BACKTITLE+=" (no MAC1)"
   fi
   if [ -n "${MACADDR2}" ]; then
     BACKTITLE+=" ${MACADDR2}"
   else
-    MACADDR2=`./macgen.sh "realmac" "eth1" ${MODEL}`
-    writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
-    BACKTITLE+=" ${MACADDR2}"
+    BACKTITLE+=" (no MAC2)"
   fi
   if [ -n "${MACADDR3}" ]; then
     BACKTITLE+=" ${MACADDR3}"
   else
-    MACADDR3=`./macgen.sh "realmac" "eth2" ${MODEL}`
-    writeConfigKey "extra_cmdline" "mac3" "${MACADDR3}"
-    BACKTITLE+=" ${MACADDR3}"
+    BACKTITLE+=" (no MAC3)"
   fi
   if [ -n "${MACADDR4}" ]; then
     BACKTITLE+=" ${MACADDR4}"
   else
-    MACADDR4=`./macgen.sh "realmac" "eth3" ${MODEL}`
-    writeConfigKey "extra_cmdline" "mac4" "${MACADDR4}"
-    BACKTITLE+=" ${MACADDR4}"
+    BACKTITLE+=" (no MAC4)"
   fi
   if [ -n "${KEYMAP}" ]; then
     BACKTITLE+=" (${LAYOUT}/${KEYMAP})"
@@ -1543,17 +1535,33 @@ fi
 # Get actual IP
 IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}' | cut -c 6- )"
 
+  if [ ! -n "${MACADDR1}" ]; then
+    MACADDR1=`./macgen.sh "realmac" "eth0" ${MODEL}`
+    writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
+  fi
 if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
   MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
   NETNUM="2"
+  if [ ! -n "${MACADDR2}" ]; then
+    MACADDR2=`./macgen.sh "realmac" "eth1" ${MODEL}`
+    writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
+  fi
 fi  
 if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
   MACADDR3="$(jq -r -e '.extra_cmdline.mac3' $USER_CONFIG_FILE)"
   NETNUM="3"
+  if [ ! -n "${MACADDR3}" ]; then
+    MACADDR3=`./macgen.sh "realmac" "eth2" ${MODEL}`
+    writeConfigKey "extra_cmdline" "mac3" "${MACADDR3}"
+  fi
 fi  
 if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
   MACADDR4="$(jq -r -e '.extra_cmdline.mac4' $USER_CONFIG_FILE)"
   NETNUM="4"
+  if [ ! -n "${MACADDR4}" ]; then
+    MACADDR4=`./macgen.sh "realmac" "eth3" ${MODEL}`
+    writeConfigKey "extra_cmdline" "mac4" "${MACADDR4}"
+  fi
 fi  
 
 CURNETNUM="$(jq -r -e '.extra_cmdline.netif_num' $USER_CONFIG_FILE)"
