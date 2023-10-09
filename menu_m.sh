@@ -1620,13 +1620,13 @@ while true; do
       eval "echo \"h \\\"\${MSG${tz}04} 4\\\"\""         >> "${TMP_PATH}/menu"
     fi
     if [ "${CPU}" = "HP" ]; then
-      LDRMODE="JOT"
-      writeConfigKey "general" "loadermode" "${LDRMODE}"
+      eval "echo \"j \\\"\${MSG${tz}05} (${BUILD})\\\"\""     >> "${TMP_PATH}/menu"
+      eval "echo \"p \\\"[TCRP ${BUILD}] \${MSG${tz}18} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
     else
       eval "echo \"z \\\"\${MSG${tz}06} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
+      eval "echo \"j \\\"\${MSG${tz}05} (${BUILD})\\\"\""     >> "${TMP_PATH}/menu"
+      eval "echo \"p \\\"[TCRP ${BUILD}] \${MSG${tz}18} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
     fi
-    eval "echo \"j \\\"\${MSG${tz}05} (${BUILD})\\\"\""     >> "${TMP_PATH}/menu"
-    eval "echo \"p \\\"[TCRP ${BUILD}] \${MSG${tz}18} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
   fi
   eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"
   echo "x \"Show SATA(s) # ports and drives\""           >> "${TMP_PATH}/menu"
