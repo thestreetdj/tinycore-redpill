@@ -55,9 +55,9 @@ MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMa
 MSGUS01="Choose a Dev Mod handling method, DDSML/EUDEV"
 MSGUS02="Choose a Synology Model"
 MSGUS03="Choose a Synology Serial Number"
-MSGUS04="Choose a mac address"
-MSGUS05="Build the [TCRP 7.1.1-42962 JOT Mode] loader"
-MSGUS06="Choose a loader Mode Current "
+MSGUS04="Choose a mac address "
+MSGUS05="Choose a DSM VERSION, Current "
+MSGUS06="Choose a loader Mode, Current "
 MSGUS07="Build the [TCRP 7.1.1-42962] loader"
 MSGUS08="Build the [TCRP 7.0.1-42218] loader (FRIEND)"
 MSGUS09="Build the [TCRP 7.2.0-64570] loader"
@@ -99,9 +99,9 @@ MSGRU00="Базовые модели и HBAs Device-Tree [DT] не требую�
 MSGRU01="Выберите метод обработки Dev Mod, DDSML/EUDEV"
 MSGRU02="Выберите модель Synology"
 MSGRU03="Выберите серийный номер Synology"
-MSGRU04="Выберите MAC-адрес"
-MSGRU05="Соберите загрузчик [TCRP 7.1.1-42962 JOT Mode]"
-MSGRU06="Выберите текущий режим загрузчика"
+MSGRU04="Выберите MAC-адрес "
+MSGRU05="Выберите ВЕРСИЮ DSM, Текущий "
+MSGRU06="Выберите текущий режим загрузчика, Текущий "
 MSGRU07="Соберите загрузчик [TCRP 7.1.1-42962]"
 MSGRU08="Соберите загрузчик [TCRP 7.0.1-42218] (FRIEND)"
 MSGRU09="Соберите загрузчик [TCRP 7.2.0-64570]"
@@ -143,9 +143,9 @@ MSGFR00="Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne 
 MSGFR01="Choisissez une méthode de gestion des modèles de périphérique, DDSML/EUDEV"
 MSGFR02="Choisissez un modèle Synology"
 MSGFR03="Choisissez un numéro de série Synology"
-MSGFR04="Choisissez une adresse MAC"
-MSGFR05="Construisez le chargeur [TCRP 7.1.1-42962 JOT Mode]"
-MSGFR06="Choisissez un mode de chargeur actuel"
+MSGFR04="Choisissez une adresse MAC "
+MSGFR05="Choisissez une VERSION DSM, Actuelle "
+MSGFR06="Choisissez un mode de chargeur, Actuelle "
 MSGFR07="Construisez le chargeur [TCRP 7.1.1-42962]"
 MSGFR08="Construisez le chargeur [TCRP 7.0.1-42218] (FRIEND)"
 MSGFR09="Construisez le chargeur [TCRP 7.2.0-64570]"
@@ -187,9 +187,9 @@ MSGDE00="Gerätebaum[DT] Basismodelle und HBAs benötigen kein SataPortMap,DiskI
 MSGDE01="Wählen Sie eine Methode zur Verwaltung von Dev-Mods, DDSML/EUDEV"
 MSGDE02="Wählen Sie ein Synology-Modell"
 MSGDE03="Wählen Sie eine Synology-Seriennummer"
-MSGDE04="Wählen Sie eine MAC-Adresse"
-MSGDE05="Erstellen Sie den [TCRP 7.1.1-42962 JOT-Modus] Loader"
-MSGDE06="Wählen Sie einen Loader-Modus Current"
+MSGDE04="Wählen Sie eine MAC-Adresse "
+MSGDE05="Wählen Sie eine DSM-VERSION, Aktuell "
+MSGDE06="Wählen Sie einen Loader-Modus, Aktuell "
 MSGDE07="Erstellen Sie den [TCRP 7.1.1-42962] Loader"
 MSGDE08="Erstellen Sie den [TCRP 7.0.1-42218] Loader (FRIEND)"
 MSGDE09="Erstellen Sie den [TCRP 7.2.0-64570] Loader"
@@ -231,9 +231,9 @@ MSGES00="Los modelos base y HBAs de Device-Tree[DT] no requieren SataPortMap, Di
 MSGES01="Elija un método de manejo de Mod Dev, DDSML/EUDEV"
 MSGES02="Elija un modelo de Synology"
 MSGES03="Elija un número de serie de Synology"
-MSGES04="Elija una dirección MAC"
-MSGES05="Construir el cargador [TCRP 7.1.1-42962 JOT Mode]"
-MSGES06="Elija un modo de cargador Actual"
+MSGES04="Elija una dirección MAC "
+MSGES05="Elija una VERSIÓN DSM, Actual "
+MSGES06="Elija un modo de cargador, Actual "
 MSGES07="Construir el cargador [TCRP 7.1.1-42962]"
 MSGES08="Construir el cargador [TCRP 7.0.1-42218] (FRIEND)"
 MSGES09="Construir el cargador [TCRP 7.2.0-64570]"
@@ -275,9 +275,9 @@ MSGBR00="Modelos Base e HBAs do Device-Tree[DT] não requerem SataPortMap, DiskI
 MSGBR01="Escolha um método de manipulação de Dev Mod, DDSML/EUDEV"
 MSGBR02="Escolha um modelo Synology"
 MSGBR03="Escolha um número de série Synology"
-MSGBR04="Escolha um endereço MAC"
-MSGBR05="Construa o loader [TCRP 7.1.1-42962 JOT Mode]"
-MSGBR06="Escolha o modo de loader Atual"
+MSGBR04="Escolha um endereço MAC "
+MSGBR05="Escolha uma VERSÃO DSM, Atual "
+MSGBR06="Escolha o modo de loader, Atual "
 MSGBR07="Construa o loader [TCRP 7.1.1-42962]"
 MSGBR08="Construa o loader [TCRP 7.0.1-42218] (FRIEND)"
 MSGBR09="Construa o loader [TCRP 7.2.0-64570]"
@@ -319,9 +319,9 @@ MSGIT00="I modelli di base e gli HBA di Device-Tree [DT] non richiedono SataPort
 MSGIT01="Scegli un metodo di gestione del Mod Dev, DDSML/EUDEV"
 MSGIT02="Scegli un modello Synology"
 MSGIT03="Scegli un numero di serie Synology"
-MSGIT04="Scegli un indirizzo MAC"
-MSGIT05="Costruisci il caricatore [TCRP 7.1.1-42962 JOT Mode]"
-MSGIT06="Scegli una modalità di caricatore corrente"
+MSGIT04="Scegli un indirizzo MAC "
+MSGIT05="Scegli una VERSIONE DSM, Attuale "
+MSGIT06="Scegli una modalità di caricatore, Attuale "
 MSGIT07="Costruisci il caricatore [TCRP 7.1.1-42962]"
 MSGIT08="Costruisci il caricatore [TCRP 7.0.1-42218] (FRIEND)"
 MSGIT09="Costruisci il caricatore [TCRP 7.2.0-64570]"
@@ -364,8 +364,8 @@ MSGKR01="커널모듈 처리방법 선택 DDSML/EUDEV"
 MSGKR02="Synology 모델 선택"
 MSGKR03="Synology S/N 선택"
 MSGKR04="선택 Mac 주소 "
-MSGKR05="[TCRP 7.1.1-42962 JOT Mode] 로더 빌드"
-MSGKR06="로더모드 선택 현재"
+MSGKR05="DSM VERSION 선택, 현재 "
+MSGKR06="로더모드 선택, 현재 "
 MSGKR07="[TCRP 7.1.1-42962] 로더 빌드"
 MSGKR08="[TCRP 7.0.1-42218] 로더 빌드 (FRIEND)"
 MSGKR09="[TCRP 7.2.0-64570] 로더 빌드"
@@ -407,9 +407,9 @@ MSGCN00="设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap. DT模
 MSGCN01="选择Dev Mod处理方法，DDSML/EUDEV"
 MSGCN02="选择一个Synology型号"
 MSGCN03="选择一个Synology序列号"
-MSGCN04="选择一个mac地址"
-MSGCN05="构建[TCRP 7.1.1-42962 JOT模式]加载器"
-MSGCN06="选择加载器模式 Current"
+MSGCN04="选择一个mac地址 "
+MSGCN05="选择当前的 DSM, 版本"
+MSGCN06="选择加载器模式, 版本"
 MSGCN07="构建[TCRP 7.1.1-42962]加载器"
 MSGCN08="构建[TCRP 7.0.1-42218]加载器 (FRIEND)"
 MSGCN09="构建[TCRP 7.2.0-64570]加载器"
@@ -451,9 +451,9 @@ MSGJP00="Device-Tree[DT]ベースモデルとHBAsは、SataPortMap、DiskIdxMap�
 MSGJP01="Dev Mod処理方法を選択してください、EUDEV / DDSML"
 MSGJP02="Synologyモデルを選択してください"
 MSGJP03="Synologyシリアル番号を選択してください"
-MSGJP04="MACアドレスを選択してください"
-MSGJP05="[TCRP 7.1.1-42962 JOT Mode]ローダーをビルドする"
-MSGJP06="現在のローダーモードを選択してください"
+MSGJP04="MACアドレスを選択してください "
+MSGJP05="DSM VERSION 選択、現在 "
+MSGJP06="のローダーモードを選択してください、現在 "
 MSGJP07="[TCRP 7.1.1-42962]ローダーをビルドする"
 MSGJP08="[TCRP 7.0.1-42218]ローダーをビルドする（FRIEND）"
 MSGJP09="[TCRP 7.2.0-64570]ローダーをビルドする"
@@ -779,6 +779,29 @@ function selectldrmode() {
   done
 
   writeConfigKey "general" "loadermode" "${LDRMODE}"
+
+}
+
+###############################################################################
+# Shows available dsm verwsion 
+function selectversion () {
+
+  while true; do
+    dialog --clear --backtitle "`backtitle`" \
+      --menu "Choose a option" 0 0 0 \
+      a "7.2.1-69057" \
+      b "7.2.0-64570" \
+      c "7.1.1-42962" \
+      d "7.0.1-42218" \
+    2>${TMP_PATH}/resp
+    [ $? -ne 0 ] && return
+    resp=$(<${TMP_PATH}/resp)
+    [ -z "${resp}" ] && return
+    BUILD="${resp}"
+    break
+  done
+
+  writeConfigKey "general" "version" "${BUILD}"
 
 }
 
@@ -1147,15 +1170,15 @@ function make() {
   if [ "$1" = "jun" ]; then
       ./my "${MODEL}"J noconfig | tee "/home/tc/zlastbuild.log"    
   elif [ "$1" = "of" ]; then
-      if [ ${BUILD} = "64570" ]; then
+      if [ ${BUILD} = "7.2.0-64570" ]; then
           ./my "${MODEL}"G noconfig | tee "/home/tc/zlastbuild.log"    
-      elif [ ${BUILD} = "69057" ]; then
+      elif [ ${BUILD} = "7.2.1-69057" ]; then
           ./my "${MODEL}"H noconfig | tee "/home/tc/zlastbuild.log"
       fi
   elif [ "$1" = "ofjot" ]; then
-      if [ ${BUILD} = "64570" ]; then  
+      if [ ${BUILD} = "7.2.0-64570" ]; then  
           ./my "${MODEL}"G noconfig "jot" | tee "/home/tc/zlastbuild.log"    
-      elif [ ${BUILD} = "69057" ]; then
+      elif [ ${BUILD} = "7.2.1-69057" ]; then
           ./my "${MODEL}"H noconfig "jot" | tee "/home/tc/zlastbuild.log"
       fi
   else
@@ -1583,21 +1606,22 @@ while true; do
   eval "echo \"m \\\"\${MSG${tz}02}\\\"\""               >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
     eval "echo \"s \\\"\${MSG${tz}03}\\\"\""             >> "${TMP_PATH}/menu"
-    eval "echo \"a \\\"\${MSG${tz}04} 1\\\"\""           >> "${TMP_PATH}/menu"
+    eval "echo \"a \\\"\${MSG${tz}04}1\\\"\""           >> "${TMP_PATH}/menu"
     if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
-      eval "echo \"f \\\"\${MSG${tz}04} 2\\\"\""         >> "${TMP_PATH}/menu"
+      eval "echo \"f \\\"\${MSG${tz}04}2\\\"\""         >> "${TMP_PATH}/menu"
     fi  
     if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
-      eval "echo \"g \\\"\${MSG${tz}04} 3\\\"\""         >> "${TMP_PATH}/menu"
+      eval "echo \"g \\\"\${MSG${tz}04}3\\\"\""         >> "${TMP_PATH}/menu"
     fi  
     if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
-      eval "echo \"h \\\"\${MSG${tz}04} 4\\\"\""         >> "${TMP_PATH}/menu"
+      eval "echo \"h \\\"\${MSG${tz}04}4\\\"\""         >> "${TMP_PATH}/menu"
     fi
     if [ "${CPU}" == "HP" ]; then
-      eval "echo \"j \\\"\${MSG${tz}05}\\\"\""           >> "${TMP_PATH}/menu"       
       eval "echo \"n \\\"\${MSG${tz}19}\\\"\""           >> "${TMP_PATH}/menu"      
     else 
       eval "echo \"z \\\"\${MSG${tz}06} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
+      eval "echo \"j \\\"\${MSG${tz}05} (${BUILD})\\\"\""     >> "${TMP_PATH}/menu"
+      
       eval "echo \"p \\\"\${MSG${tz}18} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
       eval "echo \"y \\\"\${MSG${tz}09} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
       eval "echo \"d \\\"\${MSG${tz}07} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
@@ -1645,25 +1669,29 @@ while true; do
 	fi
         ;;
     h) macMenu "eth3";    NEXT="z" ;;    
-    z) selectldrmode ;    NEXT="p" ;;
-    o) BUILD="42218"; make "jun";      NEXT="r" ;;    
-    d) BUILD="42962"
+    z) selectldrmode ;    NEXT="j" ;;
+    j) selectversion ;    NEXT="p" ;; 
+    o) #BUILD="42218"; 
+       make "jun";      NEXT="r" ;;    
+    d) #BUILD="42962"
        if [ "${LDRMODE}" == "FRIEND" ]; then
          make
        else
          make "jot"
        fi
        NEXT="r" ;;
-    j) BUILD="42962"; make "jot";      NEXT="r" ;;    
-    n) BUILD="64570"; make "ofjot";    NEXT="r" ;;    
-    y) BUILD="64570"
+    #j) #BUILD="42962"; 
+    #   make "jot";      NEXT="r" ;;    
+    n) #BUILD="64570"; 
+       make "ofjot";    NEXT="r" ;;    
+    y) #BUILD="64570"
        if [ "${LDRMODE}" == "FRIEND" ]; then
          make "of"
        else
          make "ofjot"
        fi
        NEXT="r" ;;
-    p) BUILD="69057"
+    p) #BUILD="69057"
        if [ "${LDRMODE}" == "FRIEND" ]; then
          make "of"
        else
