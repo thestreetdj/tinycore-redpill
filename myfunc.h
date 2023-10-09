@@ -176,7 +176,9 @@ set -u
 # 2023.10.01
 # Update : Add "Show SATA(s) # ports and drives" menu
 # 2023.10.07
-# Update : Add "Another TCPP Bootloader Burning" menu
+# Update : Add "Burn TCRP Bootloader" menu
+# 2023.10.09
+# Update : Add "Clone TCRP Bootloader" menu
     
 function showlastupdate() {
     cat <<EOF
@@ -198,6 +200,9 @@ function showlastupdate() {
 
 # 2023.10.07
 # Update : Add "Another TCPP Bootloader Burning" menu
+
+# 2023.10.09
+# Update : Add "Clone TCRP Bootloader" menu
         
 EOF
 }
