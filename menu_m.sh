@@ -1632,7 +1632,7 @@ while true; do
     else 
       eval "echo \"z \\\"\${MSG${tz}06} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
       eval "echo \"j \\\"\${MSG${tz}05} (${BUILD})\\\"\""     >> "${TMP_PATH}/menu"
-      eval "echo \"p \\\"\[TCRP ${BUILD}] ${MSG${tz}18} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
+      eval "echo \"p \\\"[TCRP ${BUILD}] \${MSG${tz}18} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
     fi
   fi
   eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"
