@@ -1619,13 +1619,9 @@ fi
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep firmware-broadcom_bnx2x | wc -w) -eq 0 ]; then
     sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/firmware-broadcom_bnx2x.tcz -o /mnt/${tcrppart}/cde/optional/firmware-broadcom_bnx2x.tcz
     sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/firmware-broadcom_bnx2x.tcz.md5.txt -o /mnt/${tcrppart}/cde/optional/firmware-broadcom_bnx2x.tcz.md5.txt
-    tce-load -i firmware-broadcom_bnx2x
-    if [ $? -eq 0 ]; then
-        echo "Install firmware-broadcom_bnx2x OK !!!"
-    else
-        tce-load -iw firmware-broadcom_bnx2x
-    fi
     sudo echo "firmware-broadcom_bnx2x.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+    echo "Install firmware-broadcom_bnx2x OK !!!"
+    restart
 fi
 
 NEXT="m"
