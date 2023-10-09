@@ -622,22 +622,30 @@ function backtitle() {
   if [ -n "${MACADDR1}" ]; then
     BACKTITLE+=" ${MACADDR1}"
   else
-    BACKTITLE+=" (no MAC1)"
+    MACADDR1=`./macgen.sh "realmac" "eth0" ${MODEL}`
+    writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"  
+    BACKTITLE+=" ${MACADDR1}"
   fi
   if [ -n "${MACADDR2}" ]; then
     BACKTITLE+=" ${MACADDR2}"
   else
-    BACKTITLE+=" (no MAC2)"
+    MACADDR2=`./macgen.sh "realmac" "eth1" ${MODEL}`
+    writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
+    BACKTITLE+=" ${MACADDR2}"
   fi
   if [ -n "${MACADDR3}" ]; then
     BACKTITLE+=" ${MACADDR3}"
   else
-    BACKTITLE+=" (no MAC3)"
+    MACADDR3=`./macgen.sh "realmac" "eth2" ${MODEL}`
+    writeConfigKey "extra_cmdline" "mac3" "${MACADDR3}"
+    BACKTITLE+=" ${MACADDR3}"
   fi
   if [ -n "${MACADDR4}" ]; then
     BACKTITLE+=" ${MACADDR4}"
   else
-    BACKTITLE+=" (no MAC4)"
+    MACADDR4=`./macgen.sh "realmac" "eth3" ${MODEL}`
+    writeConfigKey "extra_cmdline" "mac4" "${MACADDR4}"
+    BACKTITLE+=" ${MACADDR4}"
   fi
   if [ -n "${KEYMAP}" ]; then
     BACKTITLE+=" (${LAYOUT}/${KEYMAP})"
