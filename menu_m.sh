@@ -1178,22 +1178,20 @@ function make() {
   usbidentify
   clear
 
-  if [ "$1" = "jun" ]; then
-      ./my "${MODEL}"J noconfig | tee "/home/tc/zlastbuild.log"    
-  elif [ "$1" = "of" ]; then
-      if [ ${BUILD} = "7.2.0-64570" ]; then
-          ./my "${MODEL}"G noconfig | tee "/home/tc/zlastbuild.log"    
-      elif [ ${BUILD} = "7.2.1-69057" ]; then
-          ./my "${MODEL}"H noconfig | tee "/home/tc/zlastbuild.log"
-      fi
-  elif [ "$1" = "ofjot" ]; then
-      if [ ${BUILD} = "7.2.0-64570" ]; then  
-          ./my "${MODEL}"G noconfig "jot" | tee "/home/tc/zlastbuild.log"    
-      elif [ ${BUILD} = "7.2.1-69057" ]; then
-          ./my "${MODEL}"H noconfig "jot" | tee "/home/tc/zlastbuild.log"
-      fi
-  else
-      ./my "${MODEL}"F noconfig $1 | tee "/home/tc/zlastbuild.log"  
+  if [ "$1" = "fri" ]; then
+    BUILDMODE=""
+  elif [ "$1" = "jot" ]; then
+    BUILDMODE="jot"
+  fi
+
+  if [ ${BUILD} = "7.2.1-69057" ]; then
+    ./my "${MODEL}"H noconfig "${BUILDMODE}" | tee "/home/tc/zlastbuild.log"
+  elif [ ${BUILD} = "7.2.0-64570" ]; then  
+    ./my "${MODEL}"G noconfig "${BUILDMODE}" | tee "/home/tc/zlastbuild.log"    
+  elif [ ${BUILD} = "7.1.1-42962" ]; then
+    ./my "${MODEL}"F noconfig "${BUILDMODE}" | tee "/home/tc/zlastbuild.log"
+  elif [ ${BUILD} = "7.0.1-42218" ]; then
+    ./my "${MODEL}"J noconfig "${BUILDMODE}" | tee "/home/tc/zlastbuild.log"
   fi
 
   if [ $? -ne 0 ]; then
@@ -1678,31 +1676,30 @@ while true; do
     h) macMenu "eth3";    NEXT="z" ;;    
     z) selectldrmode ;    NEXT="j" ;;
     j) selectversion ;    NEXT="p" ;; 
-    o) #BUILD="42218"; 
-       make "jun";      NEXT="r" ;;    
-    d) #BUILD="42962"
-       if [ "${LDRMODE}" == "FRIEND" ]; then
-         make
-       else
-         make "jot"
-       fi
-       NEXT="r" ;;
+    #o) #BUILD="42218"; 
+    #   make "jun";      NEXT="r" ;;    
+    #d) #BUILD="42962"
+    #   if [ "${LDRMODE}" == "FRIEND" ]; then
+    #     make
+    #   else
+    #     make "jot"
+    #   fi
+    #   NEXT="r" ;;
     #j) #BUILD="42962"; 
     #   make "jot";      NEXT="r" ;;    
-    n) #BUILD="64570"; 
-       make "ofjot";    NEXT="r" ;;    
-    y) #BUILD="64570"
-       if [ "${LDRMODE}" == "FRIEND" ]; then
-         make "of"
+    #n) #BUILD="64570"; 
+    #   make "ofjot";    NEXT="r" ;;    
+    #y) #BUILD="64570"
+    #   if [ "${LDRMODE}" == "FRIEND" ]; then
+    #     make "fri"
+    #   else
+    #     make "jot"
+    #   fi
+    #   NEXT="r" ;;
+    p) if [ "${LDRMODE}" == "FRIEND" ]; then
+         make "fri"
        else
-         make "ofjot"
-       fi
-       NEXT="r" ;;
-    p) #BUILD="69057"
-       if [ "${LDRMODE}" == "FRIEND" ]; then
-         make "of"
-       else
-         make "ofjot"
+         make "jot"
        fi
        NEXT="r" ;;
     q) storagepanel;                   NEXT="p" ;;
