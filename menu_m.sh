@@ -1305,7 +1305,7 @@ function restartx() {
     { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) ; sleep 2 >/dev/tty0 ; startx >/dev/tty0 ; } &
 }
 
-function recordloader() {
+function burnloader() {
 
   tcrpdev=/dev/$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
   listusb=()
@@ -1340,6 +1340,38 @@ function recordloader() {
   read answer
   return 0
 }
+
+function cloneloader() {
+
+  tcrpdev=/dev/$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
+  listusb=()
+  listusb+=( $(lsblk -o PATH,ROTA,TRAN | grep '/dev/sd' | grep -v ${tcrpdev} | grep -E '(1 usb|0 sata)' | awk '{print $1}' ) )
+
+  if [ ${#listusb[@]} -eq 0 ]; then 
+    echo "No Available USB or SSD, press any key continue..."
+    read answer                       
+    return 0   
+  fi
+
+  dialog --backtitle "`backtitle`" --no-items --colors \
+    --menu "Choose a USB Stick or SSD for Clone Loader\n\Z1(Caution!) In the case of SSD, be sure to check whether it is a cache or data disk.\Zn" 0 0 0 "${listusb[@]}" \
+    2>${TMP_PATH}/resp
+  [ $? -ne 0 ] && return
+  resp=$(<${TMP_PATH}/resp)
+  [ -z "${resp}" ] && return 
+
+  loaderdev="`<${TMP_PATH}/resp`"
+
+  echo "Backup Current TCRP-mshell loader to img file..."  
+  dd if=${tcrpdev} of=/dev/shm/tinycore-redpill.backup.img status=progress bs=4M
+  
+  echo "Please wait a moment. Cloning is in progress..."  
+  dd if=/dev/shm//dev/shm/tinycore-redpill.backup.img of=${loaderdev} status=progress bs=4M
+  echo "Cloning completed, press any key to continue..."
+  read answer
+  return 0
+}
+
 
 # Main loop
 tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
@@ -1569,7 +1601,8 @@ while true; do
   fi
   eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"
   echo "x \"Show SATA(s) # ports and drives\""           >> "${TMP_PATH}/menu"
-  echo "t \"Another TCPP Bootloader Burning (USB or SSD)\""  >> "${TMP_PATH}/menu"
+  echo "t \"Burn Another TCRP Bootloader to USB or SSD\""  >> "${TMP_PATH}/menu"
+  echo "v \"Clone TCRP Bootloader to USB or SSD\""       >> "${TMP_PATH}/menu"
   eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"k \\\"\${MSG${tz}11}\\\"\""               >> "${TMP_PATH}/menu"
@@ -1690,7 +1723,8 @@ while true; do
       dialog --backtitle "$(backtitle)" --colors --title "Show SATA(s) # ports and drives" \
         --msgbox "${MSG}" 0 0
       ;;    
-    t) recordloader;                   NEXT="e" ;;
+    t) burnloader;                     NEXT="e" ;;
+    v) cloneloader;                    NEXT="e" ;;
     u) editUserConfig;                 NEXT="d" ;;
     l) langMenu ;                      NEXT="m" ;;
     k) keymapMenu ;                    NEXT="m" ;;
