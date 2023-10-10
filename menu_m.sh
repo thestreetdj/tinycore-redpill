@@ -1650,11 +1650,11 @@ while true; do
     eval "echo \"j \\\"\${MSG${tz}05} (${BUILD})\\\"\""     >> "${TMP_PATH}/menu"
     eval "echo \"p \\\"[TCRP ${BUILD}] \${MSG${tz}18} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
   fi
+  eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"
   echo "x \"Show SATA(s) # ports and drives\""           >> "${TMP_PATH}/menu"
   echo "t \"Burn Another TCRP Bootloader to USB or SSD\""  >> "${TMP_PATH}/menu"
   echo "v \"Clone TCRP Bootloader to USB or SSD\""       >> "${TMP_PATH}/menu"
-  eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"k \\\"\${MSG${tz}11}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"i \\\"\${MSG${tz}12}\\\"\""               >> "${TMP_PATH}/menu"
@@ -1668,7 +1668,7 @@ while true; do
   case `<"${TMP_PATH}/resp"` in
     c) seleudev;        NEXT="m" ;;  
     m) modelMenu;       NEXT="s" ;;
-    s) serialMenu;      NEXT="a" ;;
+    s) serialMenu;      NEXT="j" ;;
     a) macMenu "eth0"
         if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
             NEXT="f" 
@@ -1690,8 +1690,8 @@ while true; do
             NEXT="z" 	
 	fi
         ;;
-    h) macMenu "eth3";    NEXT="z" ;;    
-    z) selectldrmode ;    NEXT="j" ;;
+    h) macMenu "eth3";    NEXT="p" ;; 
+    z) selectldrmode ;    NEXT="p" ;;
     j) selectversion ;    NEXT="p" ;; 
     p) if [ "${LDRMODE}" == "FRIEND" ]; then
          make "fri"
@@ -1699,7 +1699,8 @@ while true; do
          make "jot"
        fi
        NEXT="r" ;;
-    q) storagepanel;                   NEXT="p" ;;
+    u) editUserConfig;    NEXT="p" ;;
+    q) storagepanel;      NEXT="p" ;;
     x) 
       MSG=""
       NUMPORTS=0
@@ -1759,7 +1760,6 @@ while true; do
       ;;    
     t) burnloader;                     NEXT="e" ;;
     v) cloneloader;                    NEXT="e" ;;
-    u) editUserConfig;                 NEXT="d" ;;
     l) langMenu ;                      NEXT="m" ;;
     k) keymapMenu ;                    NEXT="m" ;;
     i) erasedisk ;                     NEXT="m" ;;
