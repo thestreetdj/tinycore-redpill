@@ -20,6 +20,15 @@ function readanswer() {
     done
 }
 
+function installtcz() {
+  tczpack="${1}"
+  cd /mnt/${tcrppart}/cde/optional
+  sudo curl -kLO# http://tinycorelinux.net/12.x/x86_64/tcz/${tczpack}
+  sudo md5sum ${tczpack} > ${tczpack}.md5.txt
+  echo "${tczpack}" >> /mnt/${tcrppart}/cde/onboot.lst
+  cd ~
+}
+
 if [ -f /home/tc/my.sh ]; then
   rm /home/tc/my.sh
 fi
@@ -1617,10 +1626,9 @@ fi
 
 # Download firmware-broadcom_bnx2x
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep firmware-broadcom_bnx2x | wc -w) -eq 0 ]; then
-    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/firmware-broadcom_bnx2x.tcz -o /mnt/${tcrppart}/cde/optional/firmware-broadcom_bnx2x.tcz
-    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/firmware-broadcom_bnx2x.tcz.md5.txt -o /mnt/${tcrppart}/cde/optional/firmware-broadcom_bnx2x.tcz.md5.txt
-    sudo echo "firmware-broadcom_bnx2x.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+    installtcz "firmware-broadcom_bnx2x.tcz"
     echo "Install firmware-broadcom_bnx2x OK !!!"
+    echo "y"|./rploader.sh backup
     restart
 fi
 
