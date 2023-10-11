@@ -15,20 +15,28 @@ if [ $# -lt 2 ]; then
   exit 0
 fi
 
+if [ $# -eq 2 ]; then
+  echo "There is no dependency package name : ex) ./makeownpkg.sh newpkgname dependpkg1 dependpkg2 dependpkg3 dependpkg4 dependpkg5"
+  exit 0
+fi
+
 mksquashfs pkg ${1}.tcz -noappend
 sudo cp -f ${1}.tcz /mnt/${tcrppart}/cde/optional
 grep -q "${1}.tcz" /mnt/${tcrppart}/cde/onboot.lst || echo "${1}.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 
 touch /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
-if [ $# -lt 3 ]; then
+if [ $# -gt 3 ]; then
   echo "${2}.tcz" >> /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
 fi
-if [ $# -lt 4 ]; then
+if [ $# -gt 4 ]; then
   echo "${3}.tcz" >> /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
 fi
-if [ $# -lt 5 ]; then
+if [ $# -gt 5 ]; then
   echo "${4}.tcz" >> /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
 fi
-if [ $# -lt 6 ]; then
+if [ $# -gt 6 ]; then
   echo "${5}.tcz" >> /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
+fi
+if [ $# -gt 7 ]; then
+  echo "${6}.tcz" >> /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
 fi
