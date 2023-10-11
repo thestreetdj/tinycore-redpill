@@ -25,7 +25,7 @@ mksquashfs pkg ${1}.tcz -noappend
 sudo cp -f ${1}.tcz /mnt/${tcrppart}/cde/optional
 grep -q "${1}.tcz" /mnt/${tcrppart}/cde/onboot.lst || echo "${1}.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 
-echo "" > /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
+echo -n "" > /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
 if [ $# -gt 1 ]; then
   echo "Create a dependency file for my own package... ${2}.tcz"
   echo "${2}.tcz" >> /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
