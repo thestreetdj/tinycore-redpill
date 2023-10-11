@@ -25,24 +25,24 @@ mksquashfs pkg ${1}.tcz -noappend
 sudo cp -f ${1}.tcz /mnt/${tcrppart}/cde/optional
 grep -q "${1}.tcz" /mnt/${tcrppart}/cde/onboot.lst || echo "${1}.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 
-touch /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
-if [ $# -gt 3 ]; then
+echo "" > /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
+if [ $# -gt 1 ]; then
   echo "Create a dependency file for my own package... ${2}.tcz"
   echo "${2}.tcz" >> /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
 fi
-if [ $# -gt 4 ]; then
+if [ $# -gt 2 ]; then
   echo "Create a dependency file for my own package... ${3}.tcz"
   echo "${3}.tcz" >> /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
 fi
-if [ $# -gt 5 ]; then
+if [ $# -gt 3 ]; then
   echo "Create a dependency file for my own package... ${4}.tcz"
   echo "${4}.tcz" >> /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
 fi
-if [ $# -gt 6 ]; then
+if [ $# -gt 4 ]; then
   echo "Create a dependency file for my own package... ${5}.tcz"
   echo "${5}.tcz" >> /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
 fi
-if [ $# -gt 7 ]; then
+if [ $# -gt 5 ]; then
   echo "Create a dependency file for my own package... ${6}.tcz"
   echo "${6}.tcz" >> /mnt/${tcrppart}/cde/optional/${1}.tcz.dep
 fi
