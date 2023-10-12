@@ -263,7 +263,7 @@ function monitor() {
         echo -e "Swap Usage:\t\t"$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
         echo -e "CPU Usage:\t\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
         echo -e "-------------------------------Disk Usage >80%-------------------------------"
-        df -Ph | grep -v loop | grep -v fs
+        df -T /mnt/${loaderdisk}1 /mnt/${loaderdisk}2 /mnt/${loaderdisk}3
 
         echo "Press ctrl-c to exit"
         sleep 10
