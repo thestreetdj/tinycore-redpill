@@ -263,7 +263,7 @@ function monitor() {
         echo -e "Swap Usage:\t\t"$(free | awk '/Swap/{printf("%.2f%"), $3/$2*100}')
         echo -e "CPU Usage:\t\t"$(cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' | awk '{print $0}' | head -1)
         echo -e "-------------------------------Disk Usage >80%-------------------------------"
-        df -Ph | grep -v loop | grep -v fs
+        df -Ph /mnt/${loaderdisk}1 /mnt/${loaderdisk}2 /mnt/${loaderdisk}3
 
         echo "Press ctrl-c to exit"
         sleep 10
@@ -2886,7 +2886,6 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 #        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
 #m shell only end
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
-        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/raw/main/geminilake-4.4.302/sd_mod.ko -o /home/tc/rd.temp/lib/modules/sd_mod.ko
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     else
         unlzma -dc /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
@@ -2895,7 +2894,6 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 #        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
 #m shell only end
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
-        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/raw/main/geminilake-4.4.302/sd_mod.ko -o /home/tc/rd.temp/lib/modules/sd_mod.ko
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     fi
 
@@ -2964,11 +2962,20 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
     sudo umount localdiskp2
     sudo losetup -D
 
-    if [ ${TARGET_REVISION} -gt 64569 ]; then
-        echo "Bakcup loader.img and grub.cfg file for update to 7.2"
-        sudo cp -vf /home/tc/redpill-load/loader.img /mnt/${loaderdisk}3/loader72.img
-        sudo cp -vf /mnt/${loaderdisk}1/boot/GRUB/grub.cfg /mnt/${loaderdisk}3/grub72.cfg
-        sudo cp -vf /mnt/${loaderdisk}3/initrd-dsm /mnt/${loaderdisk}3/initrd-dsm72
+#    if [ ${TARGET_REVISION} -gt 64569 ]; then
+#        echo "Bakcup loader.img and grub.cfg file for update to 7.2"
+#        sudo cp -vf /home/tc/redpill-load/loader.img /mnt/${loaderdisk}3/loader72.img
+#        sudo cp -vf /mnt/${loaderdisk}1/boot/GRUB/grub.cfg /mnt/${loaderdisk}3/grub72.cfg
+#        sudo cp -vf /mnt/${loaderdisk}3/initrd-dsm /mnt/${loaderdisk}3/initrd-dsm72
+#    fi
+    if [ -f /mnt/${loaderdisk}3/loader72.img ]; then
+      rm /mnt/${loaderdisk}3/loader72.img
+    fi  
+    if [ -f /mnt/${loaderdisk}3/grub72.cfg ]; then
+      rm /mnt/${loaderdisk}3/grub72.cfg
+    fi  
+    if [ -f /mnt/${loaderdisk}3/initrd-dsm72 ]; then
+      rm /mnt/${loaderdisk}3/initrd-dsm72
     fi
 
     echo "Cleaning up files"
@@ -3005,7 +3012,8 @@ function bringoverfriend() {
 
   echo -n "Checking for latest friend -> "
   #URL=$(curl --connect-timeout 15 -s -k -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
-  URL="https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum"
+  #URL="https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum"
+  URL="https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest/download/chksum"
   [ -n "$URL" ] && curl -s -k -L $URL -O
 
   if [ -f chksum ]; then
