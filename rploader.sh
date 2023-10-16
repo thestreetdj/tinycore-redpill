@@ -2965,6 +2965,7 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
     sudo umount part2
     sudo umount localdiskp1
     sudo umount localdiskp2
+    sudo umount localdiskp3
     sudo losetup -D
 
 #    if [ ${TARGET_REVISION} -gt 64569 ]; then
