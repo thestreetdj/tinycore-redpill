@@ -761,7 +761,7 @@ function removefriend() {
         [ -f /mnt/${loaderdisk}3/initrd-friend ] && sudo rm -rf /mnt/${loaderdisk}3/initrd-friend
         [ -f /mnt/${loaderdisk}3/bzImage-friend ] && sudo rm -rf /mnt/${loaderdisk}3/bzImage-friend
         echo "Removing initrd-dsm and zimage-dsm from ${loaderdisk}3 "
-        [ ! "$(sha256sum /mnt/${loaderdisk}3/initrd-dsm | awk '{print $2}')" = "$(sha256sum /mnt/${loaderdisk}1/rd.gz | awk '{print $2}')" ] && cp /mnt/${loaderdisk}3/initrd-dsm /mnt/${loaderdisk}1/rd.gz
+        [ ! "$(sha256sum /mnt/${loaderdisk}3/initrd-dsm | awk '{print $2}')" = "$(sha256sum /mnt/${loaderdisk}3/rd.gz | awk '{print $2}')" ] && cp /mnt/${loaderdisk}3/initrd-dsm /mnt/${loaderdisk}3/rd.gz
         [ -f /mnt/${loaderdisk}3/initrd-dsm ] && sudo rm -rf /mnt/${loaderdisk}3/initrd-dsm
         [ ! "$(sha256sum /mnt/${loaderdisk}3/zImage-dsm | awk '{print $2}')" = "$(sha256sum /mnt/${loaderdisk}1/zImage | awk '{print $2}')" ] && cp /mnt/${loaderdisk}3/zImage-dsm /mnt/${loaderdisk}1/zImage
         [ -f /mnt/${loaderdisk}3/zimage-dsm ] && sudo rm -rf /mnt/${loaderdisk}3/zimage-dsm
@@ -842,7 +842,7 @@ function bringfriend() {
 
             [ ! -d /home/tc/rd.temp ] && mkdir /home/tc/rd.temp
             [ -d /home/tc/rd.temp ] && cd /home/tc/rd.temp
-            if [ "$(od /mnt/${loaderdisk}1/rd.gz | head -1 | awk '{print $2}')" = "000135" ]; then
+            if [ "$(od /mnt/${loaderdisk}3/rd.gz | head -1 | awk '{print $2}')" = "000135" ]; then
                 RD_COMPRESSED="true"
             else
                 RD_COMPRESSED="false"
@@ -850,12 +850,12 @@ function bringfriend() {
 
             if [ "$RD_COMPRESSED" = "false" ]; then
                 echo "Ramdisk in not compressed "
-                cat /mnt/${loaderdisk}1/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
                 cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
                 sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
                 (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) 2>&1 >/dev/null
             else
-                unlzma -dc /mnt/${loaderdisk}1/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
                 cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
                 sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
                 (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) 2>&1 >/dev/null
@@ -970,11 +970,11 @@ function postupdate() {
 
         echo "Extracting redpill ramdisk"
 
-        if [ $(od /mnt/${loaderdisk}1/rd.gz | head -1 | awk '{print $2}') == "000135" ]; then
-            sudo unlzma -c /mnt/${loaderdisk}1/rd.gz | cpio -idm
+        if [ $(od /mnt/${loaderdisk}3/rd.gz | head -1 | awk '{print $2}') == "000135" ]; then
+            sudo unlzma -c /mnt/${loaderdisk}3/rd.gz | cpio -idm
             RD_COMPRESSED="yes"
         else
-            sudo cat /mnt/${loaderdisk}1/rd.gz | cpio -idm
+            sudo cat /mnt/${loaderdisk}3/rd.gz | cpio -idm
         fi
 
         . ./etc.defaults/VERSION && echo "The new smallupdate version will be  : ${productversion}-${buildnumber}-${smallfixnumber}"
@@ -996,7 +996,7 @@ function postupdate() {
 
             echo "Adding fake sign" && sudo dd if=/dev/zero of=rd.gz bs=68 count=1 conv=notrunc oflag=append
 
-            echo "Putting ramdisk back to the loader partition ${loaderdisk}1" && sudo cp -f rd.gz /mnt/${loaderdisk}1/rd.gz
+            echo "Putting ramdisk back to the loader partition ${loaderdisk}1" && sudo cp -f rd.gz /mnt/${loaderdisk}3/rd.gz
 
             echo "Removing temp ramdisk space " && rm -rf ramdisk
 
@@ -1160,9 +1160,9 @@ function postupdatev1() {
 
     echo -n "Copying loader files -> "
     echo -n "rd.gz : "
-    cp -f /home/tc/redpill-load/localdiskp1/rd.gz /mnt/${loaderdisk}1/rd.gz
+    cp -f /home/tc/redpill-load/localdiskp3/rd.gz /mnt/${loaderdisk}3/rd.gz
     cp -f /home/tc/redpill-load/localdiskp2/rd.gz /mnt/${loaderdisk}2/rd.gz
-    [ "$(sha256sum /home/tc/redpill-load/localdiskp1/rd.gz | awk '{print $1}')" == "$(sha256sum /mnt/${loaderdisk}1/rd.gz | awk '{print $1}')" ] && [ "$(sha256sum /home/tc/redpill-load/localdiskp2/rd.gz | awk '{print $1}')" == "$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')" ] && echo -n "OK !!!"
+    [ "$(sha256sum /home/tc/redpill-load/localdiskp3/rd.gz | awk '{print $1}')" == "$(sha256sum /mnt/${loaderdisk}3/rd.gz | awk '{print $1}')" ] && [ "$(sha256sum /home/tc/redpill-load/localdiskp2/rd.gz | awk '{print $1}')" == "$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')" ] && echo -n "OK !!!"
     echo -n " zImage : "
     cp -f /home/tc/redpill-load/localdiskp1/zImage /mnt/${loaderdisk}1/zImage
     cp -f /home/tc/redpill-load/localdiskp2/zImage /mnt/${loaderdisk}2/zImage
@@ -2880,7 +2880,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
     if [ "$RD_COMPRESSED" = "false" ]; then
         echo "Ramdisk in not compressed "
-        cat /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
+        cat /home/tc/redpill-load/localdiskp3/rd.gz | sudo cpio -idm
         cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
 #m shell only start
 #        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
@@ -2888,7 +2888,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     else
-        unlzma -dc /home/tc/redpill-load/localdiskp1/rd.gz | sudo cpio -idm
+        unlzma -dc /home/tc/redpill-load/localdiskp3/rd.gz | sudo cpio -idm
         cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
 #m shell only start
 #        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
@@ -2917,9 +2917,9 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
 #        echo "Don't move file in jun's mod"
 #    else
 #        echo "Copy rd.gz to partition 3"
-#        sudo cp localdiskp1/rd.gz     /mnt/${loaderdisk}3
+#        sudo cp localdiskp3/rd.gz     /mnt/${loaderdisk}3
 #        if [ $? -eq 0 ]; then
-#            echo "Success coping file: localdiskp1/rd.gz to /mnt/${loaderdisk}3"
+#            echo "Success coping file: localdiskp3/rd.gz to /mnt/${loaderdisk}3"
 #        else
 #            echo "File copy failed!!!, Build Action exiting!!!"
 #            exit 0
