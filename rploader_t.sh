@@ -3588,8 +3588,8 @@ fi
 
 if [ -z "$GATEWAY_INTERFACE" ]; then
 
-    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
-    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
+    loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+    tcrppart="${loaderdisk}3"
 
     if [ $loaderdisk == "mmc" ]; then
         tcrppart="mmcblk0p3"
