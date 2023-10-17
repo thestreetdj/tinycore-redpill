@@ -1131,7 +1131,6 @@ function viewerrorlog() {
     while true; do
       dialog --backtitle "`backtitle`" --title "View linuxrc.syno.log file" \
         --textbox "/mnt/${loaderdisk}1/logs/jr/linuxrc.syno.log" 0 0 
-      [ $? -ne 0 ] && break
       [ $? -eq 0 ] && break
     done
     
@@ -1142,7 +1141,8 @@ function viewerrorlog() {
     read answer
   
   fi
-  
+
+  return 0
 }
 
 function checkUserConfig() {
