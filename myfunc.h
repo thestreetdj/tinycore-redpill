@@ -179,6 +179,8 @@ set -u
 # Update : Add "Burn Anither TCRP Bootloader to USB or SSD" menu
 # 2023.10.09
 # Update : Add "Clone TCRP Bootloader to USB or SSD" menu
+# 2023.10.17
+# Update : Add "Show error log of running loader" menu
     
 function showlastupdate() {
     cat <<EOF
@@ -203,6 +205,9 @@ function showlastupdate() {
         
 # 2023.10.09
 # Update : Add "Clone TCRP Bootloader to USB or SSD" menu
+
+# 2023.10.17
+# Update : Add "Show error log of running loader" menu
         
 EOF
 }
