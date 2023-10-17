@@ -672,8 +672,6 @@ function usbidentify() {
         json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
         json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
     else            
-    
-        loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
 
         lsusb -v 2>&1 | grep -B 33 -A 1 SCSI >/tmp/lsusb.out
 
@@ -1124,6 +1122,28 @@ function editUserConfig() {
   NETNUM"=$(jq -r -e '.extra_cmdline.netif_num' $USER_CONFIG_FILE)"
 }
 
+###############################################################################
+# view /var/log/*rc* file with textbox
+function viewerrorlog() {
+
+  if [ -f "/mnt/${loaderdisk}1/logs/jr/linuxrc.syno.log" ]; then
+
+    while true; do
+      dialog --backtitle "`backtitle`" --title "View file" \
+        --textbox "/mnt/${loaderdisk}1/logs/jr/linuxrc.syno.log" 0 0 
+      [ $? -ne 0 ] && return
+    done
+    
+  else
+
+    echo "/mnt/${loaderdisk}1/logs/jr/linuxrc.syno.log file not found!"
+    echo "press any key to continue..."
+    read answer
+  
+  fi
+  
+}
+
 function checkUserConfig() {
 
   if [ ! -n "${SN}" ]; then
@@ -1412,9 +1432,9 @@ function cloneloader() {
   return 0
 }
 
-
 # Main loop
-tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
+loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+tcrppart="${loaderdisk}3"
 
 #Start Locale Setting process
 #Get Langugae code & country code
@@ -1661,6 +1681,7 @@ while true; do
   eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"
   echo "x \"Show SATA(s) # ports and drives\""           >> "${TMP_PATH}/menu"
+  echo "y \"Show error log of running loader\""          >> "${TMP_PATH}/menu"  
   echo "t \"Burn Another TCRP Bootloader to USB or SSD\""  >> "${TMP_PATH}/menu"
   echo "v \"Clone TCRP Bootloader to USB or SSD\""       >> "${TMP_PATH}/menu"
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
@@ -1765,7 +1786,8 @@ while true; do
       MSG+="\nPorts with color \Z1red\Zn as DUMMY, color \Z2\Zbgreen\Zn has drive connected."
       dialog --backtitle "$(backtitle)" --colors --title "Show SATA(s) # ports and drives" \
         --msgbox "${MSG}" 0 0
-      ;;    
+      ;;  
+    y) viewerrorlog;    	       NEXT="e" ;;
     t) burnloader;                     NEXT="e" ;;
     v) cloneloader;                    NEXT="e" ;;
     l) langMenu ;                      NEXT="m" ;;
