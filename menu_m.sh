@@ -1123,15 +1123,16 @@ function editUserConfig() {
 }
 
 ###############################################################################
-# view /var/log/*rc* file with textbox
+# view linuxrc.syno.log file with textbox
 function viewerrorlog() {
 
   if [ -f "/mnt/${loaderdisk}1/logs/jr/linuxrc.syno.log" ]; then
 
     while true; do
-      dialog --backtitle "`backtitle`" --title "View file" \
+      dialog --backtitle "`backtitle`" --title "View linuxrc.syno.log file" \
         --textbox "/mnt/${loaderdisk}1/logs/jr/linuxrc.syno.log" 0 0 
-      [ $? -ne 0 ] && return
+      [ $? -ne 0 ] && break
+      [ $? -eq 0 ] && break
     done
     
   else
