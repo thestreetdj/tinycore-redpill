@@ -181,6 +181,8 @@ set -u
 # Update : Add "Clone TCRP Bootloader to USB or SSD" menu
 # 2023.10.17
 # Update : Add "Show error log of running loader" menu
+# 2023.10.18
+# Update : Improved extension processing speed (local copy instead of remote curl download)    
     
 function showlastupdate() {
     cat <<EOF
@@ -208,6 +210,9 @@ function showlastupdate() {
 
 # 2023.10.17
 # Update : Add "Show error log of running loader" menu
+
+# 2023.10.18
+# Update : Improved extension processing speed (local copy instead of remote curl download)        
         
 EOF
 }
