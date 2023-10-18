@@ -42,7 +42,7 @@ function gitdownload() {
         fi    
     fi
 
-    /home/tc
+    cd /home/tc
     
 }
 
