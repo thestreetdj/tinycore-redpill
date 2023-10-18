@@ -1434,6 +1434,27 @@ function cloneloader() {
 }
 
 # Main loop
+
+# add git download 2023.10.18
+cd /dev/shm
+if [ -d /dev/shm/tcrp-addons ]; then
+  echo "tcrp-addons already downloaded!"    
+else    
+  git clone "https://github.com/PeterSuh-Q3/tcrp-addons.git"
+  if [ $? -ne 0 ]; then
+    git clone "https://giteas.duckdns.org/PeterSuh-Q3/tcrp-addons.git"
+  fi    
+fi
+if [ -d /dev/shm/tcrp-modules ]; then
+  echo "tcrp-modules already downloaded!"    
+else    
+  git clone "https://github.com/PeterSuh-Q3/tcrp-modules.git"
+  if [ $? -ne 0 ]; then
+    git clone "https://giteas.duckdns.org/PeterSuh-Q3/tcrp-modules.git"
+  fi    
+fi
+cd /home/tc
+    
 loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
 tcrppart="${loaderdisk}3"
 
