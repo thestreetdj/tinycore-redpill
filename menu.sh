@@ -28,17 +28,17 @@ function gitdownload() {
     if [ -d /dev/shm/tcrp-addons ]; then
         echo "tcrp-addons already downloaded!"    
     else    
-        git clone -b master "https://github.com/PeterSuh-Q3/tcrp-addons.git"
+        git clone "https://github.com/PeterSuh-Q3/tcrp-addons.git"
         if [ $? -ne 0 ]; then
-            git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/tcrp-addons.git"
+            git clone "https://giteas.duckdns.org/PeterSuh-Q3/tcrp-addons.git"
         fi    
     fi
     if [ -d /dev/shm/tcrp-moduless ]; then
         echo "tcrp-moduless already downloaded!"    
     else    
-        git clone -b master "https://github.com/PeterSuh-Q3/tcrp-moduless.git"
+        git clone "https://github.com/PeterSuh-Q3/tcrp-moduless.git"
         if [ $? -ne 0 ]; then
-            git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/tcrp-moduless.git"
+            git clone "https://giteas.duckdns.org/PeterSuh-Q3/tcrp-moduless.git"
         fi    
     fi
 
