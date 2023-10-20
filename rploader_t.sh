@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 0.9.5.0
+# User Variables : 0.9.6.0
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="0.9.5.0"
+rploaderver="0.9.6.0"
 build="master"
 redpillmake="prod"
 
@@ -96,6 +96,7 @@ function history() {
     0.9.3.0 Changed set root entry to search for FS UUID
     0.9.4.3-1 Multilingual menu support 
     0.9.5.0 Add storage panel size selection menu
+    0.9.6.0 To prevent partition space shortage, rd.gz is no longer used in partition 1
     --------------------------------------------------------------------------------------
 EOF
 
@@ -2964,6 +2965,7 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
     sudo umount part2
     sudo umount localdiskp1
     sudo umount localdiskp2
+    sudo umount localdiskp3
     sudo losetup -D
 
 #    if [ ${TARGET_REVISION} -gt 64569 ]; then
