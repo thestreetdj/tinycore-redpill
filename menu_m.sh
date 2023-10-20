@@ -20,6 +20,11 @@ function readanswer() {
     done
 }
 
+function st() {
+echo -e "[$(date '+%T.%3N')]:-------------------------------------------------------------" >> /home/tc/buildstatus
+echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
+}
+
 function installtcz() {
   tczpack="${1}"
   cd /mnt/${tcrppart}/cde/optional
