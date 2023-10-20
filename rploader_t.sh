@@ -2717,7 +2717,7 @@ st "downloadtools" "Extraction tools" "Tools downloaded"
 #    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 st "extensions" "Extensions collection" "Extensions collection..."
     addrequiredexts
-st "loader.img" "Creation loader.img file" "Compile and make loader.img file..."
+st "loader.img" "Creation loader file" "Compile n make loader.img file."
     if [ "$JUNLOADER" == "YES" ]; then
         echo "jun build option has been specified, so JUN MOD loader will be created"
         # jun's mod must patch using custom.gz from the first partition, so you need to fix the partition.
