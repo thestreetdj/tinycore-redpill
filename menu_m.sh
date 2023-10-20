@@ -1233,7 +1233,6 @@ function make() {
     return 1
   fi
 
-  backup "nowait"
   echo "Ready!"
   echo "press any key to continue..."
   read answer
@@ -1370,10 +1369,8 @@ function backup() {
 st "backuploader" "Making changes persistent to the Loader Backup File" ""
   echo "y"|./rploader.sh backup
 st "finishloader" "Loader build status" "Finished building the loader"  
-  if [ "${1}" = "wait" ]; then
-    echo "press any key to continue..."
-    read answer
-  fi
+  echo "press any key to continue..."
+  read answer
   return 0
 }
 
@@ -1779,6 +1776,7 @@ while true; do
        else
          make "jot"
        fi
+       backup
        NEXT="r" ;;
     u) editUserConfig;    NEXT="p" ;;
     q) storagepanel;      NEXT="p" ;;
@@ -1845,7 +1843,7 @@ while true; do
     l) langMenu ;                      NEXT="m" ;;
     k) keymapMenu ;                    NEXT="m" ;;
     i) erasedisk ;                     NEXT="m" ;;
-    b) backup "wait";                  NEXT="m" ;;
+    b) backup ;                        NEXT="m" ;;
     r) restart ;;
     e) sudo poweroff ;;
   esac
