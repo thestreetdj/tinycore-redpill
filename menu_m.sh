@@ -1371,6 +1371,7 @@ st "backuploader" "Making changes persistent to the Loader Backup File" ""
 st "finishloader" "Loader build status" "Finished building the loader"  
   echo "press any key to continue..."
   read answer
+  rm -f /home/tc/buildstatus
   return 0
 }
 
