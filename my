@@ -467,37 +467,4 @@ if [ $? -ne 0 ]; then
     ./rploader.sh clean
 fi
 
-if  [ -f /home/tc/custom-module/redpill.ko ]; then
-    cecho y "Removing redpill.ko ..."
-    rm -rf /home/tc/custom-module/redpill.ko
-fi
-
-if [ "$makeimg" = "Y" ]; then
-    cecho y "Delete all PAT files except for the final created PAT file (including decryption PAT)!"
-    if [ $(ls /mnt/${tcrppart}/auxfiles/*.pat | grep -v ${SYNOMODEL}.pat | wc -l ) -gt 0 ]; then
-        find /mnt/${tcrppart}/auxfiles -name "*.pat" ! -name "${SYNOMODEL}.pat" -type f -delete
-    fi    
-st "finishloader" "Loader build status" "Finished building the loader"    
-    exit 0
-fi
-
-echo                                                                                                                                                                           
-cecho y "Backup in progress..."                                                                                                                                                
-echo
-                                                                                                                                                                           
-rm -rf /home/tc/old                                                                                                                                                       
-rm -rf /home/tc/oldpat.tar.gz
-st "cleanbuild" "Cleaning build dir" "Build directory cleaned"
-cecho r "Cleaning redpill-load/cache directory!"
-rm -f /home/tc/redpill-load/cache/*
-
-cecho y "Delete all PAT files except for the final created PAT file (including decryption PAT)!"
-if [ $(ls /mnt/${tcrppart}/auxfiles/*.pat | grep -v ${SYNOMODEL}.pat | wc -l ) -gt 0 ]; then
-    find /mnt/${tcrppart}/auxfiles -name "*.pat" ! -name "${SYNOMODEL}.pat" -type f -delete
-fi    
-
-rm -f /home/tc/custom-module
-st "backuploader" "Making changes persistent to the Loader Backup File" ""
-echo "y"|./rploader.sh backup                                                                                                                                         
-st "finishloader" "Loader build status" "Finished building the loader"
 exit 0
