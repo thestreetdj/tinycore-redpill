@@ -1218,6 +1218,11 @@ function make() {
     ./my "${MODEL}"J noconfig "${1}" | tee "/home/tc/zlastbuild.log"
   fi
 
+  if  [ -f /home/tc/custom-module/redpill.ko ]; then
+    cecho y "Removing redpill.ko ..."
+    rm -rf /home/tc/custom-module/redpill.ko
+  fi
+
   if [ $? -ne 0 ]; then
     dialog --backtitle "`backtitle`" --title "Error loader building" 0 0 #--textbox "${LOG_FILE}" 0 0    
     return 1
@@ -1341,7 +1346,24 @@ function erasedisk() {
 }
 
 function backup() {
+
+  echo "Cleaning redpill-load/cache directory for backup!"
+  if [ -d /home/tc/old ]; then
+    rm -rf /home/tc/old
+  fi
+  if [ -f /home/tc/oldpat.tar.gz ]; then
+    rm -f /home/tc/oldpat.tar.gz
+  fi  
+  if [ -f /home/tc/redpill-load/cache/* ]; then
+    rm -f /home/tc/redpill-load/cache/*
+  fi  
+  if [ -f /home/tc/custom-module ]; then
+    rm -f /home/tc/custom-module
+  fi
+
+st "backuploader" "Making changes persistent to the Loader Backup File" ""
   echo "y"|./rploader.sh backup
+st "finishloader" "Loader build status" "Finished building the loader"  
   echo "press any key to continue..."
   read answer
   return 0
