@@ -1219,7 +1219,7 @@ function make() {
   fi
 
   if  [ -f /home/tc/custom-module/redpill.ko ]; then
-    cecho y "Removing redpill.ko ..."
+    echo "Removing redpill.ko ..."
     rm -rf /home/tc/custom-module/redpill.ko
   fi
 
