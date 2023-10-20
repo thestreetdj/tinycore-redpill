@@ -113,7 +113,7 @@ function msgnormal() {
 } 
 function st() {
 echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
-echo -e "----------------------------------------------------------------------------" >> /home/tc/buildstatus
+echo -e "$(date '+%T.%3N')----------------------------------------------------------------" >> /home/tc/buildstatus
 }
 
 function readanswer() {
