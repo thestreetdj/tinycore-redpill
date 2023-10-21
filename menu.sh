@@ -1,27 +1,36 @@
 #!/bin/bash
 
+function gitclone() {
+    git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"
+    if [ $? -ne 0 ]; then
+        git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git"
+    fi    
+}
+
 function gitdownload() {
 
+    loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+    tcrppart="${loaderdisk}3"
+
+    cd /mnt/${tcrppart}
     git config --global http.sslVerify false    
-    if [ -d /home/tc/redpill-load ]; then
+    if [ -d /mnt/${tcrppart}/redpill-load ]; then
         echo "Loader sources already downloaded, pulling latest"
-        cd /home/tc/redpill-load
+        cd /mnt/${tcrppart}/redpill-load
         git pull
         if [ $? -ne 0 ]; then
-           cd /home/tc    
-           /home/tc/rploader.sh clean 
-           git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"
-           if [ $? -ne 0 ]; then
-               git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git"
-           fi    
+           cd /mnt/${tcrppart}    
+           rm -rf /mnt/${tcrppart}/redpill-load
+           gitclone    
         fi   
         cd /home/tc
     else
-        git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"
-        if [ $? -ne 0 ]; then
-            git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git"
-        fi    
+        gitclone
     fi
+
+    if [ -d /mnt/${tcrppart}/redpill-load ]; then
+        ln -s /mnt/${tcrppart}/redpill-load /home/tc/redpill-load
+    fi    
     
 }
 
