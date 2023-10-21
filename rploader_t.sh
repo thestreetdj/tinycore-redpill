@@ -2696,7 +2696,9 @@ checkmachine
         echo "Found build request for revision greater than 42218"
 st "downloadtools" "Extraction tools" "Tools downloaded"        
         downloadextractor
-        processpat
+        if [ ${TARGET_REVISION} -lt 69057 ]; then
+            processpat
+        fi    
 
     else
 
