@@ -182,7 +182,9 @@ set -u
 # 2023.10.17
 # Update : Add "Show error log of running loader" menu
 # 2023.10.18
-# Update : Improved extension processing speed (local copy instead of remote curl download)    
+# Update : Improved extension processing speed (local copy instead of remote curl download)
+# 2023.10.22
+# Update : Improved build processing speed (removed pat file download process since 69057)
     
 function showlastupdate() {
     cat <<EOF
@@ -212,7 +214,10 @@ function showlastupdate() {
 # Update : Add "Show error log of running loader" menu
 
 # 2023.10.18
-# Update : Improved extension processing speed (local copy instead of remote curl download)        
+# Update : Improved extension processing speed (local copy instead of remote curl download)
+
+# 2023.10.22
+# Update : Improved build processing speed (removed pat file download process since 69057)
         
 EOF
 }
