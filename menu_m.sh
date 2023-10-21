@@ -1233,6 +1233,7 @@ function make() {
     return 1
   fi
 
+st "finishloader" "Loader build status" "Finished building the loader"  
   echo "Ready!"
   echo "press any key to continue..."
   read answer
@@ -1366,12 +1367,9 @@ function backup() {
     rm -f /home/tc/custom-module
   fi
 
-st "backuploader" "Making changes persistent to the Loader Backup File" ""
   echo "y"|./rploader.sh backup
-st "finishloader" "Loader build status" "Finished building the loader"  
   echo "press any key to continue..."
   read answer
-  rm -f /home/tc/buildstatus
   return 0
 }
 
@@ -1777,7 +1775,6 @@ while true; do
        else
          make "jot"
        fi
-       backup
        NEXT="r" ;;
     u) editUserConfig;    NEXT="p" ;;
     q) storagepanel;      NEXT="p" ;;
