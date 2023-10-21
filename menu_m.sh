@@ -34,6 +34,19 @@ function installtcz() {
   cd ~
 }
 
+function restoresession() {
+    lastsessiondir="/mnt/${tcrppart}/lastsession"
+    if [ -d $lastsessiondir ]; then
+        echo "Found last user session, restoring session..."
+	if [ -d $lastsessiondir ] && [ -f ${lastsessiondir}/user_config.json ]; then
+	    echo "Copying last stored user_config.json"
+	    cp -f ${lastsessiondir}/user_config.json /home/tc
+	fi
+    else
+        echo "There is no last session stored!!!"
+    fi
+}
+
 if [ -f /home/tc/my.sh ]; then
   rm /home/tc/my.sh
 fi
@@ -43,6 +56,12 @@ fi
 
 # Trap Ctrl+C and call ctrl_c function
 trap ctrl_c INT
+
+loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+tcrppart="${loaderdisk}3"
+
+# restore user_config.json file from /mnt/sd#/lastsession directory 2023.10.21
+restoresession
 
 TMP_PATH=/tmp
 LOG_FILE="${TMP_PATH}/log.txt"
@@ -1459,20 +1478,6 @@ function cloneloader() {
   return 0
 }
 
-function restoresession() {
-
-    lastsessiondir="/mnt/${tcrppart}/lastsession"
-    if [ -d $lastsessiondir ]; then
-        echo "Found last user session, restoring session..."
-	if [ -d $lastsessiondir ] && [ -f ${lastsessiondir}/user_config.json ]; then
-	    echo "Copying last stored user_config.json"
-	    cp -f ${lastsessiondir}/user_config.json /home/tc
-	fi
-    else
-        echo "There is no last session stored!!!"
-    fi
-}
-
 # Main loop
 
 # add git download 2023.10.18
@@ -1494,12 +1499,6 @@ else
   fi    
 fi
 cd /home/tc
-    
-loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
-tcrppart="${loaderdisk}3"
-
-# restore user_config.json file from /mnt/sd#/lastsession directory 2023.10.21
-restoresession
 
 #Start Locale Setting process
 #Get Langugae code & country code
