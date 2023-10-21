@@ -9,28 +9,21 @@ function gitclone() {
 
 function gitdownload() {
 
-    loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
-    tcrppart="${loaderdisk}3"
-
-    cd /mnt/${tcrppart}
+    cd /home/tc
     git config --global http.sslVerify false    
-    if [ -d /mnt/${tcrppart}/redpill-load ]; then
+    if [ -d /home/tc/redpill-load ]; then
         echo "Loader sources already downloaded, pulling latest"
-        cd /mnt/${tcrppart}/redpill-load
+        cd /home/tc/redpill-load
         git pull
         if [ $? -ne 0 ]; then
-           cd /mnt/${tcrppart}    
-           rm -rf /mnt/${tcrppart}/redpill-load
+           cd /home/tc
+           ./rploader.sh clean
            gitclone    
         fi   
         cd /home/tc
     else
         gitclone
     fi
-
-    if [ -d /mnt/${tcrppart}/redpill-load ]; then
-        ln -s /mnt/${tcrppart}/redpill-load /home/tc/redpill-load
-    fi    
     
 }
 
