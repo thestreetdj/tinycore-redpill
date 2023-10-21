@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 0.9.6.0
+# User Variables : 0.9.7.0
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="0.9.6.0"
+rploaderver="0.9.7.0"
 build="master"
 redpillmake="prod"
 
@@ -97,6 +97,7 @@ function history() {
     0.9.4.3-1 Multilingual menu support 
     0.9.5.0 Add storage panel size selection menu
     0.9.6.0 To prevent partition space shortage, rd.gz is no longer used in partition 1
+    0.9.7.0 Improved build processing speed (removed pat file download process since 69057)
     --------------------------------------------------------------------------------------
 EOF
 
