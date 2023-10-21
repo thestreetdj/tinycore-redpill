@@ -112,8 +112,8 @@ function msgnormal() {
     echo -e "\033[1;32m$1\033[0m"
 } 
 function st() {
+echo -e "[$(date '+%T.%3N')]:-------------------------------------------------------------" >> /home/tc/buildstatus
 echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
-echo -e "----------------------------------------------------------------------------" >> /home/tc/buildstatus
 }
 
 function readanswer() {
@@ -1822,16 +1822,17 @@ function mountshare() {
 function backup() {
 
 #Apply pigz for fast backup  
-    if [ -n "$(which pigz)" ]; then
-        if [ $(cat /usr/bin/filetool.sh | grep pigz | wc -l ) -eq 0 ]; then
-            sudo sed -i 's/\-czvf/\-cvf \- \| pigz \>/g' /usr/bin/filetool.sh
-            sudo sed -i 's/\-czf/\-cf \- \| pigz \>/g' /usr/bin/filetool.sh
-        fi
-    else
+    if [ ! -n "$(which pigz)" ]; then
         echo "pigz does not exist, bringing over from repo"
         curl -s -k -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/pigz" -O
         chmod 777 pigz
         sudo mv pigz /usr/local/bin/
+    fi
+
+    thread=$(lscpu |grep CPU\(s\): | awk '{print $2}')
+    if [ $(cat /usr/bin/filetool.sh | grep pigz | wc -l ) -eq 0 ]; then
+        sudo sed -i "s/\-czvf/\-cvf \- \| pigz -p "${thread}" \>/g" /usr/bin/filetool.sh
+        sudo sed -i "s/\-czf/\-cf \- \| pigz -p "${thread}" \>/g" /usr/bin/filetool.sh
     fi
     
 #    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
@@ -2717,7 +2718,7 @@ st "downloadtools" "Extraction tools" "Tools downloaded"
 #    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 st "extensions" "Extensions collection" "Extensions collection..."
     addrequiredexts
-
+st "loader.img" "Creation loader file" "Compile n make loader.img file."
     if [ "$JUNLOADER" == "YES" ]; then
         echo "jun build option has been specified, so JUN MOD loader will be created"
         # jun's mod must patch using custom.gz from the first partition, so you need to fix the partition.
@@ -2726,7 +2727,7 @@ st "extensions" "Extensions collection" "Extensions collection..."
     else
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
     fi
-st "copyfiles" "Copying files to disk" "Copied boot files to the loader"
+st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
 #    msgnormal "======Unmount the ramdisk for add extensions.======="
 #    sudo umount /home/tc/redpill-load/custom/extensions
 
