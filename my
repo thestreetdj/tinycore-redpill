@@ -403,7 +403,8 @@ if [ -f ${patfile} ]; then
     cecho b "Downloadng Skipped!!!"
 st "download pat" "Found pat    " "Found ${SYNOMODEL}.pat"
 else
-    
+
+  if [ ${TARGET_REVISION} -lt 69057 ]; then
     chkavail
     if [ $avail_num -le 390 ]; then
         echo "No adequate space on ${local_cache} to download file into cache folder, clean up PAT file now ....."
@@ -431,7 +432,7 @@ st "download pat" "Downloading pat  " "${SYNOMODEL}.pat"
         cecho y "os sha256 verify FAILED, check ${patfile}  "                           
         exit 99                                                                         
     fi
-
+  fi
 fi
 
 
