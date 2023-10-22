@@ -469,9 +469,9 @@ if [ $? -ne 0 ]; then
     ./rploader.sh clean
 fi
 
-echo "Delete all PAT files except for the final created PAT file (including decryption PAT)!"
-if [ $(ls /mnt/${tcrppart}/auxfiles/*.pat | grep -v ${SYNOMODEL}.pat | wc -l ) -gt 0 ]; then
-  find /mnt/${tcrppart}/auxfiles -name "*.pat" ! -name "${SYNOMODEL}.pat" -type f -delete
+echo "Clean all PAT files for saving space!"
+if [ $(ls /mnt/${tcrppart}/auxfiles/*.pat | wc -l ) -gt 0 ]; then
+  sudo rm -f /mnt/${tcrppart}/auxfiles/*.pat
 fi    
 
 exit 0
