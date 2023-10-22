@@ -145,7 +145,6 @@ function chkavail() {
 }
 
 checkinternet
-gitdownload
 
 if [ "$gitdomain" = "raw.githubusercontent.com" ]; then
     if [ $# -lt 1 ]; then
@@ -159,6 +158,8 @@ if [ "$gitdomain" = "raw.githubusercontent.com" ]; then
         fi
     fi
 fi
+
+gitdownload
 
 if [ $# -lt 1 ]; then
     showhelp 
