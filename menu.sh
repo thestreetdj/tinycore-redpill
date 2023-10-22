@@ -27,14 +27,13 @@ function gitdownload() {
 
 while true; do
   if [ $(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | wc -l) -gt 0 ]; then
+    gitdownload
     /home/tc/my update
     break
   fi
   sleep 1
   echo "Waiting for internet activation in menu.sh !!!"
 done
-
-gitdownload
 
 /home/tc/menu_m.sh
 exit 0
