@@ -817,31 +817,34 @@ function selectldrmode() {
 # Shows available dsm verwsion 
 function selectversion () {
 
-  while true; do
-    dialog --clear --backtitle "`backtitle`" \
-      --menu "Choose a option" 0 0 0 \
-      a "7.2.1-69057" \
-      b "7.2.0-64570" \
-      c "7.1.1-42962" \
-      d "7.0.1-42218" \
-    2>${TMP_PATH}/resp
-    [ $? -ne 0 ] && return
-    resp=$(<${TMP_PATH}/resp)
-    [ -z "${resp}" ] && return
-    if [ "${resp}" = "a" ]; then
-      BUILD="7.2.1-69057"
-      break
-    elif [ "${resp}" = "b" ]; then
-      BUILD="7.2.0-64570"
-      break
-    elif [ "${resp}" = "c" ]; then
-      BUILD="7.1.1-42962"
-      break
-    elif [ "${resp}" = "d" ]; then
-      BUILD="7.0.1-42218"
-      break
-    fi
+while true; do
+  cmd=(dialog --clear --backtitle "`backtitle`" --menu "Choose an option" 0 0 0)
+  if [ "${MODEL}" != "DS3615xs" ]; then
+    options=("a" "7.2.1-69057" "b" "7.2.0-64570" "c" "7.1.1-42962")
+  else  
+    options=("c" "7.1.1-42962")
+  fi 
+  if [ "${MODEL}" != "DS923+" ] && [ "${MODEL}" != "DS723+" ] && [ "${MODEL}" != "DS1823+" ] && [ "${MODEL}" != "DVA1622" ]; then
+    options+=("d" "7.0.1-42218")
+  fi
+
+  for ((i=0; i<${#options[@]}; i+=2)); do
+    cmd+=("${options[i]}" "${options[i+1]}")
   done
+
+  "${cmd[@]}" 2>${TMP_PATH}/resp
+  [ $? -ne 0 ] && return
+  resp=$(<${TMP_PATH}/resp)
+  [ -z "${resp}" ] && return
+
+  case $resp in
+    "a") BUILD="7.2.1-69057"; break;;
+    "b") BUILD="7.2.0-64570"; break;;
+    "c") BUILD="7.1.1-42962"; break;;
+    "d") BUILD="7.0.1-42218"; break;;
+    *) echo "Invalid option";;
+  esac
+done
 
   writeConfigKey "general" "version" "${BUILD}"
 
@@ -959,6 +962,16 @@ done
   MODEL="`<${TMP_PATH}/resp`"
   writeConfigKey "general" "model" "${MODEL}"
   setSuggest $MODEL
+
+  if [ "${MODEL}" = "DS3615xs" ]; then
+      BUILD="7.1.1-42962"
+      writeConfigKey "general" "version" "${BUILD}"
+  fi    
+  if [ "${MODEL}" = "DS923+" ] || [ "${MODEL}" = "DS723+" ] || [ "${MODEL}" = "DS1823+" ] || [ "${MODEL}" = "DVA1622" ]; then
+      BUILD="7.2.1-69057"
+      writeConfigKey "general" "version" "${BUILD}"
+  fi
+  
 }
 
 # Set Describe model-specific requirements or suggested hardware
