@@ -2715,7 +2715,7 @@ st "downloadtools" "Extraction tools" "Tools downloaded"
 
     [ -d /home/tc/redpill-load ] && cd /home/tc/redpill-load
 
-    [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir /home/tc/redpill-load/custom/extensions
+    [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir -p /home/tc/redpill-load/custom/extensions
 #    msgnormal "======Mount the ramdisk for quick add processing of extensions.======="
 #    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 st "extensions" "Extensions collection" "Extensions collection..."
