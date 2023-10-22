@@ -97,7 +97,7 @@ function history() {
     0.9.4.3-1 Multilingual menu support 
     0.9.5.0 Add storage panel size selection menu
     0.9.6.0 To prevent partition space shortage, rd.gz is no longer used in partition 1
-    0.9.7.0 Improved build processing speed (removed pat file download process since 69057)
+    0.9.7.0 Improved build processing speed (removed pat file download process)
     --------------------------------------------------------------------------------------
 EOF
 
@@ -2697,19 +2697,18 @@ checkmachine
         echo "Found build request for revision greater than 42218"
 st "downloadtools" "Extraction tools" "Tools downloaded"        
         downloadextractor
-        if [ ${TARGET_REVISION} -lt 69057 ]; then
-            processpat
-        fi    
+        #processpat
 
     else
-
+      
         if [ -d /home/tc/custom-module ]; then
             #echo "Want to use firmware files from /home/tc/custom-module/*.pat ? [yY/nN] : "
             #readanswer
 
             #if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
-            sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
+            #sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
             #fi
+            echo "skip downloadextractor"
         fi
 
     fi
