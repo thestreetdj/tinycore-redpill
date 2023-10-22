@@ -1,28 +1,26 @@
 #!/bin/bash
 
-function gitclone() {
-    git clone -b master "https://github.com/PeterSuh-Q3/redpill-load.git"
-    if [ $? -ne 0 ]; then
-        git clone -b master "https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git"
-    fi    
-}
-
 function gitdownload() {
 
-    cd /home/tc
     git config --global http.sslVerify false    
     if [ -d /home/tc/redpill-load ]; then
         echo "Loader sources already downloaded, pulling latest"
         cd /home/tc/redpill-load
         git pull
         if [ $? -ne 0 ]; then
-           cd /home/tc
-           ./rploader.sh clean
-           gitclone    
+           cd /home/tc    
+           /home/tc/rploader.sh clean 
+           git clone -b master --single-branch https://github.com/PeterSuh-Q3/redpill-load.git
+           if [ $? -ne 0 ]; then
+               git clone -b master --single-branch https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git
+           fi    
         fi   
         cd /home/tc
     else
-        gitclone
+        git clone -b master --single-branch https://github.com/PeterSuh-Q3/redpill-load.git
+        if [ $? -ne 0 ]; then
+            git clone -b master --single-branch https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git
+        fi    
     fi
     
 }
