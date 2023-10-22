@@ -2991,7 +2991,8 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
     echo "Cleaning up files"
     removemodelexts    
     sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/redpill-load/loader.img /home/tc/cache/*pat
-
+#remark
+if [ 1 = 0 ]; then
     msgnormal "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
 
@@ -3012,7 +3013,7 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
         fi
     fi
 st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
-
+fi
 }
 
 
