@@ -184,7 +184,7 @@ set -u
 # 2023.10.18
 # Update : Improved extension processing speed (local copy instead of remote curl download)
 # 2023.10.22
-# Update : Improved build processing speed (removed pat file download process since 69057)
+# Update : Improved build processing speed (removed pat file download process)
     
 function showlastupdate() {
     cat <<EOF
@@ -217,7 +217,7 @@ function showlastupdate() {
 # Update : Improved extension processing speed (local copy instead of remote curl download)
 
 # 2023.10.22
-# Update : Improved build processing speed (removed pat file download process since 69057)
+# Update : Improved build processing speed (removed pat file download process)
         
 EOF
 }
