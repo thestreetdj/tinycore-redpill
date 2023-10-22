@@ -379,14 +379,14 @@ echo
 DN_MODEL="$(echo $MODEL | sed 's/+/%2B/g')"
 echo "DN_MODEL is $DN_MODEL"
 
+#remark
+if [ 1 = 0 ]; then
 cecho p "DSM PAT file pre-downloading in progress..."
-
 URL="https://global.synologydownload.com/download/DSM/release/${TARGET_VERSION}/${TARGET_REVISION}${SUVP}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"
-
 cecho y "$URL"
-
+fi
 patfile="/mnt/${tcrppart}/auxfiles/${SYNOMODEL}.pat"                                         
-        
+
 if [ "$TARGET_VERSION" = "7.2" ]; then
     TARGET_VERSION="7.2.0"
 fi
@@ -404,7 +404,8 @@ if [ -f ${patfile} ]; then
 st "download pat" "Found pat    " "Found ${SYNOMODEL}.pat"
 else
 
-  if [ ${TARGET_REVISION} -lt 69057 ]; then
+  #remark
+  if [ 1 = 0 ]; then
     chkavail
     if [ $avail_num -le 390 ]; then
         echo "No adequate space on ${local_cache} to download file into cache folder, clean up PAT file now ....."
