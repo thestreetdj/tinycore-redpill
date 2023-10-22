@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 0.9.6.0
+# User Variables : 0.9.7.0
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="0.9.6.0"
+rploaderver="0.9.7.0"
 build="master"
 redpillmake="prod"
 
@@ -97,6 +97,7 @@ function history() {
     0.9.4.3-1 Multilingual menu support 
     0.9.5.0 Add storage panel size selection menu
     0.9.6.0 To prevent partition space shortage, rd.gz is no longer used in partition 1
+    0.9.7.0 Improved build processing speed (removed pat file download process)
     --------------------------------------------------------------------------------------
 EOF
 
@@ -2604,7 +2605,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 0.9.5.0"
+    echo "TCRP JOT Version : 0.9.7.0"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
@@ -2696,36 +2697,38 @@ checkmachine
         echo "Found build request for revision greater than 42218"
 st "downloadtools" "Extraction tools" "Tools downloaded"        
         downloadextractor
-        processpat
+        #processpat
 
     else
-
+      
         if [ -d /home/tc/custom-module ]; then
             #echo "Want to use firmware files from /home/tc/custom-module/*.pat ? [yY/nN] : "
             #readanswer
 
             #if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
-            sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
+            #sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
             #fi
+            echo "skip downloadextractor"
         fi
 
     fi
 
     [ -d /home/tc/redpill-load ] && cd /home/tc/redpill-load
 
-    [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir /home/tc/redpill-load/custom/extensions
+    [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir -p /home/tc/redpill-load/custom/extensions
 #    msgnormal "======Mount the ramdisk for quick add processing of extensions.======="
 #    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 st "extensions" "Extensions collection" "Extensions collection..."
     addrequiredexts
 st "loader.img" "Creation loader file" "Compile n make loader.img file."
+    UPPER_ORIGIN_PLATFORM=$(echo ${ORIGIN_PLATFORM} | tr '[:lower:]' '[:upper:]')
     if [ "$JUNLOADER" == "YES" ]; then
         echo "jun build option has been specified, so JUN MOD loader will be created"
         # jun's mod must patch using custom.gz from the first partition, so you need to fix the partition.
         sed -i "s/BRP_OUT_P2}\/\${BRP_CUSTOM_RD_NAME/BRP_OUT_P1}\/\${BRP_CUSTOM_RD_NAME/g" /home/tc/redpill-load/build-loader.sh        
-        sudo BRP_JUN_MOD=1 BRP_DEBUG=0 BRP_USER_CFG=user_config.json ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
+        sudo BRP_JUN_MOD=1 BRP_DEBUG=0 BRP_USER_CFG=user_config.json ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM}
     else
-        sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img
+        sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM}
     fi
 st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
 #    msgnormal "======Unmount the ramdisk for add extensions.======="
@@ -2988,7 +2991,8 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
     echo "Cleaning up files"
     removemodelexts    
     sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/redpill-load/loader.img /home/tc/cache/*pat
-
+#remark
+if [ 1 = 0 ]; then
     msgnormal "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
 
@@ -3009,7 +3013,7 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
         fi
     fi
 st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
-
+fi
 }
 
 
