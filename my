@@ -159,7 +159,6 @@ function chkavail() {
 
 function _pat_process() {
 
-#URL="https://global.synologydownload.com/download/DSM/release/${TARGET_VERSION}/${TARGET_REVISION}${SUVP}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"
   PATURL="${URL}"
   PAT_FILE="${SYNOMODEL}.pat"
   PAT_PATH="${patfile}"
@@ -172,7 +171,7 @@ function _pat_process() {
   mirror="$(echo ${PATURL} | sed 's|^http[s]*://\([^/]*\).*|\1|')"
   echo "mirror = " "${mirror}"
   if echo "${mirrors[@]}" | grep -wq "${mirror}" && [ "${mirror}" != "${fastest}" ]; then
-      echo "Based on the current network situation, switch to %s mirror to downloading." "${fastest}"
+      echo "Based on the current network situation, switch to ${fastest} mirror to downloading."
       PATURL="$(echo ${PATURL} | sed "s/${mirror}/${fastest}/")"
   fi
 
@@ -191,7 +190,7 @@ function _pat_process() {
   STATUS=$(curl -k -w "%{http_code}" -L "${PATURL}" -o "${PAT_PATH}" --progress-bar)
   if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
       rm -f "${PAT_PATH}"
-      echo "Check internet or cache disk space.\nError: %d" "${STATUS}"
+      echo "Check internet or cache disk space.\nError: ${STATUS}"
       exit 99
   fi
 
@@ -484,10 +483,6 @@ st "download pat" "Downloading pat  " "${SYNOMODEL}.pat"
         exit 99                                                                         
     fi
 fi
-
-cecho p "press any key to continue..."
-read answer
-exit 0
 
 echo
 cecho g "Loader Building in progress..."
