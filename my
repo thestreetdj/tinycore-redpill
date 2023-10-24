@@ -163,10 +163,11 @@ function _pat_process() {
   PATURL="${URL}"
   PAT_FILE="${SYNOMODEL}.pat"
   PAT_PATH="${patfile}"
+  mirrors=("global.synologydownload.com" "global.download.synology.com" "cndl.synology.cn")
 
   SPACELEFT=$(df --block-size=1 | awk '/'${loaderdisk}'3/{print $4}') # Check disk space left
 
-  fastest=$(_get_fastest "global.synologydownload.com" "global.download.synology.com" "cndl.synology.cn")
+  fastest=$(_get_fastest "${mirrors[@]}")
   echo "fastest = " "${fastest}"
   mirror="$(echo ${PATURL} | sed 's|^http[s]*://\([^/]*\).*|\1|')"
   echo "mirror = " "${mirror}"
@@ -174,9 +175,10 @@ function _pat_process() {
       echo "Based on the current network situation, switch to %s mirror to downloading." "${fastest}"
       PATURL="$(echo ${PATURL} | sed "s/${mirror}/${fastest}/")"
   fi
+
   # Discover remote file size
   FILESIZE=$(curl -k -sLI "${PATURL}" | grep -i Content-Length | awk '{print$2}')
-  echo "FILESIZE = " "${FILESIZE}"
+  echo "FILESIZE  = " "${FILESIZE}"
   echo "SPACELEFT = " "${SPACELEFT}"
   if [ 0${FILESIZE} -ge 0${SPACELEFT} ]; then
       # No disk space to download, change it to RAMDISK
@@ -184,6 +186,7 @@ function _pat_process() {
       rm -f ${local_cache}/*.pat
 #      PAT_PATH="/dev/shm/${PAT_FILE}"
   fi
+
   echo "PATURL = " "${PATURL}"
   STATUS=$(curl -k -w "%{http_code}" -L "${PATURL}" -o "${PAT_PATH}" --progress-bar)
   if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
