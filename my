@@ -143,36 +143,6 @@ function _get_fastest() {
   echo "${fastest}"
 }
 
-function _pat_process() {
-
-#URL="https://global.synologydownload.com/download/DSM/release/${TARGET_VERSION}/${TARGET_REVISION}${SUVP}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"
-  PATURL="${URL}"
-  PAT_FILE="${SYNOMODEL}.pat"
-  PAT_PATH="${patfile}"
-
-  SPACELEFT=$(df --block-size=1 | awk '/'${loaderdisk}'3/{print $4}') # Check disk space left
-  echo "SPACELEFT=" "${SPACELEFT}"
-  fastest=$(_get_fastest "global.synologydownload.com" "global.download.synology.com" "cndl.synology.cn")
-  mirror="$(echo ${PATURL} | sed 's|^http[s]*://\([^/]*\).*|\1|')"
-  if echo "${mirrors[@]}" | grep -wq "${mirror}" && [ "${mirror}" != "${fastest}" ]; then
-      echo "Based on the current network situation, switch to %s mirror to downloading." "${fastest}"
-      PATURL="$(echo ${PATURL} | sed "s/${mirror}/${fastest}/")"
-  fi
-  # Discover remote file size
-  FILESIZE=$(curl -k -sLI "${PATURL}" | grep -i Content-Length | awk '{print$2}')
-  if [ 0${FILESIZE} -ge 0${SPACELEFT} ]; then
-      # No disk space to download, change it to RAMDISK
-      PAT_PATH="/dev/shm/${PAT_FILE}"
-  fi
-  STATUS=$(curl -k -w "%{http_code}" -L "${PATURL}" -o "${PAT_PATH}" --progress-bar)
-  if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
-      rm -f "${PAT_PATH}"
-      echo "Check internet or cache disk space.\nError: %d" "${STATUS}"
-      exit 99
-  fi
-
-}
-
 function chkavail() {
 
     if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | grep G | wc -l) -gt 0 ]; then
@@ -185,6 +155,43 @@ function chkavail() {
     avail_num=$(($avail))
     
     echo "Avail space ${avail_num}M on /mnt/${tcrppart}"
+}
+
+function _pat_process() {
+
+#URL="https://global.synologydownload.com/download/DSM/release/${TARGET_VERSION}/${TARGET_REVISION}${SUVP}/DSM_${DN_MODEL}_${TARGET_REVISION}.pat"
+  PATURL="${URL}"
+  PAT_FILE="${SYNOMODEL}.pat"
+  PAT_PATH="${patfile}"
+
+  SPACELEFT=$(df --block-size=1 | awk '/'${loaderdisk}'3/{print $4}') # Check disk space left
+
+  fastest=$(_get_fastest "global.synologydownload.com" "global.download.synology.com" "cndl.synology.cn")
+  echo "fastest = " "${fastest}"
+  mirror="$(echo ${PATURL} | sed 's|^http[s]*://\([^/]*\).*|\1|')"
+  echo "mirror = " "${mirror}"
+  if echo "${mirrors[@]}" | grep -wq "${mirror}" && [ "${mirror}" != "${fastest}" ]; then
+      echo "Based on the current network situation, switch to %s mirror to downloading." "${fastest}"
+      PATURL="$(echo ${PATURL} | sed "s/${mirror}/${fastest}/")"
+  fi
+  # Discover remote file size
+  FILESIZE=$(curl -k -sLI "${PATURL}" | grep -i Content-Length | awk '{print$2}')
+  echo "FILESIZE = " "${FILESIZE}"
+  echo "SPACELEFT = " "${SPACELEFT}"
+  if [ 0${FILESIZE} -ge 0${SPACELEFT} ]; then
+      # No disk space to download, change it to RAMDISK
+      echo "No adequate space on ${local_cache} to download file into cache folder, clean up PAT file now ....."
+      rm -f ${local_cache}/*.pat
+#      PAT_PATH="/dev/shm/${PAT_FILE}"
+  fi
+  echo "PATURL = " "${PATURL}"
+  STATUS=$(curl -k -w "%{http_code}" -L "${PATURL}" -o "${PAT_PATH}" --progress-bar)
+  if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
+      rm -f "${PAT_PATH}"
+      echo "Check internet or cache disk space.\nError: %d" "${STATUS}"
+      exit 99
+  fi
+
 }
 
 checkinternet
@@ -446,22 +453,17 @@ if [ -f ${patfile} ]; then
 st "download pat" "Found pat    " "Found ${SYNOMODEL}.pat"
 else
 
-    chkavail
-    if [ $avail_num -le 390 ]; then
-        echo "No adequate space on ${local_cache} to download file into cache folder, clean up PAT file now ....."
-        rm -f ${local_cache}/*.pat
-    fi
 st "download pat" "Downloading pat  " "${SYNOMODEL}.pat"        
 
-  if [ 1 = 0 ]; then
-    STATUS=`curl --insecure -w "%{http_code}" -L "${URL}" -o ${patfile} --progress-bar`
-    if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
-       echo  "Check internet or cache disk space"
-       exit 99
+    if [ 1 = 0 ]; then
+      STATUS=`curl --insecure -w "%{http_code}" -L "${URL}" -o ${patfile} --progress-bar`
+      if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
+        echo  "Check internet or cache disk space"
+        exit 99
+      fi
+    else
+      _pat_process    
     fi
-  else
-    _pat_process    
-  fi
 
     os_sha256=$(sha256sum ${patfile} | awk '{print $1}')                                
     cecho y "Pat file  sha256sum is : $os_sha256"                                       
