@@ -181,10 +181,12 @@ set -u
 # Update : Add "Clone TCRP Bootloader to USB or SSD" menu
 # 2023.10.17
 # Update : Add "Show error log of running loader" menu
-# 2023.10.18
+# 2023.10.18 v0.9.6.0
 # Update : Improved extension processing speed (local copy instead of remote curl download)
-# 2023.10.22
+# 2023.10.22 v0.9.7.0
 # Update : Improved build processing speed (removed pat file download process)
+# 2023.10.24 v0.9.7.1
+# Update : Back to DSM Pat Handle Method
     
 function showlastupdate() {
     cat <<EOF
@@ -204,20 +206,23 @@ function showlastupdate() {
 # 2023.10.01
 # Update : Add "Show SATA(s) # ports and drives" menu
 
-# 2023.10.07
+# 2023.10.07 
 # Update : Add "Burn Anither TCRP Bootloader to USB or SSD" menu
         
-# 2023.10.09
+# 2023.10.09 
 # Update : Add "Clone TCRP Bootloader to USB or SSD" menu
 
-# 2023.10.17
+# 2023.10.17 
 # Update : Add "Show error log of running loader" menu
 
-# 2023.10.18
+# 2023.10.18 v0.9.6.0
 # Update : Improved extension processing speed (local copy instead of remote curl download)
 
-# 2023.10.22
+# 2023.10.22 v0.9.7.0
 # Update : Improved build processing speed (removed pat file download process)
+        
+# 2023.10.24 v0.9.7.1
+# Update : Back to DSM Pat Handle Method
         
 EOF
 }
