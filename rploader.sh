@@ -3037,7 +3037,7 @@ function bringoverfriend() {
         msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
         
         msgnormal "Bringing over my friend from giteas.duckdns.org"
-        curl --connect-timeout 15 -s -k -L -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
+        curl --connect-timeout 15 -skLO "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
         -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
         -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
 
@@ -3130,10 +3130,10 @@ function getlatestrploader() {
 
     echo -n "Checking if a newer version exists on the $build repo -> "
 
-    curl -k -s -L "$rploaderfile" -o latestrploader.sh
-    curl -k -s -L "$modalias3" -o modules.alias.3.json.gz
+    curl -ksL "$rploaderfile" -o latestrploader.sh
+    curl -ksL "$modalias3" -o modules.alias.3.json.gz
     [ -f modules.alias.3.json.gz ] && gunzip -f modules.alias.3.json.gz
-    curl -k -s -L "$modalias4" -o modules.alias.4.json.gz
+    curl -ksL "$modalias4" -o modules.alias.4.json.gz
     [ -f modules.alias.4.json.gz ] && gunzip -f modules.alias.4.json.gz
 
     CURRENTSHA="$(sha256sum rploader.sh | awk '{print $1}')"
@@ -3565,12 +3565,12 @@ function getredpillko() {
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
         LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/latest"`"
         TAG="${LATESTURL##*/}"
-        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+        STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
     else
         LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/latest"`"
         TAG="${LATESTURL##*/}"
         #TAG="23.5.4"
-        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+        STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
     fi    
     echo "TAG is ${TAG}"
     if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
