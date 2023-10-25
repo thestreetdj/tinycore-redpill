@@ -696,14 +696,34 @@ function usbidentify() {
         json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
         json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
     else            
-        vendorid="0x$(udevadm info --query property --name ${loaderdisk} | grep ID_VENDOR_ID | cut -d= -f2)"
-        productid="0x$(udevadm info --query property --name ${loaderdisk} | grep ID_MODEL_ID | cut -d= -f2)"
-        if [ -n "$vendorid" ] && [ -n "$productid" ]; then
-            echo "Vendor ID : $vendorid , Product ID : $productid"
+
+        lsusb -v 2>&1 | grep -B 33 -A 1 SCSI >/tmp/lsusb.out
+
+        usblist=$(grep -B 33 -A 1 SCSI /tmp/lsusb.out)
+        vendorid=$(grep -B 33 -A 1 SCSI /tmp/lsusb.out | grep -i idVendor | awk '{print $2}')
+        productid=$(grep -B 33 -A 1 SCSI /tmp/lsusb.out | grep -i idProduct | awk '{print $2}')
+
+        if [ $(echo $vendorid | wc -w) -gt 1 ]; then
+            echo "Found more than one USB disk devices, please select which one is your loader on"
+            usbvendor=$(for item in $vendorid; do grep $item /tmp/lsusb.out | awk '{print $3}'; done)
+            select usbdev in $usbvendor; do
+                vendorid=$(grep -B 10 -A 10 $usbdev /tmp/lsusb.out | grep idVendor | grep $usbdev | awk '{print $2}')
+                productid=$(grep -B 10 -A 10 $usbdev /tmp/lsusb.out | grep -A 1 idVendor | grep idProduct | awk '{print $2}')
+                echo "Selected Device : $usbdev , with VendorID: $vendorid and ProductID: $productid"
+                break
+            done
+        else
+            usbdevice="$(grep iManufacturer /tmp/lsusb.out | awk '{print $3}') $(grep iProduct /tmp/lsusb.out | awk '{print $3}') SerialNumber: $(grep iSerial /tmp/lsusb.out | awk '{print $3}')"
+        fi
+
+        if [ -n "$usbdevice" ] && [ -n "$vendorid" ] && [ -n "$productid" ]; then
+            echo "Found $usbdevice"
+            echo "Vendor ID : $vendorid Product ID : $productid"
             json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
             json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
         else
             echo "Sorry, no usb disk could be identified"
+            rm /tmp/lsusb.out
         fi
     fi      
 }
