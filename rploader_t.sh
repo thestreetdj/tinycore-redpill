@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 0.9.7.0
+# User Variables : 0.9.7.1
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="0.9.7.0"
+rploaderver="0.9.7.1"
 build="master"
 redpillmake="prod"
 
@@ -98,6 +98,7 @@ function history() {
     0.9.5.0 Add storage panel size selection menu
     0.9.6.0 To prevent partition space shortage, rd.gz is no longer used in partition 1
     0.9.7.0 Improved build processing speed (removed pat file download process)
+    0.9.7.1 Back to DSM Pat Handle Method
     --------------------------------------------------------------------------------------
 EOF
 
@@ -2697,7 +2698,7 @@ checkmachine
         echo "Found build request for revision greater than 42218"
 st "downloadtools" "Extraction tools" "Tools downloaded"        
         downloadextractor
-        #processpat
+        processpat
 
     else
       
@@ -2991,8 +2992,7 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
     echo "Cleaning up files"
     removemodelexts    
     sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/redpill-load/loader.img /home/tc/cache/*pat
-#remark
-if [ 1 = 0 ]; then
+    
     msgnormal "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
 
@@ -3013,7 +3013,7 @@ if [ 1 = 0 ]; then
         fi
     fi
 st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
-fi
+
 }
 
 
