@@ -23,13 +23,13 @@ echo -n "Patching zImage"
 rm -f "${MOD_ZIMAGE_FILE}"
 echo -n "."
 # Extract vmlinux
-./tool/bzImage-to-vmlinux.sh "${ORI_ZIMAGE_FILE}" "${TMP_PATH}/vmlinux" >"${LOG_FILE}" 2>&1 || dieLog
+./tools/bzImage-to-vmlinux.sh "${ORI_ZIMAGE_FILE}" "${TMP_PATH}/vmlinux" >"${LOG_FILE}" 2>&1 || dieLog
 echo -n "."
 # Patch boot params and ramdisk check
-./tool/kpatch "${TMP_PATH}/vmlinux" "${TMP_PATH}/vmlinux-mod" >"${LOG_FILE}" 2>&1 || dieLog
+./tools/kpatch "${TMP_PATH}/vmlinux" "${TMP_PATH}/vmlinux-mod" >"${LOG_FILE}" 2>&1 || dieLog
 echo -n "."
 # rebuild zImage
-./tool/vmlinux-to-bzImage.sh "${TMP_PATH}/vmlinux-mod" "${MOD_ZIMAGE_FILE}" >"${LOG_FILE}" 2>&1 || dieLog
+./tools/vmlinux-to-bzImage.sh "${TMP_PATH}/vmlinux-mod" "${MOD_ZIMAGE_FILE}" >"${LOG_FILE}" 2>&1 || dieLog
 echo -n "."
 # Update HASH of new DSM zImage
 HASH="`sha256sum ${ORI_ZIMAGE_FILE} | awk '{print$1}'`"
