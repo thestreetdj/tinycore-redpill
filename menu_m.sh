@@ -704,14 +704,11 @@ function usbidentify() {
         productid=$(grep -B 33 -A 1 SCSI /tmp/lsusb.out | grep -i idProduct | awk '{print $2}')
 
         if [ $(echo $vendorid | wc -w) -gt 1 ]; then
-            echo "Found more than one USB disk devices, please select which one is your loader on"
-            usbvendor=$(for item in $vendorid; do grep $item /tmp/lsusb.out | awk '{print $3}'; done)
-            select usbdev in $usbvendor; do
-                vendorid=$(grep -B 10 -A 10 $usbdev /tmp/lsusb.out | grep idVendor | grep $usbdev | awk '{print $2}')
-                productid=$(grep -B 10 -A 10 $usbdev /tmp/lsusb.out | grep -A 1 idVendor | grep idProduct | awk '{print $2}')
-                echo "Selected Device : $usbdev , with VendorID: $vendorid and ProductID: $productid"
-                break
-            done
+            echo "Found more than one USB disk devices."
+	    echo "Please leave it to the FRIEND kernel." 
+            echo "Automatically obtains the VID/PID of the required bootloader USB."
+	    rm /tmp/lsusb.out
+            exit 0
         else
             usbdevice="$(grep iManufacturer /tmp/lsusb.out | awk '{print $3}') $(grep iProduct /tmp/lsusb.out | awk '{print $3}') SerialNumber: $(grep iSerial /tmp/lsusb.out | awk '{print $3}')"
         fi
