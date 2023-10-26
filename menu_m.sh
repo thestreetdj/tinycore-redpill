@@ -1387,7 +1387,7 @@ function backup() {
   if [ -f /home/tc/oldpat.tar.gz ]; then
     rm -f /home/tc/oldpat.tar.gz
   fi  
-  if [ -f /home/tc/redpill-load/cache/* ]; then
+  if [ -d /home/tc/redpill-load/cache ]; then
     rm -f /home/tc/redpill-load/cache/*
   fi  
   if [ -f /home/tc/custom-module ]; then
