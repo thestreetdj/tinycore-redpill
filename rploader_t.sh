@@ -2721,7 +2721,8 @@ st "downloadtools" "Extraction tools" "Tools downloaded"
 #    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 st "extensions" "Extensions collection" "Extensions collection..."
     addrequiredexts
-st "loader.img" "Creation loader file" "Compile n make loader.img file."
+st "make loader" "Creation boot loader" "Compile n make boot file."
+st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
     UPPER_ORIGIN_PLATFORM=$(echo ${ORIGIN_PLATFORM} | tr '[:lower:]' '[:upper:]')
     if [ "$JUNLOADER" == "YES" ]; then
         echo "jun build option has been specified, so JUN MOD loader will be created"
@@ -2731,15 +2732,16 @@ st "loader.img" "Creation loader file" "Compile n make loader.img file."
     else
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM}
     fi
-st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
+
 #    msgnormal "======Unmount the ramdisk for add extensions.======="
 #    sudo umount /home/tc/redpill-load/custom/extensions
-
     if [ $? -ne 0 ]; then
         echo "FAILED : Loader creation failed check the output for any errors"
         exit 99
     fi
 
+#def
+if [ 1 = 0 ]; then
     sudo losetup -fP ./loader.img
     loopdev=$(losetup -j loader.img | awk '{print $1}' | sed -e 's/://')
 
@@ -2775,24 +2777,30 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
     mkdir -p localdiskp3
     sudo mount /dev/${loaderdisk}3 localdiskp3
     msgnormal "Mounting /dev/${loaderdisk}3 to localdiskp3 "
+#def
+fi
 
-    if [ $(mount | grep -i part1 | wc -l) -eq 1 ] && [ $(mount | grep -i part2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp1 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp3 | wc -l) -eq 1 ]; then
+#    if [ $(mount | grep -i part1 | wc -l) -eq 1 ] && [ $(mount | grep -i part2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp1 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp3 | wc -l) -eq 1 ]; then
+#def
+if [ 1 = 0 ]; then
         sudo rm -rf localdiskp1/*
         sudo cp -rf part1/* localdiskp1/
         sudo rm -rf localdiskp2/*
         sudo cp -rf part2/* localdiskp2/
+#def
+fi
 
 #m shell only start
         msgnormal "Modify Jot Menu entry"
-        tempentry=$(cat /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | head -n 80 | tail -n 20)
-        sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+        tempentry=$(cat /tmp/grub.cfg | head -n 80 | tail -n 20)
+        sudo sed -i '61,80d' /tmp/grub.cfg
         echo "$tempentry" > /tmp/tempentry.txt
         
         if [ "$WITHFRIEND" = "YES" ]; then
             echo
         else
-            sudo sed -i '31,34d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg        
-            tinyjotfunc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            sudo sed -i '31,34d' /tmp/grub.cfg
+            tinyjotfunc | sudo tee --append /tmp/grub.cfg
         fi
 #m shell only end
 
@@ -2817,7 +2825,6 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         fi
 
         if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
-
             cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
             cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
         fi
@@ -2826,37 +2833,37 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
             echo "Creating tinycore friend entry"
             if [ $loaderdisk == "mmcblk0p" ]; then        
-                tcrpfriendentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg                
+                tcrpfriendentrymmc | sudo tee --append /tmp/grub.cfg
             else
-                tcrpfriendentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+                tcrpfriendentry | sudo tee --append /tmp/grub.cfg
             fi    
 
         else
 
             echo "Creating tinycore Jot entry"
-            echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /tmp/grub.cfg
             echo "Creating tinycore Jot postupdate entry"            
-            postupdateentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            postupdateentry | sudo tee --append /tmp/grub.cfg
 
         fi
 
         if [ $loaderdisk == "mmcblk0p" ]; then        
             echo "Creating tinycore entry for mmc (sdcard)"
-            tinyentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            tinyentrymmc | sudo tee --append /tmp/grub.cfg
         else
             echo "Creating tinycore entry"
-            tinyentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            tinyentry | sudo tee --append /tmp/grub.cfg
         fi
 
-    else
-        echo "ERROR: Failed to mount correctly all required partitions"
-    fi
+#    else
+#        echo "ERROR: Failed to mount correctly all required partitions"
+#    fi
 
     cd /home/tc/redpill-load
 
     msgnormal "Entries in Localdisk bootloader : "
     echo "======================================================================="
-    grep menuentry /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+    grep menuentry /tmp/grub.cfg
 
     ### Updating user_config.json
 
@@ -2910,17 +2917,17 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     if [ "$WITHFRIEND" = "YES" ]; then
     
         msgnormal "Setting default boot entry to TCRP Friend"
-        cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"0\"" localdiskp1/boot/grub/grub.cfg
+        sudo sed -i "/set default=\"*\"/cset default=\"0\"" /tmp/grub.cfg
 
     else
         echo
         if [ "$MACHINE" = "VIRTUAL" ]; then
             msgnormal "Setting default boot entry to JOT SATA"
-            cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
+            sudo sed -i "/set default=\"*\"/cset default=\"1\"" /tmp/grub.cfg
         fi
     fi
-
-st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
+    sudo cp -vf /tmp/grub.cfg /mnt/${loaderdisk}1/boot/grub/grub.cfg
+st "gen grub     " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
 
 #m shell only start
 #    if [ "$JUNLOADER" == "YES" ]; then
@@ -2962,6 +2969,8 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
 #    fi
 #m shell only end
 
+#def
+if [ 1 = 0 ]; then
     cd /home/tc/redpill-load/
 
     ####
@@ -2972,6 +2981,8 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
     sudo umount localdiskp2
     sudo umount localdiskp3
     sudo losetup -D
+#def
+fi
 
 #    if [ ${TARGET_REVISION} -gt 64569 ]; then
 #        echo "Bakcup loader.img and grub.cfg file for update to 7.2"
@@ -2991,7 +3002,7 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
 
     echo "Cleaning up files"
     removemodelexts    
-    sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/redpill-load/loader.img /home/tc/cache/*pat
+    sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/cache/*pat
     
     msgnormal "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
