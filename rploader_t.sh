@@ -2871,9 +2871,9 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     updateuserconfigfield "general" "version" "${TARGET_VERSION}-${TARGET_REVISION}"
     updateuserconfigfield "general" "redpillmake" "${redpillmake}"
     updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}"
-    zimghash=$(sha256sum /home/tc/redpill-load/localdiskp2/zImage | awk '{print $1}')
+    zimghash=$(sha256sum /mnt/${loaderdisk}2/zImage | awk '{print $1}')
     updateuserconfigfield "general" "zimghash" "$zimghash"
-    rdhash=$(sha256sum /home/tc/redpill-load/localdiskp2/rd.gz | awk '{print $1}')
+    rdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
     updateuserconfigfield "general" "rdhash" "$rdhash"
 
     USB_LINE="$(grep -A 5 "USB," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
@@ -2887,7 +2887,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     cp $userconfigfile /mnt/${loaderdisk}3/
 
     # Share RD of friend kernel with JOT 2023.05.01
-    cp localdiskp1/zImage /mnt/${loaderdisk}3/zImage-dsm
+    cp /mnt/${loaderdisk}1/zImage /mnt/${loaderdisk}3/zImage-dsm
 
     # Compining rd.gz and custom.gz
 
@@ -2897,16 +2897,16 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
     if [ "$RD_COMPRESSED" = "false" ]; then
         echo "Ramdisk in not compressed "
-        cat /home/tc/redpill-load/localdiskp3/rd.gz | sudo cpio -idm
-        cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
+        cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
+        cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm
 #m shell only start
 #        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
 #m shell only end
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     else
-        unlzma -dc /home/tc/redpill-load/localdiskp3/rd.gz | sudo cpio -idm
-        cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
+        unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
+        cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm
 #m shell only start
 #        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
 #m shell only end
