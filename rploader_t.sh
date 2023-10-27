@@ -29,6 +29,10 @@ userconfigfile="/home/tc/user_config.json"
 
 fullupdatefiles="custom_config.json custom_config_jun.json global_config.json modules.alias.3.json.gz modules.alias.4.json.gz rpext-index.json user_config.json rploader.sh"
 
+HOMEPATH="/home/tc"
+TOOLSPATH="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/tools/"
+TOOLS="bspatch bzImage-to-vmlinux.sh calc_run_size.sh crc32 dtc kexec ramdisk-patch.sh vmlinux-to-bzImage.sh xxd zimage-patch.sh kpatch zImage_template.gz grub-editenv pigz"
+
 # END Do not modify after this line
 ######################################################################################################
 
@@ -406,6 +410,20 @@ function restoresession() {
     else
         echo "OK, we will not restore last session"
     fi
+}
+
+function downloadtools() {
+
+  [ ! -d ${HOMEPATH}/tools ] && mkdir -p ${HOMEPATH}/tools
+  cd ${HOMEPATH}/tools
+  for FILE in $TOOLS; do
+    [ ! -f ${HOMEPATH}/tools/$FILE ] && curl --silent --insecure --location "$TOOLSPATH/${FILE}" -O
+    chmod +x $FILE
+  done
+
+st "setstatus" "downloadtools" "Kernel Patch Tools downloaded"
+  cd ${HOMEPATH}
+
 }
 
 function copyextractor() {
@@ -2693,10 +2711,12 @@ checkmachine
         mkdir cache
     fi
 
+    downloadtools
+    
     if [ ${TARGET_REVISION} -gt 42218 ]; then
 
         echo "Found build request for revision greater than 42218"
-st "downloadtools" "Extraction tools" "Tools downloaded"        
+st "download extractor" "Extraction tools" "Extraction Tools downloaded"        
         downloadextractor
         processpat
 
