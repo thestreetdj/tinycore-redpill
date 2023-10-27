@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 0.9.7.2
+# User Variables : 1.0.0.0
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="0.9.7.2"
+rploaderver="1.0.0.0"
 build="master"
 redpillmake="prod"
 
@@ -103,7 +103,7 @@ function history() {
     0.9.6.0 To prevent partition space shortage, rd.gz is no longer used in partition 1
     0.9.7.0 Improved build processing speed (removed pat file download process)
     0.9.7.1 Back to DSM Pat Handle Method
-    0.9.7.2 Kernel patch process improvements
+    1.0.0.0 Kernel patch process improvements
     --------------------------------------------------------------------------------------
 EOF
 
@@ -2629,7 +2629,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 0.9.7.0"
+    echo "TCRP JOT Version : 1.0.0.0"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
