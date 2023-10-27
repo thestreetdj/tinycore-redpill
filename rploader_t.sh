@@ -3030,25 +3030,20 @@ function bringoverfriend() {
             URLS=$(curl -k -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
             for file in $URLS; do curl -kL -# "$file" -O; done
 
-            #def
-            if [ 1 = 0 ]; then
             # 3rd try
             if [ $? -ne 0 ]; then
-                msgwarning "Download failed from github.com, Tring gitee.com..."
-                curl -s -k -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
-                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" \
-                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend"
-                if [ $? -ne 0 ]; then
-                    msgalert "Download failed from gitee.com... !!!!!!!!"
-                else
-                    msgnormal "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
-                fi
-              else
-                 msgnormal "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
-              fi
-              msgwarning "Download failed from github.com !!!!!!"
-            fi
-            #def
+#                msgwarning "Download failed from github.com, Tring gitee.com..."
+#                curl -s -k -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
+#                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" \
+#                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend"
+#                if [ $? -ne 0 ]; then
+#                    msgalert "Download failed from gitee.com... !!!!!!!!"
+#                else
+#                    msgnormal "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
+#                fi
+#            else
+#                msgnormal "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
+                msgwarning "Download failed from github.com !!!!!!"
             fi
         else
             msgnormal "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
