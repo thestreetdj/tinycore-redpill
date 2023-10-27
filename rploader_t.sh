@@ -419,11 +419,11 @@ function downloadtools() {
   [ ! -d ${HOMEPATH}/tools ] && mkdir -p ${HOMEPATH}/tools
   cd ${HOMEPATH}/tools
   for FILE in $TOOLS; do
-    curl --sKLO "$TOOLSPATH/${FILE}"
+    curl --skLO "$TOOLSPATH/${FILE}"
     chmod +x $FILE
   done
 
-st "Patch Tools" "downloadtools" "Kernel Patch Tools downloaded"
+st "Patch Tools" "Download tools" "Kernel Patch Tools downloaded"
   cd ${HOMEPATH}
 
 }
