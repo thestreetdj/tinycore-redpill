@@ -2716,7 +2716,7 @@ checkmachine
         mkdir cache
     fi
 
-    downloadtools
+    #downloadtools
     
     if [ ${TARGET_REVISION} -gt 42218 ]; then
 
@@ -2782,13 +2782,6 @@ if [ 1 = 0 ]; then
         mkdir part2
         sudo mount ${loopdev}p2 part2
     fi
-
-#    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
-
-    # Unmount to make sure you are able to mount properly
-# Remark from m shell
-#    sudo umount /dev/${loaderdisk}1
-#    sudo umount /dev/${loaderdisk}2
 
     mkdir -p localdiskp1
     sudo mount /dev/${loaderdisk}1 localdiskp1
@@ -2923,17 +2916,11 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         echo "Ramdisk in not compressed "
         cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
         cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm
-#m shell only start
-#        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
-#m shell only end
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     else
         unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
         cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm
-#m shell only start
-#        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
-#m shell only end
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     fi
@@ -2952,46 +2939,6 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     fi
     sudo cp -vf /tmp/grub.cfg /mnt/${loaderdisk}1/boot/grub/grub.cfg
 st "gen grub     " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
-
-#m shell only start
-#    if [ "$JUNLOADER" == "YES" ]; then
-#        echo "Don't move file in jun's mod"
-#    else
-#        echo "Copy rd.gz to partition 3"
-#        sudo cp localdiskp3/rd.gz     /mnt/${loaderdisk}3
-#        if [ $? -eq 0 ]; then
-#            echo "Success coping file: localdiskp3/rd.gz to /mnt/${loaderdisk}3"
-#        else
-#            echo "File copy failed!!!, Build Action exiting!!!"
-#            exit 0
-#        fi
-        
-#        echo "Copy custom.gz to partition 1 and 3"        
-#        sudo cp localdiskp2/custom.gz /mnt/${loaderdisk}1         
-#        if [ $? -eq 0 ]; then
-#            echo "Success coping file: localdiskp2/custom.gz to /mnt/${loaderdisk}1"
-#        else
-#            echo "File copy failed!!!, Build Action exiting!!!"
-#            exit 0
-#        fi
-#        sudo cp localdiskp2/custom.gz /mnt/${loaderdisk}3 
-#        if [ $? -eq 0 ]; then
-#            echo "Success coping file: localdiskp2/custom.gz to /mnt/${loaderdisk}3"
-#        else
-#            echo "File copy failed!!!, Build Action exiting!!!"
-#            exit 0
-#        fi
-        
-#        echo "Copy zImage to partition 3"    
-#        cp localdiskp1/zImage         /mnt/${loaderdisk}3     
-#        if [ $? -eq 0 ]; then
-#            echo "Success coping file: localdiskp1/zImage to /mnt/${loaderdisk}3"
-#        else
-#            echo "File copy failed!!!, Build Action exiting!!!"
-#            exit 0
-#        fi
-#    fi
-#m shell only end
 
 #def
 if [ 1 = 0 ]; then
@@ -3083,20 +3030,25 @@ function bringoverfriend() {
             URLS=$(curl -k -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
             for file in $URLS; do curl -kL -# "$file" -O; done
 
+            #def
+            if [ 1 = 0 ]; then
             # 3rd try
             if [ $? -ne 0 ]; then
-#                msgwarning "Download failed from github.com, Tring gitee.com..."
-#                curl -s -k -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
-#                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" \
-#                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend"
-#                if [ $? -ne 0 ]; then
-#                    msgalert "Download failed from gitee.com... !!!!!!!!"
-#                else
-#                    msgnormal "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
-#                fi
-#            else
-#                msgnormal "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
-                msgwarning "Download failed from github.com !!!!!!"
+                msgwarning "Download failed from github.com, Tring gitee.com..."
+                curl -s -k -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
+                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" \
+                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend"
+                if [ $? -ne 0 ]; then
+                    msgalert "Download failed from gitee.com... !!!!!!!!"
+                else
+                    msgnormal "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
+                fi
+              else
+                 msgnormal "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
+              fi
+              msgwarning "Download failed from github.com !!!!!!"
+            fi
+            #def
             fi
         else
             msgnormal "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
@@ -3564,14 +3516,18 @@ function listextension() {
         echo $extensionslist
 
 #m shell only
-#        echo "Target Platform : ${TARGET_PLATFORM}"
-#        if [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "rs4021xsp" ] || [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
-#            if [ -d /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe ]; then
-#                echo "Removing : PeterSuh-Q3.ixgbe"
-#                echo "Reason : The Broadwellnk platform has a vanilla.ixgbe ext driver built into the DSM, so they conflict with each other if ixgbe is added separately."
-#                sudo rm -rf /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe
-#            fi
-#        fi
+        #def
+        if [ 1 = 0 ]; then
+        echo "Target Platform : ${TARGET_PLATFORM}"
+        if [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "rs4021xsp" ] || [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
+            if [ -d /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe ]; then
+                echo "Removing : PeterSuh-Q3.ixgbe"
+                echo "Reason : The Broadwellnk platform has a vanilla.ixgbe ext driver built into the DSM, so they conflict with each other if ixgbe is added separately."
+                sudo rm -rf /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe
+            fi
+        fi
+        #def
+        fi
         
     else
         echo "No matching extension"
