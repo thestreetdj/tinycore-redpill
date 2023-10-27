@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 0.9.7.1
+# User Variables : 0.9.7.2
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="0.9.7.1"
+rploaderver="0.9.7.2"
 build="master"
 redpillmake="prod"
 
@@ -103,6 +103,7 @@ function history() {
     0.9.6.0 To prevent partition space shortage, rd.gz is no longer used in partition 1
     0.9.7.0 Improved build processing speed (removed pat file download process)
     0.9.7.1 Back to DSM Pat Handle Method
+    0.9.7.2 Kernel patch process improvements
     --------------------------------------------------------------------------------------
 EOF
 
