@@ -420,7 +420,7 @@ function downloadtools() {
   [ ! -d ${HOMEPATH}/tools ] && mkdir -p ${HOMEPATH}/tools
   cd ${HOMEPATH}/tools
   for FILE in $TOOLS; do
-    curl --skLO "$TOOLSPATH/${FILE}"
+    curl -skLO "$TOOLSPATH/${FILE}"
     chmod +x $FILE
   done
 
