@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 0.9.7.1
+# User Variables : 1.0.0.0
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="0.9.7.1"
+rploaderver="1.0.0.0"
 build="master"
 redpillmake="prod"
 
@@ -28,6 +28,10 @@ ntpserver="pool.ntp.org"
 userconfigfile="/home/tc/user_config.json"
 
 fullupdatefiles="custom_config.json custom_config_jun.json global_config.json modules.alias.3.json.gz modules.alias.4.json.gz rpext-index.json user_config.json rploader.sh"
+
+HOMEPATH="/home/tc"
+TOOLSPATH="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/tools/"
+TOOLS="bspatch bzImage-to-vmlinux.sh calc_run_size.sh crc32 dtc kexec ramdisk-patch.sh vmlinux-to-bzImage.sh xxd zimage-patch.sh kpatch zImage_template.gz grub-editenv pigz"
 
 # END Do not modify after this line
 ######################################################################################################
@@ -99,6 +103,7 @@ function history() {
     0.9.6.0 To prevent partition space shortage, rd.gz is no longer used in partition 1
     0.9.7.0 Improved build processing speed (removed pat file download process)
     0.9.7.1 Back to DSM Pat Handle Method
+    1.0.0.0 Kernel patch process improvements
     --------------------------------------------------------------------------------------
 EOF
 
@@ -408,6 +413,22 @@ function restoresession() {
     fi
 }
 
+function downloadtools() {
+
+  echo "Downloading Kernel Patch tools"
+
+  [ ! -d ${HOMEPATH}/tools ] && mkdir -p ${HOMEPATH}/tools
+  cd ${HOMEPATH}/tools
+  for FILE in $TOOLS; do
+    curl -skLO "$TOOLSPATH/${FILE}"
+    chmod +x $FILE
+  done
+
+st "Patch Tools" "Download tools  " "Kernel Patch Tools downloaded"
+  cd ${HOMEPATH}
+
+}
+
 function copyextractor() {
 #m shell mofified
     local_cache="/mnt/${tcrppart}/auxfiles"
@@ -432,6 +453,8 @@ function copyextractor() {
 }
 
 function downloadextractor() {
+
+st "extractor" "Extraction tools" "Extraction Tools downloaded"        
 #    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
@@ -2606,7 +2629,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 0.9.7.0"
+    echo "TCRP JOT Version : 1.0.0.0"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
@@ -2693,10 +2716,11 @@ checkmachine
         mkdir cache
     fi
 
+    #downloadtools
+    
     if [ ${TARGET_REVISION} -gt 42218 ]; then
 
         echo "Found build request for revision greater than 42218"
-st "downloadtools" "Extraction tools" "Tools downloaded"        
         downloadextractor
         processpat
 
@@ -2721,7 +2745,8 @@ st "downloadtools" "Extraction tools" "Tools downloaded"
 #    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 st "extensions" "Extensions collection" "Extensions collection..."
     addrequiredexts
-st "loader.img" "Creation loader file" "Compile n make loader.img file."
+st "make loader" "Creation boot loader" "Compile n make boot file."
+st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
     UPPER_ORIGIN_PLATFORM=$(echo ${ORIGIN_PLATFORM} | tr '[:lower:]' '[:upper:]')
     if [ "$JUNLOADER" == "YES" ]; then
         echo "jun build option has been specified, so JUN MOD loader will be created"
@@ -2731,15 +2756,16 @@ st "loader.img" "Creation loader file" "Compile n make loader.img file."
     else
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM}
     fi
-st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
+
 #    msgnormal "======Unmount the ramdisk for add extensions.======="
 #    sudo umount /home/tc/redpill-load/custom/extensions
-
     if [ $? -ne 0 ]; then
         echo "FAILED : Loader creation failed check the output for any errors"
         exit 99
     fi
 
+#def
+if [ 1 = 0 ]; then
     sudo losetup -fP ./loader.img
     loopdev=$(losetup -j loader.img | awk '{print $1}' | sed -e 's/://')
 
@@ -2757,13 +2783,6 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
         sudo mount ${loopdev}p2 part2
     fi
 
-#    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
-
-    # Unmount to make sure you are able to mount properly
-# Remark from m shell
-#    sudo umount /dev/${loaderdisk}1
-#    sudo umount /dev/${loaderdisk}2
-
     mkdir -p localdiskp1
     sudo mount /dev/${loaderdisk}1 localdiskp1
     msgnormal "Mounting /dev/${loaderdisk}1 to localdiskp1 "
@@ -2775,24 +2794,30 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
     mkdir -p localdiskp3
     sudo mount /dev/${loaderdisk}3 localdiskp3
     msgnormal "Mounting /dev/${loaderdisk}3 to localdiskp3 "
+#def
+fi
 
-    if [ $(mount | grep -i part1 | wc -l) -eq 1 ] && [ $(mount | grep -i part2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp1 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp3 | wc -l) -eq 1 ]; then
+#    if [ $(mount | grep -i part1 | wc -l) -eq 1 ] && [ $(mount | grep -i part2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp1 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp3 | wc -l) -eq 1 ]; then
+#def
+if [ 1 = 0 ]; then
         sudo rm -rf localdiskp1/*
         sudo cp -rf part1/* localdiskp1/
         sudo rm -rf localdiskp2/*
         sudo cp -rf part2/* localdiskp2/
+#def
+fi
 
 #m shell only start
         msgnormal "Modify Jot Menu entry"
-        tempentry=$(cat /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg | head -n 80 | tail -n 20)
-        sudo sed -i '61,80d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+        tempentry=$(cat /tmp/grub.cfg | head -n 80 | tail -n 20)
+        sudo sed -i '61,80d' /tmp/grub.cfg
         echo "$tempentry" > /tmp/tempentry.txt
         
         if [ "$WITHFRIEND" = "YES" ]; then
             echo
         else
-            sudo sed -i '31,34d' /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg        
-            tinyjotfunc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            sudo sed -i '31,34d' /tmp/grub.cfg
+            tinyjotfunc | sudo tee --append /tmp/grub.cfg
         fi
 #m shell only end
 
@@ -2817,7 +2842,6 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         fi
 
         if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
-
             cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
             cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
         fi
@@ -2826,37 +2850,37 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
             echo "Creating tinycore friend entry"
             if [ $loaderdisk == "mmcblk0p" ]; then        
-                tcrpfriendentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg                
+                tcrpfriendentrymmc | sudo tee --append /tmp/grub.cfg
             else
-                tcrpfriendentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+                tcrpfriendentry | sudo tee --append /tmp/grub.cfg
             fi    
 
         else
 
             echo "Creating tinycore Jot entry"
-            echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /tmp/grub.cfg
             echo "Creating tinycore Jot postupdate entry"            
-            postupdateentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            postupdateentry | sudo tee --append /tmp/grub.cfg
 
         fi
 
         if [ $loaderdisk == "mmcblk0p" ]; then        
             echo "Creating tinycore entry for mmc (sdcard)"
-            tinyentrymmc | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            tinyentrymmc | sudo tee --append /tmp/grub.cfg
         else
             echo "Creating tinycore entry"
-            tinyentry | sudo tee --append /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+            tinyentry | sudo tee --append /tmp/grub.cfg
         fi
 
-    else
-        echo "ERROR: Failed to mount correctly all required partitions"
-    fi
+#    else
+#        echo "ERROR: Failed to mount correctly all required partitions"
+#    fi
 
     cd /home/tc/redpill-load
 
     msgnormal "Entries in Localdisk bootloader : "
     echo "======================================================================="
-    grep menuentry /home/tc/redpill-load/localdiskp1/boot/grub/grub.cfg
+    grep menuentry /tmp/grub.cfg
 
     ### Updating user_config.json
 
@@ -2864,9 +2888,9 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     updateuserconfigfield "general" "version" "${TARGET_VERSION}-${TARGET_REVISION}"
     updateuserconfigfield "general" "redpillmake" "${redpillmake}"
     updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}"
-    zimghash=$(sha256sum /home/tc/redpill-load/localdiskp2/zImage | awk '{print $1}')
+    zimghash=$(sha256sum /mnt/${loaderdisk}2/zImage | awk '{print $1}')
     updateuserconfigfield "general" "zimghash" "$zimghash"
-    rdhash=$(sha256sum /home/tc/redpill-load/localdiskp2/rd.gz | awk '{print $1}')
+    rdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
     updateuserconfigfield "general" "rdhash" "$rdhash"
 
     USB_LINE="$(grep -A 5 "USB," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
@@ -2880,7 +2904,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     cp $userconfigfile /mnt/${loaderdisk}3/
 
     # Share RD of friend kernel with JOT 2023.05.01
-    cp localdiskp1/zImage /mnt/${loaderdisk}3/zImage-dsm
+    cp /mnt/${loaderdisk}1/zImage /mnt/${loaderdisk}3/zImage-dsm
 
     # Compining rd.gz and custom.gz
 
@@ -2890,19 +2914,13 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
     if [ "$RD_COMPRESSED" = "false" ]; then
         echo "Ramdisk in not compressed "
-        cat /home/tc/redpill-load/localdiskp3/rd.gz | sudo cpio -idm
-        cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
-#m shell only start
-#        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
-#m shell only end
+        cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
+        cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     else
-        unlzma -dc /home/tc/redpill-load/localdiskp3/rd.gz | sudo cpio -idm
-        cat /home/tc/redpill-load/localdiskp1/custom.gz | sudo cpio -idm
-#m shell only start
-#        cat /home/tc/redpill-load/localdiskp2/custom.gz | sudo cpio -idm
-#m shell only end
+        unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
+        cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     fi
@@ -2910,58 +2928,20 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     if [ "$WITHFRIEND" = "YES" ]; then
     
         msgnormal "Setting default boot entry to TCRP Friend"
-        cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"0\"" localdiskp1/boot/grub/grub.cfg
+        sudo sed -i "/set default=\"*\"/cset default=\"0\"" /tmp/grub.cfg
 
     else
         echo
         if [ "$MACHINE" = "VIRTUAL" ]; then
             msgnormal "Setting default boot entry to JOT SATA"
-            cd /home/tc/redpill-load/ && sudo sed -i "/set default=\"*\"/cset default=\"1\"" localdiskp1/boot/grub/grub.cfg
+            sudo sed -i "/set default=\"*\"/cset default=\"1\"" /tmp/grub.cfg
         fi
     fi
+    sudo cp -vf /tmp/grub.cfg /mnt/${loaderdisk}1/boot/grub/grub.cfg
+st "gen grub     " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
 
-st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
-
-#m shell only start
-#    if [ "$JUNLOADER" == "YES" ]; then
-#        echo "Don't move file in jun's mod"
-#    else
-#        echo "Copy rd.gz to partition 3"
-#        sudo cp localdiskp3/rd.gz     /mnt/${loaderdisk}3
-#        if [ $? -eq 0 ]; then
-#            echo "Success coping file: localdiskp3/rd.gz to /mnt/${loaderdisk}3"
-#        else
-#            echo "File copy failed!!!, Build Action exiting!!!"
-#            exit 0
-#        fi
-        
-#        echo "Copy custom.gz to partition 1 and 3"        
-#        sudo cp localdiskp2/custom.gz /mnt/${loaderdisk}1         
-#        if [ $? -eq 0 ]; then
-#            echo "Success coping file: localdiskp2/custom.gz to /mnt/${loaderdisk}1"
-#        else
-#            echo "File copy failed!!!, Build Action exiting!!!"
-#            exit 0
-#        fi
-#        sudo cp localdiskp2/custom.gz /mnt/${loaderdisk}3 
-#        if [ $? -eq 0 ]; then
-#            echo "Success coping file: localdiskp2/custom.gz to /mnt/${loaderdisk}3"
-#        else
-#            echo "File copy failed!!!, Build Action exiting!!!"
-#            exit 0
-#        fi
-        
-#        echo "Copy zImage to partition 3"    
-#        cp localdiskp1/zImage         /mnt/${loaderdisk}3     
-#        if [ $? -eq 0 ]; then
-#            echo "Success coping file: localdiskp1/zImage to /mnt/${loaderdisk}3"
-#        else
-#            echo "File copy failed!!!, Build Action exiting!!!"
-#            exit 0
-#        fi
-#    fi
-#m shell only end
-
+#def
+if [ 1 = 0 ]; then
     cd /home/tc/redpill-load/
 
     ####
@@ -2972,6 +2952,8 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
     sudo umount localdiskp2
     sudo umount localdiskp3
     sudo losetup -D
+#def
+fi
 
 #    if [ ${TARGET_REVISION} -gt 64569 ]; then
 #        echo "Bakcup loader.img and grub.cfg file for update to 7.2"
@@ -2991,7 +2973,7 @@ st "gengrub      " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
 
     echo "Cleaning up files"
     removemodelexts    
-    sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/redpill-load/loader.img /home/tc/cache/*pat
+    sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/cache/*pat
     
     msgnormal "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
@@ -3529,14 +3511,18 @@ function listextension() {
         echo $extensionslist
 
 #m shell only
-#        echo "Target Platform : ${TARGET_PLATFORM}"
-#        if [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "rs4021xsp" ] || [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
-#            if [ -d /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe ]; then
-#                echo "Removing : PeterSuh-Q3.ixgbe"
-#                echo "Reason : The Broadwellnk platform has a vanilla.ixgbe ext driver built into the DSM, so they conflict with each other if ixgbe is added separately."
-#                sudo rm -rf /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe
-#            fi
-#        fi
+        #def
+        if [ 1 = 0 ]; then
+        echo "Target Platform : ${TARGET_PLATFORM}"
+        if [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "rs4021xsp" ] || [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
+            if [ -d /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe ]; then
+                echo "Removing : PeterSuh-Q3.ixgbe"
+                echo "Reason : The Broadwellnk platform has a vanilla.ixgbe ext driver built into the DSM, so they conflict with each other if ixgbe is added separately."
+                sudo rm -rf /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe
+            fi
+        fi
+        #def
+        fi
         
     else
         echo "No matching extension"
