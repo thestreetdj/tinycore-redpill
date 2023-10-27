@@ -424,7 +424,7 @@ function downloadtools() {
     chmod +x $FILE
   done
 
-st "Patch Tools" "Download tools" "Kernel Patch Tools downloaded"
+st "Patch Tools" "Download tools  " "Kernel Patch Tools downloaded"
   cd ${HOMEPATH}
 
 }
