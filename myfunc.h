@@ -187,6 +187,8 @@ set -u
 # Update : Improved build processing speed (removed pat file download process)
 # 2023.10.24 v0.9.7.1
 # Update : Back to DSM Pat Handle Method
+# 2023.10.27 v1.0.0.0
+# Update : Kernel patch process improvements    
     
 function showlastupdate() {
     cat <<EOF
@@ -217,13 +219,10 @@ function showlastupdate() {
 
 # 2023.10.18 v0.9.6.0
 # Update : Improved extension processing speed (local copy instead of remote curl download)
-
-# 2023.10.22 v0.9.7.0
-# Update : Improved build processing speed (removed pat file download process)
-        
-# 2023.10.24 v0.9.7.1
-# Update : Back to DSM Pat Handle Method
-        
+    
+# 2023.10.27 v1.0.0.0 
+# Update : Kernel patch process improvements    
+    
 EOF
 }
 
@@ -289,13 +288,13 @@ Please type Synology Model Name after ./$(basename ${0})
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
 - When you want to build the loader while maintaining the already set SN/Mac/Vid/Pid/SataPortMap
-./my.sh DS3622xs+ noconfig
+./my DS3622xs+H noconfig
 
 - When you want to build the loader while maintaining the already set SN/Mac/Vid/Pid/SataPortMap and without deleting the downloaded DSM pat file.
-./my.sh DS3622xs+ noconfig noclean
+./my DS3622xs+H noconfig noclean
 
 - When you want to build the loader while using the real MAC address of the NIC, with extended auto-detection disabled
-./my.sh DS3622xs+ realmac manual
+./my DS3622xs+H realmac manual
 
 EOF
 
