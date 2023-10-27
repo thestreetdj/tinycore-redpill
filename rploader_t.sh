@@ -414,14 +414,16 @@ function restoresession() {
 
 function downloadtools() {
 
+  echo "Downloading Kernel Patch tools"
+
   [ ! -d ${HOMEPATH}/tools ] && mkdir -p ${HOMEPATH}/tools
   cd ${HOMEPATH}/tools
   for FILE in $TOOLS; do
-    [ ! -f ${HOMEPATH}/tools/$FILE ] && curl --silent --insecure --location "$TOOLSPATH/${FILE}" -O
+    curl --sKLO "$TOOLSPATH/${FILE}"
     chmod +x $FILE
   done
 
-st "setstatus" "downloadtools" "Kernel Patch Tools downloaded"
+st "Patch Tools" "downloadtools" "Kernel Patch Tools downloaded"
   cd ${HOMEPATH}
 
 }
@@ -450,6 +452,8 @@ function copyextractor() {
 }
 
 function downloadextractor() {
+
+st "extractor" "Extraction tools" "Extraction Tools downloaded"        
 #    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
@@ -2716,7 +2720,6 @@ checkmachine
     if [ ${TARGET_REVISION} -gt 42218 ]; then
 
         echo "Found build request for revision greater than 42218"
-st "download extractor" "Extraction tools" "Extraction Tools downloaded"        
         downloadextractor
         processpat
 
