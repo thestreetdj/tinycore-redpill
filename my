@@ -271,7 +271,7 @@ makeimg="N"
             else                                                              
                 if [ "$(echo $1 | sed 's/J//g' | sed 's/F//g' | sed 's/K//g' | sed 's/G//g' | sed 's/H//g' )" != "$MODEL" ]; then
                     echo "Syntax error, not valid arguments or not enough options"
-                    exit 0                                                        
+                    exit 0
                 fi                                                                
             fi          
             ;;
@@ -287,6 +287,11 @@ makeimg="N"
 #echo "makeimg = $makeimg"
 
 echo
+
+if [ $(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}' | wc -l) -gt 1 ]; then
+    echo "In addition to the loader disk, additional USB loaders are detected. Please remove the added USB..."
+    exit 0
+fi
 
 loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
 tcrppart="${loaderdisk}3"
