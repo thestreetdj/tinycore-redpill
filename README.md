@@ -6,7 +6,7 @@
 <!-- [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/PeterSuh-Q3) -->
 
 
-![스크린샷 2023-05-28 오후 2 39 15](https://github.com/PeterSuh-Q3/tinycore-redpill/assets/85427533/d3ca93b7-1f0e-4988-b4e7-a5af61d668ff)
+![스크린샷 2023-10-28 오전 9 13 45](https://github.com/PeterSuh-Q3/tinycore-redpill/assets/85427533/f0a293de-0765-43d1-b75c-89271b417124)
 
 
 ### Please note that minimum recommended memory size for configuring the loader is 2GB
