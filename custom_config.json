@@ -3755,7 +3755,7 @@
           "sha256": "26eec2a0fa76d55500d4c40644c2b9958e6a914a1740a4593a4562f9a1e453a4"
         },
         "os": {
-          "sha256": "1cdf0a81e889a6d89d795080a9774a15ee1b56ab6c64854739a03113d8143a83"
+          "sha256": "aa13f1e8cedc13eb785eb5be1c758d2ef33953a620a5d365da51e3ec4ecf496d"
         }
       },
       "redpill_lkm": {
