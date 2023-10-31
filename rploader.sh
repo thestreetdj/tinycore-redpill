@@ -3545,7 +3545,9 @@ function ext_manager() {
 
 function getredpillko() {
 
-    echo "KERNEL VERSION of getredpillko() is ${KVER}"
+    DSMVER=$(echo ${TARGET_VERSION} | cut -c 1-3 )
+
+    echo "KERNEL VERSION of getredpillko() is ${KVER}, DSMVER is ${DSMVER}"
 
     echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
@@ -3569,9 +3571,15 @@ function getredpillko() {
     fi
     sudo rm -f /home/tc/custom-module/*.gz
     sudo rm -f /home/tc/custom-module/*.ko
-    unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
-    gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
-    cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then    
+        unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
+        gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-prod.ko.gz >/dev/null 2>&1
+        cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
+    else    
+        unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
+        gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
+        cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
+    fi
 
 }
 
