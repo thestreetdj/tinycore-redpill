@@ -504,9 +504,9 @@ else
 fi
 
 if [ "$MODEL" = "SA6400" ]; then
-    cecho g "Remove Exts for SA6400 test (cgetty,acpid,smb3-multi ) ..."
-    jsonfile=$(jq 'del(.cgetty)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
-    sudo rm -rf /home/tc/redpill-load/custom/extensions/cgetty
+    cecho g "Remove Exts for SA6400 (boot-wait) ..."
+    jsonfile=$(jq 'del(.boot-wait)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
+    sudo rm -rf /home/tc/redpill-load/custom/extensions/boot-wait
 fi
 
 if [ "$jot" = "N" ]; then
