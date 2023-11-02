@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.0.0
+# User Variables : 1.0.0.1
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.0.0"
+rploaderver="1.0.0.1"
 build="master"
 redpillmake="prod"
 
@@ -104,6 +104,7 @@ function history() {
     0.9.7.0 Improved build processing speed (removed pat file download process)
     0.9.7.1 Back to DSM Pat Handle Method
     1.0.0.0 Kernel patch process improvements
+    1.0.0.1 Improved platform release ID identification method
     --------------------------------------------------------------------------------------
 EOF
 
@@ -701,9 +702,17 @@ function addrequiredexts() {
         fi
     done
 
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        vkersion=${major}${minor}_${KVER}
+    else
+        vkersion=${KVER}
+    fi
+
     for extension in ${EXTENSIONS}; do
-        echo "Updating extension : ${extension} contents for model : ${SYNOMODEL}  "
-        cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${SYNOMODEL} ${extension}
+        echo "Updating extension : ${extension} contents for platform, kernel : ${ORIGIN_PLATFORM}, ${vkersion}  "
+        platkver="$(echo ${ORIGIN_PLATFORM}_${vkersion} | sed 's/\.//g')"
+        echo "platkver = ${platkver}"
+        cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${platkver} ${extension}
         if [ $? -ne 0 ]; then
             echo "FAILED : Processing add_extensions failed check the output for any errors"
             ./rploader.sh clean
@@ -2748,13 +2757,20 @@ st "extensions" "Extensions collection" "Extensions collection..."
 st "make loader" "Creation boot loader" "Compile n make boot file."
 st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
     UPPER_ORIGIN_PLATFORM=$(echo ${ORIGIN_PLATFORM} | tr '[:lower:]' '[:upper:]')
+
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        vkersion=${major}${minor}_${KVER}
+    else
+        vkersion=${KVER}
+    fi
+    
     if [ "$JUNLOADER" == "YES" ]; then
         echo "jun build option has been specified, so JUN MOD loader will be created"
         # jun's mod must patch using custom.gz from the first partition, so you need to fix the partition.
         sed -i "s/BRP_OUT_P2}\/\${BRP_CUSTOM_RD_NAME/BRP_OUT_P1}\/\${BRP_CUSTOM_RD_NAME/g" /home/tc/redpill-load/build-loader.sh        
-        sudo BRP_JUN_MOD=1 BRP_DEBUG=0 BRP_USER_CFG=user_config.json ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM}
+        sudo BRP_JUN_MOD=1 BRP_DEBUG=0 BRP_USER_CFG=user_config.json ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${vkersion}
     else
-        sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM}
+        sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${vkersion}
     fi
 
 #    msgnormal "======Unmount the ramdisk for add extensions.======="
