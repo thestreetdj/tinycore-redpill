@@ -703,7 +703,9 @@ function addrequiredexts() {
 
     for extension in ${EXTENSIONS}; do
         echo "Updating extension : ${extension} contents for platform, kernel : ${ORIGIN_PLATFORM}, ${KVER}  "
-        cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts "$(echo ${ORIGIN_PLATFORM}_${KVER}| sed -s 's/.//g')" ${extension}
+        platkver="$(echo ${ORIGIN_PLATFORM}_${KVER}| sed -s 's/.//g')"
+        echo "${platkver}"
+        cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${platkver} ${extension}
         if [ $? -ne 0 ]; then
             echo "FAILED : Processing add_extensions failed check the output for any errors"
             ./rploader.sh clean
