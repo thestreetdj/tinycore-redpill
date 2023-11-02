@@ -701,9 +701,15 @@ function addrequiredexts() {
         fi
     done
 
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        vkersion=${major}${minor}_${KVER}
+    else
+        vkersion=${KVER}
+    fi
+
     for extension in ${EXTENSIONS}; do
-        echo "Updating extension : ${extension} contents for platform, kernel : ${ORIGIN_PLATFORM}, ${KVER}  "
-        platkver="$(echo ${ORIGIN_PLATFORM}_${KVER} | sed 's/\.//g')"
+        echo "Updating extension : ${extension} contents for platform, kernel : ${ORIGIN_PLATFORM}, ${vkersion}  "
+        platkver="$(echo ${ORIGIN_PLATFORM}_${vkersion} | sed 's/\.//g')"
         echo "platkver = ${platkver}"
         cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${platkver} ${extension}
         if [ $? -ne 0 ]; then
@@ -2750,13 +2756,20 @@ st "extensions" "Extensions collection" "Extensions collection..."
 st "make loader" "Creation boot loader" "Compile n make boot file."
 st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
     UPPER_ORIGIN_PLATFORM=$(echo ${ORIGIN_PLATFORM} | tr '[:lower:]' '[:upper:]')
+
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        vkersion=${major}${minor}_${KVER}
+    else
+        vkersion=${KVER}
+    fi
+    
     if [ "$JUNLOADER" == "YES" ]; then
         echo "jun build option has been specified, so JUN MOD loader will be created"
         # jun's mod must patch using custom.gz from the first partition, so you need to fix the partition.
         sed -i "s/BRP_OUT_P2}\/\${BRP_CUSTOM_RD_NAME/BRP_OUT_P1}\/\${BRP_CUSTOM_RD_NAME/g" /home/tc/redpill-load/build-loader.sh        
-        sudo BRP_JUN_MOD=1 BRP_DEBUG=0 BRP_USER_CFG=user_config.json ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${KVER}
+        sudo BRP_JUN_MOD=1 BRP_DEBUG=0 BRP_USER_CFG=user_config.json ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${vkersion}
     else
-        sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${KVER}
+        sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${vkersion}
     fi
 
 #    msgnormal "======Unmount the ramdisk for add extensions.======="
