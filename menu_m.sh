@@ -57,8 +57,13 @@ fi
 # Trap Ctrl+C and call ctrl_c function
 trap ctrl_c INT
 
-loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}'| head -1)"
 tcrppart="${loaderdisk}3"
+
+if [ $loaderdisk == "mmc" ]; then
+    loaderdisk="mmcblk0p"
+    tcrppart="mmcblk0p3"
+fi    
 
 # restore user_config.json file from /mnt/sd#/lastsession directory 2023.10.21
 restoresession
