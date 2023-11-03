@@ -395,7 +395,7 @@ function getvarsmshell()
     
     if [ "${MODEL}" = "SA6400" ]; then    
         KVER="5.10.55"
-    elif [ "${MODEL}" = "DS3615xs" ]||[ "${MODEL}" = "DS916+" ]; then
+    elif [ "${MODEL}" = "DS3615xs" ]||[ "${MODEL}" = "RS3413xs+" ]||[ "${MODEL}" = "DS916+" ]; then
         KVER="3.10.108"        
     fi    
         
