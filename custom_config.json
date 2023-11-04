@@ -4,7 +4,7 @@
     {
       "id": "ds3615xs-7.0.1-42218",
       "platform_version": "ds3615xs-7.0.1-42218",
-      "user_config_json": "bromolow_user_config.json",
+      "platform_name": "bromolow",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "dev-v7",
@@ -40,7 +40,7 @@
     {
       "id": "rs3413xsp-7.0.1-42218",
       "platform_version": "rs3413xsp-7.0.1-42218",
-      "user_config_json": "bromolow_user_config.json",
+      "platform_name": "bromolow",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "dev-v7",
@@ -74,7 +74,7 @@
     {
       "id": "ds3617xs-7.0.1-42218",
       "platform_version": "ds3617xs-7.0.1-42218",
-      "user_config_json": "broadwell_user_config-test.json",
+      "platform_name": "broadwell",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -111,7 +111,7 @@
     {
       "id": "rs3618xs-7.0.1-42218",
       "platform_version": "rs3618xs-7.0.1-42218",
-      "user_config_json": "rs3618xs_user_config-test.json",
+      "platform_name": "broadwell",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -148,7 +148,7 @@
     {
       "id": "ds3622xsp-7.0.1-42218",
       "platform_version": "ds3622xsp-7.0.1-42218",
-      "user_config_json": "broadwellnk_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -185,7 +185,7 @@
     {
       "id": "ds1621xsp-7.0.1-42218",
       "platform_version": "ds1621xsp-7.0.1-42218",
-      "user_config_json": "ds1621xsp_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -222,7 +222,7 @@
     {
       "id": "rs4021xsp-7.0.1-42218",
       "platform_version": "rs4021xsp-7.0.1-42218",
-      "user_config_json": "rs4021xsp_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -259,7 +259,7 @@
     {
       "id": "dva3221-7.0.1-42218",
       "platform_version": "dva3221-7.0.1-42218",
-      "user_config_json": "denverton_user_config-test.json",
+      "platform_name": "denverton",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -296,7 +296,7 @@
     {
       "id": "dva3219-7.0.1-42218",
       "platform_version": "dva3219-7.0.1-42218",
-      "user_config_json": "dva3219_user_config-test.json",
+      "platform_name": "denverton",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -333,7 +333,7 @@
     {
       "id": "ds1621p-7.0.1-42218",
       "platform_version": "ds1621p-7.0.1-42218",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -371,7 +371,7 @@
     {
       "id": "ds1821p-7.0.1-42218",
       "platform_version": "ds1821p-7.0.1-42218",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -409,7 +409,7 @@
     {
       "id": "ds2422p-7.0.1-42218",
       "platform_version": "ds2422p-7.0.1-42218",
-      "user_config_json": "ds2422p_user_config.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -447,7 +447,7 @@
     {
       "id": "fs2500-7.0.1-42218",
       "platform_version": "fs2500-7.0.1-42218",
-      "user_config_json": "fs2500_user_config.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -485,7 +485,7 @@
     {
       "id": "ds1019p-7.0.1-42218",
       "platform_version": "ds1019p-7.0.1-42218",
-      "user_config_json": "ds1019p_user_config.json",
+      "platform_name": "apollolake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -523,7 +523,7 @@
     {
       "id": "ds620slim-7.0.1-42218",
       "platform_version": "ds620slim-7.0.1-42218",
-      "user_config_json": "apollolake_user_config.json",
+      "platform_name": "apollolake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -561,7 +561,7 @@
     {
       "id": "ds1819p-7.0.1-42218",
       "platform_version": "ds1819p-7.0.1-42218",
-      "user_config_json": "denverton_user_config-test.json",
+      "platform_name": "denverton",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -598,7 +598,7 @@
     {
       "id": "ds1019p-7.1.1-42962",
       "platform_version": "ds1019p-7.1.1-42962",
-      "user_config_json": "ds1019p_user_config.json",
+      "platform_name": "apollolake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -636,7 +636,7 @@
     {
       "id": "ds1520p-7.0.1-42218",
       "platform_version": "ds1520p-7.0.1-42218",
-      "user_config_json": "ds1520p_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -674,7 +674,7 @@
     {
       "id": "ds720p-7.0.1-42218",
       "platform_version": "ds720p-7.0.1-42218",
-      "user_config_json": "geminilake_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -712,7 +712,7 @@
     {
       "id": "rs1221p-7.0.1-42218",
       "platform_version": "rs1221p-7.0.1-42218",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -750,7 +750,7 @@
     {
       "id": "rs2423p-7.0.1-42218",
       "platform_version": "rs2423p-7.0.1-42218",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -788,7 +788,7 @@
     {
       "id": "rs3621xsp-7.0.1-42218",
       "platform_version": "rs3621xsp-7.0.1-42218",
-      "user_config_json": "broadwellnk_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -825,7 +825,7 @@
     {
       "id": "ds1520p-7.1.1-42962",
       "platform_version": "ds1520p-7.1.1-42962",
-      "user_config_json": "ds1520p_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -863,7 +863,7 @@
     {
       "id": "ds1621p-7.1.1-42962",
       "platform_version": "ds1621p-7.1.1-42962",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -901,7 +901,7 @@
     {
       "id": "ds1821p-7.1.1-42962",
       "platform_version": "ds1821p-7.1.1-42962",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -939,7 +939,7 @@
     {
       "id": "ds1621xsp-7.1.1-42962",
       "platform_version": "ds1621xsp-7.1.1-42962",
-      "user_config_json": "ds1621xsp_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -976,7 +976,7 @@
     {
       "id": "ds2422p-7.1.1-42962",
       "platform_version": "ds2422p-7.1.1-42962",
-      "user_config_json": "ds2422p_user_config.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1014,7 +1014,7 @@
     {
       "id": "ds3615xs-7.1.1-42962",
       "platform_version": "ds3615xs-7.1.1-42962",
-      "user_config_json": "bromolow_user_config.json",
+      "platform_name": "bromolow",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "dev-v7",
@@ -1050,7 +1050,7 @@
     {
       "id": "ds3617xs-7.1.1-42962",
       "platform_version": "ds3617xs-7.1.1-42962",
-      "user_config_json": "broadwell_user_config-test.json",
+      "platform_name": "broadwell",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1087,7 +1087,7 @@
     {
       "id": "ds3622xsp-7.1.1-42962",
       "platform_version": "ds3622xsp-7.1.1-42962",
-      "user_config_json": "broadwellnk_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1124,17 +1124,17 @@
     {
       "id": "ds723p-7.1.1-42962",
       "platform_version": "ds723p-7.1.1-42962",
-      "user_config_json": "ds723p_user_config.json",
+      "platform_name": "r1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
       "downloads": {
         "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
+          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.r1000-7.0.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
         },
         "os": {
@@ -1162,7 +1162,7 @@
     {
       "id": "ds918p-7.0.1-42218",
       "platform_version": "ds918p-7.0.1-42218",
-      "user_config_json": "apollolake_user_config.json",
+      "platform_name": "apollolake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -1200,7 +1200,7 @@
     {
       "id": "ds918p-7.1.1-42962",
       "platform_version": "ds918p-7.1.1-42962",
-      "user_config_json": "apollolake_user_config.json",
+      "platform_name": "apollolake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -1238,7 +1238,7 @@
     {
       "id": "ds920p-7.0.1-42218",
       "platform_version": "ds920p-7.0.1-42218",
-      "user_config_json": "geminilake_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -1276,7 +1276,7 @@
     {
       "id": "ds920p-7.1.1-42962",
       "platform_version": "ds920p-7.1.1-42962",
-      "user_config_json": "geminilake_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -1314,17 +1314,17 @@
     {
       "id": "ds923p-7.1.1-42962",
       "platform_version": "ds923p-7.1.1-42962",
-      "user_config_json": "ds923p_user_config.json",
+      "platform_name": "r1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
       "downloads": {
         "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
+          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
+          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.r1000-7.0.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
         },
         "os": {
@@ -1352,7 +1352,7 @@
     {
       "id": "dva1622-7.1.1-42962",
       "platform_version": "dva1622-7.1.1-42962",
-      "user_config_json": "dva1622_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -1390,7 +1390,7 @@
     {
       "id": "dva3219-7.1.1-42962",
       "platform_version": "dva3219-7.1.1-42962",
-      "user_config_json": "dva3219_user_config-test.json",
+      "platform_name": "denverton",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1427,7 +1427,7 @@
     {
       "id": "dva3221-7.1.1-42962",
       "platform_version": "dva3221-7.1.1-42962",
-      "user_config_json": "denverton_user_config-test.json",
+      "platform_name": "denverton",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1464,7 +1464,7 @@
     {
       "id": "fs2500-7.1.1-42962",
       "platform_version": "fs2500-7.1.1-42962",
-      "user_config_json": "fs2500_user_config.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1502,7 +1502,7 @@
     {
       "id": "rs3413xsp-7.1.1-42962",
       "platform_version": "rs3413xsp-7.1.1-42962",
-      "user_config_json": "rs3413xsp_user_config.json",
+      "platform_name": "bromolow",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "dev-v7",
@@ -1535,7 +1535,7 @@
     {
       "id": "rs3618xs-7.1.1-42962",
       "platform_version": "rs3618xs-7.1.1-42962",
-      "user_config_json": "rs3618xs_user_config-test.json",
+      "platform_name": "broadwell",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1572,7 +1572,7 @@
     {
       "id": "rs4021xsp-7.1.1-42962",
       "platform_version": "rs4021xsp-7.1.1-42962",
-      "user_config_json": "rs4021xsp_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1609,7 +1609,7 @@
     {
       "id": "sa3600-7.1.1-42962",
       "platform_version": "sa3600-7.1.1-42962",
-      "user_config_json": "sa3600_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1642,7 +1642,7 @@
     {
       "id": "sa6400-7.1.1-42962",
       "platform_version": "sa6400-7.1.1-42962",
-      "user_config_json": "epyc7002_user_config-test.json",
+      "platform_name": "epyc7002",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1679,7 +1679,7 @@
     {
       "id": "ds720p-7.1.1-42962",
       "platform_version": "ds720p-7.1.1-42962",
-      "user_config_json": "geminilake_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -1717,7 +1717,7 @@
     {
       "id": "rs1221p-7.1.1-42962",
       "platform_version": "rs1221p-7.1.1-42962",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1755,7 +1755,7 @@
     {
       "id": "rs2423p-7.1.1-42962",
       "platform_version": "rs2423p-7.1.1-42962",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1793,7 +1793,7 @@
     {
       "id": "rs1619xsp-7.1.1-42962",
       "platform_version": "rs1619xsp-7.1.1-42962",
-      "user_config_json": "broadwellnk_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1830,7 +1830,7 @@
     {
       "id": "rs3621xsp-7.1.1-42962",
       "platform_version": "rs3621xsp-7.1.1-42962",
-      "user_config_json": "broadwellnk_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1867,7 +1867,7 @@
     {
       "id": "sa3410-7.1.1-42962",
       "platform_version": "sa3410-7.1.1-42962",
-      "user_config_json": "broadwellnkv2_user_config-test.json",
+      "platform_name": "broadwellnkv2",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1900,7 +1900,7 @@
     {
       "id": "ds620slim-7.1.1-42962",
       "platform_version": "ds620slim-7.1.1-42962",
-      "user_config_json": "apollolake_user_config.json",
+      "platform_name": "apollolake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -1938,7 +1938,7 @@
     {
       "id": "ds1819p-7.1.1-42962",
       "platform_version": "ds1819p-7.1.1-42962",
-      "user_config_json": "denverton_user_config-test.json",
+      "platform_name": "denverton",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -1975,7 +1975,7 @@
     {
       "id": "ds1823xsp-7.1.1-42962",
       "platform_version": "ds1823xsp-7.1.1-42962",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2013,7 +2013,7 @@
     {
       "id": "ds918p-7.2.0-64570",
       "platform_version": "ds918p-7.2.0-64570",
-      "user_config_json": "apollolake_user_config.json",
+      "platform_name": "apollolake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -2051,7 +2051,7 @@
     {
       "id": "ds1019p-7.2.0-64570",
       "platform_version": "ds1019p-7.2.0-64570",
-      "user_config_json": "ds1019p_user_config.json",
+      "platform_name": "apollolake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -2089,7 +2089,7 @@
     {
       "id": "ds1520p-7.2.0-64570",
       "platform_version": "ds1520p-7.2.0-64570",
-      "user_config_json": "ds1520p_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -2128,7 +2128,7 @@
     {
       "id": "ds1621p-7.2.0-64570",
       "platform_version": "ds1621p-7.2.0-64570",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2167,7 +2167,7 @@
     {
       "id": "ds1821p-7.2.0-64570",
       "platform_version": "ds1821p-7.2.0-64570",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2206,7 +2206,7 @@
     {
       "id": "ds1621xsp-7.2.0-64570",
       "platform_version": "ds1621xsp-7.2.0-64570",
-      "user_config_json": "ds1621xsp_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2243,7 +2243,7 @@
     {
       "id": "ds2422p-7.2.0-64570",
       "platform_version": "ds2422p-7.2.0-64570",
-      "user_config_json": "ds2422p_user_config.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2282,7 +2282,7 @@
     {
       "id": "ds3617xs-7.2.0-64570",
       "platform_version": "ds3617xs-7.2.0-64570",
-      "user_config_json": "broadwell_user_config-test.json",
+      "platform_name": "broadwell",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2319,7 +2319,7 @@
     {
       "id": "ds3622xsp-7.2.0-64570",
       "platform_version": "ds3622xsp-7.2.0-64570",
-      "user_config_json": "broadwellnk_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2356,17 +2356,17 @@
     {
       "id": "ds723p-7.2.0-64570",
       "platform_version": "ds723p-7.2.0-64570",
-      "user_config_json": "ds723p_user_config.json",
+      "platform_name": "r1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
       "downloads": {
         "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
+          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.r1000-7.2.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
         },
         "os": {
@@ -2395,7 +2395,7 @@
     {
       "id": "ds920p-7.2.0-64570",
       "platform_version": "ds920p-7.2.0-64570",
-      "user_config_json": "geminilake_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -2434,17 +2434,17 @@
     {
       "id": "ds923p-7.2.0-64570",
       "platform_version": "ds923p-7.2.0-64570",
-      "user_config_json": "ds923p_user_config.json",
+      "platform_name": "r1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
       "downloads": {
         "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
+          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.r1000-7.2.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
         },
         "os": {
@@ -2473,7 +2473,7 @@
     {
       "id": "dva1622-7.2.0-64570",
       "platform_version": "dva1622-7.2.0-64570",
-      "user_config_json": "dva1622_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -2512,7 +2512,7 @@
     {
       "id": "dva3219-7.2.0-64570",
       "platform_version": "dva3219-7.2.0-64570",
-      "user_config_json": "dva3219_user_config-test.json",
+      "platform_name": "denverton",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2549,7 +2549,7 @@
     {
       "id": "dva3221-7.2.0-64570",
       "platform_version": "dva3221-7.2.0-64570",
-      "user_config_json": "denverton_user_config-test.json",
+      "platform_name": "denverton",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2586,7 +2586,7 @@
     {
       "id": "fs2500-7.2.0-64570",
       "platform_version": "fs2500-7.2.0-64570",
-      "user_config_json": "fs2500_user_config.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2625,7 +2625,7 @@
     {
       "id": "rs3413xsp-7.2.0-64570",
       "platform_version": "rs3413xsp-7.2.0-64570",
-      "user_config_json": "rs3413xsp_user_config.json",
+      "platform_name": "bromolow",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "dev-v7",
@@ -2659,7 +2659,7 @@
     {
       "id": "rs3618xs-7.2.0-64570",
       "platform_version": "rs3618xs-7.2.0-64570",
-      "user_config_json": "rs3618xs_user_config-test.json",
+      "platform_name": "broadwell",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2696,7 +2696,7 @@
     {
       "id": "rs4021xsp-7.2.0-64570",
       "platform_version": "rs4021xsp-7.2.0-64570",
-      "user_config_json": "rs4021xsp_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2733,7 +2733,7 @@
     {
       "id": "sa3610-7.2.0-64570",
       "platform_version": "sa3610-7.2.0-64570",
-      "user_config_json": "sa3610_user_config-test.json",
+      "platform_name": "broadwellnkv2",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2767,7 +2767,7 @@
     {
       "id": "sa6400-7.2.0-64570",
       "platform_version": "sa6400-7.2.0-64570",
-      "user_config_json": "epyc7002_user_config-test.json",
+      "platform_name": "epyc7002",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2805,7 +2805,7 @@
     {
       "id": "ds720p-7.2.0-64570",
       "platform_version": "ds720p-7.2.0-64570",
-      "user_config_json": "geminilake_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -2844,7 +2844,7 @@
     {
       "id": "rs1221p-7.2.0-64570",
       "platform_version": "rs1221p-7.2.0-64570",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2883,7 +2883,7 @@
     {
       "id": "rs2423p-7.2.0-64570",
       "platform_version": "rs2423p-7.2.0-64570",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2922,7 +2922,7 @@
     {
       "id": "rs3621xsp-7.2.0-64570",
       "platform_version": "rs3621xsp-7.2.0-64570",
-      "user_config_json": "broadwellnk_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -2959,17 +2959,17 @@
     {
       "id": "ds916p-7.2.0-64570",
       "platform_version": "ds916p-7.2.0-64570",
-      "user_config_json": "braswell_user_config.json",
+      "platform_name": "braswell",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
       "downloads": {
         "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/bromolow-source/linux-3.10.x.txz/download",
+          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/braswell-source/linux-3.10.x.txz/download",
           "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.bromolow-7.2.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.braswell-7.2.dev.txz/download",
           "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
         }
       },
@@ -2991,7 +2991,7 @@
     {
       "id": "ds620slim-7.2.0-64570",
       "platform_version": "ds620slim-7.2.0-64570",
-      "user_config_json": "apollolake_user_config.json",
+      "platform_name": "apollolake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -3029,7 +3029,7 @@
     {
       "id": "ds1819p-7.2.0-64570",
       "platform_version": "ds1819p-7.2.0-64570",
-      "user_config_json": "denverton_user_config-test.json",
+      "platform_name": "denverton",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3066,7 +3066,7 @@
     {
       "id": "ds1823xsp-7.2.0-64570",
       "platform_version": "ds1823xsp-7.2.0-64570",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3105,7 +3105,7 @@
     {
       "id": "ds918p-7.2.1-69057",
       "platform_version": "ds918p-7.2.1-69057",
-      "user_config_json": "apollolake_user_config.json",
+      "platform_name": "apollolake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -3143,7 +3143,7 @@
     {
       "id": "ds1019p-7.2.1-69057",
       "platform_version": "ds1019p-7.2.1-69057",
-      "user_config_json": "ds1019p_user_config.json",
+      "platform_name": "apollolake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -3181,7 +3181,7 @@
     {
       "id": "ds1520p-7.2.1-69057",
       "platform_version": "ds1520p-7.2.1-69057",
-      "user_config_json": "ds1520p_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -3220,7 +3220,7 @@
     {
       "id": "ds1621p-7.2.1-69057",
       "platform_version": "ds1621p-7.2.1-69057",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3259,7 +3259,7 @@
     {
       "id": "ds1821p-7.2.1-69057",
       "platform_version": "ds1821p-7.2.1-69057",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3298,7 +3298,7 @@
     {
       "id": "ds1621xsp-7.2.1-69057",
       "platform_version": "ds1621xsp-7.2.1-69057",
-      "user_config_json": "ds1621xsp_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3335,7 +3335,7 @@
     {
       "id": "ds2422p-7.2.1-69057",
       "platform_version": "ds2422p-7.2.1-69057",
-      "user_config_json": "ds2422p_user_config.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3374,7 +3374,7 @@
     {
       "id": "ds3617xs-7.2.1-69057",
       "platform_version": "ds3617xs-7.2.1-69057",
-      "user_config_json": "broadwell_user_config-test.json",
+      "platform_name": "broadwell",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3411,7 +3411,7 @@
     {
       "id": "ds3622xsp-7.2.1-69057",
       "platform_version": "ds3622xsp-7.2.1-69057",
-      "user_config_json": "broadwellnk_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3448,17 +3448,17 @@
     {
       "id": "ds723p-7.2.1-69057",
       "platform_version": "ds723p-7.2.1-69057",
-      "user_config_json": "ds723p_user_config.json",
+      "platform_name": "r1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
       "downloads": {
         "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
+          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.r1000-7.2.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
         },
         "os": {
@@ -3487,7 +3487,7 @@
     {
       "id": "ds920p-7.2.1-69057",
       "platform_version": "ds920p-7.2.1-69057",
-      "user_config_json": "geminilake_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -3526,17 +3526,17 @@
     {
       "id": "ds923p-7.2.1-69057",
       "platform_version": "ds923p-7.2.1-69057",
-      "user_config_json": "ds923p_user_config.json",
+      "platform_name": "r1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
       "downloads": {
         "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
+          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.r1000-7.2.dev.txz/download",
           "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
         },
         "os": {
@@ -3565,7 +3565,7 @@
     {
       "id": "dva1622-7.2.1-69057",
       "platform_version": "dva1622-7.2.1-69057",
-      "user_config_json": "dva1622_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -3604,7 +3604,7 @@
     {
       "id": "dva3219-7.2.1-69057",
       "platform_version": "dva3219-7.2.1-69057",
-      "user_config_json": "dva3219_user_config-test.json",
+      "platform_name": "denverton",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3641,7 +3641,7 @@
     {
       "id": "dva3221-7.2.1-69057",
       "platform_version": "dva3221-7.2.1-69057",
-      "user_config_json": "denverton_user_config-test.json",
+      "platform_name": "denverton",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3678,7 +3678,7 @@
     {
       "id": "fs2500-7.2.1-69057",
       "platform_version": "fs2500-7.2.1-69057",
-      "user_config_json": "fs2500_user_config.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3717,7 +3717,7 @@
     {
       "id": "rs3413xsp-7.2.1-69057",
       "platform_version": "rs3413xsp-7.2.1-69057",
-      "user_config_json": "rs3413xsp_user_config.json",
+      "platform_name": "bromolow",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "dev-v7",
@@ -3751,7 +3751,7 @@
     {
       "id": "rs3618xs-7.2.1-69057",
       "platform_version": "rs3618xs-7.2.1-69057",
-      "user_config_json": "rs3618xs_user_config-test.json",
+      "platform_name": "broadwell",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3788,7 +3788,7 @@
     {
       "id": "rs4021xsp-7.2.1-69057",
       "platform_version": "rs4021xsp-7.2.1-69057",
-      "user_config_json": "rs4021xsp_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3825,7 +3825,7 @@
     {
       "id": "sa3600-7.2.1-69057",
       "platform_version": "sa3600-7.2.1-69057",
-      "user_config_json": "sa3600_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3859,7 +3859,7 @@
     {
       "id": "sa6400-7.2.1-69057",
       "platform_version": "sa6400-7.2.1-69057",
-      "user_config_json": "epyc7002_user_config-test.json",
+      "platform_name": "epyc7002",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3897,7 +3897,7 @@
     {
       "id": "ds720p-7.2.1-69057",
       "platform_version": "ds720p-7.2.1-69057",
-      "user_config_json": "geminilake_user_config.json",
+      "platform_name": "geminilake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -3936,7 +3936,7 @@
     {
       "id": "rs1221p-7.2.1-69057",
       "platform_version": "rs1221p-7.2.1-69057",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -3975,7 +3975,7 @@
     {
       "id": "rs2423p-7.2.1-69057",
       "platform_version": "rs2423p-7.2.1-69057",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -4014,7 +4014,7 @@
     {
       "id": "rs3621xsp-7.2.1-69057",
       "platform_version": "rs3621xsp-7.2.1-69057",
-      "user_config_json": "broadwellnk_user_config-test.json",
+      "platform_name": "broadwellnk",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -4051,17 +4051,17 @@
     {
       "id": "ds916p-7.2.1-69057",
       "platform_version": "ds916p-7.2.1-69057",
-      "user_config_json": "braswell_user_config.json",
+      "platform_name": "braswell",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
       "downloads": {
         "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/bromolow-source/linux-3.10.x.txz/download",
+          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/braswell-source/linux-3.10.x.txz/download",
           "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
         },
         "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.bromolow-7.2.dev.txz/download",
+          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.braswell-7.2.dev.txz/download",
           "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
         }
       },
@@ -4083,7 +4083,7 @@
     {
       "id": "ds620slim-7.2.1-69057",
       "platform_version": "ds620slim-7.2.1-69057",
-      "user_config_json": "apollolake_user_config.json",
+      "platform_name": "apollolake",
       "docker_base_image": "debian:8-slim",
       "compile_with": "toolkit_dev",
       "redpill_lkm_make_target": "test-v7",
@@ -4121,7 +4121,7 @@
     {
       "id": "ds1819p-7.2.1-69057",
       "platform_version": "ds1819p-7.2.1-69057",
-      "user_config_json": "denverton_user_config-test.json",
+      "platform_name": "denverton",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
@@ -4158,7 +4158,7 @@
     {
       "id": "ds1823xsp-7.2.1-69057",
       "platform_version": "ds1823xsp-7.2.1-69057",
-      "user_config_json": "v1000_user_config-test.json",
+      "platform_name": "v1000",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
