@@ -2253,73 +2253,6 @@ function setplatform() {
     MODEL=$(echo "${TARGET_PLATFORM}" | sed 's/ds/DS/' | sed 's/rs/RS/' | sed 's/p/+/' | sed 's/dva/DVA/' | sed 's/fs/FS/' | sed 's/sa/SA/' )
     ORIGIN_PLATFORM="$(echo $platform_selected | jq -r -e '.platform_name')"
 
-  if [ 1 = 0 ]; then
-    if [ "${TARGET_PLATFORM}" = "apollolake" ] || [ "${TARGET_PLATFORM}" = "ds918p" ]; then
-        SYNOMODEL="ds918p_$TARGET_REVISION" && MODEL="DS918+" && ORIGIN_PLATFORM="apollolake"
-    elif [ "${TARGET_PLATFORM}" = "bromolow" ] || [ "${TARGET_PLATFORM}" = "ds3615xs" ]; then
-        SYNOMODEL="ds3615xs_$TARGET_REVISION" && MODEL="DS3615xs" && ORIGIN_PLATFORM="bromolow"
-    elif [ "${TARGET_PLATFORM}" = "broadwell" ] || [ "${TARGET_PLATFORM}" = "ds3617xs" ]; then
-        SYNOMODEL="ds3617xs_$TARGET_REVISION" && MODEL="DS3617xs" && ORIGIN_PLATFORM="broadwell"
-    elif [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "ds3622xsp" ]; then
-        SYNOMODEL="ds3622xsp_$TARGET_REVISION" && MODEL="DS3622xs+" && ORIGIN_PLATFORM="broadwellnk"
-    elif [ "${TARGET_PLATFORM}" = "v1000" ] || [ "${TARGET_PLATFORM}" = "ds1621p" ]; then
-        SYNOMODEL="ds1621p_$TARGET_REVISION" && MODEL="DS1621+" && ORIGIN_PLATFORM="v1000"
-    elif [ "${TARGET_PLATFORM}" = "denverton" ] || [ "${TARGET_PLATFORM}" = "dva3221" ]; then
-        SYNOMODEL="dva3221_$TARGET_REVISION" && MODEL="DVA3221" && ORIGIN_PLATFORM="denverton"
-    elif [ "${TARGET_PLATFORM}" = "geminilake" ] || [ "${TARGET_PLATFORM}" = "ds920p" ]; then
-        SYNOMODEL="ds920p_$TARGET_REVISION" && MODEL="DS920+" && ORIGIN_PLATFORM="geminilake"
-    elif [ "${TARGET_PLATFORM}" = "r1000" ] || [ "${TARGET_PLATFORM}" = "ds923p" ]; then
-        SYNOMODEL="ds923p_$TARGET_REVISION" && MODEL="DS923+" && ORIGIN_PLATFORM="r1000"
-    elif [ "${TARGET_PLATFORM}" = "ds723p" ]; then
-        SYNOMODEL="ds723p_$TARGET_REVISION" && MODEL="DS723+" && ORIGIN_PLATFORM="r1000"
-    elif [ "${TARGET_PLATFORM}" = "dva1622" ]; then
-        SYNOMODEL="dva1622_$TARGET_REVISION" && MODEL="DVA1622" && ORIGIN_PLATFORM="geminilake"
-    elif [ "${TARGET_PLATFORM}" = "ds2422p" ]; then
-        SYNOMODEL="ds2422p_$TARGET_REVISION" && MODEL="DS2422+" && ORIGIN_PLATFORM="v1000"
-    elif [ "${TARGET_PLATFORM}" = "rs1221p" ]; then
-        SYNOMODEL="rs1221p_$TARGET_REVISION" && MODEL="RS1221+" && ORIGIN_PLATFORM="v1000"
-    elif [ "${TARGET_PLATFORM}" = "rs1619xsp" ]; then
-        SYNOMODEL="rs1619xsp_$TARGET_REVISION" && MODEL="RS1619xs+" && ORIGIN_PLATFORM="broadwellnk"
-    elif [ "${TARGET_PLATFORM}" = "rs2423p" ]; then
-        SYNOMODEL="rs2423p_$TARGET_REVISION" && MODEL="RS2423+" && ORIGIN_PLATFORM="v1000"
-    elif [ "${TARGET_PLATFORM}" = "rs3621xsp" ]; then
-        SYNOMODEL="rs3621xsp_$TARGET_REVISION" && MODEL="RS3621xs+" && ORIGIN_PLATFORM="broadwellnk"
-    elif [ "${TARGET_PLATFORM}" = "rs4021xsp" ]; then
-        SYNOMODEL="rs4021xsp_$TARGET_REVISION" && MODEL="RS4021xs+" && ORIGIN_PLATFORM="broadwellnk"
-    elif [ "${TARGET_PLATFORM}" = "sa3410" ]; then
-        SYNOMODEL="sa3410_$TARGET_REVISION" && MODEL="SA3410" && ORIGIN_PLATFORM="broadwellnkv2"
-    elif [ "${TARGET_PLATFORM}" = "sa3610" ]; then
-        SYNOMODEL="sa3610_$TARGET_REVISION" && MODEL="SA3610" && ORIGIN_PLATFORM="broadwellnkv2"
-    elif [ "${TARGET_PLATFORM}" = "sa6400" ]; then
-        SYNOMODEL="sa6400_$TARGET_REVISION" && MODEL="SA6400" && ORIGIN_PLATFORM="epyc7002"
-    elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
-        SYNOMODEL="ds1621xsp_$TARGET_REVISION" && MODEL="DS1621xs+" && ORIGIN_PLATFORM="broadwellnk"
-    elif [ "${TARGET_PLATFORM}" = "dva3219" ]; then
-        SYNOMODEL="dva3219_$TARGET_REVISION" && MODEL="DVA3219" && ORIGIN_PLATFORM="denverton"
-    elif [ "${TARGET_PLATFORM}" = "ds1520p" ]; then
-        SYNOMODEL="ds1520p_$TARGET_REVISION" && MODEL="DS1520+" && ORIGIN_PLATFORM="geminilake"
-    elif [ "${TARGET_PLATFORM}" = "ds720p" ]; then
-        SYNOMODEL="ds720p_$TARGET_REVISION" && MODEL="DS720+" && ORIGIN_PLATFORM="geminilake"
-    elif [ "${TARGET_PLATFORM}" = "fs2500" ]; then
-        SYNOMODEL="fs2500_$TARGET_REVISION" && MODEL="FS2500" && ORIGIN_PLATFORM="v1000"
-    elif [ "${TARGET_PLATFORM}" = "rs3618xs" ]; then
-        SYNOMODEL="rs3618xs_$TARGET_REVISION" && MODEL="RS3618xs" && ORIGIN_PLATFORM="broadwell"
-    elif [ "${TARGET_PLATFORM}" = "rs3413xsp" ]; then
-        SYNOMODEL="rs3413xsp_$TARGET_REVISION" && MODEL="RS3413xs+" && ORIGIN_PLATFORM="bromolow"
-    elif [ "${TARGET_PLATFORM}" = "ds1019p" ]; then
-        SYNOMODEL="ds1019p_$TARGET_REVISION" && MODEL="DS1019+" && ORIGIN_PLATFORM="apollolake"
-    elif [ "${TARGET_PLATFORM}" = "ds916p" ]; then
-        SYNOMODEL="ds916p_$TARGET_REVISION" && MODEL="DS916+" && ORIGIN_PLATFORM="braswell"
-    elif [ "${TARGET_PLATFORM}" = "ds1821p" ]; then
-        SYNOMODEL="ds1821p_$TARGET_REVISION" && MODEL="DS1821+" && ORIGIN_PLATFORM="v1000"
-    elif [ "${TARGET_PLATFORM}" = "ds1823xsp" ]; then
-        SYNOMODEL="ds1823xsp_$TARGET_REVISION" && MODEL="DS1823xs+" && ORIGIN_PLATFORM="v1000"
-    elif [ "${TARGET_PLATFORM}" = "ds620slim" ]; then
-        SYNOMODEL="ds620slim_$TARGET_REVISION" && MODEL="DS620slim" && ORIGIN_PLATFORM="apollolake"
-    elif [ "${TARGET_PLATFORM}" = "ds1819p" ]; then
-        SYNOMODEL="ds1819p_$TARGET_REVISION" && MODEL="DS1819+" && ORIGIN_PLATFORM="denverton"
-    fi
-  fi
 }
 
 function getvars() {
@@ -2387,13 +2320,13 @@ function getvars() {
         exit 99
     fi
 
-    case $TARGET_PLATFORM in
+    case $ORIGINAL_PLATFORM in
 
-    bromolow | rs3413xsp)
+    bromolow | braswell)
         KERNEL_MAJOR="3"
         MODULE_ALIAS_FILE="modules.alias.3.json"
         ;;
-    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | dva1622 | ds1019p | ds2422p | ds1520p | fs2500 | ds1621xsp| rs4021xsp | sa3600 | dva3219 | rs3618xs | *)
+    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | broadwellnkv2 | broadwellntbap | purley | *)
         KERNEL_MAJOR="4"
         MODULE_ALIAS_FILE="modules.alias.4.json"
         ;;
@@ -3638,7 +3571,6 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
     build)
 
         getvars $2
-        exit 0
         checkinternet
 #        getlatestrploader
 #        gitdownload     # When called from the parent my.sh, -d flag authority check is not possible, pre-downloaded in advance 
