@@ -1789,15 +1789,15 @@
       ]
     },
     {
-      "id": "sa3400-7.1.1-42962",
-      "platform_version": "sa3400-7.1.1-42962",
-      "user_config_json": "broadwellnk_user_config-test.json",
+      "id": "sa3410-7.1.1-42962",
+      "platform_version": "sa3410-7.1.1-42962",
+      "user_config_json": "broadwellnkv2_user_config-test.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
       "downloads": {
         "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
+          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnkv2-source/linux-4.4.x.txz/download",
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
@@ -2655,15 +2655,15 @@
       ]
     },
     {
-      "id": "sa3600-7.2.0-64570",
-      "platform_version": "sa3600-7.2.0-64570",
-      "user_config_json": "sa3600_user_config-test.json",
+      "id": "sa3610-7.2.0-64570",
+      "platform_version": "sa3610-7.2.0-64570",
+      "user_config_json": "sa3610_user_config-test.json",
       "docker_base_image": "debian:8-slim",
       "redpill_lkm_make_target": "dev-v7",
       "compile_with": "toolkit_dev",
       "downloads": {
         "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
+          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnkv2-source/linux-4.4.x.txz/download",
           "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
         },
         "toolkit_dev": {
