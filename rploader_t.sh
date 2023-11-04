@@ -2220,13 +2220,14 @@ function gettoolchain() {
 function getPlatforms() {
 
     platform_versions=$(jq -s '.[0].build_configs=(.[1].build_configs + .[0].build_configs | unique_by(.id)) | .[0]' custom_config_jun.json custom_config.json | jq -r '.build_configs[].id')
-    echo "$platform_versions"
+    echo "platform_versions=$platform_versions"
 
 }
 
 function selectPlatform() {
 
     platform_selected=$(jq -s '.[0].build_configs=(.[1].build_configs + .[0].build_configs | unique_by(.id)) | .[0]' custom_config_jun.json custom_config.json | jq ".build_configs[] | select(.id==\"${1}\")")
+    echo "platform_selected=${platform_selected}"
 
 }
 function getValueByJsonPath() {
