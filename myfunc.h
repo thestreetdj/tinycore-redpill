@@ -189,6 +189,8 @@ set -u
 # Update : Back to DSM Pat Handle Method
 # 2023.10.27 v1.0.0.0
 # Update : Kernel patch process improvements    
+# 2023.11.04 
+# Update : Added DS1522+ (r1000), DS220+ (geminilake), DS2419+ (denverton), DS423+ (geminilake), DS718+ (apollolake), RS2423+ (v1000)
     
 function showlastupdate() {
     cat <<EOF
@@ -221,7 +223,10 @@ function showlastupdate() {
 # Update : Improved extension processing speed (local copy instead of remote curl download)
     
 # 2023.10.27 v1.0.0.0 
-# Update : Kernel patch process improvements    
+# Update : Kernel patch process improvements
+
+# 2023.11.04 
+# Update : Added DS1522+ (r1000), DS220+ (geminilake), DS2419+ (denverton), DS423+ (geminilake), DS718+ (apollolake), RS2423+ (v1000)
     
 EOF
 }
@@ -311,7 +316,7 @@ function getvarsmshell()
     tem="${1}"
 
 #7.1.1-42962
-    MODELS="DS3615xsF DS1019+F DS1520+F DS1621+F DS1821+F DS1621xs+F DS2422+F DS3617xsF DS3622xs+F DS720+F DS918+F DS620slimF DS920+F DVA1622F DS1819+F DVA3219F DVA3221F FS2500F RS1221+F RS1619xs+F RS2423+F RS3413xs+F SA3410F SA3610F"
+    MODELS="DS3615xsF DS1019+F DS1522+F DS220+F DS2419+F DS423+F DS718+F DS1520+F DS1621+F DS1821+F DS1621xs+F DS2422+F DS3617xsF DS3622xs+F DS720+F DS918+F DS620slimF DS920+F DVA1622F DS1819+F DVA3219F DVA3221F FS2500F RS1221+F RS1619xs+F RS2423+F RS3413xs+F SA3410F SA3610F"
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
        TARGET_REVISION="42962"
        SUVP="-1"
@@ -323,20 +328,20 @@ function getvarsmshell()
     fi
 
 #7.0.1-42218
-    MODELS="DS3615xsJ DS1019+J DS620slimJ DS1520+J DS1621+J DS1821+J DS1621xs+J DS2422+J DS3617xsJ DS3622xs+J DS720+J DS723+J DS918+J DS920+J DS923+J DS1819+J DVA3219J DVA3221J FS2500J RS1221+J RS1619xs+J RS2423+J RS3413xs+J RS3618xsJ RS3621xs+J RS4021xs+J SA3410J SA3610J SA6400J"
+    MODELS="DS3615xsJ DS1019+J DS620slimJ DS1520+J DS1522+J DS220+J DS2419+J DS423+J DS718+J DS1621+J DS1821+J DS1621xs+J DS2422+J DS3617xsJ DS3622xs+J DS720+J DS723+J DS918+J DS920+J DS923+J DS1819+J DVA3219J DVA3221J FS2500J RS1221+J RS1619xs+J RS2423+J RS3413xs+J RS3618xsJ RS3621xs+J RS4021xs+J SA3410J SA3610J SA6400J"
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
        TARGET_REVISION="42218"
     fi
         
 #7.2.0-64570 Official
-    MODELS="DS1019+G DS620slimG DS1520+G DS1621+G DS1821+G DS1823xs+G DS1621xs+G DS2422+G DS3617xsG DS3622xs+G DS720+G DS723+G DS918+G DS920+G DS923+G DVA1622G DS1819+G DVA3219G DVA3221G FS2500G RS1221+G RS1619xs+G RS2423+G RS3413xs+G RS3618xsG RS3621xs+G RS4021xs+G SA3410G SA3610G SA6400G"
+    MODELS="DS1019+G DS620slimG DS1520+G DS1522+G DS220+G DS2419+G DS423+G DS718+G DS1621+G DS1821+G DS1823xs+G DS1621xs+G DS2422+G DS3617xsG DS3622xs+G DS720+G DS723+G DS918+G DS920+G DS923+G DVA1622G DS1819+G DVA3219G DVA3221G FS2500G RS1221+G RS1619xs+G RS2423+G RS3413xs+G RS3618xsG RS3621xs+G RS4021xs+G SA3410G SA3610G SA6400G"
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
        TARGET_REVISION="64570"
        SUVP="-1" 
     fi
 
 #7.2.1-69057 Official
-    MODELS="DS1019+H DS620slimH DS1520+H DS1621+H DS1821+H DS1823xs+H DS1621xs+H DS2422+H DS3617xsH DS3622xs+H DS720+H DS723+H DS918+H DS920+H DS923+H DVA1622H DS1819+H DVA3219H DVA3221H FS2500H RS1221+H RS1619xs+H RS2423+H RS3413xs+H RS3618xsH RS3621xs+H RS4021xs+H SA3410H SA3610H SA6400H"
+    MODELS="DS1019+H DS620slimH DS1520+H DS1522+H DS220+H DS2419+H DS423+H DS718+H DS1621+H DS1821+H DS1823xs+H DS1621xs+H DS2422+H DS3617xsH DS3622xs+H DS720+H DS723+H DS918+H DS920+H DS923+H DVA1622H DS1819+H DVA3219H DVA3221H FS2500H RS1221+H RS1619xs+H RS2423+H RS3413xs+H RS3618xsH RS3621xs+H RS4021xs+H SA3410H SA3610H SA6400H"
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
        TARGET_REVISION="69057"
     fi
@@ -374,28 +379,40 @@ function getvarsmshell()
     TARGET_PLATFORM=$(echo "$MODEL" | sed 's/DS/ds/' | sed 's/RS/rs/' | sed 's/+/p/' | sed 's/DVA/dva/' | sed 's/FS/fs/' | sed 's/SA/sa/' )
     SYNOMODEL="${TARGET_PLATFORM}_${TARGET_REVISION}"
 
-    if [ "${MODEL}" = "DS918+" ]||[ "${MODEL}" = "DS1019+" ]||[ "${MODEL}" = "DS620slim" ]; then
+    case ${MODEL} in
+
+    DS718+ | DS918+ | DS1019+ | DS620slim )
         ORIGIN_PLATFORM="apollolake"
-    elif [ "${MODEL}" = "DS3615xs" ]||[ "${MODEL}" = "RS3413xs+" ]; then
+        ;;
+    DS3615xs | RS3413xs+ )
         ORIGIN_PLATFORM="bromolow"
-    elif [ "${MODEL}" = "DS3617xs" ]||[ "${MODEL}" = "RS3618xs" ]; then
+        ;;
+    DS3617xs | RS3618xs )
         ORIGIN_PLATFORM="broadwell"
-    elif [ "${MODEL}" = "DS3622xs+" ]||[ "${MODEL}" = "DS1621xs+" ]||[ "${MODEL}" = "RS4021xs+" ]||[ "${MODEL}" = "SA3400" ]||[ "${MODEL}" = "SA3600" ]||[ "${MODEL}" = "RS1619xs+" ]||[ "${MODEL}" = "RS3621xs+" ]; then
+        ;;
+    DS3622xs+ | DS1621xs+ | SA3400 | SA3600 | RS1619xs+ | RS3621xs+ | RS4021xs+ )
         ORIGIN_PLATFORM="broadwellnk"
-    elif [ "${MODEL}" = "SA3410" ]||[ "${MODEL}" = "SA3610" ]; then
+        ;;
+    SA3410 | SA3610 )
         ORIGIN_PLATFORM="broadwellnkv2"
-    elif [ "${MODEL}" = "DVA3221" ]||[ "${MODEL}" = "DVA3219" ]||[ "${MODEL}" = "DS1819+" ]; then
+        ;;
+    DVA3221 | DVA3219 | DS1819+ | DS2419+ )
         ORIGIN_PLATFORM="denverton"
-    elif [ "${MODEL}" = "DVA1622" ]||[ "${MODEL}" = "DS920+" ]||[ "${MODEL}" = "DS1520+" ]||[ "${MODEL}" = "DS720+" ]; then
+        ;;
+    DVA1622 | DS220+ | DS423+ | DS920+ | DS1520+ | DS720+ )
         ORIGIN_PLATFORM="geminilake"
-    elif [ "${MODEL}" = "DS923+" ]||[ "${MODEL}" = "DS723+" ]; then
+        ;;
+    DS923+ | DS723+ | DS1522+ )
         ORIGIN_PLATFORM="r1000"
-    elif [ "${MODEL}" = "DS1621+" ]||[ "${MODEL}" = "DS1821+" ]||[ "${MODEL}" = "DS1823xs+" ]||[ "${MODEL}" = "DS2422+" ]||[ "${MODEL}" = "FS2500" ]||[ "${MODEL}" = "RS1221+" ]||[ "${MODEL}" = "RS2423+" ]; then
+        ;;
+    DS1621+ | DS1821+ | DS1823xs+ | DS2422+ | FS2500 | RS1221+ | RS2423+ )
         ORIGIN_PLATFORM="v1000"
-    elif [ "${MODEL}" = "SA6400" ]; then
+        ;;
+    SA6400 )
         ORIGIN_PLATFORM="epyc7002"        
-    fi
-    
+        ;;
+    esac
+   
     if [ "${MODEL}" = "SA6400" ]; then    
         KVER="5.10.55"
     elif [ "${MODEL}" = "DS3615xs" ]||[ "${MODEL}" = "RS3413xs+" ]||[ "${MODEL}" = "DS916+" ]; then
