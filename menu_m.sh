@@ -824,9 +824,13 @@ while true; do
   else  
     options=("c" "7.1.1-42962")
   fi 
-  if [ "${MODEL}" != "DS923+" ] && [ "${MODEL}" != "DS723+" ] && [ "${MODEL}" != "DS1823+" ] && [ "${MODEL}" != "DVA1622" ]; then
-    options+=("d" "7.0.1-42218")
-  fi
+  case $MODEL in
+    DS923+ | DS723+ | DS1823+ | DVA1622 | DS1522+ | DS423+ | RS2423+ )
+      ;;
+    * )
+      options+=("d" "7.0.1-42218")
+      ;;
+  esac    
 
   for ((i=0; i<${#options[@]}; i+=2)); do
     cmd+=("${options[i]}" "${options[i+1]}")
