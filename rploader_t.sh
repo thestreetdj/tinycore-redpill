@@ -2251,7 +2251,9 @@ function setplatform() {
 
     SYNOMODEL="$(echo $platform_selected | jq -r -e '.id')"
     MODEL=$(echo "${TARGET_PLATFORM}" | sed 's/ds/DS/' | sed 's/rs/RS/' | sed 's/p/+/' | sed 's/dva/DVA/' | sed 's/fs/FS/' | sed 's/sa/SA/' )
-    
+    ORIGIN_PLATFORM="$(echo $platform_selected | jq -r -e '.platform_name')"
+
+  if [ 1 = 0 ]; then
     if [ "${TARGET_PLATFORM}" = "apollolake" ] || [ "${TARGET_PLATFORM}" = "ds918p" ]; then
         SYNOMODEL="ds918p_$TARGET_REVISION" && MODEL="DS918+" && ORIGIN_PLATFORM="apollolake"
     elif [ "${TARGET_PLATFORM}" = "bromolow" ] || [ "${TARGET_PLATFORM}" = "ds3615xs" ]; then
@@ -2317,7 +2319,7 @@ function setplatform() {
     elif [ "${TARGET_PLATFORM}" = "ds1819p" ]; then
         SYNOMODEL="ds1819p_$TARGET_REVISION" && MODEL="DS1819+" && ORIGIN_PLATFORM="denverton"
     fi
-
+  fi
 }
 
 function getvars() {
