@@ -2249,7 +2249,7 @@ function readConfig() {
 
 function setplatform() {
 
-    SYNOMODEL=${TARGET_PLATFORM}-${TARGET_REVISION}
+    SYNOMODEL=${TARGET_PLATFORM}_${TARGET_REVISION}
     MODEL=$(echo "${TARGET_PLATFORM}" | sed 's/ds/DS/' | sed 's/rs/RS/' | sed 's/p/+/' | sed 's/dva/DVA/' | sed 's/fs/FS/' | sed 's/sa/SA/' )
     ORIGIN_PLATFORM="$(echo $platform_selected | jq -r -e '.platform_name')"
 
