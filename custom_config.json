@@ -308,44 +308,6 @@
       ]
     },
     {
-      "id": "ds1522p-7.0.1-42218",
-      "platform_version": "ds1522p-7.0.1-42218",
-      "platform_name": "r1000",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.r1000-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
-        "os": {
-          "sha256": "b8864e2becd8ce5a6083db993564c8c0b982df8300a006b56695a0495a670aa3"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
-      "add_extensions": [
-        {
-          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
-          "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
-          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
-        }
-      ]
-    },
-    {
       "id": "ds1522p-7.1.1-42962",
       "platform_version": "ds1522p-7.1.1-42962",
       "platform_name": "r1000",
@@ -1198,7 +1160,7 @@
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
         },
         "os": {
-          "sha256": "b8864e2becd8ce5a6083db993564c8c0b982df8300a006b56695a0495a670aa3"
+          "sha256": "c57a7913852b4a6ffd709a6bb40e38c2d15b1ea7f7c72eec01ba259af920c56d"
         }
       },
       "redpill_lkm": {
@@ -1236,7 +1198,7 @@
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
         },
         "os": {
-          "sha256": "edcacbab10b77e2a6862d31173f5369c6e3c1720b8f0ec4fd41786609017c39b"
+          "sha256": "9b39d13127991660855618760216bf737a7944230a14a7bc8b7b73f7dcdca39c"
         }
       },
       "redpill_lkm": {
@@ -1274,7 +1236,7 @@
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
         },
         "os": {
-          "sha256": "e3b62ac87f63017d762cc3e5d93175b13302c4ed3ca4747ec1f7610395980881"
+          "sha256": "ac137a1a8213448bc6da887f617b1fbccac7df954fc40189ed383b324f89d71c"
         }
       },
       "redpill_lkm": {
@@ -1313,7 +1275,7 @@
           "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
         },
         "os": {
-          "sha256": "5481d7fd3e9bd58c84db36e0b03c6c7d10fd30c06ff0480feeb94dae25d94636"
+          "sha256": "d8a04151d95d562cfad84b132c815c2443e090e71a585d5fb9d244b98533b0e6"
         }
       },
       "redpill_lkm": {
@@ -2007,44 +1969,6 @@
           "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json",
-          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
-        }
-      ]
-    },
-    {
-      "id": "ds423p-7.0.1-42218",
-      "platform_version": "ds423p-7.0.1-42218",
-      "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
-        "os": {
-          "sha256": "b8864e2becd8ce5a6083db993564c8c0b982df8300a006b56695a0495a670aa3"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
-      "add_extensions": [
-        {
-          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
-          "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
           "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
         }
       ]
@@ -3980,44 +3904,6 @@
           "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
           "nvme-cache": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/nvme-cache/rpext-index.json",
-          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
-        }
-      ]
-    },
-    {
-      "id": "rs2423p-7.0.1-42218",
-      "platform_version": "rs2423p-7.0.1-42218",
-      "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
-        "os": {
-          "sha256": "d71daffc317b9447fd28cec2db4c699ecde86ddc99819d68a5914a982692887f"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
-      "add_extensions": [
-        {
-          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
-          "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
-          "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
-          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
           "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
         }
       ]
