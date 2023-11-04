@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.0.0
+# User Variables : 1.0.0.2
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.0.0"
+rploaderver="1.0.0.2"
 build="master"
 redpillmake="prod"
 
@@ -104,6 +104,8 @@ function history() {
     0.9.7.0 Improved build processing speed (removed pat file download process)
     0.9.7.1 Back to DSM Pat Handle Method
     1.0.0.0 Kernel patch process improvements
+    1.0.0.1 Improved platform release ID identification method
+    1.0.0.2 Setplatform() function converted to custom_config.json reference method
     --------------------------------------------------------------------------------------
 EOF
 
@@ -3020,9 +3022,13 @@ function bringoverfriend() {
 
   echo -n "Checking for latest friend -> "
   #URL=$(curl --connect-timeout 15 -s -k -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
-  #URL="https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum"
+  
   URL="https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest/download/chksum"
-  [ -n "$URL" ] && curl -s -k -L $URL -O
+  [ -n "$URL" ] && curl --connect-timeout 5 -s -k -L $URL -O
+  if [ ! -f chksum ]; then
+    URL="https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum"
+    [ -n "$URL" ] && curl --connect-timeout 5 -s -k -L $URL -O
+  fi
 
   if [ -f chksum ]; then
     FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
@@ -3189,14 +3195,16 @@ function setplatform() {
         SYNOMODEL="rs1221p_$TARGET_REVISION" && MODEL="RS1221+" && ORIGIN_PLATFORM="v1000"
     elif [ "${TARGET_PLATFORM}" = "rs1619xsp" ]; then
         SYNOMODEL="rs1619xsp_$TARGET_REVISION" && MODEL="RS1619xs+" && ORIGIN_PLATFORM="broadwellnk"
+    elif [ "${TARGET_PLATFORM}" = "rs2423p" ]; then
+        SYNOMODEL="rs2423p_$TARGET_REVISION" && MODEL="RS2423+" && ORIGIN_PLATFORM="v1000"
     elif [ "${TARGET_PLATFORM}" = "rs3621xsp" ]; then
         SYNOMODEL="rs3621xsp_$TARGET_REVISION" && MODEL="RS3621xs+" && ORIGIN_PLATFORM="broadwellnk"
     elif [ "${TARGET_PLATFORM}" = "rs4021xsp" ]; then
         SYNOMODEL="rs4021xsp_$TARGET_REVISION" && MODEL="RS4021xs+" && ORIGIN_PLATFORM="broadwellnk"
-    elif [ "${TARGET_PLATFORM}" = "sa3400" ]; then
-        SYNOMODEL="sa3400_$TARGET_REVISION" && MODEL="SA3400" && ORIGIN_PLATFORM="broadwellnk"
-    elif [ "${TARGET_PLATFORM}" = "sa3600" ]; then
-        SYNOMODEL="sa3600_$TARGET_REVISION" && MODEL="SA3600" && ORIGIN_PLATFORM="broadwellnk"
+    elif [ "${TARGET_PLATFORM}" = "sa3410" ]; then
+        SYNOMODEL="sa3410_$TARGET_REVISION" && MODEL="SA3410" && ORIGIN_PLATFORM="broadwellnkv2"
+    elif [ "${TARGET_PLATFORM}" = "sa3610" ]; then
+        SYNOMODEL="sa3610_$TARGET_REVISION" && MODEL="SA3610" && ORIGIN_PLATFORM="broadwellnkv2"
     elif [ "${TARGET_PLATFORM}" = "sa6400" ]; then
         SYNOMODEL="sa6400_$TARGET_REVISION" && MODEL="SA6400" && ORIGIN_PLATFORM="epyc7002"
     elif [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
@@ -3604,7 +3612,7 @@ fi
 
 if [ -z "$GATEWAY_INTERFACE" ]; then
 
-    loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+    loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}'| head -1)"
     tcrppart="${loaderdisk}3"
 
     if [ $loaderdisk == "mmc" ]; then
