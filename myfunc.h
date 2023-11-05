@@ -375,7 +375,7 @@ function getvarsmshell()
         exit 0                                                                                               
     fi
 
-    echo "MODEL is $MODEL"
+    #echo "MODEL is $MODEL"
     TARGET_PLATFORM=$(echo "$MODEL" | sed 's/DS/ds/' | sed 's/RS/rs/' | sed 's/+/p/' | sed 's/DVA/dva/' | sed 's/FS/fs/' | sed 's/SA/sa/' )
     SYNOMODEL="${TARGET_PLATFORM}_${TARGET_REVISION}"
 
