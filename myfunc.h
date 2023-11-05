@@ -315,6 +315,12 @@ function getvarsmshell()
 
     tem="${1}"
 
+#7.0.1-42218
+    MODELS="DS3615xsJ DS1019+J DS620slimJ DS1520+J DS1522+J DS220+J DS2419+J DS423+J DS718+J DS1621+J DS1821+J DS1621xs+J DS2422+J DS3617xsJ DS3622xs+J DS720+J DS723+J DS918+J DS920+J DS923+J DS1819+J DVA3219J DVA3221J FS2500J RS1221+J RS1619xs+J RS2423+J RS3413xs+J RS3618xsJ RS3621xs+J RS4021xs+J SA3410J SA3610J SA6400J"
+    if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
+       TARGET_REVISION="42218"
+    fi
+    
 #7.1.1-42962
     MODELS="DS3615xsF DS1019+F DS1522+F DS220+F DS2419+F DS718+F DS1520+F DS1621+F DS1821+F DS1621xs+F DS2422+F DS3617xsF DS3622xs+F DS720+F DS918+F DS620slimF DS920+F DVA1622F DS1819+F DVA3219F DVA3221F FS2500F RS1221+F RS1619xs+F RS2423+F RS3413xs+F SA3410F SA3610F"
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
@@ -325,12 +331,6 @@ function getvarsmshell()
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
        TARGET_REVISION="42962"
        SUVP="-6"
-    fi
-
-#7.0.1-42218
-    MODELS="DS3615xsJ DS1019+J DS620slimJ DS1520+J DS1522+J DS220+J DS2419+J DS423+J DS718+J DS1621+J DS1821+J DS1621xs+J DS2422+J DS3617xsJ DS3622xs+J DS720+J DS723+J DS918+J DS920+J DS923+J DS1819+J DVA3219J DVA3221J FS2500J RS1221+J RS1619xs+J RS2423+J RS3413xs+J RS3618xsJ RS3621xs+J RS4021xs+J SA3410J SA3610J SA6400J"
-    if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
-       TARGET_REVISION="42218"
     fi
         
 #7.2.0-64570 Official
@@ -380,12 +380,12 @@ function getvarsmshell()
     SYNOMODEL="${TARGET_PLATFORM}_${TARGET_REVISION}"
 
     case ${MODEL} in
-
     DS718+ | DS918+ | DS1019+ | DS620slim )
         ORIGIN_PLATFORM="apollolake"
         ;;
     DS3615xs | RS3413xs+ )
         ORIGIN_PLATFORM="bromolow"
+        KVER="3.10.108"
         ;;
     DS3617xs | RS3618xs )
         ORIGIN_PLATFORM="broadwell"
@@ -409,16 +409,169 @@ function getvarsmshell()
         ORIGIN_PLATFORM="v1000"
         ;;
     SA6400 )
-        ORIGIN_PLATFORM="epyc7002"        
+        ORIGIN_PLATFORM="epyc7002"
+        KVER="5.10.55"
         ;;
     esac
-   
-    if [ "${MODEL}" = "SA6400" ]; then    
-        KVER="5.10.55"
-    elif [ "${MODEL}" = "DS3615xs" ]||[ "${MODEL}" = "RS3413xs+" ]||[ "${MODEL}" = "DS916+" ]; then
-        KVER="3.10.108"        
-    fi    
-        
+
+    case ${MODEL} in
+    DS1019+)
+        permanent="PDN"
+        serialstart="1780 1790 1860 1980"
+        ;;
+    DS1520+)
+        permanent="TRR"
+        serialstart="2270"
+        ;;    
+    DS1522+)
+        permanent="TRR"
+        serialstart="2270"
+        ;;
+    DS1621+)
+        permanent="S7R"
+        serialstart="2080"
+        ;;
+    DS1621xs+)
+        permanent="S7R"
+        serialstart="2080"
+        ;;
+    DS1819+)
+        permanent="RFR"
+        serialstart="1930 1940"
+        ;;
+    DS1821+)
+        permanent="S7R"
+        serialstart="2080"
+        ;;
+    DS1823xs+)
+        permanent="V5R"
+        serialstart="22B0"
+        ;;
+    DS220+)
+        permanent="XXX"
+        serialstart="0000"
+        ;;
+    DS2419+)
+        permanent="QZA"
+        serialstart="1880"
+        ;;
+    DS2422+)
+        permanent="S7R"
+        serialstart="2080"
+        ;;
+    DS3615xs)
+        permanent="LWN"
+        serialstart="1130 1230 1330 1430"
+        ;;
+    DS3617xs)
+        permanent="ODN"
+        serialstart="1130 1230 1330 1430"
+        ;;
+    DS3622xs+)
+        permanent="SQR"
+        serialstart="2030 2040 20C0 2150"
+        ;;
+    DS423+)
+        permanent="VKR"
+        serialstart="22A0"
+        ;;
+    DS620slim)
+        permanent="PDN"
+        serialstart="1780 1790 1860 1980"
+        ;;
+    DS718+)
+        permanent="PEN"
+        serialstart="1930"
+        ;;
+    DS720+)
+        permanent="SBR"
+        serialstart="2030 2040 20C0 2150"
+        ;;
+    DS723+)
+        permanent="TQR"
+        serialstart="2270"
+        ;;
+    DS916+)
+        permanent="NZN"
+        serialstart="1130 1230 1330 1430"
+        ;;
+    DS918+)
+        permanent="PDN"
+        serialstart="1780 1790 1860 1980"
+        ;;
+    DS920+)
+        permanent="SBR"
+        serialstart="2030 2040 20C0 2150"
+        ;;
+    DS923+)
+        permanent="TQR"
+        serialstart="2270"
+        ;;
+    DVA1622)
+        permanent="UBR"
+        serialstart="2030 2040 20C0 2150"
+        ;;
+    DVA3219)
+        permanent="RFR"
+        serialstart="1930 1940"
+        ;;
+    DVA3221)
+        permanent="SJR"
+        serialstart="2030 2040 20C0 2150"
+        ;;
+    FS2500)
+        permanent="PSN"
+        serialstart="1960"
+        ;;
+    FS6400)
+        permanent="PSN"
+        serialstart="1960"
+        ;;
+    RS1221+)
+        permanent="RWR"
+        serialstart="20B0"
+        ;;
+    RS2423+)
+        permanent="XXX"
+        serialstart="0000"
+        ;;
+    RS1619xs+)
+        permanent="QPR"
+        serialstart="1920"
+        ;;
+    RS3413xs+)
+        permanent="S7R"
+        serialstart="2080"
+        ;;
+    RS3618xs)
+        permanent="ODN"
+        serialstart="1130 1230 1330 1430"
+        ;;
+    RS3621xs+)
+        permanent="SZR"
+        serialstart="20A0"
+        ;;
+    RS4021xs+)
+        permanent="T2R"
+        serialstart="2250"
+        ;;
+    SA3400)
+        permanent="RJR"
+        serialstart="1920"
+        ;;
+    SA3600)
+        permanent="RJR"
+        serialstart="1920"
+        ;;
+    SA6400)
+        permanent="TQR"
+        serialstart="2270"
+        ;;
+    *)
+        permanent="XXX"
+        serialstart="0000"
+        ;;        
+    esac        
 }
 
 # Function READ_YN, cecho                                                                                        
