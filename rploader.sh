@@ -2189,34 +2189,6 @@ function prepareforcompile() {
 
 }
 
-function gettoolchain() {
-
-    if [ -d /usr/local/x86_64-pc-linux-gnu/ ]; then
-        echo "Toolchain already cached"
-        return
-    fi
-
-    cd /home/tc
-
-    if [ -f dsm-toolchain.7.0.txz ]; then
-        echo "File already cached"
-    else
-        echo "Downloading and caching toolchain"
-        curl -k -# -L "${TOOLKIT_URL}" -o dsm-toolchain.7.0.txz
-    fi
-
-    echo -n "Checking file -> "
-    checkfilechecksum dsm-toolchain.7.0.txz ${TOOLKIT_SHA}
-    echo "OK, file matches sha256sum, extracting"
-    cd / && sudo tar -xf /home/tc/dsm-toolchain.7.0.txz usr/local/x86_64-pc-linux-gnu/x86_64-pc-linux-gnu/sys-root/usr/lib/modules/DSM-7.0/build
-    if [ $? = 0 ]; then
-        return
-    else
-        echo "Failed to extract toolchain"
-    fi
-
-}
-
 function getPlatforms() {
 
     platform_versions=$(jq -s '.[0].build_configs=(.[1].build_configs + .[0].build_configs | unique_by(.id)) | .[0]' custom_config_jun.json custom_config.json | jq -r '.build_configs[].id')
@@ -2274,10 +2246,6 @@ function getvars() {
     EXTENSIONS="$(echo $platform_selected | jq -r -e '.add_extensions[]' | grep json | awk -F: '{print $1}' | sed -s 's/"//g')"
     #EXTENSIONS_SOURCE_URL="$(echo $platform_selected | jq '.add_extensions[] .url')"
     EXTENSIONS_SOURCE_URL="$(echo $platform_selected | jq '.add_extensions[]' | grep json | awk '{print $2}')"
-    TOOLKIT_URL="$(echo $platform_selected | jq -r -e '.downloads .toolkit_dev .url')"
-    TOOLKIT_SHA="$(echo $platform_selected | jq -r -e '.downloads .toolkit_dev .sha256')"
-    SYNOKERNEL_URL="$(echo $platform_selected | jq -r -e '.downloads .kernel .url')"
-    SYNOKERNEL_SHA="$(echo $platform_selected | jq -r -e '.downloads .kernel .sha256')"
     TARGET_PLATFORM="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[0])"
     TARGET_VERSION="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[1])"
     echo "TARGET_VERSION = ${TARGET_VERSION}"
@@ -2338,10 +2306,6 @@ function getvars() {
     echo "Redpill module source : $LKM_SOURCE_URL : Redpill module branch : $LKM_BRANCH "
     echo "Extensions : $EXTENSIONS "
     echo "Extensions URL : $EXTENSIONS_SOURCE_URL"
-    echo "TOOLKIT_URL : $TOOLKIT_URL"
-    echo "TOOLKIT_SHA : $TOOLKIT_SHA"
-    echo "SYNOKERNEL_URL : $SYNOKERNEL_URL"
-    echo "SYNOKERNEL_SHA : $SYNOKERNEL_SHA"
     echo "TARGET_PLATFORM       : $TARGET_PLATFORM"
     echo "TARGET_VERSION    : $TARGET_VERSION"
     echo "TARGET_REVISION : $TARGET_REVISION"
@@ -2360,41 +2324,6 @@ function getvars() {
     fi
 
     #getvarsmshell "$MODEL"
-
-}
-
-function getsynokernel() {
-
-    if [ -d /home/tc/linux-kernel ]; then
-        if [ -f /home/tc/linux-kernel/synoconfigs/${TARGET_PLATFORM} ]; then
-            echo "Synokernel already cached"
-            return
-        else
-            echo "Synokernel is cached but does not match the required sources"
-            rm -rf /home/tc/linux-kernel
-            rm -rf synokernel.txz
-        fi
-    fi
-
-    cd /home/tc
-
-    if [ -f synokernel.txz ]; then
-        echo -n "File already cached, checking file -> "
-        checkfilechecksum synokernel.txz ${SYNOKERNEL_SHA}
-        echo "OK, file matches sha256sum, extracting"
-        tar xf /home/tc/synokernel.txz
-        mv $(tar --exclude="*/*/*" -tf synokernel.txz | head -1) linux-kernel
-        rm -rf synokernel.txz
-    else
-        echo "Downloading and caching synokernel"
-        cd /home/tc && curl -k -# -L ${SYNOKERNEL_URL} -o synokernel.txz
-        checkfilechecksum synokernel.txz ${SYNOKERNEL_SHA}
-        echo "OK, file matches sha256sum, extracting"
-        echo "Extracting synokernel"
-        tar xf /home/tc/synokernel.txz
-        mv $(tar --exclude="*/*/*" -tf synokernel.txz | head -1) linux-kernel
-        rm -rf synokernel.txz
-    fi
 
 }
 
