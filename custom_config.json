@@ -3,31 +3,11 @@
   "build_configs": [
     {
       "id": "ds1019p-7.0.1-42218",
-      "platform_version": "ds1019p-7.0.1-42218",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
-          "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
-        },
         "os": {
           "sha256": "e782ad4ce5e0505e7981a5a3fa7ca986a4575240f645ec2c64f92def1774556f"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -41,31 +21,11 @@
     },
     {
       "id": "ds1019p-7.1.1-42962",
-      "platform_version": "ds1019p-7.1.1-42962",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
-          "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
-        },
         "os": {
           "sha256": "af2268388df9434679205ffd782ae5c17cd81d733cdcd94b13fc894748ffe321"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -79,31 +39,11 @@
     },
     {
       "id": "ds1019p-7.2.0-64570",
-      "platform_version": "ds1019p-7.2.0-64570",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
-          "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
-        },
         "os": {
           "sha256": "453aeda2bf814db39588f23802188775a1420b8fc057b0137e21bf60b5126950"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -117,31 +57,11 @@
     },
     {
       "id": "ds1019p-7.2.1-69057",
-      "platform_version": "ds1019p-7.2.1-69057",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
-          "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
-        },
         "os": {
           "sha256": "6199dbf7304628d73bc6a1463116d194d9e193cf0881c05f3df046b4ee9c54e6"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -155,31 +75,11 @@
     },
     {
       "id": "ds1520p-7.0.1-42218",
-      "platform_version": "ds1520p-7.0.1-42218",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "b8864e2becd8ce5a6083db993564c8c0b982df8300a006b56695a0495a670aa3"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -193,31 +93,11 @@
     },
     {
       "id": "ds1520p-7.1.1-42962",
-      "platform_version": "ds1520p-7.1.1-42962",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "edcacbab10b77e2a6862d31173f5369c6e3c1720b8f0ec4fd41786609017c39b"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -231,31 +111,11 @@
     },
     {
       "id": "ds1520p-7.2.0-64570",
-      "platform_version": "ds1520p-7.2.0-64570",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "e3b62ac87f63017d762cc3e5d93175b13302c4ed3ca4747ec1f7610395980881"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -270,31 +130,11 @@
     },
     {
       "id": "ds1520p-7.2.1-69057",
-      "platform_version": "ds1520p-7.2.1-69057",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "5481d7fd3e9bd58c84db36e0b03c6c7d10fd30c06ff0480feeb94dae25d94636"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -309,31 +149,11 @@
     },
     {
       "id": "ds1522p-7.1.1-42962",
-      "platform_version": "ds1522p-7.1.1-42962",
       "platform_name": "r1000",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.r1000-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "8aa46320e66b3ed8b8d75e9e0ed85ae7e34b9e860b690f4af96acd51b5d81055"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -347,31 +167,11 @@
     },
     {
       "id": "ds1522p-7.2.0-64570",
-      "platform_version": "ds1522p-7.2.0-64570",
       "platform_name": "r1000",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.r1000-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "aec324cbb694fec5628e3ac18b3662570099721b4444d36742955afcab392400"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -386,31 +186,11 @@
     },
     {
       "id": "ds1522p-7.2.1-69057",
-      "platform_version": "ds1522p-7.2.1-69057",
       "platform_name": "r1000",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.r1000-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "934f3d521a6a8d945562c83fe0d7e26ada3d71c92fb6a98d78acda3b0dcad163"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -425,31 +205,11 @@
     },
     {
       "id": "ds1621p-7.0.1-42218",
-      "platform_version": "ds1621p-7.0.1-42218",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "396144fdcd94d441b4ad665099395cf24a14606742bee9438745ea30bf12b9ef"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -463,31 +223,11 @@
     },
     {
       "id": "ds1621p-7.1.1-42962",
-      "platform_version": "ds1621p-7.1.1-42962",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "41a4b80ef58f3ff5ee924329ff59bd4ac0abb7676561847a84e98bc6bb225003"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -501,31 +241,11 @@
     },
     {
       "id": "ds1621p-7.2.0-64570",
-      "platform_version": "ds1621p-7.2.0-64570",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "2cb71fb6da7aece7be00a1fbb31b165e38c8ec238fc31e85504073a831c9febb"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -540,31 +260,11 @@
     },
     {
       "id": "ds1621p-7.2.1-69057",
-      "platform_version": "ds1621p-7.2.1-69057",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "973909b64606c4e8189404bff5b2c455a75ddde2ccc0fe8e4e399614ddbba111"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -579,31 +279,11 @@
     },
     {
       "id": "ds1621xsp-7.0.1-42218",
-      "platform_version": "ds1621xsp-7.0.1-42218",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "12bcfd44b4aaa6c3439b1404b7f07760373d816724ef672884d5187f27ccd70f"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -616,31 +296,11 @@
     },
     {
       "id": "ds1621xsp-7.1.1-42962",
-      "platform_version": "ds1621xsp-7.1.1-42962",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "d2272ab531f0f68f8008106dd75b4e303c71db8d95093d186a22c1cf2d970402"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -653,31 +313,11 @@
     },
     {
       "id": "ds1621xsp-7.2.0-64570",
-      "platform_version": "ds1621xsp-7.2.0-64570",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "611bf57e91be99bcc3d494c482b2b25212c998e3588d424c726f011f21c6efb2"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -690,31 +330,11 @@
     },
     {
       "id": "ds1621xsp-7.2.1-69057",
-      "platform_version": "ds1621xsp-7.2.1-69057",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "3bebf588f4255ecb205b3265b6a6d5c03e3a86c57fa08f9b87d1ef1c12610982"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -727,31 +347,11 @@
     },
     {
       "id": "ds1819p-7.0.1-42218",
-      "platform_version": "ds1819p-7.0.1-42218",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "b1309ce5ff47c9aec3b217e85b5caa7a52e0514a22b37b287e66b3b743a709aa"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -764,31 +364,11 @@
     },
     {
       "id": "ds1819p-7.1.1-42962",
-      "platform_version": "ds1819p-7.1.1-42962",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "7593c09fa75c4933f3482c1c05efc963ae7a71f9be21650910030dc51377c93f"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -801,31 +381,11 @@
     },
     {
       "id": "ds1819p-7.2.0-64570",
-      "platform_version": "ds1819p-7.2.0-64570",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "e590fb027b7157be1d4f226b9fa5a453ff25e746168d7b55138d635091eca65b"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -838,31 +398,11 @@
     },
     {
       "id": "ds1819p-7.2.1-69057",
-      "platform_version": "ds1819p-7.2.1-69057",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "0f429809983b604a27e1bd4a2f3b2172f7c5c357019d3da91bbab66f29fdf7e1"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -875,31 +415,11 @@
     },
     {
       "id": "ds1821p-7.0.1-42218",
-      "platform_version": "ds1821p-7.0.1-42218",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "829c1f6018cffc398f4d811c213b57bb44770c0c961d9e59bf6431d900dc9746"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -913,31 +433,11 @@
     },
     {
       "id": "ds1821p-7.1.1-42962",
-      "platform_version": "ds1821p-7.1.1-42962",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "42dcd0dce1f41492ef8f313f558d2a59c452714daf27e562896faa577e0acce7"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -951,31 +451,11 @@
     },
     {
       "id": "ds1821p-7.2.0-64570",
-      "platform_version": "ds1821p-7.2.0-64570",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "613cfb9ec0dc6ed5b664d4c34b84267dae26997617b32f604314da05b59b53c0"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -990,31 +470,11 @@
     },
     {
       "id": "ds1821p-7.2.1-69057",
-      "platform_version": "ds1821p-7.2.1-69057",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "d7f2a0f7e5b1fb33c7c30ac820f50ff090d348f8b2f45bdfc87ff4be36c4a0a2"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1029,31 +489,11 @@
     },
     {
       "id": "ds1823xsp-7.1.1-42962",
-      "platform_version": "ds1823xsp-7.1.1-42962",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "4fc66cb6a7377c61d529900a452e815c27755b741ad850948eb68b5103912976"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1067,31 +507,11 @@
     },
     {
       "id": "ds1823xsp-7.2.0-64570",
-      "platform_version": "ds1823xsp-7.2.0-64570",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "aa9485370d93bd8d972ab4736b75da2ce1cfad3fcfc409ad36d5a799ed62d50c"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1106,31 +526,11 @@
     },
     {
       "id": "ds1823xsp-7.2.1-69057",
-      "platform_version": "ds1823xsp-7.2.1-69057",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "0704edca80af701c098ef7c40ee9b67aeae7f1de649afb0a2fa63983618608a6"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1145,31 +545,11 @@
     },
     {
       "id": "ds220p-7.0.1-42218",
-      "platform_version": "ds220p-7.0.1-42218",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "c57a7913852b4a6ffd709a6bb40e38c2d15b1ea7f7c72eec01ba259af920c56d"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1183,31 +563,11 @@
     },
     {
       "id": "ds220p-7.1.1-42962",
-      "platform_version": "ds220p-7.1.1-42962",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "9b39d13127991660855618760216bf737a7944230a14a7bc8b7b73f7dcdca39c"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1221,31 +581,11 @@
     },
     {
       "id": "ds220p-7.2.0-64570",
-      "platform_version": "ds220p-7.2.0-64570",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "ac137a1a8213448bc6da887f617b1fbccac7df954fc40189ed383b324f89d71c"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1260,31 +600,11 @@
     },
     {
       "id": "ds220p-7.2.1-69057",
-      "platform_version": "ds220p-7.2.1-69057",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "d8a04151d95d562cfad84b132c815c2443e090e71a585d5fb9d244b98533b0e6"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1299,31 +619,11 @@
     },
     {
       "id": "ds2419p-7.0.1-42218",
-      "platform_version": "ds2419p-7.0.1-42218",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "8fb90b7fb8d0b88808d172a73f0d59e60a39326302c04669ff64d8200252c26d"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1337,31 +637,11 @@
     },
     {
       "id": "ds2419p-7.1.1-42962",
-      "platform_version": "ds2419p-7.1.1-42962",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "f2e6c64e72857475aef678f1a8b079c30063ae6b65a636817b82e80278c43eb5"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1375,31 +655,11 @@
     },
     {
       "id": "ds2419p-7.2.0-64570",
-      "platform_version": "ds2419p-7.2.0-64570",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "4cb94a1398ac643d4d0512912347faa4696284bd3ebb70bd5820b83bb4c87556"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1414,31 +674,11 @@
     },
     {
       "id": "ds2419p-7.2.1-69057",
-      "platform_version": "ds2419p-7.2.1-69057",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "4a0bc99276565453f388c011d07e555f7f211770221ad6f573fc06b051380671"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1453,31 +693,11 @@
     },
     {
       "id": "ds2422p-7.0.1-42218",
-      "platform_version": "ds2422p-7.0.1-42218",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "5a6cfbc690facdfaef9fbcc55215eac38c73ca6a85965a910af11cede5e2cd5d"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1491,31 +711,11 @@
     },
     {
       "id": "ds2422p-7.1.1-42962",
-      "platform_version": "ds2422p-7.1.1-42962",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "69f02c4636ff2593e5feb393e13ed82791fa6457d61874368a0b6f93ee11f164"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1529,31 +729,11 @@
     },
     {
       "id": "ds2422p-7.2.0-64570",
-      "platform_version": "ds2422p-7.2.0-64570",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "e2f88804988da7b9c9f180ec19984d4bfc1031a4ac3d7be1968561601938e0e9"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1568,31 +748,11 @@
     },
     {
       "id": "ds2422p-7.2.1-69057",
-      "platform_version": "ds2422p-7.2.1-69057",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "4c2ff2c3317d6b70221a20baad5d28583fa1b48712b9aabd7fb706c1cee4b5da"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1607,31 +767,11 @@
     },
     {
       "id": "ds3615xs-7.0.1-42218",
-      "platform_version": "ds3615xs-7.0.1-42218",
       "platform_name": "bromolow",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "dev-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/bromolow-source/linux-3.10.x.txz/download",
-          "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.bromolow-7.0.dev.txz/download",
-          "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
-        },
         "os": {
           "sha256": "ae1aca3b178a00689b93e97cca680b56af3f453174b852e0047496120dee2ee3"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1643,31 +783,11 @@
     },
     {
       "id": "ds3615xs-7.1.1-42962",
-      "platform_version": "ds3615xs-7.1.1-42962",
       "platform_name": "bromolow",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "dev-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/bromolow-source/linux-3.10.x.txz/download",
-          "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.bromolow-7.0.dev.txz/download",
-          "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
-        },
         "os": {
           "sha256": "f01a17d73e2594b0b31f134bfe023dccc0bb9389a462f9918080573134093023"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1679,31 +799,11 @@
     },
     {
       "id": "ds3617xs-7.0.1-42218",
-      "platform_version": "ds3617xs-7.0.1-42218",
       "platform_name": "broadwell",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwell-source/linux-3.10.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwell-7.0.dev.txz/download",
-          "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
-        },
         "os": {
           "sha256": "f7e846e2a22b62613ac5e9d6e154df0213ba4ae64a6556297af627cd1e643e5c"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1716,31 +816,11 @@
     },
     {
       "id": "ds3617xs-7.1.1-42962",
-      "platform_version": "ds3617xs-7.1.1-42962",
       "platform_name": "broadwell",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwell-source/linux-3.10.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwell-7.0.dev.txz/download",
-          "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
-        },
         "os": {
           "sha256": "1b72bb24dc9d10d3784298e6df9d79a8f8c3555087e0de12f3359ce373f4e7c9"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1753,31 +833,11 @@
     },
     {
       "id": "ds3617xs-7.2.0-64570",
-      "platform_version": "ds3617xs-7.2.0-64570",
       "platform_name": "broadwell",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwell-source/linux-3.10.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwell-7.2.dev.txz/download",
-          "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
-        },
         "os": {
           "sha256": "380103c3642163d3b0e5e603a5d506d1870c70bd89dc8a593ced50407ad18c2b"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1790,31 +850,11 @@
     },
     {
       "id": "ds3617xs-7.2.1-69057",
-      "platform_version": "ds3617xs-7.2.1-69057",
       "platform_name": "broadwell",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwell-source/linux-3.10.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwell-7.2.dev.txz/download",
-          "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
-        },
         "os": {
           "sha256": "8b951421e63401ee4b38ad0c29dd790c4ced9e24059b66284e1a3a25e0768949"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1827,31 +867,11 @@
     },
     {
       "id": "ds3622xsp-7.0.1-42218",
-      "platform_version": "ds3622xsp-7.0.1-42218",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "a222d37f369d71042057ccb592f40c7c81e9b988a95d69fa166c7c2a611da99c"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1864,31 +884,11 @@
     },
     {
       "id": "ds3622xsp-7.1.1-42962",
-      "platform_version": "ds3622xsp-7.1.1-42962",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "775933e32a9e04700fc10a155f5a26c0878c3cdec18b6ec6b1d5a4110e83d428"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1901,31 +901,11 @@
     },
     {
       "id": "ds3622xsp-7.2.0-64570",
-      "platform_version": "ds3622xsp-7.2.0-64570",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "8c6bc56862017881d46b02b164d8ea0094922e5c44c937ecc8504c3c009e8dd4"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1938,31 +918,11 @@
     },
     {
       "id": "ds3622xsp-7.2.1-69057",
-      "platform_version": "ds3622xsp-7.2.1-69057",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "d75304abc59cbb33013d098b7f822523ed83ff104a06d8f03e272a027b7b51fe"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -1975,31 +935,11 @@
     },
     {
       "id": "ds423p-7.1.1-42962",
-      "platform_version": "ds423p-7.1.1-42962",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "d301e21660c2bdb1f0f9261872b60d77884f211fc3591af20b66114494c55ac4"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2013,31 +953,11 @@
     },
     {
       "id": "ds423p-7.2.0-64570",
-      "platform_version": "ds423p-7.2.0-64570",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "f3faa885052b577201faf09b33baa21f85f253be6d0ae6d4777cbad0da041d7f"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2052,31 +972,11 @@
     },
     {
       "id": "ds423p-7.2.1-69057",
-      "platform_version": "ds423p-7.2.1-69057",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "5ac3463b59eb276c3bf810be8f06b1f66160615c076fa92191bb5d8255f2ee12"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2091,31 +991,11 @@
     },
     {
       "id": "ds620slim-7.0.1-42218",
-      "platform_version": "ds620slim-7.0.1-42218",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
-          "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
-        },
         "os": {
           "sha256": "44a001fb95a14b5698b54afd4e06edbe5446ed3f7e5299b1e4c63fcdcb6d952f"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2129,31 +1009,11 @@
     },
     {
       "id": "ds620slim-7.1.1-42962",
-      "platform_version": "ds620slim-7.1.1-42962",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
-          "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
-        },
         "os": {
           "sha256": "ab9db20017f742055da67170e12785086a39fc2789084909c0b42d940549e00b"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2167,31 +1027,11 @@
     },
     {
       "id": "ds620slim-7.2.0-64570",
-      "platform_version": "ds620slim-7.2.0-64570",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
-          "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
-        },
         "os": {
           "sha256": "cad08710c965a59ce1a0fe05f217d1a6f74ba7230960b539cdf0d7571b127e19"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2205,31 +1045,11 @@
     },
     {
       "id": "ds620slim-7.2.1-69057",
-      "platform_version": "ds620slim-7.2.1-69057",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
-          "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
-        },
         "os": {
           "sha256": "4eaebc191b5bf4ef2e180281c47d1c5eec7c1f5d8276fa8fef6f9ecd4ddd03f9"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2243,31 +1063,11 @@
     },
     {
       "id": "ds718p-7.0.1-42218",
-      "platform_version": "ds718p-7.0.1-42218",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "260862cc3c8aa72e001120d3b34d5dcd7b508008e79635aad1821aa85851ab10"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2281,31 +1081,11 @@
     },
     {
       "id": "ds718p-7.1.1-42962",
-      "platform_version": "ds718p-7.1.1-42962",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "76bbc423a8bcb6a3567c73fbb7719d5c0ae1dab7914230cee97d69480694a131"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2319,31 +1099,11 @@
     },
     {
       "id": "ds718p-7.2.0-64570",
-      "platform_version": "ds718p-7.2.0-64570",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "e033e4915dfea49bb53ba2e49236baf575966e8b63c1051ad2ab9f522a3dc21e"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2358,31 +1118,11 @@
     },
     {
       "id": "ds718p-7.2.1-69057",
-      "platform_version": "ds718p-7.2.1-69057",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "a6f792c09922a08ad3d002df641dd5e84d4bc177d09a2a86b2c927ef07b2c464"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2397,31 +1137,11 @@
     },
     {
       "id": "ds720p-7.0.1-42218",
-      "platform_version": "ds720p-7.0.1-42218",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "3fedba49296a019866cfa18242e633f8419af28522a6bb0e34657143399b54e0"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2435,31 +1155,11 @@
     },
     {
       "id": "ds720p-7.1.1-42962",
-      "platform_version": "ds720p-7.1.1-42962",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "914641e4885d0a465a46c35e3c271ca5e8cf7f1564591110c762c3ab11d0f202"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2473,31 +1173,11 @@
     },
     {
       "id": "ds720p-7.2.0-64570",
-      "platform_version": "ds720p-7.2.0-64570",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "c1d03806c288b3986d55d8b4c770e29541f7e5047e9ba6f24f25c77733c0921a"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2512,31 +1192,11 @@
     },
     {
       "id": "ds720p-7.2.1-69057",
-      "platform_version": "ds720p-7.2.1-69057",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "fddb6b3968afdf926fb02a1d84c79a166d156005f8e413f83b5c3308457a84e4"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2551,31 +1211,11 @@
     },
     {
       "id": "ds723p-7.1.1-42962",
-      "platform_version": "ds723p-7.1.1-42962",
       "platform_name": "r1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.r1000-7.0.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "93b849708801d6efdf3e6ab9ca01e8e22dd8abd2e21bd90a0532e231cfa86d12"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2589,31 +1229,11 @@
     },
     {
       "id": "ds723p-7.2.0-64570",
-      "platform_version": "ds723p-7.2.0-64570",
       "platform_name": "r1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.r1000-7.2.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "79604df6c2084853b26631a46c781f77c3f3cadfc4f1a793af1c45328a7648a4"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2628,31 +1248,11 @@
     },
     {
       "id": "ds723p-7.2.1-69057",
-      "platform_version": "ds723p-7.2.1-69057",
       "platform_name": "r1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.r1000-7.2.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "b2d562d4437a6671a658291734455a89ad1e5213153997f7915542f2b1fac91c"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2667,29 +1267,8 @@
     },
     {
       "id": "ds916p-7.2.0-64570",
-      "platform_version": "ds916p-7.2.0-64570",
       "platform_name": "braswell",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/braswell-source/linux-3.10.x.txz/download",
-          "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.braswell-7.2.dev.txz/download",
-          "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
+      "downloads": {},
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
@@ -2699,29 +1278,8 @@
     },
     {
       "id": "ds916p-7.2.1-69057",
-      "platform_version": "ds916p-7.2.1-69057",
       "platform_name": "braswell",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/braswell-source/linux-3.10.x.txz/download",
-          "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.braswell-7.2.dev.txz/download",
-          "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
+      "downloads": {},
       "add_extensions": [
         {
           "misc": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/misc/rpext-index.json",
@@ -2731,31 +1289,11 @@
     },
     {
       "id": "ds918p-7.0.1-42218",
-      "platform_version": "ds918p-7.0.1-42218",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
-          "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
-        },
         "os": {
           "sha256": "a662d11999c266dfa86c54f7ba01045c6644c191124195a22d056d618790dffe"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2769,31 +1307,11 @@
     },
     {
       "id": "ds918p-7.1.1-42962",
-      "platform_version": "ds918p-7.1.1-42962",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.apollolake-7.0.dev.txz/download",
-          "sha256": "d349fa644392d4cfab8191243ee38aaa32bd517208c144678e0c855cb5a619ea"
-        },
         "os": {
           "sha256": "9905e145f3bd88fcc938b00882be10281861867e5165ae98aefa37be0d5d34b5"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2807,31 +1325,11 @@
     },
     {
       "id": "ds918p-7.2.0-64570",
-      "platform_version": "ds918p-7.2.0-64570",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
-          "sha256": "ffc43c663f1707eba57d2d50786c0666e4ea7a77ea4ee389f42dfb0a0d6c5dad"
-        },
         "os": {
           "sha256": "379d2f93f6e09f8f53d5ba250d71e9286dc1c0e557dbc9a7b18dce49c34cea13"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2845,31 +1343,11 @@
     },
     {
       "id": "ds918p-7.2.1-69057",
-      "platform_version": "ds918p-7.2.1-69057",
       "platform_name": "apollolake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/apollolake-source/linux-4.4.x.txz/download",
-          "sha256": "af815ee065775d2e569fd7176e25c8ba7ee17a03361557975c8e5a4b64230c5b"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.apollolake-7.2.dev.txz/download",
-          "sha256": "ffc43c663f1707eba57d2d50786c0666e4ea7a77ea4ee389f42dfb0a0d6c5dad"
-        },
         "os": {
           "sha256": "18fcde01b7f6d059387ef416885416b589b0d51db865504615391d7b653c7ce2"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2883,31 +1361,11 @@
     },
     {
       "id": "ds920p-7.0.1-42218",
-      "platform_version": "ds920p-7.0.1-42218",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "b9b77846e0983f50496276bec6bcdfcfadd4c1f9f0db8ed2ca5766f131ddf97f"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2921,31 +1379,11 @@
     },
     {
       "id": "ds920p-7.1.1-42962",
-      "platform_version": "ds920p-7.1.1-42962",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "f58c15d4d83699884c30e4a4b04b1d2e0db19c477923d920327a897a73c741b6"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2959,31 +1397,11 @@
     },
     {
       "id": "ds920p-7.2.0-64570",
-      "platform_version": "ds920p-7.2.0-64570",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "fd9305b5a34e5aba79e77496ed5a68ec6823a98840be02f36c01fd273031a8f1"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -2998,31 +1416,11 @@
     },
     {
       "id": "ds920p-7.2.1-69057",
-      "platform_version": "ds920p-7.2.1-69057",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "a316c99f43256b90342fcadf3e46fbcce6c57ebbc4f877005b73233c981035a0"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3037,31 +1435,11 @@
     },
     {
       "id": "ds923p-7.1.1-42962",
-      "platform_version": "ds923p-7.1.1-42962",
       "platform_name": "r1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.r1000-7.0.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "17e2ef183233175cea392eff69158780d8c3521d1710d504533524351175cba0"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3075,31 +1453,11 @@
     },
     {
       "id": "ds923p-7.2.0-64570",
-      "platform_version": "ds923p-7.2.0-64570",
       "platform_name": "r1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.r1000-7.2.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "7c6dcdc4d0e88585d20d066ed960839b9c08a548e4d439334e051ec3931d2f31"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3114,31 +1472,11 @@
     },
     {
       "id": "ds923p-7.2.1-69057",
-      "platform_version": "ds923p-7.2.1-69057",
       "platform_name": "r1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/r1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.r1000-7.2.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "7a825f5520851ce032821c1efb5bf76f9cc9ef2435783c709e7e727b57d52909"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3153,31 +1491,11 @@
     },
     {
       "id": "dva1622-7.1.1-42962",
-      "platform_version": "dva1622-7.1.1-42962",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.geminilake-7.0.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "ebebc3f1de22b789b386f1d52fbe0be3fcca23f83e0d34ed9c24e794701b4c3d"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3191,31 +1509,11 @@
     },
     {
       "id": "dva1622-7.2.0-64570",
-      "platform_version": "dva1622-7.2.0-64570",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "f5b32522686315ee54c5142b72fa55d65e50019099c067b928a585ade0c2d409"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3230,31 +1528,11 @@
     },
     {
       "id": "dva1622-7.2.1-69057",
-      "platform_version": "dva1622-7.2.1-69057",
       "platform_name": "geminilake",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "test-v7",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/geminilake-source/linux-4.4.x.txz/download",
-          "sha256": "7a625433187269afa255be0382dad2ff27ff27fe3421e9b92d45a7e75653797a"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.geminilake-7.2.dev.txz/download",
-          "sha256": "544fbe3b8b6390af180163322864acb3f4a60cbb44f73ae1e79131f0693c6754"
-        },
         "os": {
           "sha256": "af4fe5837fff77bc0c0f82bc20fd00d9d582760f7d72f13619380c0b9cab473a"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3269,31 +1547,11 @@
     },
     {
       "id": "dva3219-7.0.1-42218",
-      "platform_version": "dva3219-7.0.1-42218",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "b3498a20aeb7c7c36deca0f4393172d4db7b51aa4fb87eaace83fe224d935e3b"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3306,31 +1564,11 @@
     },
     {
       "id": "dva3219-7.1.1-42962",
-      "platform_version": "dva3219-7.1.1-42962",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "9f8c6095235df2e2caebadf846f11e4244af6f1aada9a7dd5c2c60543f944aac"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3343,31 +1581,11 @@
     },
     {
       "id": "dva3219-7.2.0-64570",
-      "platform_version": "dva3219-7.2.0-64570",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "1fac55d2b133a165d7bac31f647ffc087d52d3e3c36c76ca7c97e4ed07bb417f"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3380,31 +1598,11 @@
     },
     {
       "id": "dva3219-7.2.1-69057",
-      "platform_version": "dva3219-7.2.1-69057",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "c1338e62d6f31b2e1f1f59f4f90fbc7ee09128219b753d2079445db3742d5623"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3417,31 +1615,11 @@
     },
     {
       "id": "dva3221-7.0.1-42218",
-      "platform_version": "dva3221-7.0.1-42218",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "6722c73c51070dde2f542659d7728c497fc846256da2c9cf017177476de0bb09"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3454,31 +1632,11 @@
     },
     {
       "id": "dva3221-7.1.1-42962",
-      "platform_version": "dva3221-7.1.1-42962",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.denverton-7.0.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "7bd2fe270bc665cc859142b7c6462fe8137f047c4fbe2f87ed3d03c30c514766"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3491,31 +1649,11 @@
     },
     {
       "id": "dva3221-7.2.0-64570",
-      "platform_version": "dva3221-7.2.0-64570",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "e696a59b2242e330666a35a57e2b33f7cc4c48a539e1471e59ebcc3c1f8ab39a"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3528,31 +1666,11 @@
     },
     {
       "id": "dva3221-7.2.1-69057",
-      "platform_version": "dva3221-7.2.1-69057",
       "platform_name": "denverton",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/denverton-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.denverton-7.2.dev.txz/download",
-          "sha256": "6dc6818bad28daff4b3b8d27b5e12d0565b65ee60ac17e55c36d913462079f57"
-        },
         "os": {
           "sha256": "a84df82703f91ab8844243cd077ceec847e713b08a04696e6e5575e52b87f7b8"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3565,31 +1683,11 @@
     },
     {
       "id": "fs2500-7.0.1-42218",
-      "platform_version": "fs2500-7.0.1-42218",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "3fbd5defbc0fef0d152494033f3e817c330525b70e356a9e9acd2b72d9806b59"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3603,31 +1701,11 @@
     },
     {
       "id": "fs2500-7.1.1-42962",
-      "platform_version": "fs2500-7.1.1-42962",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "e74ff783b5ca6fbdec1a0eb950b366b74b27c0288fb72baaf86db8a31d68b985"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3641,31 +1719,11 @@
     },
     {
       "id": "fs2500-7.2.0-64570",
-      "platform_version": "fs2500-7.2.0-64570",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "d6756ef388a3a9ec55c692a62b99c96c4ab8373aaab66a1d24631bafebd64e79"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3680,31 +1738,11 @@
     },
     {
       "id": "fs2500-7.2.1-69057",
-      "platform_version": "fs2500-7.2.1-69057",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "75fe6ffb86c163b5676490b94b8590faf84cf000f5bfa7687e535e02acc9fbd3"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3719,31 +1757,11 @@
     },
     {
       "id": "rs1221p-7.0.1-42218",
-      "platform_version": "rs1221p-7.0.1-42218",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "d71daffc317b9447fd28cec2db4c699ecde86ddc99819d68a5914a982692887f"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3757,31 +1775,11 @@
     },
     {
       "id": "rs1221p-7.1.1-42962",
-      "platform_version": "rs1221p-7.1.1-42962",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "8a06aea176eb5f227675c1b75acd02875c2e0a2d3f4e227e87dc85b663bdbe33"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3795,31 +1793,11 @@
     },
     {
       "id": "rs1221p-7.2.0-64570",
-      "platform_version": "rs1221p-7.2.0-64570",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "6c6764e53c2d434743c0f6ce2c0bd518dc2b7d462dce553d98e53018956ad0ba"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3834,31 +1812,11 @@
     },
     {
       "id": "rs1221p-7.2.1-69057",
-      "platform_version": "rs1221p-7.2.1-69057",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "806ab78a2c348c9a3aacf103c61bd03a1b3de7ba9c2a7f49d4e176ca188a8073"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3873,31 +1831,11 @@
     },
     {
       "id": "rs1619xsp-7.1.1-42962",
-      "platform_version": "rs1619xsp-7.1.1-42962",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "4cd9b66fcf56d8d8cedd1435267a18c0b1cb7894462bdaf4db1bd9bb8f1ac0e1"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3910,31 +1848,11 @@
     },
     {
       "id": "rs2423p-7.1.1-42962",
-      "platform_version": "rs2423p-7.1.1-42962",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.v1000-7.0.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "66cefbd8fbd788e788792547bf626e3ae7541a1a0f7c1bcd94871fac2ddbc72d"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3948,31 +1866,11 @@
     },
     {
       "id": "rs2423p-7.2.0-64570",
-      "platform_version": "rs2423p-7.2.0-64570",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "079c6a7a70b4731827048ee4a889b0e841d8ea8239d329e03cb41aab71a2c697"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -3987,31 +1885,11 @@
     },
     {
       "id": "rs2423p-7.2.1-69057",
-      "platform_version": "rs2423p-7.2.1-69057",
       "platform_name": "v1000",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/v1000-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.v1000-7.2.dev.txz/download",
-          "sha256": "6108f9f7b7f0a13ee985314aef9419303375ab7ded4112be991590339b66ecd1"
-        },
         "os": {
           "sha256": "a7ddde570d9c65002fc5d14892acf3d49fe174f65089e972076b76e698327020"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4026,29 +1904,8 @@
     },
     {
       "id": "rs3413xsp-7.0.1-42218",
-      "platform_version": "rs3413xsp-7.0.1-42218",
       "platform_name": "bromolow",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "dev-v7",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/bromolow-source/linux-3.10.x.txz/download",
-          "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.bromolow-7.0.dev.txz/download",
-          "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
+      "downloads": {},
       "add_extensions": [
         {
           "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
@@ -4060,29 +1917,8 @@
     },
     {
       "id": "rs3413xsp-7.1.1-42962",
-      "platform_version": "rs3413xsp-7.1.1-42962",
       "platform_name": "bromolow",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "dev-v7",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/bromolow-source/linux-3.10.x.txz/download",
-          "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.bromolow-7.0.dev.txz/download",
-          "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
+      "downloads": {},
       "add_extensions": [
         {
           "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
@@ -4093,29 +1929,8 @@
     },
     {
       "id": "rs3413xsp-7.2.0-64570",
-      "platform_version": "rs3413xsp-7.2.0-64570",
       "platform_name": "bromolow",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "dev-v7",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/bromolow-source/linux-3.10.x.txz/download",
-          "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.bromolow-7.2.dev.txz/download",
-          "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
+      "downloads": {},
       "add_extensions": [
         {
           "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
@@ -4127,29 +1942,8 @@
     },
     {
       "id": "rs3413xsp-7.2.1-69057",
-      "platform_version": "rs3413xsp-7.2.1-69057",
       "platform_name": "bromolow",
-      "docker_base_image": "debian:8-slim",
-      "compile_with": "toolkit_dev",
-      "redpill_lkm_make_target": "dev-v7",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/bromolow-source/linux-3.10.x.txz/download",
-          "sha256": "18aecead760526d652a731121d5b8eae5d6e45087efede0da057413af0b489ed"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.bromolow-7.2.dev.txz/download",
-          "sha256": "a5fbc3019ae8787988c2e64191549bfc665a5a9a4cdddb5ee44c10a48ff96cdd"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
+      "downloads": {},
       "add_extensions": [
         {
           "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
@@ -4161,31 +1955,11 @@
     },
     {
       "id": "rs3618xs-7.0.1-42218",
-      "platform_version": "rs3618xs-7.0.1-42218",
       "platform_name": "broadwell",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwell-source/linux-3.10.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwell-7.0.dev.txz/download",
-          "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
-        },
         "os": {
           "sha256": "941886bee9a0929c6bd078c5f2c465d9599721fc885a1e3835d6b60631f419af"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4198,31 +1972,11 @@
     },
     {
       "id": "rs3618xs-7.1.1-42962",
-      "platform_version": "rs3618xs-7.1.1-42962",
       "platform_name": "broadwell",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwell-source/linux-3.10.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwell-7.0.dev.txz/download",
-          "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
-        },
         "os": {
           "sha256": "2ccd7dc0c33cb133476bce8cdd29db6a164669c0e0caf6fb2daad17202525ec5"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4235,31 +1989,11 @@
     },
     {
       "id": "rs3618xs-7.2.0-64570",
-      "platform_version": "rs3618xs-7.2.0-64570",
       "platform_name": "broadwell",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwell-source/linux-3.10.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwell-7.2.dev.txz/download",
-          "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
-        },
         "os": {
           "sha256": "583d29266def40decd043e9495fdae8ebbd920adf25c1b982dfb87518ad7e311"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4272,31 +2006,11 @@
     },
     {
       "id": "rs3618xs-7.2.1-69057",
-      "platform_version": "rs3618xs-7.2.1-69057",
       "platform_name": "broadwell",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwell-source/linux-3.10.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwell-7.2.dev.txz/download",
-          "sha256": "e050987fbbab0c246aff2af935b1d8a4140ce490915aa4c92f3c8d163eea970c"
-        },
         "os": {
           "sha256": "394fdcb64ef00d51479ffa98778e914af106cb931acad352a71513ec43a3e047"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4309,31 +2023,11 @@
     },
     {
       "id": "rs3621xsp-7.0.1-42218",
-      "platform_version": "rs3621xsp-7.0.1-42218",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "8c1187abe05449778cc11017cbda917a1f74479011c218760e75c4de56e5e996"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4346,31 +2040,11 @@
     },
     {
       "id": "rs3621xsp-7.1.1-42962",
-      "platform_version": "rs3621xsp-7.1.1-42962",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "3d82184a9346dc1e3405b743b8a079318e095563d3dc8e8016201df12033db4c"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4383,31 +2057,11 @@
     },
     {
       "id": "rs3621xsp-7.2.0-64570",
-      "platform_version": "rs3621xsp-7.2.0-64570",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "7b675342f838e99c58a9c124bcd3d11f4537acf3de714c6c2c07e20ad8b252c8"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4420,31 +2074,11 @@
     },
     {
       "id": "rs3621xsp-7.2.1-69057",
-      "platform_version": "rs3621xsp-7.2.1-69057",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "d738eb37f7a5d89fc4669415d85f5b3d3de20f482a664e157adcd0a298cf3382"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4457,31 +2091,11 @@
     },
     {
       "id": "rs4021xsp-7.0.1-42218",
-      "platform_version": "rs4021xsp-7.0.1-42218",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "2a32266b7bcf0b2582b5afd9e39dc444e7cb40eaf4ccfdbfedf4743af821f11c"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4494,31 +2108,11 @@
     },
     {
       "id": "rs4021xsp-7.1.1-42962",
-      "platform_version": "rs4021xsp-7.1.1-42962",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "9b24656847eac5e94765f314e12f18b1dbec02b8f94c5366cc92211c4fba8c92"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4531,31 +2125,11 @@
     },
     {
       "id": "rs4021xsp-7.2.0-64570",
-      "platform_version": "rs4021xsp-7.2.0-64570",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "3004dff33f4cb3e99e97aa834c5478a708df72cbb6e46859bd5dbc1a93269aca"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4568,31 +2142,11 @@
     },
     {
       "id": "rs4021xsp-7.2.1-69057",
-      "platform_version": "rs4021xsp-7.2.1-69057",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        },
         "os": {
           "sha256": "055094eca24a8c0866d6697e7e4dd4c54be6bd55d555c81ee46d6338d6816fdb"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4605,29 +2159,8 @@
     },
     {
       "id": "sa3410-7.1.1-42962",
-      "platform_version": "sa3410-7.1.1-42962",
       "platform_name": "broadwellnkv2",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnkv2-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
+      "downloads": {},
       "add_extensions": [
         {
           "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
@@ -4638,29 +2171,8 @@
     },
     {
       "id": "sa3600-7.1.1-42962",
-      "platform_version": "sa3600-7.1.1-42962",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/toolkit/DSM7.0/ds.broadwellnk-7.0.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
+      "downloads": {},
       "add_extensions": [
         {
           "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
@@ -4671,29 +2183,8 @@
     },
     {
       "id": "sa3600-7.2.1-69057",
-      "platform_version": "sa3600-7.2.1-69057",
       "platform_name": "broadwellnk",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnk-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
+      "downloads": {},
       "add_extensions": [
         {
           "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
@@ -4705,29 +2196,8 @@
     },
     {
       "id": "sa3610-7.2.0-64570",
-      "platform_version": "sa3610-7.2.0-64570",
       "platform_name": "broadwellnkv2",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
-      "downloads": {
-        "kernel": {
-          "url": "https://sourceforge.net/projects/dsgpl/files/Synology%20NAS%20GPL%20Source/25426branch/broadwellnkv2-source/linux-4.4.x.txz/download",
-          "sha256": "d3e85eb80f16a83244fcae6016ab6783cd8ac55e3af2b4240455261396e1e1be"
-        },
-        "toolkit_dev": {
-          "url": "https://sourceforge.net/projects/toolkit-me/files/ds.broadwellnk-7.2.dev.txz/download",
-          "sha256": "0d9edca67d9e7e14c2529bbb58341b623936124d5264f71f1e4acbacf3ea202d"
-        }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
-      },
+      "downloads": {},
       "add_extensions": [
         {
           "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
@@ -4739,31 +2209,11 @@
     },
     {
       "id": "sa6400-7.1.1-42962",
-      "platform_version": "sa6400-7.1.1-42962",
       "platform_name": "epyc7002",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.10.55.tar.xz",
-          "sha256": "7581113dad67a095bc5cc32b457e1a9283f91579e248f3b547a7302157fe8889"
-        },
-        "toolkit_dev": {
-          "url": "https://global.synologydownload.com/download/ToolChain/toolkit/7.1/epyc7002/ds.epyc7002-7.1.dev.txz",
-          "sha256": "26eec2a0fa76d55500d4c40644c2b9958e6a914a1740a4593a4562f9a1e453a4"
-        },
         "os": {
           "sha256": "5c1d59c19b032183e92efd6c82a0573bc6704b22f7c92ed2c19e0e8ca4c777d8"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4776,31 +2226,11 @@
     },
     {
       "id": "sa6400-7.2.0-64570",
-      "platform_version": "sa6400-7.2.0-64570",
       "platform_name": "epyc7002",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.10.55.tar.xz",
-          "sha256": "7581113dad67a095bc5cc32b457e1a9283f91579e248f3b547a7302157fe8889"
-        },
-        "toolkit_dev": {
-          "url": "https://global.synologydownload.com/download/ToolChain/toolkit/7.2/epyc7002/ds.epyc7002-7.2.dev.txz",
-          "sha256": "26eec2a0fa76d55500d4c40644c2b9958e6a914a1740a4593a4562f9a1e453a4"
-        },
         "os": {
           "sha256": "1cdf0a81e889a6d89d795080a9774a15ee1b56ab6c64854739a03113d8143a83"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
@@ -4814,31 +2244,11 @@
     },
     {
       "id": "sa6400-7.2.1-69057",
-      "platform_version": "sa6400-7.2.1-69057",
       "platform_name": "epyc7002",
-      "docker_base_image": "debian:8-slim",
-      "redpill_lkm_make_target": "dev-v7",
-      "compile_with": "toolkit_dev",
       "downloads": {
-        "kernel": {
-          "url": "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.10.55.tar.xz",
-          "sha256": "7581113dad67a095bc5cc32b457e1a9283f91579e248f3b547a7302157fe8889"
-        },
-        "toolkit_dev": {
-          "url": "https://global.synologydownload.com/download/ToolChain/toolkit/7.2/epyc7002/ds.epyc7002-7.2.dev.txz",
-          "sha256": "26eec2a0fa76d55500d4c40644c2b9958e6a914a1740a4593a4562f9a1e453a4"
-        },
         "os": {
           "sha256": "aa13f1e8cedc13eb785eb5be1c758d2ef33953a620a5d365da51e3ec4ecf496d"
         }
-      },
-      "redpill_lkm": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-lkm.git",
-        "branch": "master"
-      },
-      "redpill_load": {
-        "source_url": "https://github.com/PeterSuh-Q3/redpill-load.git",
-        "branch": "master"
       },
       "add_extensions": [
         {
