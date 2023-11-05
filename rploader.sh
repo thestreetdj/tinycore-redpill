@@ -2238,19 +2238,14 @@ function getvars() {
     INTERNETDATE=$(date +"%d%m%Y" -d "$GETTIME")
     LOCALDATE=$(date +"%d%m%Y")
 
-    LD_SOURCE_URL="$(echo $platform_selected | jq -r -e '.redpill_load .source_url')"
-    LD_BRANCH="$(echo $platform_selected | jq -r -e '.redpill_load .branch')"
-    LKM_SOURCE_URL="$(echo $platform_selected | jq -r -e '.redpill_lkm .source_url')"
-    LKM_BRANCH="$(echo $platform_selected | jq -r -e '.redpill_lkm .branch')"
     #EXTENSIONS="$(echo $platform_selected | jq -r -e '.add_extensions[]')"
     EXTENSIONS="$(echo $platform_selected | jq -r -e '.add_extensions[]' | grep json | awk -F: '{print $1}' | sed -s 's/"//g')"
     #EXTENSIONS_SOURCE_URL="$(echo $platform_selected | jq '.add_extensions[] .url')"
     EXTENSIONS_SOURCE_URL="$(echo $platform_selected | jq '.add_extensions[]' | grep json | awk '{print $2}')"
     TARGET_PLATFORM="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[0])"
     TARGET_VERSION="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[1])"
-    echo "TARGET_VERSION = ${TARGET_VERSION}"
     TARGET_REVISION="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[2])"
-#    tcrpdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+
     tcrppart="${tcrpdisk}3"
     local_cache="/mnt/${tcrppart}/auxfiles"
     usbpart1uuid=$(blkid /dev/${tcrpdisk}1 | awk '{print $3}' | sed -e "s/\"//g" -e "s/UUID=//g")
@@ -2301,21 +2296,19 @@ function getvars() {
     setplatform
 
     #echo "Platform : $platform_selected"
-    echo "Rploader Version : ${rploaderver}"
-    echo "Loader source : $LD_SOURCE_URL Loader Branch : $LD_BRANCH "
-    echo "Redpill module source : $LKM_SOURCE_URL : Redpill module branch : $LKM_BRANCH "
-    echo "Extensions : $EXTENSIONS "
-    echo "Extensions URL : $EXTENSIONS_SOURCE_URL"
-    echo "TARGET_PLATFORM       : $TARGET_PLATFORM"
+    echo "Rploader Version  : ${rploaderver}"
+    echo "Extensions        : $EXTENSIONS "
+    echo "Extensions URL    : $EXTENSIONS_SOURCE_URL"
+    echo "TARGET_PLATFORM   : $TARGET_PLATFORM"
     echo "TARGET_VERSION    : $TARGET_VERSION"
-    echo "TARGET_REVISION : $TARGET_REVISION"
-    echo "KERNEL_MAJOR : $KERNEL_MAJOR"
-    echo "MODULE_ALIAS_FILE :  $MODULE_ALIAS_FILE"
-    echo "SYNOMODEL : $SYNOMODEL "
-    echo "MODEL : $MODEL "
-    echo "KERNEL VERSION is $KVER "
+    echo "TARGET_REVISION   : $TARGET_REVISION"
+    echo "KERNEL_MAJOR      : $KERNEL_MAJOR"
+    echo "MODULE_ALIAS_FILE : $MODULE_ALIAS_FILE"
+    echo "SYNOMODEL         : $SYNOMODEL"
+    echo "MODEL             : $MODEL"
+    echo "KERNEL VERSION    : $KVER"
     echo "Local Cache Folder : $local_cache"
-    echo "DATE Internet : $INTERNETDATE Local : $LOCALDATE"
+    echo "DATE Internet     : $INTERNETDATE Local : $LOCALDATE"
 
     if [ "$INTERNETDATE" != "$LOCALDATE" ]; then
         echo "ERROR ! System DATE is not correct"
