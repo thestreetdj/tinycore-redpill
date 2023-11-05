@@ -2278,7 +2278,6 @@ function getvars() {
     TOOLKIT_SHA="$(echo $platform_selected | jq -r -e '.downloads .toolkit_dev .sha256')"
     SYNOKERNEL_URL="$(echo $platform_selected | jq -r -e '.downloads .kernel .url')"
     SYNOKERNEL_SHA="$(echo $platform_selected | jq -r -e '.downloads .kernel .sha256')"
-    COMPILE_METHOD="$(echo $platform_selected | jq -r -e '.compile_with')"
     TARGET_PLATFORM="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[0])"
     TARGET_VERSION="$(echo $platform_selected | jq -r -e '.platform_version | split("-")' | jq -r -e .[1])"
     echo "TARGET_VERSION = ${TARGET_VERSION}"
@@ -2344,7 +2343,6 @@ function getvars() {
     echo "TOOLKIT_SHA : $TOOLKIT_SHA"
     echo "SYNOKERNEL_URL : $SYNOKERNEL_URL"
     echo "SYNOKERNEL_SHA : $SYNOKERNEL_SHA"
-    echo "COMPILE_METHOD : $COMPILE_METHOD"
     echo "TARGET_PLATFORM       : $TARGET_PLATFORM"
     echo "TARGET_VERSION    : $TARGET_VERSION"
     echo "TARGET_REVISION : $TARGET_REVISION"
@@ -2408,43 +2406,6 @@ function cleanloader() {
     sudo rm -rf /home/tc/redpill*
     sudo rm -rf /home/tc/*tgz
     sudo rm -rf /home/tc/latestrploader.sh
-
-}
-
-function compileredpill() {
-
-    cd /home/tc
-    git config --global http.sslVerify false
-    
-    if [ -d /home/tc/redpill-lkm ]; then
-        echo "Redpill sources already downloaded, pulling latest"
-        cd redpill-lkm
-        git pull
-        cd /home/tc
-    else
-        git clone -b master "https://github.com/PeterSuh-Q3/redpill-lkm.git"
-    fi
-
-    export DSM_VERSION=${TARGET_VERSION}
-    export REDPILL_LOAD_SRC=/home/tc/redpill-load
-    export REDPILL_LKM_SRC=/home/tc/redpill-lkm
-    export LOCAL_RP_LOAD_USE=false
-    export ARCH=x86_64
-    export LOCAL_RP_LKM_USE=false
-
-    echo "Compiling redpill with $COMPILE_METHOD"
-    if [ "$COMPILE_METHOD" = "toolkit_dev" ]; then
-        export LINUX_SRC=/usr/local/x86_64-pc-linux-gnu/x86_64-pc-linux-gnu/sys-root/usr/lib/modules/DSM-7.0/build
-
-    else
-        export LINUX_SRC=/home/tc/linux-kernel
-    fi
-
-    cd redpill-lkm && make ${REDPILL_LKM_MAKE_TARGET}
-    strip --strip-debug /home/tc/redpill-lkm/redpill.ko
-    modinfo /home/tc/redpill-lkm/redpill.ko
-    REDPILL_MOD_NAME="redpill-linux-v$(modinfo redpill.ko | grep vermagic | awk '{print $2}').ko"
-    cp /home/tc/redpill-lkm/redpill.ko /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
 
 }
 
@@ -3586,21 +3547,6 @@ echo "$4"
 
         case $3 in
 
-        compile)
-            prepareforcompile
-            if [ "$COMPILE_METHOD" = "toolkit_dev" ]; then
-                gettoolchain
-                compileredpill
-                echo "Starting loader creation "
-                buildloader
-            else
-                getsynokernel
-                kernelprepare
-                compileredpill
-                echo "Starting loader creation "
-                buildloader
-            fi
-            ;;
         manual)
 
             echo "Using static compiled redpill extension"
