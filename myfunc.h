@@ -418,158 +418,197 @@ function getvarsmshell()
     DS1019+)
         permanent="PDN"
         serialstart="1780 1790 1860 1980"
+        suffix="numeric"
         ;;
     DS1520+)
         permanent="TRR"
         serialstart="2270"
+        suffix="alpha"
         ;;    
     DS1522+)
         permanent="TRR"
         serialstart="2270"
+        suffix="alpha"
         ;;
     DS1621+)
         permanent="S7R"
         serialstart="2080"
+        suffix="alpha"
         ;;
     DS1621xs+)
         permanent="S7R"
         serialstart="2080"
+        suffix="alpha"
         ;;
     DS1819+)
         permanent="RFR"
         serialstart="1930 1940"
+        suffix="alpha"
         ;;
     DS1821+)
         permanent="S7R"
         serialstart="2080"
+        suffix="alpha"
         ;;
     DS1823xs+)
         permanent="V5R"
         serialstart="22B0"
+        suffix="alpha"
         ;;
     DS220+)
         permanent="XXX"
         serialstart="0000"
+        suffix="alpha"
         ;;
     DS2419+)
         permanent="QZA"
         serialstart="1880"
+        suffix="alpha"
         ;;
     DS2422+)
         permanent="S7R"
         serialstart="2080"
+        suffix="alpha"
         ;;
     DS3615xs)
         permanent="LWN"
         serialstart="1130 1230 1330 1430"
+        suffix="numeric"
         ;;
     DS3617xs)
         permanent="ODN"
         serialstart="1130 1230 1330 1430"
+        suffix="numeric"
         ;;
     DS3622xs+)
         permanent="SQR"
         serialstart="2030 2040 20C0 2150"
+        suffix="alpha"
         ;;
     DS423+)
         permanent="VKR"
         serialstart="22A0"
+        suffix="alpha"
         ;;
     DS620slim)
         permanent="PDN"
         serialstart="1780 1790 1860 1980"
+        suffix="numeric"
         ;;
     DS718+)
         permanent="PEN"
         serialstart="1930"
+        suffix="numeric"
         ;;
     DS720+)
         permanent="SBR"
         serialstart="2030 2040 20C0 2150"
+        suffix="alpha"
         ;;
     DS723+)
         permanent="TQR"
         serialstart="2270"
+        suffix="alpha"
         ;;
     DS916+)
         permanent="NZN"
         serialstart="1130 1230 1330 1430"
+        suffix="numeric"
         ;;
     DS918+)
         permanent="PDN"
         serialstart="1780 1790 1860 1980"
+        suffix="numeric"
         ;;
     DS920+)
         permanent="SBR"
         serialstart="2030 2040 20C0 2150"
+        suffix="alpha"
         ;;
     DS923+)
         permanent="TQR"
         serialstart="2270"
+        suffix="alpha"
         ;;
     DVA1622)
         permanent="UBR"
         serialstart="2030 2040 20C0 2150"
+        suffix="alpha"
         ;;
     DVA3219)
         permanent="RFR"
         serialstart="1930 1940"
+        suffix="alpha"
         ;;
     DVA3221)
         permanent="SJR"
         serialstart="2030 2040 20C0 2150"
+        suffix="alpha"
         ;;
     FS2500)
         permanent="PSN"
         serialstart="1960"
+        suffix="numeric"
         ;;
     FS6400)
         permanent="PSN"
         serialstart="1960"
+        suffix="numeric"
         ;;
     RS1221+)
         permanent="RWR"
         serialstart="20B0"
+        suffix="alpha"
         ;;
     RS2423+)
         permanent="XXX"
         serialstart="0000"
+        suffix="alpha"
         ;;
     RS1619xs+)
         permanent="QPR"
         serialstart="1920"
+        suffix="alpha"
         ;;
     RS3413xs+)
         permanent="S7R"
         serialstart="2080"
+        suffix="alpha"
         ;;
     RS3618xs)
         permanent="ODN"
         serialstart="1130 1230 1330 1430"
+        suffix="numeric"
         ;;
     RS3621xs+)
         permanent="SZR"
         serialstart="20A0"
+        suffix="alpha"
         ;;
     RS4021xs+)
         permanent="T2R"
         serialstart="2250"
+        suffix="alpha"
         ;;
     SA3400)
         permanent="RJR"
         serialstart="1920"
+        suffix="alpha"
         ;;
     SA3600)
         permanent="RJR"
         serialstart="1920"
+        suffix="alpha"
         ;;
     SA6400)
         permanent="TQR"
         serialstart="2270"
+        suffix="alpha"
         ;;
     *)
         permanent="XXX"
         serialstart="0000"
+        suffix="alpha"
         ;;        
     esac        
 }
