@@ -1741,6 +1741,10 @@ fi
 
 NEXT="m"
 setSuggest $MODEL
+bfbay=$(jq -r -e '.general.bay' "$USER_CONFIG_FILE")
+if [ -n "${bfbay}" ]; then
+  bay=${bfbay}
+fi
 writeConfigKey "general" "bay" "${bay}"
 
 # Until urxtv is available, Korean menu is used only on remote terminals.
