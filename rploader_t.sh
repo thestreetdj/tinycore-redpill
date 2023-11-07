@@ -3109,7 +3109,7 @@ fi
     fi
 
     echo "Cleaning up files"
-    removemodelexts    
+    #removemodelexts    
     sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/cache/*pat
     
     msgnormal "Caching files for future use"
