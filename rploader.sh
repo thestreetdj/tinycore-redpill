@@ -2738,13 +2738,7 @@ checkmachine
     else
       
         if [ -d /home/tc/custom-module ]; then
-            #echo "Want to use firmware files from /home/tc/custom-module/*.pat ? [yY/nN] : "
-            #readanswer
-
-            #if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
-            #sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
-            #fi
-            echo "skip downloadextractor"
+            sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
         fi
 
     fi
