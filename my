@@ -221,10 +221,8 @@ fi
 getvarsmshell "$1"
 
 #echo "$TARGET_REVISION"                                                      
-#echo "$MSHELL_ONLY_MODEL"                                                        
 #echo "$TARGET_PLATFORM"                                            
 #echo "$SYNOMODEL"                                      
-#echo "$sha256"
 
 postupdate="N"
 userdts="N"
@@ -233,6 +231,7 @@ frmyv="N"
 jot="N"
 makeimg="N"
 
+shift
     while [[ "$#" > 0 ]] ; do
 
         case $1 in
