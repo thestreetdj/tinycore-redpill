@@ -311,14 +311,21 @@ function getvarsmshell()
     
     SUVP=""
     ORIGIN_PLATFORM=""
-    TARGET_REVISION=""
 
     tem="${1}"
 
-#7.0.1-42218
-    MODELS="DS3615xsJ DS1019+J DS620slimJ DS1520+J DS1522+J DS220+J DS2419+J DS423+J DS718+J DS1621+J DS1821+J DS1621xs+J DS2422+J DS3617xsJ DS3622xs+J DS720+J DS723+J DS918+J DS920+J DS923+J DS1819+J DVA3219J DVA3221J FS2500J RS1221+J RS1619xs+J RS2423+J RS3413xs+J RS3618xsJ RS3621xs+J RS4021xs+J SA3410J SA3610J SA6400J"
-    if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
-       TARGET_REVISION="42218"
+    MODEL="$(cat ${tem} |cut -d '-' -f 1)"
+    if [ "$TARGET_REVISION" == "64570" ]; then
+      TARGET_VERSION="$(cat ${tem} |cut -d '-' -f 2 | cut -c 1-3)"
+    else
+      TARGET_VERSION="$(cat ${tem} |cut -d '-' -f 2)"
+    fi
+    TARGET_REVISION="$(cat ${tem} |cut -d '-' -f 3)"    
+    
+    MODELS="DS3615xs DS1019+ DS620slim DS1520+ DS1522+ DS220+ DS2419+ DS423+ DS718+ DS1621+ DS1821+ DS1621xs+ DS2422+ DS3617xs DS3622xs+ DS720+ DS723+ DS918+ DS920+ DS923+ DS1819+ DVA3219 DVA3221 FS2500 RS1221+ RS1619xs+ RS2423+ RS3413xs+ RS3618xs RS3621xs+ RS4021xs+ SA3410 SA3610 SA6400"
+    if [ $(echo ${MODELS} | grep ${MODEL} | wc -l ) -gt 0 ]; then
+        echo "This synology model not supported by TCRP."
+        exit 0
     fi
     
 #7.1.1-42962
@@ -345,34 +352,18 @@ function getvarsmshell()
     if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
        TARGET_REVISION="69057"
     fi
-        
+    
     if [ "$TARGET_REVISION" == "42218" ]; then
-        MODEL="$(echo $tem | sed 's/J//g')"
-        TARGET_VERSION="7.0.1"
         KVER="4.4.180"
     elif [ "$TARGET_REVISION" == "42962" ]; then
-        if [ $tem = "FS2500F" ]; then
-            MODEL="FS2500"
-        else
-            if [ $(echo $tem | grep F | wc -l) -gt 0 ]; then
-                MODEL="$(echo $tem | sed 's/F//g')"
-            else
-                MODEL=$tem
-            fi
-        fi    
-        TARGET_VERSION="7.1.1"
         KVER="4.4.180"                
     elif [ "$TARGET_REVISION" == "64570" ]; then
-        MODEL="$(echo $tem | sed 's/G//g')"
-        TARGET_VERSION="7.2"
         KVER="4.4.302"
     elif [ "$TARGET_REVISION" == "69057" ]; then
-        MODEL="$(echo $tem | sed 's/H//g')"
-        TARGET_VERSION="7.2.1"
         KVER="4.4.302"
     else
         echo "Synology model revision not supported by TCRP."
-        exit 0                                                                                               
+        exit 0
     fi
 
     #echo "MODEL is $MODEL"
