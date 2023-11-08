@@ -1255,15 +1255,7 @@ function make() {
   usbidentify
   clear
 
-  if [ ${BUILD} = "7.2.1-69057" ]; then
-    ./my "${MODEL}"H noconfig "${1}" | tee "/home/tc/zlastbuild.log"
-  elif [ ${BUILD} = "7.2.0-64570" ]; then  
-    ./my "${MODEL}"G noconfig "${1}" | tee "/home/tc/zlastbuild.log"    
-  elif [ ${BUILD} = "7.1.1-42962" ]; then
-    ./my "${MODEL}"F noconfig "${1}" | tee "/home/tc/zlastbuild.log"
-  elif [ ${BUILD} = "7.0.1-42218" ]; then
-    ./my "${MODEL}"J noconfig "${1}" | tee "/home/tc/zlastbuild.log"
-  fi
+  ./my "${MODEL}"-"${BUILD}" noconfig "${1}" | tee "/home/tc/zlastbuild.log"
 
   if  [ -f /home/tc/custom-module/redpill.ko ]; then
     echo "Removing redpill.ko ..."
