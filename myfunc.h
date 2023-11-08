@@ -260,36 +260,36 @@ Please type Synology Model Name after ./$(basename ${0})
 
 - for friend mode
 
-./$(basename ${0}) DS918+G
-./$(basename ${0}) DS3617xsG
-./$(basename ${0}) DS3615xsG
-./$(basename ${0}) DS3622xs+G                                                                                                   
-./$(basename ${0}) DVA3221G
-./$(basename ${0}) DS920+G                                                                                                      
-./$(basename ${0}) DS1621+G 
-./$(basename ${0}) DS2422+G  
-./$(basename ${0}) DVA1622G
-./$(basename ${0}) DS1520+G
-./$(basename ${0}) FS2500G
-./$(basename ${0}) DS1621xs+G
-./$(basename ${0}) RS4021xs+G 
-./$(basename ${0}) DVA3219G
-./$(basename ${0}) RS3618xsG
-./$(basename ${0}) DS1019+G
-./$(basename ${0}) DS923+G
-./$(basename ${0}) DS723+G
-./$(basename ${0}) SA6400G
-./$(basename ${0}) DS720+G
-./$(basename ${0}) RS1221+G
-./$(basename ${0}) RS2423+G
-./$(basename ${0}) RS1619xs+G
-./$(basename ${0}) RS3621xs+G
-./$(basename ${0}) SA6400G
-./$(basename ${0}) DS916+G
-./$(basename ${0}) DS1821+G
-./$(basename ${0}) DS1819+G
-./$(basename ${0}) DS1823xs+G
-./$(basename ${0}) DS620slim+G
+./$(basename ${0}) DS918+-7.2.1-69057
+./$(basename ${0}) DS3617xs-7.2.1-69057
+./$(basename ${0}) DS3615xs-7.2.1-69057
+./$(basename ${0}) DS3622xs+-7.2.1-69057
+./$(basename ${0}) DVA3221-7.2.1-69057
+./$(basename ${0}) DS920+-7.2.1-69057
+./$(basename ${0}) DS1621+-7.2.1-69057
+./$(basename ${0}) DS2422+-7.2.1-69057
+./$(basename ${0}) DVA1622-7.2.1-69057
+./$(basename ${0}) DS1520+-7.2.1-69057
+./$(basename ${0}) FS2500-7.2.1-69057
+./$(basename ${0}) DS1621xs+-7.2.1-69057
+./$(basename ${0}) RS4021xs+-7.2.1-69057 
+./$(basename ${0}) DVA3219-7.2.1-69057
+./$(basename ${0}) RS3618xs-7.2.1-69057
+./$(basename ${0}) DS1019+-7.2.1-69057
+./$(basename ${0}) DS923+-7.2.1-69057
+./$(basename ${0}) DS723+-7.2.1-69057
+./$(basename ${0}) SA6400-7.2.1-69057
+./$(basename ${0}) DS720+-7.2.1-69057
+./$(basename ${0}) RS1221+-7.2.1-69057
+./$(basename ${0}) RS2423+-7.2.1-69057
+./$(basename ${0}) RS1619xs+-7.2.1-69057
+./$(basename ${0}) RS3621xs+-7.2.1-69057
+./$(basename ${0}) SA6400-7.2.1-69057
+./$(basename ${0}) DS916+-7.2.1-69057
+./$(basename ${0}) DS1821+-7.2.1-69057
+./$(basename ${0}) DS1819+-7.2.1-69057
+./$(basename ${0}) DS1823xs+-7.2.1-69057
+./$(basename ${0}) DS620slim+-7.2.1-69057
 
 ex) Except for postupdate and userdts that must be used alone, the rest of the options can be used in combination. 
 
