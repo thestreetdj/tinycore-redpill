@@ -321,6 +321,10 @@ function getvarsmshell()
       TARGET_VERSION="$(cat ${tem} |cut -d '-' -f 2)"
     fi
     TARGET_REVISION="$(cat ${tem} |cut -d '-' -f 3)"    
+
+    #echo "MODEL is $MODEL"
+    TARGET_PLATFORM=$(echo "$MODEL" | sed 's/DS/ds/' | sed 's/RS/rs/' | sed 's/+/p/' | sed 's/DVA/dva/' | sed 's/FS/fs/' | sed 's/SA/sa/' )
+    SYNOMODEL="${TARGET_PLATFORM}_${TARGET_REVISION}"
     
     MODELS="DS3615xs DS1019+ DS620slim DS1520+ DS1522+ DS220+ DS2419+ DS423+ DS718+ DS1621+ DS1821+ DS1621xs+ DS2422+ DS3617xs DS3622xs+ DS720+ DS723+ DS918+ DS920+ DS923+ DS1819+ DVA3219 DVA3221 FS2500 RS1221+ RS1619xs+ RS2423+ RS3413xs+ RS3618xs RS3621xs+ RS4021xs+ SA3410 SA3610 SA6400"
     if [ $(echo ${MODELS} | grep ${MODEL} | wc -l ) -gt 0 ]; then
@@ -328,47 +332,27 @@ function getvarsmshell()
         exit 0
     fi
     
-#7.1.1-42962
-    MODELS="DS3615xsF DS1019+F DS1522+F DS220+F DS2419+F DS718+F DS1520+F DS1621+F DS1821+F DS1621xs+F DS2422+F DS3617xsF DS3622xs+F DS720+F DS918+F DS620slimF DS920+F DVA1622F DS1819+F DVA3219F DVA3221F FS2500F RS1221+F RS1619xs+F RS2423+F RS3413xs+F SA3410F SA3610F"
-    if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
-       TARGET_REVISION="42962"
-       SUVP="-1"
-    fi
-    MODELS="DS423+F DS723+F DS923+F DS1823xs+F RS3621xs+F RS4021xs+F RS3618xsF SA6400F"
-    if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
-       TARGET_REVISION="42962"
-       SUVP="-6"
-    fi
-        
-#7.2.0-64570 Official
-    MODELS="DS1019+G DS620slimG DS1520+G DS1522+G DS220+G DS2419+G DS423+G DS718+G DS1621+G DS1821+G DS1823xs+G DS1621xs+G DS2422+G DS3617xsG DS3622xs+G DS720+G DS723+G DS918+G DS920+G DS923+G DVA1622G DS1819+G DVA3219G DVA3221G FS2500G RS1221+G RS1619xs+G RS2423+G RS3413xs+G RS3618xsG RS3621xs+G RS4021xs+G SA3410G SA3610G SA6400G"
-    if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
-       TARGET_REVISION="64570"
-       SUVP="-1" 
-    fi
-
-#7.2.1-69057 Official
-    MODELS="DS1019+H DS620slimH DS1520+H DS1522+H DS220+H DS2419+H DS423+H DS718+H DS1621+H DS1821+H DS1823xs+H DS1621xs+H DS2422+H DS3617xsH DS3622xs+H DS720+H DS723+H DS918+H DS920+H DS923+H DVA1622H DS1819+H DVA3219H DVA3221H FS2500H RS1221+H RS1619xs+H RS2423+H RS3413xs+H RS3618xsH RS3621xs+H RS4021xs+H SA3410H SA3610H SA6400H"
-    if [ $(echo ${MODELS} | grep ${tem} | wc -l ) -gt 0 ]; then
-       TARGET_REVISION="69057"
-    fi
-    
     if [ "$TARGET_REVISION" == "42218" ]; then
         KVER="4.4.180"
+        SUVP="" 
     elif [ "$TARGET_REVISION" == "42962" ]; then
-        KVER="4.4.180"                
+        KVER="4.4.180"
+        MODELS6="DS423+ DS723+ DS923+ DS1823xs+ RS3621xs+ RS4021xs+ RS3618xs SA6400"
+        if [ $(echo ${MODELS6} | grep ${MODEL} | wc -l ) -gt 0 ]; then
+           SUVP="-6"
+        else
+           SUVP="-1"
+        fi
     elif [ "$TARGET_REVISION" == "64570" ]; then
         KVER="4.4.302"
+        SUVP="-1" 
     elif [ "$TARGET_REVISION" == "69057" ]; then
         KVER="4.4.302"
+        SUVP=""
     else
         echo "Synology model revision not supported by TCRP."
         exit 0
     fi
-
-    #echo "MODEL is $MODEL"
-    TARGET_PLATFORM=$(echo "$MODEL" | sed 's/DS/ds/' | sed 's/RS/rs/' | sed 's/+/p/' | sed 's/DVA/dva/' | sed 's/FS/fs/' | sed 's/SA/sa/' )
-    SYNOMODEL="${TARGET_PLATFORM}_${TARGET_REVISION}"
 
     case ${MODEL} in
     DS718+ | DS918+ | DS1019+ | DS620slim )
