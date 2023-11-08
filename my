@@ -264,16 +264,8 @@ makeimg="N"
             makeimg="Y"
             ;;
         *)
-            if [ $1 = "FS2500F" ]; then                                       
-                echo                                                          
-            elif [ $1 = "FS2500" ]; then                                      
-                echo                                                          
-            else                                                              
-                if [ "$(echo $1 | sed 's/J//g' | sed 's/F//g' | sed 's/K//g' | sed 's/G//g' | sed 's/H//g' )" != "$MODEL" ]; then
-                    echo "Syntax error, not valid arguments or not enough options"
-                    exit 0
-                fi                                                                
-            fi          
+            echo "Syntax error, not valid arguments or not enough options"
+            exit 0
             ;;
 
         esac
