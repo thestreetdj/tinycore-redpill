@@ -314,13 +314,13 @@ function getvarsmshell()
 
     tem="${1}"
 
-    MODEL="$(cat ${tem} |cut -d '-' -f 1)"
+    MODEL="$(echo ${tem} |cut -d '-' -f 1)"
     if [ "$TARGET_REVISION" == "64570" ]; then
-      TARGET_VERSION="$(cat ${tem} |cut -d '-' -f 2 | cut -c 1-3)"
+      TARGET_VERSION="$(echo ${tem} |cut -d '-' -f 2 | cut -c 1-3)"
     else
-      TARGET_VERSION="$(cat ${tem} |cut -d '-' -f 2)"
+      TARGET_VERSION="$(echo ${tem} |cut -d '-' -f 2)"
     fi
-    TARGET_REVISION="$(cat ${tem} |cut -d '-' -f 3)"    
+    TARGET_REVISION="$(echo ${tem} |cut -d '-' -f 3)"    
 
     #echo "MODEL is $MODEL"
     TARGET_PLATFORM=$(echo "$MODEL" | sed 's/DS/ds/' | sed 's/RS/rs/' | sed 's/+/p/' | sed 's/DVA/dva/' | sed 's/FS/fs/' | sed 's/SA/sa/' )
