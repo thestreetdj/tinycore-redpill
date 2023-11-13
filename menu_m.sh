@@ -1076,7 +1076,7 @@ function serialMenu() {
       done
       break
     elif [ "${resp}" = "a" ]; then
-      SERIAL=`./sngen.sh "${MODEL}"`
+      SERIAL=`./sngen.sh "${MODEL}"-"${BUILD}"`
       break
     fi
   done
