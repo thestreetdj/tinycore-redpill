@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.0.2
+# User Variables : 1.0.0.3
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.0.2"
+rploaderver="1.0.0.3"
 build="master"
 redpillmake="prod"
 
@@ -106,6 +106,7 @@ function history() {
     1.0.0.0 Kernel patch process improvements
     1.0.0.1 Improved platform release ID identification method
     1.0.0.2 Setplatform() function converted to custom_config.json reference method
+    1.0.0.3 To prevent partition space shortage, custom.gz is no longer used in partition 1
     --------------------------------------------------------------------------------------
 EOF
 
@@ -887,12 +888,12 @@ function bringfriend() {
             if [ "$RD_COMPRESSED" = "false" ]; then
                 echo "Ramdisk in not compressed "
                 cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
-                cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
                 sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
                 (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) 2>&1 >/dev/null
             else
                 unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
-                cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
                 sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
                 (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) 2>&1 >/dev/null
             fi
@@ -1214,8 +1215,8 @@ function postupdatev1() {
 
     if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
         echo "Copying custom.gz"
-        cp -f /home/tc/redpill-load/localdiskp1/custom.gz /mnt/${loaderdisk}1/custom.gz
-        [ "$(sha256sum /home/tc/redpill-load/localdiskp1/custom.gz | awk '{print $1}')" == "$(sha256sum /mnt/${loaderdisk}1/custom.gz | awk '{print $1}')" ] && echo "OK !!!"
+        cp -f /home/tc/redpill-load/localdiskp1/custom.gz /mnt/${loaderdisk}3/custom.gz
+        [ "$(sha256sum /home/tc/redpill-load/localdiskp1/custom.gz | awk '{print $1}')" == "$(sha256sum /mnt/${loaderdisk}3/custom.gz | awk '{print $1}')" ] && echo "OK !!!"
     else
         echo "OK, you should be fine keeping your existing custom.gz"
     fi
@@ -2640,7 +2641,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 1.0.0.0"
+    echo "TCRP JOT Version : 1.0.0.3"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
@@ -2927,12 +2928,12 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     if [ "$RD_COMPRESSED" = "false" ]; then
         echo "Ramdisk in not compressed "
         cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
-        cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm
+        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     else
         unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
-        cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm
+        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     fi
