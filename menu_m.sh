@@ -995,7 +995,11 @@ done
       BUILD="7.2.1-69057"
       writeConfigKey "general" "version" "${BUILD}"
   fi
-  
+
+  if [ "${MODEL}" = "SA6400" ]; then
+    DMPM="EUDEV"
+    writeConfigKey "general" "devmod" "${DMPM}"
+  fi
 }
 
 # Set Describe model-specific requirements or suggested hardware
@@ -1758,6 +1762,11 @@ if [ -n "${bfbay}" ]; then
   bay=${bfbay}
 fi
 writeConfigKey "general" "bay" "${bay}"
+
+if [ "${MODEL}" = "SA6400" ]; then
+  DMPM="EUDEV"
+  writeConfigKey "general" "devmod" "${DMPM}"
+fi
 
 # Until urxtv is available, Korean menu is used only on remote terminals.
 while true; do
