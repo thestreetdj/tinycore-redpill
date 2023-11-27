@@ -3403,8 +3403,8 @@ function getredpillko() {
             exit 99
         fi    
     else
-        echo "TAG is ${TAG}"
         TAG="${LATESTURL##*/}"
+        echo "TAG is ${TAG}"        
         STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
     fi
     
