@@ -2035,7 +2035,7 @@
       "add_extensions": [
         {
           "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
-          "disks": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/disks/rpext-index.json",
+          "dtbpatch": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dtbpatch/rpext-index.json",
           "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
         }
       ]
