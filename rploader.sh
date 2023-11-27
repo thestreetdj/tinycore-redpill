@@ -31,7 +31,7 @@ fullupdatefiles="custom_config.json custom_config_jun.json global_config.json mo
 
 HOMEPATH="/home/tc"
 TOOLSPATH="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/tools/"
-TOOLS="bspatch bzImage-to-vmlinux.sh calc_run_size.sh crc32 dtc kexec ramdisk-patch.sh vmlinux-to-bzImage.sh xxd zimage-patch.sh kpatch zImage_template.gz grub-editenv pigz"
+TOOLS="bspatch bzImage-template-v4.gz bzImage-template-v5.gz bzImage-to-vmlinux.sh calc_run_size.sh crc32 dtc kexec ramdisk-patch.sh vmlinux-to-bzImage.sh xxd zimage-patch.sh kpatch grub-editenv pigz"
 
 # END Do not modify after this line
 ######################################################################################################
