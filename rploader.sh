@@ -3395,7 +3395,7 @@ function getredpillko() {
 
     LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/latest"`"
 
-    if [ $? -ne 0 ] || [ "${STATUS}" -ne 200 ]; then
+    if [ $? -ne 0 ]; then
         echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
         curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms.zip -o /tmp/rp-lkms.zip
         if [ $? -ne 0 ]; then
