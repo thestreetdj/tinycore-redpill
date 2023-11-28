@@ -891,18 +891,6 @@ while true; do
   echo "" > "${TMP_PATH}/mdl"
   
   if [ "$HBADETECT" = "ON" ]; then
-    if [ $threads -gt 16 ]; then
-      echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-    elif [ $threads -gt 8 ]; then
-      if [ "${AFTERHASWELL}" == "OFF" ]; then
-        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-      else  
-        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-        echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-      fi
-    else
       if [ "${AFTERHASWELL}" == "OFF" ]; then
         echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
         echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
@@ -912,24 +900,7 @@ while true; do
         echo "${M_GRP4}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
         echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
       fi
-    fi
   else
-    if [ $threads -gt 16 ]; then
-      echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-    elif [ $threads -gt 8 ]; then
-      if [ "${AFTERHASWELL}" == "OFF" ]; then
-        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
-        echo "${M_GRP5}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
-      else
-        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
-        echo "${M_GRP5}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
-        echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-      fi
-    else
       if [ "${AFTERHASWELL}" == "OFF" ]; then
         echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
         echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
@@ -945,7 +916,6 @@ while true; do
         echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
 	RESTRICT=0
       fi
-    fi
   fi	  
   
   if [ ${RESTRICT} -eq 1 ]; then
