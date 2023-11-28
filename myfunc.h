@@ -191,6 +191,8 @@ set -u
 # Update : Kernel patch process improvements    
 # 2023.11.04 
 # Update : Added DS1522+ (r1000), DS220+ (geminilake), DS2419+ (denverton), DS423+ (geminilake), DS718+ (apollolake), RS2423+ (v1000)
+# 2023.11.28
+# Update : Turn off thread limits when displaying models (Thanks alirz1)
     
 function showlastupdate() {
     cat <<EOF
@@ -200,12 +202,6 @@ function showlastupdate() {
 
 # 2023.08.24 (M-SHELL for TCRP, v0.9.5.0 release)
 # Update : Add storage panel size selection menu
-
-# 2023.09.26
-# Update : Add Support DSM 7.2.1-69057 Official Version
-
-# 2023.09.30
-# Update : Fixed locale selection issue, modified some menu guidance text
 
 # 2023.10.01
 # Update : Add "Show SATA(s) # ports and drives" menu
@@ -227,6 +223,9 @@ function showlastupdate() {
 
 # 2023.11.04 
 # Update : Added DS1522+ (r1000), DS220+ (geminilake), DS2419+ (denverton), DS423+ (geminilake), DS718+ (apollolake), RS2423+ (v1000)
+
+# 2023.11.28
+# Update : Turn off thread limits when displaying models (Thanks alirz1)
     
 EOF
 }
