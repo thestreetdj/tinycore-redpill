@@ -193,6 +193,8 @@ set -u
 # Update : Added DS1522+ (r1000), DS220+ (geminilake), DS2419+ (denverton), DS423+ (geminilake), DS718+ (apollolake), RS2423+ (v1000)
 # 2023.11.28
 # Update : Turn off thread limits when displaying models (Thanks alirz1)
+# 2023.12.01
+# Update : Separate tcrp-addons and tcrp-modules repo processing methods
     
 function showlastupdate() {
     cat <<EOF
@@ -226,6 +228,9 @@ function showlastupdate() {
 
 # 2023.11.28
 # Update : Turn off thread limits when displaying models (Thanks alirz1)
+
+# 2023.12.01
+# Update : Separate tcrp-addons and tcrp-modules repo processing methods
     
 EOF
 }
