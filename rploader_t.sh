@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.0.2
+# User Variables : 1.0.0.4
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.0.2"
+rploaderver="1.0.0.4"
 build="master"
 redpillmake="prod"
 
@@ -31,7 +31,7 @@ fullupdatefiles="custom_config.json custom_config_jun.json global_config.json mo
 
 HOMEPATH="/home/tc"
 TOOLSPATH="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/tools/"
-TOOLS="bspatch bzImage-to-vmlinux.sh calc_run_size.sh crc32 dtc kexec ramdisk-patch.sh vmlinux-to-bzImage.sh xxd zimage-patch.sh kpatch zImage_template.gz grub-editenv pigz"
+TOOLS="bspatch bzImage-template-v4.gz bzImage-template-v5.gz bzImage-to-vmlinux.sh calc_run_size.sh crc32 dtc kexec ramdisk-patch.sh vmlinux-to-bzImage.sh xxd zimage-patch.sh kpatch grub-editenv pigz"
 
 # END Do not modify after this line
 ######################################################################################################
@@ -106,6 +106,9 @@ function history() {
     1.0.0.0 Kernel patch process improvements
     1.0.0.1 Improved platform release ID identification method
     1.0.0.2 Setplatform() function converted to custom_config.json reference method
+    1.0.0.3 To prevent partition space shortage, custom.gz is no longer used in partition 1
+    1.0.0.4 Prevents kernel panic from occurring due to rp-lkm.zip download failure 
+            when ramdisk patching occurs without internet.
     --------------------------------------------------------------------------------------
 EOF
 
@@ -887,12 +890,12 @@ function bringfriend() {
             if [ "$RD_COMPRESSED" = "false" ]; then
                 echo "Ramdisk in not compressed "
                 cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
-                cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
                 sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
                 (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) 2>&1 >/dev/null
             else
                 unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm 2>/dev/null >/dev/null
-                cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
+                cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm 2>/dev/null >/dev/null
                 sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
                 (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) 2>&1 >/dev/null
             fi
@@ -1214,8 +1217,8 @@ function postupdatev1() {
 
     if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
         echo "Copying custom.gz"
-        cp -f /home/tc/redpill-load/localdiskp1/custom.gz /mnt/${loaderdisk}1/custom.gz
-        [ "$(sha256sum /home/tc/redpill-load/localdiskp1/custom.gz | awk '{print $1}')" == "$(sha256sum /mnt/${loaderdisk}1/custom.gz | awk '{print $1}')" ] && echo "OK !!!"
+        cp -f /home/tc/redpill-load/localdiskp1/custom.gz /mnt/${loaderdisk}3/custom.gz
+        [ "$(sha256sum /home/tc/redpill-load/localdiskp1/custom.gz | awk '{print $1}')" == "$(sha256sum /mnt/${loaderdisk}3/custom.gz | awk '{print $1}')" ] && echo "OK !!!"
     else
         echo "OK, you should be fine keeping your existing custom.gz"
     fi
@@ -2189,34 +2192,6 @@ function prepareforcompile() {
 
 }
 
-function gettoolchain() {
-
-    if [ -d /usr/local/x86_64-pc-linux-gnu/ ]; then
-        echo "Toolchain already cached"
-        return
-    fi
-
-    cd /home/tc
-
-    if [ -f dsm-toolchain.7.0.txz ]; then
-        echo "File already cached"
-    else
-        echo "Downloading and caching toolchain"
-        curl -k -# -L "${TOOLKIT_URL}" -o dsm-toolchain.7.0.txz
-    fi
-
-    echo -n "Checking file -> "
-    checkfilechecksum dsm-toolchain.7.0.txz ${TOOLKIT_SHA}
-    echo "OK, file matches sha256sum, extracting"
-    cd / && sudo tar -xf /home/tc/dsm-toolchain.7.0.txz usr/local/x86_64-pc-linux-gnu/x86_64-pc-linux-gnu/sys-root/usr/lib/modules/DSM-7.0/build
-    if [ $? = 0 ]; then
-        return
-    else
-        echo "Failed to extract toolchain"
-    fi
-
-}
-
 function getPlatforms() {
 
     platform_versions=$(jq -s '.[0].build_configs=(.[1].build_configs + .[0].build_configs | unique_by(.id)) | .[0]' custom_config_jun.json custom_config.json | jq -r '.build_configs[].id')
@@ -2266,25 +2241,14 @@ function getvars() {
     INTERNETDATE=$(date +"%d%m%Y" -d "$GETTIME")
     LOCALDATE=$(date +"%d%m%Y")
 
-    LD_SOURCE_URL="$(echo $platform_selected | jq -r -e '.redpill_load .source_url')"
-    LD_BRANCH="$(echo $platform_selected | jq -r -e '.redpill_load .branch')"
-    LKM_SOURCE_URL="$(echo $platform_selected | jq -r -e '.redpill_lkm .source_url')"
-    LKM_BRANCH="$(echo $platform_selected | jq -r -e '.redpill_lkm .branch')"
     #EXTENSIONS="$(echo $platform_selected | jq -r -e '.add_extensions[]')"
     EXTENSIONS="$(echo $platform_selected | jq -r -e '.add_extensions[]' | grep json | awk -F: '{print $1}' | sed -s 's/"//g')"
     #EXTENSIONS_SOURCE_URL="$(echo $platform_selected | jq '.add_extensions[] .url')"
     EXTENSIONS_SOURCE_URL="$(echo $platform_selected | jq '.add_extensions[]' | grep json | awk '{print $2}')"
-    TOOLKIT_URL="$(echo $platform_selected | jq -r -e '.downloads .toolkit_dev .url')"
-    TOOLKIT_SHA="$(echo $platform_selected | jq -r -e '.downloads .toolkit_dev .sha256')"
-    SYNOKERNEL_URL="$(echo $platform_selected | jq -r -e '.downloads .kernel .url')"
-    SYNOKERNEL_SHA="$(echo $platform_selected | jq -r -e '.downloads .kernel .sha256')"
-    COMPILE_METHOD="$(echo $platform_selected | jq -r -e '.compile_with')"
     TARGET_PLATFORM="$(echo $platform_selected | jq -r -e '.id | split("-")' | jq -r -e .[0])"
     TARGET_VERSION="$(echo $platform_selected | jq -r -e '.id | split("-")' | jq -r -e .[1])"
-    echo "TARGET_VERSION = ${TARGET_VERSION}"
     TARGET_REVISION="$(echo $platform_selected | jq -r -e '.id | split("-")' | jq -r -e .[2])"
-    REDPILL_LKM_MAKE_TARGET="$(echo $platform_selected | jq -r -e '.redpill_lkm_make_target')"
-#    tcrpdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
+
     tcrppart="${tcrpdisk}3"
     local_cache="/mnt/${tcrppart}/auxfiles"
     usbpart1uuid=$(blkid /dev/${tcrpdisk}1 | awk '{print $3}' | sed -e "s/\"//g" -e "s/UUID=//g")
@@ -2335,27 +2299,19 @@ function getvars() {
     setplatform
 
     #echo "Platform : $platform_selected"
-    echo "Rploader Version : ${rploaderver}"
-    echo "Loader source : $LD_SOURCE_URL Loader Branch : $LD_BRANCH "
-    echo "Redpill module source : $LKM_SOURCE_URL : Redpill module branch : $LKM_BRANCH "
-    echo "Extensions : $EXTENSIONS "
-    echo "Extensions URL : $EXTENSIONS_SOURCE_URL"
-    echo "TOOLKIT_URL : $TOOLKIT_URL"
-    echo "TOOLKIT_SHA : $TOOLKIT_SHA"
-    echo "SYNOKERNEL_URL : $SYNOKERNEL_URL"
-    echo "SYNOKERNEL_SHA : $SYNOKERNEL_SHA"
-    echo "COMPILE_METHOD : $COMPILE_METHOD"
-    echo "TARGET_PLATFORM       : $TARGET_PLATFORM"
+    echo "Rploader Version  : ${rploaderver}"
+    echo "Extensions        : $EXTENSIONS "
+    echo "Extensions URL    : $EXTENSIONS_SOURCE_URL"
+    echo "TARGET_PLATFORM   : $TARGET_PLATFORM"
     echo "TARGET_VERSION    : $TARGET_VERSION"
-    echo "TARGET_REVISION : $TARGET_REVISION"
-    echo "REDPILL_LKM_MAKE_TARGET : $REDPILL_LKM_MAKE_TARGET"
-    echo "KERNEL_MAJOR : $KERNEL_MAJOR"
-    echo "MODULE_ALIAS_FILE :  $MODULE_ALIAS_FILE"
-    echo "SYNOMODEL : $SYNOMODEL "
-    echo "MODEL : $MODEL "
-    echo "KERNEL VERSION is $KVER "
+    echo "TARGET_REVISION   : $TARGET_REVISION"
+    echo "KERNEL_MAJOR      : $KERNEL_MAJOR"
+    echo "MODULE_ALIAS_FILE : $MODULE_ALIAS_FILE"
+    echo "SYNOMODEL         : $SYNOMODEL"
+    echo "MODEL             : $MODEL"
+    echo "KERNEL VERSION    : $KVER"
     echo "Local Cache Folder : $local_cache"
-    echo "DATE Internet : $INTERNETDATE Local : $LOCALDATE"
+    echo "DATE Internet     : $INTERNETDATE Local : $LOCALDATE"
 
     if [ "$INTERNETDATE" != "$LOCALDATE" ]; then
         echo "ERROR ! System DATE is not correct"
@@ -2367,84 +2323,12 @@ function getvars() {
 
 }
 
-function getsynokernel() {
-
-    if [ -d /home/tc/linux-kernel ]; then
-        if [ -f /home/tc/linux-kernel/synoconfigs/${TARGET_PLATFORM} ]; then
-            echo "Synokernel already cached"
-            return
-        else
-            echo "Synokernel is cached but does not match the required sources"
-            rm -rf /home/tc/linux-kernel
-            rm -rf synokernel.txz
-        fi
-    fi
-
-    cd /home/tc
-
-    if [ -f synokernel.txz ]; then
-        echo -n "File already cached, checking file -> "
-        checkfilechecksum synokernel.txz ${SYNOKERNEL_SHA}
-        echo "OK, file matches sha256sum, extracting"
-        tar xf /home/tc/synokernel.txz
-        mv $(tar --exclude="*/*/*" -tf synokernel.txz | head -1) linux-kernel
-        rm -rf synokernel.txz
-    else
-        echo "Downloading and caching synokernel"
-        cd /home/tc && curl -k -# -L ${SYNOKERNEL_URL} -o synokernel.txz
-        checkfilechecksum synokernel.txz ${SYNOKERNEL_SHA}
-        echo "OK, file matches sha256sum, extracting"
-        echo "Extracting synokernel"
-        tar xf /home/tc/synokernel.txz
-        mv $(tar --exclude="*/*/*" -tf synokernel.txz | head -1) linux-kernel
-        rm -rf synokernel.txz
-    fi
-
-}
-
 function cleanloader() {
 
     echo "Clearing local redpill files"
     sudo rm -rf /home/tc/redpill*
     sudo rm -rf /home/tc/*tgz
     sudo rm -rf /home/tc/latestrploader.sh
-
-}
-
-function compileredpill() {
-
-    cd /home/tc
-    git config --global http.sslVerify false
-    
-    if [ -d /home/tc/redpill-lkm ]; then
-        echo "Redpill sources already downloaded, pulling latest"
-        cd redpill-lkm
-        git pull
-        cd /home/tc
-    else
-        git clone -b master "https://github.com/PeterSuh-Q3/redpill-lkm.git"
-    fi
-
-    export DSM_VERSION=${TARGET_VERSION}
-    export REDPILL_LOAD_SRC=/home/tc/redpill-load
-    export REDPILL_LKM_SRC=/home/tc/redpill-lkm
-    export LOCAL_RP_LOAD_USE=false
-    export ARCH=x86_64
-    export LOCAL_RP_LKM_USE=false
-
-    echo "Compiling redpill with $COMPILE_METHOD"
-    if [ "$COMPILE_METHOD" = "toolkit_dev" ]; then
-        export LINUX_SRC=/usr/local/x86_64-pc-linux-gnu/x86_64-pc-linux-gnu/sys-root/usr/lib/modules/DSM-7.0/build
-
-    else
-        export LINUX_SRC=/home/tc/linux-kernel
-    fi
-
-    cd redpill-lkm && make ${REDPILL_LKM_MAKE_TARGET}
-    strip --strip-debug /home/tc/redpill-lkm/redpill.ko
-    modinfo /home/tc/redpill-lkm/redpill.ko
-    REDPILL_MOD_NAME="redpill-linux-v$(modinfo redpill.ko | grep vermagic | awk '{print $2}').ko"
-    cp /home/tc/redpill-lkm/redpill.ko /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
 
 }
 
@@ -2759,7 +2643,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 1.0.0.0"
+    echo "TCRP JOT Version : 1.0.0.4"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
@@ -2857,13 +2741,7 @@ checkmachine
     else
       
         if [ -d /home/tc/custom-module ]; then
-            #echo "Want to use firmware files from /home/tc/custom-module/*.pat ? [yY/nN] : "
-            #readanswer
-
-            #if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
-            #sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
-            #fi
-            echo "skip downloadextractor"
+            sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
         fi
 
     fi
@@ -3052,12 +2930,12 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     if [ "$RD_COMPRESSED" = "false" ]; then
         echo "Ramdisk in not compressed "
         cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
-        cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm
+        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     else
         unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
-        cat /mnt/${loaderdisk}1/custom.gz | sudo cpio -idm
+        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
         sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     fi
@@ -3109,7 +2987,7 @@ fi
     fi
 
     echo "Cleaning up files"
-    #removemodelexts    
+    removemodelexts    
     sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/cache/*pat
     
     msgnormal "Caching files for future use"
@@ -3146,7 +3024,7 @@ function bringoverfriend() {
   URL="https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest/download/chksum"
   [ -n "$URL" ] && curl --connect-timeout 5 -s -k -L $URL -O
   if [ ! -f chksum ]; then
-    URL="https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum"
+    URL="https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum"
     [ -n "$URL" ] && curl --connect-timeout 5 -s -k -L $URL -O
   fi
 
@@ -3159,14 +3037,14 @@ function bringoverfriend() {
     else
         msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
         
-        msgnormal "Bringing over my friend from giteas.duckdns.org"
-        curl --connect-timeout 15 -skLO "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
-        -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
-        -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
+        msgnormal "Bringing over my friend from gitea.com"
+        curl --connect-timeout 15 -skLO "https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
+        -O "https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
+        -O "https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
 
         # 2nd try
         if [ $? -ne 0 ]; then
-            msgwarning "Download failed from giteas.duckdns.org, Tring github.com..."    
+            msgwarning "Download failed from gitea.com, Tring github.com..."    
 
             URLS=$(curl -k -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
             for file in $URLS; do curl -kL -# "$file" -O; done
@@ -3187,7 +3065,7 @@ function bringoverfriend() {
                 msgwarning "Download failed from github.com !!!!!!"
             fi
         else
-            msgnormal "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
+            msgnormal "Bringing over my friend from gitea.com Done!!!!!!!!!!!!!!"    
         fi
 
         if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
@@ -3512,32 +3390,34 @@ function getredpillko() {
 
     echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
-        LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/latest"`"
-        TAG="${LATESTURL##*/}"
-        STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+        v="5"
     else
-        LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/latest"`"
-        TAG="${LATESTURL##*/}"
-        #TAG="23.5.4"
-        STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
-    fi    
-    echo "TAG is ${TAG}"
-    if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
+        v=""
+    fi
+
+    LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/latest"`"
+
+    if [ $? -ne 0 ]; then
         echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
-        curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm/master/rp-lkms.zip -o /tmp/rp-lkms.zip
+        curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms.zip -o /mnt/${tcrppart}/rp-lkms${v}.zip
         if [ $? -ne 0 ]; then
-            echo "Error downloading https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm/master/rp-lkms.zip"
+            echo "Error downloading https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms${v}.zip"
             exit 99
         fi    
+    else
+        TAG="${LATESTURL##*/}"
+        echo "TAG is ${TAG}"        
+        STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/download/${TAG}/rp-lkms.zip" -o "/mnt/${tcrppart}/rp-lkms${v}.zip"`
     fi
+    
     sudo rm -f /home/tc/custom-module/*.gz
     sudo rm -f /home/tc/custom-module/*.ko
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then    
-        unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
+        unzip /mnt/${tcrppart}/rp-lkms${v}.zip        rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
         gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-prod.ko.gz >/dev/null 2>&1
         cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
     else    
-        unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
+        unzip /mnt/${tcrppart}/rp-lkms${v}.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
         gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
         cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
     fi
@@ -3586,21 +3466,6 @@ echo "$4"
 
         case $3 in
 
-        compile)
-            prepareforcompile
-            if [ "$COMPILE_METHOD" = "toolkit_dev" ]; then
-                gettoolchain
-                compileredpill
-                echo "Starting loader creation "
-                buildloader
-            else
-                getsynokernel
-                kernelprepare
-                compileredpill
-                echo "Starting loader creation "
-                buildloader
-            fi
-            ;;
         manual)
 
             echo "Using static compiled redpill extension"
