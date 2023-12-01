@@ -3022,7 +3022,7 @@ function bringoverfriend() {
   URL="https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest/download/chksum"
   [ -n "$URL" ] && curl --connect-timeout 5 -s -k -L $URL -O
   if [ ! -f chksum ]; then
-    URL="https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum"
+    URL="https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum"
     [ -n "$URL" ] && curl --connect-timeout 5 -s -k -L $URL -O
   fi
 
@@ -3035,14 +3035,14 @@ function bringoverfriend() {
     else
         msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
         
-        msgnormal "Bringing over my friend from giteas.duckdns.org"
-        curl --connect-timeout 15 -skLO "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
-        -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
-        -O "https://giteas.duckdns.org/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
+        msgnormal "Bringing over my friend from gitea.com"
+        curl --connect-timeout 15 -skLO "https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
+        -O "https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
+        -O "https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
 
         # 2nd try
         if [ $? -ne 0 ]; then
-            msgwarning "Download failed from giteas.duckdns.org, Tring github.com..."    
+            msgwarning "Download failed from gitea.com, Tring github.com..."    
 
             URLS=$(curl -k -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
             for file in $URLS; do curl -kL -# "$file" -O; done
@@ -3063,7 +3063,7 @@ function bringoverfriend() {
                 msgwarning "Download failed from github.com !!!!!!"
             fi
         else
-            msgnormal "Bringing over my friend from giteas.duckdns.org Done!!!!!!!!!!!!!!"    
+            msgnormal "Bringing over my friend from gitea.com Done!!!!!!!!!!!!!!"    
         fi
 
         if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
