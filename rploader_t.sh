@@ -698,6 +698,10 @@ function addrequiredexts() {
     echo "Processing add_extensions entries found on custom_config.json file : ${EXTENSIONS}"
     for extension in ${EXTENSIONS_SOURCE_URL}; do
         echo "Adding extension ${extension} "
+        if [ $(echo $extension | grep tcrp-addons | wc -l) -gt 0 ]; then
+            extension="#"$(echo "${extension}" | sed 's#https://raw.githubusercontent.com/PeterSuh-Q3#/dev/shm#' | sed 's#/master##' | sed 's#/main##')
+            echo "modified url for tcrp-addons ${extension}"
+        fi
         cd /home/tc/redpill-load/ && ./ext-manager.sh add "$(echo $extension | sed -s 's/"//g' | sed -s 's/,//g')"
         if [ $? -ne 0 ]; then
             echo "FAILED : Processing add_extensions failed check the output for any errors"
