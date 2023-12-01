@@ -1499,14 +1499,14 @@ else
     git clone "https://giteas.duckdns.org/PeterSuh-Q3/tcrp-addons.git"
   fi    
 fi
-if [ -d /dev/shm/tcrp-modules ]; then
-  echo "tcrp-modules already downloaded!"    
-else    
-  git clone "https://github.com/PeterSuh-Q3/tcrp-modules.git"
-  if [ $? -ne 0 ]; then
-    git clone "https://giteas.duckdns.org/PeterSuh-Q3/tcrp-modules.git"
-  fi    
-fi
+#if [ -d /dev/shm/tcrp-modules ]; then
+#  echo "tcrp-modules already downloaded!"    
+#else    
+#  git clone "https://github.com/PeterSuh-Q3/tcrp-modules.git"
+#  if [ $? -ne 0 ]; then
+#    git clone "https://giteas.duckdns.org/PeterSuh-Q3/tcrp-modules.git"
+#  fi    
+#fi
 cd /home/tc
 
 #Start Locale Setting process
