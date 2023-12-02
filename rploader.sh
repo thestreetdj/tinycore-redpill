@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.0.4
+# User Variables : 1.0.0.5
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.0.4"
+rploaderver="1.0.0.5"
 build="master"
 redpillmake="prod"
 
@@ -109,6 +109,7 @@ function history() {
     1.0.0.3 To prevent partition space shortage, custom.gz is no longer used in partition 1
     1.0.0.4 Prevents kernel panic from occurring due to rp-lkm.zip download failure 
             when ramdisk patching occurs without internet.
+    1.0.0.5 Add offline loader build function
     --------------------------------------------------------------------------------------
 EOF
 
@@ -1060,6 +1061,18 @@ function postupdate() {
 
 }
 
+function getbspatch() {
+    if [ ! -n "$(which bspatch)" ]; then
+
+        #echo "bspatch does not exist, bringing over from repo"
+        #curl -kL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
+         
+        echo "bspatch does not exist, copy from tools"
+        chmod 777 ~/tools/bspatch
+        sudo cp ~/tools/bspatch /usr/local/bin/
+    fi
+}    
+
 function postupdatev1() {
 
     echo "Mounting root to get the latest dsmroot patch in /.syno/patch "
@@ -1083,16 +1096,7 @@ function postupdatev1() {
         [ ! -h /lib64 ] && ln -s /lib /lib64
     fi
 
-    if [ ! -n "$(which bspatch)" ]; then
-
-        echo "bspatch does not exist, bringing over from repo"
-
-        curl -kL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
-
-        chmod 777 bspatch
-        sudo mv bspatch /usr/local/bin/
-
-    fi
+    getbspatch
 
     echo "Checking available patch"
 
@@ -2258,21 +2262,14 @@ function getvars() {
 
     sudo chown -R tc:staff /home/tc
 
-    if [ ! -n "$(which bspatch)" ]; then
+    getbspatch
 
-        echo "bspatch does not exist, bringing over from repo"
-
-        curl -kL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
-
-        chmod 777 bspatch
-        sudo mv bspatch /usr/local/bin/
-
-    fi
-    
-    echo "Redownload the latest module.alias.4.json file ..."    
-    echo
-    curl -k -s -L "$modalias4" -o modules.alias.4.json.gz
-    [ -f modules.alias.4.json.gz ] && gunzip -f modules.alias.4.json.gz    
+    if [ "${offline}" = "NO" ]; then
+        echo "Redownload the latest module.alias.4.json file ..."    
+        echo
+        curl -ksL "$modalias4" -o modules.alias.4.json.gz
+        [ -f modules.alias.4.json.gz ] && gunzip -f modules.alias.4.json.gz    
+    fi    
 
     [ ! -d ${local_cache} ] && sudo mkdir -p ${local_cache}
     [ -h /home/tc/custom-module ] && unlink /home/tc/custom-module
@@ -2313,12 +2310,13 @@ function getvars() {
     echo "Local Cache Folder : $local_cache"
     echo "DATE Internet     : $INTERNETDATE Local : $LOCALDATE"
 
+  if [ "${offline}" = "NO" ]; then
     if [ "$INTERNETDATE" != "$LOCALDATE" ]; then
         echo "ERROR ! System DATE is not correct"
         synctime
         echo "Current time after communicating with NTP server ${ntpserver} :  $(date) "
     fi
-
+  fi
     #getvarsmshell "$MODEL"
 
 }
@@ -2643,7 +2641,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 1.0.0.4"
+    echo "TCRP JOT Version : 1.0.0.5"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
@@ -3385,31 +3383,32 @@ function ext_manager() {
 function getredpillko() {
 
     DSMVER=$(echo ${TARGET_VERSION} | cut -c 1-3 )
-
     echo "KERNEL VERSION of getredpillko() is ${KVER}, DSMVER is ${DSMVER}"
-
-    echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
         v="5"
     else
         v=""
     fi
 
-    LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/latest"`"
-
-    if [ $? -ne 0 ]; then
-        echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
-        curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms.zip -o /mnt/${tcrppart}/rp-lkms${v}.zip
+    if [ "${offline}" = "NO" ]; then
+        echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."    
+        LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/latest"`"
         if [ $? -ne 0 ]; then
-            echo "Error downloading https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms${v}.zip"
-            exit 99
-        fi    
+            echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
+            curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms.zip -o /mnt/${tcrppart}/rp-lkms${v}.zip
+            if [ $? -ne 0 ]; then
+                echo "Error downloading https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms${v}.zip"
+                exit 99
+            fi    
+        else
+            TAG="${LATESTURL##*/}"
+            echo "TAG is ${TAG}"        
+            STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/download/${TAG}/rp-lkms.zip" -o "/mnt/${tcrppart}/rp-lkms${v}.zip"`
+        fi
     else
-        TAG="${LATESTURL##*/}"
-        echo "TAG is ${TAG}"        
-        STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/download/${TAG}/rp-lkms.zip" -o "/mnt/${tcrppart}/rp-lkms${v}.zip"`
-    fi
-    
+        echo "Unzipping ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."        
+    fi    
+
     sudo rm -f /home/tc/custom-module/*.gz
     sudo rm -f /home/tc/custom-module/*.ko
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then    
@@ -3451,11 +3450,17 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
     build)
 
         getvars $2
-        checkinternet
+        if [ -d /mnt/${tcrppart}/redpill-load/ ]; then
+            offline="YES"
+        else
+            offline="NO"
+            checkinternet
+        fi    
 #        getlatestrploader
 #        gitdownload     # When called from the parent my.sh, -d flag authority check is not possible, pre-downloaded in advance 
         checkUserConfig
         getredpillko
+
 echo "$3"
 echo "$4"
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
