@@ -196,22 +196,28 @@ function _pat_process() {
 
 }
 
-checkinternet
+loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+tcrppart="${loaderdisk}3"
 
-if [ "$gitdomain" = "raw.githubusercontent.com" ]; then
-    if [ $# -lt 1 ]; then
-        getlatestmshell "ask"
-    else
-        if [ "$1" = "update" ]; then 
-            getlatestmshell "noask"
-            exit 0
+if [ -d /mnt/${tcrppart}/redpill-load/ ]; then
+    offline="YES"
+else
+    offline="NO"
+    checkinternet
+    if [ "$gitdomain" = "raw.githubusercontent.com" ]; then
+        if [ $# -lt 1 ]; then
+            getlatestmshell "ask"
         else
-            getlatestmshell "noask"
+            if [ "$1" = "update" ]; then 
+                getlatestmshell "noask"
+                exit 0
+            else
+                getlatestmshell "noask"
+            fi
         fi
     fi
+    gitdownload
 fi
-
-gitdownload
 
 if [ $# -lt 1 ]; then
     showhelp 
@@ -284,9 +290,6 @@ if [ $(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}' | wc -l) -g
     exit 0
 fi
 
-loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
-tcrppart="${loaderdisk}3"
-
 if [ "$tcrppart" = "mmc3" ]; then
     tcrppart="mmcblk0p3"
 fi
@@ -351,11 +354,13 @@ else
     exit 0
 fi
 
-curl -skLO https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json                          
-curl -skLO https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh                                
-#curl -skL https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader_t.sh -o rploader.sh
-
-#curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/master/rpext-index.json" -O
+if [ "${offline}" = "NO" ]; then
+    curl -skLO https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json                          
+    curl -skLO https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh                                
+    #curl -skL https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader_t.sh -o rploader.sh
+    
+    #curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/master/rpext-index.json" -O
+fi
 
 echo
 if [ "$jot" = "N" ]; then    
@@ -460,7 +465,7 @@ st "download pat" "Downloading pat  " "${SYNOMODEL}.pat"
         exit 99
       fi
     else
-      _pat_process    
+      [ "${offline}" = "NO" ] && _pat_process    
     fi
 
     os_sha256=$(sha256sum ${patfile} | awk '{print $1}')                                
