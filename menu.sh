@@ -35,8 +35,8 @@ if [ -d ${tcrppart}/redpill-load/ ] && [ -d ${tcrppart}/tcrp-addons/ ] && [ -d $
     echo "Press any key to continue..."    
     read answer
     sudo cp -rf /mnt/${tcrppart}/redpill-load/ ~/
-    sudo mv -rf /mnt/${tcrppart}/tcrp-addons/ /dev/shm/
-    sudo mv -rf /mnt/${tcrppart}/tcrp-modules/ /dev/shm/
+    sudo mv -f /mnt/${tcrppart}/tcrp-addons/ /dev/shm/
+    sudo mv -f /mnt/${tcrppart}/tcrp-modules/ /dev/shm/
     echo "Go directly to the menu. Press any key to continue..."
     read answer
 else
