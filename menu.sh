@@ -30,7 +30,7 @@ function gitdownload() {
 loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}'| head -1)"
 tcrppart="${loaderdisk}3"
 
-if [ -d /mnt/${tcrppart}/redpill-load/ ] && [ -d /mnt/${tcrppart}/tcrp-addons/ ] && [ -d /mnt/${tcrppart}/redpill-modules/ ]; then
+if [ -d /mnt/${tcrppart}/redpill-load/ ] && [ -d /mnt/${tcrppart}/tcrp-addons/ ] && [ -d /mnt/${tcrppart}/tcrp-modules/ ]; then
     echo "Repositories for offline loader building have been confirmed. Copy the repositories to the required location..."
     echo "Press any key to continue..."    
     read answer
