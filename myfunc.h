@@ -195,12 +195,11 @@ set -u
 # Update : Turn off thread limits when displaying models (Thanks alirz1)
 # 2023.12.01
 # Update : Separate tcrp-addons and tcrp-modules repo processing methods
+# 2023.12.02
+# Update : Add offline loader build function
     
 function showlastupdate() {
     cat <<EOF
-
-# 2023.06.18
-# Update : Added ds1823xs+ (v1000), ds620slim (apollokale), ds1819+ (denverton)
 
 # 2023.08.24 (M-SHELL for TCRP, v0.9.5.0 release)
 # Update : Add storage panel size selection menu
@@ -231,6 +230,9 @@ function showlastupdate() {
 
 # 2023.12.01
 # Update : Separate tcrp-addons and tcrp-modules repo processing methods
+
+# 2023.12.02
+# Update : Add offline loader build function
     
 EOF
 }
