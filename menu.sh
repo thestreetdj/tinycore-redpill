@@ -31,8 +31,13 @@ loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}'| hea
 tcrppart="${loaderdisk}3"
 
 if [ -d ${tcrppart}/redpill-load/ ] && [ -d ${tcrppart}/tcrp-addons/ ] && [ -d ${tcrppart}/redpill-modules/ ] ; then
-    echo "Repositories for offline loader building have been confirmed. Go directly to the menu."
-    echo "Press any key to continue..."
+    echo "Repositories for offline loader building have been confirmed. Copy the repositories to the required location..."
+    echo "Press any key to continue..."    
+    read answer
+    sudo cp -rf /mnt/${tcrppart}/redpill-load/ ~/
+    sudo cp -rf /mnt/${tcrppart}/tcrp-addons/ /dev/shm/
+    sudo cp -rf /mnt/${tcrppart}/tcrp-modules/ /dev/shm/
+    echo "Go directly to the menu. Press any key to continue..."
     read answer
 else
     while true; do
