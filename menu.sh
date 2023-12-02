@@ -34,7 +34,7 @@ if [ -d /mnt/${tcrppart}/redpill-load/ ] && [ -d /mnt/${tcrppart}/tcrp-addons/ ]
     echo "Repositories for offline loader building have been confirmed. Copy the repositories to the required location..."
     echo "Press any key to continue..."    
     read answer
-    sudo cp -rf /mnt/${tcrppart}/redpill-load/ ~/
+    cp -rf /mnt/${tcrppart}/redpill-load/ ~/
     mv -f /mnt/${tcrppart}/tcrp-addons/ /dev/shm/
     mv -f /mnt/${tcrppart}/tcrp-modules/ /dev/shm/
     echo "Go directly to the menu. Press any key to continue..."
