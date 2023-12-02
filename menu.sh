@@ -27,16 +27,24 @@ function gitdownload() {
     
 }
 
-while true; do
-  if [ $(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | wc -l) -gt 0 ]; then
-    /home/tc/my update
-    break
-  fi
-  sleep 1
-  echo "Waiting for internet activation in menu.sh !!!"
-done
+loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}'| head -1)"
+tcrppart="${loaderdisk}3"
 
-gitdownload
+if [ -d ${tcrppart}/redpill-load/ ] && [ -d ${tcrppart}/tcrp-addons/ ] && [ -d ${tcrppart}/redpill-modules/ ] ; then
+    echo "Repositories for offline loader building have been confirmed. Go directly to the menu."
+    echo "Press any key to continue..."
+    read answer
+else
+    while true; do
+      if [ $(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | wc -l) -gt 0 ]; then
+        /home/tc/my update
+        break
+      fi
+      sleep 1
+      echo "Waiting for internet activation in menu.sh !!!"
+    done
+    gitdownload
+fi
 
 /home/tc/menu_m.sh
 exit 0
