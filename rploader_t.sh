@@ -2310,12 +2310,13 @@ function getvars() {
     echo "Local Cache Folder : $local_cache"
     echo "DATE Internet     : $INTERNETDATE Local : $LOCALDATE"
 
+  if [ "${offline}" = "NO" ]; then
     if [ "$INTERNETDATE" != "$LOCALDATE" ]; then
         echo "ERROR ! System DATE is not correct"
         synctime
         echo "Current time after communicating with NTP server ${ntpserver} :  $(date) "
     fi
-
+  fi
     #getvarsmshell "$MODEL"
 
 }
