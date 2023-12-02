@@ -1061,6 +1061,18 @@ function postupdate() {
 
 }
 
+function getbspatch() {
+    if [ ! -n "$(which bspatch)" ]; then
+
+        #echo "bspatch does not exist, bringing over from repo"
+        #curl -kL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
+         
+        echo "bspatch does not exist, copy from tools"
+        chmod 777 ~/tools/bspatch
+        sudo cp ~/tools/bspatch /usr/local/bin/
+    fi
+}    
+
 function postupdatev1() {
 
     echo "Mounting root to get the latest dsmroot patch in /.syno/patch "
@@ -1084,16 +1096,7 @@ function postupdatev1() {
         [ ! -h /lib64 ] && ln -s /lib /lib64
     fi
 
-    if [ ! -n "$(which bspatch)" ]; then
-
-        echo "bspatch does not exist, bringing over from repo"
-
-        curl -kL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
-
-        chmod 777 bspatch
-        sudo mv bspatch /usr/local/bin/
-
-    fi
+    getbspatch
 
     echo "Checking available patch"
 
@@ -2259,21 +2262,14 @@ function getvars() {
 
     sudo chown -R tc:staff /home/tc
 
-    if [ ! -n "$(which bspatch)" ]; then
+    getbspatch
 
-        echo "bspatch does not exist, bringing over from repo"
-
-        curl -kL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
-
-        chmod 777 bspatch
-        sudo mv bspatch /usr/local/bin/
-
-    fi
-    
-    echo "Redownload the latest module.alias.4.json file ..."    
-    echo
-    curl -k -s -L "$modalias4" -o modules.alias.4.json.gz
-    [ -f modules.alias.4.json.gz ] && gunzip -f modules.alias.4.json.gz    
+    if [ "${offline}" = "NO" ]; then
+        echo "Redownload the latest module.alias.4.json file ..."    
+        echo
+        curl -ksL "$modalias4" -o modules.alias.4.json.gz
+        [ -f modules.alias.4.json.gz ] && gunzip -f modules.alias.4.json.gz    
+    fi    
 
     [ ! -d ${local_cache} ] && sudo mkdir -p ${local_cache}
     [ -h /home/tc/custom-module ] && unlink /home/tc/custom-module
