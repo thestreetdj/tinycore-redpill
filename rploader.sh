@@ -2986,7 +2986,7 @@ fi
 
     echo "Cleaning up files"
     removemodelexts    
-    sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/cache/*pat
+    sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/cache/*.pat
     
     msgnormal "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
@@ -2994,7 +2994,7 @@ fi
     chkavail
     if [ $avail_num -le 360 ]; then
         echo "No adequate space on TCRP loader partition /mnt/${tcrppart} to backup cache pat file"
-        echo "Found $(ls /mnt/${tcrppart}/auxfiles/*pat) file"
+        echo "Found $(ls /mnt/${tcrppart}/auxfiles/*.pat) file"
         echo "Removing older cached pat files to cache current"
         rm -f /mnt/${tcrppart}/auxfiles/*.pat
         patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
