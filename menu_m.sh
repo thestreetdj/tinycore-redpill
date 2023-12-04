@@ -1735,8 +1735,10 @@ writeConfigKey "general" "bay" "${bay}"
 
 if [ "${MODEL}" = "SA6400" ]; then
   DMPM="EUDEV"
-  writeConfigKey "general" "devmod" "${DMPM}"
+else
+  DMPM="DDSML"
 fi
+writeConfigKey "general" "devmod" "${DMPM}"
 
 # Until urxtv is available, Korean menu is used only on remote terminals.
 while true; do
