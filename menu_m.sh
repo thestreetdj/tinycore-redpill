@@ -737,23 +737,23 @@ function seleudev() {
   eval "MSG40=\"\${MSG${tz}40}\""
 
   if [ "${MODEL}" = "SA6400" ]; then
-		  while true; do
-		    dialog --clear --backtitle "`backtitle`" \
-		      --menu "Choose a option" 0 0 0 \
-		      e "${MSG26}" \
-		      f "${MSG40}" \
-		    2>${TMP_PATH}/resp
-		    [ $? -ne 0 ] && return
-		    resp=$(<${TMP_PATH}/resp)
-		    [ -z "${resp}" ] && return
-		    if [ "${resp}" = "e" ]; then
-		      DMPM="EUDEV"
-		      break
-		    elif [ "${resp}" = "f" ]; then
-		      DMPM="DDSML+EUDEV"
-		      break
-		    fi
-		  done
+	  while true; do
+	    dialog --clear --backtitle "`backtitle`" \
+	      --menu "Choose a option" 0 0 0 \
+	      e "${MSG26}" \
+	      f "${MSG40}" \
+	    2>${TMP_PATH}/resp
+	    [ $? -ne 0 ] && return
+	    resp=$(<${TMP_PATH}/resp)
+	    [ -z "${resp}" ] && return
+	    if [ "${resp}" = "e" ]; then
+	      DMPM="EUDEV"
+	      break
+	    elif [ "${resp}" = "f" ]; then
+	      DMPM="DDSML+EUDEV"
+	      break
+	    fi
+	  done
   else
 	  if [ ${BLOCK_EUDEV} = "Y" ]; then
 		  while true; do
@@ -796,7 +796,7 @@ function seleudev() {
 		    fi
 		  done
 	  fi
-	fi 
+  fi 
 
   curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/bundled-exts.json -o /home/tc/redpill-load/bundled-exts.json
   sudo rm -rf /home/tc/redpill-load/custom/extensions/ddsml
