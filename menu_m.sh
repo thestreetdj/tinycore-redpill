@@ -1404,65 +1404,6 @@ function backup() {
   return 0
 }
 
-###############################################################################
-# Reset DSM password
-function resetPassword() {
-
-  [ "$(which python2)_" == "_" ] && tce-load -wi python
-  rm -f "${TMP_PATH}/menu"
-  mkdir -p "${TMP_PATH}/sdX1"
-  for I in $(ls /dev/sd*1 2>/dev/null | grep -v "${loaderdisk}1"); do
-    mount ${I} "${TMP_PATH}/sdX1"
-    if [ -f "${TMP_PATH}/sdX1/etc/shadow" ]; then
-      for U in $(cat "${TMP_PATH}/sdX1/etc/shadow" | awk -F ':' '{if ($2 != "*" && $2 != "!!") {print $1;}}'); do
-        grep -q "status=on" "${TMP_PATH}/sdX1/usr/syno/etc/packages/SecureSignIn/preference/${U}/method.config" 2>/dev/nulll
-        [ $? -eq 0 ] && SS="SecureSignIn" || SS="            "
-        printf "\"%-36s %-16s\"\n" "${U}" "${SS}" >>"${TMP_PATH}/menu"
-      done
-    fi
-    umount "${I}"
-    [ -f "${TMP_PATH}/menu" ] && break
-  done
-  rm -rf "${TMP_PATH}/sdX1"
-  if [ ! -f "${TMP_PATH}/menu" ]; then
-    dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" \
-      --msgbox "The installed Syno system not found in the currently inserted disks!" 0 0
-    return
-  fi
-  dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" \
-    --no-items --menu "Choose a User" 0 0 0  --file "${TMP_PATH}/menu" \
-    2>${TMP_PATH}/resp
-  [ $? -ne 0 ] && return
-  USER="$(cat "${TMP_PATH}/resp" | awk '{print $1}')"
-  [ -z "${USER}" ] && return
-  while true; do
-    dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" \
-      --inputbox "Type a new Password for User ${USER}" 0 70 "${CMDLINE[${NAME}]}" \
-      2>${TMP_PATH}/resp
-    [ $? -ne 0 ] && break 2
-    VALUE="$(<"${TMP_PATH}/resp")"
-    [ -n "${VALUE}" ] && break
-    dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" \
-      --msgbox "Invalid Password" 0 0
-  done
-  NEWPASSWD="$(python2 -c "from passlib.hash import sha512_crypt;pw=\"${VALUE}\";print(sha512_crypt.using(rounds=5000).hash(pw))")"
-  (
-    mkdir -p "${TMP_PATH}/sdX1"
-    for I in $(ls /dev/sd*1 2>/dev/null | grep -v "${loaderdisk}1"); do
-      mount "${I}" "${TMP_PATH}/sdX1"
-      OLDPASSWD="$(cat "${TMP_PATH}/sdX1/etc/shadow" | grep "^${USER}:" | awk -F ':' '{print $2}')"
-      [[ -n "${NEWPASSWD}" && -n "${OLDPASSWD}" ]] && sed -i "s|${OLDPASSWD}|${NEWPASSWD}|g" "${TMP_PATH}/sdX1/etc/shadow"
-      sed -i "s|status=on|status=off|g" "${TMP_PATH}/sdX1/usr/syno/etc/packages/SecureSignIn/preference/${USER}/method.config" 2>/dev/null
-      sync
-      umount "${I}"
-    done
-    rm -rf "${TMP_PATH}/sdX1"
-  ) 2>&1 | dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" \
-    --progressbox "Resetting ..." 20 100
-  dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" --aspect 18 \
-    --msgbox "Password reset completed." 0 0
-}
-
 function restart() {
     echo "A reboot is required. Press any key to reboot..."
     read answer
@@ -1823,7 +1764,6 @@ while true; do
   echo "y \"Show error log of running loader\""          >> "${TMP_PATH}/menu"  
   echo "t \"Burn Another TCRP Bootloader to USB or SSD\""  >> "${TMP_PATH}/menu"
   echo "v \"Clone TCRP Bootloader to USB or SSD\""       >> "${TMP_PATH}/menu"
-  echo "d \"Reset DSM Password\""       		 >> "${TMP_PATH}/menu"  
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"k \\\"\${MSG${tz}11}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"i \\\"\${MSG${tz}12}\\\"\""               >> "${TMP_PATH}/menu"
@@ -1933,7 +1873,6 @@ while true; do
     l) langMenu ;;
     k) keymapMenu ;;
     i) erasedisk ;;
-    d) resetPassword ;;
     b) backup ;;
     r) restart ;;
     e) sudo poweroff ;;
