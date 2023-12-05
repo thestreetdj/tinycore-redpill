@@ -1407,6 +1407,8 @@ function backup() {
 ###############################################################################
 # Reset DSM password
 function resetPassword() {
+
+  [ "$(which python2)_" == "_" ] && tce-load -wi python
   rm -f "${TMP_PATH}/menu"
   mkdir -p "${TMP_PATH}/sdX1"
   for I in $(ls /dev/sd*1 2>/dev/null | grep -v "${loaderdisk}1"); do
@@ -1443,7 +1445,7 @@ function resetPassword() {
     dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" \
       --msgbox "Invalid Password" 0 0
   done
-  NEWPASSWD="$(python -c "from passlib.hash import sha512_crypt;pw=\"${VALUE}\";print(sha512_crypt.using(rounds=5000).hash(pw))")"
+  NEWPASSWD="$(python2 -c "from passlib.hash import sha512_crypt;pw=\"${VALUE}\";print(sha512_crypt.using(rounds=5000).hash(pw))")"
   (
     mkdir -p "${TMP_PATH}/sdX1"
     for I in $(ls /dev/sd*1 2>/dev/null | grep -v "${loaderdisk}1"); do
