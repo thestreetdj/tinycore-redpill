@@ -1823,6 +1823,7 @@ while true; do
   echo "y \"Show error log of running loader\""          >> "${TMP_PATH}/menu"  
   echo "t \"Burn Another TCRP Bootloader to USB or SSD\""  >> "${TMP_PATH}/menu"
   echo "v \"Clone TCRP Bootloader to USB or SSD\""       >> "${TMP_PATH}/menu"
+  echo "d \"Reset DSM Password\""       		 >> "${TMP_PATH}/menu"  
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"k \\\"\${MSG${tz}11}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"i \\\"\${MSG${tz}12}\\\"\""               >> "${TMP_PATH}/menu"
