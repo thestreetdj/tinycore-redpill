@@ -66,7 +66,7 @@ if [ $loaderdisk == "mmc" ]; then
 fi    
 
 # restore user_config.json file from /mnt/sd#/lastsession directory 2023.10.21
-restoresession
+#restoresession
 
 TMP_PATH=/tmp
 LOG_FILE="${TMP_PATH}/log.txt"
