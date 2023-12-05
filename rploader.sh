@@ -2316,6 +2316,13 @@ function getvars() {
         synctime
         echo "Current time after communicating with NTP server ${ntpserver} :  $(date) "
     fi
+
+    LOCALDATE=$(date +"%d%m%Y")
+    if [ "$INTERNETDATE" != "$LOCALDATE" ]; then
+        echo "Sync with NTP server ${ntpserver} :  $(date) Fail !!!"
+        echo "ERROR !!! The system date is incorrect."
+        exit 99        
+    fi
   fi
     #getvarsmshell "$MODEL"
 
