@@ -1499,7 +1499,8 @@ if [ -d /dev/shm/tcrp-addons ]; then
 else    
   git clone "https://github.com/PeterSuh-Q3/tcrp-addons.git"
   if [ $? -ne 0 ]; then
-    git clone "https://giteas.duckdns.org/PeterSuh-Q3/tcrp-addons.git"
+    git clone "https://gitea.com/PeterSuh-Q3/tcrp-addons.git"
+    git clone "https://gitea.com/PeterSuh-Q3/tcrp-modules.git"
   fi    
 fi
 #if [ -d /dev/shm/tcrp-modules ]; then
@@ -1507,7 +1508,7 @@ fi
 #else    
 #  git clone "https://github.com/PeterSuh-Q3/tcrp-modules.git"
 #  if [ $? -ne 0 ]; then
-#    git clone "https://giteas.duckdns.org/PeterSuh-Q3/tcrp-modules.git"
+#    git clone "https://gitea.com/PeterSuh-Q3/tcrp-modules.git"
 #  fi    
 #fi
 cd /home/tc
