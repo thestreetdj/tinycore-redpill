@@ -3,7 +3,7 @@
 function gitclone() {
     git clone -b master --single-branch https://github.com/PeterSuh-Q3/redpill-load.git
     if [ $? -ne 0 ]; then
-        git clone -b master --single-branch https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git
+        git clone -b master --single-branch https://gitea.com/PeterSuh-Q3/redpill-load.git
     fi    
 }
 
