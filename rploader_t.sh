@@ -2774,7 +2774,7 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
         sed -i "s/BRP_OUT_P2}\/\${BRP_CUSTOM_RD_NAME/BRP_OUT_P1}\/\${BRP_CUSTOM_RD_NAME/g" /home/tc/redpill-load/build-loader.sh        
         sudo BRP_JUN_MOD=1 BRP_DEBUG=0 BRP_USER_CFG=user_config.json ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${vkersion}
     else
-        sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${vkersion}
+        sudo ./build-loader_t.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${vkersion}
     fi
 
 #    msgnormal "======Unmount the ramdisk for add extensions.======="
@@ -2785,7 +2785,7 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
     fi
 
 #def
-if [ 1 = 0 ]; then
+if [ 1 = 1 ]; then
     sudo losetup -fP ./loader.img
     loopdev=$(losetup -j loader.img | awk '{print $1}' | sed -e 's/://')
 
@@ -2819,7 +2819,7 @@ fi
 
 #    if [ $(mount | grep -i part1 | wc -l) -eq 1 ] && [ $(mount | grep -i part2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp1 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp3 | wc -l) -eq 1 ]; then
 #def
-if [ 1 = 0 ]; then
+if [ 1 = 1 ]; then
         sudo rm -rf localdiskp1/*
         sudo cp -rf part1/* localdiskp1/
         sudo rm -rf localdiskp2/*
@@ -2961,7 +2961,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 st "gen grub     " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
 
 #def
-if [ 1 = 0 ]; then
+if [ 1 = 1 ]; then
     cd /home/tc/redpill-load/
 
     ####
