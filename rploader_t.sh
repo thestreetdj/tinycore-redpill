@@ -2960,6 +2960,9 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     sudo cp -vf /tmp/grub.cfg /mnt/${loaderdisk}1/boot/grub/grub.cfg
 st "gen grub     " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
 
+echo "Bakcup loader.img and grub.cfg file for update to 7.2"
+sudo cp -vf /home/tc/redpill-load/loader.img /mnt/${loaderdisk}3/loader72_${MODEL}.img
+
 #def
 if [ 1 = 0 ]; then
     cd /home/tc/redpill-load/
