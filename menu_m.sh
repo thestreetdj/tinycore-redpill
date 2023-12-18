@@ -47,6 +47,28 @@ function restoresession() {
     fi
 }
 
+function update_tinycore() {
+  echo "check update for tinycore 14.0..."
+  cd /mnt/${tcrppart}3
+  md5_corepure64=$(sudo md5sum corepure64.gz | awk '{print $1}')
+  md5_vmlinuz64=$(sudo md5sum vmlinuz64 | awk '{print $1}')
+  if [ ${md5_corepure64} != "232d192a1e95151fbf2f53fae2114eaa" ] && [ ${md5_vmlinuz64} != "04cb17bbf7fbca9aaaa2e1356a936d7c" ]; then
+      echo "current tinycore version is not 14.0, update tinycore linux to 14.0..."
+      sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tinycore_14.0/corepure64.gz -o corepure64.gz_copy
+      sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tinycore_14.0/vmlinuz64 -o vmlinuz64_copy
+      md5_corepure64=$(sudo md5sum corepure64.gz_copy | awk '{print $1}')
+      md5_vmlinuz64=$(sudo md5sum vmlinuz64_copy | awk '{print $1}')
+      if [ ${md5_corepure64} = "232d192a1e95151fbf2f53fae2114eaa" ] && [ ${md5_vmlinuz64} = "04cb17bbf7fbca9aaaa2e1356a936d7c" ]; then
+  	echo "tinycore 14.0 md5 check is OK! ( corepure64.gz / vmlinuz64 ) "
+        sudo mv corepure64.gz_copy corepure64.gz
+	sudo mv vmlinuz64_copy vmlinuz64
+      	sudo curl -kL#  https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tinycore_14.0/etc/shadow -o /etc/shadow
+        echo "/etc/shadow" >> /opt/.filetool.lst
+      fi
+  fi
+  cd ~
+}
+
 if [ -f /home/tc/my.sh ]; then
   rm /home/tc/my.sh
 fi
@@ -59,6 +81,9 @@ trap ctrl_c INT
 
 loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}'| head -1)"
 tcrppart="${loaderdisk}3"
+
+# update tinycore 14.0 2023.12.18
+update_tinycore
 
 if [ $loaderdisk == "mmc" ]; then
     loaderdisk="mmcblk0p"
