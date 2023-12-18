@@ -64,6 +64,7 @@ function update_tinycore() {
 	sudo mv vmlinuz64_copy vmlinuz64
       	sudo curl -kL#  https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tinycore_14.0/etc/shadow -o /etc/shadow
         echo "/etc/shadow" >> /opt/.filetool.lst
+	cd ~
 	echo 'Y'|./rploader.sh backup
       fi
   fi
