@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.0.5
+# User Variables : 1.0.1.0
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.0.5"
+rploaderver="1.0.1.0"
 build="master"
 redpillmake="prod"
 
@@ -110,6 +110,8 @@ function history() {
     1.0.0.4 Prevents kernel panic from occurring due to rp-lkm.zip download failure 
             when ramdisk patching occurs without internet.
     1.0.0.5 Add offline loader build function
+    1.0.1.0 Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
+    
     --------------------------------------------------------------------------------------
 EOF
 
@@ -2648,7 +2650,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 1.0.0.5"
+    echo "TCRP JOT Version : 1.0.1.0"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
