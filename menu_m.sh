@@ -49,7 +49,7 @@ function restoresession() {
 
 function update_tinycore() {
   echo "check update for tinycore 14.0..."
-  cd /mnt/${tcrppart}3
+  cd /mnt/${tcrppart}
   md5_corepure64=$(sudo md5sum corepure64.gz | awk '{print $1}')
   md5_vmlinuz64=$(sudo md5sum vmlinuz64 | awk '{print $1}')
   if [ ${md5_corepure64} != "232d192a1e95151fbf2f53fae2114eaa" ] && [ ${md5_vmlinuz64} != "04cb17bbf7fbca9aaaa2e1356a936d7c" ]; then
