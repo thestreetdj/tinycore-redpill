@@ -25,6 +25,20 @@ echo -e "[$(date '+%T.%3N')]:---------------------------------------------------
 echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
 }
 
+function restart() {
+    echo "A reboot is required. Press any key to reboot..."
+    read answer
+    clear
+    sudo reboot
+}
+
+function restartx() {
+    echo "X window needs to be restarted. Press any key to restart x window..."
+    read answer
+    clear
+    { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) ; sleep 2 >/dev/tty0 ; startx >/dev/tty0 ; } &
+}
+
 function installtcz() {
   tczpack="${1}"
   cd /mnt/${tcrppart}/cde/optional
@@ -66,6 +80,7 @@ function update_tinycore() {
         echo "/etc/shadow" >> /opt/.filetool.lst
 	cd ~
 	echo 'Y'|./rploader.sh backup
+        restart
       fi
   fi
   cd ~
@@ -1429,20 +1444,6 @@ function backup() {
   echo "press any key to continue..."
   read answer
   return 0
-}
-
-function restart() {
-    echo "A reboot is required. Press any key to reboot..."
-    read answer
-    clear
-    sudo reboot
-}
-
-function restartx() {
-    echo "X window needs to be restarted. Press any key to restart x window..."
-    read answer
-    clear
-    { kill $(cat /tmp/.X${DISPLAY:1:1}-lock) ; sleep 2 >/dev/tty0 ; startx >/dev/tty0 ; } &
 }
 
 function burnloader() {
