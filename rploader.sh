@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.1.0
+# User Variables : 1.0.1.1
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.1.0"
+rploaderver="1.0.1.1"
 build="master"
 redpillmake="prod"
 
@@ -111,7 +111,7 @@ function history() {
             when ramdisk patching occurs without internet.
     1.0.0.5 Add offline loader build function
     1.0.1.0 Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
-    
+    1.0.1.1 Fix minitor fuction about ethernet infomation
     --------------------------------------------------------------------------------------
 EOF
 
@@ -246,6 +246,15 @@ function getgrubconf() {
 
 }
 
+function getip() {
+    ethdevs=$(ls /sys/class/net/ | grep eth || true)
+    for eth in $ethdevs; do 
+        DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
+        IP="$(ifconfig ${eth} | grep inet | awk '{print $2}' | awk -F \: '{print $2}')"
+        echo "IP Address : $(msgnormal "${IP}"), Network Interface Card : ${eth} (${DRIVER})"        
+    done
+}
+
 function monitor() {
 
 #    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
@@ -270,7 +279,8 @@ function monitor() {
         ) 
         msgnormal "CPU Threads:\t\t"$(lscpu |grep CPU\(s\): | awk '{print $2}')
         echo -e "Current Date Time:\t"$(date)
-        msgnormal "System Main IP:\t\t"$(ifconfig | grep inet | grep -v 127.0.0.1 | awk '{print $2}' | awk -F \: '{print $2}' | tr '\n' ',' | sed 's#,$##')
+        #msgnormal "System Main IP:\t\t"$(ifconfig | grep inet | grep -v 127.0.0.1 | awk '{print $2}' | awk -F \: '{print $2}' | tr '\n' ',' | sed 's#,$##')
+        getip
         listpci
         echo -e "-------------------------------Loader boot entries---------------------------"
         grep -i menuentry /mnt/${loaderdisk}1/boot/grub/grub.cfg | awk -F \' '{print $2}'
@@ -3242,12 +3252,12 @@ function listpci() {
             msgnormal "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 03)//'
             ;;
-        0200)
-            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0680)
-            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
+#        0200)
+#            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+#        0680)
+#            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
 #        0300)
 #            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
 #            ;;
