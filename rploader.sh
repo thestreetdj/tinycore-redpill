@@ -251,7 +251,8 @@ function getip() {
     for eth in $ethdevs; do 
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
         IP="$(ifconfig ${eth} | grep inet | awk '{print $2}' | awk -F \: '{print $2}')"
-        echo "IP Address : $(msgnormal "${IP}"), Network Interface Card : ${eth} (${DRIVER})"        
+        HWADDR="$(ifconfig ${eth} | | grep HWaddr | awk '{print $5}')"
+        echo "IP Address : $(msgnormal "${IP}"), ${HWADDR} : ${eth} (${DRIVER})"        
     done
 }
 
