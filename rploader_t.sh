@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.0.5
+# User Variables : 1.0.1.1
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.0.5"
+rploaderver="1.0.1.1"
 build="master"
 redpillmake="prod"
 
@@ -110,6 +110,8 @@ function history() {
     1.0.0.4 Prevents kernel panic from occurring due to rp-lkm.zip download failure 
             when ramdisk patching occurs without internet.
     1.0.0.5 Add offline loader build function
+    1.0.1.0 Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
+    1.0.1.1 Fix minitor fuction about ethernet infomation
     --------------------------------------------------------------------------------------
 EOF
 
@@ -244,6 +246,16 @@ function getgrubconf() {
 
 }
 
+function getip() {
+    ethdevs=$(ls /sys/class/net/ | grep eth || true)
+    for eth in $ethdevs; do 
+        DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
+        IP="$(ifconfig ${eth} | grep inet | awk '{print $2}' | awk -F \: '{print $2}')"
+        HWADDR="$(ifconfig ${eth} | grep HWaddr | awk '{print $5}')"
+        echo "IP Address : $(msgnormal "${IP}"), ${HWADDR} : ${eth} (${DRIVER})"        
+    done
+}
+
 function monitor() {
 
 #    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
@@ -268,7 +280,8 @@ function monitor() {
         ) 
         msgnormal "CPU Threads:\t\t"$(lscpu |grep CPU\(s\): | awk '{print $2}')
         echo -e "Current Date Time:\t"$(date)
-        msgnormal "System Main IP:\t\t"$(ifconfig | grep inet | awk '{print $2}' | awk -F \: '{print $2}')
+        #msgnormal "System Main IP:\t\t"$(ifconfig | grep inet | grep -v 127.0.0.1 | awk '{print $2}' | awk -F \: '{print $2}' | tr '\n' ',' | sed 's#,$##')
+        getip
         listpci
         echo -e "-------------------------------Loader boot entries---------------------------"
         grep -i menuentry /mnt/${loaderdisk}1/boot/grub/grub.cfg | awk -F \' '{print $2}'
@@ -2648,7 +2661,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 1.0.0.5"
+    echo "TCRP JOT Version : 1.0.1.0"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
@@ -2774,8 +2787,7 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
         sed -i "s/BRP_OUT_P2}\/\${BRP_CUSTOM_RD_NAME/BRP_OUT_P1}\/\${BRP_CUSTOM_RD_NAME/g" /home/tc/redpill-load/build-loader.sh        
         sudo BRP_JUN_MOD=1 BRP_DEBUG=0 BRP_USER_CFG=user_config.json ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${vkersion}
     else
-        chmod +x ./build-loader_t.sh
-        sudo ./build-loader_t.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${vkersion}
+        sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${vkersion}
     fi
 
 #    msgnormal "======Unmount the ramdisk for add extensions.======="
@@ -2786,7 +2798,7 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
     fi
 
 #def
-if [ 1 = 1 ]; then
+if [ 1 = 0 ]; then
     sudo losetup -fP ./loader.img
     loopdev=$(losetup -j loader.img | awk '{print $1}' | sed -e 's/://')
 
@@ -2820,7 +2832,7 @@ fi
 
 #    if [ $(mount | grep -i part1 | wc -l) -eq 1 ] && [ $(mount | grep -i part2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp1 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp3 | wc -l) -eq 1 ]; then
 #def
-if [ 1 = 1 ]; then
+if [ 1 = 0 ]; then
         sudo rm -rf localdiskp1/*
         sudo cp -rf part1/* localdiskp1/
         sudo rm -rf localdiskp2/*
@@ -2962,7 +2974,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 st "gen grub     " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
 
 #def
-if [ 1 = 1 ]; then
+if [ 1 = 0 ]; then
     cd /home/tc/redpill-load/
 
     ####
@@ -2977,8 +2989,8 @@ if [ 1 = 1 ]; then
 fi
 
 #    if [ ${TARGET_REVISION} -gt 64569 ]; then
-        echo "Bakcup loader.img and grub.cfg file for update to 7.2"
-        sudo cp -vf /home/tc/redpill-load/loader.img /mnt/${loaderdisk}3/loader72_${MODEL}.img
+#        echo "Bakcup loader.img and grub.cfg file for update to 7.2"
+#        sudo cp -vf /home/tc/redpill-load/loader.img /mnt/${loaderdisk}3/loader72.img
 #        sudo cp -vf /mnt/${loaderdisk}1/boot/GRUB/grub.cfg /mnt/${loaderdisk}3/grub72.cfg
 #        sudo cp -vf /mnt/${loaderdisk}3/initrd-dsm /mnt/${loaderdisk}3/initrd-dsm72
 #    fi
@@ -3241,12 +3253,12 @@ function listpci() {
             msgnormal "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 03)//'
             ;;
-        0200)
-            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0680)
-            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
+#        0200)
+#            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+#        0680)
+#            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
 #        0300)
 #            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
 #            ;;
