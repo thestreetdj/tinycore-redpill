@@ -3,7 +3,6 @@
 model=$(uname -u | cut -d '_' -f3)
 echo model "${model}" >&2  # debug
 
-if [ "${1}" = "modules" ]; then
 
   #------------------------------------------------------------------------------
   # Get list of installed SATA, SAS and M.2 NVMe/SATA drives,
@@ -55,21 +54,11 @@ if [ "${1}" = "modules" ]; then
 
         device="/dev/$(basename -- "${1}")"
         # Account for SSD drives with spaces in their model name/number
-        chmod +x ./hdparm701
-        chmod +x ./hdparm711
-        chmod +x ./hdparm720
-
         if [[ $2 == "sd" ]]; then
           if [ -f ${1}/device/sas_address ]; then
             fwrev="1.13.2"
           else
-            if [ ${REVISION} = "#42218" ]; then
-                fwrev=$(./hdparm701 -I "${device}" | grep Firmware | cut -d':' -f2- | cut -d ' ' -f 3 )
-            elif [ ${REVISION} = "#42962" ]; then
-                fwrev=$(./hdparm711 -I "${device}" | grep Firmware | cut -d':' -f2- | cut -d ' ' -f 3 )
-            else
-                fwrev=$(./hdparm720 -I "${device}" | grep Firmware | cut -d':' -f2- | cut -d ' ' -f 3 )
-            fi
+            fwrev=$(hdparm -I "${device}" | grep Firmware | cut -d':' -f2- | cut -d ' ' -f 3 )
           fi  
         elif [[ $2 == "nvme" ]]; then
             fwrev=$(cat "$1/device/firmware_rev")
@@ -77,20 +66,21 @@ if [ "${1}" = "modules" ]; then
 
         echo hdmodel "${hdmodel}" >&2  # debug
         echo fwrev "${fwrev}" >&2      # debug
-        
-        if [ -n "${hdmodel}" ] && [ -n "${fwrev}" ]; then
-            if grep '"'"${hdmodel}"'":' /etc/disk_db.json >/dev/null; then
-               # Replace  "WD40PURX-64GVNY0":{  with  "WD40PURX-64GVNY0":{"80.00A80":{ ... }}},
-                echo "Insert firmware version:"  # debug
-                sed -i 's#"'"${hdmodel}"'":{#"'"${hdmodel}"'":{"'"${fwrev}"'":{"compatibility_interval":[{"compatibility":"support","not_yet_rolling_status":"support","fw_dsm_update_status_notify":false,"barebone_installable":true}]},#' /etc/disk_db.json
-            else
-               # Add  "WD40PURX-64GVNY0":{"80.00A80":{ ... }}},"default":{ ... }}}
-                echo "Append drive and firmware:"  # debug
-                jsondata='"'"${hdmodel}"'":{"'"${fwrev}"'":{"compatibility_interval":[{"compatibility":"support","not_yet_rolling_status":"support","fw_dsm_update_status_notify":false,"barebone_installable":true}]},
-                "default":{"compatibility_interval":[{"compatibility":"support","not_yet_rolling_status":"support","fw_dsm_update_status_notify":false,"barebone_installable":true}]}}' && echo $jsondata >> /etc/disk_db.json
-                echo "," >> /etc/disk_db.json
-            fi                    
-        fi
+
+        #
+        #if [ -n "${hdmodel}" ] && [ -n "${fwrev}" ]; then
+        #    if grep '"'"${hdmodel}"'":' /etc/disk_db.json >/dev/null; then
+        #       # Replace  "WD40PURX-64GVNY0":{  with  "WD40PURX-64GVNY0":{"80.00A80":{ ... }}},
+        #        echo "Insert firmware version:"  # debug
+        #        sed -i 's#"'"${hdmodel}"'":{#"'"${hdmodel}"'":{"'"${fwrev}"'":{"compatibility_interval":[{"compatibility":"support","not_yet_rolling_status":"support","fw_dsm_update_status_notify":false,"barebone_installable":true}]},#' /etc/disk_db.json
+        #    else
+        #       # Add  "WD40PURX-64GVNY0":{"80.00A80":{ ... }}},"default":{ ... }}}
+        #        echo "Append drive and firmware:"  # debug
+        #        jsondata='"'"${hdmodel}"'":{"'"${fwrev}"'":{"compatibility_interval":[{"compatibility":"support","not_yet_rolling_status":"support","fw_dsm_update_status_notify":false,"barebone_installable":true}]},
+        #        "default":{"compatibility_interval":[{"compatibility":"support","not_yet_rolling_status":"support","fw_dsm_update_status_notify":false,"barebone_installable":true}]}}' && echo $jsondata >> /etc/disk_db.json
+        #        echo "," >> /etc/disk_db.json
+        #    fi                    
+        #fi
     fi
   }
 
@@ -107,25 +97,17 @@ if [ "${1}" = "modules" ]; then
     esac
   done
   sed -i '$s/,$/}/' /etc/disk_db.json
-  #cat /etc/disk_db.json
+  cat /etc/disk_db.json
   
   # Host db files
-  dbpath="/var/lib/disk-compatibility/"
-  dbfile=$(ls "${dbpath}"*"${model}_host_v7.db")
-  echo dbfile "${dbfile}" >&2  # debug
+  #dbpath="/var/lib/disk-compatibility/"
+  #dbfile=$(ls "${dbpath}"*"${model}_host_v7.db")
+  #echo dbfile "${dbfile}" >&2  # debug
 
-  diskdata=$(jq . /etc/disk_db.json)
-  jsonfile=$(jq '.disk_compatbility_info |= .+ '"$diskdata" ${dbfile}) && echo $jsonfile | jq . > ${dbfile}
+  #diskdata=$(jq . /etc/disk_db.json)
+  #jsonfile=$(jq '.disk_compatbility_info |= .+ '"$diskdata" ${dbfile}) && echo $jsonfile | jq . > ${dbfile}
   # print last 8 elements
   #jq '.disk_compatbility_info | to_entries | map(select(.value != null)) | .[-8:]' ${dbfile}
 
-  cp -vf ${dbfile} /etc/
+  #cp -vf ${dbfile} /etc/
   
-elif [ "${1}" = "late" ]; then
-  echo "copy disk_db.json file....."
-  cp -vf /etc/disk_db.json /tmpRoot/etc/disk_db.json
-
-  echo "copy db file to /tmpRoot/....."
-  cp -vf /etc/*${model}_host_v7.db /tmpRoot/etc/
-  cp -vf /etc/*${model}_host_v7.db /tmpRoot/var/lib/disk-compatibility/
-fi
