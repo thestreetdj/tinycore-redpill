@@ -84,7 +84,7 @@ echo model "${model}" >&2  # debug
     fi
   }
 
-  #echo "{" > /etc/disk_db.json
+  echo "{" > /etc/disk_db.json
   for d in /sys/block/*; do
     # $d is /sys/block/sata1 etc
     case "$(basename -- "${d}")" in
@@ -96,8 +96,8 @@ echo model "${model}" >&2  # debug
       ;;
     esac
   done
-  #sed -i '$s/,$/}/' /etc/disk_db.json
-  #cat /etc/disk_db.json
+  sed -i '$s/,$/}/' /etc/disk_db.json
+  cat /etc/disk_db.json
   
   # Host db files
   #dbpath="/var/lib/disk-compatibility/"
