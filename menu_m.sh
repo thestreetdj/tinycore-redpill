@@ -1306,7 +1306,11 @@ function make() {
   usbidentify
   clear
 
-  ./my "${MODEL}"-"${BUILD}" noconfig "${1}" "${2}" | tee "/home/tc/zlastbuild.log"
+  if [ "${prevent_init}" = "OFF" ]; then
+    ./my "${MODEL}"-"${BUILD}" noconfig "${1}" | tee "/home/tc/zlastbuild.log"
+  else
+    ./my "${MODEL}"-"${BUILD}" noconfig "${1}" prevent_init | tee "/home/tc/zlastbuild.log"
+  fi 
 
   if  [ -f /home/tc/custom-module/redpill.ko ]; then
     echo "Removing redpill.ko ..."
