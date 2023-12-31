@@ -1187,6 +1187,15 @@ function macMenu() {
 
 }
 
+function prevent() {
+
+    
+    echo "Enable SataPortMap/DiskIdxMap initialization protection"
+    echo "press any key to continue..."
+    read answer
+  
+}
+
 ###############################################################################
 # Permits user edit the user config
 function editUserConfig() {
@@ -1787,6 +1796,9 @@ while true; do
     eval "echo \"j \\\"\${MSG${tz}05} (${BUILD})\\\"\""     >> "${TMP_PATH}/menu"
     eval "echo \"p \\\"\${MSG${tz}18} (${BUILD}, ${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
   fi
+  if [ "$MACHINE" = "VIRTUAL" ]; then
+    echo "d \"Prevent SataPortMap/DiskIdxMap initialization\""  >> "${TMP_PATH}/menu"
+  fi
   eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"
   echo "x \"Show SATA(s) # ports and drives\""           >> "${TMP_PATH}/menu"
@@ -1837,6 +1849,7 @@ while true; do
          make "jot"
        fi
        NEXT="r" ;;
+    d) prevent;           NEXT="u" ;;
     u) editUserConfig;    NEXT="p" ;;
     q) storagepanel;      NEXT="p" ;;
     x) 
