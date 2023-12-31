@@ -93,6 +93,9 @@ if [ -f /home/tc/myv.sh ]; then
   rm /home/tc/myv.sh
 fi
 
+# Prevent SataPortMap/DiskIdxMap initialization 2023.12.31
+prevent_init="OFF"
+
 # Trap Ctrl+C and call ctrl_c function
 trap ctrl_c INT
 
@@ -1189,7 +1192,7 @@ function macMenu() {
 
 function prevent() {
 
-    
+    prevent_init="ON"
     echo "Enable SataPortMap/DiskIdxMap initialization protection"
     echo "press any key to continue..."
     read answer
@@ -1303,7 +1306,7 @@ function make() {
   usbidentify
   clear
 
-  ./my "${MODEL}"-"${BUILD}" noconfig "${1}" | tee "/home/tc/zlastbuild.log"
+  ./my "${MODEL}"-"${BUILD}" noconfig "${1}" "${2}" | tee "/home/tc/zlastbuild.log"
 
   if  [ -f /home/tc/custom-module/redpill.ko ]; then
     echo "Removing redpill.ko ..."
@@ -1844,9 +1847,9 @@ while true; do
     z) selectldrmode ;    NEXT="p" ;;
     j) selectversion ;    NEXT="p" ;; 
     p) if [ "${LDRMODE}" == "FRIEND" ]; then
-         make "fri"
+         make "fri" "${prevent_init}"
        else
-         make "jot"
+         make "jot" "${prevent_init}"
        fi
        NEXT="r" ;;
     d) prevent;           NEXT="u" ;;
