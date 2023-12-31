@@ -199,6 +199,8 @@ set -u
 # Update : Add offline loader build function
 # 2023.12.18 v1.0.1.0
 # Update : Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
+# 2023.12.31        
+# Added SataPortMap/DiskIdxMap prevent initialization menu for virtual machines  
     
 function showlastupdate() {
     cat <<EOF
@@ -238,6 +240,9 @@ function showlastupdate() {
 
 # 2023.12.18 v1.0.1.0
 # Update : Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
+
+# 2023.12.31        
+# Added SataPortMap/DiskIdxMap prevent initialization menu for virtual machines       
     
 EOF
 }
