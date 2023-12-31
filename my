@@ -236,6 +236,7 @@ noconfig="N"
 frmyv="N"
 jot="N"
 makeimg="N"
+prevent_init="N"
 
 shift
     while [[ "$#" > 0 ]] ; do
@@ -268,6 +269,11 @@ shift
         makeimg)
             makeimg="Y"
             ;;
+
+        prevent_init)
+            prevent_init="Y"
+            ;;
+
         *)
             echo "Syntax error, not valid arguments or not enough options"
             exit 0
