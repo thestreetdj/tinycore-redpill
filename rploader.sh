@@ -10,7 +10,7 @@
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.1.2"
+rploaderver="1.0.1.1"
 build="master"
 redpillmake="prod"
 
