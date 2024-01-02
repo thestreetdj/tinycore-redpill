@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.1.1
+# User Variables : 1.0.1.2
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.1.1"
+rploaderver="1.0.1.2"
 build="master"
 redpillmake="prod"
 
@@ -112,6 +112,7 @@ function history() {
     1.0.0.5 Add offline loader build function
     1.0.1.0 Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
     1.0.1.1 Fix minitor fuction about ethernet infomation
+    1.0.1.2 Add Re-install DSM (GRUB Menu)
     --------------------------------------------------------------------------------------
 EOF
 
@@ -2413,6 +2414,38 @@ EOF
 
 }
 
+function tcrpfriendentry_juniorusb() {
+    
+    cat <<EOF
+menuentry 'Re-Install DSM of $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update 0 ${DMPM}, USB' {
+        savedefault
+        search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
+        echo Loading Linux...
+        linux /bzImage-friend ${USB_LINE} force_junior
+        echo Loading initramfs...
+        initrd /initrd-friend
+        echo Booting TinyCore Friend
+}
+EOF
+
+}
+
+function tcrpfriendentry_juniorsata() {
+    
+    cat <<EOF
+menuentry 'Re-Install DSM of $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update 0 ${DMPM}, SATA' {
+        savedefault
+        search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
+        echo Loading Linux...
+        linux /bzImage-friend ${SATA_LINE} force_junior
+        echo Loading initramfs...
+        initrd /initrd-friend
+        echo Booting TinyCore Friend
+}
+EOF
+
+}
+
 function tcrpfriendentrymmc() {
     
     cat <<EOF
@@ -2907,6 +2940,11 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
             echo "Creating tinycore entry"
             tinyentry | sudo tee --append /tmp/grub.cfg
         fi
+
+        if [ "$WITHFRIEND" = "YES" ]; then
+            tcrpfriendentry_juniorusb | sudo tee --append /tmp/grub.cfg
+            tcrpfriendentry_juniorsata | sudo tee --append /tmp/grub.cfg
+        fi    
 
 #    else
 #        echo "ERROR: Failed to mount correctly all required partitions"
