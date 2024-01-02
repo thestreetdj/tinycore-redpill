@@ -5,7 +5,7 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.1.2
+# User Variables : 1.0.1.1
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
@@ -112,7 +112,6 @@ function history() {
     1.0.0.5 Add offline loader build function
     1.0.1.0 Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
     1.0.1.1 Fix minitor fuction about ethernet infomation
-    1.0.1.2 Add Re-install DSM (GRUB Menu)
     --------------------------------------------------------------------------------------
 EOF
 
@@ -2941,10 +2940,10 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
             tinyentry | sudo tee --append /tmp/grub.cfg
         fi
 
-        if [ "$WITHFRIEND" = "YES" ]; then
-            tcrpfriendentry_juniorusb | sudo tee --append /tmp/grub.cfg
-            tcrpfriendentry_juniorsata | sudo tee --append /tmp/grub.cfg
-        fi    
+        #if [ "$WITHFRIEND" = "YES" ]; then
+        #    tcrpfriendentry_juniorusb | sudo tee --append /tmp/grub.cfg
+        #    tcrpfriendentry_juniorsata | sudo tee --append /tmp/grub.cfg
+        #fi    
 
 #    else
 #        echo "ERROR: Failed to mount correctly all required partitions"
