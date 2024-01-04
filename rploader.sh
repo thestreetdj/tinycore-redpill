@@ -2413,33 +2413,31 @@ EOF
 
 }
 
-function tcrpfriendentry_juniorusb() {
+function tcrpentry_juniorusb() {
     
     cat <<EOF
 menuentry 'Re-Install DSM of $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update 0 ${DMPM}, USB' {
         savedefault
         search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
         echo Loading Linux...
-        linux /bzImage-friend ${USB_LINE} force_junior
-        echo Loading initramfs...
-        initrd /initrd-friend
-        echo Booting TinyCore Friend
+        kexec -l /zImage-dsm --initrd /initrd-dsm --command-line="${USB_LINE}" force_junior
+        kexec -e -a
+        echo Entering Force Junior (For Re-install DSM, USB)
 }
 EOF
 
 }
 
-function tcrpfriendentry_juniorsata() {
+function tcrpentry_juniorsata() {
     
     cat <<EOF
 menuentry 'Re-Install DSM of $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update 0 ${DMPM}, SATA' {
         savedefault
         search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
         echo Loading Linux...
-        linux /bzImage-friend ${SATA_LINE} force_junior
-        echo Loading initramfs...
-        initrd /initrd-friend
-        echo Booting TinyCore Friend
+        kexec -l /zImage-dsm --initrd /initrd-dsm --command-line="${SATA_LINE}" force_junior
+        kexec -e -a
+        echo Entering Force Junior (For Re-install DSM, SATA)
 }
 EOF
 
@@ -2940,10 +2938,10 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
             tinyentry | sudo tee --append /tmp/grub.cfg
         fi
 
-        #if [ "$WITHFRIEND" = "YES" ]; then
-        #    tcrpfriendentry_juniorusb | sudo tee --append /tmp/grub.cfg
-        #    tcrpfriendentry_juniorsata | sudo tee --append /tmp/grub.cfg
-        #fi    
+        if [ "$WITHFRIEND" = "YES" ]; then
+            tcrpentry_juniorusb | sudo tee --append /tmp/grub.cfg
+            tcrpentry_juniorsata | sudo tee --append /tmp/grub.cfg
+        fi    
 
 #    else
 #        echo "ERROR: Failed to mount correctly all required partitions"
