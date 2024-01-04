@@ -2413,6 +2413,36 @@ EOF
 
 }
 
+function tcrpentry_juniorusb() {
+    
+    cat <<EOF
+menuentry 'Re-Install DSM of $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update 0 ${DMPM}, USB' {
+        savedefault
+        search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
+        echo Loading Linux...
+        kexec -l /zImage-dsm --initrd /initrd-dsm --command-line="${USB_LINE}" force_junior
+        kexec -e -a
+        echo Entering Force Junior (For Re-install DSM, USB)
+}
+EOF
+
+}
+
+function tcrpentry_juniorsata() {
+    
+    cat <<EOF
+menuentry 'Re-Install DSM of $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update 0 ${DMPM}, SATA' {
+        savedefault
+        search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
+        echo Loading Linux...
+        kexec -l /zImage-dsm --initrd /initrd-dsm --command-line="${SATA_LINE}" force_junior
+        kexec -e -a
+        echo Entering Force Junior (For Re-install DSM, SATA)
+}
+EOF
+
+}
+
 function tcrpfriendentrymmc() {
     
     cat <<EOF
@@ -2879,6 +2909,9 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
             cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
         fi
 
+    USB_LINE="$(grep -A 5 "USB," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
+    SATA_LINE="$(grep -A 5 "SATA," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
+
         if [ "$WITHFRIEND" = "YES" ]; then
 
             echo "Creating tinycore friend entry"
@@ -2905,6 +2938,11 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
             tinyentry | sudo tee --append /tmp/grub.cfg
         fi
 
+        if [ "$WITHFRIEND" = "YES" ]; then
+            tcrpentry_juniorusb | sudo tee --append /tmp/grub.cfg
+            tcrpentry_juniorsata | sudo tee --append /tmp/grub.cfg
+        fi    
+
 #    else
 #        echo "ERROR: Failed to mount correctly all required partitions"
 #    fi
@@ -2925,9 +2963,6 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     updateuserconfigfield "general" "zimghash" "$zimghash"
     rdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
     updateuserconfigfield "general" "rdhash" "$rdhash"
-
-    USB_LINE="$(grep -A 5 "USB," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
-    SATA_LINE="$(grep -A 5 "SATA," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
 
     msgwarning "Updated user_config with USB Command Line : $USB_LINE"
     json=$(jq --arg var "${USB_LINE}" '.general.usb_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
