@@ -2940,10 +2940,10 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
             tinyentry | sudo tee --append /tmp/grub.cfg
         fi
 
-        #if [ "$WITHFRIEND" = "YES" ]; then
-        #    tcrpentry_juniorusb | sudo tee --append /tmp/grub.cfg
-        #    tcrpentry_juniorsata | sudo tee --append /tmp/grub.cfg
-        #fi    
+        if [ "$WITHFRIEND" = "YES" ]; then
+            tcrpentry_juniorusb | sudo tee --append /tmp/grub.cfg
+            tcrpentry_juniorsata | sudo tee --append /tmp/grub.cfg
+        fi    
 
 #    else
 #        echo "ERROR: Failed to mount correctly all required partitions"
