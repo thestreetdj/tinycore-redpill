@@ -252,8 +252,61 @@ function getip() {
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
         IP="$(ifconfig ${eth} | grep inet | awk '{print $2}' | awk -F \: '{print $2}')"
         HWADDR="$(ifconfig ${eth} | grep HWaddr | awk '{print $5}')"
+        VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
+        DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
+        MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
+        if [ ! -z "${MATCHDRIVER}" ]; then
+            if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
+                DRIVER=${MATCHDRIVER}
+            fi
+        fi
         echo "IP Address : $(msgnormal "${IP}"), ${HWADDR} : ${eth} (${DRIVER})"        
     done
+}
+
+function listpci() {
+
+    lspci -n | while read line; do
+
+        bus="$(echo $line | cut -c 1-7)"
+        class="$(echo $line | cut -c 9-12)"
+        vendor="$(echo $line | cut -c 15-18)"
+        device="$(echo $line | cut -c 20-23)"
+
+        #echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
+        case $class in
+#        0100)
+#            echo "Found SCSI Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+#        0106)
+#            echo "Found SATA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+#        0101)
+#            echo "Found IDE Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+        0104)
+            msgnormal "RAID bus Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0104/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 05)//'
+            ;;
+        0107)
+            msgnormal "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 03)//'
+            ;;
+#        0200)
+#            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+#        0680)
+#            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+#        0300)
+#            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+#        0c04)
+#            echo "Found Fibre Channel Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+#            ;;
+        esac
+    done
+
 }
 
 function monitor() {
@@ -3259,51 +3312,6 @@ function matchpciidmodule() {
     echo "$matchedmodule"
 
     #listextension $matchedmodule
-
-}
-
-function listpci() {
-
-    lspci -n | while read line; do
-
-        bus="$(echo $line | cut -c 1-7)"
-        class="$(echo $line | cut -c 9-12)"
-        vendor="$(echo $line | cut -c 15-18)"
-        device="$(echo $line | cut -c 20-23)"
-
-        #echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
-        case $class in
-#        0100)
-#            echo "Found SCSI Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-#            ;;
-#        0106)
-#            echo "Found SATA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-#            ;;
-#        0101)
-#            echo "Found IDE Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-#            ;;
-        0104)
-            msgnormal "RAID bus Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0104/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 05)//'
-            ;;
-        0107)
-            msgnormal "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 03)//'
-            ;;
-#        0200)
-#            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
-#            ;;
-#        0680)
-#            msgnormal "Ethernet Interface : Required Extension : $(matchpciidmodule ${vendor} ${device})"
-#            ;;
-#        0300)
-#            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-#            ;;
-#        0c04)
-#            echo "Found Fibre Channel Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-#            ;;
-        esac
-    done
 
 }
 
