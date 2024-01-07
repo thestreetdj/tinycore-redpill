@@ -2420,8 +2420,9 @@ menuentry 'Re-Install DSM of $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update 
         savedefault
         search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
         echo Loading Linux...
-        kexec -l /zImage-dsm --initrd /initrd-dsm --command-line="${USB_LINE}" force_junior
-        kexec -e -a
+        linux /zImage-dsm ${USB_LINE} force_junior
+        echo Loading initramfs...
+        initrd /initrd-dsm
         echo Entering Force Junior (For Re-install DSM, USB)
 }
 EOF
@@ -2435,8 +2436,9 @@ menuentry 'Re-Install DSM of $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update 
         savedefault
         search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
         echo Loading Linux...
-        kexec -l /zImage-dsm --initrd /initrd-dsm --command-line="${SATA_LINE}" force_junior
-        kexec -e -a
+        linux /zImage-dsm ${SATA_LINE} force_junior
+        echo Loading initramfs...
+        initrd /initrd-dsm
         echo Entering Force Junior (For Re-install DSM, SATA)
 }
 EOF
