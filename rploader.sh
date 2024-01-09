@@ -254,12 +254,14 @@ function getip() {
         HWADDR="$(ifconfig ${eth} | grep HWaddr | awk '{print $5}')"
         VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
         DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
-        MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
-        if [ ! -z "${MATCHDRIVER}" ]; then
-            if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
-                DRIVER=${MATCHDRIVER}
+        if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
+            MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
+            if [ ! -z "${MATCHDRIVER}" ]; then
+                if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
+                    DRIVER=${MATCHDRIVER}
+                fi
             fi
-        fi
+        fi    
         echo "IP Address : $(msgnormal "${IP}"), ${HWADDR} : ${eth} (${DRIVER})"        
     done
 }
