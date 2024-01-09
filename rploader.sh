@@ -111,7 +111,7 @@ function history() {
             when ramdisk patching occurs without internet.
     1.0.0.5 Add offline loader build function
     1.0.1.0 Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
-    1.0.1.1 Fix minitor fuction about ethernet infomation
+    1.0.1.1 Fix monitor fuction about ethernet infomation
     --------------------------------------------------------------------------------------
 EOF
 
