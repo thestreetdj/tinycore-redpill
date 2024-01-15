@@ -1781,6 +1781,8 @@ if [ -n "${bfbay}" ]; then
 fi
 writeConfigKey "general" "bay" "${bay}"
 
+[ $(lspci -d ::107 | wc -l) -gt 0 ] && tce-load -iw scsi-6.1.2-tinycore64.tcz
+
 # Until urxtv is available, Korean menu is used only on remote terminals.
 while true; do
   eval "echo \"c \\\"\${MSG${tz}01}, (${DMPM})\\\"\""     > "${TMP_PATH}/menu" 
@@ -1885,7 +1887,7 @@ while true; do
         done
         MSG+="\n"
       done
-      [ $(lspci -d ::107 | wc -l) -gt 0 ] && tce-load -iw scsi-6.1.2-tinycore64.tcz && MSG+="\nLSI:\n"
+      [ $(lspci -d ::107 | wc -l) -gt 0 ] && MSG+="\nLSI:\n"
       for PCI in $(lspci -d ::107 | awk '{print $1}'); do
         NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
         PORT=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
