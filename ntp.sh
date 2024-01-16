@@ -11,6 +11,8 @@ while [ -z "$GATEWAY_INTERFACE" ]; do
     else
       echo -e "\e[33m----------------------user_config.json extra_cmdline-----------------------\e[0m"
       jq '.extra_cmdline' /home/tc/user_config.json
+      echo -e "\e[33m----------------------user_config.json synoinfo-----------------------\e[0m"
+      jq '.synoinfo' /home/tc/user_config.json
     fi
     echo "Press ctrl-c to exit"
     sleep 1
