@@ -3126,9 +3126,9 @@ st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
 function curlfriend() {
 
     msgwarning "Download failed from ${domain}..."
-    curl --progress-bar -k -L -O "https://${domain}/PeterSuh-Q3/tcrpfriend/raw/main/chksum" \
-    -O "https://${domain}/PeterSuh-Q3/tcrpfriend/raw/main/bzImage-friend" \
-    -O "https://${domain}/PeterSuh-Q3/tcrpfriend/raw/main/initrd-friend"
+    curl --progress-bar -k -L -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/chksum" \
+    -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/bzImage-friend" \
+    -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/initrd-friend"
     if [ $? -ne 0 ]; then
         msgalert "Download failed from ${domain}... !!!!!!!!"
     else
@@ -3160,7 +3160,7 @@ function bringoverfriend() {
     else
         msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
 
-        domain="github.com"
+        domain="raw.githubusercontent.com"
         curlfriend
 
         if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
