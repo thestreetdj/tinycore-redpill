@@ -3123,6 +3123,19 @@ st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
 
 }
 
+function curlfriend() {
+
+    msgwarning "Download failed from ${domain}..."
+    curl --progress-bar -k -L -O "https://${domain}/PeterSuh-Q3/tcrpfriend/raw/main/chksum" \
+    -O "https://${domain}/PeterSuh-Q3/tcrpfriend/raw/main/bzImage-friend" \
+    -O "https://${domain}/PeterSuh-Q3/tcrpfriend/raw/main/initrd-friend"
+    if [ $? -ne 0 ]; then
+        msgalert "Download failed from ${domain}... !!!!!!!!"
+    else
+        msgnormal "Bringing over my friend from ${domain} Done!!!!!!!!!!!!!!"            
+    fi
+
+}
 
 function bringoverfriend() {
 
@@ -3146,37 +3159,9 @@ function bringoverfriend() {
         msgnormal "OK, latest \n"
     else
         msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
-        
-#        msgnormal "Bringing over my friend from gitea.com"
-#        curl --connect-timeout 15 -kLO "https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
-#        -O "https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
-#        -O "https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
 
-        # 2nd try
- #       if [ $? -ne 0 ]; then
- #           msgwarning "Download failed from gitea.com, Tring github.com..."    
-
-            URLS=$(curl -k -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
-            for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
-
-            # 3rd try
-            if [ $? -ne 0 ]; then
-#                msgwarning "Download failed from github.com, Tring gitee.com..."
-#                curl -s -k -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
-#                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" \
-#                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend"
-#                if [ $? -ne 0 ]; then
-#                    msgalert "Download failed from gitee.com... !!!!!!!!"
-#                else
-#                    msgnormal "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
-#                fi
-#            else
-#                msgnormal "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
-                msgwarning "Download failed from github.com !!!!!!"
-            fi
-#        else
-#            msgnormal "Bringing over my friend from gitea.com Done!!!!!!!!!!!!!!"    
-#        fi
+        domain="gitee.com"
+        curlfriend
 
         if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
             FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
