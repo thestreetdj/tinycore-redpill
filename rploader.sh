@@ -3160,7 +3160,7 @@ function bringoverfriend() {
     else
         msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
 
-        domain="gitee.com"
+        domain="github.com"
         curlfriend
 
         if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
