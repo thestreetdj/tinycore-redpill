@@ -1592,7 +1592,12 @@ function cloneloader() {
   return 0
 }
 
+function macspoof() {
+  jsonfile=$(jq '. |= .+ {"mac-spoof":"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/mac-spoof/rpext-index.json"}' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+}
+
 function additional() {
+  MSG50="Add Mac-spoof Addon for extensions"
   MSG51="Prevent SataPortMap,DiskIdxMap initialization"
   MSG52="Show SATA(s) ports and drives"
   MSG53="Show error log of running loader"
@@ -1603,27 +1608,30 @@ function additional() {
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
-      a "${MSG51}" \
-      b "${MSG52}" \
-      c "${MSG53}" \
-      d "${MSG54}" \
-      e "${MSG55}" \
-      f "${MSG12}" \
+      a "${MSG50}" \
+      b "${MSG51}" \
+      c "${MSG52}" \
+      d "${MSG53}" \
+      e "${MSG54}" \
+      f "${MSG55}" \
+      g "${MSG12}" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
     if [ "${resp}" = "a" ]; then
-      prevent
+      macspoof 
     elif [ "${resp}" = "b" ]; then
-      showsata
+      prevent
     elif [ "${resp}" = "c" ]; then
-      viewerrorlog
+      showsata
     elif [ "${resp}" = "d" ]; then
-      burnloader
+      viewerrorlog
     elif [ "${resp}" = "e" ]; then
-      cloneloader
+      burnloader
     elif [ "${resp}" = "f" ]; then
+      cloneloader
+    elif [ "${resp}" = "g" ]; then
       erasedisk
     fi
   done
