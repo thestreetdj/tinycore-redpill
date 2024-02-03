@@ -1610,22 +1610,6 @@ function additional() {
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
-    if [ "${resp}" = "a" ]; then
-      prevent
-      break
-    elif [ "${resp}" = "b" ]; then
-      showsata
-      break
-    elif [ "${resp}" = "c" ]; then
-      viewerrorlog
-      break
-    elif [ "${resp}" = "d" ]; then
-      burnloader
-      break
-    elif [ "${resp}" = "e" ]; then
-      cloneloader
-      break
-    fi
   done
 }
 
