@@ -1595,11 +1595,20 @@ function cloneloader() {
 function additional() {
   eval "MSG30=\"\${MSG${tz}30}\""
   eval "MSG31=\"\${MSG${tz}31}\""  
+  MSG51="Prevent SataPortMap,DiskIdxMap initialization"
+  MSG52="Show SATA(s) ports and drives"
+  MSG53="Show error log of running loader"
+  MSG54="Burn Another TCRP Bootloader to USB or SSD"
+  MSG55="Clone TCRP Bootloader to USB or SSD"
+  
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
-      a "${MSG30}" \
-      m "${MSG31}" \
+      a "${MSG51}" \
+      b "${MSG52}" \
+      c "${MSG53}" \
+      d "${MSG54}" \
+      e "${MSG55}" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
