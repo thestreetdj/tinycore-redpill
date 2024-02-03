@@ -1593,7 +1593,7 @@ function cloneloader() {
 }
 
 function macspoof() {
-  jsonfile=$(jq '. |= .+ {"mac-spoof":"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/mac-spoof/rpext-index.json"}' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+  jsonfile=$(jq '. |= .+ {"mac-spoof":"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/mac-spoof/rpext-index.json"}' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
 }
 
 function additional() {
