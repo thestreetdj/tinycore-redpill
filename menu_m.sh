@@ -1593,8 +1593,6 @@ function cloneloader() {
 }
 
 function additional() {
-  eval "MSG30=\"\${MSG${tz}30}\""
-  eval "MSG31=\"\${MSG${tz}31}\""  
   MSG51="Prevent SataPortMap,DiskIdxMap initialization"
   MSG52="Show SATA(s) ports and drives"
   MSG53="Show error log of running loader"
@@ -1615,19 +1613,14 @@ function additional() {
     [ -z "${resp}" ] && return
     if [ "${resp}" = "a" ]; then
       prevent
-      break
     elif [ "${resp}" = "b" ]; then
       showsata
-      break
     elif [ "${resp}" = "c" ]; then
       viewerrorlog
-      break
     elif [ "${resp}" = "d" ]; then
       burnloader
-      break
     elif [ "${resp}" = "e" ]; then
       cloneloader
-      break
     fi
   done
 }
