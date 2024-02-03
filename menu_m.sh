@@ -1498,6 +1498,64 @@ function burnloader() {
   return 0
 }
 
+function showsata () {
+      MSG=""
+      NUMPORTS=0
+      [ $(lspci -d ::106 | wc -l) -gt 0 ] && MSG+="\nATA:\n"
+      for PCI in $(lspci -d ::106 | awk '{print $1}'); do
+        NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
+        MSG+="\Zb${NAME}\Zn\nPorts: "
+        PORTS=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
+        for P in ${PORTS}; do
+	  # Skip for Unused Port
+          if [ "$(dmesg | grep 'SATA link down' | grep ata$((${P} + 1)): | wc -l)" -eq 0 ]; then          
+  	    DUMMY="$([ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ] && echo 1 || echo 2)"
+	    if [ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ]; then
+	      MSG+="\Z1$(printf "%02d" ${P})\Zn "
+	    else
+              if lsscsi -b | grep -v - | grep -q "\[${P}:"; then
+	        MSG+="\Z2$(printf "%02d" ${P})\Zn "
+              else
+                MSG+="$(printf "%02d" ${P}) "
+              fi
+	    fi  
+          fi
+          NUMPORTS=$((${NUMPORTS} + 1))
+        done
+        MSG+="\n"
+      done
+      [ $(lspci -d ::107 | wc -l) -gt 0 ] && MSG+="\nLSI:\n"
+      for PCI in $(lspci -d ::107 | awk '{print $1}'); do
+        NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
+        PORT=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
+        PORTNUM=$(lsscsi -b | grep -v - | grep "\[${PORT}:" | wc -l)
+        MSG+="\Zb${NAME}\Zn\nNumber: ${PORTNUM}\n"
+        NUMPORTS=$((${NUMPORTS} + ${PORTNUM}))
+      done
+      [ $(ls -l /sys/class/scsi_host | grep usb | wc -l) -gt 0 ] && MSG+="\nUSB:\n"
+      for PCI in $(lspci -d ::c03 | awk '{print $1}'); do
+        NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
+        PORT=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
+        PORTNUM=$(lsscsi -b | grep -v - | grep "\[${PORT}:" | wc -l)
+        [ ${PORTNUM} -eq 0 ] && continue
+        MSG+="\Zb${NAME}\Zn\nNumber: ${PORTNUM}\n"
+        NUMPORTS=$((${NUMPORTS} + ${PORTNUM}))
+      done
+      [ $(lspci -d ::108 | wc -l) -gt 0 ] && MSG+="\nNVME:\n"
+      for PCI in $(lspci -d ::108 | awk '{print $1}'); do
+        NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
+        PORT=$(ls -l /sys/class/nvme | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/nvme//' | sort -n)
+        PORTNUM=$(lsscsi -b | grep -v - | grep "\[N:${PORT}:" | wc -l)
+        MSG+="\Zb${NAME}\Zn\nNumber: ${PORTNUM}\n"
+        NUMPORTS=$((${NUMPORTS} + ${PORTNUM}))
+      done
+      MSG+="\n"
+      MSG+="$(printf "\nTotal of ports: %s\n")" "${NUMPORTS}"
+      MSG+="\nPorts with color \Z1red\Zn as DUMMY, color \Z2\Zbgreen\Zn has drive connected."
+      dialog --backtitle "$(backtitle)" --colors --title "Show SATA(s) # ports and drives" \
+        --msgbox "${MSG}" 0 0
+}
+
 function cloneloader() {
 
   tcrpdev=/dev/$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
@@ -1532,6 +1590,35 @@ function cloneloader() {
   echo "Cloning completed, press any key to continue..."
   read answer
   return 0
+}
+
+function additional() {
+  while true; do
+    dialog --clear --backtitle "`backtitle`" \
+      --menu "Choose a option" 0 0 0 \
+    if [ "$MACHINE" = "VIRTUAL" ]; then
+      a "Prevent SataPortMap/DiskIdxMap initialization" \
+    fi
+    b "Show SATA(s) # ports and drives" \
+    c "Show error log of running loader" \  
+    d "Burn Another TCRP Bootloader to USB or SSD" \
+    e "Clone TCRP Bootloader to USB or SSD" \
+    2>${TMP_PATH}/resp
+    [ $? -ne 0 ] && return
+    resp=$(<${TMP_PATH}/resp)
+    [ -z "${resp}" ] && return
+    if [ "${resp}" = "a" ]; then
+      prevent
+    elif [ "${resp}" = "b" ]; then
+      showsata
+    elif [ "${resp}" = "c" ]; then
+      viewerrorlog
+    elif [ "${resp}" = "d" ]; then
+      burnloader
+    elif [ "${resp}" = "e" ]; then
+      cloneloader
+    fi
+  done
 }
 
 # Main loop
@@ -1805,17 +1892,11 @@ while true; do
     eval "echo \"j \\\"\${MSG${tz}05} (${BUILD})\\\"\""     >> "${TMP_PATH}/menu"
     eval "echo \"p \\\"\${MSG${tz}18} (${BUILD}, ${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
   fi
-  if [ "$MACHINE" = "VIRTUAL" ]; then
-    echo "d \"Prevent SataPortMap/DiskIdxMap initialization\""  >> "${TMP_PATH}/menu"
-  fi
-  eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"
+  eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"  
   eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"
-  echo "x \"Show SATA(s) # ports and drives\""           >> "${TMP_PATH}/menu"
-  echo "y \"Show error log of running loader\""          >> "${TMP_PATH}/menu"  
-  echo "t \"Burn Another TCRP Bootloader to USB or SSD\""  >> "${TMP_PATH}/menu"
-  echo "v \"Clone TCRP Bootloader to USB or SSD\""       >> "${TMP_PATH}/menu"
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"k \\\"\${MSG${tz}11}\\\"\""               >> "${TMP_PATH}/menu"
+  echo "n \"Additional Functions\""  >> "${TMP_PATH}/menu"  
   eval "echo \"i \\\"\${MSG${tz}12}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"b \\\"\${MSG${tz}13}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"r \\\"\${MSG${tz}14}\\\"\""               >> "${TMP_PATH}/menu"
@@ -1825,6 +1906,7 @@ while true; do
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
   case `<"${TMP_PATH}/resp"` in
+    n) additional;       NEXT="p" ;; 
     c) seleudev;        NEXT="m" ;;  
     m) modelMenu;       NEXT="s" ;;
     s) serialMenu;      NEXT="j" ;;
@@ -1858,69 +1940,8 @@ while true; do
          make "jot" "${prevent_init}"
        fi
        NEXT="r" ;;
-    d) prevent;           NEXT="u" ;;
     u) editUserConfig;    NEXT="p" ;;
     q) storagepanel;      NEXT="p" ;;
-    x) 
-      MSG=""
-      NUMPORTS=0
-      [ $(lspci -d ::106 | wc -l) -gt 0 ] && MSG+="\nATA:\n"
-      for PCI in $(lspci -d ::106 | awk '{print $1}'); do
-        NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
-        MSG+="\Zb${NAME}\Zn\nPorts: "
-        PORTS=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
-        for P in ${PORTS}; do
-	  # Skip for Unused Port
-          if [ "$(dmesg | grep 'SATA link down' | grep ata$((${P} + 1)): | wc -l)" -eq 0 ]; then          
-  	    DUMMY="$([ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ] && echo 1 || echo 2)"
-	    if [ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ]; then
-	      MSG+="\Z1$(printf "%02d" ${P})\Zn "
-	    else
-              if lsscsi -b | grep -v - | grep -q "\[${P}:"; then
-	        MSG+="\Z2$(printf "%02d" ${P})\Zn "
-              else
-                MSG+="$(printf "%02d" ${P}) "
-              fi
-	    fi  
-          fi
-          NUMPORTS=$((${NUMPORTS} + 1))
-        done
-        MSG+="\n"
-      done
-      [ $(lspci -d ::107 | wc -l) -gt 0 ] && MSG+="\nLSI:\n"
-      for PCI in $(lspci -d ::107 | awk '{print $1}'); do
-        NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
-        PORT=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
-        PORTNUM=$(lsscsi -b | grep -v - | grep "\[${PORT}:" | wc -l)
-        MSG+="\Zb${NAME}\Zn\nNumber: ${PORTNUM}\n"
-        NUMPORTS=$((${NUMPORTS} + ${PORTNUM}))
-      done
-      [ $(ls -l /sys/class/scsi_host | grep usb | wc -l) -gt 0 ] && MSG+="\nUSB:\n"
-      for PCI in $(lspci -d ::c03 | awk '{print $1}'); do
-        NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
-        PORT=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
-        PORTNUM=$(lsscsi -b | grep -v - | grep "\[${PORT}:" | wc -l)
-        [ ${PORTNUM} -eq 0 ] && continue
-        MSG+="\Zb${NAME}\Zn\nNumber: ${PORTNUM}\n"
-        NUMPORTS=$((${NUMPORTS} + ${PORTNUM}))
-      done
-      [ $(lspci -d ::108 | wc -l) -gt 0 ] && MSG+="\nNVME:\n"
-      for PCI in $(lspci -d ::108 | awk '{print $1}'); do
-        NAME=$(lspci -s "${PCI}" | sed "s/\ .*://")
-        PORT=$(ls -l /sys/class/nvme | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/nvme//' | sort -n)
-        PORTNUM=$(lsscsi -b | grep -v - | grep "\[N:${PORT}:" | wc -l)
-        MSG+="\Zb${NAME}\Zn\nNumber: ${PORTNUM}\n"
-        NUMPORTS=$((${NUMPORTS} + ${PORTNUM}))
-      done
-      MSG+="\n"
-      MSG+="$(printf "\nTotal of ports: %s\n")" "${NUMPORTS}"
-      MSG+="\nPorts with color \Z1red\Zn as DUMMY, color \Z2\Zbgreen\Zn has drive connected."
-      dialog --backtitle "$(backtitle)" --colors --title "Show SATA(s) # ports and drives" \
-        --msgbox "${MSG}" 0 0
-      ;;  
-    y) viewerrorlog;;
-    t) burnloader;;
-    v) cloneloader;;
     l) langMenu ;;
     k) keymapMenu ;;
     i) erasedisk ;;
