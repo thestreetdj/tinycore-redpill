@@ -1602,12 +1602,8 @@ function del-macspoof() {
 
 function additional() {
 
-  if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ]; then
-    MSGZ="Remove Mac-spoof Addon from extensions"
-  else
-    MSGZ="Add Mac-spoof Addon to extensions"
-  fi
-  MSG50="${MSGZ}"
+  spoof="Add"
+  MSG50="Mac-spoof Addon"
   MSG51="Prevent SataPortMap,DiskIdxMap initialization"
   MSG52="Show SATA(s) ports and drives"
   MSG53="Show error log of running loader"
@@ -1618,7 +1614,7 @@ function additional() {
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
-      a "${MSG50}" \
+      a "${spoof} ${MSG50}" \
       b "${MSG51}" \
       c "${MSG52}" \
       d "${MSG53}" \
@@ -1629,9 +1625,15 @@ function additional() {
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
+    if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ]; then
+        spoof="Remove"
+    else
+        spoof="Add"
+    fi
+    
     if [ "${resp}" = "a" ]; then
-      if [ $(echo "${MSG50}" | grep "Remove" | wc -l ) -gt 0 ]; then
-        add-macspoof 
+      if [ "${spoof}" = "Add" ]; then
+        add-macspoof
       else
         del-macspoof
       fi
