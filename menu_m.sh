@@ -1602,7 +1602,7 @@ function del-macspoof() {
 
 function additional() {
 
-  if cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")'; then
+  if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ]; then
     MSGZ="Remove Mac-spoof Addon from extensions"
   else
     MSGZ="Add Mac-spoof Addon to extensions"
