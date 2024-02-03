@@ -1598,6 +1598,7 @@ function additional() {
   MSG53="Show error log of running loader"
   MSG54="Burn Another TCRP Bootloader to USB or SSD"
   MSG55="Clone TCRP Bootloader to USB or SSD"
+  eval "MSG12=\"\${MSG${tz}12}\""    
   
   while true; do
     dialog --clear --backtitle "`backtitle`" \
@@ -1607,6 +1608,7 @@ function additional() {
       c "${MSG53}" \
       d "${MSG54}" \
       e "${MSG55}" \
+      f "${MSG12}" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
@@ -1621,6 +1623,8 @@ function additional() {
       burnloader
     elif [ "${resp}" = "e" ]; then
       cloneloader
+    elif [ "${resp}" = "f" ]; then
+      erasedisk
     fi
   done
 }
@@ -1901,7 +1905,6 @@ while true; do
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"k \\\"\${MSG${tz}11}\\\"\""               >> "${TMP_PATH}/menu"
   echo "n \"Additional Functions\""  >> "${TMP_PATH}/menu"  
-  eval "echo \"i \\\"\${MSG${tz}12}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"b \\\"\${MSG${tz}13}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"r \\\"\${MSG${tz}14}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"e \\\"\${MSG${tz}15}\\\"\""               >> "${TMP_PATH}/menu"
@@ -1948,7 +1951,6 @@ while true; do
     q) storagepanel;      NEXT="p" ;;
     l) langMenu ;;
     k) keymapMenu ;;
-    i) erasedisk ;;
     b) backup ;;
     r) restart ;;
     e) sudo poweroff ;;
