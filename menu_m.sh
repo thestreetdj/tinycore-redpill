@@ -1593,7 +1593,7 @@ function cloneloader() {
 }
 
 function additional() {
-  while true; do
+  #while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
     a "Prevent SataPortMap/DiskIdxMap initialization" \
@@ -1616,7 +1616,7 @@ function additional() {
     elif [ "${resp}" = "e" ]; then
       cloneloader
     fi
-  done
+  #done
 }
 
 # Main loop
