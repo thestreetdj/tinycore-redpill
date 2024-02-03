@@ -1592,12 +1592,22 @@ function cloneloader() {
   return 0
 }
 
-function macspoof() {
+function add-macspoof() {
   jsonfile=$(jq '. |= .+ {"mac-spoof":"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/mac-spoof/rpext-index.json"}' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
 }
 
+function del-macspoof() {
+  jsonfile=$(jq 'del(.["mac-spoof"])' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+}
+
 function additional() {
-  MSG50="Add Mac-spoof Addon for extensions"
+
+  if cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")'; then
+    MSGZ="Remove Mac-spoof Addon from extensions"
+  else
+    MSGZ="Add Mac-spoof Addon to extensions"
+  fi
+  MSG50="${MSGZ}"
   MSG51="Prevent SataPortMap,DiskIdxMap initialization"
   MSG52="Show SATA(s) ports and drives"
   MSG53="Show error log of running loader"
@@ -1620,7 +1630,11 @@ function additional() {
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
     if [ "${resp}" = "a" ]; then
-      macspoof 
+      if [ $(echo "${MSG50}" | grep "Remove" | wc -l ) -gt 0 ]; then
+        add-macspoof 
+      else
+        del-macspoof
+      fi
     elif [ "${resp}" = "b" ]; then
       prevent
     elif [ "${resp}" = "c" ]; then
