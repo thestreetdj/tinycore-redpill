@@ -1596,9 +1596,7 @@ function additional() {
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
-    if [ "$MACHINE" = "VIRTUAL" ]; then
-      a "Prevent SataPortMap/DiskIdxMap initialization" \
-    fi
+    a "Prevent SataPortMap/DiskIdxMap initialization" \
     b "Show SATA(s) # ports and drives" \
     c "Show error log of running loader" \  
     d "Burn Another TCRP Bootloader to USB or SSD" \
