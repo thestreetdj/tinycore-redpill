@@ -1593,35 +1593,8 @@ function cloneloader() {
 }
 
 function additional() {
-  while true; do
-    dialog --clear --backtitle "`backtitle`" \
-      --menu "Choose a option" 0 0 0 \
-    a "Prevent SataPortMap/DiskIdxMap initialization" \
-    b "Show SATA(s) # ports and drives" \
-    c "Show error log of running loader" \  
-    d "Burn Another TCRP Bootloader to USB or SSD" \
-    e "Clone TCRP Bootloader to USB or SSD" \
-    2>${TMP_PATH}/resp
-    [ $? -ne 0 ] && return
-    resp=$(<${TMP_PATH}/resp)
-    [ -z "${resp}" ] && return
-    if [ "${resp}" = "a" ]; then
-      prevent
-      break
-    elif [ "${resp}" = "b" ]; then
-      showsata
-      break
-    elif [ "${resp}" = "c" ]; then
-      viewerrorlog
-      break
-    elif [ "${resp}" = "d" ]; then
-      burnloader
-      break
-    elif [ "${resp}" = "e" ]; then
-      cloneloader
-      break
-    fi
-  done
+showsata
+
 }
 
 # Main loop
