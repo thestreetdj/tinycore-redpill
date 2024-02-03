@@ -1602,7 +1602,12 @@ function del-macspoof() {
 
 function additional() {
 
-  spoof="Add"
+  if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ]; then
+      spoof="Remove"
+  else
+      spoof="Add"
+  fi
+  
   MSG50="Mac-spoof Addon"
   MSG51="Prevent SataPortMap,DiskIdxMap initialization"
   MSG52="Show SATA(s) ports and drives"
@@ -1625,17 +1630,16 @@ function additional() {
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
-    if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ]; then
-        spoof="Remove"
-    else
-        spoof="Add"
-    fi
-    
     if [ "${resp}" = "a" ]; then
       if [ "${spoof}" = "Add" ]; then
         add-macspoof
       else
         del-macspoof
+      fi
+      if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ]; then
+        spoof="Remove"
+      else
+        spoof="Add"
       fi
     elif [ "${resp}" = "b" ]; then
       prevent
