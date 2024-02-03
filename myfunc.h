@@ -201,24 +201,11 @@ set -u
 # Update : Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
 # 2023.12.31        
 # Added SataPortMap/DiskIdxMap prevent initialization menu for virtual machines  
+# 2023.02.03
+# Created a menu to select the mac-spoof add-on and a submenu for additional features.
     
 function showlastupdate() {
     cat <<EOF
-
-# 2023.08.24 (M-SHELL for TCRP, v0.9.5.0 release)
-# Update : Add storage panel size selection menu
-
-# 2023.10.01
-# Update : Add "Show SATA(s) # ports and drives" menu
-
-# 2023.10.07 
-# Update : Add "Burn Anither TCRP Bootloader to USB or SSD" menu
-        
-# 2023.10.09 
-# Update : Add "Clone TCRP Bootloader to USB or SSD" menu
-
-# 2023.10.17 
-# Update : Add "Show error log of running loader" menu
 
 # 2023.10.18 v0.9.6.0
 # Update : Improved extension processing speed (local copy instead of remote curl download)
@@ -228,9 +215,6 @@ function showlastupdate() {
 
 # 2023.11.04 
 # Update : Added DS1522+ (r1000), DS220+ (geminilake), DS2419+ (denverton), DS423+ (geminilake), DS718+ (apollolake), RS2423+ (v1000)
-
-# 2023.11.28
-# Update : Turn off thread limits when displaying models (Thanks alirz1)
 
 # 2023.12.01
 # Update : Separate tcrp-addons and tcrp-modules repo processing methods
@@ -243,6 +227,9 @@ function showlastupdate() {
 
 # 2023.12.31        
 # Added SataPortMap/DiskIdxMap prevent initialization menu for virtual machines       
+
+# 2023.02.03
+# Created a menu to select the mac-spoof add-on and a submenu for additional features.
     
 EOF
 }
