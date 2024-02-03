@@ -1593,7 +1593,11 @@ function cloneloader() {
 }
 
 function add-macspoof() {
-  jsonfile=$(jq '. |= .+ {"mac-spoof":"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/mac-spoof/rpext-index.json"}' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+  echo -n "(Warning) Enabling mac-spoof may compromise San Manager and VMM. Do you still want to add it? [yY/nN] : "
+  readanswer    
+  if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
+    jsonfile=$(jq '. |= .+ {"mac-spoof":"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/mac-spoof/rpext-index.json"}' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+  fi
 }
 
 function del-macspoof() {
