@@ -176,6 +176,12 @@ MSGUS38="The netif_num and the number of mac addresses do not match. Check user_
 MSGUS39="Choose a language"
 MSGUS40="DDSML+EUDEV"
 MSGUS41="Choose a Storage Panel Size"
+MSGUS50="Mac-spoof Addon"
+MSGUS51="Prevent SataPortMap,DiskIdxMap initialization"
+MSGUS52="Show SATA(s) ports and drives for SataPortMap"
+MSGUS53="Show error log of running loader"
+MSGUS54="Burn Another TCRP Bootloader to USB or SSD"
+MSGUS55="Clone TCRP Bootloader to USB or SSD"
 
 ## RU
 MSGRU00="Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap. DT модели не поддерживают HBAs\n"
@@ -220,6 +226,12 @@ MSGRU38="Количество интерфейсов (netif_num) и количе
 MSGRU39="Выберите язык"
 MSGRU40="DDSML+EUDEV"
 MSGRU41="Выберите размер панели хранения"
+MSGRU50="Дополнение Mac-spoof"
+MSGRU51="Запретить инициализацию SataPortMap,DiskIdxMap"
+MSGRU52="Показать порты и диски SATA для SataPortMap"
+MSGRU53="Показать журнал ошибок работающего загрузчика"
+MSGRU54="Записать еще один загрузчик TCRP на USB или SSD"
+MSGRU55="Клонировать загрузчик TCRP на USB или SSD"
 
 ## FR
 MSGFR00="Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne nécessitent pas de SataPortMap, DiskIdxMap. Les modèles DT ne prennent pas en charge les HBAs\n"
@@ -264,6 +276,12 @@ MSGFR38="Le netif_num et le nombre d'adresses MAC ne correspondent pas. Vérifie
 MSGFR39="Choisissez une langue"
 MSGFR40="DDSML+EUDEV"
 MSGFR41="Choisissez une taille de panneau de stockage"
+MSGFR50="Module complémentaire usurpant Mac"
+MSGFR51="Empêcher l'initialisation de SataPortMap, DiskIdxMap"
+MSGFR52="Afficher les ports et lecteurs SATA(s) pour SataPortMap"
+MSGFR53="Afficher le journal des erreurs du chargeur en cours d'exécution"
+MSGFR54="Graver un autre chargeur de démarrage TCRP sur USB ou SSD"
+MSGFR55="Cloner le chargeur de démarrage TCRP sur USB ou SSD"
 
 ## DE
 MSGDE00="Gerätebaum[DT] Basismodelle und HBAs benötigen kein SataPortMap,DiskIdxMap. DT-Modelle unterstützen keine HBAs\n"
@@ -308,6 +326,12 @@ MSGDE38="Die netif_num und die Anzahl der MAC-Adressen stimmen nicht überein. �
 MSGDE39="Wählen Sie eine Sprache"
 MSGDE40="DDSML+EUDEV"
 MSGDE41="Wählen Sie eine Größe des Speicherpaneels"
+MSGDE50="Mac-Spoof Addon"
+MSGDE51="SataPortMap,DiskIdxMap-Initialisierung verhindern"
+MSGDE52="SATA(s)-Ports und -Laufwerke für SataPortMap anzeigen"
+MSGDE53="Fehlerprotokoll des laufenden Loaders anzeigen"
+MSGDE54="Einen weiteren TCP-Bootloader auf USB oder SSD brennen"
+MSGDE55="TCRP-Bootloader auf USB oder SSD klonen"
 
 ## ES
 MSGES00="Los modelos base y HBAs de Device-Tree[DT] no requieren SataPortMap, DiskIdxMap. Los modelos DT no admiten HBAs\n"
@@ -352,6 +376,12 @@ MSGES38="El número de netif_num y direcciones MAC no coinciden. Revise user_con
 MSGES39="Elige un idioma"
 MSGES40="DDSML+EUDEV"
 MSGES41="Elija un tamaño de panel de almacenamiento"
+MSGES50="Complemento falso para Mac"
+MSGES51="Evitar la inicialización de SataPortMap,DiskIdxMap"
+MSGES52="Mostrar puertos y unidades SATA para SataPortMap"
+MSGES53="Mostrar registro de errores del cargador en ejecución"
+MSGES54="Grabar otro gestor de arranque TCRP en USB o SSD"
+MSGES55="Clonar el cargador de arranque TCRP a USB o SSD"
 
 ## BR
 MSGBR00="Modelos Base e HBAs do Device-Tree[DT] não requerem SataPortMap, DiskIdxMap. Modelos DT não suportam HBAs\n"
@@ -396,6 +426,12 @@ MSGBR38="O netif_num e o número de endereços MAC não correspondem. Verifique 
 MSGBR39="Olá! Posso ajudá-lo em Português"
 MSGBR40="DDSML+EUDEV"
 MSGBR41="Escolha um tamanho de painel de armazenamento"
+MSGBR50="Complemento de falsificação de Mac"
+MSGBR51="Impedir inicialização de SataPortMap,DiskIdxMap"
+MSGBR52="Mostrar portas e unidades SATA(s) para SataPortMap"
+MSGBR53="Mostrar log de erros do carregador em execução"
+MSGBR54="Gravar outro bootloader TCPP em USB ou SSD"
+MSGBR55="Clone Bootloader TCRP para USB ou SSD"
 
 ## IT
 MSGIT00="I modelli di base e gli HBA di Device-Tree [DT] non richiedono SataPortMap, DiskIdxMap. I modelli DT non supportano gli HBA\n"
@@ -440,6 +476,12 @@ MSGIT38="Il numero di netif e il numero di indirizzi MAC non corrispondono. Cont
 MSGIT39="Scegli una lingua"
 MSGIT40="DDSML+EUDEV"
 MSGIT41="Scegli una dimensione del pannello di archiviazione"
+MSGIT50="Componente aggiuntivo spoofing Mac"
+MSGIT51="Impedisci l'inizializzazione di SataPortMap, DiskIdxMap"
+MSGIT52="Mostra porte e unità SATA per SATAPortMap"
+MSGIT53="Mostra registro errori del caricatore in esecuzione"
+MSGIT54="Masterizza un altro bootloader TCRP su USB o SSD"
+MSGIT55="Clona bootloader TCRP su USB o SSD"
 
 ## KR
 MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다. DT모델은 HBA를 지원하지 않습니다.\n"
@@ -484,6 +526,12 @@ MSGKR38="netif_num과 mac 주소 갯수가 일치하지 않습니다. user_confi
 MSGKR39="언어를 선택하세요(Choose a lageuage)"
 MSGKR40="DDSML+EUDEV"
 MSGKR41="저장소 패널 크기를 선택하세요"
+MSGKR50="Mac 스푸핑 애드온"
+MSGKR51="SataPortMap,DiskIdxMap 초기화 방지"
+MSGKR52="SataPortMap용 SATA 포트 및 드라이브 표시"
+MSGKR53="실행 중인 로더의 오류 로그 표시"
+MSGKR54="다른 TCRP 부트로더를 USB 또는 SSD에 굽기"
+MSGKR55="TCRP 부트로더를 USB 또는 SSD에 복제"
 
 ## CN
 MSGCN00="设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap. DT模型不支持HBA\n"
@@ -528,6 +576,12 @@ MSGCN38="netif_num和mac地址数量不匹配。请再次检查user_config.json�
 MSGCN39="选择语言"
 MSGCN40="DDSML+EUDEV"
 MSGCN41="选择存储面板尺寸"
+MSGCN50="Mac 欺骗插件"
+MSGCN51="防止 SataPortMap、DiskIdxMap 初始化"
+MSGCN52="显示 SATAPortMap 的 SATA 端口和驱动器"
+MSGCN53="显示运行加载程序的错误日志"
+MSGCN54="将另一个 TCRP 引导加载程序刻录到 USB 或 SSD"
+MSGCN55="将 TCRP 引导加载程序克隆到 USB 或 SSD"
 
 ## JP
 MSGJP00="Device-Tree[DT]ベースモデルとHBAsは、SataPortMap、DiskIdxMapが必要ありません. DTモデルはHBAsをサポートしていません\n"
@@ -572,7 +626,12 @@ MSGJP38="netif_numとMACアドレスの数が一致しません。user_config.js
 MSGJP39="言語を選択してください"
 MSGJP40="DDSML+EUDEV"
 MSGJP41="ストレージパネルのサイズを選択してください"
-
+MSGJP50="Mac なりすましアドオン"
+MSGJP51="SataPortMap、DiskIdxMap の初期化を防止します"
+MSGJP52="SataPortMap の SATA ポートとドライブを表示"
+MSGJP53="実行中のローダーのエラー ログを表示"
+MSGJP54="別の TCRP ブートローダーを USB または SSD に書き込む"
+MSGJP55="TCRP ブートローダーのクローンを USB または SSD に作成"
 
 ###############################################################################
 # check for Sas module
@@ -1611,14 +1670,14 @@ function additional() {
   else
       spoof="Add"
   fi
-  
-  MSG50="Mac-spoof Addon"
-  MSG51="Prevent SataPortMap,DiskIdxMap initialization"
-  MSG52="Show SATA(s) ports and drives"
-  MSG53="Show error log of running loader"
-  MSG54="Burn Another TCRP Bootloader to USB or SSD"
-  MSG55="Clone TCRP Bootloader to USB or SSD"
-  eval "MSG12=\"\${MSG${tz}12}\""    
+
+  eval "MSG50=\"\${MSG${tz}50}\""
+  eval "MSG51=\"\${MSG${tz}51}\""
+  eval "MSG52=\"\${MSG${tz}52}\""
+  eval "MSG53=\"\${MSG${tz}53}\""
+  eval "MSG54=\"\${MSG${tz}54}\""
+  eval "MSG55=\"\${MSG${tz}55}\""
+  eval "MSG12=\"\${MSG${tz}12}\""
   
   while true; do
     dialog --clear --backtitle "`backtitle`" \
