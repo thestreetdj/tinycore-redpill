@@ -66,7 +66,7 @@ function update_tinycore() {
   cd /mnt/${tcrppart}
   md5_corepure64=$(sudo md5sum corepure64.gz | awk '{print $1}')
   md5_vmlinuz64=$(sudo md5sum vmlinuz64 | awk '{print $1}')
-  if [ ${md5_corepure64} != "f33c4560e3909a7784c0e83ce424ff5c" ] && [ ${md5_vmlinuz64} != "04cb17bbf7fbca9aaaa2e1356a936d7c" ]; then
+  if [ ${md5_corepure64} != "f33c4560e3909a7784c0e83ce424ff5c" ] || [ ${md5_vmlinuz64} != "04cb17bbf7fbca9aaaa2e1356a936d7c" ]; then
       echo "current tinycore version is not 14.0, update tinycore linux to 14.0..."
       sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tinycore_14.0/corepure64.gz -o corepure64.gz_copy
       sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tinycore_14.0/vmlinuz64 -o vmlinuz64_copy
