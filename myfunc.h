@@ -203,6 +203,8 @@ set -u
 # Added SataPortMap/DiskIdxMap prevent initialization menu for virtual machines  
 # 2023.02.03
 # Created a menu to select the mac-spoof add-on and a submenu for additional features.
+# 2023.02.06
+# update corepure64.gz for tc user ttyS0 serial console works
     
 function showlastupdate() {
     cat <<EOF
@@ -230,6 +232,9 @@ function showlastupdate() {
 
 # 2023.02.03
 # Created a menu to select the mac-spoof add-on and a submenu for additional features.
+
+# 2023.02.06
+# update corepure64.gz for tc user ttyS0 serial console works
     
 EOF
 }
