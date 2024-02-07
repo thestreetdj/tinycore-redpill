@@ -205,6 +205,8 @@ set -u
 # Created a menu to select the mac-spoof add-on and a submenu for additional features.
 # 2023.02.06
 # update corepure64.gz for tc user ttyS0 serial console works
+# 2023.02.08
+# Add Apollolake DS218+
     
 function showlastupdate() {
     cat <<EOF
@@ -235,7 +237,10 @@ function showlastupdate() {
 
 # 2023.02.06
 # update corepure64.gz for tc user ttyS0 serial console works
-    
+
+# 2023.02.08
+# Add Apollolake DS218+
+        
 EOF
 }
 
@@ -334,7 +339,7 @@ function getvarsmshell()
     TARGET_PLATFORM=$(echo "$MODEL" | sed 's/DS/ds/' | sed 's/RS/rs/' | sed 's/+/p/' | sed 's/DVA/dva/' | sed 's/FS/fs/' | sed 's/SA/sa/' )
     SYNOMODEL="${TARGET_PLATFORM}_${TARGET_REVISION}"
     
-    MODELS="DS3615xs DS1019+ DS620slim DS1520+ DS1522+ DS220+ DS2419+ DS423+ DS718+ DS1621+ DS1821+ DS1823xs+ DS1621xs+ DS2422+ DS3617xs DS3622xs+ DS720+ DS723+ DS918+ DS920+ DS923+ DS1819+ DVA3219 DVA3221 DVA1622 FS2500 RS1221+ RS1619xs+ RS2423+ RS3413xs+ RS3618xs RS3621xs+ RS4021xs+ SA3410 SA3610 SA6400"
+    MODELS="DS3615xs DS218+ DS1019+ DS620slim DS1520+ DS1522+ DS220+ DS2419+ DS423+ DS718+ DS1621+ DS1821+ DS1823xs+ DS1621xs+ DS2422+ DS3617xs DS3622xs+ DS720+ DS723+ DS918+ DS920+ DS923+ DS1819+ DVA3219 DVA3221 DVA1622 FS2500 RS1221+ RS1619xs+ RS2423+ RS3413xs+ RS3618xs RS3621xs+ RS4021xs+ SA3410 SA3610 SA6400"
     if [ $(echo ${MODELS} | grep ${MODEL} | wc -l ) -eq 0 ]; then
         echo "This synology model not supported by TCRP."
         exit 0
@@ -363,7 +368,7 @@ function getvarsmshell()
     fi
 
     case ${MODEL} in
-    DS718+ | DS918+ | DS1019+ | DS620slim )
+    DS218+ | DS718+ | DS918+ | DS1019+ | DS620slim )
         ORIGIN_PLATFORM="apollolake"
         ;;
     DS3615xs | RS3413xs+ )
@@ -472,6 +477,11 @@ function getvarsmshell()
         permanent="VKR"
         serialstart="22A0"
         suffix="alpha"
+        ;;
+    DS218+)
+        permanent="PDN"
+        serialstart="1780 1790 1860 1980"
+        suffix="numeric"
         ;;
     DS620slim)
         permanent="PDN"
