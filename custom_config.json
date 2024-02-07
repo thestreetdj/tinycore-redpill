@@ -2,6 +2,70 @@
   "docker": {},
   "build_configs": [
     {
+      "id": "ds218p-7.0.1-42218",
+      "platform_name": "apollolake",
+      "downloads": {
+        "os": {
+          "sha256": "2de06ee0bf4d3432523399f3bfc2292c35a29ec5ab12eeb29102c095add9b25e"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds218p-7.1.1-42962",
+      "platform_name": "apollolake",
+      "downloads": {
+        "os": {
+          "sha256": "41a389dc18c538f1fefd6b8eb6a9093da6bed74b90ab2e36cc92de48443ebc73"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds218p-7.2.0-64570",
+      "platform_name": "apollolake",
+      "downloads": {
+        "os": {
+          "sha256": "190d89d9b92064bc0b79d2b234f3b5fe60e589143e3c4e7d7bd8a9acb0155d3b"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds218p-7.2.1-69057",
+      "platform_name": "apollolake",
+      "downloads": {
+        "os": {
+          "sha256": "7454e891d35077d9b929f5c4b2816b74e1ca870b626d91da64fb870e98821ee0"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
       "id": "ds1019p-7.0.1-42218",
       "platform_name": "apollolake",
       "downloads": {
