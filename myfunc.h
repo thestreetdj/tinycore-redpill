@@ -361,7 +361,10 @@ function getvarsmshell()
         SUVP="-1" 
     elif [ "$TARGET_REVISION" == "69057" ]; then
         KVER="4.4.302"
-        SUVP="-1"
+        SUVP=""
+        if [ "${MODEL}" = "DS218+" ]; then
+          SUVP="-1"
+        fi
     else
         echo "Synology model revision not supported by TCRP."
         exit 0
