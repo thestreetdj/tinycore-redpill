@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.1.1
+# User Variables : 1.0.1.2
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.1.1"
+rploaderver="1.0.1.2"
 build="master"
 redpillmake="prod"
 
@@ -112,6 +112,7 @@ function history() {
     1.0.0.5 Add offline loader build function
     1.0.1.0 Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
     1.0.1.1 Fix monitor fuction about ethernet infomation
+    1.0.1.2 Fix for SA6400
     --------------------------------------------------------------------------------------
 EOF
 
@@ -3047,7 +3048,22 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     fi
 
     cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
-    sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+
+    # SA6400 patches
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        echo -e "Apply Epyc7002 Fixes"
+        sudo sed -i 's#/dev/console#/var/log/lrc#g' /home/tc/rd.temp/usr/bin/busybox
+        sudo sed -i '/^echo "START/a \\nmknod -m 0666 /dev/console c 1 3' /home/tc/rd.temp/linuxrc.syno        
+        # Copying fake modprobe
+        sudo cp -vf "/home/tc/redpill-load/config/_common/iosched-trampoline5.sh" "/home/tc/rd.temp/usr/sbin/modprobe"
+    else
+        # Copying fake modprobe
+        sudo cp -vf "/home/tc/redpill-load/config/_common/iosched-trampoline.sh" "/home/tc/rd.temp/usr/sbin/modprobe"
+    fi
+    sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe    
+
+    # Copying LKM to /usr/lib/modules
+    sudo cp -vf "/home/tc/custom-module/redpill.ko" "/home/tc/rd.temp/usr/lib/modules/rp.ko"
     
     if [ "$RD_COMPRESSED" = "false" ]; then
         echo "Ramdisk in not compressed "
