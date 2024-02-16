@@ -3038,15 +3038,22 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     RD_COMPRESSED=$(cat /home/tc/redpill-load/config/$MODEL/${TARGET_VERSION}-${TARGET_REVISION}/config.json | jq -r -e ' .extra .compress_rd')
 
     if [ "$RD_COMPRESSED" = "false" ]; then
-        echo "Ramdisk in not compressed "
+        echo "Ramdisk in not compressed "    
         cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
-        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
-        sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+
+    else    
+        echo "Ramdisk in compressed "        
+        unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
+    fi
+
+    cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
+    sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+    
+    if [ "$RD_COMPRESSED" = "false" ]; then
+        echo "Ramdisk in not compressed "
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     else
-        unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
-        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
-        sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+        echo "Ramdisk in compressed "            
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     fi
 
