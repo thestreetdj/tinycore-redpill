@@ -3049,21 +3049,21 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
     cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
 
-    # SA6400 patches
-    #if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
-    #    echo -e "Apply Epyc7002 Fixes"
-    #    sudo sed -i 's#/dev/console#/var/log/lrc#g' /home/tc/rd.temp/usr/bin/busybox
-    #    sudo sed -i '/^echo "START/a \\nmknod -m 0666 /dev/console c 1 3' /home/tc/rd.temp/linuxrc.syno        
+    # SA6400 patches for JOT Mode
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        echo -e "Apply Epyc7002 Fixes"
+        sudo sed -i 's#/dev/console#/var/log/lrc#g' /home/tc/rd.temp/usr/bin/busybox
+        sudo sed -i '/^echo "START/a \\nmknod -m 0666 /dev/console c 1 3' /home/tc/rd.temp/linuxrc.syno        
         # Copying fake modprobe
-    #    sudo cp -vf "/home/tc/redpill-load/config/_common/iosched-trampoline5.sh" "/home/tc/rd.temp/usr/sbin/modprobe"
-    #else
+        sudo cp -vf "/home/tc/redpill-load/config/_common/iosched-trampoline5.sh" "/home/tc/rd.temp/usr/sbin/modprobe"
+    else
         # Copying fake modprobe
-    #    sudo cp -vf "/home/tc/redpill-load/config/_common/iosched-trampoline.sh" "/home/tc/rd.temp/usr/sbin/modprobe"
-    #fi
+        sudo cp -vf "/home/tc/redpill-load/config/_common/iosched-trampoline.sh" "/home/tc/rd.temp/usr/sbin/modprobe"
+    fi
     sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe    
 
-    # Copying LKM to /usr/lib/modules
-    #sudo cp -vf "/home/tc/custom-module/redpill.ko" "/home/tc/rd.temp/usr/lib/modules/rp.ko"
+    # Copying LKM to /usr/lib/modules for JOT mode, Friend ramdisk is being processed separately in initrd-friend
+    sudo cp -vf "/home/tc/custom-module/redpill.ko" "/home/tc/rd.temp/usr/lib/modules/rp.ko"
     
     if [ "$RD_COMPRESSED" = "false" ]; then
         echo "Ramdisk in not compressed "
