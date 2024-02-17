@@ -841,65 +841,65 @@ function seleudev() {
   eval "MSG40=\"\${MSG${tz}40}\""
 
   if [ "${MODEL}" = "SA6400" ]; then
-	  while true; do
-	    dialog --clear --backtitle "`backtitle`" \
-	      --menu "Choose a option" 0 0 0 \
-	      e "${MSG26}" \
-	      f "${MSG40}" \
-	    2>${TMP_PATH}/resp
-	    [ $? -ne 0 ] && return
-	    resp=$(<${TMP_PATH}/resp)
-	    [ -z "${resp}" ] && return
-	    if [ "${resp}" = "e" ]; then
-	      DMPM="EUDEV"
-	      break
-	    elif [ "${resp}" = "f" ]; then
-	      DMPM="DDSML+EUDEV"
-	      break
-	    fi
-	  done
+    while true; do
+      dialog --clear --backtitle "`backtitle`" \
+	--menu "Choose a option" 0 0 0 \
+	e "${MSG26}" \
+	f "${MSG40}" \
+	2>${TMP_PATH}/resp
+      [ $? -ne 0 ] && return
+      resp=$(<${TMP_PATH}/resp)
+      [ -z "${resp}" ] && return
+      if [ "${resp}" = "e" ]; then
+        DMPM="EUDEV"
+        break
+      elif [ "${resp}" = "f" ]; then
+        DMPM="DDSML+EUDEV"
+        break
+      fi
+    done
   else
-	  if [ ${BLOCK_EUDEV} = "Y" ]; then
-		  while true; do
-		    dialog --clear --backtitle "`backtitle`" \
-		      --menu "Choose a option" 0 0 0 \
-		      d "${MSG27}" \
-		      f "${MSG40}" \
-		    2>${TMP_PATH}/resp
-		    [ $? -ne 0 ] && return
-		    resp=$(<${TMP_PATH}/resp)
-		    [ -z "${resp}" ] && return
-		    if [ "${resp}" = "d" ]; then
-		      DMPM="DDSML"
-		      break
-		    elif [ "${resp}" = "f" ]; then
-		      DMPM="DDSML+EUDEV"
-		      break
-		    fi
-		  done
-	  else
-		  while true; do
-		    dialog --clear --backtitle "`backtitle`" \
-		      --menu "Choose a option" 0 0 0 \
-		      d "${MSG27}" \
-		      e "${MSG26}" \
-		      f "${MSG40}" \
-		    2>${TMP_PATH}/resp
-		    [ $? -ne 0 ] && return
-		    resp=$(<${TMP_PATH}/resp)
-		    [ -z "${resp}" ] && return
-		    if [ "${resp}" = "d" ]; then
-		      DMPM="DDSML"
-		      break
-		    elif [ "${resp}" = "e" ]; then
-		      DMPM="EUDEV"
-		      break
-		    elif [ "${resp}" = "f" ]; then
-		      DMPM="DDSML+EUDEV"
-		      break
-		    fi
-		  done
-	  fi
+    if [ ${BLOCK_EUDEV} = "Y" ]; then
+      while true; do
+	dialog --clear --backtitle "`backtitle`" \
+	  --menu "Choose a option" 0 0 0 \
+	  d "${MSG27}" \
+	  f "${MSG40}" \
+	  2>${TMP_PATH}/resp
+	[ $? -ne 0 ] && return
+	resp=$(<${TMP_PATH}/resp)
+	[ -z "${resp}" ] && return
+	if [ "${resp}" = "d" ]; then
+	  DMPM="DDSML"
+	  break
+	elif [ "${resp}" = "f" ]; then
+	  DMPM="DDSML+EUDEV"
+	  break
+	fi
+      done
+    else
+      while true; do
+        dialog --clear --backtitle "`backtitle`" \
+          --menu "Choose a option" 0 0 0 \
+	  d "${MSG27}" \
+	  e "${MSG26}" \
+	  f "${MSG40}" \
+	  2>${TMP_PATH}/resp
+	[ $? -ne 0 ] && return
+	resp=$(<${TMP_PATH}/resp)
+	[ -z "${resp}" ] && return
+	if [ "${resp}" = "d" ]; then
+	  DMPM="DDSML"
+	  break
+	elif [ "${resp}" = "e" ]; then
+	  DMPM="EUDEV"
+	  break
+	elif [ "${resp}" = "f" ]; then
+	  DMPM="DDSML+EUDEV"
+	  break
+	fi
+      done
+    fi
   fi 
 
   curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/bundled-exts.json -o /home/tc/redpill-load/bundled-exts.json
@@ -982,11 +982,11 @@ done
 # Shows available models to user choose one
 function modelMenu() {
 
-  M_GRP1="DS3622xs+ DS1621xs+ RS3621xs+ RS4021xs+ DS3617xs RS3618xs"
+  M_GRP1="SA6400 DS3622xs+ DS1621xs+ RS3621xs+ RS4021xs+ DS3617xs RS3618xs"
   M_GRP2="DS3615xs"
   M_GRP3="DVA3221 DVA3219 DS1819+ DS2419+"
   M_GRP4="DS218+ DS918+ DS1019+ DS620slim DS718+"
-  M_GRP5="DS923+ DS723+ DS1522+ SA6400"
+  M_GRP5="DS923+ DS723+ DS1522+"
   M_GRP6="DS1621+ DS1821+ DS1823xs+ DS2422+ FS2500 RS1221+ RS2423+"
   M_GRP7="DS220+ DS423+ DS720+ DS920+ DS1520+ DVA1622"
   
@@ -1071,7 +1071,11 @@ done
   fi
 
   if [ "${MODEL}" = "SA6400" ]; then
-    DMPM="EUDEV"
+    if [ "$HBADETECT" = "ON" ]; then
+	DMPM="DDSML+EUDEV"
+    else
+    	DMPM="EUDEV"
+    fi 
   else
     DMPM="DDSML"
   fi
