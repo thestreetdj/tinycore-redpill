@@ -3059,6 +3059,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         sudo tar xvfz /home/tc/rd.temp/exts/all-modules/firmware.tgz -C /home/tc/rd.temp/usr/lib/firmware
         sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/rr/linuxrc.syno.impl -o /home/tc/rd.temp/linuxrc.syno.impl
         sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rr/addons.tgz -o /tmp/addons.tgz
+        sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rr/gzip -o /home/tc/rd.temp/usr/bin
         sudo tar xvfz /tmp/addons.tgz -C /home/tc/rd.temp
         sudo tar xvfz /home/tc/rd.temp/exts/all-modules/sbin.tgz -C /home/tc/rd.temp
         sudo cp -vf /home/tc/tools/dtc /home/tc/rd.temp/usr/bin
