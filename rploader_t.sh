@@ -3049,7 +3049,7 @@ if [ 1 = 1 ]; then
         sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmware.tgz  -o /tmp/firmware.tgz                
         sudo tar xvfz /tmp/modules.tgz -C /home/tc/custom.temp/usr/lib/modules/
         sudo tar xvfz /tmp/firmware.tgz -C /home/tc/custom.temp/usr/lib/firmware/
-        sudo tar xvfz /home/tc/custom.temp/exts/all-modules/sbin.tgz -C /home/tc/custom.temp        
+        sudo tar xvfz /home/tc/custom.temp/exts/all-modules/sbin.tgz -C /home/tc/custom.temp
     fi
     (cd /home/tc/custom.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/custom.gz) >/dev/null
 fi
