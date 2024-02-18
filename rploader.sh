@@ -3049,7 +3049,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         sudo tar xvfz /tmp/firmware.tgz -C /home/tc/custom.temp/usr/lib/firmware/
         sudo tar xvfz /home/tc/custom.temp/exts/all-modules/sbin.tgz -C /home/tc/custom.temp        
     fi
-    sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/custom.gz) >/dev/null
+    (cd /home/tc/custom.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/custom.gz) >/dev/null
 
     # Compining rd.gz and custom.gz
 
