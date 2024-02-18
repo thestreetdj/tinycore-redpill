@@ -3044,6 +3044,7 @@ if [ 1 = 1 ]; then
         sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/usr.tgz -o /tmp/usr.tgz
         [ ! -d /home/tc/custom.temp/usr/lib/firmware ] && sudo mkdir /home/tc/custom.temp/usr/lib/firmware
         sudo tar xvfz /tmp/usr.tgz -C /home/tc/custom.temp
+        sudo tar xvfz /home/tc/custom.temp/exts/all-modules/sbin.tgz -C /home/tc/custom.temp
     else
         sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${ORIGIN_PLATFORM}-${KVER}.tgz  -o /tmp/modules.tgz
         sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmware.tgz  -o /tmp/firmware.tgz                
