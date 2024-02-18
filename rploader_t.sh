@@ -3037,14 +3037,16 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
     [ ! -d /home/tc/custom.temp ] && mkdir /home/tc/custom.temp
     [ -d /home/tc/custom.temp ] && cd /home/tc/custom.temp
+    
     cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
-
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
         sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/usr.tgz -o /tmp/usr.tgz
         sudo tar xvfz /tmp/usr.tgz -C /home/tc/custom.temp
     else
-        sudo tar xvfz /home/tc/custom.temp/exts/all-modules/${ORIGIN_PLATFORM}*${KVER}.tgz -C /home/tc/custom.temp/usr/lib/modules/        
-        sudo tar xvfz /home/tc/custom.temp/exts/all-modules/firmware.tgz -C /home/tc/custom.temp/usr/lib/firmware
+        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${ORIGIN_PLATFORM}-${KVER}.tgz  -o /tmp/modules.tgz
+        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmware.tgz  -o /tmp/firmware.tgz                
+        sudo tar xvfz /tmp/modules.tgz -C /home/tc/custom.temp/usr/lib/modules/
+        sudo tar xvfz /tmp/firmware.tgz -C /home/tc/custom.temp/usr/lib/firmware/
         sudo tar xvfz /home/tc/custom.temp/exts/all-modules/sbin.tgz -C /home/tc/custom.temp        
     fi
     sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/custom.gz) >/dev/null
