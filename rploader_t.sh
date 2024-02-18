@@ -3052,6 +3052,7 @@ if [ 1 = 1 ]; then
     fi
     msgnormal "mshell is repackaging custom.gz. It will take some time..."
     (cd /home/tc/custom.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/custom.gz) >/dev/null
+    sudo rm -rf /home/tc/custom.temp
 fi
 
     # Compining rd.gz and custom.gz
