@@ -3050,6 +3050,7 @@ if [ 1 = 1 ]; then
         sudo tar xvfz /tmp/firmware.tgz -C /home/tc/custom.temp/usr/lib/firmware/
         sudo tar xvfz /home/tc/custom.temp/exts/all-modules/sbin.tgz -C /home/tc/custom.temp        
     fi
+    msgnormal "mshell is repackaging custom.gz. It will take some time..."
     (cd /home/tc/custom.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/custom.gz) >/dev/null
 fi
 
