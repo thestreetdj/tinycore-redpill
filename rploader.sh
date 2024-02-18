@@ -3045,6 +3045,7 @@ if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
         [ ! -d /home/tc/custom.temp/usr/lib/firmware ] && sudo mkdir /home/tc/custom.temp/usr/lib/firmware
         sudo tar xvfz /tmp/usr.tgz -C /home/tc/custom.temp
         sudo tar xvfz /home/tc/custom.temp/exts/all-modules/sbin.tgz -C /home/tc/custom.temp
+        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/raw/main/thirdparty/epyc7002-7.2-5.10.55/i915.ko -o /home/tc/custom.temp/usr/lib/modules/i915.ko
 #    else
 #        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${ORIGIN_PLATFORM}-${KVER}.tgz  -o /tmp/modules.tgz
 #        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmware.tgz  -o /tmp/firmware.tgz                
