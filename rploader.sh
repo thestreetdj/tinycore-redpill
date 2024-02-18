@@ -3077,7 +3077,7 @@ fi
         sudo sed -i '/^echo "START/a \\nmknod -m 0666 /dev/console c 1 3' /home/tc/rd.temp/linuxrc.syno     
 
         sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/usr.tgz -o /tmp/usr.tgz
-        sudo tar xvfz /tmp/usr.tgz -C /home/tc/custom.temp
+        sudo tar xvfz /tmp/usr.tgz -C /home/tc/rc.temp
 
         #sudo tar xvfz /home/tc/rd.temp/exts/all-modules/${ORIGIN_PLATFORM}*${KVER}.tgz -C /home/tc/rd.temp/usr/lib/modules/        
         #sudo tar xvfz /home/tc/rd.temp/exts/all-modules/firmware.tgz -C /home/tc/rd.temp/usr/lib/firmware        
