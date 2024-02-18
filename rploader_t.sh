@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.1.2
+# User Variables : 1.1.0.0
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.1.2"
+rploaderver="1.1.0.0"
 build="master"
 redpillmake="prod"
 
@@ -113,6 +113,7 @@ function history() {
     1.0.1.0 Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
     1.0.1.1 Fix monitor fuction about ethernet infomation
     1.0.1.2 Fix for SA6400
+    1.1.0.0 Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules
     --------------------------------------------------------------------------------------
 EOF
 
@@ -3031,6 +3032,8 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
     # Share RD of friend kernel with JOT 2023.05.01
     cp /mnt/${loaderdisk}1/zImage /mnt/${loaderdisk}3/zImage-dsm
+
+    # Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules 2024.02.18
 
     # Compining rd.gz and custom.gz
 
