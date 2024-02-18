@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.1.2
+# User Variables : 1.1.0.0
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.1.2"
+rploaderver="1.1.0.0"
 build="master"
 redpillmake="prod"
 
@@ -113,6 +113,7 @@ function history() {
     1.0.1.0 Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
     1.0.1.1 Fix monitor fuction about ethernet infomation
     1.0.1.2 Fix for SA6400
+    1.1.0.0 Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules
     --------------------------------------------------------------------------------------
 EOF
 
@@ -3032,6 +3033,24 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     # Share RD of friend kernel with JOT 2023.05.01
     cp /mnt/${loaderdisk}1/zImage /mnt/${loaderdisk}3/zImage-dsm
 
+    # Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules 2024.02.18
+
+    [ ! -d /home/tc/custom.temp ] && mkdir /home/tc/custom.temp
+    [ -d /home/tc/custom.temp ] && cd /home/tc/custom.temp
+    
+    cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/usr.tgz -o /tmp/usr.tgz
+        sudo tar xvfz /tmp/usr.tgz -C /home/tc/custom.temp
+    else
+        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${ORIGIN_PLATFORM}-${KVER}.tgz  -o /tmp/modules.tgz
+        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmware.tgz  -o /tmp/firmware.tgz                
+        sudo tar xvfz /tmp/modules.tgz -C /home/tc/custom.temp/usr/lib/modules/
+        sudo tar xvfz /tmp/firmware.tgz -C /home/tc/custom.temp/usr/lib/firmware/
+        sudo tar xvfz /home/tc/custom.temp/exts/all-modules/sbin.tgz -C /home/tc/custom.temp        
+    fi
+    sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/custom.gz) >/dev/null
+
     # Compining rd.gz and custom.gz
 
     [ ! -d /home/tc/rd.temp ] && mkdir /home/tc/rd.temp
@@ -3054,10 +3073,6 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         echo -e "Apply Epyc7002 Fixes"
         sudo sed -i 's#/dev/console#/var/log/lrc#g' /home/tc/rd.temp/usr/bin/busybox
         sudo sed -i '/^echo "START/a \\nmknod -m 0666 /dev/console c 1 3' /home/tc/rd.temp/linuxrc.syno     
-
-        [ ! -d /home/tc/rd.temp/usr/lib/firmware ] && sudo mkdir /home/tc/rd.temp/usr/lib/firmware
-        sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/usr.tgz -o /tmp/usr.tgz
-        sudo tar xvfz /tmp/usr.tgz -C /home/tc/rd.temp
 
         #sudo tar xvfz /home/tc/rd.temp/exts/all-modules/${ORIGIN_PLATFORM}*${KVER}.tgz -C /home/tc/rd.temp/usr/lib/modules/        
         #sudo tar xvfz /home/tc/rd.temp/exts/all-modules/firmware.tgz -C /home/tc/rd.temp/usr/lib/firmware        
