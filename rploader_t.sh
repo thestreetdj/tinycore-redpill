@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.0.1.1
+# User Variables : 1.0.1.2
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.1.1"
+rploaderver="1.0.1.2"
 build="master"
 redpillmake="prod"
 
@@ -111,7 +111,8 @@ function history() {
             when ramdisk patching occurs without internet.
     1.0.0.5 Add offline loader build function
     1.0.1.0 Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
-    1.0.1.1 Fix minitor fuction about ethernet infomation
+    1.0.1.1 Fix monitor fuction about ethernet infomation
+    1.0.1.2 Fix for SA6400
     --------------------------------------------------------------------------------------
 EOF
 
@@ -254,12 +255,14 @@ function getip() {
         HWADDR="$(ifconfig ${eth} | grep HWaddr | awk '{print $5}')"
         VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
         DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
-        MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
-        if [ ! -z "${MATCHDRIVER}" ]; then
-            if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
-                DRIVER=${MATCHDRIVER}
+        if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
+            MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
+            if [ ! -z "${MATCHDRIVER}" ]; then
+                if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
+                    DRIVER=${MATCHDRIVER}
+                fi
             fi
-        fi
+        fi    
         echo "IP Address : $(msgnormal "${IP}"), ${HWADDR} : ${eth} (${DRIVER})"        
     done
 }
@@ -2457,7 +2460,7 @@ menuentry 'Tiny Core Friend $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update $
         savedefault
         search --set=root --fs-uuid $usbpart3uuid --hint hd0,msdos3
         echo Loading Linux...
-        linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 
+        linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 console=ttyS0,115200n8
         echo Loading initramfs...
         initrd /initrd-friend
         echo Booting TinyCore Friend
@@ -2505,7 +2508,7 @@ menuentry 'Tiny Core Friend $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update $
         savedefault
         search --set=root --fs-uuid $usbpart3uuid --hint hd1,msdos3
         echo Loading Linux...
-        linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 
+        linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 console=ttyS0,115200n8
         echo Loading initramfs...
         initrd /initrd-friend
         echo Booting TinyCore Friend
@@ -3036,15 +3039,43 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     RD_COMPRESSED=$(cat /home/tc/redpill-load/config/$MODEL/${TARGET_VERSION}-${TARGET_REVISION}/config.json | jq -r -e ' .extra .compress_rd')
 
     if [ "$RD_COMPRESSED" = "false" ]; then
-        echo "Ramdisk in not compressed "
+        echo "Ramdisk in not compressed "    
         cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
-        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
-        sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+
+    else    
+        echo "Ramdisk in compressed "        
+        unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
+    fi
+
+    cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
+
+    # SA6400 patches for JOT Mode
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        echo -e "Apply Epyc7002 Fixes"
+        sudo sed -i 's#/dev/console#/var/log/lrc#g' /home/tc/rd.temp/usr/bin/busybox
+        sudo sed -i '/^echo "START/a \\nmknod -m 0666 /dev/console c 1 3' /home/tc/rd.temp/linuxrc.syno     
+
+        [ ! -d /home/tc/rd.temp/usr/lib/firmware ] && sudo mkdir /home/tc/rd.temp/usr/lib/firmware
+        sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/usr.tgz -o /tmp/usr.tgz
+        sudo tar xvfz /tmp/usr.tgz -C /home/tc/rd.temp
+
+        #sudo tar xvfz /home/tc/rd.temp/exts/all-modules/${ORIGIN_PLATFORM}*${KVER}.tgz -C /home/tc/rd.temp/usr/lib/modules/        
+        #sudo tar xvfz /home/tc/rd.temp/exts/all-modules/firmware.tgz -C /home/tc/rd.temp/usr/lib/firmware        
+        #sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rr/addons.tgz -o /tmp/addons.tgz
+        #sudo tar xvfz /tmp/addons.tgz -C /home/tc/rd.temp
+        #sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rr/modules.tgz -o /tmp/modules.tgz
+        #sudo tar xvfz /tmp/modules.tgz -C /home/tc/rd.temp/usr/lib/modules/
+        #sudo tar xvfz /home/tc/rd.temp/exts/all-modules/sbin.tgz -C /home/tc/rd.temp
+        #sudo cp -vf /home/tc/tools/dtc /home/tc/rd.temp/usr/bin
+        #sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/rr/linuxrc.syno.impl -o /home/tc/rd.temp/linuxrc.syno.impl        
+    fi
+    sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe    
+    
+    if [ "$RD_COMPRESSED" = "false" ]; then
+        echo "Ramdisk in not compressed "
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     else
-        unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
-        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
-        sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe
+        echo "Ramdisk in compressed "            
         (cd /home/tc/rd.temp && sudo find . | sudo cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/${loaderdisk}3/initrd-dsm) >/dev/null
     fi
 
@@ -3121,6 +3152,19 @@ st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
 
 }
 
+function curlfriend() {
+
+    msgwarning "Download failed from ${domain}..."
+    curl --progress-bar -k -L -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/chksum" \
+    -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/bzImage-friend" \
+    -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/initrd-friend"
+    if [ $? -ne 0 ]; then
+        msgalert "Download failed from ${domain}... !!!!!!!!"
+    else
+        msgnormal "Bringing over my friend from ${domain} Done!!!!!!!!!!!!!!"            
+    fi
+
+}
 
 function bringoverfriend() {
 
@@ -3144,37 +3188,9 @@ function bringoverfriend() {
         msgnormal "OK, latest \n"
     else
         msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
-        
-        msgnormal "Bringing over my friend from gitea.com"
-        curl --connect-timeout 15 -skLO "https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum" \
-        -O "https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/bzImage-friend" \
-        -O "https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/initrd-friend"
 
-        # 2nd try
-        if [ $? -ne 0 ]; then
-            msgwarning "Download failed from gitea.com, Tring github.com..."    
-
-            URLS=$(curl -k -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
-            for file in $URLS; do curl -kL -# "$file" -O; done
-
-            # 3rd try
-            if [ $? -ne 0 ]; then
-#                msgwarning "Download failed from github.com, Tring gitee.com..."
-#                curl -s -k -L -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/chksum" \
-#                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/bzImage-friend" \
-#                -O "https://gitee.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.0.4a/initrd-friend"
-#                if [ $? -ne 0 ]; then
-#                    msgalert "Download failed from gitee.com... !!!!!!!!"
-#                else
-#                    msgnormal "Bringing over my friend from gitee.com Done!!!!!!!!!!!!!!"            
-#                fi
-#            else
-#                msgnormal "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"
-                msgwarning "Download failed from github.com !!!!!!"
-            fi
-        else
-            msgnormal "Bringing over my friend from gitea.com Done!!!!!!!!!!!!!!"    
-        fi
+        domain="raw.githubusercontent.com"
+        curlfriend
 
         if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
             FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
