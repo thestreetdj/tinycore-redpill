@@ -207,6 +207,8 @@ set -u
 # update corepure64.gz for tc user ttyS0 serial console works
 # 2023.02.08
 # Add Apollolake DS218+
+# 2023.02.18 v1.1.0.0
+# Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules
     
 function showlastupdate() {
     cat <<EOF
@@ -238,8 +240,8 @@ function showlastupdate() {
 # 2023.02.06
 # update corepure64.gz for tc user ttyS0 serial console works
 
-# 2023.02.08
-# Add Apollolake DS218+
+# 2023.02.18 v1.1.0.0
+# Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules
         
 EOF
 }
