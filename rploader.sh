@@ -3035,7 +3035,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
     # Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules 2024.02.18
 #def
-if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+if [ 1= 0 ]; then
     [ ! -d /home/tc/custom.temp ] && mkdir /home/tc/custom.temp
     [ -d /home/tc/custom.temp ] && cd /home/tc/custom.temp
     
