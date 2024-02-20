@@ -3172,7 +3172,7 @@ fi
     if [ 0${FILESIZE} -ge 0${SPACELEFT} ]; then
         # No disk space to download, change it to RAMDISK
         echo "No adequate space on ${local_cache} to backup cache pat file, clean up PAT file now ....."
-        rm -vf ${local_cache}/*.pat | head -n 1 | xargs rm -v
+        sudo sh -c "rm -vf $(ls -t ${local_cache}/*.pat | head -n 1)"
     fi
 
     if [ -f ${patfile} ]; then
