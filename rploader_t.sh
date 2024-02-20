@@ -3160,8 +3160,15 @@ fi
     patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)    
     FILESIZE=$(stat -c%s "${patfile}")
     SPACELEFT=$(df --block-size=1 | awk '/'${loaderdisk}'3/{print $4}') # Check disk space left    
-    echo "FILESIZE  = " "${FILESIZE}"
-    echo "SPACELEFT = " "${SPACELEFT}"
+
+    FILESIZE_FORMATTED=$(printf "%'d" "${FILESIZE}")
+    SPACELEFT_FORMATTED=$(printf "%'d" "${SPACELEFT}")
+    FILESIZE_MB=$((FILESIZE / 1024 / 1024))
+    SPACELEFT_MB=$((SPACELEFT / 1024 / 1024))    
+
+    echo "FILESIZE  = ${FILESIZE_FORMATTED} bytes (${FILESIZE_MB} MB)"
+    echo "SPACELEFT = ${SPACELEFT_FORMATTED} bytes (${SPACELEFT_MB} MB)"
+
     if [ 0${FILESIZE} -ge 0${SPACELEFT} ]; then
         # No disk space to download, change it to RAMDISK
         echo "No adequate space on ${local_cache} to backup cache pat file, clean up PAT file now ....."
