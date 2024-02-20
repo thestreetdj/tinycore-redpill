@@ -3476,7 +3476,7 @@ function getredpillko() {
 if [ $# -lt 2 ]; then
     syntaxcheck $@
 fi
-
+GATEWAY_INTERFACE=""
 if [ -z "$GATEWAY_INTERFACE" ]; then
 
     loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}'| head -1)"
