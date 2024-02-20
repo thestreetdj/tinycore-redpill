@@ -7,7 +7,7 @@
 #
 # User Variables : 1.1.0.0
 ##### INCLUDES #########################################################################################################
-source myfunc.h # my.sh / myv.sh common use 
+#source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
 rploaderver="1.1.0.0"
@@ -118,6 +118,31 @@ function history() {
 EOF
 
 }
+
+function msgalert() {
+    echo -e "\033[1;31m$1\033[0m"
+}
+function msgwarning() {
+    echo -e "\033[1;33m$1\033[0m"
+}
+function msgnormal() {
+    echo -e "\033[1;32m$1\033[0m"
+} 
+function st() {
+echo -e "[$(date '+%T.%3N')]:-------------------------------------------------------------" >> /home/tc/buildstatus
+echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
+}
+
+function readanswer() {
+    while true; do
+        read answ
+        case $answ in
+            [Yy]* ) answer="$answ"; break;;
+            [Nn]* ) answer="$answ"; break;;
+            * ) msgwarning "Please answer yY/nN.";;
+        esac
+    done
+}        
 
 function setnetwork() {
 
