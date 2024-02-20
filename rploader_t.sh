@@ -398,6 +398,22 @@ function version() {
 
 }
 
+function checkmachine() {
+
+    if grep -q ^flags.*\ hypervisor\  /proc/cpuinfo; then
+        MACHINE="VIRTUAL"
+        HYPERVISOR=$(dmesg | grep -i "Hypervisor detected" | awk '{print $5}')
+        echo "Machine is $MACHINE Hypervisor=$HYPERVISOR"
+    fi
+
+    if [ $(lscpu |grep Intel |wc -l) -gt 0 ]; then
+        CPU="INTEL"
+    else	
+        CPU="AMD"    
+    fi
+
+}
+
 function savesession() {
 
     lastsessiondir="/mnt/${tcrppart}/lastsession"
@@ -557,6 +573,20 @@ st "extractor" "Extraction tools" "Extraction Tools downloaded"
     fi
     if [ $? -eq 255 ]; then echo "Executed succesfully"; else echo "Cound not execute"; fi    
 
+}
+
+function chkavail() {
+
+    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | grep G | wc -l) -gt 0 ]; then
+        avail_str=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/G//g' | cut -c 1-3)
+        avail=$(echo "$avail_str 1000" | awk '{print $1 * $2}')
+    else
+        avail=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' | cut -c 1-3)
+    fi
+
+    avail_num=$(($avail))
+    
+    echo "Avail space ${avail_num}M on /mnt/${tcrppart}"
 }
 
 function processpat() {
@@ -3476,7 +3506,7 @@ function getredpillko() {
 if [ $# -lt 2 ]; then
     syntaxcheck $@
 fi
-GATEWAY_INTERFACE=""
+
 if [ -z "$GATEWAY_INTERFACE" ]; then
 
     loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}'| head -1)"
