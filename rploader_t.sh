@@ -3035,7 +3035,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
     # Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules 2024.02.18
 #def
-if [ 1= 0 ]; then
+if [ 1 = 0 ]; then
     [ ! -d /home/tc/custom.temp ] && mkdir /home/tc/custom.temp
     [ -d /home/tc/custom.temp ] && cd /home/tc/custom.temp
     
@@ -3160,8 +3160,8 @@ fi
     patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)    
     FILESIZE=$(stat -c%s "${patfile}")
     SPACELEFT=$(df --block-size=1 | awk '/'${loaderdisk}'3/{print $4}') # Check disk space left    
-    echo "FILESIZE  = " "0${FILESIZE}"
-    echo "SPACELEFT = " "0${SPACELEFT}"
+    echo "FILESIZE  = " "${FILESIZE}"
+    echo "SPACELEFT = " "${SPACELEFT}"
     if [ 0${FILESIZE} -ge 0${SPACELEFT} ]; then
         # No disk space to download, change it to RAMDISK
         echo "No adequate space on ${local_cache} to backup cache pat file, clean up PAT file now ....."
@@ -3169,8 +3169,8 @@ fi
     fi
 
     if [ -f ${patfile} ]; then
-        echo "Found ${patfile}, copying to cache directory : ${local_cache} "
-        mv -vf ${patfile} ${local_cache}
+        echo "Found ${patfile}, moving to cache directory : ${local_cache} "
+        sudo mv -vf ${patfile} ${local_cache}
     fi
 st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
 
