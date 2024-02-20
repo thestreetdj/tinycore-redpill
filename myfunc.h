@@ -745,6 +745,12 @@ function checkmachine() {
         MACHINE="NON-VIRTUAL"
     fi
 
+    if [ $(lscpu |grep Intel |wc -l) -gt 0 ]; then
+        CPU="INTEL"
+    else	
+        CPU="AMD"    
+    fi
+
 }
 
 function checkinternet() {
