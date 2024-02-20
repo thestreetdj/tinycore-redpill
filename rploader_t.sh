@@ -3035,26 +3035,17 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
     # Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules 2024.02.18
 #def
-if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+if [ 1= 0 ]; then
     [ ! -d /home/tc/custom.temp ] && mkdir /home/tc/custom.temp
     [ -d /home/tc/custom.temp ] && cd /home/tc/custom.temp
     
     cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/usr.tgz -o /tmp/usr.tgz
         [ ! -d /home/tc/custom.temp/usr/lib/firmware ] && sudo mkdir /home/tc/custom.temp/usr/lib/firmware
-        
-        #sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/usr.tgz -o /tmp/usr.tgz        
-        #sudo tar xvfz /tmp/usr.tgz -C /home/tc/custom.temp
-
-        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${ORIGIN_PLATFORM}-${major}.${minor}-${KVER}.tgz  -o /tmp/modules.tgz
-        sudo tar xvfz /tmp/modules.tgz -C /home/tc/custom.temp/usr/lib/modules/        
-        # get rr's mpt3sas
-        sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rr/mpt3sas.ko -o /home/tc/custom.temp/usr/lib/modules/mpt3sas.ko
-
-        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmware.tgz  -o /tmp/firmware.tgz
-        sudo tar xvfz /tmp/firmware.tgz -C /home/tc/custom.temp/usr/lib/firmware/
-        
+        sudo tar xvfz /tmp/usr.tgz -C /home/tc/custom.temp
         sudo tar xvfz /home/tc/custom.temp/exts/all-modules/sbin.tgz -C /home/tc/custom.temp
+        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/raw/main/thirdparty/epyc7002-7.2-5.10.55/i915.ko -o /home/tc/custom.temp/usr/lib/modules/i915.ko
 #    else
 #        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${ORIGIN_PLATFORM}-${KVER}.tgz  -o /tmp/modules.tgz
 #        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmware.tgz  -o /tmp/firmware.tgz                
@@ -3082,7 +3073,7 @@ fi
 
     cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
 
-    # SA6400 patches
+    # SA6400 patches for JOT Mode
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
         echo -e "Apply Epyc7002 Fixes"
         sudo sed -i 's#/dev/console#/var/log/lrc#g' /home/tc/rd.temp/usr/bin/busybox
