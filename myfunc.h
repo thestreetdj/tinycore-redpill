@@ -676,7 +676,7 @@ function getlatestmshell() {
 
 }
 
-macgen() {
+function macgen() {
 echo
 
     if [ "$realmac" == 'Y' ] ; then
@@ -709,3 +709,87 @@ function generateMacAddress() {
     printf '00:11:32:%02X:%02X:%02X' $((RANDOM % 256)) $((RANDOM % 256)) $((RANDOM % 256))
 
 }
+
+function st() {
+echo -e "[$(date '+%T.%3N')]:-------------------------------------------------------------" >> /home/tc/buildstatus
+echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
+}
+
+function checkmachine() {
+
+    if grep -q ^flags.*\ hypervisor\  /proc/cpuinfo; then
+        MACHINE="VIRTUAL"
+        HYPERVISOR=$(dmesg | grep -i "Hypervisor detected" | awk '{print $5}')
+        echo "Machine is $MACHINE Hypervisor=$HYPERVISOR"
+    else
+        MACHINE="NON-VIRTUAL"
+    fi
+
+}
+
+function checkinternet() {
+
+    echo -n "Checking Internet Access -> "
+#    nslookup $gitdomain 2>&1 >/dev/null
+    curl --insecure -L -s https://raw.githubusercontent.com/about.html -O 2>&1 >/dev/null
+
+    if [ $? -eq 0 ]; then
+        echo "OK"
+    else
+        cecho g "Error: No internet found, or $gitdomain is not accessible"
+        
+        gitdomain="giteas.duckdns.org"
+        cecho p "Try to connect to $gitdomain......"
+        nslookup $gitdomain 2>&1 >/dev/null
+        if [ $? -eq 0 ]; then
+            echo "OK"
+        else
+            cecho g "Error: No internet found, or $gitdomain is not accessible"
+            exit 99
+        fi
+    fi
+
+}
+
+###############################################################################
+# Write to json config file
+function writeConfigKey() {
+
+    block="$1"
+    field="$2"
+    value="$3"
+
+    if [ -n "$1 " ] && [ -n "$2" ]; then
+        jsonfile=$(jq ".$block+={\"$field\":\"$value\"}" $USER_CONFIG_FILE)
+        echo $jsonfile | jq . >$USER_CONFIG_FILE
+    else
+        echo "No values to update"
+    fi
+}
+
+###############################################################################
+# Get fastest url in list
+# @ - url list
+function _get_fastest() {
+  local speedlist=""
+  for I in $@; do
+    speed=$(ping -c 1 -W 5 ${I} 2>/dev/null | awk '/time=/ {print $7}' | cut -d '=' -f 2)
+    speedlist+="${I} ${speed:-999}\n"
+  done
+  fastest="$(echo -e "${speedlist}" | tr -s '\n' | sort -k2n | head -1 | awk '{print $1}')"
+  echo "${fastest}"
+}
+
+function chkavail() {
+
+    if [ $(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | grep G | wc -l) -gt 0 ]; then
+        avail_str=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/G//g' | cut -c 1-3)
+        avail=$(echo "$avail_str 1000" | awk '{print $1 * $2}')
+    else
+        avail=$(df -h /mnt/${tcrppart} | grep mnt | awk '{print $4}' | sed -e 's/M//g' | cut -c 1-3)
+    fi
+
+    avail_num=$(($avail))
+    
+    echo "Avail space ${avail_num}M on /mnt/${tcrppart}"
+}    
