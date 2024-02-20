@@ -3035,7 +3035,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
     # Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules 2024.02.18
 #def
-if [ 1= 0 ]; then
+if [ 1 = 0 ]; then
     [ ! -d /home/tc/custom.temp ] && mkdir /home/tc/custom.temp
     [ -d /home/tc/custom.temp ] && cd /home/tc/custom.temp
     
@@ -3156,21 +3156,28 @@ fi
     msgnormal "Caching files for future use"
     [ ! -d ${local_cache} ] && mkdir ${local_cache}
 
-    chkavail
-    if [ $avail_num -le 360 ]; then
-        echo "No adequate space on TCRP loader partition /mnt/${tcrppart} to backup cache pat file"
-        echo "Found $(ls /mnt/${tcrppart}/auxfiles/*.pat) file"
-        echo "Removing older cached pat files to cache current"
-        rm -f /mnt/${tcrppart}/auxfiles/*.pat
-        patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
-        echo "Found ${patfile}, copying to cache directory : ${local_cache} "
-        cp -f ${patfile} ${local_cache} && rm /home/tc/redpill-load/cache/*.pat
-    else
-        if [ -f "$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)" ]; then
-            patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)
-            echo "Found ${patfile}, copying to cache directory : ${local_cache} "
-            cp -f ${patfile} ${local_cache}
-        fi
+    # Discover remote file size
+    patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)    
+    FILESIZE=$(stat -c%s "${patfile}")
+    SPACELEFT=$(df --block-size=1 | awk '/'${loaderdisk}'3/{print $4}') # Check disk space left    
+
+    FILESIZE_FORMATTED=$(printf "%'d" "${FILESIZE}")
+    SPACELEFT_FORMATTED=$(printf "%'d" "${SPACELEFT}")
+    FILESIZE_MB=$((FILESIZE / 1024 / 1024))
+    SPACELEFT_MB=$((SPACELEFT / 1024 / 1024))    
+
+    echo "FILESIZE  = ${FILESIZE_FORMATTED} bytes (${FILESIZE_MB} MB)"
+    echo "SPACELEFT = ${SPACELEFT_FORMATTED} bytes (${SPACELEFT_MB} MB)"
+
+    if [ 0${FILESIZE} -ge 0${SPACELEFT} ]; then
+        # No disk space to download, change it to RAMDISK
+        echo "No adequate space on ${local_cache} to backup cache pat file, clean up PAT file now ....."
+        rm -vf ${local_cache}/*.pat | head -n 1 | xargs rm -v
+    fi
+
+    if [ -f ${patfile} ]; then
+        echo "Found ${patfile}, moving to cache directory : ${local_cache} "
+        cp -vf ${patfile} ${local_cache} && rm -vf /home/tc/redpill-load/cache/*.pat
     fi
 st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
 
