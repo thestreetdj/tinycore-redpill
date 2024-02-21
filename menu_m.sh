@@ -1950,13 +1950,6 @@ if [ "$(which ntpclient)_" == "_" ]; then
    sudo echo "ntpclient.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 fi
 
-# Download bspatch
-if [ "$(which bspatch)_" == "_" ]; then
-    echo "bspatch does not exist, copy from tools"
-    chmod 700 ~/tools/bspatch
-    sudo cp -vf ~/tools/bspatch /usr/local/bin/
-fi
-
 # Download pigz
 if [ "$(which pigz)_" == "_" ]; then
     echo "pigz does not exist, bringing over from repo"
@@ -1972,6 +1965,13 @@ if [ "$(which dtc)_" == "_" ]; then
     chmod 700 dtc
     sudo mv -vf dtc /usr/local/bin/
 fi   
+
+# Download bspatch
+if [ ! -f /usr/local/bspatch ]; then
+    echo "bspatch does not exist, copy from tools"
+    chmod 700 ~/tools/bspatch
+    sudo cp -vf ~/tools/bspatch /usr/local/bin/
+fi
 
 # Download kmaps
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep kmaps | wc -w) -eq 0 ]; then
