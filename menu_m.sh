@@ -1943,6 +1943,36 @@ if [ "$(which dialog)_" == "_" ]; then
     sudo echo "dialog.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 fi
 
+# Download ntpclient
+if [ "$(which ntpclient)_" == "_" ]; then
+    echo "ntpclient does not exist, install from tinycore"
+   tce-load -iw ntpclient 2>&1 >/dev/null
+   sudo echo "ntpclient.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+fi
+
+# Download bspatch
+if [ "$(which bspatch)_" == "_" ]; then
+    echo "bspatch does not exist, copy from tools"
+    chmod 700 ~/tools/bspatch
+    sudo cp -vf ~/tools/bspatch /usr/local/bin/
+fi
+
+# Download pigz
+if [ "$(which pigz)_" == "_" ]; then
+    echo "pigz does not exist, bringing over from repo"
+    curl -skLO https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tools/pigz
+    chmod 700 pigz
+    sudo mv -vf pigz /usr/local/bin/
+fi
+
+# Download dtc
+if [ "$(which dtc)_" == "_" ]; then
+    echo "dtc dos not exist, Downloading dtc binary"
+    curl -skLO https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tools/dtc
+    chmod 700 dtc
+    sudo mv -vf dtc /usr/local/bin/
+fi   
+
 # Download kmaps
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep kmaps | wc -w) -eq 0 ]; then
     sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz -o /mnt/${tcrppart}/cde/optional/kmaps.tcz
