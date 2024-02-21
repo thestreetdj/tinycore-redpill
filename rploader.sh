@@ -1748,7 +1748,7 @@ function patchdtc() {
     usbvid=$(cat user_config.json | jq '.extra_cmdline .vid' | sed -e 's/"//g' | sed -e 's/0x//g')
     loaderusb=$(lsusb | grep "${usbvid}:${usbpid}" | awk '{print $2 "-"  $4 }' | sed -e 's/://g' | sed -s 's/00//g')
 
-    curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/${TARGET_PLATFORM}.dts" -o /home/tc/redpill-load/${TARGET_PLATFORM}.dts
+    curl -skL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/${TARGET_PLATFORM}.dts" -o /home/tc/redpill-load/${TARGET_PLATFORM}.dts
 
     if [ ! -d /lib64 ]; then
         [ ! -h /lib64 ] && sudo ln -s /lib /lib64
