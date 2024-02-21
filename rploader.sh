@@ -1754,9 +1754,13 @@ function patchdtc() {
         [ ! -h /lib64 ] && sudo ln -s /lib /lib64
     fi
 
-    echo "Downloading dtc binary"
-    curl -kL -# "$dtcbin" -O
-    chmod 700 dtc
+    # Download dtc
+    if [ "$(which dtc)_" == "_" ]; then
+        echo "dtc dos not exist, Downloading dtc binary"
+        curl -skLO "$dtcbin"
+        chmod 700 dtc
+        sudo mv -vf dtc /usr/local/bin/
+    fi 
 
     if [ -f /home/tc/custom-module/${TARGET_PLATFORM}.dts ] && [ ! -f /home/tc/custom-module/${TARGET_PLATFORM}.dtb ]; then
         echo "Found locally cached dts file ${TARGET_PLATFORM}.dts and dtb file does not exist in cache, converting dts to dtb"
