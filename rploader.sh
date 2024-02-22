@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.1.0.0
+# User Variables : 1.0.2.0
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.1.0.0"
+rploaderver="1.0.2.0"
 build="master"
 redpillmake="prod"
 
@@ -113,7 +113,7 @@ function history() {
     1.0.1.0 Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
     1.0.1.1 Fix monitor fuction about ethernet infomation
     1.0.1.2 Fix for SA6400
-    1.1.0.0 Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules
+    1.0.2.0 Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
     --------------------------------------------------------------------------------------
 EOF
 
@@ -2754,7 +2754,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 1.0.1.0"
+    echo "TCRP JOT Version : 1.0.2.0"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
