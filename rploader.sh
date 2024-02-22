@@ -3029,8 +3029,8 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
     if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "v1000" ] || [ ${ORIGIN_PLATFORM} = "r1000" ]; then
         echo "add modprobe.blacklist=mpt3sas for Device-tree based platforms"
-        USB_LINE="${USB_LINE} modprobe.blacklist=mpt3sas"
-        SATA_LINE="${SATA_LINE} modprobe.blacklist=mpt3sas"
+        USB_LINE="${USB_LINE} modprobe.blacklist=mpt3sas "
+        SATA_LINE="${SATA_LINE} modprobe.blacklist=mpt3sas "
     fi
     
     msgwarning "Updated user_config with USB Command Line : $USB_LINE"
