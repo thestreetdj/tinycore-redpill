@@ -3027,6 +3027,12 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     rdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
     updateuserconfigfield "general" "rdhash" "$rdhash"
 
+    if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "v1000" ] || [ ${ORIGIN_PLATFORM} = "r1000" ]; then
+        echo "add modprobe.blacklist=mpt3sas for Device-tree based platforms"
+        USB_LINE="${USB_LINE} modprobe.blacklist=mpt3sas"
+        SATA_LINE="${SATA_LINE} modprobe.blacklist=mpt3sas"
+    fi
+    
     msgwarning "Updated user_config with USB Command Line : $USB_LINE"
     json=$(jq --arg var "${USB_LINE}" '.general.usb_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
     msgwarning "Updated user_config with SATA Command Line : $SATA_LINE"
