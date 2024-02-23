@@ -5,12 +5,12 @@
 # Version : 0.9.4.0-1
 #
 #
-# User Variables : 1.1.0.0
+# User Variables : 1.0.2.0
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.1.0.0"
+rploaderver="1.0.2.0"
 build="master"
 redpillmake="prod"
 
@@ -113,7 +113,7 @@ function history() {
     1.0.1.0 Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
     1.0.1.1 Fix monitor fuction about ethernet infomation
     1.0.1.2 Fix for SA6400
-    1.1.0.0 Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules
+    1.0.2.0 Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
     --------------------------------------------------------------------------------------
 EOF
 
@@ -1132,14 +1132,14 @@ function postupdate() {
 }
 
 function getbspatch() {
-    if [ ! -n "$(which bspatch)" ]; then
+    if [ ! -f /usr/local/bspatch ]; then
 
         #echo "bspatch does not exist, bringing over from repo"
         #curl -kL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
          
         echo "bspatch does not exist, copy from tools"
         chmod 777 ~/tools/bspatch
-        sudo cp ~/tools/bspatch /usr/local/bin/
+        sudo cp -vf ~/tools/bspatch /usr/local/bin/
     fi
 }    
 
@@ -1748,15 +1748,19 @@ function patchdtc() {
     usbvid=$(cat user_config.json | jq '.extra_cmdline .vid' | sed -e 's/"//g' | sed -e 's/0x//g')
     loaderusb=$(lsusb | grep "${usbvid}:${usbpid}" | awk '{print $2 "-"  $4 }' | sed -e 's/://g' | sed -s 's/00//g')
 
-    curl -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/${TARGET_PLATFORM}.dts" -o /home/tc/redpill-load/${TARGET_PLATFORM}.dts
+    curl -skL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/${TARGET_PLATFORM}.dts" -o /home/tc/redpill-load/${TARGET_PLATFORM}.dts
 
     if [ ! -d /lib64 ]; then
         [ ! -h /lib64 ] && sudo ln -s /lib /lib64
     fi
 
-    echo "Downloading dtc binary"
-    curl -kL -# "$dtcbin" -O
-    chmod 700 dtc
+    # Download dtc
+    if [ "$(which dtc)_" == "_" ]; then
+        echo "dtc dos not exist, Downloading dtc binary"
+        curl -skLO "$dtcbin"
+        chmod 700 dtc
+        sudo mv -vf dtc /usr/local/bin/
+    fi 
 
     if [ -f /home/tc/custom-module/${TARGET_PLATFORM}.dts ] && [ ! -f /home/tc/custom-module/${TARGET_PLATFORM}.dtb ]; then
         echo "Found locally cached dts file ${TARGET_PLATFORM}.dts and dtb file does not exist in cache, converting dts to dtb"
@@ -2750,7 +2754,7 @@ function savedefault {
     saved_entry="\${chosen}"
     save_env --file \$prefix/grubenv saved_entry
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 1.0.1.0"
+    echo "TCRP JOT Version : 1.0.2.0"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
@@ -3023,6 +3027,12 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     rdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
     updateuserconfigfield "general" "rdhash" "$rdhash"
 
+    if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "v1000" ] || [ ${ORIGIN_PLATFORM} = "r1000" ]; then
+        echo "add modprobe.blacklist=mpt3sas for Device-tree based platforms"
+        USB_LINE="${USB_LINE} modprobe.blacklist=mpt3sas "
+        SATA_LINE="${SATA_LINE} modprobe.blacklist=mpt3sas "
+    fi
+    
     msgwarning "Updated user_config with USB Command Line : $USB_LINE"
     json=$(jq --arg var "${USB_LINE}" '.general.usb_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
     msgwarning "Updated user_config with SATA Command Line : $SATA_LINE"
@@ -3172,7 +3182,7 @@ fi
     if [ 0${FILESIZE} -ge 0${SPACELEFT} ]; then
         # No disk space to download, change it to RAMDISK
         echo "No adequate space on ${local_cache} to backup cache pat file, clean up PAT file now ....."
-        rm -vf ${local_cache}/*.pat | head -n 1 | xargs rm -v
+        sudo sh -c "rm -vf $(ls -t ${local_cache}/*.pat | head -n 1)"
     fi
 
     if [ -f ${patfile} ]; then
