@@ -4,13 +4,12 @@
 # Date : 221115
 # Version : 0.9.4.0-1
 #
-#
-# User Variables : 1.0.2.0
+# 
 ##### INCLUDES #########################################################################################################
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.2.0"
+rploaderver="1.0.2.1"
 build="master"
 redpillmake="prod"
 
@@ -114,6 +113,7 @@ function history() {
     1.0.1.1 Fix monitor fuction about ethernet infomation
     1.0.1.2 Fix for SA6400
     1.0.2.0 Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
+    1.0.2.1 Changed extension file organization method
     --------------------------------------------------------------------------------------
 EOF
 
@@ -1340,17 +1340,19 @@ function removebundledexts() {
 
 function removemodelexts() {                                                                             
                                                                                         
-    echo "Entering redpill-load directory to remove model exts"                                                            
+    echo "Entering redpill-load directory to remove exts"                                                            
     cd /home/tc/redpill-load/
+    echo "Removing all exts directories..."
+    sudo rm -rf /home/tc/redpill-load/custom/extensions/*
                                                                                                                               
-    echo "Removing model exts directories"
-    for modelextdir in ${EXTENSIONS}; do
-        if [ -d /home/tc/redpill-load/custom/extensions/${modelextdir} ]; then                                                         
-            echo "Removing : ${modelextdir}"
-            sudo rm -rf /home/tc/redpill-load/custom/extensions/${modelextdir}            
-        fi                                                                                            
-    done                                                           
-                                                                                                                              
+    #echo "Removing model exts directories..."
+    #for modelextdir in ${EXTENSIONS}; do
+    #    if [ -d /home/tc/redpill-load/custom/extensions/${modelextdir} ]; then                                                         
+    #        echo "Removing : ${modelextdir}"
+    #        sudo rm -rf /home/tc/redpill-load/custom/extensions/${modelextdir}            
+    #    fi                                                                                            
+    #done                                                           
+
 } 
 
 function downloadextractorv2() {
@@ -2819,7 +2821,8 @@ checkmachine
     if [ "$FROMMYV" = "YES" ]; then
         echo "skip removebundledexts() for called from myv.sh"
     else
-        removemodelexts
+        echo "Clean up extension files before building!!!"
+        removemodelexts    
     fi    
 
     if [ ! -d /lib64 ]; then
@@ -3159,8 +3162,6 @@ fi
       rm /mnt/${loaderdisk}3/initrd-dsm72
     fi
 
-    echo "Cleaning up files"
-    removemodelexts    
     sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/cache/*.pat
     
     msgnormal "Caching files for future use"
