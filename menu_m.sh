@@ -982,7 +982,7 @@ done
 # Shows available models to user choose one
 function modelMenu() {
 
-  M_GRP1="SA6400 DS3622xs+ DS1621xs+ RS3621xs+ RS4021xs+ RS1619xs+ DS3617xs RS3618xs"
+  M_GRP1="SA6400 DS3622xs+ DS1621xs+ RS3621xs+ RS4021xs+ DS3617xs RS3618xs" #RS1619xs+
   M_GRP2="DS3615xs"
   M_GRP3="DVA3221 DVA3219 DS1819+ DS2419+"
   M_GRP4="DS218+ DS918+ DS1019+ DS620slim DS718+"
@@ -1120,7 +1120,7 @@ function setSuggest() {
     RS3618xs)    platform="broadwell";bay="RACK_12_Bay";mcpu="Intel Xeon D-1521";eval "desc=\"[${MODEL}]:${platform},${bay},${mcpu}, \${MSG${tz}16}\"";;
     RS3621xs+)   platform="broadwellnk";bay="RACK_12_Bay";mcpu="Intel Xeon D-1541";eval "desc=\"[${MODEL}]:${platform},${bay},${mcpu}, \${MSG${tz}16}\"";;    
     RS4021xs+)   platform="broadwellnk";bay="RACK_16_Bay";mcpu="Intel Xeon D-1541";eval "desc=\"[${MODEL}]:${platform},${bay},${mcpu}, \${MSG${tz}16}\"";;
-    RS1619xs+)   platform="broadwellnk";bay="RACK_16_Bay";mcpu="Intel Xeon D-1541";eval "desc=\"[${MODEL}]:${platform},${bay},${mcpu}, \${MSG${tz}16}\"";;
+    #RS1619xs+)   platform="broadwellnk";bay="RACK_16_Bay";mcpu="Intel Xeon D-1541";eval "desc=\"[${MODEL}]:${platform},${bay},${mcpu}, \${MSG${tz}16}\"";;
     SA6400)      platform="epyc7002(DT)";bay="RACK_12_Bay";mcpu="AMD EPYC 7272";eval "desc=\"[${MODEL}]:${platform},${bay},${mcpu} \"";;
   esac
 
