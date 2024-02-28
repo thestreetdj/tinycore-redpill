@@ -897,15 +897,15 @@ function addrequiredexts() {
             exit 99
         fi
         if [ ${extension} = "all-modules" ]; then
-            echo "Extract all-modules to making compact custom.gz !!!!!!!!!!!!!"
+            echo "Extract all-modules to making compact custom.gz !!!"
             listmodules
         fi
     done
 
-    echo "Remove firmware.tgz to making compact custom.gz !!!!!!!!!!!!!"
+    echo "Remove firmware.tgz to making compact custom.gz !!!"
     sudo rm -f /home/tc/redpill-load/custom/extensions/all-modules/${platkver}/firmware.tgz
-    echo "Repacking all-modules to making compact custom.gz !!!!!!!!!!!!!"
-    tar -zcvf /home/tc/redpill-load/custom/extensions/all-modules/${platkver}/${ORIGIN_PLATFORM}_${vkersion}.tgz *.ko
+    echo "Repacking all-modules to making compact custom.gz !!!"
+    tar -zcvf /home/tc/redpill-load/custom/extensions/all-modules/${platkver}/${ORIGIN_PLATFORM}-${vkersion}.tgz *.ko
 
 #m shell only
  #Use user define dts file instaed of dtbpatch ext now
