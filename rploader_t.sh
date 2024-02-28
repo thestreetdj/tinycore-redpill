@@ -809,6 +809,64 @@ function testarchive() {
 
 }
 
+function getmodaliasfile() {
+
+    echo "{"
+    echo "\"modules\" : ["
+
+    grep -ie pci -ie usb /lib/modules/$(uname -r)/modules.alias | while read line; do
+
+        read alias pciid module <<<"$line"
+        echo "{"
+        echo "\"name\" :  \"${module}\"",
+        echo "\"alias\" :  \"${pciid}\""
+        echo "}",
+        #       echo "},"
+
+    done | sed '$ s/,//'
+
+    echo "]"
+    echo "}"
+
+}
+
+function listmodules() {
+
+    if [ ! -f $MODULE_ALIAS_FILE ]; then
+        echo "Creating module alias json file"
+        getmodaliasfile >modules.alias.4.json
+    fi
+
+    echo -n "Testing $MODULE_ALIAS_FILE -> "
+    if $(jq '.' $MODULE_ALIAS_FILE >/dev/null); then
+        echo "File OK"
+        echo "------------------------------------------------------------------------------------------------"
+        echo -e "It looks that you will need the following modules : \n\n"
+
+        #if [ "$WITHFRIEND" = "YES" ]; then
+        #    echo "Block listpci for using all-modules. 2022.11.09"
+        #else    
+            listpci
+        #fi
+
+        echo "------------------------------------------------------------------------------------------------"
+    else
+        echo "Error : File $MODULE_ALIAS_FILE could not be parsed"
+    fi
+
+}
+
+function listextension() {
+
+    if [ ! -z $1 ]; then
+        echo "Extract matching extension for $1"
+        tar xvfz /home/tc/redpill-load/custom/extensions/all-modules/${platkver}/${ORIGIN_PLATFORM}*.tgz ${1}.ko
+    else
+        echo "No matching extension"
+    fi
+
+}
+
 function addrequiredexts() {
 
     echo "Processing add_extensions entries found on custom_config.json file : ${EXTENSIONS}"
@@ -838,7 +896,16 @@ function addrequiredexts() {
             ./rploader.sh clean
             exit 99
         fi
+        if [ ${extension} = "all-modules" ]; then
+            echo "Extract all-modules to making compact custom.gz !!!!!!!!!!!!!"
+            listmodules
+        fi
     done
+
+    echo "Remove firmware.tgz to making compact custom.gz !!!!!!!!!!!!!"
+    sudo rm -f /home/tc/redpill-load/custom/extensions/all-modules/${platkver}/firmware.tgz
+    echo "Repacking all-modules to making compact custom.gz !!!!!!!!!!!!!"
+    tar -zcvf /home/tc/redpill-load/custom/extensions/all-modules/${platkver}/${ORIGIN_PLATFORM}_${vkersion}.tgz *.ko
 
 #m shell only
  #Use user define dts file instaed of dtbpatch ext now
@@ -3446,68 +3513,6 @@ function getmodulealiasjson() {
 
 }
 
-function getmodaliasfile() {
-
-    echo "{"
-    echo "\"modules\" : ["
-
-    grep -ie pci -ie usb /lib/modules/$(uname -r)/modules.alias | while read line; do
-
-        read alias pciid module <<<"$line"
-        echo "{"
-        echo "\"name\" :  \"${module}\"",
-        echo "\"alias\" :  \"${pciid}\""
-        echo "}",
-        #       echo "},"
-
-    done | sed '$ s/,//'
-
-    echo "]"
-    echo "}"
-
-}
-
-function listmodules() {
-
-    if [ ! -f $MODULE_ALIAS_FILE ]; then
-        echo "Creating module alias json file"
-        getmodaliasfile >modules.alias.4.json
-    fi
-
-    echo -n "Testing $MODULE_ALIAS_FILE -> "
-    if $(jq '.' $MODULE_ALIAS_FILE >/dev/null); then
-        echo "File OK"
-        echo "------------------------------------------------------------------------------------------------"
-        echo -e "It looks that you will need the following modules : \n\n"
-
-        #if [ "$WITHFRIEND" = "YES" ]; then
-        #    echo "Block listpci for using all-modules. 2022.11.09"
-        #else    
-            listpci
-        #fi
-
-        echo "------------------------------------------------------------------------------------------------"
-    else
-        echo "Error : File $MODULE_ALIAS_FILE could not be parsed"
-    fi
-
-}
-
-function listextension() {
-
-    if [ ! -z $1 ]; then
-        echo "Searching for matching extension for $1"
-        matchingextension=($(jq ". | select(.id | endswith(\"${1}\")) .url  " rpext-index.json))
-
-        extensionslist+="${matchingextension} "
-        echo $extensionslist
-        
-    else
-        echo "No matching extension"
-    fi
-
-}
-
 function ext_manager() {
 
     local _SCRIPTNAME="${0}"
@@ -3627,7 +3632,7 @@ echo "$4"
             echo "Using static compiled redpill extension"
             getstaticmodule
             echo "Got $REDPILL_MOD_NAME "
-            listmodules
+            #listmodules
             echo "Starting loader creation "
             buildloader junmod
             [ $? -eq 0 ] && savesession
@@ -3638,7 +3643,7 @@ echo "$4"
             echo "Using static compiled redpill extension"
             getstaticmodule
             echo "Got $REDPILL_MOD_NAME "
-            listmodules
+            #listmodules
             echo "Starting loader creation "
             buildloader
             [ $? -eq 0 ] && savesession
@@ -3655,7 +3660,7 @@ echo "$4"
         gitdownload
 
         if [ "$3" = "auto" ]; then
-            listmodules
+            ext_manager $@
         else
             ext_manager $@ # instead of listmodules
         fi
@@ -3681,7 +3686,7 @@ echo "$4"
         getvars $2
         checkinternet
         gitdownload
-        listmodules
+        #listmodules
         echo "$extensionslist"
         ;;
 
