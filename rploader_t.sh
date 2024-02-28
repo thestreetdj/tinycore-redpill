@@ -9,7 +9,7 @@
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.2.1"
+rploaderver="1.0.2.2"
 build="master"
 redpillmake="prod"
 
@@ -114,6 +114,7 @@ function history() {
     1.0.1.2 Fix for SA6400
     1.0.2.0 Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
     1.0.2.1 Changed extension file organization method
+    1.0.2.2 Remove firmware.tgz to create compact initrd-dsm and initrd-friend, select only modules detected in all-modules 
     --------------------------------------------------------------------------------------
 EOF
 
@@ -268,7 +269,7 @@ function getip() {
     done
 }
 
-function listpci() {
+function listpci_monitor() {
 
     lspci -n | while read line; do
 
@@ -339,7 +340,7 @@ function monitor() {
         echo -e "Current Date Time:\t"$(date)
         #msgnormal "System Main IP:\t\t"$(ifconfig | grep inet | grep -v 127.0.0.1 | awk '{print $2}' | awk -F \: '{print $2}' | tr '\n' ',' | sed 's#,$##')
         getip
-        listpci
+        listpci_monitor
         echo -e "-------------------------------Loader boot entries---------------------------"
         grep -i menuentry /mnt/${loaderdisk}1/boot/grub/grub.cfg | awk -F \' '{print $2}'
         echo -e "-------------------------------CPU / Memory----------------------------------"
@@ -354,6 +355,50 @@ function monitor() {
     done
 
 }
+
+function listpci() {
+
+    lspci -n | while read line; do
+
+        bus="$(echo $line | cut -c 1-7)"
+        class="$(echo $line | cut -c 9-12)"
+        vendor="$(echo $line | cut -c 15-18)"
+        device="$(echo $line | cut -c 20-23)"
+
+        #echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
+        case $class in
+        0100)
+            echo "Found SCSI Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            ;;
+        0106)
+            echo "Found SATA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            ;;
+        0101)
+            echo "Found IDE Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            ;;
+        0104)
+            echo "Found SAS Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            ;;
+        0107)
+            echo "Found SAS Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            ;;
+        0200)
+            echo "Found Ethernet Interface : pciid ${vendor}d0000${device} Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            ;;
+        0680)
+            echo "Found Ethernet Interface : pciid ${vendor}d0000${device} Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            ;;
+        0300)
+            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            ;;
+        0c04)
+            echo "Found Fibre Channel Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            ;;
+        esac
+    done
+
+}
+
 
 function syntaxcheck() {
 
@@ -3369,7 +3414,7 @@ function matchpciidmodule() {
 
     echo "$matchedmodule"
 
-    #listextension $matchedmodule
+    listextension $matchedmodule
 
 }
 
@@ -3435,11 +3480,11 @@ function listmodules() {
         echo "------------------------------------------------------------------------------------------------"
         echo -e "It looks that you will need the following modules : \n\n"
 
-        if [ "$WITHFRIEND" = "YES" ]; then
-            echo "Block listpci for using all-modules. 2022.11.09"
-        else    
+        #if [ "$WITHFRIEND" = "YES" ]; then
+        #    echo "Block listpci for using all-modules. 2022.11.09"
+        #else    
             listpci
-        fi
+        #fi
 
         echo "------------------------------------------------------------------------------------------------"
     else
@@ -3450,39 +3495,12 @@ function listmodules() {
 
 function listextension() {
 
-    if [ ! -f rpext-index.json ]; then
-        curl -k -# -L "${modextention}" -o rpext-index.json
-    fi
-
-    ## Get extension author rpext-index.json and then parse for extension download with :
-    #       jq '. | select(.id | contains("vxge")) .url  ' rpext-index.json
-
     if [ ! -z $1 ]; then
         echo "Searching for matching extension for $1"
         matchingextension=($(jq ". | select(.id | endswith(\"${1}\")) .url  " rpext-index.json))
 
-        if [ ! -z $matchingextension ]; then
-            echo "Found matching extension : "
-            echo $matchingextension
-            ./redpill-load/ext-manager.sh add "${matchingextension//\"/}"
-        fi
-
         extensionslist+="${matchingextension} "
         echo $extensionslist
-
-#m shell only
-        #def
-        if [ 1 = 0 ]; then
-        echo "Target Platform : ${TARGET_PLATFORM}"
-        if [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "rs4021xsp" ] || [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
-            if [ -d /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe ]; then
-                echo "Removing : PeterSuh-Q3.ixgbe"
-                echo "Reason : The Broadwellnk platform has a vanilla.ixgbe ext driver built into the DSM, so they conflict with each other if ixgbe is added separately."
-                sudo rm -rf /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe
-            fi
-        fi
-        #def
-        fi
         
     else
         echo "No matching extension"
