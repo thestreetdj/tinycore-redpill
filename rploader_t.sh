@@ -258,7 +258,7 @@ function getip() {
         VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
         DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
         if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
-            MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
+            MATCHDRIVER=$(echo "$(matchpciidmodulename ${VENDOR} ${DEVICE})")
             if [ ! -z "${MATCHDRIVER}" ]; then
                 if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
                     DRIVER=${MATCHDRIVER}
@@ -267,6 +267,27 @@ function getip() {
         fi    
         echo "IP Address : $(msgnormal "${IP}"), ${HWADDR} : ${eth} (${DRIVER})"        
     done
+}
+
+function matchpciidmodulename() {
+
+    MODULE_ALIAS_FILE="modules.alias.4.json"
+
+    vendor="$(echo $1 | sed 's/[a-z]/\U&/g')"
+    device="$(echo $2 | sed 's/[a-z]/\U&/g')"
+
+    pciid="${vendor}d0000${device}"
+
+    #jq -e -r ".modules[] | select(.alias | test(\"(?i)${1}\")?) |   .name " modules.alias.json
+    # Correction to work with tinycore jq
+    matchedmodule=$(jq -e -r ".modules[] | select(.alias | contains(\"${pciid}\")?) | .name " $MODULE_ALIAS_FILE)
+
+    # Call listextensions for extention matching
+
+    echo "$matchedmodule"
+
+    #listextension $matchedmodule
+
 }
 
 function listpci_monitor() {
@@ -290,11 +311,11 @@ function listpci_monitor() {
 #            echo "Found IDE Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
 #            ;;
         0104)
-            msgnormal "RAID bus Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgnormal "RAID bus Controller : Required Extension : $(matchpciidmodulename ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0104/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 05)//'
             ;;
         0107)
-            msgnormal "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
+            msgnormal "SAS Controller : Required Extension : $(matchpciidmodulename ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 03)//'
             ;;
 #        0200)
