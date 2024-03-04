@@ -442,9 +442,8 @@ fi
 if [ $? -ne 0 ]; then
     cecho r "An error occurred while building the loader!!! Clean the redpill-load directory!!! "
     ./rploader.sh clean
+else
+    echo "y"|./rploader.sh backup
 fi
-
-#echo "Clean all PAT files for saving space!"
-#sudo rm -f /mnt/${tcrppart}/auxfiles/*.pat
 
 exit 0
