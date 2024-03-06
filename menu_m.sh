@@ -1672,7 +1672,56 @@ function del-macspoof() {
 function inject_loader() {
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
   readanswer    
-  if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
+  if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
+    IDX=0
+    for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+    	if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
+	    echo "This is BASIC Type Disk. $edisk"
+            IDX=$((${IDX} + 1))
+        fi
+    done
+
+    if [ ${IDX} -gt 1 ]; then
+          NUM=1
+	  for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+	    model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
+	    echo
+	    echo
+	    if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+		echo "Skip this disk as it is a loader disk. $edisk $model"
+		continue
+	    elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
+		echo "Create extended and logical partitions on disk. ${edisk} ${model}"
+
+		last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}') 
+		echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+  		if [ ${NUM} = 1 ]; then
+  		# +98M
+                  echo "Create partitions on 1st disks... $edisk $model"
+		  echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
+		  echo -e "a\n5\nw" | sudo fdisk "${edisk}"
+		# +26M
+                  echo "Create partitions on 2nd disks... $edisk $model"  
+		  echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
+                elif [ ${NUM} = 2 ]; then
+		# + 127M
+		  echo -e "n\n\n+127M\nw\n" | sudo fdisk "${edisk}"
+                else
+		  echo "The 3rd and subsequent BASIC type disks are skipped... $edisk $model"
+		  continue
+                fi
+  		NUM=$((${NUM} + 1))
+            else
+		echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $edisk $model"
+		continue
+	    fi
+     else
+	echo "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..."
+    	read answer 
+        return
+     fi
+  done
+
     tce-load -wi grub2-multi
     sudo mount /dev/sdb5 /mnt/sdb5
     sudo mkdir /usr/local/share/locale
