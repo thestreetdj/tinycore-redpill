@@ -201,15 +201,15 @@ set -u
 # Update : Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
 # 2023.12.31        
 # Added SataPortMap/DiskIdxMap prevent initialization menu for virtual machines  
-# 2023.02.03
+# 2024.02.03
 # Created a menu to select the mac-spoof add-on and a submenu for additional features.
-# 2023.02.06
+# 2024.02.06
 # update corepure64.gz for tc user ttyS0 serial console works
-# 2023.02.08
+# 2024.02.08
 # Add Apollolake DS218+
-# 2023.02.22 v1.0.2.0
+# 2024.02.22 v1.0.2.0
 # Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
-# 2023.03.06 v1.0.2.2
+# 2024.03.06 v1.0.2.2
 # Recycle initrd-dsm instead of custom.gz (extract /exts)
     
 function showlastupdate() {
@@ -236,16 +236,16 @@ function showlastupdate() {
 # 2023.12.31        
 # Added SataPortMap/DiskIdxMap prevent initialization menu for virtual machines       
 
-# 2023.02.03
+# 2024.02.03
 # Created a menu to select the mac-spoof add-on and a submenu for additional features.
 
-# 2023.02.06
+# 2024.02.06
 # update corepure64.gz for tc user ttyS0 serial console works
 
-# 2023.02.22 v1.0.2.0
+# 2024.02.22 v1.0.2.0
 # Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
 
-# 2023.03.06 v1.0.2.2
+# 2024.03.06 v1.0.2.2
 # Recycle initrd-dsm instead of custom.gz (extract /exts)
         
 EOF
