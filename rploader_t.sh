@@ -9,7 +9,7 @@
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.2.1"
+rploaderver="1.0.2.2"
 build="master"
 redpillmake="prod"
 
@@ -114,6 +114,7 @@ function history() {
     1.0.1.2 Fix for SA6400
     1.0.2.0 Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
     1.0.2.1 Changed extension file organization method
+    1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts)
     --------------------------------------------------------------------------------------
 EOF
 
@@ -3080,11 +3081,19 @@ fi
         cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
 
     else    
-        echo "Ramdisk in compressed "        
+        echo "Ramdisk in compressed " 
         unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
     fi
 
-    cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
+    # 1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts)
+    if [ -f /mnt/${loaderdisk}3/initrd-dsm ]; then
+        echo "Found initrd-dsm and extract /exts from " 
+        cat /mnt/${loaderdisk}3/initrd-dsm | gzip -dc | sudo cpio -idm --to-stdout | grep '/exts'
+        sudo cp -vf /home/tc/custom-module/redpill.ko /home/tc/rd.temp/usr/lib/modules/redpill.ko
+    else
+        echo "Not found initrd-dsm, so extract from custom.gz " 
+        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
+    fi
 
     # SA6400 patches for JOT Mode
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
