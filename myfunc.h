@@ -209,6 +209,8 @@ set -u
 # Add Apollolake DS218+
 # 2023.02.22 v1.0.2.0
 # Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
+# 2023.03.06 v1.0.2.2
+# Recycle initrd-dsm instead of custom.gz (extract /exts)
     
 function showlastupdate() {
     cat <<EOF
@@ -242,6 +244,9 @@ function showlastupdate() {
 
 # 2023.02.22 v1.0.2.0
 # Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
+
+# 2023.03.06 v1.0.2.2
+# Recycle initrd-dsm instead of custom.gz (extract /exts)
         
 EOF
 }
