@@ -2845,7 +2845,7 @@ checkmachine
         mkdir cache
     fi
 
-    #downloadtools
+    downloadtools
     
     if [ ${TARGET_REVISION} -gt 42218 ]; then
 
