@@ -1688,20 +1688,19 @@ function inject_loader() {
 	    echo
 	    echo
 	    if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
-		echo "Skip this disk as it is a loader disk. $edisk $model"
+		echo "Skip this disk as it is a loader disk. $model"
 		continue
 	    elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
-		echo "Create extended and logical partitions on disk. ${edisk} ${model}"
+		echo "Create extended and logical partitions on disk. ${model}"
 
 		last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}') 
 		echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
   		if [ ${NUM} = 1 ]; then
   		# +98M
-                  echo "Create partitions on 1st disks... $edisk $model"
+                  echo "Create partitions on 1st disks... $model"
 		  echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
 		  echo -e "a\n5\nw" | sudo fdisk "${edisk}"
 		# +26M
-                  echo "Create partitions on 2nd disks... $edisk $model"  
 		  echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
 
 	  	  tce-load -wi grub2-multi
@@ -1712,16 +1711,16 @@ function inject_loader() {
 	    	  sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
     
                 elif [ ${NUM} = 2 ]; then
-		  echo "Create partitions on 2st disks... $edisk $model"
+		  echo "Create partitions on 2st disks... $model"
 		# + 127M
 		  echo -e "n\n\n+127M\nw\n" | sudo fdisk "${edisk}"
                 else
-		  echo "The 3rd and subsequent BASIC type disks are skipped... $edisk $model"
+		  echo "The 3rd and subsequent BASIC type disks are skipped... $model"
 		  continue
                 fi
   		NUM=$((${NUM} + 1))
             else
-		echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $edisk $model"
+		echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
 		continue
 	    fi
         done
