@@ -1703,7 +1703,16 @@ function inject_loader() {
 		# +26M
                   echo "Create partitions on 2nd disks... $edisk $model"  
 		  echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
+
+	  	  tce-load -wi grub2-multi
+                  mdisk=$(echo "${edisk}" | tr 'dev' 'mnt')
+	    	  sudo mount "${edisk}5" "${mdisk}5"
+	    	  sudo mkdir -p /usr/local/share/locale
+	    	  sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
+	    	  sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
+    
                 elif [ ${NUM} = 2 ]; then
+		  echo "Create partitions on 2st disks... $edisk $model"
 		# + 127M
 		  echo -e "n\n\n+127M\nw\n" | sudo fdisk "${edisk}"
                 else
@@ -1716,17 +1725,15 @@ function inject_loader() {
 		continue
 	    fi
         done
+	echo "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..."
+    	read answer 
+        return
     else
 	echo "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..."
     	read answer 
         return
     fi
 
-    tce-load -wi grub2-multi
-    sudo mount /dev/sdb5 /mnt/sdb5
-    sudo mkdir /usr/local/share/locale
-    sudo grub-install --target=x86_64-efi --boot-directory=/mnt/sdb5/boot --efi-directory=/mnt/sdb5 --removable
-    sudo grub-install --target=i386-pc --boot-directory=/mnt/sdb5/boot /dev/sdb
   fi
 }
 
