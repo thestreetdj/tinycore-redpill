@@ -1712,8 +1712,8 @@ function inject_loader() {
     
                 elif [ ${NUM} = 2 ]; then
 		  echo "Create partitions on 2st disks... $model"
-		# + 127M
-		  echo -e "n\n\n+127M\nw\n" | sudo fdisk "${edisk}"
+		# + about 127M
+		  echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
                 else
 		  echo "The 3rd and subsequent BASIC type disks are skipped... $model"
 		  continue
