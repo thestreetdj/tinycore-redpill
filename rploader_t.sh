@@ -30,7 +30,7 @@ fullupdatefiles="custom_config.json custom_config_jun.json global_config.json mo
 
 HOMEPATH="/home/tc"
 TOOLSPATH="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/tools/"
-TOOLS="bspatch bzImage-template-v4.gz bzImage-template-v5.gz bzImage-to-vmlinux.sh calc_run_size.sh crc32 dtc kexec ramdisk-patch.sh vmlinux-to-bzImage.sh xxd zimage-patch.sh kpatch grub-editenv pigz"
+TOOLS="bspatch bzImage-template-v4.gz bzImage-template-v5.gz bzImage-to-vmlinux.sh calc_run_size.sh crc32 dtc kexec ramdisk-patch.sh vmlinux-to-bzImage.sh xxd zimage-patch.sh kpatch grub-editenv pigz modprobe"
 
 # END Do not modify after this line
 ######################################################################################################
@@ -94,7 +94,7 @@ function history() {
     0.9.2.5 Adding experimental RS4021xs+ support
     0.9.2.6 Added the downloadupgradepat action **experimental
     0.9.2.7 Added setting the static network configuration for TCRP Friend
-    0.9.2.8 Changed all curl calls to use the -k flag to avoid expired certificate issues
+    0.9.2.8 Changed all  calls to use the -k flag to avoid expired certificate issues
     0.9.2.9 Added the smallfixnumber key in user_config.json and changed the platform ids to model ids
     0.9.3.0 Changed set root entry to search for FS UUID
     0.9.4.3-1 Multilingual menu support 
@@ -3088,8 +3088,9 @@ fi
     # 1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts)
     if [ -f /mnt/${loaderdisk}3/initrd-dsm ]; then
         echo "Found initrd-dsm and extract /exts from " 
-        cat /mnt/${loaderdisk}3/initrd-dsm | gzip -dc | sudo cpio -idm --to-stdout | grep '/exts'
+        sudo cpio -idm < /mnt/${loaderdisk}3/initrd-dsm | grep '/exts'
         sudo cp -vf /home/tc/custom-module/redpill.ko /home/tc/rd.temp/usr/lib/modules/redpill.ko
+        sudo cp -vf ${HOMEPATH}/tools/modprobe /home/tc/rd.temp/usr/sbin/modprobe
     else
         echo "Not found initrd-dsm, so extract from custom.gz " 
         cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
