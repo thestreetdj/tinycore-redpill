@@ -9,7 +9,7 @@
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.2.1"
+rploaderver="1.0.2.2"
 build="master"
 redpillmake="prod"
 
@@ -30,7 +30,7 @@ fullupdatefiles="custom_config.json custom_config_jun.json global_config.json mo
 
 HOMEPATH="/home/tc"
 TOOLSPATH="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/tools/"
-TOOLS="bspatch bzImage-template-v4.gz bzImage-template-v5.gz bzImage-to-vmlinux.sh calc_run_size.sh crc32 dtc kexec ramdisk-patch.sh vmlinux-to-bzImage.sh xxd zimage-patch.sh kpatch grub-editenv pigz"
+TOOLS="bspatch bzImage-template-v4.gz bzImage-template-v5.gz bzImage-to-vmlinux.sh calc_run_size.sh crc32 dtc kexec ramdisk-patch.sh vmlinux-to-bzImage.sh xxd zimage-patch.sh kpatch grub-editenv pigz modprobe"
 
 # END Do not modify after this line
 ######################################################################################################
@@ -94,7 +94,7 @@ function history() {
     0.9.2.5 Adding experimental RS4021xs+ support
     0.9.2.6 Added the downloadupgradepat action **experimental
     0.9.2.7 Added setting the static network configuration for TCRP Friend
-    0.9.2.8 Changed all curl calls to use the -k flag to avoid expired certificate issues
+    0.9.2.8 Changed all  calls to use the -k flag to avoid expired certificate issues
     0.9.2.9 Added the smallfixnumber key in user_config.json and changed the platform ids to model ids
     0.9.3.0 Changed set root entry to search for FS UUID
     0.9.4.3-1 Multilingual menu support 
@@ -114,6 +114,7 @@ function history() {
     1.0.1.2 Fix for SA6400
     1.0.2.0 Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
     1.0.2.1 Changed extension file organization method
+    1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts)
     --------------------------------------------------------------------------------------
 EOF
 
@@ -3080,11 +3081,20 @@ fi
         cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
 
     else    
-        echo "Ramdisk in compressed "        
+        echo "Ramdisk in compressed " 
         unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
     fi
 
-    cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
+    # 1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts)
+    if [ -f /mnt/${loaderdisk}3/initrd-dsm ]; then
+        echo "Found initrd-dsm and extract /exts from " 
+        cat /mnt/${loaderdisk}3/initrd-dsm | sudo cpio -idm "*exts*"  >/dev/null 2>&1
+        cat /mnt/${loaderdisk}3/initrd-dsm | sudo cpio -idm "*modprobe*"  >/dev/null 2>&1
+        cat /mnt/${loaderdisk}3/initrd-dsm | sudo cpio -idm "*rp.ko*"  >/dev/null 2>&1
+    else
+        echo "Not found initrd-dsm, so extract from custom.gz " 
+        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm  >/dev/null 2>&1
+    fi
 
     # SA6400 patches for JOT Mode
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
