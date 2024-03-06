@@ -2845,7 +2845,7 @@ checkmachine
         mkdir cache
     fi
 
-    downloadtools
+    #downloadtools
     
     if [ ${TARGET_REVISION} -gt 42218 ]; then
 
@@ -3088,12 +3088,12 @@ fi
     # 1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts)
     if [ -f /mnt/${loaderdisk}3/initrd-dsm ]; then
         echo "Found initrd-dsm and extract /exts from " 
-        cat /mnt/${loaderdisk}3/initrd-dsm | sudo cpio -idm "*exts*"
-        sudo cp -vpf /home/tc/custom-module/redpill.ko /home/tc/rd.temp/usr/lib/modules/rp.ko
-        sudo cp -vpf ${HOMEPATH}/tools/modprobe /home/tc/rd.temp/usr/sbin/modprobe
+        cat /mnt/${loaderdisk}3/initrd-dsm | sudo cpio -idm "*exts*"  >/dev/null 2>&1
+        cat /mnt/${loaderdisk}3/initrd-dsm | sudo cpio -idm "*modprobe*"  >/dev/null 2>&1
+        cat /mnt/${loaderdisk}3/initrd-dsm | sudo cpio -idm "*rp.ko*"  >/dev/null 2>&1
     else
         echo "Not found initrd-dsm, so extract from custom.gz " 
-        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
+        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm  >/dev/null 2>&1
     fi
 
     # SA6400 patches for JOT Mode
