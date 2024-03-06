@@ -1703,17 +1703,31 @@ function inject_loader() {
 		# +26M
 		  echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
 
-	  	  tce-load -wi grub2-multi
+	  	  tce-load -wi grub2-multi dosfstools
+		  sudo mkfs.vfat -F 16 "${edisk}5"
+    		  sudo mkfs.vfat -F 16 "${edisk}6"
+      
                   mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 	    	  sudo mount "${edisk}5" "${mdisk}5"
+		  cd /mnt/sda1 && sudo find . | sudo cpio -pdm "${mdisk}5"
+	
 	    	  sudo mkdir -p /usr/local/share/locale
 	    	  sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
 	    	  sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
-    
+
+    	    	  sudo mount "${edisk}6" "${mdisk}6"
+		  cd /mnt/sda2 && sudo find . | sudo cpio -pdm "${mdisk}6"
+
                 elif [ ${NUM} = 2 ]; then
 		  echo "Create partitions on 2st disks... $model"
 		# + about 127M
 		  echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
+                  sudo mkfs.vfat -F 32 "${edisk}5"
+
+                  mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
+	    	  sudo mount "${edisk}5" "${mdisk}5"
+		  cd /mnt/sda3 && sudo find . | sudo cpio -pdm "${mdisk}5"
+
                 else
 		  echo "The 3rd and subsequent BASIC type disks are skipped... $model"
 		  continue
