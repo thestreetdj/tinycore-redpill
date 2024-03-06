@@ -1704,7 +1704,7 @@ function inject_loader() {
 		  echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
 
 	  	  tce-load -wi grub2-multi
-                  mdisk=$(echo "${edisk}" | tr 'dev' 'mnt')
+                  mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 	    	  sudo mount "${edisk}5" "${mdisk}5"
 	    	  sudo mkdir -p /usr/local/share/locale
 	    	  sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
