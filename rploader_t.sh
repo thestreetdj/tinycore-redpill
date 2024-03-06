@@ -9,7 +9,7 @@
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.2.2"
+rploaderver="1.0.2.1"
 build="master"
 redpillmake="prod"
 
@@ -114,7 +114,6 @@ function history() {
     1.0.1.2 Fix for SA6400
     1.0.2.0 Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
     1.0.2.1 Changed extension file organization method
-    1.0.2.2 Remove firmware.tgz to create compact initrd-dsm and initrd-friend, select only modules detected in all-modules 
     --------------------------------------------------------------------------------------
 EOF
 
@@ -258,7 +257,7 @@ function getip() {
         VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
         DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
         if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
-            MATCHDRIVER=$(echo "$(matchpciidmodulename ${VENDOR} ${DEVICE})")
+            MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
             if [ ! -z "${MATCHDRIVER}" ]; then
                 if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
                     DRIVER=${MATCHDRIVER}
@@ -269,28 +268,7 @@ function getip() {
     done
 }
 
-function matchpciidmodulename() {
-
-    MODULE_ALIAS_FILE="modules.alias.4.json"
-
-    vendor="$(echo $1 | sed 's/[a-z]/\U&/g')"
-    device="$(echo $2 | sed 's/[a-z]/\U&/g')"
-
-    pciid="${vendor}d0000${device}"
-
-    #jq -e -r ".modules[] | select(.alias | test(\"(?i)${1}\")?) |   .name " modules.alias.json
-    # Correction to work with tinycore jq
-    matchedmodule=$(jq -e -r ".modules[] | select(.alias | contains(\"${pciid}\")?) | .name " $MODULE_ALIAS_FILE)
-
-    # Call listextensions for extention matching
-
-    echo "$matchedmodule"
-
-    #listextension $matchedmodule
-
-}
-
-function listpci_monitor() {
+function listpci() {
 
     lspci -n | while read line; do
 
@@ -311,11 +289,11 @@ function listpci_monitor() {
 #            echo "Found IDE Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
 #            ;;
         0104)
-            msgnormal "RAID bus Controller : Required Extension : $(matchpciidmodulename ${vendor} ${device})"
+            msgnormal "RAID bus Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0104/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 05)//'
             ;;
         0107)
-            msgnormal "SAS Controller : Required Extension : $(matchpciidmodulename ${vendor} ${device})"
+            msgnormal "SAS Controller : Required Extension : $(matchpciidmodule ${vendor} ${device})"
             echo `lspci -nn |grep ${vendor}:${device}|awk 'match($0,/0107/) {print substr($0,RSTART+7,100)}'`| sed 's/\['"$vendor:$device"'\]//' | sed 's/(rev 03)//'
             ;;
 #        0200)
@@ -361,7 +339,7 @@ function monitor() {
         echo -e "Current Date Time:\t"$(date)
         #msgnormal "System Main IP:\t\t"$(ifconfig | grep inet | grep -v 127.0.0.1 | awk '{print $2}' | awk -F \: '{print $2}' | tr '\n' ',' | sed 's#,$##')
         getip
-        listpci_monitor
+        listpci
         echo -e "-------------------------------Loader boot entries---------------------------"
         grep -i menuentry /mnt/${loaderdisk}1/boot/grub/grub.cfg | awk -F \' '{print $2}'
         echo -e "-------------------------------CPU / Memory----------------------------------"
@@ -376,50 +354,6 @@ function monitor() {
     done
 
 }
-
-function listpci() {
-
-    lspci -n | while read line; do
-
-        bus="$(echo $line | cut -c 1-7)"
-        class="$(echo $line | cut -c 9-12)"
-        vendor="$(echo $line | cut -c 15-18)"
-        device="$(echo $line | cut -c 20-23)"
-
-        #echo "PCI : $bus Class : $class Vendor: $vendor Device: $device"
-        case $class in
-        0100)
-            echo "Found SCSI Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0106)
-            echo "Found SATA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0101)
-            echo "Found IDE Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0104)
-            echo "Found SAS Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0107)
-            echo "Found SAS Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0200)
-            echo "Found Ethernet Interface : pciid ${vendor}d0000${device} Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0680)
-            echo "Found Ethernet Interface : pciid ${vendor}d0000${device} Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0300)
-            echo "Found VGA Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        0c04)
-            echo "Found Fibre Channel Controller : pciid ${vendor}d0000${device}  Required Extension : $(matchpciidmodule ${vendor} ${device})"
-            ;;
-        esac
-    done
-
-}
-
 
 function syntaxcheck() {
 
@@ -830,64 +764,6 @@ function testarchive() {
 
 }
 
-function getmodaliasfile() {
-
-    echo "{"
-    echo "\"modules\" : ["
-
-    grep -ie pci -ie usb /lib/modules/$(uname -r)/modules.alias | while read line; do
-
-        read alias pciid module <<<"$line"
-        echo "{"
-        echo "\"name\" :  \"${module}\"",
-        echo "\"alias\" :  \"${pciid}\""
-        echo "}",
-        #       echo "},"
-
-    done | sed '$ s/,//'
-
-    echo "]"
-    echo "}"
-
-}
-
-function listmodules() {
-
-    if [ ! -f $MODULE_ALIAS_FILE ]; then
-        echo "Creating module alias json file"
-        getmodaliasfile >modules.alias.4.json
-    fi
-
-    echo -n "Testing $MODULE_ALIAS_FILE -> "
-    if $(jq '.' $MODULE_ALIAS_FILE >/dev/null); then
-        echo "File OK"
-        echo "------------------------------------------------------------------------------------------------"
-        echo -e "It looks that you will need the following modules : \n\n"
-
-        #if [ "$WITHFRIEND" = "YES" ]; then
-        #    echo "Block listpci for using all-modules. 2022.11.09"
-        #else    
-            listpci
-        #fi
-
-        echo "------------------------------------------------------------------------------------------------"
-    else
-        echo "Error : File $MODULE_ALIAS_FILE could not be parsed"
-    fi
-
-}
-
-function listextension() {
-
-    if [ ! -z $1 ]; then
-        echo "Extract matching extension for $1"
-        tar xvfz /home/tc/redpill-load/custom/extensions/all-modules/${platkver}/${ORIGIN_PLATFORM}*.tgz ${1}.ko
-    else
-        echo "No matching extension"
-    fi
-
-}
-
 function addrequiredexts() {
 
     echo "Processing add_extensions entries found on custom_config.json file : ${EXTENSIONS}"
@@ -917,16 +793,7 @@ function addrequiredexts() {
             ./rploader.sh clean
             exit 99
         fi
-        if [ ${extension} = "all-modules" ]; then
-            echo "Extract all-modules to making compact custom.gz !!!"
-            listmodules
-        fi
     done
-
-    echo "Remove firmware.tgz to making compact custom.gz !!!"
-    sudo rm -f /home/tc/redpill-load/custom/extensions/all-modules/${platkver}/firmware.tgz
-    echo "Repacking all-modules to making compact custom.gz !!!"
-    tar -zcvf /home/tc/redpill-load/custom/extensions/all-modules/${platkver}/${ORIGIN_PLATFORM}-${vkersion}.tgz *.ko
 
 #m shell only
  #Use user define dts file instaed of dtbpatch ext now
@@ -3502,7 +3369,7 @@ function matchpciidmodule() {
 
     echo "$matchedmodule"
 
-    listextension $matchedmodule
+    #listextension $matchedmodule
 
 }
 
@@ -3531,6 +3398,95 @@ function getmodulealiasjson() {
     # or cat modules.alias.json | jq '.modules[] | select(.alias | test("(?i)1000d00000030")?) |  .name'
     #
     #
+
+}
+
+function getmodaliasfile() {
+
+    echo "{"
+    echo "\"modules\" : ["
+
+    grep -ie pci -ie usb /lib/modules/$(uname -r)/modules.alias | while read line; do
+
+        read alias pciid module <<<"$line"
+        echo "{"
+        echo "\"name\" :  \"${module}\"",
+        echo "\"alias\" :  \"${pciid}\""
+        echo "}",
+        #       echo "},"
+
+    done | sed '$ s/,//'
+
+    echo "]"
+    echo "}"
+
+}
+
+function listmodules() {
+
+    if [ ! -f $MODULE_ALIAS_FILE ]; then
+        echo "Creating module alias json file"
+        getmodaliasfile >modules.alias.4.json
+    fi
+
+    echo -n "Testing $MODULE_ALIAS_FILE -> "
+    if $(jq '.' $MODULE_ALIAS_FILE >/dev/null); then
+        echo "File OK"
+        echo "------------------------------------------------------------------------------------------------"
+        echo -e "It looks that you will need the following modules : \n\n"
+
+        if [ "$WITHFRIEND" = "YES" ]; then
+            echo "Block listpci for using all-modules. 2022.11.09"
+        else    
+            listpci
+        fi
+
+        echo "------------------------------------------------------------------------------------------------"
+    else
+        echo "Error : File $MODULE_ALIAS_FILE could not be parsed"
+    fi
+
+}
+
+function listextension() {
+
+    if [ ! -f rpext-index.json ]; then
+        curl -k -# -L "${modextention}" -o rpext-index.json
+    fi
+
+    ## Get extension author rpext-index.json and then parse for extension download with :
+    #       jq '. | select(.id | contains("vxge")) .url  ' rpext-index.json
+
+    if [ ! -z $1 ]; then
+        echo "Searching for matching extension for $1"
+        matchingextension=($(jq ". | select(.id | endswith(\"${1}\")) .url  " rpext-index.json))
+
+        if [ ! -z $matchingextension ]; then
+            echo "Found matching extension : "
+            echo $matchingextension
+            ./redpill-load/ext-manager.sh add "${matchingextension//\"/}"
+        fi
+
+        extensionslist+="${matchingextension} "
+        echo $extensionslist
+
+#m shell only
+        #def
+        if [ 1 = 0 ]; then
+        echo "Target Platform : ${TARGET_PLATFORM}"
+        if [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "rs4021xsp" ] || [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
+            if [ -d /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe ]; then
+                echo "Removing : PeterSuh-Q3.ixgbe"
+                echo "Reason : The Broadwellnk platform has a vanilla.ixgbe ext driver built into the DSM, so they conflict with each other if ixgbe is added separately."
+                sudo rm -rf /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe
+            fi
+        fi
+        #def
+        fi
+        
+    else
+        echo "No matching extension"
+    fi
 
 }
 
@@ -3653,7 +3609,7 @@ echo "$4"
             echo "Using static compiled redpill extension"
             getstaticmodule
             echo "Got $REDPILL_MOD_NAME "
-            #listmodules
+            listmodules
             echo "Starting loader creation "
             buildloader junmod
             [ $? -eq 0 ] && savesession
@@ -3664,7 +3620,7 @@ echo "$4"
             echo "Using static compiled redpill extension"
             getstaticmodule
             echo "Got $REDPILL_MOD_NAME "
-            #listmodules
+            listmodules
             echo "Starting loader creation "
             buildloader
             [ $? -eq 0 ] && savesession
@@ -3681,7 +3637,7 @@ echo "$4"
         gitdownload
 
         if [ "$3" = "auto" ]; then
-            ext_manager $@
+            listmodules
         else
             ext_manager $@ # instead of listmodules
         fi
@@ -3707,7 +3663,7 @@ echo "$4"
         getvars $2
         checkinternet
         gitdownload
-        #listmodules
+        listmodules
         echo "$extensionslist"
         ;;
 
