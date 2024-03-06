@@ -3089,8 +3089,8 @@ fi
     if [ -f /mnt/${loaderdisk}3/initrd-dsm ]; then
         echo "Found initrd-dsm and extract /exts from " 
         cat /mnt/${loaderdisk}3/initrd-dsm | sudo cpio -idm "*exts*"
-        sudo cp -vf /home/tc/custom-module/redpill.ko /home/tc/rd.temp/usr/lib/modules/rp.ko
-        sudo cp -vf ${HOMEPATH}/tools/modprobe /home/tc/rd.temp/usr/sbin/modprobe
+        sudo cp -vpf /home/tc/custom-module/redpill.ko /home/tc/rd.temp/usr/lib/modules/rp.ko
+        sudo cp -vpf ${HOMEPATH}/tools/modprobe /home/tc/rd.temp/usr/sbin/modprobe
     else
         echo "Not found initrd-dsm, so extract from custom.gz " 
         cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
