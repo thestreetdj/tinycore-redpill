@@ -1669,6 +1669,18 @@ function del-macspoof() {
   jsonfile=$(jq 'del(.["mac-spoof"])' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
 }
 
+function inject_loader() {
+  echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
+  readanswer    
+  if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
+    tce-load -wi grub2-multi
+    sudo mount /dev/sdb5 /mnt/sdb5
+    sudo mkdir /usr/local/share/locale
+    sudo grub-install --target=x86_64-efi --boot-directory=/mnt/sdb5/boot --efi-directory=/mnt/sdb5 --removable
+    sudo grub-install --target=i386-pc --boot-directory=/mnt/sdb5/boot /dev/sdb
+  fi
+}
+
 function additional() {
 
   if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ]; then
@@ -1695,6 +1707,7 @@ function additional() {
       e "${MSG54}" \
       f "${MSG55}" \
       g "${MSG12}" \
+      h "Inject Bootloader to Syno DISK" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
@@ -1722,6 +1735,8 @@ function additional() {
       cloneloader
     elif [ "${resp}" = "g" ]; then
       erasedisk
+    elif [ "${resp}" = "h" ]; then
+      inject_loader
     fi
   done
 }
@@ -2040,7 +2055,7 @@ while true; do
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
   case `<"${TMP_PATH}/resp"` in
-    n) additional;       NEXT="p" ;; 
+    n) additional;      NEXT="p" ;; 
     c) seleudev;        NEXT="m" ;;  
     m) modelMenu;       NEXT="s" ;;
     s) serialMenu;      NEXT="j" ;;
