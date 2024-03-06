@@ -1682,8 +1682,8 @@ function inject_loader() {
     done
 
     if [ ${IDX} -gt 1 ]; then
-          NUM=1
-	  for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+        NUM=1
+	for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
 	    model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
 	    echo
 	    echo
@@ -1715,12 +1715,12 @@ function inject_loader() {
 		echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $edisk $model"
 		continue
 	    fi
-     else
+        done
+    else
 	echo "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..."
     	read answer 
         return
-     fi
-  done
+    fi
 
     tce-load -wi grub2-multi
     sudo mount /dev/sdb5 /mnt/sdb5
