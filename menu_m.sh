@@ -1792,10 +1792,12 @@ function inject_loader() {
 	
         echo "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..."
     	read answer 
+        cd ~
         return
     else
         echo "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..."
     	read answer 
+        cd ~ 
         return
     fi
 
