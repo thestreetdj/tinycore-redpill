@@ -1676,103 +1676,103 @@ function inject_loader() {
     IDX=0
     for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
     	if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
-	    echo "This is BASIC Type Disk. $edisk"
+            echo "This is BASIC Type Disk. $edisk"
             IDX=$((${IDX} + 1))
         fi
     done
 
     if [ ${IDX} -gt 1 ]; then
         NUM=1
-	for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-	    model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
-	    echo
-	    echo
-	    if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
-		echo "Skip this disk as it is a loader disk. $model"
-		continue
-	    elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
-		echo "Create extended and logical partitions on disk. ${model}"
+        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
+            echo
+            echo
+            if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+                echo "Skip this disk as it is a loader disk. $model"
+                continue
+            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
+                echo "Create extended and logical partitions on disk. ${model}"
+                last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
+                echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+                
+                if [ ${NUM} = 1 ]; then
+                    echo "Downloading tempelete disk image..."
+                    curl -kLO https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img
 
-		last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}') 
-		echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
-  		if [ ${NUM} = 1 ]; then
+                    tce-load -i grub2-multi
+                    if [ $? -eq 0 ]; then
+                        echo "Install dialog OK !!!"
+                    else
+                        tce-load -iw grub2-multi
+                    fi
+                    sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+
+                    if [ ! -n "$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')" ]; then
+                        echo -n "Setting up boot-image-to-hdd img loop -> "
+                        sudo losetup -fP ./boot-image-to-hdd.img
+                    else
+                        echo -n "Loop device exists..."
+                    fi
+                    loopdev=$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')
+                    echo "$loopdev"
     
-	  		echo "Downloading tempelete disk image..."
-			curl -kLO https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img
-	
-			tce-load -i grub2-multi
-			if [ $? -eq 0 ]; then
-			    echo "Install dialog OK !!!"
-			else
-			    tce-load -iw grub2-multi
-			fi
-			sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+                    # +98M
+                    echo "Create partitions on 1st disks... $model"
+                    echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
+                    echo -e "a\n5\nw" | sudo fdisk "${edisk}"
+                    # +26M
+                    echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
+                    
+                    sudo dd if="${loopdev}p1" of="${edisk}5"
+                    sudo dd if="${loopdev}p2" of="${edisk}6"
 
-			if [ ! -n "$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')" ]; then
-			    echo -n "Setting up boot-image-to-hdd img loop -> "
-			    sudo losetup -fP ./boot-image-to-hdd.img
-			else
-			    echo -n "Loop device exists..."
-			fi
-	   		loopdev=$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')
-		        echo "$loopdev"
-    
-  		# +98M
-                  echo "Create partitions on 1st disks... $model"
-		  echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
-		  echo -e "a\n5\nw" | sudo fdisk "${edisk}"
-		# +26M
-		  echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
-    
-                  sudo dd if="${loopdev}p1" of="${edisk}5"
-		  sudo dd if="${loopdev}p2" of="${edisk}6"
+                    mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
+                    sudo mount "${edisk}5" "${mdisk}5"
+                    cd /mnt/sda1 && sudo find . | sudo cpio -pdm "${mdisk}5"
+                    sudo cp -vf /mnt/sda3/bzImage-friend  "${mdisk}5"
+                    sudo cp -vf /mnt/sda3/initrd-friend  "${mdisk}5"
 
-                  mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
-	    	  sudo mount "${edisk}5" "${mdisk}5"
-		  cd /mnt/sda1 && sudo find . | sudo cpio -pdm "${mdisk}5"
-      		  sudo cp -vf /mnt/sda3/bzImage-friend  "${mdisk}5"
-	  	  sudo cp -vf /mnt/sda3/initrd-friend  "${mdisk}5"
-	
-	    	  sudo mkdir -p /usr/local/share/locale
-	    	  sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
-	    	  sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
+                    sudo mkdir -p /usr/local/share/locale
+                    sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
+                    sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
 
-    	    	  sudo mount "${edisk}6" "${mdisk}6"
-		  cd /mnt/sda2 && sudo find . | sudo cpio -pdm "${mdisk}6"
+                    sudo mount "${edisk}6" "${mdisk}6"
+                    cd /mnt/sda2 && sudo find . | sudo cpio -pdm "${mdisk}6"
 
                 elif [ ${NUM} = 2 ]; then
-		  echo "Create partitions on 2st disks... $model"
-		# + about 127M
-		  echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
+                    echo "Create partitions on 2st disks... $model"
+                    # + about 127M
+                    echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
 
-		  sudo dd if="${loopdev}p3" of="${edisk}5"
-    
-                  mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
-	    	  sudo mount "${edisk}5" "${mdisk}5"
-		  cd /mnt/sda3 
-      		  sudo cp -vf custom.gz  "${mdisk}5"
-	  	  sudo cp -vf initrd-dsm "${mdisk}5"
-                  sudo cp -vf zImage-dsm "${mdisk}5"
-                  sudo cp -vf user_config.json "${mdisk}5"
-		  sudo cp -vf user_config.json "${mdisk}5"/user_config.json.bak
-    
+                    sudo dd if="${loopdev}p3" of="${edisk}5"
+
+                    mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
+                    sudo mount "${edisk}5" "${mdisk}5"
+                    cd /mnt/sda3
+                    sudo cp -vf initrd-dsm "${mdisk}5"
+                    sudo cp -vf zImage-dsm "${mdisk}5"
+                    sudo cp -vf user_config.json "${mdisk}5"
+                    sudo cp -vf user_config.json "${mdisk}5"/user_config.json.bak
+
                 else
-		  echo "The 3rd and subsequent BASIC type disks are skipped... $model"
-		  continue
+                    echo "The 3rd and subsequent BASIC type disks are skipped... $model"
+                    continue
                 fi
-  		NUM=$((${NUM} + 1))
+                NUM=$((${NUM} + 1))
             else
-		echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
-		continue
-	    fi
+                echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
+                continue
+            fi
         done
-        losetup -d $(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')
+
+        sudo losetup -d ${loopdev}
+        [ -z $(losetup | grep -i boot-image-to-hdd.img) ] && echo "boot-image-to-hdd.img losetup OK !!!"
 	
-	echo "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..."
+        echo "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..."
     	read answer 
         return
     else
-	echo "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..."
+        echo "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..."
     	read answer 
         return
     fi
