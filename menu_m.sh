@@ -1744,6 +1744,8 @@ function inject_loader() {
                     # + about 127M
                     echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
 
+                    loopdev=$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')
+                    echo "$loopdev"
                     sudo dd if="${loopdev}p3" of="${edisk}5"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
