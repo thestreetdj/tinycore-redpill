@@ -1662,11 +1662,11 @@ function tcrpfriendentry() {
     cat <<EOF
 menuentry 'Tiny Core Friend ${MODEL} ${BUILD} Update 0 ${DMPM}' {
         savedefault
-        search --set=root --hint hd0,msdos5
+	set root=(hd0,msdos5)
         echo Loading Linux...
-        linux (hd0,msdos5)/bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 console=ttyS0,115200n8
+        linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 console=ttyS0,115200n8
         echo Loading initramfs...
-        initrd (hd0,msdos5)/initrd-friend
+        initrd /initrd-friend
         echo Booting TinyCore Friend
 }
 EOF
