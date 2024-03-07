@@ -1748,7 +1748,7 @@ function inject_loader() {
                     cd /mnt/sda1 && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 
       		    echo "Modifying grub.cfg for new loader boot..."	
-		    sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
+		    sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
       		    tcrpfriendentry | sudo tee --append "${mdisk}5"/boot/grub/grub.cfg
       
                     sudo cp -vf /mnt/sda3/bzImage-friend  "${mdisk}5"
