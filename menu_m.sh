@@ -1692,29 +1692,31 @@ function inject_loader() {
 		continue
 	    elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
 		echo "Create extended and logical partitions on disk. ${model}"
-  		echo "Downloading tempelete disk image..."
-		curl -kLO https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img
-
-		tce-load -i grub2-multi
-		if [ $? -eq 0 ]; then
-		    echo "Install dialog OK !!!"
-		else
-		    tce-load -iw grub2-multi
-		fi
-		sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-
-		if [ ! -n "$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')" ]; then
-		    echo -n "Setting up boot-image-to-hdd img loop -> "
-		    sudo losetup -fP ./boot-image-to-hdd.img
-		else
-		    echo -n "Loop device exists..."
-		fi
-   		loopdev=$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')
-	        echo "$loopdev"
 
 		last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}') 
 		echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
   		if [ ${NUM} = 1 ]; then
+    
+	  		echo "Downloading tempelete disk image..."
+			curl -kLO https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img
+	
+			tce-load -i grub2-multi
+			if [ $? -eq 0 ]; then
+			    echo "Install dialog OK !!!"
+			else
+			    tce-load -iw grub2-multi
+			fi
+			sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+
+			if [ ! -n "$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')" ]; then
+			    echo -n "Setting up boot-image-to-hdd img loop -> "
+			    sudo losetup -fP ./boot-image-to-hdd.img
+			else
+			    echo -n "Loop device exists..."
+			fi
+	   		loopdev=$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')
+		        echo "$loopdev"
+    
   		# +98M
                   echo "Create partitions on 1st disks... $model"
 		  echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
