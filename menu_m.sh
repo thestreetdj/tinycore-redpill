@@ -1729,7 +1729,7 @@ function inject_loader() {
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
                     sudo mount "${edisk}5" "${mdisk}5"
-                    cd /mnt/sda1 && sudo find . | sudo cpio -pdm "${mdisk}5"
+                    cd /mnt/sda1 && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
                     sudo cp -vf /mnt/sda3/bzImage-friend  "${mdisk}5"
                     sudo cp -vf /mnt/sda3/initrd-friend  "${mdisk}5"
 
@@ -1738,7 +1738,7 @@ function inject_loader() {
                     sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
 
                     sudo mount "${edisk}6" "${mdisk}6"
-                    cd /mnt/sda2 && sudo find . | sudo cpio -pdm "${mdisk}6"
+                    cd /mnt/sda2 && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
 
                 elif [ ${NUM} = 2 ]; then
                     echo "Create partitions on 2st disks... $model"
@@ -1752,10 +1752,10 @@ function inject_loader() {
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
                     sudo mount "${edisk}5" "${mdisk}5"
                     cd /mnt/sda3
-                    sudo cp -vf initrd-dsm "${mdisk}5"
-                    sudo cp -vf zImage-dsm "${mdisk}5"
                     sudo cp -vf user_config.json "${mdisk}5"
                     sudo cp -vf user_config.json "${mdisk}5"/user_config.json.bak
+                    sudo cp -vf initrd-dsm "${mdisk}5"
+                    sudo cp -vf zImage-dsm "${mdisk}5"
 
                 else
                     echo "The 3rd and subsequent BASIC type disks are skipped... $model"
