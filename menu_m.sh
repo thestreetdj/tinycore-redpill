@@ -1744,7 +1744,8 @@ function inject_loader() {
                     echo "Create partitions on 2st disks... $model"
                     # + about 127M
                     echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
-
+		    sleep 2
+      
                     loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
                     echo "$loopdev"
                     sudo dd if="${loopdev}p3" of="${edisk}5"
