@@ -1695,6 +1695,14 @@ function inject_loader() {
   		echo "Downloading tempelete disk image..."
 		curl -kLO https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img
 
+		tce-load -i grub2-multi
+		if [ $? -eq 0 ]; then
+		    echo "Install dialog OK !!!"
+		else
+		    tce-load -iw grub2-multi
+		fi
+		sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+
 		if [ ! -n "$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')" ]; then
 		    echo -n "Setting up boot-image-to-hdd img loop -> "
 		    sudo losetup -fP ./boot-image-to-hdd.img
@@ -1716,8 +1724,7 @@ function inject_loader() {
     
                   sudo dd if="${loopdev}p1" of="${edisk}5"
 		  sudo dd if="${loopdev}p2" of="${edisk}6"
- 			
-	  	  tce-load -wi grub2-multi
+
                   mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 	    	  sudo mount "${edisk}5" "${mdisk}5"
 		  cd /mnt/sda1 && sudo find . | sudo cpio -pdm "${mdisk}5"
