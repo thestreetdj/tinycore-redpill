@@ -1692,6 +1692,17 @@ function inject_loader() {
 		continue
 	    elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
 		echo "Create extended and logical partitions on disk. ${model}"
+  		echo "Downloading tempelete disk image..."
+		curl -kLO https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img
+
+		if [ ! -n "$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')" ]; then
+		    echo -n "Setting up boot-image-to-hdd img loop -> "
+		    sudo losetup -fP ./boot-image-to-hdd.img
+		else
+		    echo -n "Loop device exists..."
+		fi
+   		loopdev=$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')
+	        echo "$loopdev"
 
 		last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}') 
 		echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
@@ -1702,14 +1713,16 @@ function inject_loader() {
 		  echo -e "a\n5\nw" | sudo fdisk "${edisk}"
 		# +26M
 		  echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
-
-	  	  tce-load -wi grub2-multi dosfstools
-		  sudo mkfs.vfat -F 16 "${edisk}5"
-    		  sudo mkfs.vfat -F 16 "${edisk}6"
-      
+    
+                  sudo dd if="${loopdev}p1" of="${edisk}5"
+		  sudo dd if="${loopdev}p2" of="${edisk}6"
+ 			
+	  	  tce-load -wi grub2-multi
                   mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 	    	  sudo mount "${edisk}5" "${mdisk}5"
 		  cd /mnt/sda1 && sudo find . | sudo cpio -pdm "${mdisk}5"
+      		  sudo cp -vf /mnt/sda3/bzImage-friend  "${mdisk}5"
+	  	  sudo cp -vf /mnt/sda3/initrd-friend  "${mdisk}5"
 	
 	    	  sudo mkdir -p /usr/local/share/locale
 	    	  sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
@@ -1722,12 +1735,18 @@ function inject_loader() {
 		  echo "Create partitions on 2st disks... $model"
 		# + about 127M
 		  echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
-                  sudo mkfs.vfat -F 32 "${edisk}5"
 
+		  sudo dd if="${loopdev}p3" of="${edisk}5"
+    
                   mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 	    	  sudo mount "${edisk}5" "${mdisk}5"
-		  cd /mnt/sda3 && sudo find . | sudo cpio -pdm "${mdisk}5"
-
+		  cd /mnt/sda3 
+      		  sudo cp -vf custom.gz  "${mdisk}5"
+	  	  sudo cp -vf initrd-dsm "${mdisk}5"
+                  sudo cp -vf zImage-dsm "${mdisk}5"
+                  sudo cp -vf user_config.json "${mdisk}5"
+		  sudo cp -vf user_config.json "${mdisk}5"/user_config.json.bak
+    
                 else
 		  echo "The 3rd and subsequent BASIC type disks are skipped... $model"
 		  continue
@@ -1738,6 +1757,8 @@ function inject_loader() {
 		continue
 	    fi
         done
+        losetup -d $(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')
+	
 	echo "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..."
     	read answer 
         return
