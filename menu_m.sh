@@ -1762,6 +1762,7 @@ function inject_loader() {
                     cd /mnt/sda2 && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
 
                 elif [ ${NUM} = 2 ]; then
+		
                     echo "Create partitions on 2st disks... $model"
                     # + about 127M
                     echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
@@ -1773,11 +1774,7 @@ function inject_loader() {
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
                     sudo mount "${edisk}5" "${mdisk}5"
-                    cd /mnt/sda3
-                    sudo cp -vf user_config.json "${mdisk}5"
-                    sudo cp -vf user_config.json "${mdisk}5"/user_config.json.bak
-                    sudo cp -vf initrd-dsm "${mdisk}5"
-                    sudo cp -vf zImage-dsm "${mdisk}5"
+                    cd /mnt/sda3 && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 
                 else
                     echo "The 3rd and subsequent BASIC type disks are skipped... $model"
