@@ -1657,6 +1657,22 @@ function cloneloader() {
   return 0
 }
 
+function tcrpfriendentry() {
+    
+    cat <<EOF
+menuentry 'Tiny Core Friend ${MODEL} ${BUILD} Update 0 ${DMPM}' {
+        savedefault
+        search --set=root --fs-uuid 6234-C863 --hint hd0,msdos5
+        echo Loading Linux...
+        linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 console=ttyS0,115200n8
+        echo Loading initramfs...
+        initrd /initrd-friend
+        echo Booting TinyCore Friend
+}
+EOF
+
+}
+
 function add-macspoof() {
   echo -n "(Warning) Enabling mac-spoof may compromise San Manager and VMM. Do you still want to add it? [yY/nN] : "
   readanswer    
@@ -1730,6 +1746,11 @@ function inject_loader() {
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
                     sudo mount "${edisk}5" "${mdisk}5"
                     cd /mnt/sda1 && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+
+      		    echo "Modifying grub.cfg for new loader boot..."	
+		    sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
+      		    tcrpfriendentry | sudo tee --append "${mdisk}5"/boot/grub/grub.cfg
+      
                     sudo cp -vf /mnt/sda3/bzImage-friend  "${mdisk}5"
                     sudo cp -vf /mnt/sda3/initrd-friend  "${mdisk}5"
 
