@@ -1696,8 +1696,9 @@ function inject_loader() {
                 echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
                 
                 if [ ${NUM} = 1 ]; then
-                    echo "Downloading tempelete disk image..."
-                    curl -kLO https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img
+		    imgpath="/dev/shm/boot-image-to-hdd.img"		
+                    echo "Downloading tempelete disk image to ${imgpath}..."
+                    curl -kL https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img -o ${imgpath}
 
                     tce-load -i grub2-multi
                     if [ $? -eq 0 ]; then
@@ -1707,13 +1708,13 @@ function inject_loader() {
                     fi
                     sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 
-                    if [ ! -n "$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')" ]; then
-                        echo -n "Setting up boot-image-to-hdd img loop -> "
-                        sudo losetup -fP ./boot-image-to-hdd.img
+                    if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
+                        echo -n "Setting up ${imgpath} loop -> "
+                        sudo losetup -fP ${imgpath}
                     else
                         echo -n "Loop device exists..."
                     fi
-                    loopdev=$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')
+                    loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
                     echo "$loopdev"
     
                     # +98M
@@ -1744,7 +1745,7 @@ function inject_loader() {
                     # + about 127M
                     echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
 
-                    loopdev=$(losetup -j boot-image-to-hdd.img | awk '{print $1}' | sed -e 's/://')
+                    loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
                     echo "$loopdev"
                     sudo dd if="${loopdev}p3" of="${edisk}5"
 
@@ -1768,7 +1769,7 @@ function inject_loader() {
         done
 
         sudo losetup -d ${loopdev}
-        [ -z $(losetup | grep -i boot-image-to-hdd.img) ] && echo "boot-image-to-hdd.img losetup OK !!!"
+        [ -z $(losetup | grep -i ${imgpath}) ] && echo "boot-image-to-hdd.img losetup OK !!!"
 	
         echo "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..."
     	read answer 
