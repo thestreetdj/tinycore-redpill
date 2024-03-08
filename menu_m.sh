@@ -1788,27 +1788,28 @@ function inject_loader() {
                 elif [ ${NUM} = 2 ]; then
 		
                     echo "Create partitions on 2nd disks... $edisk"
-	            last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}3" | awk '{print $3}')
+	            last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
 	     	    echo "2nd disk's last sector is $last_sector"
-                    # + 100M	   
-                    echo -e "n\np\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+	   	    echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+                    # + 127M
+                    echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
 
 		    sleep 1
       
                     loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
                     echo "$loopdev"
-                    sudo dd if="${loopdev}p3" of="${edisk}4"
+                    sudo dd if="${loopdev}p3" of="${edisk}5"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 
-                    [ ! -d "${mdisk}4" ] && sudo mkdir "${mdisk}4"
+                    [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
       		    while true; do
 	    		sleep 1
-                        echo "Mounting ${edisk}4 ..."	
-                    	sudo mount "${edisk}4" "${mdisk}4"
-		        [ $( mount | grep "${edisk}4" | wc -l ) -gt 0 ] && break
+                        echo "Mounting ${edisk}5 ..."	
+                    	sudo mount "${edisk}5" "${mdisk}5"
+		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
 		    done 
-                    cd /mnt/${loaderdisk}3 && sudo rm -rf "${mdisk}4"/* && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}4" 2>/dev/null
+                    cd /mnt/${loaderdisk}3 && sudo rm -rf "${mdisk}5"/* && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 
                 else
                     echo "The 3rd and subsequent BASIC type disks are skipped... $model"
