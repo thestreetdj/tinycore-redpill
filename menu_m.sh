@@ -1707,11 +1707,14 @@ function inject_loader() {
                 echo "Skip this disk as it is a loader disk. $model"
                 continue
             elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
-                echo "Create extended and logical partitions on disk. ${model}"
-                last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
-                echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
                 
                 if [ ${NUM} = 1 ]; then
+		
+                    echo "Create extended and logical partitions on 1st disk. ${model}"		
+                    last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
+		    echo "1st disk's last sector is $last_sector"
+                    echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+		
 		    imgpath="/dev/shm/boot-image-to-hdd.img"		
                     echo "Downloading tempelete disk image to ${imgpath}..."
                     curl -kL https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img -o ${imgpath}
@@ -1766,9 +1769,9 @@ function inject_loader() {
 
                 elif [ ${NUM} = 2 ]; then
 		
-                    echo "Create partitions on 2st disks... $edisk"
+                    echo "Create partitions on 2nd disks... $edisk"
 	            last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}3" | awk '{print $3}')
-	     	    echo "2st disk's last sector is $last_sector"
+	     	    echo "2nd disk's last sector is $last_sector"
                     echo -e "n\np\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
 		    
                     # + 100M
