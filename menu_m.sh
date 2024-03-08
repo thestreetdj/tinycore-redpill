@@ -1699,6 +1699,7 @@ function inject_loader() {
 
     if [ ${IDX} -gt 1 ]; then
         NUM=1
+		imgpath="/dev/shm/boot-image-to-hdd.img"
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
             model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
             echo
@@ -1709,18 +1710,17 @@ function inject_loader() {
             elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
                 
                 if [ ${NUM} = 1 ]; then
-
-		    imgpath="/dev/shm/boot-image-to-hdd.img"		
+		    
                     echo "Downloading tempelete disk image to ${imgpath}..."
                     sudo curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
-	            if [ $? -ne 0 ]; then
-	             	echo "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..."
-		  	read answer 
-		        cd ~
-		        return
-	            fi    		    
-		    echo "Unpacking image ${imgpath}..."
-      		    sudo gunzip -f "${imgpath}.gz"
+	            	if [ $? -ne 0 ]; then
+	             		echo "Download failed. Stop processing!!! ${imgpath}"
+		  				read answer 
+		        		cd ~
+		        		return
+	            	fi    		    
+		    		echo "Unpacking image ${imgpath}..."
+      		    	sudo gunzip -f "${imgpath}.gz"
 
                     tce-load -i grub2-multi
                     if [ $? -eq 0 ]; then
@@ -1732,7 +1732,7 @@ function inject_loader() {
 		
                     echo "Create extended and logical partitions on 1st disk. ${model}"		
                     last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
-		    echo "1st disk's last sector is $last_sector"
+		    		echo "1st disk's last sector is $last_sector"
                     echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
 
                     if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
@@ -1756,17 +1756,17 @@ function inject_loader() {
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 		    
-      		    while true; do
-	    		sleep 1
+      		    	while true; do
+	    				sleep 1
                         echo "Mounting ${edisk}5 ..."	
                     	sudo mount "${edisk}5" "${mdisk}5"
-		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
-		    done 
+		        		[ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
+		    		done 
                     cd /mnt/sda1 && sudo rm -rf * && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 
-      		    echo "Modifying grub.cfg for new loader boot..."	
-		    sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
-      		    tcrpfriendentry | sudo tee --append "${mdisk}5"/boot/grub/grub.cfg
+      		    	echo "Modifying grub.cfg for new loader boot..."	
+		    		sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
+      		    	tcrpfriendentry | sudo tee --append "${mdisk}5"/boot/grub/grub.cfg
       
                     sudo cp -vf /mnt/sda3/bzImage-friend  "${mdisk}5"
                     sudo cp -vf /mnt/sda3/initrd-friend  "${mdisk}5"
@@ -1775,24 +1775,23 @@ function inject_loader() {
                     sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
                     sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
 		    
-      		    while true; do
-	    		sleep 1
+      		    	while true; do
+	    				sleep 1
                         echo "Mounting ${edisk}6 ..."	
                     	sudo mount "${edisk}6" "${mdisk}6"
-		        [ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
-		    done 
-                    
+		        		[ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
+		    		done 
                     cd /mnt/sda2 && sudo rm -rf * && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
 
                 elif [ ${NUM} = 2 ]; then
 		
                     echo "Create partitions on 2nd disks... $edisk"
-	            last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}3" | awk '{print $3}')
-	     	    echo "2nd disk's last sector is $last_sector"
+	            	last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}3" | awk '{print $3}')
+	     	    	echo "2nd disk's last sector is $last_sector"
                     # + 100M	   
                     echo -e "n\np\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
 
-		    sleep 1
+		    		sleep 1
       
                     loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
                     echo "$loopdev"
@@ -1800,13 +1799,12 @@ function inject_loader() {
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 		    
-      		    while true; do
-	    		sleep 1
+      		    	while true; do
+	    				sleep 1
                         echo "Mounting ${edisk}4 ..."	
                     	sudo mount "${edisk}4" "${mdisk}4"
-		        [ $( mount | grep "${edisk}4" | wc -l ) -gt 0 ] && break
-		    done 
-		    
+		        		[ $( mount | grep "${edisk}4" | wc -l ) -gt 0 ] && break
+		    		done 
                     cd /mnt/sda3 && sudo rm -rf * && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}4" 2>/dev/null
 
                 else
