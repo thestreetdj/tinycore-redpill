@@ -1760,7 +1760,7 @@ function inject_loader() {
 	    		sleep 1
                         echo "Mounting ${edisk}5 ..."	
                     	sudo mount "${edisk}5" "${mdisk}5"
-		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && return
+		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
 		    done 
                     cd /mnt/sda1 && sudo rm -rf * && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 
@@ -1779,7 +1779,7 @@ function inject_loader() {
 	    		sleep 1
                         echo "Mounting ${edisk}6 ..."	
                     	sudo mount "${edisk}6" "${mdisk}6"
-		        [ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && return
+		        [ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
 		    done 
                     
                     cd /mnt/sda2 && sudo rm -rf * && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
@@ -1804,7 +1804,7 @@ function inject_loader() {
 	    		sleep 1
                         echo "Mounting ${edisk}4 ..."	
                     	sudo mount "${edisk}4" "${mdisk}4"
-		        [ $( mount | grep "${edisk}4" | wc -l ) -gt 0 ] && return
+		        [ $( mount | grep "${edisk}4" | wc -l ) -gt 0 ] && break
 		    done 
 		    
                     cd /mnt/sda3 && sudo rm -rf * && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}4" 2>/dev/null
