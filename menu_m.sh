@@ -1699,7 +1699,7 @@ function inject_loader() {
 
     if [ ${IDX} -gt 1 ]; then
         NUM=1
-		imgpath="/dev/shm/boot-image-to-hdd.img"
+	imgpath="/dev/shm/boot-image-to-hdd.img"
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
             model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
             echo
@@ -1762,14 +1762,14 @@ function inject_loader() {
                     	sudo mount "${edisk}5" "${mdisk}5"
 			[ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
 		    done 
-                    cd /mnt/sda1 && sudo rm -rf "${mdisk}5"/* && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+                    cd /mnt/${loaderdisk}1 && sudo rm -rf "${mdisk}5"/* && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 
       		    echo "Modifying grub.cfg for new loader boot..."	
 		    sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
       		    tcrpfriendentry | sudo tee --append "${mdisk}5"/boot/grub/grub.cfg
       
-                    sudo cp -vf /mnt/sda3/bzImage-friend  "${mdisk}5"
-                    sudo cp -vf /mnt/sda3/initrd-friend  "${mdisk}5"
+                    sudo cp -vf /mnt/${loaderdisk}3/bzImage-friend  "${mdisk}5"
+                    sudo cp -vf /mnt/${loaderdisk}3/initrd-friend  "${mdisk}5"
 
                     sudo mkdir -p /usr/local/share/locale
                     sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
@@ -1781,7 +1781,7 @@ function inject_loader() {
                     	sudo mount "${edisk}6" "${mdisk}6"
 		  	[ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
 		    done 
-                    cd /mnt/sda2 && sudo rm -rf "${mdisk}6"/* && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
+                    cd /mnt/${loaderdisk}2 && sudo rm -rf "${mdisk}6"/* && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
 
                 elif [ ${NUM} = 2 ]; then
 		
@@ -1805,7 +1805,7 @@ function inject_loader() {
                     	sudo mount "${edisk}4" "${mdisk}4"
 		        [ $( mount | grep "${edisk}4" | wc -l ) -gt 0 ] && break
 		    done 
-                    cd /mnt/sda3 && sudo rm -rf "${mdisk}4"/* && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}4" 2>/dev/null
+                    cd /mnt/${loaderdisk}3 && sudo rm -rf "${mdisk}4"/* && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}4" 2>/dev/null
 
                 else
                     echo "The 3rd and subsequent BASIC type disks are skipped... $model"
