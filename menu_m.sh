@@ -902,7 +902,7 @@ function seleudev() {
     fi
   fi 
 
-  curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/bundled-exts.json -o /home/tc/redpill-load/bundled-exts.json
+  curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/bundled-exts.json -o /home/tc/redpill-load/bundled-exts.json
   sudo rm -rf /home/tc/redpill-load/custom/extensions/ddsml
   sudo rm -rf /home/tc/redpill-load/custom/extensions/eudev
   writeConfigKey "general" "devmod" "${DMPM}"
@@ -1552,7 +1552,7 @@ function burnloader() {
   if [ -f /dev/shm/tinycore-redpill.v1.0.1.0.m-shell.img ]; then
     echo "TCRP-mshell img file already exists. Skip download..."  
   else
-    curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/tinycore-redpill.v1.0.1.0.m-shell.img.gz -o /dev/shm/tinycore-redpill.v1.0.1.0.m-shell.img.gz --progress-bar
+    curl -kL# https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/tinycore-redpill.v1.0.1.0.m-shell.img.gz -o /dev/shm/tinycore-redpill.v1.0.1.0.m-shell.img.gz
     gunzip /dev/shm/tinycore-redpill.v1.0.1.0.m-shell.img.gz
   fi
 
@@ -1709,15 +1709,17 @@ function inject_loader() {
             elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
                 
                 if [ ${NUM} = 1 ]; then
+
+		    imgpath="/dev/shm/boot-image-to-hdd.img"		
+                    echo "Downloading tempelete disk image to ${imgpath}..."
+                    curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
+		    echo "Unpacking image ${imgpath}..."
+      		    gunzip -f "${imgpath}.gz" >/dev/null 2>&1
 		
                     echo "Create extended and logical partitions on 1st disk. ${model}"		
                     last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
 		    echo "1st disk's last sector is $last_sector"
                     echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
-		
-		    imgpath="/dev/shm/boot-image-to-hdd.img"		
-                    echo "Downloading tempelete disk image to ${imgpath}..."
-                    curl -kL https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img -o ${imgpath}
 
                     tce-load -i grub2-multi
                     if [ $? -eq 0 ]; then
@@ -1725,7 +1727,7 @@ function inject_loader() {
                     else
                         tce-load -iw grub2-multi
                     fi
-                    sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+                    #sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 
                     if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
                         echo -n "Setting up ${imgpath} loop -> "
@@ -1743,9 +1745,8 @@ function inject_loader() {
                     # +26M
                     echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
 
-
-                    #sudo dd if="${loopdev}p1" of="${edisk}5"
-                    #sudo dd if="${loopdev}p2" of="${edisk}6"
+                    sudo dd if="${loopdev}p1" of="${edisk}5"
+                    sudo dd if="${loopdev}p2" of="${edisk}6"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 		    sleep 1
@@ -1772,15 +1773,14 @@ function inject_loader() {
                     echo "Create partitions on 2nd disks... $edisk"
 	            last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}3" | awk '{print $3}')
 	     	    echo "2nd disk's last sector is $last_sector"
+                    # + 100M	   
                     echo -e "n\np\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
-		    
-                    # + 100M
-                    #echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
+
 		    sleep 1
       
                     loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
                     echo "$loopdev"
-                    #sudo dd if="${loopdev}p3" of="${edisk}4"
+                    sudo dd if="${loopdev}p3" of="${edisk}4"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 		    sleep 1
@@ -2081,9 +2081,9 @@ fi
 
 # Download dialog
 if [ "$(which dialog)_" == "_" ]; then
-    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz -o /mnt/${tcrppart}/cde/optional/dialog.tcz
-    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.dep -o /mnt/${tcrppart}/cde/optional/dialog.tcz.dep
-    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.md5.txt -o /mnt/${tcrppart}/cde/optional/dialog.tcz.md5.txt
+    sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz -o /mnt/${tcrppart}/cde/optional/dialog.tcz
+    sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.dep -o /mnt/${tcrppart}/cde/optional/dialog.tcz.dep
+    sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/dialog.tcz.md5.txt -o /mnt/${tcrppart}/cde/optional/dialog.tcz.md5.txt
     tce-load -i dialog
     if [ $? -eq 0 ]; then
         echo "Install dialog OK !!!"
@@ -2103,7 +2103,7 @@ fi
 # Download pigz
 if [ "$(which pigz)_" == "_" ]; then
     echo "pigz does not exist, bringing over from repo"
-    curl -skLO https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tools/pigz
+    curl -skLO# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tools/pigz
     chmod 700 pigz
     sudo mv -vf pigz /usr/local/bin/
 fi
@@ -2111,7 +2111,7 @@ fi
 # Download dtc
 if [ "$(which dtc)_" == "_" ]; then
     echo "dtc dos not exist, Downloading dtc binary"
-    curl -skLO https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tools/dtc
+    curl -skLO# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tools/dtc
     chmod 700 dtc
     sudo mv -vf dtc /usr/local/bin/
 fi   
@@ -2125,8 +2125,8 @@ fi
 
 # Download kmaps
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep kmaps | wc -w) -eq 0 ]; then
-    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz -o /mnt/${tcrppart}/cde/optional/kmaps.tcz
-    sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz.md5.txt -o /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
+    sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz -o /mnt/${tcrppart}/cde/optional/kmaps.tcz
+    sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tce/optional/kmaps.tcz.md5.txt -o /mnt/${tcrppart}/cde/optional/kmaps.tcz.md5.txt
     tce-load -i kmaps
     if [ $? -eq 0 ]; then
         echo "Install kmaps OK !!!"
