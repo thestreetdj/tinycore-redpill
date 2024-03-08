@@ -1755,7 +1755,8 @@ function inject_loader() {
                     sudo dd if="${loopdev}p2" of="${edisk}6"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
-		    
+
+      		    [ ! -d "${mdisk}5" ] && mkdir "${mdisk}5"
       		    while true; do
 	    		sleep 1
                         echo "Mounting ${edisk}5 ..."	
@@ -1774,7 +1775,8 @@ function inject_loader() {
                     sudo mkdir -p /usr/local/share/locale
                     sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
                     sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
-		    
+
+                    [ ! -d "${mdisk}6" ] && mkdir "${mdisk}6"
       		    while true; do
 	    		sleep 1
                         echo "Mounting ${edisk}6 ..."	
@@ -1798,7 +1800,8 @@ function inject_loader() {
                     sudo dd if="${loopdev}p3" of="${edisk}4"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
-		    
+
+                    [ ! -d "${mdisk}4" ] && mkdir "${mdisk}4"
       		    while true; do
 	    		sleep 1
                         echo "Mounting ${edisk}4 ..."	
