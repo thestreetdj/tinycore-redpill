@@ -1712,9 +1712,15 @@ function inject_loader() {
 
 		    imgpath="/dev/shm/boot-image-to-hdd.img"		
                     echo "Downloading tempelete disk image to ${imgpath}..."
-                    curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
+                    sudo curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
+	            if [ $? -ne 0 ]; then
+	             	echo "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..."
+		  	read answer 
+		        cd ~
+		        return
+	            fi    		    
 		    echo "Unpacking image ${imgpath}..."
-      		    gunzip -f "${imgpath}.gz" >/dev/null 2>&1
+      		    sudo gunzip -f "${imgpath}.gz"
 		
                     echo "Create extended and logical partitions on 1st disk. ${model}"		
                     last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
