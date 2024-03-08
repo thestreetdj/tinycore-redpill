@@ -1755,9 +1755,14 @@ function inject_loader() {
                     sudo dd if="${loopdev}p2" of="${edisk}6"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
-		    sleep 1
-                    sudo mount "${edisk}5" "${mdisk}5"
-                    cd /mnt/sda1 && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+		    
+      		    while true; do
+	    		sleep 1
+                        echo "Mounting ${edisk}5 ..."	
+                    	sudo mount "${edisk}5" "${mdisk}5"
+		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && return
+		    done 
+                    cd /mnt/sda1 && sudo rm -rf * && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 
       		    echo "Modifying grub.cfg for new loader boot..."	
 		    sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
@@ -1770,9 +1775,14 @@ function inject_loader() {
                     sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
                     sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
 		    
-      		    sleep 1
-                    sudo mount "${edisk}6" "${mdisk}6"
-                    cd /mnt/sda2 && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
+      		    while true; do
+	    		sleep 1
+                        echo "Mounting ${edisk}6 ..."	
+                    	sudo mount "${edisk}6" "${mdisk}6"
+		        [ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && return
+		    done 
+                    
+                    cd /mnt/sda2 && sudo rm -rf * && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
 
                 elif [ ${NUM} = 2 ]; then
 		
@@ -1789,9 +1799,15 @@ function inject_loader() {
                     sudo dd if="${loopdev}p3" of="${edisk}4"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
-		    sleep 1
-                    sudo mount "${edisk}4" "${mdisk}4"
-                    cd /mnt/sda3 && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}4" 2>/dev/null
+		    
+      		    while true; do
+	    		sleep 1
+                        echo "Mounting ${edisk}4 ..."	
+                    	sudo mount "${edisk}4" "${mdisk}4"
+		        [ $( mount | grep "${edisk}4" | wc -l ) -gt 0 ] && return
+		    done 
+		    
+                    cd /mnt/sda3 && sudo rm -rf * && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}4" 2>/dev/null
 
                 else
                     echo "The 3rd and subsequent BASIC type disks are skipped... $model"
