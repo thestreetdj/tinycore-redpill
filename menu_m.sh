@@ -1721,11 +1721,6 @@ function inject_loader() {
 	            fi    		    
 		    echo "Unpacking image ${imgpath}..."
       		    sudo gunzip -f "${imgpath}.gz"
-		
-                    echo "Create extended and logical partitions on 1st disk. ${model}"		
-                    last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
-		    echo "1st disk's last sector is $last_sector"
-                    echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
 
                     tce-load -i grub2-multi
                     if [ $? -eq 0 ]; then
@@ -1734,6 +1729,11 @@ function inject_loader() {
                         tce-load -iw grub2-multi
                     fi
                     #sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+		
+                    echo "Create extended and logical partitions on 1st disk. ${model}"		
+                    last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
+		    echo "1st disk's last sector is $last_sector"
+                    echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
 
                     if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
                         echo -n "Setting up ${imgpath} loop -> "
