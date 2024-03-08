@@ -1734,7 +1734,7 @@ function inject_loader() {
                     echo "$loopdev"
     
                     # +98M
-                    echo "Create partitions on 1st disks... $model"
+                    echo "Create partitions on 1st disks... $edisk"
                     echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
                     echo -e "a\n5\nw" | sudo fdisk "${edisk}"
                     # +26M
@@ -1766,8 +1766,9 @@ function inject_loader() {
 
                 elif [ ${NUM} = 2 ]; then
 		
-                    echo "Create partitions on 2st disks... $model"
+                    echo "Create partitions on 2st disks... $edisk"
 	            last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}3" | awk '{print $3}')
+	     	    echo "2st disk's last sector is $last_sector"
                     echo -e "n\np\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
 		    
                     # + 100M
@@ -1776,7 +1777,7 @@ function inject_loader() {
       
                     loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
                     echo "$loopdev"
-                    sudo dd if="${loopdev}p3" of="${edisk}4"
+                    #sudo dd if="${loopdev}p3" of="${edisk}4"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 		    sleep 1
