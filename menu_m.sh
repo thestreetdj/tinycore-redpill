@@ -1739,11 +1739,13 @@ function inject_loader() {
                     echo -e "a\n5\nw" | sudo fdisk "${edisk}"
                     # +26M
                     echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
-                    
-                    sudo dd if="${loopdev}p1" of="${edisk}5"
-                    sudo dd if="${loopdev}p2" of="${edisk}6"
+
+
+                    #sudo dd if="${loopdev}p1" of="${edisk}5"
+                    #sudo dd if="${loopdev}p2" of="${edisk}6"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
+		    sleep 1
                     sudo mount "${edisk}5" "${mdisk}5"
                     cd /mnt/sda1 && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 
@@ -1757,24 +1759,29 @@ function inject_loader() {
                     sudo mkdir -p /usr/local/share/locale
                     sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
                     sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
-
+		    
+      		    sleep 1
                     sudo mount "${edisk}6" "${mdisk}6"
                     cd /mnt/sda2 && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
 
                 elif [ ${NUM} = 2 ]; then
 		
                     echo "Create partitions on 2st disks... $model"
-                    # + about 127M
-                    echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
-		    sleep 2
+	            last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}3" | awk '{print $3}')
+                    echo -e "n\np\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+		    
+                    # + 100M
+                    #echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
+		    sleep 1
       
                     loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
                     echo "$loopdev"
-                    sudo dd if="${loopdev}p3" of="${edisk}5"
+                    sudo dd if="${loopdev}p3" of="${edisk}4"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
-                    sudo mount "${edisk}5" "${mdisk}5"
-                    cd /mnt/sda3 && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+		    sleep 1
+                    sudo mount "${edisk}4" "${mdisk}4"
+                    cd /mnt/sda3 && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}4" 2>/dev/null
 
                 else
                     echo "The 3rd and subsequent BASIC type disks are skipped... $model"
