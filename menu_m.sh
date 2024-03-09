@@ -1722,11 +1722,11 @@ function inject_loader() {
 		    echo "Unpacking image ${imgpath}..."
       		    sudo gunzip -f "${imgpath}.gz"
 
-                    tce-load -i grub2-multi dosfstools
+                    tce-load -i grub2-multi 
                     if [ $? -eq 0 ]; then
                         echo "Install dialog OK !!!"
                     else
-                        tce-load -iw grub2-multi
+                        tce-load -iw grub2-multi dosfstools
                     fi
                     #sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 		
