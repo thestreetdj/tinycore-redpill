@@ -1722,7 +1722,7 @@ function inject_loader() {
 		    echo "Unpacking image ${imgpath}..."
       		    sudo gunzip -f "${imgpath}.gz"
 
-                    tce-load -i grub2-multi
+                    tce-load -i grub2-multi dosfstools
                     if [ $? -eq 0 ]; then
                         echo "Install dialog OK !!!"
                     else
@@ -1751,8 +1751,10 @@ function inject_loader() {
                     # +26M
                     echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
 
-                    sudo dd if="${loopdev}p1" of="${edisk}5"
-                    sudo dd if="${loopdev}p2" of="${edisk}6"
+                    #sudo dd if="${loopdev}p1" of="${edisk}5"
+                    #sudo dd if="${loopdev}p2" of="${edisk}6"
+		    sudo mkfs.vfat -F16 "${edisk}5"
+      		    sudo mkfs.vfat -F16 "${edisk}6"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 
