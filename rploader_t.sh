@@ -3207,10 +3207,9 @@ st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
 function curlfriend() {
 
     msgwarning "Download failed from ${domain}..."
-    curl -kLO# https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/chksum -O https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/bzImage-friend -O https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/initrd-friend
-    #curl -kLO# "https://${domain}/PeterSuh-Q3/tcrpfriend/main/chksum" \
-    #-O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/bzImage-friend" \
-    #-O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/initrd-friend"
+    curl -kLO# "https://${domain}/PeterSuh-Q3/tcrpfriend/main/chksum" \
+    -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/bzImage-friend" \
+    -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/initrd-friend"
     if [ $? -ne 0 ]; then
         msgalert "Download failed from ${domain}... !!!!!!!!"
     else
@@ -3224,6 +3223,9 @@ function bringoverfriend() {
   [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
   echo -n "Checking for latest friend -> "
+  # for test
+  curl -kLO# https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/chksum -O https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/bzImage-friend -O https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/initrd-friend
+  return
   #URL=$(curl --connect-timeout 15 -s -k -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
   
   URL="https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest/download/chksum"
