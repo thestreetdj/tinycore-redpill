@@ -114,7 +114,7 @@ function history() {
     1.0.1.2 Fix for SA6400
     1.0.2.0 Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
     1.0.2.1 Changed extension file organization method
-    1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts)
+    1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts), The priority starts from custom.gz
     --------------------------------------------------------------------------------------
 EOF
 
@@ -3085,15 +3085,15 @@ fi
         unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
     fi
 
-    # 1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts)
-    if [ -f /mnt/${loaderdisk}3/initrd-dsm ]; then
-        echo "Found initrd-dsm and extract /exts from " 
+    # 1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts), The priority starts from custom.gz
+    if [ -f /mnt/${loaderdisk}3/custom.gz ]; then
+        echo "Found custom.gz, so extract from custom.gz " 
+        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm  >/dev/null 2>&1
+    else
+        echo "Not found custom.gz, extract /exts from initrd-dsm" 
         cat /mnt/${loaderdisk}3/initrd-dsm | sudo cpio -idm "*exts*"  >/dev/null 2>&1
         cat /mnt/${loaderdisk}3/initrd-dsm | sudo cpio -idm "*modprobe*"  >/dev/null 2>&1
         cat /mnt/${loaderdisk}3/initrd-dsm | sudo cpio -idm "*rp.ko*"  >/dev/null 2>&1
-    else
-        echo "Not found initrd-dsm, so extract from custom.gz " 
-        cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm  >/dev/null 2>&1
     fi
 
     # SA6400 patches for JOT Mode
