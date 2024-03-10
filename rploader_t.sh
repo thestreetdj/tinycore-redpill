@@ -3207,7 +3207,7 @@ st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
 function curlfriend() {
 
     msgwarning "Download failed from ${domain}..."
-    curl --progress-bar -k -L -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/chksum" \
+    curl -kLO# "https://${domain}/PeterSuh-Q3/tcrpfriend/main/chksum" \
     -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/bzImage-friend" \
     -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/initrd-friend"
     if [ $? -ne 0 ]; then
