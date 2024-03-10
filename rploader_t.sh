@@ -3117,6 +3117,12 @@ fi
         #sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/rr/linuxrc.syno.impl -o /home/tc/rd.temp/linuxrc.syno.impl        
     fi
     sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe    
+
+    sudo curl -kL# https://github.com/PeterSuh-Q3/tcrpfriend/raw/main/buildroot/board/tcrpfriend/rootfs-overlay/root/boot-image-dummy-sda.img.gz -o /home/tc/rd.temp/root/boot-image-dummy-sda.img.gz
+    sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tcrpfriend/main/buildroot/board/tcrpfriend/rootfs-overlay/root/load-sda-first.sh -o /home/tc/rd.temp/root/load-sda-first.sh
+    sudo chmod +x /home/tc/rd.temp/root/load-sda-first.sh 
+    sudo mkdir -p /home/tc/rd.temp/etc/udev/rules.d
+    sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tcrpfriend/main/buildroot/board/tcrpfriend/rootfs-overlay/etc/udev/rules.d/99-custom.rules -o /home/tc/rd.temp/etc/udev/rules.d/99-custom.rules
     
     if [ "$RD_COMPRESSED" = "false" ]; then
         echo "Ramdisk in not compressed "
