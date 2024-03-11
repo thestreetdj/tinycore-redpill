@@ -3123,6 +3123,9 @@ fi
     sudo chmod +x /home/tc/rd.temp/root/load-sda-first.sh 
     sudo mkdir -p /home/tc/rd.temp/etc/udev/rules.d
     sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tcrpfriend/main/buildroot/board/tcrpfriend/rootfs-overlay/etc/udev/rules.d/99-custom.rules -o /home/tc/rd.temp/etc/udev/rules.d/99-custom.rules
+    sudo curl -kL# https://github.com/PeterSuh-Q3/losetup/raw/master/sbin/libsmartcols.so.1 -o /home/tc/rd.temp/usr/lib/libsmartcols.so.1
+    sudo curl -kL# https://github.com/PeterSuh-Q3/losetup/raw/master/sbin/losetup -o /home/tc/rd.temp/usr/sbin/losetup
+    sudo chmod +x /home/tc/rd.temp/usr/sbin/losetup
     
     if [ "$RD_COMPRESSED" = "false" ]; then
         echo "Ramdisk in not compressed "
