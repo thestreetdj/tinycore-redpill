@@ -3121,8 +3121,8 @@ fi
     sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tcrpfriend/main/buildroot/board/tcrpfriend/rootfs-overlay/root/boot-image-dummy-sda.img.gz -o /home/tc/rd.temp/root/boot-image-dummy-sda.img.gz
     sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tcrpfriend/main/buildroot/board/tcrpfriend/rootfs-overlay/root/load-sda-first.sh -o /home/tc/rd.temp/root/load-sda-first.sh
     sudo chmod +x /home/tc/rd.temp/root/load-sda-first.sh 
-    sudo echo "#!/bin/sh" > /home/tc/rd.temp/usr/syno/etc/rc.d/S12loop0.sh
-    sudo echo "/bin/sh /root/load-sda-first.sh" >> /home/tc/rd.temp/usr/syno/etc/rc.d/S12loop0.sh
+    echo "#!/bin/sh" > /home/tc/rd.temp/usr/syno/etc/rc.d/S12loop0.sh
+    echo "/bin/sh /root/load-sda-first.sh" >> /home/tc/rd.temp/usr/syno/etc/rc.d/S12loop0.sh
     sudo chmod +x /home/tc/rd.temp/usr/syno/etc/rc.d/S12loop0.sh
     sudo mkdir -p /home/tc/rd.temp/etc/udev/rules.d
     sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tcrpfriend/main/buildroot/board/tcrpfriend/rootfs-overlay/etc/udev/rules.d/99-custom.rules -o /home/tc/rd.temp/etc/udev/rules.d/99-custom.rules
