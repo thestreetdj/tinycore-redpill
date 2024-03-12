@@ -1692,7 +1692,7 @@ function inject_loader() {
     IDX=0
     for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
     	if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
-            echo "This is BASIC Type Disk. $edisk"
+            echo "This is BASIC Type Hard Disk. $edisk"
             IDX=$((${IDX} + 1))
         fi
     done
@@ -1727,6 +1727,12 @@ function inject_loader() {
                         echo "Install dialog OK !!!"
                     else
                         tce-load -iw grub2-multi dosfstools
+	            	if [ $? -ne 0 ]; then
+		            echo "Install grub2-multi failed. Stop processing!!! "
+			    read answer 
+			    cd ~
+			    return
+		        fi    		    
                     fi
                     #sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 		
@@ -1735,9 +1741,22 @@ function inject_loader() {
 		    echo "1st disk's last sector is $last_sector"
                     echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
 
+            	    if [ $? -ne 0 ]; then
+		        echo "make extend partition on ${edisk} failed. Stop processing!!! "
+		        read answer 
+		        cd ~
+		        return
+		    fi    		    
+
                     if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
                         echo -n "Setting up ${imgpath} loop -> "
                         sudo losetup -fP ${imgpath}
+               	        if [ $? -ne 0 ]; then
+		            echo "Mount loop device for ${imgpath} failed. Stop processing!!! "
+		            read answer 
+		            cd ~
+		            return
+		        fi    		    
                     else
                         echo -n "Loop device exists..."
                     fi
@@ -1747,9 +1766,29 @@ function inject_loader() {
                     # +98M
                     echo "Create partitions on 1st disks... $edisk"
                     echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
+            	    if [ $? -ne 0 ]; then
+		        echo "make logical partition on ${edisk} failed. Stop processing!!! "
+		        read answer 
+		        cd ~
+		        return
+		    fi    		    
+		    
                     echo -e "a\n5\nw" | sudo fdisk "${edisk}"
+            	    if [ $? -ne 0 ]; then
+		        echo "activate partition on ${edisk} failed. Stop processing!!! "
+		        read answer 
+		        cd ~
+		        return
+		    fi    		    
+      
                     # +26M
                     echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
+            	    if [ $? -ne 0 ]; then
+		        echo "make logical partition on ${edisk} failed. Stop processing!!! "
+		        read answer 
+		        cd ~
+		        return
+		    fi
 
                     #sudo dd if="${loopdev}p1" of="${edisk}5"
                     #sudo dd if="${loopdev}p2" of="${edisk}6"
@@ -1777,6 +1816,12 @@ function inject_loader() {
                     sudo mkdir -p /usr/local/share/locale
                     sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
                     sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
+            	    if [ $? -ne 0 ]; then
+		        echo "excute grub-install ${mdisk}5 failed. Stop processing!!! "
+		        read answer 
+		        cd ~
+		        return
+		    fi
 
                     [ ! -d "${mdisk}6" ] && sudo mkdir "${mdisk}6"
       		    while true; do
@@ -1787,14 +1832,29 @@ function inject_loader() {
 		    done 
                     cd /mnt/${loaderdisk}2 && sudo rm -rf "${mdisk}6"/* && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
 
+		    synop1=${edisk}5
+      		    synop2=${edisk}6
+      
                 elif [ ${NUM} = 2 ]; then
 		
                     echo "Create partitions on 2nd disks... $edisk"
 	            last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
 	     	    echo "2nd disk's last sector is $last_sector"
 	   	    echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+            	    if [ $? -ne 0 ]; then
+		        echo "make extend partition on ${edisk} failed. Stop processing!!! "
+		        read answer 
+		        cd ~
+		        return
+		    fi
                     # + 127M
                     echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
+            	    if [ $? -ne 0 ]; then
+		        echo "make logical partition on ${edisk} failed. Stop processing!!! "
+		        read answer 
+		        cd ~
+		        return
+		    fi
 
 		    sleep 1
       
@@ -1812,7 +1872,8 @@ function inject_loader() {
 		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
 		    done 
                     cd /mnt/${loaderdisk}3 && sudo rm -rf "${mdisk}5"/* && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
-
+		    
+                    synop3=${edisk}5
                 else
                     echo "The 3rd and subsequent BASIC type disks are skipped... $model"
                     continue
@@ -1826,7 +1887,10 @@ function inject_loader() {
 
         sudo losetup -d ${loopdev}
         [ -z $(losetup | grep -i ${imgpath}) ] && echo "boot-image-to-hdd.img losetup OK !!!"
-	
+	sync
+ 	echo "unmount synoboot partitions...${synop1}, ${synop2}, ${synop3}"
+        sudo umount ${synop1} && sudo umount ${synop2} && sudo umount ${synop3}
+ 
         echo "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..."
     	read answer 
         cd ~
