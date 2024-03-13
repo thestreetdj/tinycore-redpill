@@ -1685,6 +1685,20 @@ function del-macspoof() {
   jsonfile=$(jq 'del(.["mac-spoof"])' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
 }
 
+function spacechk() {
+  # Discover file size
+  SPACEUSED=$(df --block-size=1 | awk '/'${1}'/{print $3}') # Check disk space used
+  SPACELEFT=$(df --block-size=1 | awk '/'${2}'/{print $4}') # Check disk space left
+
+  SPACEUSED_FORMATTED=$(printf "%'d" "${SPACEUSED}")
+  SPACELEFT_FORMATTED=$(printf "%'d" "${SPACELEFT}")
+  SPACEUSED_MB=$((SPACEUSED / 1024 / 1024))
+  SPACELEFT_MB=$((SPACELEFT / 1024 / 1024))    
+
+  echo "SPACEUSED = ${SPACEUSED_FORMATTED} bytes (${SPACEUSED_MB} MB)"
+  echo "SPACELEFT = ${SPACELEFT_FORMATTED} bytes (${SPACELEFT_MB} MB)"
+}
+
 function inject_loader() {
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
   readanswer    
@@ -1710,7 +1724,7 @@ function inject_loader() {
             elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
                 
                 if [ ${NUM} = 1 ]; then
-		    
+
                     echo "Downloading tempelete disk image to ${imgpath}..."
                     sudo curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
     	            if [ $? -ne 0 ]; then
@@ -1726,7 +1740,7 @@ function inject_loader() {
                     if [ $? -eq 0 ]; then
                         echo "Install dialog OK !!!"
                     else
-                        tce-load -iw grub2-multi dosfstools
+                        tce-load -iw grub2-multi dosfstools bc
     	            	if [ $? -ne 0 ]; then
     		            echo "Install grub2-multi failed. Stop processing!!! "
         			    read answer 
@@ -1804,6 +1818,26 @@ function inject_loader() {
                     	sudo mount "${edisk}5" "${mdisk}5"
 			            [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
 		            done 
+
+                    diskid=$(echo "${edisk}" | sed 's#/dev/##')
+                    spacechk "${loaderdisk}1" "${diskid}5"
+                    FILESIZE1=$(ll /mnt/${loaderdisk}3/bzImage-friend | awk '{print$5}')
+                    FILESIZE2=$(ll /mnt/${loaderdisk}3/initrd-friend | awk '{print$5}')
+                    
+                    a_num=$(echo $FILESIZE1 | bc)
+                    b_num=$(echo $FILESIZE2 | bc)
+                    c_num=$(echo $SPACEUSED | bc)
+                    t_num=$(($a_num + $b_num + $c_num))
+                    TOTALUSED=$(echo $t_num)
+
+            	    if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
+                        echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
+                        sudo umount "${mdisk}5"
+           			    read answer 
+           			    cd ~
+           			    return
+            	    fi
+              
                     cd /mnt/${loaderdisk}1 && sudo rm -rf "${mdisk}5"/* && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 
       		        echo "Modifying grub.cfg for new loader boot..."	
@@ -1830,6 +1864,16 @@ function inject_loader() {
                     	sudo mount "${edisk}6" "${mdisk}6"
             		  	[ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
 		            done 
+
+                    spacechk "${loaderdisk}2" "${diskid}6"
+            	    if [ 0${SPACEUSED} -ge 0${SPACELEFT} ]; then
+                        echo "Source Partition is too big ${SPACEUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
+                        sudo umount "${mdisk}6"
+           			    read answer 
+           			    cd ~
+           			    return
+            	    fi
+              
                     cd /mnt/${loaderdisk}2 && sudo rm -rf "${mdisk}6"/* && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
 
 		            synop1=${edisk}5
@@ -1871,6 +1915,24 @@ function inject_loader() {
                     	sudo mount "${edisk}5" "${mdisk}5"
 		                [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
 		            done 
+              
+                    spacechk "${loaderdisk}3" "${diskid}5"
+                    FILESIZE1=$(ll /mnt/${loaderdisk}3/zImage-dsm | awk '{print$5}')
+                    FILESIZE2=$(ll /mnt/${loaderdisk}3/initrd-dsm | awk '{print$5}')
+                    
+                    a_num=$(echo $FILESIZE1 | bc)
+                    b_num=$(echo $FILESIZE2 | bc)
+                    t_num=$(($a_num + $b_num + 20000 ))
+                    TOTALUSED=$(echo $t_num)
+                    
+            	    if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
+                        echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
+                        sudo umount "${mdisk}6"
+           			    read answer 
+           			    cd ~
+           			    return
+            	    fi
+              
                     cd /mnt/${loaderdisk}3 && sudo rm -rf "${mdisk}5"/* && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 		    
                     synop3=${edisk}5
