@@ -1830,6 +1830,10 @@ function inject_loader() {
                     t_num=$(($a_num + $b_num + $c_num))
                     TOTALUSED=$(echo $t_num)
 
+                    TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
+                    TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
+                    echo "TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
+
             	    if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
                         echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
                         sudo umount "${mdisk}5"
@@ -1924,6 +1928,10 @@ function inject_loader() {
                     b_num=$(echo $FILESIZE2 | bc)
                     t_num=$(($a_num + $b_num + 20000 ))
                     TOTALUSED=$(echo $t_num)
+
+                    TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
+                    TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
+                    echo "TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
                     
             	    if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
                         echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
