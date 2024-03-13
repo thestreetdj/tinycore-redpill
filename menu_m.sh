@@ -1919,6 +1919,7 @@ function inject_loader() {
                     	sudo mount "${edisk}5" "${mdisk}5"
 		                [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
 		            done 
+                    sudo rm -rf "${mdisk}5"/*
               
                     spacechk "${loaderdisk}3" "${diskid}5"
                     FILESIZE1=$(ls -l /mnt/${loaderdisk}3/zImage-dsm | awk '{print$5}')
@@ -1941,7 +1942,7 @@ function inject_loader() {
            			    return
             	    fi
               
-                    cd /mnt/${loaderdisk}3 && sudo rm -rf "${mdisk}5"/* && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+                    cd /mnt/${loaderdisk}3 && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 		    
                     synop3=${edisk}5
                 else
