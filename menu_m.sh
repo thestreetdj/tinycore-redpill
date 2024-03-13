@@ -1818,6 +1818,7 @@ function inject_loader() {
                     	sudo mount "${edisk}5" "${mdisk}5"
 			            [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
 		            done 
+                    sudo rm -rf "${mdisk}5"/*
 
                     diskid=$(echo "${edisk}" | sed 's#/dev/##')
                     spacechk "${loaderdisk}1" "${diskid}5"
@@ -1842,7 +1843,7 @@ function inject_loader() {
            			    return
             	    fi
               
-                    cd /mnt/${loaderdisk}1 && sudo rm -rf "${mdisk}5"/* && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+                    cd /mnt/${loaderdisk}1 && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 
       		        echo "Modifying grub.cfg for new loader boot..."	
 		            sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
@@ -1868,7 +1869,8 @@ function inject_loader() {
                     	sudo mount "${edisk}6" "${mdisk}6"
             		  	[ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
 		            done 
-
+                    sudo rm -rf "${mdisk}6"/*
+                    
                     spacechk "${loaderdisk}2" "${diskid}6"
             	    if [ 0${SPACEUSED} -ge 0${SPACELEFT} ]; then
                         echo "Source Partition is too big ${SPACEUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
@@ -1878,7 +1880,7 @@ function inject_loader() {
            			    return
             	    fi
               
-                    cd /mnt/${loaderdisk}2 && sudo rm -rf "${mdisk}6"/* && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
+                    cd /mnt/${loaderdisk}2 && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
 
 		            synop1=${edisk}5
       		        synop2=${edisk}6
