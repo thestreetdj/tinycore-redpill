@@ -1829,21 +1829,37 @@ function inject_loader() {
                     b_num=$(echo $FILESIZE2 | bc)
                     c_num=$(echo $SPACEUSED | bc)
                     t_num=$(($a_num + $b_num + $c_num))
+                    
                     TOTALUSED=$(echo $t_num)
-
                     TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
                     TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
                     echo "TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
 
+                    ZIMAGESIZE=""
             	    if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
-                        echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
-                        sudo umount "${mdisk}5"
-           			    read answer 
-           			    cd ~
-           			    return
+                        ZIMAGESIZE=$(ls -l /mnt/${loaderdisk}1/zImage | awk '{print$5}')
+                        z_num=$(echo $ZIMAGESIZE | bc)
+                        t_num=$(($t_num - $z_num))
+
+                        TOTALUSED=$(echo $t_num)
+                        TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
+                        TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
+                        echo "FIXED TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
+                        
+            	        if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then                        
+                            echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
+                            sudo umount "${mdisk}5"
+               			    read answer 
+               			    cd ~
+               			    return
+                        fi
             	    fi
-              
-                    cd /mnt/${loaderdisk}1 && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+
+                    if [ -z ${ZIMAGESIZE} ]; then
+                        cd /mnt/${loaderdisk}1 && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+                    else
+                        cd /mnt/${loaderdisk}1 && sudo find . -not -name "zImage" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+                    fi
 
       		        echo "Modifying grub.cfg for new loader boot..."	
 		            sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
