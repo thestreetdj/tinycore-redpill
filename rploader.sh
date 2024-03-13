@@ -9,7 +9,7 @@
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.2.2"
+rploaderver="1.0.2.3"
 build="master"
 redpillmake="prod"
 
@@ -115,6 +115,7 @@ function history() {
     1.0.2.0 Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
     1.0.2.1 Changed extension file organization method
     1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts), The priority starts from custom.gz
+    1.0.2.3 Added RedPill bootloader hard disk porting function
     --------------------------------------------------------------------------------------
 EOF
 
@@ -3117,6 +3118,16 @@ fi
         #sudo curl -kL https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/rr/linuxrc.syno.impl -o /home/tc/rd.temp/linuxrc.syno.impl        
     fi
     sudo chmod +x /home/tc/rd.temp/usr/sbin/modprobe    
+
+    # add dummy loop0 test
+    #sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tcrpfriend/main/buildroot/board/tcrpfriend/rootfs-overlay/root/boot-image-dummy-sda.img.gz -o /home/tc/rd.temp/root/boot-image-dummy-sda.img.gz
+    #sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tcrpfriend/main/buildroot/board/tcrpfriend/rootfs-overlay/root/load-sda-first.sh -o /home/tc/rd.temp/root/load-sda-first.sh
+    #sudo chmod +x /home/tc/rd.temp/root/load-sda-first.sh 
+    #sudo mkdir -p /home/tc/rd.temp/etc/udev/rules.d
+    #sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/tcrpfriend/main/buildroot/board/tcrpfriend/rootfs-overlay/etc/udev/rules.d/99-custom.rules -o /home/tc/rd.temp/etc/udev/rules.d/99-custom.rules
+    #sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/losetup/master/sbin/libsmartcols.so.1 -o /home/tc/rd.temp/usr/lib/libsmartcols.so.1
+    #sudo curl -kL# https://raw.githubusercontent.com/PeterSuh-Q3/losetup/master/sbin/losetup -o /home/tc/rd.temp/usr/sbin/losetup
+    #sudo chmod +x /home/tc/rd.temp/usr/sbin/losetup
     
     if [ "$RD_COMPRESSED" = "false" ]; then
         echo "Ramdisk in not compressed "
@@ -3207,7 +3218,7 @@ st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
 function curlfriend() {
 
     msgwarning "Download failed from ${domain}..."
-    curl --progress-bar -k -L -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/chksum" \
+    curl -kLO# "https://${domain}/PeterSuh-Q3/tcrpfriend/main/chksum" \
     -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/bzImage-friend" \
     -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/initrd-friend"
     if [ $? -ne 0 ]; then
@@ -3223,6 +3234,9 @@ function bringoverfriend() {
   [ ! -d /home/tc/friend ] && mkdir /home/tc/friend/ && cd /home/tc/friend
 
   echo -n "Checking for latest friend -> "
+  # for test
+  curl -kLO# https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/chksum -O https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/bzImage-friend -O https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/initrd-friend
+  return
   #URL=$(curl --connect-timeout 15 -s -k -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
   
   URL="https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest/download/chksum"
