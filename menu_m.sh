@@ -1927,7 +1927,7 @@ function inject_loader() {
                     
             	    if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
                         echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
-                        sudo umount "${mdisk}6"
+                        sudo umount "${mdisk}5"
            			    read answer 
            			    cd ~
            			    return
