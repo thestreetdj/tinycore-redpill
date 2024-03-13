@@ -1700,6 +1700,22 @@ function spacechk() {
 }
 
 function inject_loader() {
+
+  plat=$(cat /mnt/${loaderdisk}1/GRUB_VER | grep PLATFORM | cut -d "=" -f2 | tr '[:upper:]' '[:lower:]' | sed 's/"//g')
+  if [ "${plat}" = "epyc7002" ]; then
+	echo "Epyc7002 like SA6400 is not supported... Stop processing!!! "
+	read answer 
+	cd ~
+	return
+  fi
+
+  if [ "$MACHINE" = "VIRTUAL" ]; then
+	echo "Virtual system environment is not supported. Two or more BASIC type hard disks are required on bare metal. (SSD not possible)... Stop processing!!! "
+	read answer 
+	cd ~
+	return
+  fi
+
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
   readanswer    
   if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
