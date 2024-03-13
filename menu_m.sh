@@ -1699,7 +1699,7 @@ function inject_loader() {
 
     if [ ${IDX} -gt 1 ]; then
         NUM=1
-	imgpath="/dev/shm/boot-image-to-hdd.img"
+	    imgpath="/dev/shm/boot-image-to-hdd.img"
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
             model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
             echo
@@ -1713,14 +1713,14 @@ function inject_loader() {
 		    
                     echo "Downloading tempelete disk image to ${imgpath}..."
                     sudo curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
-	            if [ $? -ne 0 ]; then
-	            	echo "Download failed. Stop processing!!! ${imgpath}"
-		  	read answer 
-		  	cd ~
-		  	return
-	            fi    		    
-		    echo "Unpacking image ${imgpath}..."
-      		    sudo gunzip -f "${imgpath}.gz"
+    	            if [ $? -ne 0 ]; then
+    	            	echo "Download failed. Stop processing!!! ${imgpath}"
+            		  	read answer 
+            		  	cd ~
+            		  	return
+    	            fi    		    
+            	    echo "Unpacking image ${imgpath}..."
+          		    sudo gunzip -f "${imgpath}.gz"
 
                     tce-load -i grub2-multi 
                     if [ $? -eq 0 ]; then
