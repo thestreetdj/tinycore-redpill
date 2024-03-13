@@ -737,7 +737,7 @@ function DeleteConfigKey() {
 ###############################################################################
 # Mounts backtitle dynamically
 function backtitle() {
-  BACKTITLE="TCRP-mshell 1.0.1.0"
+  BACKTITLE="TCRP-mshell 1.0.2.3"
   BACKTITLE+=" ${DMPM}"
   BACKTITLE+=" ${ucode}"
   BACKTITLE+=" ${LDRMODE}"
