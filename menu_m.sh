@@ -1922,7 +1922,8 @@ function inject_loader() {
 		                [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
 		            done 
                     sudo rm -rf "${mdisk}5"/*
-              
+
+                    diskid=$(echo "${edisk}" | sed 's#/dev/##')
                     spacechk "${loaderdisk}3" "${diskid}5"
                     FILESIZE1=$(ls -l /mnt/${loaderdisk}3/zImage-dsm | awk '{print$5}')
                     FILESIZE2=$(ls -l /mnt/${loaderdisk}3/initrd-dsm | awk '{print$5}')
