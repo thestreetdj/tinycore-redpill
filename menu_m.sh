@@ -1821,8 +1821,8 @@ function inject_loader() {
 
                     diskid=$(echo "${edisk}" | sed 's#/dev/##')
                     spacechk "${loaderdisk}1" "${diskid}5"
-                    FILESIZE1=$(ll /mnt/${loaderdisk}3/bzImage-friend | awk '{print$5}')
-                    FILESIZE2=$(ll /mnt/${loaderdisk}3/initrd-friend | awk '{print$5}')
+                    FILESIZE1=$(ls -l /mnt/${loaderdisk}3/bzImage-friend | awk '{print$5}')
+                    FILESIZE2=$(ls -l /mnt/${loaderdisk}3/initrd-friend | awk '{print$5}')
                     
                     a_num=$(echo $FILESIZE1 | bc)
                     b_num=$(echo $FILESIZE2 | bc)
@@ -1917,8 +1917,8 @@ function inject_loader() {
 		            done 
               
                     spacechk "${loaderdisk}3" "${diskid}5"
-                    FILESIZE1=$(ll /mnt/${loaderdisk}3/zImage-dsm | awk '{print$5}')
-                    FILESIZE2=$(ll /mnt/${loaderdisk}3/initrd-dsm | awk '{print$5}')
+                    FILESIZE1=$(ls -l /mnt/${loaderdisk}3/zImage-dsm | awk '{print$5}')
+                    FILESIZE2=$(ls -l /mnt/${loaderdisk}3/initrd-dsm | awk '{print$5}')
                     
                     a_num=$(echo $FILESIZE1 | bc)
                     b_num=$(echo $FILESIZE2 | bc)
