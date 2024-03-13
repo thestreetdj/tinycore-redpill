@@ -1727,36 +1727,36 @@ function inject_loader() {
                         echo "Install dialog OK !!!"
                     else
                         tce-load -iw grub2-multi dosfstools
-	            	if [ $? -ne 0 ]; then
-		            echo "Install grub2-multi failed. Stop processing!!! "
-			    read answer 
-			    cd ~
-			    return
-		        fi    		    
+    	            	if [ $? -ne 0 ]; then
+    		            echo "Install grub2-multi failed. Stop processing!!! "
+        			    read answer 
+        			    cd ~
+        			    return
+        		        fi    		    
                     fi
                     #sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 		
                     echo "Create extended and logical partitions on 1st disk. ${model}"		
                     last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
-		    echo "1st disk's last sector is $last_sector"
+        		    echo "1st disk's last sector is $last_sector"
                     echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
 
             	    if [ $? -ne 0 ]; then
-		        echo "make extend partition on ${edisk} failed. Stop processing!!! "
-		        read answer 
-		        cd ~
-		        return
-		    fi    		    
+        		        echo "make extend partition on ${edisk} failed. Stop processing!!! "
+        		        read answer 
+        		        cd ~
+        		        return
+        		    fi    		    
 
                     if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
                         echo -n "Setting up ${imgpath} loop -> "
                         sudo losetup -fP ${imgpath}
                	        if [ $? -ne 0 ]; then
-		            echo "Mount loop device for ${imgpath} failed. Stop processing!!! "
-		            read answer 
-		            cd ~
-		            return
-		        fi    		    
+        		            echo "Mount loop device for ${imgpath} failed. Stop processing!!! "
+        		            read answer 
+        		            cd ~
+        		            return
+        		        fi    		    
                     else
                         echo -n "Loop device exists..."
                     fi
@@ -1767,48 +1767,48 @@ function inject_loader() {
                     echo "Create partitions on 1st disks... $edisk"
                     echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
             	    if [ $? -ne 0 ]; then
-		        echo "make logical partition on ${edisk} failed. Stop processing!!! "
-		        read answer 
-		        cd ~
-		        return
-		    fi    		    
+        		        echo "make logical partition on ${edisk} failed. Stop processing!!! "
+        		        read answer 
+        		        cd ~
+        		        return
+        		    fi    		    
 		    
                     echo -e "a\n5\nw" | sudo fdisk "${edisk}"
             	    if [ $? -ne 0 ]; then
-		        echo "activate partition on ${edisk} failed. Stop processing!!! "
-		        read answer 
-		        cd ~
-		        return
-		    fi    		    
+        		        echo "activate partition on ${edisk} failed. Stop processing!!! "
+        		        read answer 
+        		        cd ~
+        		        return
+        		    fi    		    
       
                     # +26M
                     echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
             	    if [ $? -ne 0 ]; then
-		        echo "make logical partition on ${edisk} failed. Stop processing!!! "
-		        read answer 
-		        cd ~
-		        return
-		    fi
+        		        echo "make logical partition on ${edisk} failed. Stop processing!!! "
+        		        read answer 
+        		        cd ~
+        		        return
+        		    fi
 
                     #sudo dd if="${loopdev}p1" of="${edisk}5"
                     #sudo dd if="${loopdev}p2" of="${edisk}6"
-		    sudo mkfs.vfat -F16 "${edisk}5"
-      		    sudo mkfs.vfat -F16 "${edisk}6"
+        		    sudo mkfs.vfat -F16 "${edisk}5"
+      	    	    sudo mkfs.vfat -F16 "${edisk}6"
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 
-      		    [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
-      		    while true; do
-	    		sleep 1
+      		        [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
+      		        while true; do
+	    		        sleep 1
                         echo "Mounting ${edisk}5 ..."	
                     	sudo mount "${edisk}5" "${mdisk}5"
-			[ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
-		    done 
+			            [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
+		            done 
                     cd /mnt/${loaderdisk}1 && sudo rm -rf "${mdisk}5"/* && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 
-      		    echo "Modifying grub.cfg for new loader boot..."	
-		    sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
-      		    tcrpfriendentry | sudo tee --append "${mdisk}5"/boot/grub/grub.cfg
+      		        echo "Modifying grub.cfg for new loader boot..."	
+		            sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
+      		        tcrpfriendentry | sudo tee --append "${mdisk}5"/boot/grub/grub.cfg
       
                     sudo cp -vf /mnt/${loaderdisk}3/bzImage-friend  "${mdisk}5"
                     sudo cp -vf /mnt/${loaderdisk}3/initrd-friend  "${mdisk}5"
@@ -1817,46 +1817,46 @@ function inject_loader() {
                     sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
                     sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
             	    if [ $? -ne 0 ]; then
-		        echo "excute grub-install ${mdisk}5 failed. Stop processing!!! "
-		        read answer 
-		        cd ~
-		        return
-		    fi
+        		        echo "excute grub-install ${mdisk}5 failed. Stop processing!!! "
+        		        read answer 
+        		        cd ~
+        		        return
+        		    fi
 
                     [ ! -d "${mdisk}6" ] && sudo mkdir "${mdisk}6"
-      		    while true; do
-	    		sleep 1
+                    while true; do
+                        sleep 1
                         echo "Mounting ${edisk}6 ..."	
                     	sudo mount "${edisk}6" "${mdisk}6"
-		  	[ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
-		    done 
+            		  	[ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
+		            done 
                     cd /mnt/${loaderdisk}2 && sudo rm -rf "${mdisk}6"/* && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
 
-		    synop1=${edisk}5
-      		    synop2=${edisk}6
+		            synop1=${edisk}5
+      		        synop2=${edisk}6
       
                 elif [ ${NUM} = 2 ]; then
 		
                     echo "Create partitions on 2nd disks... $edisk"
-	            last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
-	     	    echo "2nd disk's last sector is $last_sector"
-	   	    echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+    	            last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
+    	     	    echo "2nd disk's last sector is $last_sector"
+        	   	    echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
             	    if [ $? -ne 0 ]; then
-		        echo "make extend partition on ${edisk} failed. Stop processing!!! "
-		        read answer 
-		        cd ~
-		        return
-		    fi
+        		        echo "make extend partition on ${edisk} failed. Stop processing!!! "
+        		        read answer 
+        		        cd ~
+        		        return
+        		    fi
                     # + 127M
                     echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
             	    if [ $? -ne 0 ]; then
-		        echo "make logical partition on ${edisk} failed. Stop processing!!! "
-		        read answer 
-		        cd ~
-		        return
-		    fi
+        		        echo "make logical partition on ${edisk} failed. Stop processing!!! "
+        		        read answer 
+        		        cd ~
+        		        return
+        		    fi
 
-		    sleep 1
+		            sleep 1
       
                     loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
                     echo "$loopdev"
@@ -1865,12 +1865,12 @@ function inject_loader() {
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 
                     [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
-      		    while true; do
-	    		sleep 1
+          		    while true; do
+        	    		sleep 1
                         echo "Mounting ${edisk}5 ..."	
                     	sudo mount "${edisk}5" "${mdisk}5"
-		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
-		    done 
+		                [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
+		            done 
                     cd /mnt/${loaderdisk}3 && sudo rm -rf "${mdisk}5"/* && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 		    
                     synop3=${edisk}5
@@ -1887,8 +1887,8 @@ function inject_loader() {
 
         sudo losetup -d ${loopdev}
         [ -z $(losetup | grep -i ${imgpath}) ] && echo "boot-image-to-hdd.img losetup OK !!!"
-	sync
- 	echo "unmount synoboot partitions...${synop1}, ${synop2}, ${synop3}"
+	    sync
+ 	    echo "unmount synoboot partitions...${synop1}, ${synop2}, ${synop3}"
         sudo umount ${synop1} && sudo umount ${synop2} && sudo umount ${synop3}
  
         echo "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..."
