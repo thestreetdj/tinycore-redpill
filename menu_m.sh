@@ -101,7 +101,7 @@ trap ctrl_c INT
 
 for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
     if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
-        loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"    
+        loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
     fi    
 done
 
@@ -1729,7 +1729,23 @@ function inject_loader() {
       fi
   done
 
-  if [ ${IDX} -lt 2 ]; then
+  IDX_EX=0
+  for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
+          echo "This is BASIC Type Hard Disk and Has synoboot1 and synoboot2 Boot Partition  $edisk"
+          IDX_EX=$((${IDX_EX} + 1))
+      fi
+  done
+  for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
+      	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
+              echo "This is BASIC Type Hard Disk and Has synoboot3 Boot Partition $edisk"
+              IDX_EX=$((${IDX_EX} + 1))
+	  fi    
+      fi
+  done
+
+  if [ ${IDX} -lt 2 ] && [ ${IDX_EX} -lt 2 ]; then
       echo "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..."
       read answer 
       cd ~ 
@@ -1739,9 +1755,10 @@ function inject_loader() {
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
   readanswer    
   if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
-  
+    imgpath="/dev/shm/boot-image-to-hdd.img"  
+    if [ ${IDX} -gt 1 ]; then
+        echo "New bootloader injection (including fdisk partition creation)..."
         NUM=1
-	    imgpath="/dev/shm/boot-image-to-hdd.img"
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
             model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
             echo
@@ -1757,9 +1774,9 @@ function inject_loader() {
                     sudo curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
     	            if [ $? -ne 0 ]; then
     	            	echo "Download failed. Stop processing!!! ${imgpath}"
-            		  	read answer 
-            		  	cd ~
-            		  	return
+            		read answer 
+            		cd ~
+            		return
     	            fi    		    
             	    echo "Unpacking image ${imgpath}..."
           		    sudo gunzip -f "${imgpath}.gz"
@@ -1771,10 +1788,10 @@ function inject_loader() {
                         tce-load -iw grub2-multi dosfstools bc
     	            	if [ $? -ne 0 ]; then
     		            echo "Install grub2-multi failed. Stop processing!!! "
-        			    read answer 
-        			    cd ~
-        			    return
-        		        fi    		    
+        		    read answer 
+        		    cd ~
+        		    return
+        		fi    		    
                     fi
                     #sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 		
@@ -2002,18 +2019,203 @@ function inject_loader() {
                 continue
             fi
         done
+	
+    elif [ ${IDX_EX} -gt 1 ]; then
+	echo "Reinject bootloader (into existing partition)..."
+        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
+            echo
+            echo
+            if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+                echo "Skip this disk as it is a loader disk. $model"
+                continue
+            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
 
-        sudo losetup -d ${loopdev}
-        [ -z $(losetup | grep -i ${imgpath}) ] && echo "boot-image-to-hdd.img losetup OK !!!"
-	    sync
- 	    echo "unmount synoboot partitions...${synop1}, ${synop2}, ${synop3}"
-        sudo umount ${synop1} && sudo umount ${synop2} && sudo umount ${synop3}
+                    echo "Downloading tempelete disk image to ${imgpath}..."
+                    sudo curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
+    	            if [ $? -ne 0 ]; then
+    	            	echo "Download failed. Stop processing!!! ${imgpath}"
+            		read answer 
+            		cd ~
+            		return
+    	            fi    		    
+            	    echo "Unpacking image ${imgpath}..."
+       		    sudo gunzip -f "${imgpath}.gz"
+
+                    tce-load -i grub2-multi 
+                    if [ $? -eq 0 ]; then
+                        echo "Install dialog OK !!!"
+                    else
+                        tce-load -iw grub2-multi dosfstools bc
+    	            	if [ $? -ne 0 ]; then
+    		            echo "Install grub2-multi failed. Stop processing!!! "
+        		    read answer 
+        		    cd ~
+        		    return
+        		fi    		    
+                    fi
+                    #sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+
+                    if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
+                        echo -n "Setting up ${imgpath} loop -> "
+                        sudo losetup -fP ${imgpath}
+               	        if [ $? -ne 0 ]; then
+       		            echo "Mount loop device for ${imgpath} failed. Stop processing!!! "
+       		            read answer 
+       		            cd ~
+       		            return
+       		        fi    		    
+                    else
+                        echo -n "Loop device exists..."
+                    fi
+                    loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
+                    echo "$loopdev"
+
+                    mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
+    		    [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
+      		    while true; do
+	    	        sleep 1
+                        echo "Mounting ${edisk}5 ..."	
+                    	sudo mount "${edisk}5" "${mdisk}5"
+		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
+		    done 
+                    sudo rm -rf "${mdisk}5"/*
+
+                    diskid=$(echo "${edisk}" | sed 's#/dev/##')
+                    spacechk "${loaderdisk}1" "${diskid}5"
+                    FILESIZE1=$(ls -l /mnt/${loaderdisk}3/bzImage-friend | awk '{print$5}')
+                    FILESIZE2=$(ls -l /mnt/${loaderdisk}3/initrd-friend | awk '{print$5}')
+                    
+                    a_num=$(echo $FILESIZE1 | bc)
+                    b_num=$(echo $FILESIZE2 | bc)
+                    c_num=$(echo $SPACEUSED | bc)
+                    t_num=$(($a_num + $b_num + $c_num))
+                    
+                    TOTALUSED=$(echo $t_num)
+                    TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
+                    TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
+                    echo "TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
+
+                    ZIMAGESIZE=""
+            	    if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
+                        ZIMAGESIZE=$(ls -l /mnt/${loaderdisk}1/zImage | awk '{print$5}')
+                        z_num=$(echo $ZIMAGESIZE | bc)
+                        t_num=$(($t_num - $z_num))
+
+                        TOTALUSED=$(echo $t_num)
+                        TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
+                        TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
+                        echo "FIXED TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
+                        
+            	        if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then                        
+                            echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
+                            sudo umount "${mdisk}5"
+            		    read answer 
+               		    cd ~
+               		    return
+                        fi
+            	    fi
+
+                    if [ -z ${ZIMAGESIZE} ]; then
+                        cd /mnt/${loaderdisk}1 && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+                    else
+                        cd /mnt/${loaderdisk}1 && sudo find . -not -name "zImage" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+                    fi
+
+      		    echo "Modifying grub.cfg for new loader boot..."	
+		    sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
+      		    tcrpfriendentry | sudo tee --append "${mdisk}5"/boot/grub/grub.cfg
+      
+                    sudo cp -vf /mnt/${loaderdisk}3/bzImage-friend  "${mdisk}5"
+                    sudo cp -vf /mnt/${loaderdisk}3/initrd-friend  "${mdisk}5"
+
+                    sudo mkdir -p /usr/local/share/locale
+                    sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
+                    sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
+            	    if [ $? -ne 0 ]; then
+       		        echo "excute grub-install ${mdisk}5 failed. Stop processing!!! "
+       		        read answer 
+       		        cd ~
+       		        return
+       		    fi
+
+                    [ ! -d "${mdisk}6" ] && sudo mkdir "${mdisk}6"
+                    while true; do
+                        sleep 1
+                        echo "Mounting ${edisk}6 ..."	
+                    	sudo mount "${edisk}6" "${mdisk}6"
+            		[ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
+		    done 
+                    sudo rm -rf "${mdisk}6"/*
+                    
+                    spacechk "${loaderdisk}2" "${diskid}6"
+            	    if [ 0${SPACEUSED} -ge 0${SPACELEFT} ]; then
+                        echo "Source Partition is too big ${SPACEUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
+                        sudo umount "${mdisk}6"
+           		read answer 
+           		cd ~
+           		return
+            	    fi
+              
+                    cd /mnt/${loaderdisk}2 && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
+
+		    synop1=${edisk}5
+      		    synop2=${edisk}6
+      
+            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
+      	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then	
+                    mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
+
+                    [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
+        	    while true; do
+        	        sleep 1
+                        echo "Mounting ${edisk}5 ..."	
+                    	sudo mount "${edisk}5" "${mdisk}5"
+		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
+		    done 
+                    sudo rm -rf "${mdisk}5"/*
+
+                    diskid=$(echo "${edisk}" | sed 's#/dev/##')
+                    spacechk "${loaderdisk}3" "${diskid}5"
+                    FILESIZE1=$(ls -l /mnt/${loaderdisk}3/zImage-dsm | awk '{print$5}')
+                    FILESIZE2=$(ls -l /mnt/${loaderdisk}3/initrd-dsm | awk '{print$5}')
+                    
+                    a_num=$(echo $FILESIZE1 | bc)
+                    b_num=$(echo $FILESIZE2 | bc)
+                    t_num=$(($a_num + $b_num + 20000 ))
+                    TOTALUSED=$(echo $t_num)
+
+                    TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
+                    TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
+                    echo "TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
+                    
+            	    if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
+                        echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
+                        sudo umount "${mdisk}5"
+           	        read answer 
+           		cd ~
+           		return
+            	    fi
+              
+                    cd /mnt/${loaderdisk}3 && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+		    
+                    synop3=${edisk}5
+		fi    
+            fi
+        done
+    fi
+
+    sudo losetup -d ${loopdev}
+    [ -z $(losetup | grep -i ${imgpath}) ] && echo "boot-image-to-hdd.img losetup OK !!!"
+    sync
+    echo "unmount synoboot partitions...${synop1}, ${synop2}, ${synop3}"
+    sudo umount ${synop1} && sudo umount ${synop2} && sudo umount ${synop3}
  
-        echo "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..."
-    	read answer 
-        cd ~
-        return
-
+    echo "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..."
+    read answer 
+    cd ~
+    return
+    
   fi
 }
 
