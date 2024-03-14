@@ -211,6 +211,8 @@ set -u
 # Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
 # 2024.03.06 v1.0.2.2
 # Recycle initrd-dsm instead of custom.gz (extract /exts)
+# 2024.03.13 v1.0.2.3 
+# Added RedPill bootloader hard disk porting function
     
 function showlastupdate() {
     cat <<EOF
@@ -247,7 +249,10 @@ function showlastupdate() {
 
 # 2024.03.06 v1.0.2.2
 # Recycle initrd-dsm instead of custom.gz (extract /exts)
-        
+    
+# 2024.03.13 v1.0.2.3 
+# Added RedPill bootloader hard disk porting function
+    
 EOF
 }
 
