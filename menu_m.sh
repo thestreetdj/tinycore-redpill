@@ -1721,18 +1721,25 @@ function inject_loader() {
 	return
   fi
 
+  IDX=0
+  for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
+          echo "This is BASIC Type Hard Disk. $edisk"
+          IDX=$((${IDX} + 1))
+      fi
+  done
+
+  if [ ${IDX} -lt 2 ]; then
+      echo "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..."
+      read answer 
+      cd ~ 
+      return
+  fi	
+
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
   readanswer    
   if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
-    IDX=0
-    for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-    	if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
-            echo "This is BASIC Type Hard Disk. $edisk"
-            IDX=$((${IDX} + 1))
-        fi
-    done
-
-    if [ ${IDX} -gt 1 ]; then
+  
         NUM=1
 	    imgpath="/dev/shm/boot-image-to-hdd.img"
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
@@ -2006,12 +2013,6 @@ function inject_loader() {
     	read answer 
         cd ~
         return
-    else
-        echo "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..."
-    	read answer 
-        cd ~ 
-        return
-    fi
 
   fi
 }
