@@ -1706,6 +1706,13 @@ function spacechk() {
 
 function inject_loader() {
 
+  if [ ! -f /mnt/${loaderdisk}3/bzImage-friend ] || [ ! -f /mnt/${loaderdisk}3/initrd-friend ] || [ ! -f /mnt/${loaderdisk}3/zImage-dsm ] || [ ! -f /mnt/${loaderdisk}3/initrd-dsm ] || [ ! -f /mnt/${loaderdisk}3/user_config.json ] || [ ! $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ]; then
+	echo "The loader has not been built yet. Start with the build.... Stop processing!!! "
+	read answer 
+	cd ~
+	return
+  fi
+
   plat=$(cat /mnt/${loaderdisk}1/GRUB_VER | grep PLATFORM | cut -d "=" -f2 | tr '[:upper:]' '[:lower:]' | sed 's/"//g')
   if [ "${plat}" = "epyc7002" ]; then
 	echo "Epyc7002 like SA6400 is not supported... Stop processing!!! "
