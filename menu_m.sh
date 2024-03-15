@@ -1973,11 +1973,12 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 
                     #sudo dd if="${loopdev}p1" of="${edisk}5"
                     #sudo dd if="${loopdev}p2" of="${edisk}6"
-        	    	sudo mkfs.vfat -F16 "${edisk}5"
-      	    	    sudo mkfs.vfat -F16 "${edisk}6"
 
 					prepare_inject
 	 				[ $? -ne 0 ] && return
+
+        	    	sudo mkfs.vfat -F16 "${edisk}5"
+      	    	    sudo mkfs.vfat -F16 "${edisk}6"
 
                     wr_part1 "5"
                     [ $? -ne 0 ] && return
