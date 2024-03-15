@@ -1916,15 +1916,20 @@ function inject_loader() {
       fi
   done
 
-  if [ ${IDX} -gt 1 ] || [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; then
-      echo "There is at least one disk of type BASIC or SHR...OK"
-  elif [ ${IDX_EX} -gt 1 ] || [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; then
+  do_ex_first=""	
+  if [ ${IDX_EX} -gt 1 ] || [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; then
       echo "There is at least one BASIC or SHR type disk each with an injected bootloader...OK"
+      do_ex_first="Y"
+  elif [ ${IDX} -gt 1 ] || [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; then
+      echo "There is at least one disk of type BASIC or SHR...OK"
+	  [ ${do_ex_first} = "Y" ] && do_ex_first="Y" | do_ex_first="N"
   #elif [ ${IDX} -eq 0 ] && [ ${SHR} -gt 2 ]; then 
   #elif [ ${IDX_EX} -eq 0 ] && [ ${SHR_EX} -gt 2 ]; then 
   else
       returnto "There is not enough Type Disk. Function Exit now!!! Press any key to continue..." && return  
   fi
+
+  echo "do_ex_first = ${do_ex_first}"
   
 # [ ${IDX} -gt 1 ] BASIC more than 2 
 # [ ${IDX} -gt 0 && ${SHR} -gt 0 ] BASIC more than 1 && SHR more than 1
@@ -1932,7 +1937,7 @@ function inject_loader() {
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
   readanswer
 if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
-    if [ ${IDX} -gt 1 ] || [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; then
+    if [ "${do_ex_first}" = "N" ] && [ ${IDX} -gt 1 ] || [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; then
         echo "New bootloader injection (including fdisk partition creation)..."
         NUM=1
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
@@ -2011,7 +2016,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	        fi
 	    done
 	
-    elif [ ${IDX_EX} -gt 1 ] || [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; then
+    elif [ "${do_ex_first}" = "Y" ] && [ ${IDX_EX} -gt 1 ] || [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; then
         echo "Reinject bootloader (into existing partition)..."
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
             model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
