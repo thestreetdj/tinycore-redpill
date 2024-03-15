@@ -1989,7 +1989,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     synop1=${edisk}5
                     synop2=${edisk}6
       
-            	elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
+            	elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
 
   					# + 128M
                     echo "Create partitions on 2nd disks... $edisk"
@@ -2042,7 +2042,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	                synop1=${edisk}5
 			   		synop2=${edisk}6
 	      
-	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
+	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
 	            
 	      	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
 	                  
