@@ -1867,14 +1867,6 @@ function prepare_img() {
 
 function inject_loader() {
 
-  tce-load -i bc
-  if [ $? -eq 0 ]; then
-	echo "Install bc OK !!!"
-  else
-	tce-load -iw bc
-	[ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && return
-  fi
-
   if [ ! -f /mnt/${loaderdisk}3/bzImage-friend ] || [ ! -f /mnt/${loaderdisk}3/initrd-friend ] || [ ! -f /mnt/${loaderdisk}3/zImage-dsm ] || [ ! -f /mnt/${loaderdisk}3/initrd-dsm ] || [ ! -f /mnt/${loaderdisk}3/user_config.json ] || [ ! $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ]; then
 	returnto "The loader has not been built yet. Start with the build.... Stop processing!!! " && return
   fi
@@ -1956,6 +1948,14 @@ function inject_loader() {
 echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
 readanswer
 if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
+    tce-load -i bc
+    if [ $? -eq 0 ]; then
+		echo "Install bc OK !!!"
+    else
+		tce-load -iw bc
+		[ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && return
+    fi
+
     if [ "${do_ex_first}" = "N" ]; then
 		if [ ${IDX} -gt 1 ] || { [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; }; then
 	        echo "New bootloader injection (including fdisk partition creation)..."
@@ -1963,13 +1963,20 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 		    BOOTMAKE=""
 	  		SYNOP3MAKE=""
 	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+		 
 	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
+		 	    RAID_CNT="$(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l )"
+		        DOS_CNT="$(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l )"
+			    W95_CNT="$(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l )" 
+		        echo "RAID_CNT=${RAID_CNT}"
+		  		echo "DOS_CNT=${DOS_CNT}"
+				echo "W95_CNT=${W95_CNT}"
 	            echo
-	            if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+	            if [ "${DOS_CNT}" -eq 3 ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
 	                continue
-	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then				
-			        echo "BEFORE BOOTMAKE"
+	            elif [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}"-eq 0 ] && [ "${W95_CNT}"-eq 0 ]; then
+			        echo "BEFORE BOOTMAKE ${BOOTMAKE}"
 					if [ -z "${BOOTMAKE}" ]; then
 						# BASIC OR JBOD can make extend partition
 						echo "Create extended and logical partitions on 1st disk. ${model}"		
@@ -2014,9 +2021,9 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 					fi
 	                BOOTMAKE="YES"
 				    continue
-      
-            	elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
-                    echo "BEFORE SYNOP3MAKE"
+
+            	elif [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 0 ]; then
+                    echo "BEFORE SYNOP3MAKE ${SYNOP3MAKE}"
 	 				if [ -z "${SYNOP3MAKE}" ] && [ $(blkid | grep "6234-C863" | wc -l) -eq 1 ]; then
 	  					# + 128M
 	                    echo "Create partitions on 2nd disks... $edisk"
