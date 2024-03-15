@@ -1823,16 +1823,21 @@ function wr_part3() {
     true
 }
 
-function prepare_inject() {
+function prepare_grub() {
 
 	tce-load -i grub2-multi 
 	if [ $? -eq 0 ]; then
 		echo "Install dialog OK !!!"
 	else
-		tce-load -iw grub2-multi dosfstools bc
+		tce-load -iw grub2-multi dosfstools
 		[ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && false
 	fi
 	#sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+
+    true
+}
+
+function prepare_img() {
 
 	echo "Downloading tempelete disk image to ${imgpath}..."
     imgpath="/dev/shm/boot-image-to-hdd.img"  
@@ -1856,10 +1861,19 @@ function prepare_inject() {
     fi
 	loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
 	echo "$loopdev"
+ 
     true
 }
 
 function inject_loader() {
+
+  tce-load -i bc
+  if [ $? -eq 0 ]; then
+	echo "Install bc OK !!!"
+  else
+	tce-load -iw bc
+	[ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && return
+  fi
 
   if [ ! -f /mnt/${loaderdisk}3/bzImage-friend ] || [ ! -f /mnt/${loaderdisk}3/initrd-friend ] || [ ! -f /mnt/${loaderdisk}3/zImage-dsm ] || [ ! -f /mnt/${loaderdisk}3/initrd-dsm ] || [ ! -f /mnt/${loaderdisk}3/user_config.json ] || [ ! $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ]; then
 	returnto "The loader has not been built yet. Start with the build.... Stop processing!!! " && return
@@ -1976,7 +1990,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     #sudo dd if="${loopdev}p1" of="${edisk}5"
                     #sudo dd if="${loopdev}p2" of="${edisk}6"
 
-					prepare_inject
+					prepare_grub
 	 				[ $? -ne 0 ] && return
 
         	    	sudo mkfs.vfat -F16 "${edisk}5"
@@ -2006,7 +2020,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 
 	            	sleep 1
 
-					prepare_inject
+					prepare_img
 					[ $? -ne 0 ] && return
    
 	                sudo dd if="${loopdev}p3" of="${edisk}4"
@@ -2034,7 +2048,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	                continue
 	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then
 	
-					prepare_inject
+					prepare_grub
 					[ $? -ne 0 ] && return
 	
 	                wr_part1 "5"
@@ -2049,7 +2063,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	            
 	      	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
 
-						prepare_inject
+						prepare_img
 						[ $? -ne 0 ] && return
 				   
 	                    wr_part3 "4"
