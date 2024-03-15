@@ -1975,9 +1975,8 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	            if [ "${DOS_CNT}" -eq 3 ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
 	                continue
-	            elif [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ] && [ "${W95_CNT}" -eq 0 ]; then
-			        echo "BEFORE BOOTMAKE ${BOOTMAKE}"
-					if [ -z "${BOOTMAKE}" ]; then
+	            elif [ -z "${BOOTMAKE}" ] && { [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ] && [ "${W95_CNT}" -eq 0 ]; }; then
+			 
 						# BASIC OR JBOD can make extend partition
 						echo "Create extended and logical partitions on 1st disk. ${model}"		
 						last_sector="20979712"
@@ -2018,13 +2017,13 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	
 	                    synop1=${edisk}5
 	                    synop2=${edisk}6
-					fi
+
 	                BOOTMAKE="YES"
 				    continue
 
-            	elif [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 0 ]; then
-                    echo "BEFORE SYNOP3MAKE ${SYNOP3MAKE}"
-	 				if [ -z "${SYNOP3MAKE}" ] && [ $(blkid | grep "6234-C863" | wc -l) -eq 1 ]; then
+            	elif [ -z "${SYNOP3MAKE}" ] && { [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 0 ]; }; then
+
+	 				if [ $(blkid | grep "6234-C863" | wc -l) -eq 1 ]; then
 	  					# + 128M
 	                    echo "Create partitions on 2nd disks... $edisk"
 	    	            last_sector="20979712"
