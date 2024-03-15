@@ -1900,14 +1900,12 @@ function inject_loader() {
       fi
   done
 
-  if [ ${IDX} -lt 2 ]; then 
+  if [ ${IDX} -lt 2 ] && [ ${IDX_EX} -lt 2 ]; then
       returnto "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..." && return  
   elif [ ${IDX} -lt 1 ] && [ ${SHR} -lt 1 ]; then 
       returnto "There is not enough BASIC Type and SHR Type Disk. Function Exit now!!! Press any key to continue..." && return    
   elif [ ${IDX} -lt 0 ] && [ ${SHR} -lt 3 ]; then 
       returnto "There is not enough SHR Type Disk. Function Exit now!!! Press any key to continue..." && return    
-  elif [ ${IDX_EX} -lt 2 ]; then
-      returnto "There is not enough BASIC Type Disk for reinject. Function Exit now!!! Press any key to continue..." && return
   fi	
 
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
