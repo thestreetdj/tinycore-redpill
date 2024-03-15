@@ -1871,8 +1871,16 @@ function inject_loader() {
   IDX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
       if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then
-          echo "This is BASIC Type Hard Disk. $edisk"
+          echo "This is BASIC or JBOD Type Hard Disk. $edisk"
           IDX=$((${IDX} + 1))
+      fi
+  done
+
+  SHR=0
+  for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 1 ]; then
+          echo "This is SHR or RAID Type Hard Disk. $edisk"
+          SHR=$((${SHR} + 1))
       fi
   done
 
@@ -1892,7 +1900,7 @@ function inject_loader() {
       fi
   done
 
-  if [ ${IDX} -lt 2 ] && [ ${IDX_EX} -lt 2 ]; then
+  if [ ${IDX} -lt 2 ] &&  [ ${IDX_EX} -lt 2 ]; then
       returnto "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..." && return
   fi	
 
