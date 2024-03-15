@@ -1713,17 +1713,17 @@ function spacechk() {
 function wr_part1() {
 
     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
-    [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
+    [ ! -d "${mdisk}${1}" ] && sudo mkdir "${mdisk}${1}"
       while true; do
         sleep 1
-        echo "Mounting ${edisk}5 ..."
-        sudo mount "${edisk}5" "${mdisk}5"
-        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
+        echo "Mounting ${edisk}${1} ..."
+        sudo mount "${edisk}${1}" "${mdisk}${1}"
+        [ $( mount | grep "${edisk}${1}" | wc -l ) -gt 0 ] && break
     done
-    sudo rm -rf "${mdisk}5"/*
+    sudo rm -rf "${mdisk}${1}"/*
 
     diskid=$(echo "${edisk}" | sed 's#/dev/##')
-    spacechk "${loaderdisk}1" "${diskid}5"
+    spacechk "${loaderdisk}1" "${diskid}${1}"
     FILESIZE1=$(ls -l /mnt/${loaderdisk}3/bzImage-friend | awk '{print$5}')
     FILESIZE2=$(ls -l /mnt/${loaderdisk}3/initrd-friend | awk '{print$5}')
     
@@ -1747,46 +1747,46 @@ function wr_part1() {
         TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
         TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
         echo "FIXED TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
-        [ 0${TOTALUSED} -ge 0${SPACELEFT} ] && sudo umount "${mdisk}5" && returnto "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! " && false
+        [ 0${TOTALUSED} -ge 0${SPACELEFT} ] && sudo umount "${mdisk}${1}" && returnto "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! " && false
     fi
 
     if [ -z ${ZIMAGESIZE} ]; then
-        cd /mnt/${loaderdisk}1 && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+        cd /mnt/${loaderdisk}1 && sudo find . | sudo cpio -pdm "${mdisk}${1}" 2>/dev/null
     else
-        cd /mnt/${loaderdisk}1 && sudo find . -not -name "zImage" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+        cd /mnt/${loaderdisk}1 && sudo find . -not -name "zImage" | sudo cpio -pdm "${mdisk}${1}" 2>/dev/null
     fi
 
     echo "Modifying grub.cfg for new loader boot..."
-    sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
-    tcrpfriendentry | sudo tee --append "${mdisk}5"/boot/grub/grub.cfg
+    sudo sed -i '61,$d' "${mdisk}${1}"/boot/grub/grub.cfg
+    tcrpfriendentry | sudo tee --append "${mdisk}${1}"/boot/grub/grub.cfg
 
-    sudo cp -vf /mnt/${loaderdisk}3/bzImage-friend  "${mdisk}5"
-    sudo cp -vf /mnt/${loaderdisk}3/initrd-friend  "${mdisk}5"
+    sudo cp -vf /mnt/${loaderdisk}3/bzImage-friend  "${mdisk}${1}"
+    sudo cp -vf /mnt/${loaderdisk}3/initrd-friend  "${mdisk}${1}"
 
     sudo mkdir -p /usr/local/share/locale
-    sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
-    [ $? -ne 0 ] && returnto "excute grub-install ${mdisk}5 failed. Stop processing!!! " && false
-    sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
-    [ $? -ne 0 ] && returnto "excute grub-install ${mdisk}5 failed. Stop processing!!! " && false
+    sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}${1}"/boot --efi-directory="${mdisk}${1}" --removable
+    [ $? -ne 0 ] && returnto "excute grub-install ${mdisk}${1} failed. Stop processing!!! " && false
+    sudo grub-install --target=i386-pc --boot-directory="${mdisk}${1}"/boot "${edisk}"
+    [ $? -ne 0 ] && returnto "excute grub-install ${mdisk}${1} failed. Stop processing!!! " && false
     true
 }
 
 function wr_part2() {
 
     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
-    [ ! -d "${mdisk}6" ] && sudo mkdir "${mdisk}6"
+    [ ! -d "${mdisk}${1}" ] && sudo mkdir "${mdisk}${1}"
     while true; do
         sleep 1
-        echo "Mounting ${edisk}6 ..."
-        sudo mount "${edisk}6" "${mdisk}6"
-        [ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
+        echo "Mounting ${edisk}${1} ..."
+        sudo mount "${edisk}${1}" "${mdisk}${1}"
+        [ $( mount | grep "${edisk}${1}" | wc -l ) -gt 0 ] && break
     done
-    sudo rm -rf "${mdisk}6"/*
+    sudo rm -rf "${mdisk}${1}"/*
         
-    spacechk "${loaderdisk}2" "${diskid}6"
-    [ 0${SPACEUSED} -ge 0${SPACELEFT} ] && sudo umount "${mdisk}6" && returnto "Source Partition is too big ${SPACEUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! " && false
+    spacechk "${loaderdisk}2" "${diskid}${1}"
+    [ 0${SPACEUSED} -ge 0${SPACELEFT} ] && sudo umount "${mdisk}${1}" && returnto "Source Partition is too big ${SPACEUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! " && false
   
-    cd /mnt/${loaderdisk}2 && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
+    cd /mnt/${loaderdisk}2 && sudo find . | sudo cpio -pdm "${mdisk}${1}" 2>/dev/null
     true
 }
 
@@ -1794,17 +1794,17 @@ function wr_part3() {
 
     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 
-    [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
+    [ ! -d "${mdisk}${1}" ] && sudo mkdir "${mdisk}${1}"
     while true; do
         sleep 1
-        echo "Mounting ${edisk}5 ..."
-        sudo mount "${edisk}5" "${mdisk}5"
-        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
+        echo "Mounting ${edisk}${1} ..."
+        sudo mount "${edisk}${1}" "${mdisk}${1}"
+        [ $( mount | grep "${edisk}${1}" | wc -l ) -gt 0 ] && break
     done
-    sudo rm -rf "${mdisk}5"/*
+    sudo rm -rf "${mdisk}${1}"/*
 
     diskid=$(echo "${edisk}" | sed 's#/dev/##')
-    spacechk "${loaderdisk}3" "${diskid}5"
+    spacechk "${loaderdisk}3" "${diskid}${1}"
     FILESIZE1=$(ls -l /mnt/${loaderdisk}3/zImage-dsm | awk '{print$5}')
     FILESIZE2=$(ls -l /mnt/${loaderdisk}3/initrd-dsm | awk '{print$5}')
     
@@ -1817,9 +1817,9 @@ function wr_part3() {
     TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
     echo "TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
     
-    [ 0${TOTALUSED} -ge 0${SPACELEFT} ] && sudo umount "${mdisk}5" && returnto "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! " && false
+    [ 0${TOTALUSED} -ge 0${SPACELEFT} ] && sudo umount "${mdisk}${1}" && returnto "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! " && false
 
-    cd /mnt/${loaderdisk}3 && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+    cd /mnt/${loaderdisk}3 && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}${1}" 2>/dev/null
     true
 }
 
@@ -1952,10 +1952,10 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 					prepare_inject
 	 				[ $? -ne 0 ] && return
 
-                    wr_part1
+                    wr_part1 "5"
                     [ $? -ne 0 ] && return
 
-                    wr_part2
+                    wr_part2 "6"
                     [ $? -ne 0 ] && return
 
                     synop1=${edisk}5
@@ -1979,7 +1979,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	                echo "$loopdev"
 	                sudo dd if="${loopdev}p3" of="${edisk}5"
 
-                    wr_part3
+                    wr_part3 "5"
                     [ $? -ne 0 ] && return
 
 		            synop3=${edisk}5
@@ -2008,9 +2008,9 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 				prepare_inject
 				[ $? -ne 0 ] && return
 
-                wr_part1
+                wr_part1 "5"
                 [ $? -ne 0 ] && return
-                wr_part2
+                wr_part2 "6"
                 [ $? -ne 0 ] && return
 
                 synop1=${edisk}5
@@ -2020,7 +2020,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
             
       	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
                   
-                    wr_part3
+                    wr_part3 "5"
                     [ $? -ne 0 ] && return
 
                     synop3=${edisk}5
