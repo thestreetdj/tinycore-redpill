@@ -1900,20 +1900,20 @@ function inject_loader() {
       fi
   done
 
-  if [ ${IDX} -lt 2 && ${IDX_EX} -lt 2 ]; then
+  if [[ ${IDX} -lt 2 ] && [ ${IDX_EX} -lt 2 ]]; then
       returnto "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..." && return  
-  elif [ ${IDX} -lt 1 && ${SHR} -lt 1 ]; then 
+  elif [[ ${IDX} -lt 1 ] && [ ${SHR} -lt 1 ]]; then 
       returnto "There is not enough BASIC Type and SHR Type Disk. Function Exit now!!! Press any key to continue..." && return    
-  elif [ ${IDX} -lt 0 && ${SHR} -lt 3 ]; then 
+  elif [[ ${IDX} -lt 0 ] && [ ${SHR} -lt 3 ]]; then 
       returnto "There is not enough SHR Type Disk. Function Exit now!!! Press any key to continue..." && return    
   fi	
 # [ ${IDX} -gt 1 ] BASIC more than 2 
 # [ ${IDX} -gt 0 && ${SHR} -gt 0 ] BASIC more than 1 && SHR more than 1
-# [ ${IDX} -eq 0 && ${SHR} -gt 2 ] BASIC 0 && SHR 3 and more
+# [ ${IDX} -eq 0 && ${SHR} -gt 2 ] BASIC 0 && SHR more than 3
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
   readanswer    
 if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
-    if [ ${IDX} -gt 1 ]||[ ${IDX} -gt 0 && ${SHR} -gt 0 ]; then
+    if [ ${IDX} -gt 1 ]||[[ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]]; then
         echo "New bootloader injection (including fdisk partition creation)..."
         NUM=1
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
