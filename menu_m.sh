@@ -1882,7 +1882,7 @@ function inject_loader() {
   plat=$(cat /mnt/${loaderdisk}1/GRUB_VER | grep PLATFORM | cut -d "=" -f2 | tr '[:upper:]' '[:lower:]' | sed 's/"//g')
   [ "${plat}" = "epyc7002" ] &&	returnto "Epyc7002 like SA6400 is not supported... Stop processing!!! " && return
 
-  [ "$MACHINE" = "VIRTUAL" ] &&	returnto "Virtual system environment is not supported. Two or more BASIC type hard disks are required on bare metal. (SSD not possible)... Stop processing!!! " && return
+  #[ "$MACHINE" = "VIRTUAL" ] &&	returnto "Virtual system environment is not supported. Two or more BASIC type hard disks are required on bare metal. (SSD not possible)... Stop processing!!! " && return
 
   IDX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
@@ -1969,6 +1969,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
 	                continue
 	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then				
+			        echo "BEFORE BOOTMAKE"
 					if [ -z "${BOOTMAKE}" ]; then
 						# BASIC OR JBOD can make extend partition
 						echo "Create extended and logical partitions on 1st disk. ${model}"		
@@ -2015,7 +2016,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 				    continue
       
             	elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
-
+                    echo "BEFORE SYNOP3MAKE"
 	 				if [ -z "${SYNOP3MAKE}" ] && [ $(blkid | grep "6234-C863" | wc -l) -eq 1 ]; then
 	  					# + 128M
 	                    echo "Create partitions on 2nd disks... $edisk"
