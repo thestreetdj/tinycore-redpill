@@ -1781,12 +1781,12 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     sudo curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
     	            if [ $? -ne 0 ]; then
     	            	echo "Download failed. Stop processing!!! ${imgpath}"
-            		read answer 
-            		cd ~
-            		return
+                        read answer
+                        cd ~
+                        return
     	            fi    		    
             	    echo "Unpacking image ${imgpath}..."
-       		    sudo gunzip -f "${imgpath}.gz"
+                    sudo gunzip -f "${imgpath}.gz"
 
                     tce-load -i grub2-multi 
                     if [ $? -eq 0 ]; then
@@ -1794,11 +1794,11 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     else
                         tce-load -iw grub2-multi dosfstools bc
     	            	if [ $? -ne 0 ]; then
-    		            echo "Install grub2-multi failed. Stop processing!!! "
-        		    read answer 
-        		    cd ~
-        		    return
-        		fi    		    
+                            echo "Install grub2-multi failed. Stop processing!!! "
+                            read answer
+                            cd ~
+                            return
+                        fi
                     fi
                     #sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 		
@@ -1808,21 +1808,21 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
 
             	    if [ $? -ne 0 ]; then
-       		        echo "make extend partition on ${edisk} failed. Stop processing!!! "
-       		        read answer 
-       		        cd ~
-       		        return
-       		    fi    		    
+                        echo "make extend partition on ${edisk} failed. Stop processing!!! "
+                        read answer
+                        cd ~
+                        return
+                    fi
 
                     if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
                         echo -n "Setting up ${imgpath} loop -> "
                         sudo losetup -fP ${imgpath}
                	        if [ $? -ne 0 ]; then
-       		            echo "Mount loop device for ${imgpath} failed. Stop processing!!! "
-       		            read answer 
-       		            cd ~
-       		            return
-       		        fi    		    
+                            echo "Mount loop device for ${imgpath} failed. Stop processing!!! "
+                            read answer
+                            cd ~
+                            return
+                        fi
                     else
                         echo -n "Loop device exists..."
                     fi
@@ -1833,28 +1833,28 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     echo "Create partitions on 1st disks... $edisk"
                     echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
             	    if [ $? -ne 0 ]; then
-       		        echo "make logical partition on ${edisk} failed. Stop processing!!! "
-       		        read answer 
-       		        cd ~
-       		        return
-       		    fi    		    
+                        echo "make logical partition on ${edisk} failed. Stop processing!!! "
+                        read answer
+                        cd ~
+                        return
+                    fi
 		    
                     echo -e "a\n5\nw" | sudo fdisk "${edisk}"
             	    if [ $? -ne 0 ]; then
-       		        echo "activate partition on ${edisk} failed. Stop processing!!! "
-       		        read answer 
-       		        cd ~
-       		        return
-       		    fi    		    
+                        echo "activate partition on ${edisk} failed. Stop processing!!! "
+                        read answer
+                        cd ~
+                        return
+                    fi
       
                     # +26M
                     echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
             	    if [ $? -ne 0 ]; then
-       		        echo "make logical partition on ${edisk} failed. Stop processing!!! "
-       		        read answer 
-       		        cd ~
-       		        return
-       		    fi
+                        echo "make logical partition on ${edisk} failed. Stop processing!!! "
+                        read answer
+                        cd ~
+                        return
+                    fi
 
                     #sudo dd if="${loopdev}p1" of="${edisk}5"
                     #sudo dd if="${loopdev}p2" of="${edisk}6"
@@ -1863,13 +1863,13 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 
-  		    [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
-      		    while true; do
-	    	        sleep 1
-                        echo "Mounting ${edisk}5 ..."	
-                    	sudo mount "${edisk}5" "${mdisk}5"
-		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
-		    done 
+                    [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
+                        while true; do
+                            sleep 1
+                                echo "Mounting ${edisk}5 ..."
+                                sudo mount "${edisk}5" "${mdisk}5"
+                        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
+                    done
                     sudo rm -rf "${mdisk}5"/*
 
                     diskid=$(echo "${edisk}" | sed 's#/dev/##')
@@ -1901,9 +1901,9 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
             	        if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then                        
                             echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
                             sudo umount "${mdisk}5"
-             		    read answer 
-               		    cd ~
-               		    return
+                            read answer
+                            cd ~
+                            return
                         fi
             	    fi
 
@@ -1913,45 +1913,45 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                         cd /mnt/${loaderdisk}1 && sudo find . -not -name "zImage" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
                     fi
 
-      		    echo "Modifying grub.cfg for new loader boot..."	
-		    sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
-      		    tcrpfriendentry | sudo tee --append "${mdisk}5"/boot/grub/grub.cfg
-      
+                    echo "Modifying grub.cfg for new loader boot..."
+                    sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
+                    tcrpfriendentry | sudo tee --append "${mdisk}5"/boot/grub/grub.cfg
+          
                     sudo cp -vf /mnt/${loaderdisk}3/bzImage-friend  "${mdisk}5"
                     sudo cp -vf /mnt/${loaderdisk}3/initrd-friend  "${mdisk}5"
 
                     sudo mkdir -p /usr/local/share/locale
                     sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
                     sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
-            	    if [ $? -ne 0 ]; then
-       		        echo "excute grub-install ${mdisk}5 failed. Stop processing!!! "
-       		        read answer 
-       		        cd ~
-       		        return
-       		    fi
+                    if [ $? -ne 0 ]; then
+                        echo "excute grub-install ${mdisk}5 failed. Stop processing!!! "
+                        read answer
+                        cd ~
+                        return
+                    fi
 
                     [ ! -d "${mdisk}6" ] && sudo mkdir "${mdisk}6"
                     while true; do
                         sleep 1
                         echo "Mounting ${edisk}6 ..."	
                     	sudo mount "${edisk}6" "${mdisk}6"
-            		[ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
-		    done 
+                        [ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
+                    done
                     sudo rm -rf "${mdisk}6"/*
                     
                     spacechk "${loaderdisk}2" "${diskid}6"
             	    if [ 0${SPACEUSED} -ge 0${SPACELEFT} ]; then
                         echo "Source Partition is too big ${SPACEUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
                         sudo umount "${mdisk}6"
-           		read answer 
-           		cd ~
-           		return
+                        read answer
+                        cd ~
+                        return
             	    fi
               
                     cd /mnt/${loaderdisk}2 && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
 
-		    synop1=${edisk}5
-      		    synop2=${edisk}6
+                    synop1=${edisk}5
+                    synop2=${edisk}6
       
                 elif [ ${NUM} = 2 ]; then
 		
@@ -1960,11 +1960,11 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
     	     	    echo "2nd disk's last sector is $last_sector"
         	   	    echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
             	    if [ $? -ne 0 ]; then
-        		echo "make extend partition on ${edisk} failed. Stop processing!!! "
-        		read answer 
-        		cd ~
-        		return
-        	    fi
+                        echo "make extend partition on ${edisk} failed. Stop processing!!! "
+                        read answer
+                        cd ~
+                        return
+                    fi
                     # + 127M
                     echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
             	    if [ $? -ne 0 ]; then
@@ -1976,59 +1976,59 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 
 	            sleep 1
       
-                    loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
-                    echo "$loopdev"
-                    sudo dd if="${loopdev}p3" of="${edisk}5"
+                loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
+                echo "$loopdev"
+                sudo dd if="${loopdev}p3" of="${edisk}5"
 
-                    mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
+                mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 
-                    [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
+                [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
           	    while true; do
         	    	sleep 1
-                        echo "Mounting ${edisk}5 ..."	
-                    	sudo mount "${edisk}5" "${mdisk}5"
-		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
-		    done 
-                    sudo rm -rf "${mdisk}5"/*
+                    echo "Mounting ${edisk}5 ..."
+                    sudo mount "${edisk}5" "${mdisk}5"
+                    [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
+                done
+                sudo rm -rf "${mdisk}5"/*
 
-                    diskid=$(echo "${edisk}" | sed 's#/dev/##')
-                    spacechk "${loaderdisk}3" "${diskid}5"
-                    FILESIZE1=$(ls -l /mnt/${loaderdisk}3/zImage-dsm | awk '{print$5}')
-                    FILESIZE2=$(ls -l /mnt/${loaderdisk}3/initrd-dsm | awk '{print$5}')
-                    
-                    a_num=$(echo $FILESIZE1 | bc)
-                    b_num=$(echo $FILESIZE2 | bc)
-                    t_num=$(($a_num + $b_num + 20000 ))
-                    TOTALUSED=$(echo $t_num)
+                diskid=$(echo "${edisk}" | sed 's#/dev/##')
+                spacechk "${loaderdisk}3" "${diskid}5"
+                FILESIZE1=$(ls -l /mnt/${loaderdisk}3/zImage-dsm | awk '{print$5}')
+                FILESIZE2=$(ls -l /mnt/${loaderdisk}3/initrd-dsm | awk '{print$5}')
+                
+                a_num=$(echo $FILESIZE1 | bc)
+                b_num=$(echo $FILESIZE2 | bc)
+                t_num=$(($a_num + $b_num + 20000 ))
+                TOTALUSED=$(echo $t_num)
 
-                    TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
-                    TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
-                    echo "TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
-                    
-            	    if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
-                        echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
-                        sudo umount "${mdisk}5"
-           		read answer 
-           		cd ~
-           		return
-            	    fi
+                TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
+                TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
+                echo "TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
+                
+                if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
+                    echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
+                    sudo umount "${mdisk}5"
+                    read answer
+                    cd ~
+                    return
+           	    fi
               
-                    cd /mnt/${loaderdisk}3 && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+                cd /mnt/${loaderdisk}3 && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 		    
-                    synop3=${edisk}5
-                else
-                    echo "The 3rd and subsequent BASIC type disks are skipped... $model"
-                    continue
-                fi
-                NUM=$((${NUM} + 1))
+                synop3=${edisk}5
             else
-                echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
+                echo "The 3rd and subsequent BASIC type disks are skipped... $model"
                 continue
             fi
+            NUM=$((${NUM} + 1))
+        else
+            echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
+            continue
+        fi
         done
 	
     elif [ ${IDX_EX} -gt 1 ]; then
-	echo "Reinject bootloader (into existing partition)..."
+        echo "Reinject bootloader (into existing partition)..."
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
             model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
             echo
@@ -2038,135 +2038,135 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                 continue
             elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
 
-                    echo "Downloading tempelete disk image to ${imgpath}..."
-                    sudo curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
-    	            if [ $? -ne 0 ]; then
-    	            	echo "Download failed. Stop processing!!! ${imgpath}"
+                echo "Downloading tempelete disk image to ${imgpath}..."
+                sudo curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
+                if [ $? -ne 0 ]; then
+                    echo "Download failed. Stop processing!!! ${imgpath}"
             		read answer 
             		cd ~
             		return
-    	            fi    		    
-            	    echo "Unpacking image ${imgpath}..."
+                fi
+                echo "Unpacking image ${imgpath}..."
        		    sudo gunzip -f "${imgpath}.gz"
 
-                    tce-load -i grub2-multi 
-                    if [ $? -eq 0 ]; then
-                        echo "Install dialog OK !!!"
-                    else
-                        tce-load -iw grub2-multi dosfstools bc
-    	            	if [ $? -ne 0 ]; then
-    		            echo "Install grub2-multi failed. Stop processing!!! "
-        		    read answer 
-        		    cd ~
-        		    return
-        		fi    		    
+                tce-load -i grub2-multi
+                if [ $? -eq 0 ]; then
+                    echo "Install dialog OK !!!"
+                else
+                    tce-load -iw grub2-multi dosfstools bc
+                    if [ $? -ne 0 ]; then
+                        echo "Install grub2-multi failed. Stop processing!!! "
+                        read answer
+                        cd ~
+                        return
                     fi
-                    #sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+                fi
+                #sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 
-                    if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
-                        echo -n "Setting up ${imgpath} loop -> "
-                        sudo losetup -fP ${imgpath}
-               	        if [ $? -ne 0 ]; then
+                if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
+                    echo -n "Setting up ${imgpath} loop -> "
+                    sudo losetup -fP ${imgpath}
+                    if [ $? -ne 0 ]; then
        		            echo "Mount loop device for ${imgpath} failed. Stop processing!!! "
        		            read answer 
        		            cd ~
        		            return
        		        fi    		    
-                    else
-                        echo -n "Loop device exists..."
-                    fi
-                    loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
-                    echo "$loopdev"
+                else
+                    echo -n "Loop device exists..."
+                fi
+                loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
+                echo "$loopdev"
 
-                    mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
+                mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
     		    [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
       		    while true; do
 	    	        sleep 1
-                        echo "Mounting ${edisk}5 ..."	
-                    	sudo mount "${edisk}5" "${mdisk}5"
-		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
-		    done 
-                    sudo rm -rf "${mdisk}5"/*
+                    echo "Mounting ${edisk}5 ..."
+                    sudo mount "${edisk}5" "${mdisk}5"
+                    [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
+                done
+                sudo rm -rf "${mdisk}5"/*
 
-                    diskid=$(echo "${edisk}" | sed 's#/dev/##')
-                    spacechk "${loaderdisk}1" "${diskid}5"
-                    FILESIZE1=$(ls -l /mnt/${loaderdisk}3/bzImage-friend | awk '{print$5}')
-                    FILESIZE2=$(ls -l /mnt/${loaderdisk}3/initrd-friend | awk '{print$5}')
-                    
-                    a_num=$(echo $FILESIZE1 | bc)
-                    b_num=$(echo $FILESIZE2 | bc)
-                    c_num=$(echo $SPACEUSED | bc)
-                    t_num=$(($a_num + $b_num + $c_num))
-                    
+                diskid=$(echo "${edisk}" | sed 's#/dev/##')
+                spacechk "${loaderdisk}1" "${diskid}5"
+                FILESIZE1=$(ls -l /mnt/${loaderdisk}3/bzImage-friend | awk '{print$5}')
+                FILESIZE2=$(ls -l /mnt/${loaderdisk}3/initrd-friend | awk '{print$5}')
+                
+                a_num=$(echo $FILESIZE1 | bc)
+                b_num=$(echo $FILESIZE2 | bc)
+                c_num=$(echo $SPACEUSED | bc)
+                t_num=$(($a_num + $b_num + $c_num))
+                
+                TOTALUSED=$(echo $t_num)
+                TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
+                TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
+                echo "TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
+
+                ZIMAGESIZE=""
+                if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
+                    ZIMAGESIZE=$(ls -l /mnt/${loaderdisk}1/zImage | awk '{print$5}')
+                    z_num=$(echo $ZIMAGESIZE | bc)
+                    t_num=$(($t_num - $z_num))
+
                     TOTALUSED=$(echo $t_num)
                     TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
                     TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
-                    echo "TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
-
-                    ZIMAGESIZE=""
-            	    if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
-                        ZIMAGESIZE=$(ls -l /mnt/${loaderdisk}1/zImage | awk '{print$5}')
-                        z_num=$(echo $ZIMAGESIZE | bc)
-                        t_num=$(($t_num - $z_num))
-
-                        TOTALUSED=$(echo $t_num)
-                        TOTALUSED_FORMATTED=$(printf "%'d" "${TOTALUSED}")
-                        TOTALUSED_MB=$((TOTALUSED / 1024 / 1024))
-                        echo "FIXED TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
-                        
-            	        if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then                        
-                            echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
-                            sudo umount "${mdisk}5"
-            		    read answer 
-               		    cd ~
-               		    return
-                        fi
-            	    fi
-
-                    if [ -z ${ZIMAGESIZE} ]; then
-                        cd /mnt/${loaderdisk}1 && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
-                    else
-                        cd /mnt/${loaderdisk}1 && sudo find . -not -name "zImage" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+                    echo "FIXED TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
+                    
+                    if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
+                        echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
+                        sudo umount "${mdisk}5"
+                        read answer
+                        cd ~
+                        return
                     fi
+                fi
+
+                if [ -z ${ZIMAGESIZE} ]; then
+                    cd /mnt/${loaderdisk}1 && sudo find . | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+                else
+                    cd /mnt/${loaderdisk}1 && sudo find . -not -name "zImage" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
+                fi
 
       		    echo "Modifying grub.cfg for new loader boot..."	
-		    sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
+                sudo sed -i '61,$d' "${mdisk}5"/boot/grub/grub.cfg
       		    tcrpfriendentry | sudo tee --append "${mdisk}5"/boot/grub/grub.cfg
       
-                    sudo cp -vf /mnt/${loaderdisk}3/bzImage-friend  "${mdisk}5"
-                    sudo cp -vf /mnt/${loaderdisk}3/initrd-friend  "${mdisk}5"
+                sudo cp -vf /mnt/${loaderdisk}3/bzImage-friend  "${mdisk}5"
+                sudo cp -vf /mnt/${loaderdisk}3/initrd-friend  "${mdisk}5"
 
-                    sudo mkdir -p /usr/local/share/locale
-                    sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
-                    sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
-            	    if [ $? -ne 0 ]; then
+                sudo mkdir -p /usr/local/share/locale
+                sudo grub-install --target=x86_64-efi --boot-directory="${mdisk}5"/boot --efi-directory="${mdisk}5" --removable
+                sudo grub-install --target=i386-pc --boot-directory="${mdisk}5"/boot "${edisk}"
+                if [ $? -ne 0 ]; then
        		        echo "excute grub-install ${mdisk}5 failed. Stop processing!!! "
        		        read answer 
        		        cd ~
        		        return
        		    fi
 
-                    [ ! -d "${mdisk}6" ] && sudo mkdir "${mdisk}6"
-                    while true; do
-                        sleep 1
-                        echo "Mounting ${edisk}6 ..."	
-                    	sudo mount "${edisk}6" "${mdisk}6"
+                [ ! -d "${mdisk}6" ] && sudo mkdir "${mdisk}6"
+                while true; do
+                    sleep 1
+                    echo "Mounting ${edisk}6 ..."
+                    sudo mount "${edisk}6" "${mdisk}6"
             		[ $( mount | grep "${edisk}6" | wc -l ) -gt 0 ] && break
-		    done 
-                    sudo rm -rf "${mdisk}6"/*
+                done
+                sudo rm -rf "${mdisk}6"/*
                     
-                    spacechk "${loaderdisk}2" "${diskid}6"
-            	    if [ 0${SPACEUSED} -ge 0${SPACELEFT} ]; then
-                        echo "Source Partition is too big ${SPACEUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
-                        sudo umount "${mdisk}6"
-           		read answer 
-           		cd ~
-           		return
-            	    fi
+                spacechk "${loaderdisk}2" "${diskid}6"
+                if [ 0${SPACEUSED} -ge 0${SPACELEFT} ]; then
+                    echo "Source Partition is too big ${SPACEUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
+                    sudo umount "${mdisk}6"
+                    read answer
+                    cd ~
+                    return
+                fi
               
-                    cd /mnt/${loaderdisk}2 && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
+                cd /mnt/${loaderdisk}2 && sudo find . | sudo cpio -pdm "${mdisk}6" 2>/dev/null
 
-		    synop1=${edisk}5
+                synop1=${edisk}5
       		    synop2=${edisk}6
       
             elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
@@ -2174,12 +2174,12 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 
                     [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
-        	    while true; do
-        	        sleep 1
+                    while true; do
+                        sleep 1
                         echo "Mounting ${edisk}5 ..."	
                     	sudo mount "${edisk}5" "${mdisk}5"
-		        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
-		    done 
+                        [ $( mount | grep "${edisk}5" | wc -l ) -gt 0 ] && break
+                    done
                     sudo rm -rf "${mdisk}5"/*
 
                     diskid=$(echo "${edisk}" | sed 's#/dev/##')
@@ -2199,15 +2199,15 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
             	    if [ 0${TOTALUSED} -ge 0${SPACELEFT} ]; then
                         echo "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! "
                         sudo umount "${mdisk}5"
-           	        read answer 
-           		cd ~
-           		return
+                        read answer
+                        cd ~
+                        return
             	    fi
               
                     cd /mnt/${loaderdisk}3 && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}5" 2>/dev/null
 		    
                     synop3=${edisk}5
-		fi    
+                fi
             fi
         done
     fi
