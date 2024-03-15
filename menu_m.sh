@@ -2009,6 +2009,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	                    synop2=${edisk}6
 					fi
 	                BOOTMAKE="YES"
+				    continue
       
             	elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
 
@@ -2040,7 +2041,8 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 			            continue
 			   		fi
 					SYNOP3MAKE="YES"
-			  
+			        continue
+		   
 		        else
 		            echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
 		            continue
