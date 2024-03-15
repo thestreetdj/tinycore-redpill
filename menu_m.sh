@@ -1961,6 +1961,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	        echo "New bootloader injection (including fdisk partition creation)..."
 
 		    BOOTMAKE=""
+	  		SYNOP3MAKE=""
 	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
 	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
 	            echo
@@ -1968,7 +1969,6 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
 	                continue
 	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then				
-
 					if [ -z "${BOOTMAKE}" ]; then
 						# BASIC OR JBOD can make extend partition
 						echo "Create extended and logical partitions on 1st disk. ${model}"		
@@ -2008,12 +2008,11 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	                    synop1=${edisk}5
 	                    synop2=${edisk}6
 					fi
-	 
-	                BOOTMAKE="ON"
+	                BOOTMAKE="YES"
       
             	elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
 
-	 				if [ $(blkid | grep "6234-C863" | wc -l) -eq 1 ]; then
+	 				if [ -z "${SYNOP3MAKE}" ] && [ $(blkid | grep "6234-C863" | wc -l) -eq 1 ]; then
 	  					# + 128M
 	                    echo "Create partitions on 2nd disks... $edisk"
 	    	            last_sector="20979712"
@@ -2040,6 +2039,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 			            echo "The synoboot3 was already made!!!"
 			            continue
 			   		fi
+					SYNOP3MAKE="YES"
 			  
 		        else
 		            echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
