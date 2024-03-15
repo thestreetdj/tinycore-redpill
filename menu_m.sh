@@ -2007,28 +2007,33 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
       
             	elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
 
-  					# + 128M
-                    echo "Create partitions on 2nd disks... $edisk"
-    	            last_sector="20979712"
-    	     	    echo "2nd disk's last sector is $last_sector"
-        	   	    echo -e "n\np\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
-                    [ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
-                    
-                    # + 127M logical
-                    #echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
-                    #[ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
-
-	            	sleep 1
-
-					prepare_img
-					[ $? -ne 0 ] && return
-   
-	                sudo dd if="${loopdev}p3" of="${edisk}4"
-
-                    wr_part3 "4"
-                    [ $? -ne 0 ] && return
-
-		            synop3=${edisk}4
+	 				if [ $(blkid | grep "6234-C863" | wc -l) -eq 1 ]; then
+	  					# + 128M
+	                    echo "Create partitions on 2nd disks... $edisk"
+	    	            last_sector="20979712"
+	    	     	    echo "2nd disk's last sector is $last_sector"
+	        	   	    echo -e "n\np\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+	                    [ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
+	                    
+	                    # + 127M logical
+	                    #echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
+	                    #[ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
+	
+		            	sleep 1
+	
+						prepare_img
+						[ $? -ne 0 ] && return
+	   
+		                sudo dd if="${loopdev}p3" of="${edisk}4"
+	
+	                    wr_part3 "4"
+	                    [ $? -ne 0 ] && return
+	
+			            synop3=${edisk}4
+                    else
+			            echo "The synoboot3 was already made!!!"
+			            continue
+			   		fi
 			  
 		        else
 		            echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
