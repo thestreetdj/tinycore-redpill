@@ -1827,7 +1827,7 @@ function prepare_grub() {
 
 	tce-load -i grub2-multi 
 	if [ $? -eq 0 ]; then
-		echo "Install dialog OK !!!"
+		echo "Install grub2-multi OK !!!"
 	else
 		tce-load -iw grub2-multi dosfstools
 		[ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && false
@@ -1959,7 +1959,8 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
     if [ "${do_ex_first}" = "N" ]; then
 		if [ ${IDX} -gt 1 ] || { [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; }; then
 	        echo "New bootloader injection (including fdisk partition creation)..."
-	        NUM=1
+
+		    BOOTMAKE=""
 	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
 	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
 	            echo
@@ -1968,43 +1969,47 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	                continue
 	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then				
 
-				# BASIC OR JBOD can make extend partition
-					echo "Create extended and logical partitions on 1st disk. ${model}"		
-					last_sector="20979712"
-					echo "1st disk's last sector is $last_sector"
-					echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
-				
-					[ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
-    
-                    # +98M
-                    echo "Create partitions on 1st disks... $edisk"
-                    echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
-            	    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
-		    
-                    echo -e "a\n5\nw" | sudo fdisk "${edisk}"
-            	    [ $? -ne 0 ] && returnto "activate partition on ${edisk} failed. Stop processing!!! " && return
-      
-                    # +26M
-                    echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
-            	    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
-
-                    #sudo dd if="${loopdev}p1" of="${edisk}5"
-                    #sudo dd if="${loopdev}p2" of="${edisk}6"
-
-					prepare_grub
-	 				[ $? -ne 0 ] && return
-
-        	    	sudo mkfs.vfat -F16 "${edisk}5"
-      	    	    sudo mkfs.vfat -F16 "${edisk}6"
-
-                    wr_part1 "5"
-                    [ $? -ne 0 ] && return
-
-                    wr_part2 "6"
-                    [ $? -ne 0 ] && return
-
-                    synop1=${edisk}5
-                    synop2=${edisk}6
+					if [ -z "${BOOTMAKE}" ]; then
+						# BASIC OR JBOD can make extend partition
+						echo "Create extended and logical partitions on 1st disk. ${model}"		
+						last_sector="20979712"
+						echo "1st disk's last sector is $last_sector"
+						echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+					
+						[ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
+	    
+	                    # +98M
+	                    echo "Create partitions on 1st disks... $edisk"
+	                    echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
+	            	    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
+			    
+	                    echo -e "a\n5\nw" | sudo fdisk "${edisk}"
+	            	    [ $? -ne 0 ] && returnto "activate partition on ${edisk} failed. Stop processing!!! " && return
+	      
+	                    # +26M
+	                    echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
+	            	    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
+	
+	                    #sudo dd if="${loopdev}p1" of="${edisk}5"
+	                    #sudo dd if="${loopdev}p2" of="${edisk}6"
+	
+						prepare_grub
+		 				[ $? -ne 0 ] && return
+	
+	        	    	sudo mkfs.vfat -F16 "${edisk}5"
+	      	    	    sudo mkfs.vfat -F16 "${edisk}6"
+	
+	                    wr_part1 "5"
+	                    [ $? -ne 0 ] && return
+	
+	                    wr_part2 "6"
+	                    [ $? -ne 0 ] && return
+	
+	                    synop1=${edisk}5
+	                    synop2=${edisk}6
+					fi
+	 
+	                BOOTMAKE="ON"
       
             	elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
 
@@ -2047,7 +2052,6 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	        echo "Reinject bootloader (into existing partition)..."
 	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
 	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
-	            echo
 	            echo
 	            if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
