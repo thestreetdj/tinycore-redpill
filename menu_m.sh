@@ -1690,6 +1690,13 @@ function del-macspoof() {
   jsonfile=$(jq 'del(.["mac-spoof"])' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
 }
 
+function returnto() {
+    echo "${1}"
+    read answer
+    cd ~
+    return
+}
+
 function spacechk() {
   # Discover file size
   SPACEUSED=$(df --block-size=1 | awk '/'${1}'/{print $3}') # Check disk space used
@@ -1707,26 +1714,15 @@ function spacechk() {
 function inject_loader() {
 
   if [ ! -f /mnt/${loaderdisk}3/bzImage-friend ] || [ ! -f /mnt/${loaderdisk}3/initrd-friend ] || [ ! -f /mnt/${loaderdisk}3/zImage-dsm ] || [ ! -f /mnt/${loaderdisk}3/initrd-dsm ] || [ ! -f /mnt/${loaderdisk}3/user_config.json ] || [ ! $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ]; then
-	echo "The loader has not been built yet. Start with the build.... Stop processing!!! "
-	read answer 
-	cd ~
-	return
+	returnto "The loader has not been built yet. Start with the build.... Stop processing!!! "
   fi
 
   plat=$(cat /mnt/${loaderdisk}1/GRUB_VER | grep PLATFORM | cut -d "=" -f2 | tr '[:upper:]' '[:lower:]' | sed 's/"//g')
   if [ "${plat}" = "epyc7002" ]; then
-	echo "Epyc7002 like SA6400 is not supported... Stop processing!!! "
-	read answer 
-	cd ~
-	return
+	returnto "Epyc7002 like SA6400 is not supported... Stop processing!!! "
   fi
 
-  if [ "$MACHINE" = "VIRTUAL" ]; then
-	echo "Virtual system environment is not supported. Two or more BASIC type hard disks are required on bare metal. (SSD not possible)... Stop processing!!! "
-	read answer 
-	cd ~
-	return
-  fi
+  [ "$MACHINE" = "VIRTUAL" ] &&	returnto "Virtual system environment is not supported. Two or more BASIC type hard disks are required on bare metal. (SSD not possible)... Stop processing!!! "
 
   IDX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
