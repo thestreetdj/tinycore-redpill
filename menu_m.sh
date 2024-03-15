@@ -1944,6 +1944,7 @@ function inject_loader() {
   #elif [ ${IDX} -eq 0 ] && [ ${SHR} -gt 2 ]; then 
   #elif [ ${IDX_EX} -eq 0 ] && [ ${SHR_EX} -gt 2 ]; then 
   else
+      echo "IDX = ${IDX}, SHR = ${SHR}, IDX_EX = ${IDX_EX}, SHR_EX=${SHR_EX}"
       returnto "There is not enough Type Disk. Function Exit now!!! Press any key to continue..." && return  
   fi
 
