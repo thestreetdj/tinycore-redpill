@@ -1975,20 +1975,23 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 						last_sector="20979712"
 						echo "1st disk's last sector is $last_sector"
 						echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
-					
-						[ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
+					    [ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
+		                sleep 1 
 	    
 	                    # +98M
 	                    echo "Create partitions on 1st disks... $edisk"
 	                    echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
 	            	    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
-			    
+			            sleep 1
+			   
 	                    echo -e "a\n5\nw" | sudo fdisk "${edisk}"
 	            	    [ $? -ne 0 ] && returnto "activate partition on ${edisk} failed. Stop processing!!! " && return
+				        sleep 1
 	      
 	                    # +26M
 	                    echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
 	            	    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
+				        sleep 1
 	
 	                    #sudo dd if="${loopdev}p1" of="${edisk}5"
 	                    #sudo dd if="${loopdev}p2" of="${edisk}6"
