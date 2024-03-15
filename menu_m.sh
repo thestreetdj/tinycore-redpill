@@ -1730,7 +1730,7 @@ function inject_loader() {
 
   IDX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
+      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then
           echo "This is BASIC Type Hard Disk. $edisk"
           IDX=$((${IDX} + 1))
       fi
@@ -1738,13 +1738,13 @@ function inject_loader() {
 
   IDX_EX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
+      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then
           echo "This is BASIC Type Hard Disk and Has synoboot1 and synoboot2 Boot Partition  $edisk"
           IDX_EX=$((${IDX_EX} + 1))
       fi
   done
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
+      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then
       	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
               echo "This is BASIC Type Hard Disk and Has synoboot3 Boot Partition $edisk"
               IDX_EX=$((${IDX_EX} + 1))
