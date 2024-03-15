@@ -442,6 +442,7 @@ if [ $? -ne 0 ]; then
     cecho r "An error occurred while building the loader!!! Clean the redpill-load directory!!! "
     ./rploader.sh clean
 else
+    [ "$MACHINE" != "VIRTUAL" ] && sleep 2
     echo "y"|./rploader.sh backup
 fi
 
