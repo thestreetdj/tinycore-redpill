@@ -1937,17 +1937,17 @@ function inject_loader() {
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
   readanswer
 if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
-    if [ "${do_ex_first}" = "N" ] && [ ${IDX} -gt 1 ] || [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; then
-        echo "New bootloader injection (including fdisk partition creation)..."
-        NUM=1
-        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
-            echo
-            echo
-            if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
-                echo "Skip this disk as it is a loader disk. $model"
-                continue
-            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then				
+    if [ "${do_ex_first}" = "N" ]; then
+		if [ ${IDX} -gt 1 ] || [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; then
+	        echo "New bootloader injection (including fdisk partition creation)..."
+	        NUM=1
+	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
+	            echo
+	            if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+	                echo "Skip this disk as it is a loader disk. $model"
+	                continue
+	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then				
 
 				# BASIC OR JBOD can make extend partition
 					echo "Create extended and logical partitions on 1st disk. ${model}"		
@@ -1986,7 +1986,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     synop1=${edisk}5
                     synop2=${edisk}6
       
-            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
+            	elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
 
   					# + 128M
                     echo "Create partitions on 2nd disks... $edisk"
@@ -2010,46 +2010,47 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 
 		            synop3=${edisk}4
 			  
-	        else
-	            echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
-	            continue
-	        fi
-	    done
+		        else
+		            echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
+		            continue
+		        fi
+		    done
+	elif [ "${do_ex_first}" = "Y" ]; then
+	    if [ ${IDX_EX} -gt 1 ] || [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; then
+	        echo "Reinject bootloader (into existing partition)..."
+	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
+	            echo
+	            echo
+	            if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+	                echo "Skip this disk as it is a loader disk. $model"
+	                continue
+	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then
 	
-    elif [ "${do_ex_first}" = "Y" ] && [ ${IDX_EX} -gt 1 ] || [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; then
-        echo "Reinject bootloader (into existing partition)..."
-        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
-            echo
-            echo
-            if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
-                echo "Skip this disk as it is a loader disk. $model"
-                continue
-            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then
-
-				prepare_inject
-				[ $? -ne 0 ] && return
-
-                wr_part1 "5"
-                [ $? -ne 0 ] && return
-                wr_part2 "6"
-                [ $? -ne 0 ] && return
-
-                synop1=${edisk}5
-		   		synop2=${edisk}6
-      
-            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
-            
-      	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
-                  
-                    wr_part3 "4"
-                    [ $? -ne 0 ] && return
-
-                    synop3=${edisk}4
-                fi
-            fi
-        done
-    fi
+					prepare_inject
+					[ $? -ne 0 ] && return
+	
+	                wr_part1 "5"
+	                [ $? -ne 0 ] && return
+	                wr_part2 "6"
+	                [ $? -ne 0 ] && return
+	
+	                synop1=${edisk}5
+			   		synop2=${edisk}6
+	      
+	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
+	            
+	      	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
+	                  
+	                    wr_part3 "4"
+	                    [ $? -ne 0 ] && return
+	
+	                    synop3=${edisk}4
+	                fi
+	            fi
+	        done
+	    fi
+	fi 
 
     sudo losetup -d ${loopdev}
     [ -z "$(losetup | grep -i ${imgpath})" ] && echo "boot-image-to-hdd.img losetup OK !!!"
