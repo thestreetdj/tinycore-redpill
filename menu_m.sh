@@ -2070,7 +2070,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	
 	                synop1=${edisk}5
 			   		synop2=${edisk}6
-	      
+	                continue
 	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
 	            
 	      	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
@@ -2083,6 +2083,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	
 	                    synop3=${edisk}4
 	                fi
+				    continue
 	            fi
 	        done
 	    fi
