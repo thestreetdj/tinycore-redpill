@@ -1710,7 +1710,7 @@ function spacechk() {
   echo "SPACELEFT = ${SPACELEFT_FORMATTED} bytes (${SPACELEFT_MB} MB)"
 }
 
-fuction wr_part1() {
+function wr_part1() {
 
     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
     [ ! -d "${mdisk}5" ] && sudo mkdir "${mdisk}5"
@@ -1771,7 +1771,7 @@ fuction wr_part1() {
 
 }
 
-fuction wr_part2() {
+function wr_part2() {
 
     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
     [ ! -d "${mdisk}6" ] && sudo mkdir "${mdisk}6"
@@ -1790,7 +1790,7 @@ fuction wr_part2() {
 
 }
 
-fuction wr_part3() {
+function wr_part3() {
 
     mdisk=$(echo "${edisk}" | sed 's/dev/mnt/')
 
