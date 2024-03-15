@@ -1929,7 +1929,7 @@ function inject_loader() {
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
   readanswer
 if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
-    if [ ${IDX} -gt 1 ] || [[ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]]; then
+    if [ ${IDX} -gt 1 ] || [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; then
         echo "New bootloader injection (including fdisk partition creation)..."
         NUM=1
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
