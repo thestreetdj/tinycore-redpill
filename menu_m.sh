@@ -1900,20 +1900,20 @@ function inject_loader() {
       fi
   done
 
-  if [ ${IDX} -lt 2 ] && [ ${IDX_EX} -lt 2 ]; then
+  if [ ${IDX} -lt 2 && ${IDX_EX} -lt 2 ]; then
       returnto "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..." && return  
-  elif [ ${IDX} -lt 1 ] && [ ${SHR} -lt 1 ]; then 
+  elif [ ${IDX} -lt 1 && ${SHR} -lt 1 ]; then 
       returnto "There is not enough BASIC Type and SHR Type Disk. Function Exit now!!! Press any key to continue..." && return    
-  elif [ ${IDX} -lt 0 ] && [ ${SHR} -lt 3 ]; then 
+  elif [ ${IDX} -lt 0 && ${SHR} -lt 3 ]; then 
       returnto "There is not enough SHR Type Disk. Function Exit now!!! Press any key to continue..." && return    
   fi	
 # [ ${IDX} -gt 1 ] BASIC more than 2 
-# [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ] BASIC more than 1 && SHR more than 1
-# [ ${IDX} -eq 0 ] && [ ${SHR} -gt 2 ] BASIC 0 && SHR 3 and more
+# [ ${IDX} -gt 0 && ${SHR} -gt 0 ] BASIC more than 1 && SHR more than 1
+# [ ${IDX} -eq 0 && ${SHR} -gt 2 ] BASIC 0 && SHR 3 and more
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
   readanswer    
 if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
-    if [ ${IDX} -gt 1 ]; then
+    if [ ${IDX} -gt 1 ]||[ ${IDX} -gt 0 && ${SHR} -gt 0 ]; then
         echo "New bootloader injection (including fdisk partition creation)..."
         NUM=1
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
@@ -1964,27 +1964,28 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     synop2=${edisk}6
       
                 elif [ ${NUM} = 2 ]; then
-		
+
+  					# + 128M
                     echo "Create partitions on 2nd disks... $edisk"
     	            last_sector="20979712"
     	     	    echo "2nd disk's last sector is $last_sector"
-        	   	    echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+        	   	    echo -e "n\np\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
                     [ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
                     
-                    # + 127M
-                    echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
-                    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
+                    # + 127M logical
+                    #echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
+                    #[ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
 
 	            	sleep 1
       
 	                loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
 	                echo "$loopdev"
-	                sudo dd if="${loopdev}p3" of="${edisk}5"
+	                sudo dd if="${loopdev}p3" of="${edisk}4"
 
-                    wr_part3 "5"
+                    wr_part3 "4"
                     [ $? -ne 0 ] && return
 
-		            synop3=${edisk}5
+		            synop3=${edisk}4
             else
                 echo "The 3rd and subsequent BASIC type disks are skipped... $model"
                 continue
@@ -2022,10 +2023,10 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
             
       	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
                   
-                    wr_part3 "5"
+                    wr_part3 "4"
                     [ $? -ne 0 ] && return
 
-                    synop3=${edisk}5
+                    synop3=${edisk}4
                 fi
             fi
         done
