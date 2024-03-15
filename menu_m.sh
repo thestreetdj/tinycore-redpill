@@ -1746,10 +1746,7 @@ function inject_loader() {
   done
 
   if [ ${IDX} -lt 2 ] && [ ${IDX_EX} -lt 2 ]; then
-      echo "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..."
-      read answer 
-      cd ~ 
-      return
+      returnto "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..." && return
   fi	
 
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
