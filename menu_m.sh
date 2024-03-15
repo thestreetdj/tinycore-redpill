@@ -1916,13 +1916,16 @@ function inject_loader() {
       fi
   done
 
-  if [ ${IDX} -lt 2 ] && [ ${IDX_EX} -lt 2 ]; then
-      returnto "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..." && return  
-  elif [ ${IDX} -lt 1 ] && [ ${SHR} -lt 1 ]; then 
-      returnto "There is not enough BASIC Type and SHR Type Disk. Function Exit now!!! Press any key to continue..." && return    
-  #elif [ ${IDX} -lt 0 ] && [ ${SHR} -lt 3 ]; then 
-  #    returnto "There is not enough SHR Type Disk. Function Exit now!!! Press any key to continue..." && return    
-  fi	
+  if [ ${IDX} -gt 1 ] || [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; then
+      echo "There is at least one disk of type BASIC or SHR...OK"
+  elif [ ${IDX_EX} -gt 1 ] || [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; then
+      echo "There is at least one BASIC or SHR type disk each with an injected bootloader...OK"
+  #elif [ ${IDX} -eq 0 ] && [ ${SHR} -gt 2 ]; then 
+  #elif [ ${IDX_EX} -eq 0 ] && [ ${SHR_EX} -gt 2 ]; then 
+  else
+      returnto "There is not enough Type Disk. Function Exit now!!! Press any key to continue..." && return  
+  fi
+  
 # [ ${IDX} -gt 1 ] BASIC more than 2 
 # [ ${IDX} -gt 0 && ${SHR} -gt 0 ] BASIC more than 1 && SHR more than 1
 # [ ${IDX} -eq 0 && ${SHR} -gt 2 ] BASIC 0 && SHR more than 3
