@@ -1845,13 +1845,15 @@ function prepare_inject() {
 		sudo gunzip -f "${imgpath}.gz"
     fi
 
-	if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
-		echo -n "Setting up ${imgpath} loop -> "
-		sudo losetup -fP ${imgpath}
-		[ $? -ne 0 ] && returnto "Mount loop device for ${imgpath} failed. Stop processing!!! " && false
-	else
-		echo -n "Loop device exists..."
-	fi
+ 	if [ -z "$(losetup | grep -i ${imgpath})" ]; then
+		if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
+			echo -n "Setting up ${imgpath} loop -> "
+			sudo losetup -fP ${imgpath}
+			[ $? -ne 0 ] && returnto "Mount loop device for ${imgpath} failed. Stop processing!!! " && false
+		else
+			echo -n "Loop device exists..."
+		fi
+    fi
 	loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
 	echo "$loopdev"
     true
@@ -2003,9 +2005,10 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     #[ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
 
 	            	sleep 1
-      
-	                loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
-	                echo "$loopdev"
+
+					prepare_inject
+					[ $? -ne 0 ] && return
+   
 	                sudo dd if="${loopdev}p3" of="${edisk}4"
 
                     wr_part3 "4"
@@ -2045,7 +2048,10 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
 	            
 	      	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
-	                  
+
+						prepare_inject
+						[ $? -ne 0 ] && return
+				   
 	                    wr_part3 "4"
 	                    [ $? -ne 0 ] && return
 	
