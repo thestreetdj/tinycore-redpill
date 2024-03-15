@@ -2018,8 +2018,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
     fi
 
     sudo losetup -d ${loopdev}
-    imgpath="/dev/shm/boot-image-to-hdd.img"
-    [ -z $(losetup | grep -i ${imgpath}) ] && echo "boot-image-to-hdd.img losetup OK !!!"
+    [ -z "$(losetup | grep -i ${imgpath})" ] && echo "boot-image-to-hdd.img losetup OK !!!"
     sync
     echo "unmount synoboot partitions...${synop1}, ${synop2}, ${synop3}"
     sudo umount ${synop1} && sudo umount ${synop2} && sudo umount ${synop3}
