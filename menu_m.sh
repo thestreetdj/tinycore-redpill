@@ -1830,7 +1830,7 @@ function prepare_inject() {
 		echo "Install dialog OK !!!"
 	else
 		tce-load -iw grub2-multi dosfstools bc
-		[ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && return
+		[ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && false
 	fi
 	#sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 
@@ -1840,7 +1840,7 @@ function prepare_inject() {
 		echo "Image file ${imgpath} Already Exist..."
  	else
 		sudo curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
-		[ $? -ne 0 ] && returnto "Download failed. Stop processing!!! ${imgpath}" && return
+		[ $? -ne 0 ] && returnto "Download failed. Stop processing!!! ${imgpath}" && false
 		echo "Unpacking image ${imgpath}..."
 		sudo gunzip -f "${imgpath}.gz"
     fi
@@ -1848,13 +1848,13 @@ function prepare_inject() {
 	if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
 		echo -n "Setting up ${imgpath} loop -> "
 		sudo losetup -fP ${imgpath}
-		[ $? -ne 0 ] && returnto "Mount loop device for ${imgpath} failed. Stop processing!!! " && return
+		[ $? -ne 0 ] && returnto "Mount loop device for ${imgpath} failed. Stop processing!!! " && false
 	else
 		echo -n "Loop device exists..."
 	fi
 	loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
 	echo "$loopdev"
-
+    true
 }
 
 function inject_loader() {
@@ -1938,6 +1938,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
       	    	    sudo mkfs.vfat -F16 "${edisk}6"
 
 					prepare_inject
+	 				[ $? -ne 0 ] && return
 
                     wr_part1
                     [ $? -ne 0 ] && return
@@ -1993,6 +1994,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
             elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
 
 				prepare_inject
+				[ $? -ne 0 ] && return
 
                 wr_part1
                 [ $? -ne 0 ] && return
