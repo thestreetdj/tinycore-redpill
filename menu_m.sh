@@ -1975,7 +1975,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	            if [ "${DOS_CNT}" -eq 3 ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
 	                continue
-	            elif [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}"-eq 0 ] && [ "${W95_CNT}"-eq 0 ]; then
+	            elif [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ] && [ "${W95_CNT}" -eq 0 ]; then
 			        echo "BEFORE BOOTMAKE ${BOOTMAKE}"
 					if [ -z "${BOOTMAKE}" ]; then
 						# BASIC OR JBOD can make extend partition
