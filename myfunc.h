@@ -213,6 +213,8 @@ set -u
 # Recycle initrd-dsm instead of custom.gz (extract /exts)
 # 2024.03.13 v1.0.2.3 
 # Added RedPill bootloader hard disk porting function
+# 2024.03.15
+# Added RedPill bootloader hard disk porting function supporting 1 SHR Type DISK
     
 function showlastupdate() {
     cat <<EOF
@@ -252,7 +254,10 @@ function showlastupdate() {
     
 # 2024.03.13 v1.0.2.3 
 # Added RedPill bootloader hard disk porting function
-    
+
+# 2024.03.15
+# Added RedPill bootloader hard disk porting function supporting 1 SHR Type DISK
+        
 EOF
 }
 
