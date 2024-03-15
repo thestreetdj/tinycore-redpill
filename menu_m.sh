@@ -1934,8 +1934,8 @@ function inject_loader() {
 # [ ${IDX} -gt 1 ] BASIC more than 2 
 # [ ${IDX} -gt 0 && ${SHR} -gt 0 ] BASIC more than 1 && SHR more than 1
 # [ ${IDX} -eq 0 && ${SHR} -gt 2 ] BASIC 0 && SHR more than 3
-  echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
-  readanswer
+echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
+readanswer
 if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
     if [ "${do_ex_first}" = "N" ]; then
 		if [ ${IDX} -gt 1 ] || [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; then
@@ -2015,6 +2015,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 		            continue
 		        fi
 		    done
+	    fi
 	elif [ "${do_ex_first}" = "Y" ]; then
 	    if [ ${IDX_EX} -gt 1 ] || [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; then
 	        echo "Reinject bootloader (into existing partition)..."
@@ -2051,15 +2052,12 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	        done
 	    fi
 	fi 
-
     sudo losetup -d ${loopdev}
     [ -z "$(losetup | grep -i ${imgpath})" ] && echo "boot-image-to-hdd.img losetup OK !!!"
     sync
     echo "unmount synoboot partitions...${synop1}, ${synop2}, ${synop3}"
     sudo umount ${synop1} && sudo umount ${synop2} && sudo umount ${synop3}
- 
     returnto "The entire process of injecting the boot loader into the disk has been completed! Press any key to continue..." && return
-    
 fi
 
 }
