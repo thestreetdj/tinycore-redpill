@@ -1896,7 +1896,23 @@ function inject_loader() {
       	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
               echo "This is BASIC Type Hard Disk and Has synoboot3 Boot Partition $edisk"
               IDX_EX=$((${IDX_EX} + 1))
-	  fi    
+	  	  fi    
+      fi
+  done
+
+  SHR_EX=0
+  for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 1 ]; then
+          echo "This is SHR or RAID Type Hard Disk and Has synoboot1 and synoboot2 Boot Partition. $edisk"	  
+          SHR_EX=$((${SHR_EX} + 1))
+      fi
+  done
+  for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 1 ]; then
+      	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
+              echo "This is SHR or RAID Type Hard Disk and Has synoboot3 Boot Partition $edisk"
+              SHR_EX=$((${SHR_EX} + 1))
+	      fi    
       fi
   done
 
@@ -1904,16 +1920,16 @@ function inject_loader() {
       returnto "There is not enough BASIC Type Disk. Function Exit now!!! Press any key to continue..." && return  
   elif [ ${IDX} -lt 1 ] && [ ${SHR} -lt 1 ]; then 
       returnto "There is not enough BASIC Type and SHR Type Disk. Function Exit now!!! Press any key to continue..." && return    
-  elif [ ${IDX} -lt 0 ] && [ ${SHR} -lt 3 ]; then 
-      returnto "There is not enough SHR Type Disk. Function Exit now!!! Press any key to continue..." && return    
+  #elif [ ${IDX} -lt 0 ] && [ ${SHR} -lt 3 ]; then 
+  #    returnto "There is not enough SHR Type Disk. Function Exit now!!! Press any key to continue..." && return    
   fi	
 # [ ${IDX} -gt 1 ] BASIC more than 2 
 # [ ${IDX} -gt 0 && ${SHR} -gt 0 ] BASIC more than 1 && SHR more than 1
 # [ ${IDX} -eq 0 && ${SHR} -gt 2 ] BASIC 0 && SHR more than 3
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
-  readanswer    
+  readanswer
 if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
-    if [ ${IDX} -gt 1 ]||[[ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]]; then
+    if [ ${IDX} -gt 1 ] || [[ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]]; then
         echo "New bootloader injection (including fdisk partition creation)..."
         NUM=1
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
@@ -1923,10 +1939,9 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
             if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
                 echo "Skip this disk as it is a loader disk. $model"
                 continue
-            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
-                
-                if [ ${NUM} = 1 ]; then
+            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then				
 
+				# BASIC OR JBOD can make extend partition
 					echo "Create extended and logical partitions on 1st disk. ${model}"		
 					last_sector="20979712"
 					echo "1st disk's last sector is $last_sector"
@@ -1963,7 +1978,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     synop1=${edisk}5
                     synop2=${edisk}6
       
-                elif [ ${NUM} = 2 ]; then
+            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ]; then
 
   					# + 128M
                     echo "Create partitions on 2nd disks... $edisk"
@@ -1986,18 +2001,14 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     [ $? -ne 0 ] && return
 
 		            synop3=${edisk}4
-            else
-                echo "The 3rd and subsequent BASIC type disks are skipped... $model"
-                continue
-            fi
-            NUM=$((${NUM} + 1))
-        else
-            echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
-            continue
-        fi
-        done
+			  
+	        else
+	            echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
+	            continue
+	        fi
+	    done
 	
-    elif [ ${IDX_EX} -gt 1 ]; then
+    elif [ ${IDX_EX} -gt 1 ] || [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; then
         echo "Reinject bootloader (into existing partition)..."
         for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
             model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
@@ -2006,7 +2017,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
             if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
                 echo "Skip this disk as it is a loader disk. $model"
                 continue
-            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
+            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then
 
 				prepare_inject
 				[ $? -ne 0 ] && return
