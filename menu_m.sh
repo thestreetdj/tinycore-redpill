@@ -1933,10 +1933,10 @@ function inject_loader() {
   done
 
   do_ex_first=""	
-  if [ ${IDX_EX} -gt 1 ] || [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; then
+  if [ ${IDX_EX} -gt 1 ] || { [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; }; then
     echo "There is at least one BASIC or SHR type disk each with an injected bootloader...OK"
     do_ex_first="Y"
-  elif [ ${IDX} -gt 1 ] || [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; then
+  elif [ ${IDX} -gt 1 ] || { [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; }; then
     echo "There is at least one disk of type BASIC or SHR...OK"
 	if [ -z "${do_ex_first}" ]; then
 	  do_ex_first="N"
@@ -1957,7 +1957,7 @@ echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more B
 readanswer
 if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
     if [ "${do_ex_first}" = "N" ]; then
-		if [ ${IDX} -gt 1 ] || [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; then
+		if [ ${IDX} -gt 1 ] || { [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; }; then
 	        echo "New bootloader injection (including fdisk partition creation)..."
 	        NUM=1
 	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
@@ -2043,7 +2043,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 		    done
 	    fi
 	elif [ "${do_ex_first}" = "Y" ]; then
-	    if [ ${IDX_EX} -gt 1 ] || [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; then
+	    if [ ${IDX_EX} -gt 1 ] || { [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; }; then
 	        echo "Reinject bootloader (into existing partition)..."
 	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
 	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
