@@ -1866,7 +1866,7 @@ function inject_loader() {
   plat=$(cat /mnt/${loaderdisk}1/GRUB_VER | grep PLATFORM | cut -d "=" -f2 | tr '[:upper:]' '[:lower:]' | sed 's/"//g')
   [ "${plat}" = "epyc7002" ] &&	returnto "Epyc7002 like SA6400 is not supported... Stop processing!!! " && return
 
-  [ "$MACHINE" = "VIRTUAL" ] &&	returnto "Virtual system environment is not supported. Two or more BASIC type hard disks are required on bare metal. (SSD not possible)... Stop processing!!! " && return
+#  [ "$MACHINE" = "VIRTUAL" ] &&	returnto "Virtual system environment is not supported. Two or more BASIC type hard disks are required on bare metal. (SSD not possible)... Stop processing!!! " && return
 
   IDX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
@@ -1907,7 +1907,9 @@ function inject_loader() {
   elif [ ${IDX} -lt 0 ] && [ ${SHR} -lt 3 ]; then 
       returnto "There is not enough SHR Type Disk. Function Exit now!!! Press any key to continue..." && return    
   fi	
-
+# [ ${IDX} -gt 1 ] BASIC more than 2 
+# [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ] BASIC more than 1 && SHR more than 1
+# [ ${IDX} -eq 0 ] && [ ${SHR} -gt 2 ] BASIC 0 && SHR 3 and more
   echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
   readanswer    
 if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
@@ -1926,7 +1928,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                 if [ ${NUM} = 1 ]; then
 
 					echo "Create extended and logical partitions on 1st disk. ${model}"		
-					last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
+					last_sector="20979712"
 					echo "1st disk's last sector is $last_sector"
 					echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
 				
@@ -1964,7 +1966,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                 elif [ ${NUM} = 2 ]; then
 		
                     echo "Create partitions on 2nd disks... $edisk"
-    	            last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}2" | awk '{print $3}')
+    	            last_sector="20979712"
     	     	    echo "2nd disk's last sector is $last_sector"
         	   	    echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
                     [ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
