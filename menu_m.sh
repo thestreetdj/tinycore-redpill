@@ -1968,26 +1968,29 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 		 	    RAID_CNT="$(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l )"
 		        DOS_CNT="$(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l )"
 			    W95_CNT="$(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l )" 
+	   			EXT_CNT="$(sudo fdisk -l | grep "Extended" | grep ${edisk} | wc -l )" 
 		        echo "RAID_CNT=${RAID_CNT}"
 		  		echo "DOS_CNT=${DOS_CNT}"
 				echo "W95_CNT=${W95_CNT}"
-	            echo
+	            echo "EXT_CNT=${EXT_CNT}"
 	            if [ "${DOS_CNT}" -eq 3 ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
 	                continue
 	            elif [ -z "${BOOTMAKE}" ] && { [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ] && [ "${W95_CNT}" -eq 0 ]; }; then
-			 
-						# BASIC OR JBOD can make extend partition
-						echo "Create extended and logical partitions on 1st disk. ${model}"		
-						last_sector="20979712"
-						echo "1st disk's last sector is $last_sector"
-						echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
-					    [ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
-		                sleep 1 
+
+						if [ "${EXT_CNT}" -eq 0 ]; then
+							# BASIC OR JBOD can make extend partition
+							echo "Create extended and logical partitions on 1st disk. ${model}"		
+							last_sector="20979712"
+							echo "1st disk's last sector is $last_sector"
+							echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+						    [ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
+			                sleep 2
+				        fi
 	    
 	                    # +98M
 	                    echo "Create partitions on 1st disks... $edisk"
-	                    echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
+	                    echo -e "n\n5\n+98M\nw\n" | sudo fdisk "${edisk}"
 	            	    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
 			            sleep 1
 			   
@@ -1996,7 +1999,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 				        sleep 1
 	      
 	                    # +26M
-	                    echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
+	                    echo -e "n\n6\n+26M\nw\n" | sudo fdisk "${edisk}"
 	            	    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
 				        sleep 1
 	
