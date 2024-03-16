@@ -2063,12 +2063,19 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	    if [ ${IDX_EX} -gt 1 ] || { [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; }; then
 	        echo "Reinject bootloader (into existing partition)..."
 	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+		 
 	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
+		 	    RAID_CNT="$(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l )"
+		        DOS_CNT="$(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l )"
+			    W95_CNT="$(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l )" 
+		        echo "RAID_CNT=${RAID_CNT}"
+		  		echo "DOS_CNT=${DOS_CNT}"
+				echo "W95_CNT=${W95_CNT}"
 	            echo
-	            if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+	            if [ "${DOS_CNT}" -eq 3 ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
 	                continue
-	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then
+	            elif [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 2 ] && [ "${W95_CNT}" -eq 0 ]; then
 	
 					prepare_grub
 					[ $? -ne 0 ] && return
@@ -2081,7 +2088,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	                synop1=${edisk}5
 			   		synop2=${edisk}6
 	                continue
-	            elif [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
+	            elif [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 1 ]; then
 	            
 	      	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
 
