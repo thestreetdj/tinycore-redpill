@@ -1990,7 +1990,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	    
 	                    # +98M
 	                    echo "Create partitions on 1st disks... $edisk"
-	                    echo -e "n\n5\n+98M\nw\n" | sudo fdisk "${edisk}"
+	                    echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
 	            	    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
 			            sleep 1
 			   
@@ -1999,7 +1999,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 				        sleep 1
 	      
 	                    # +26M
-	                    echo -e "n\n6\n+26M\nw\n" | sudo fdisk "${edisk}"
+	                    echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
 	            	    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
 				        sleep 1
 	
