@@ -1871,10 +1871,12 @@ function get_disk_type_cnt() {
     DOS_CNT="$(sudo fdisk -l | grep "83 Linux" | grep ${1} | wc -l )"
     W95_CNT="$(sudo fdisk -l | grep "W95 Ext" | grep ${1} | wc -l )" 
     EXT_CNT="$(sudo fdisk -l | grep "Extended" | grep ${1} | wc -l )" 
-    echo "RAID_CNT=${RAID_CNT}"
-    echo "DOS_CNT=${DOS_CNT}"
-    echo "W95_CNT=${W95_CNT}"
-    echo "EXT_CNT=${EXT_CNT}"
+    if [ "${2}" = "Y" ]; then
+        echo "RAID_CNT=${RAID_CNT}"
+        echo "DOS_CNT=${DOS_CNT}"
+        echo "W95_CNT=${W95_CNT}"
+        echo "EXT_CNT=${EXT_CNT}"
+    fi    
              
 }
 
@@ -1891,7 +1893,7 @@ function inject_loader() {
 
   IDX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      get_disk_type_cnt "${edisk}"
+      get_disk_type_cnt "${edisk}" "N"
       if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ] && [ "${W95_CNT}" -eq 0 ]; then
           echo "This is BASIC or JBOD Type Hard Disk. $edisk"
           IDX=$((${IDX} + 1))
@@ -1900,7 +1902,7 @@ function inject_loader() {
 
   SHR=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      get_disk_type_cnt "${edisk}"
+      get_disk_type_cnt "${edisk}" "N"
       if [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 0 ] && [ "${W95_CNT}" -eq 1 ]; then
           echo "This is SHR or RAID Type Hard Disk. $edisk"
           SHR=$((${SHR} + 1))
@@ -1909,14 +1911,14 @@ function inject_loader() {
 
   IDX_EX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      get_disk_type_cnt "${edisk}"
+      get_disk_type_cnt "${edisk}" "N"
       if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 2 ] && [ "${W95_CNT}" -eq 0 ]; then
           echo "This is BASIC Type Hard Disk and Has synoboot1 and synoboot2 Boot Partition  $edisk"
           IDX_EX=$((${IDX_EX} + 1))
       fi
   done
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      get_disk_type_cnt "${edisk}"
+      get_disk_type_cnt "${edisk}" "N"
       if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 1 ] && [ "${W95_CNT}" -eq 0 ]; then
       	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
               echo "This is BASIC Type Hard Disk and Has synoboot3 Boot Partition $edisk"
@@ -1927,14 +1929,7 @@ function inject_loader() {
 
   SHR_EX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      get_disk_type_cnt "${edisk}"
-      if [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 1 ] && [ "${W95_CNT}" -eq 1 ]; then
-          echo "This is SHR or RAID Type Hard Disk and Has synoboot1 and synoboot2 Boot Partition. $edisk"	  
-          SHR_EX=$((${SHR_EX} + 1))
-      fi
-  done
-  for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      get_disk_type_cnt "${edisk}"
+      get_disk_type_cnt "${edisk}" "N"
       if [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 1 ] && [ "${W95_CNT}" -eq 1 ]; then
       	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
               echo "This is SHR or RAID Type Hard Disk and Has synoboot3 Boot Partition $edisk"
@@ -1984,7 +1979,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
 		 
 	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
-                get_disk_type_cnt "${edisk}"
+                get_disk_type_cnt "${edisk}" "Y"
                 
 	            if [ "${DOS_CNT}" -eq 3 ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
@@ -2081,7 +2076,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
 		 
 	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
-                get_disk_type_cnt "${edisk}"
+                get_disk_type_cnt "${edisk}" "Y"
                 
 	            echo
 	            if [ "${DOS_CNT}" -eq 3 ]; then
