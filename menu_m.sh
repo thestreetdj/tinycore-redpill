@@ -1891,7 +1891,8 @@ function inject_loader() {
 
   IDX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then
+      get_disk_type_cnt "${edisk}"
+      if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ] && [ "${W95_CNT}" -eq 0 ]; then
           echo "This is BASIC or JBOD Type Hard Disk. $edisk"
           IDX=$((${IDX} + 1))
       fi
@@ -1899,7 +1900,8 @@ function inject_loader() {
 
   SHR=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 0 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 1 ]; then
+      get_disk_type_cnt "${edisk}"
+      if [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 0 ] && [ "${W95_CNT}" -eq 1 ]; then
           echo "This is SHR or RAID Type Hard Disk. $edisk"
           SHR=$((${SHR} + 1))
       fi
@@ -1907,13 +1909,15 @@ function inject_loader() {
 
   IDX_EX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then
+      get_disk_type_cnt "${edisk}"
+      if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 2 ] && [ "${W95_CNT}" -eq 0 ]; then
           echo "This is BASIC Type Hard Disk and Has synoboot1 and synoboot2 Boot Partition  $edisk"
           IDX_EX=$((${IDX_EX} + 1))
       fi
   done
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 0 ]; then
+      get_disk_type_cnt "${edisk}"
+      if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 1 ] && [ "${W95_CNT}" -eq 0 ]; then
       	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
               echo "This is BASIC Type Hard Disk and Has synoboot3 Boot Partition $edisk"
               IDX_EX=$((${IDX_EX} + 1))
@@ -1923,17 +1927,19 @@ function inject_loader() {
 
   SHR_EX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 1 ]; then
+      get_disk_type_cnt "${edisk}"
+      if [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 1 ] && [ "${W95_CNT}" -eq 1 ]; then
           echo "This is SHR or RAID Type Hard Disk and Has synoboot1 and synoboot2 Boot Partition. $edisk"	  
           SHR_EX=$((${SHR_EX} + 1))
       fi
   done
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-      if [ $(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -gt 2 ] && [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ] && [ $(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 1 ]; then
+      get_disk_type_cnt "${edisk}"
+      if [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 1 ] && [ "${W95_CNT}" -eq 1 ]; then
       	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
               echo "This is SHR or RAID Type Hard Disk and Has synoboot3 Boot Partition $edisk"
               SHR_EX=$((${SHR_EX} + 1))
-	      fi    
+	      fi
       fi
   done
 
@@ -1943,7 +1949,7 @@ function inject_loader() {
     do_ex_first="Y"
   elif [ ${IDX} -gt 1 ] || { [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; }; then
     echo "There is at least one disk of type BASIC or SHR...OK"
-	if [ -z "${do_ex_first}" ]; then
+    if [ -z "${do_ex_first}" ]; then
 	  do_ex_first="N"
 	fi
   #elif [ ${IDX} -eq 0 ] && [ ${SHR} -gt 2 ]; then 
