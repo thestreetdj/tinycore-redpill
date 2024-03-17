@@ -1865,6 +1865,19 @@ function prepare_img() {
     true
 }
 
+function get_disk_type_cnt() {
+
+    RAID_CNT="$(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${1} | wc -l )"
+    DOS_CNT="$(sudo fdisk -l | grep "83 Linux" | grep ${1} | wc -l )"
+    W95_CNT="$(sudo fdisk -l | grep "W95 Ext" | grep ${1} | wc -l )" 
+    EXT_CNT="$(sudo fdisk -l | grep "Extended" | grep ${1} | wc -l )" 
+    echo "RAID_CNT=${RAID_CNT}"
+    echo "DOS_CNT=${DOS_CNT}"
+    echo "W95_CNT=${W95_CNT}"
+    echo "EXT_CNT=${EXT_CNT}"
+             
+}
+
 function inject_loader() {
 
   if [ ! -f /mnt/${loaderdisk}3/bzImage-friend ] || [ ! -f /mnt/${loaderdisk}3/initrd-friend ] || [ ! -f /mnt/${loaderdisk}3/zImage-dsm ] || [ ! -f /mnt/${loaderdisk}3/initrd-dsm ] || [ ! -f /mnt/${loaderdisk}3/user_config.json ] || [ ! $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ]; then
@@ -1965,14 +1978,8 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
 		 
 	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
-		 	    RAID_CNT="$(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l )"
-		        DOS_CNT="$(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l )"
-			    W95_CNT="$(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l )" 
-	   			EXT_CNT="$(sudo fdisk -l | grep "Extended" | grep ${edisk} | wc -l )" 
-		        echo "RAID_CNT=${RAID_CNT}"
-		  		echo "DOS_CNT=${DOS_CNT}"
-				echo "W95_CNT=${W95_CNT}"
-	            echo "EXT_CNT=${EXT_CNT}"
+                get_disk_type_cnt "${edisk}"
+                
 	            if [ "${DOS_CNT}" -eq 3 ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
 	                continue
@@ -2068,12 +2075,8 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
 		 
 	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
-		 	    RAID_CNT="$(sudo fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l )"
-		        DOS_CNT="$(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l )"
-			    W95_CNT="$(sudo fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l )" 
-		        echo "RAID_CNT=${RAID_CNT}"
-		  		echo "DOS_CNT=${DOS_CNT}"
-				echo "W95_CNT=${W95_CNT}"
+                get_disk_type_cnt "${edisk}"
+                
 	            echo
 	            if [ "${DOS_CNT}" -eq 3 ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
