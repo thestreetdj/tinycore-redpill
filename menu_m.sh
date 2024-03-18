@@ -2121,7 +2121,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 		    done
 	    fi
 	elif [ "${do_ex_first}" = "Y" ]; then
-	    if [ ${IDX_EX} -gt 1 ] || { [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; }; then
+	    if [ ${IDX_EX} -eq 2 ] || [ `expr ${IDX_EX} + ${SHR_EX}` -eq 2 ]; then
 	        echo "Reinject bootloader (into existing partition)..."
 	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
 		 
