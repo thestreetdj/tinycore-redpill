@@ -1975,7 +1975,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
     fi
 
     if [ "${do_ex_first}" = "N" ]; then
-		if [ ${IDX} -gt 1 ] || { [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ] } || { [ ${IDX} -eq 0 ] && [ ${SHR} -gt 1 ] }; then
+		if [ ${IDX} -gt 1 ] || { [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; } || { [ ${IDX} -eq 0 ] && [ ${SHR} -gt 1 ]; }; then
 	        echo "New bootloader injection (including fdisk partition creation)..."
 
 		    BOOTMAKE=""
