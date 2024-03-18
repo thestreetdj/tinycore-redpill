@@ -1667,7 +1667,7 @@ function tcrpfriendentry() {
     cat <<EOF
 menuentry 'Tiny Core Friend ${MODEL} ${BUILD} Update 0 ${DMPM}' {
         savedefault
-	set root=(hd0,msdos5)
+	set root=(hd0,msdos${1})
         echo Loading Linux...
         linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 console=ttyS0,115200n8
         echo Loading initramfs...
@@ -1758,7 +1758,7 @@ function wr_part1() {
 
     echo "Modifying grub.cfg for new loader boot..."
     sudo sed -i '61,$d' "${mdisk}${1}"/boot/grub/grub.cfg
-    tcrpfriendentry | sudo tee --append "${mdisk}${1}"/boot/grub/grub.cfg
+    tcrpfriendentry ${1} | sudo tee --append "${mdisk}${1}"/boot/grub/grub.cfg
 
     sudo cp -vf /mnt/${loaderdisk}3/bzImage-friend  "${mdisk}${1}"
     sudo cp -vf /mnt/${loaderdisk}3/initrd-friend  "${mdisk}${1}"
