@@ -1871,6 +1871,15 @@ function get_disk_type_cnt() {
     DOS_CNT="$(sudo fdisk -l | grep "83 Linux" | grep ${1} | wc -l )"
     W95_CNT="$(sudo fdisk -l | grep "W95 Ext" | grep ${1} | wc -l )" 
     EXT_CNT="$(sudo fdisk -l | grep "Extended" | grep ${1} | wc -l )" 
+    # for FIXED Linux RAID
+    RAID_FIX_CNT="$(sudo fdisk -l | grep "Linux RAID" | grep ${1} | wc -l )"
+    RAID_FIX_P5_SD_CNT="$(sudo fdisk -l | grep "Linux RAID" | grep ${1}5 | wc -l )"
+    RAID_FIX_P5_SATA_CNT="$(sudo fdisk -l | grep "Linux RAID" | grep ${1}p5 | wc -l )"
+    RAID_FIX_P5_CNT=`expr ${RAID_FIX_P5_SD_CNT} + ${RAID_FIX_P5_SATA_CNT}`
+    if [ ${RAID_FIX_CNT} -eq 3 ] && [ ${RAID_FIX_P5_CNT} -eq 1 ]; then
+        RAID_CNT="3"
+        W95_CNT="1"
+    fi
     if [ "${2}" = "Y" ]; then
         echo "RAID_CNT=${RAID_CNT}"
         echo "DOS_CNT=${DOS_CNT}"
@@ -1904,7 +1913,7 @@ function inject_loader() {
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
       get_disk_type_cnt "${edisk}" "N"
       if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ] && [ "${W95_CNT}" -eq 1 ]; then
-          echo "This is SHR or RAID Type Hard Disk. $edisk"
+          echo "This is SHR Type Hard Disk. $edisk"
           SHR=$((${SHR} + 1))
       fi
   done
@@ -1931,7 +1940,7 @@ function inject_loader() {
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
       get_disk_type_cnt "${edisk}" "N"
       if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 2 ] && [ "${W95_CNT}" -eq 1 ]; then
-          echo "This is SHR or RAID Type Hard Disk and Has synoboot1 and synoboot2 Boot Partition $edisk"
+          echo "This is SHR Type Hard Disk and Has synoboot1 and synoboot2 Boot Partition $edisk"
           SHR_EX=$((${SHR_EX} + 1))
       fi
   done
@@ -1939,7 +1948,7 @@ function inject_loader() {
       get_disk_type_cnt "${edisk}" "N"
       if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 1 ] && [ "${W95_CNT}" -eq 1 ]; then
       	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
-              echo "This is SHR or RAID Type Hard Disk and Has synoboot3 Boot Partition $edisk"
+              echo "This is SHR Type Hard Disk and Has synoboot3 Boot Partition $edisk"
               SHR_EX=$((${SHR_EX} + 1))
 	      fi
       fi
