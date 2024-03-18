@@ -2010,7 +2010,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                         echo "1st disk's part 6 last sector is $last_sector"
                         
                         # +26M
-                        echo -e "n\n\n$last_sector\n+26M\nw\n" | sudo fdisk "${edisk}"
+                        echo -e "n\n$last_sector\n+26M\nw\n" | sudo fdisk "${edisk}"
                         [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
                         sleep 1
  
