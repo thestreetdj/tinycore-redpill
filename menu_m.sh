@@ -1930,6 +1930,13 @@ function inject_loader() {
   SHR_EX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
       get_disk_type_cnt "${edisk}" "N"
+      if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 2 ] && [ "${W95_CNT}" -eq 1 ]; then
+          echo "This is SHR or RAID Type Hard Disk and Has synoboot1 and synoboot2 Boot Partition $edisk"
+          SHR_EX=$((${SHR_EX} + 1))
+      fi
+  done
+  for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+      get_disk_type_cnt "${edisk}" "N"
       if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 1 ] && [ "${W95_CNT}" -eq 1 ]; then
       	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
               echo "This is SHR or RAID Type Hard Disk and Has synoboot3 Boot Partition $edisk"
@@ -1939,20 +1946,15 @@ function inject_loader() {
   done
 
   do_ex_first=""	
-  if [ ${IDX_EX} -gt 1 ] || { [ ${IDX_EX} -gt 0 ] && [ ${SHR_EX} -gt 0 ]; }; then
+  if [ ${IDX_EX} -eq 2 ] || [ `expr ${IDX_EX} + ${SHR_EX}` -eq 2 ]; then
     echo "There is at least one BASIC or SHR type disk each with an injected bootloader...OK"
     do_ex_first="Y"
-  elif [ ${IDX} -gt 1 ] || { [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; }; then
+  elif [ ${IDX} -eq 2 ] || [ `expr ${IDX} + ${SHR}` -eq 2 ]; }; then
     echo "There is at least one disk of type BASIC or SHR...OK"
     if [ -z "${do_ex_first}" ]; then
 	  do_ex_first="N"
 	fi
-  elif [ ${IDX} -eq 0 ] && [ ${SHR} -gt 1 ]; then 
-    echo "There is at least two disks of type SHR or RAID...OK"  
-    if [ -z "${do_ex_first}" ]; then
-	  do_ex_first="N"
-	fi
-  #elif [ ${IDX_EX} -eq 0 ] && [ ${SHR_EX} -gt 2 ]; then 
+  #elif [ ${IDX_EX} -eq 0 ] && [ ${SHR_EX} -gt 1 ]; then 
   else
       echo "IDX = ${IDX}, SHR = ${SHR}, IDX_EX = ${IDX_EX}, SHR_EX=${SHR_EX}"
       returnto "There is not enough Type Disk. Function Exit now!!! Press any key to continue..." && return  
