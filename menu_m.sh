@@ -2005,7 +2005,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                         [ $? -ne 0 ] && returnto "activate partition on ${edisk} failed. Stop processing!!! " && return
                         sleep 1
                       
-                        last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}5" | awk '{print $3}')
+                        last_sector="$(sudo fdisk -l "${edisk}" | grep "${edisk}5" | awk '{print $3}')"
                         last_sector=$((${last_sector} + 1))
                         echo "1st disk's part 6 last sector is $last_sector"
                         
