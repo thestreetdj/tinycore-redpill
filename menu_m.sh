@@ -1949,7 +1949,7 @@ function inject_loader() {
   if [ ${IDX_EX} -eq 2 ] || [ `expr ${IDX_EX} + ${SHR_EX}` -eq 2 ]; then
     echo "There is at least one BASIC or SHR type disk each with an injected bootloader...OK"
     do_ex_first="Y"
-  elif [ ${IDX} -eq 2 ] || [ `expr ${IDX} + ${SHR}` -eq 2 ]; then
+  elif [ ${IDX} -eq 2 ] || [ `expr ${IDX} + ${SHR}` -gt 1 ]; then
     echo "There is at least one disk of type BASIC or SHR...OK"
     if [ -z "${do_ex_first}" ]; then
 	  do_ex_first="N"
@@ -1977,7 +1977,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
     fi
 
     if [ "${do_ex_first}" = "N" ]; then
-		if [ ${IDX} -gt 1 ] || { [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; } || { [ ${IDX} -eq 0 ] && [ ${SHR} -gt 1 ]; }; then
+        if [ ${IDX} -eq 2 ] || [ `expr ${IDX} + ${SHR}` -gt 1 ]; then
 	        echo "New bootloader injection (including fdisk partition creation)..."
 
 		    BOOTMAKE=""
@@ -1990,7 +1990,10 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	            if [ "${DOS_CNT}" -eq 3 ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
 	                continue
-	            elif [ -z "${BOOTMAKE}" ] && { [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ]; }; then
+	            elif [ -z "${BOOTMAKE}" ] && [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ]; then
+
+                    prepare_grub
+                    [ $? -ne 0 ] && return
 
                     if [ "${W95_CNT}" -eq 1 ]; then
                         # SHR OR RAID can make primary partition
@@ -2016,24 +2019,11 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                         [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
                         sleep 1
  
-                        #sudo dd if="${loopdev}p1" of="${edisk}5"
-                        #sudo dd if="${loopdev}p2" of="${edisk}6"
- 
-                        prepare_grub
-                        [ $? -ne 0 ] && return
- 
                         sudo mkfs.vfat -F16 "${edisk}4"
-                        sudo mkfs.vfat -F16 "${edisk}6"
- 
+                        synop1=${edisk}4 
                         wr_part1 "4"
                         [ $? -ne 0 ] && return
      
-                        wr_part2 "6"
-                        [ $? -ne 0 ] && return
-     
-                        synop1=${edisk}4
-                        synop2=${edisk}6
-
                     else
                         if [ "${EXT_CNT}" -eq 0 ]; then
                             # BASIC OR JBOD can make extend partition
@@ -2060,29 +2050,21 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                         [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
                         sleep 1
  
-                        #sudo dd if="${loopdev}p1" of="${edisk}5"
-                        #sudo dd if="${loopdev}p2" of="${edisk}6"
- 
-                        prepare_grub
-                        [ $? -ne 0 ] && return
- 
                         sudo mkfs.vfat -F16 "${edisk}5"
-                        sudo mkfs.vfat -F16 "${edisk}6"
- 
+                        synop1=${edisk}5
                         wr_part1 "5"
                         [ $? -ne 0 ] && return
-    
-                        wr_part2 "6"
-                        [ $? -ne 0 ] && return
-    
-                        synop1=${edisk}5
-                        synop2=${edisk}6
+
                     fi 
+                    sudo mkfs.vfat -F16 "${edisk}6"                    
+                    synop2=${edisk}6    
+                    wr_part2 "6"
+                    [ $? -ne 0 ] && return
 
                     BOOTMAKE="YES"
                     continue
 
-            	elif [ -z "${SYNOP3MAKE}" ] && { [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 0 ]; }; then
+            	elif [ -z "${SYNOP3MAKE}" ] && [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 0 ]; then
 
 	 				if [ $(blkid | grep "6234-C863" | wc -l) -eq 1 ]; then
 	  					# + 128M
@@ -2132,19 +2114,23 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	            if [ "${DOS_CNT}" -eq 3 ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
 	                continue
-	            elif [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 2 ] && [ "${W95_CNT}" -eq 0 ]; then
-	
+	            elif [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 2 ]; then
+
 					prepare_grub
 					[ $? -ne 0 ] && return
-	
-	                wr_part1 "5"
-	                [ $? -ne 0 ] && return
+                    if [ "${W95_CNT}" -eq 1 ]; then
+	                    synop1=${edisk}4                    
+	                    wr_part1 "4"
+                    else 
+	                    synop1=${edisk}5
+	                    wr_part1 "5"
+                    fi
+
+		   		    synop2=${edisk}6                 
 	                wr_part2 "6"
 	                [ $? -ne 0 ] && return
-	
-	                synop1=${edisk}5
-			   		synop2=${edisk}6
-	                continue
+		            continue
+              
 	            elif [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 1 ]; then
 	            
 	      	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
