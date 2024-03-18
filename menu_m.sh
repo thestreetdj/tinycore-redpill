@@ -1947,7 +1947,11 @@ function inject_loader() {
     if [ -z "${do_ex_first}" ]; then
 	  do_ex_first="N"
 	fi
-  #elif [ ${IDX} -eq 0 ] && [ ${SHR} -gt 2 ]; then 
+  elif [ ${IDX} -eq 0 ] && [ ${SHR} -gt 1 ]; then 
+    echo "There is at least one disk of type SHR or RAID...OK"  
+    if [ -z "${do_ex_first}" ]; then
+	  do_ex_first="N"
+	fi
   #elif [ ${IDX_EX} -eq 0 ] && [ ${SHR_EX} -gt 2 ]; then 
   else
       echo "IDX = ${IDX}, SHR = ${SHR}, IDX_EX = ${IDX_EX}, SHR_EX=${SHR_EX}"
