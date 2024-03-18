@@ -1903,7 +1903,7 @@ function inject_loader() {
   SHR=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
       get_disk_type_cnt "${edisk}" "N"
-      if [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 0 ] && [ "${W95_CNT}" -eq 1 ]; then
+      if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ] && [ "${W95_CNT}" -eq 1 ]; then
           echo "This is SHR or RAID Type Hard Disk. $edisk"
           SHR=$((${SHR} + 1))
       fi
@@ -1930,7 +1930,7 @@ function inject_loader() {
   SHR_EX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
       get_disk_type_cnt "${edisk}" "N"
-      if [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 1 ] && [ "${W95_CNT}" -eq 1 ]; then
+      if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 1 ] && [ "${W95_CNT}" -eq 1 ]; then
       	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
               echo "This is SHR or RAID Type Hard Disk and Has synoboot3 Boot Partition $edisk"
               SHR_EX=$((${SHR_EX} + 1))
@@ -1984,53 +1984,97 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	            if [ "${DOS_CNT}" -eq 3 ]; then
 	                echo "Skip this disk as it is a loader disk. $model"
 	                continue
-	            elif [ -z "${BOOTMAKE}" ] && { [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ] && [ "${W95_CNT}" -eq 0 ]; }; then
+	            elif [ -z "${BOOTMAKE}" ] && { [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ]; }; then
 
-						if [ "${EXT_CNT}" -eq 0 ]; then
-							# BASIC OR JBOD can make extend partition
-							echo "Create extended and logical partitions on 1st disk. ${model}"		
-							last_sector="20979712"
-							echo "1st disk's last sector is $last_sector"
-							echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
-						    [ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
-			                sleep 2
-				        fi
-	    
-	                    # +98M
-	                    echo "Create partitions on 1st disks... $edisk"
-	                    echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
-	            	    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
-			            sleep 1
-			   
-	                    echo -e "a\n5\nw" | sudo fdisk "${edisk}"
-	            	    [ $? -ne 0 ] && returnto "activate partition on ${edisk} failed. Stop processing!!! " && return
-				        sleep 1
-	      
-	                    # +26M
-	                    echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
-	            	    [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
-				        sleep 1
-	
-	                    #sudo dd if="${loopdev}p1" of="${edisk}5"
-	                    #sudo dd if="${loopdev}p2" of="${edisk}6"
-	
-						prepare_grub
-		 				[ $? -ne 0 ] && return
-	
-	        	    	sudo mkfs.vfat -F16 "${edisk}5"
-	      	    	    sudo mkfs.vfat -F16 "${edisk}6"
-	
-	                    wr_part1 "5"
-	                    [ $? -ne 0 ] && return
-	
-	                    wr_part2 "6"
-	                    [ $? -ne 0 ] && return
-	
-	                    synop1=${edisk}5
-	                    synop2=${edisk}6
+                    if [ "${W95_CNT}" -eq 1 ]; then
+                        # SHR OR RAID can make primary partition
+                        echo "Create primary and logical partitions on 1st disk. ${model}"
+                        last_sector="20979712"
+                    
+                        # +127M
+                        echo "Create partitions on 1st disks... $edisk"
+                        echo -e "n\n\n$last_sector\n+127M\nw\n" | sudo fdisk "${edisk}"
+                        [ $? -ne 0 ] && returnto "make primary partition on ${edisk} failed. Stop processing!!! " && return
+                        sleep 1
+      
+                        echo -e "a\n4\nw" | sudo fdisk "${edisk}"
+                        [ $? -ne 0 ] && returnto "activate partition on ${edisk} failed. Stop processing!!! " && return
+                        sleep 1
+                      
+                        last_sector=$(sudo fdisk -l "${edisk}" | grep "${edisk}5" | awk '{print $3}')
+                        last_sector=$((${last_sector} + 1))
+                        echo "1st disk's part 6 last sector is $last_sector"
+                        
+                        # +26M
+                        echo -e "n\n\n$last_sector\n+26M\nw\n" | sudo fdisk "${edisk}"
+                        [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
+                        sleep 1
+ 
+                        #sudo dd if="${loopdev}p1" of="${edisk}5"
+                        #sudo dd if="${loopdev}p2" of="${edisk}6"
+ 
+                        prepare_grub
+                        [ $? -ne 0 ] && return
+ 
+                        sudo mkfs.vfat -F16 "${edisk}4"
+                        sudo mkfs.vfat -F16 "${edisk}6"
+ 
+                        wr_part1 "4"
+                        [ $? -ne 0 ] && return
+     
+                        wr_part2 "6"
+                        [ $? -ne 0 ] && return
+     
+                        synop1=${edisk}4
+                        synop2=${edisk}6
 
-	                BOOTMAKE="YES"
-				    continue
+                    else
+                        if [ "${EXT_CNT}" -eq 0 ]; then
+                            # BASIC OR JBOD can make extend partition
+                            echo "Create extended and logical partitions on 1st disk. ${model}"
+                            last_sector="20979712"
+                            echo "1st disk's last sector is $last_sector"
+                            echo -e "n\ne\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+                            [ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
+                            sleep 2
+                        fi
+     
+                        # +98M
+                        echo "Create partitions on 1st disks... $edisk"
+                        echo -e "n\n\n+98M\nw\n" | sudo fdisk "${edisk}"
+                        [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
+                        sleep 1
+      
+                        echo -e "a\n5\nw" | sudo fdisk "${edisk}"
+                        [ $? -ne 0 ] && returnto "activate partition on ${edisk} failed. Stop processing!!! " && return
+                        sleep 1
+       
+                        # +26M
+                        echo -e "n\n\n+26M\nw\n" | sudo fdisk "${edisk}"
+                        [ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
+                        sleep 1
+ 
+                        #sudo dd if="${loopdev}p1" of="${edisk}5"
+                        #sudo dd if="${loopdev}p2" of="${edisk}6"
+ 
+                        prepare_grub
+                        [ $? -ne 0 ] && return
+ 
+                        sudo mkfs.vfat -F16 "${edisk}5"
+                        sudo mkfs.vfat -F16 "${edisk}6"
+ 
+                        wr_part1 "5"
+                        [ $? -ne 0 ] && return
+    
+                        wr_part2 "6"
+                        [ $? -ne 0 ] && return
+    
+                        synop1=${edisk}5
+                        synop2=${edisk}6
+                    fi 
+
+                    BOOTMAKE="YES"
+                    continue
 
             	elif [ -z "${SYNOP3MAKE}" ] && { [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 0 ]; }; then
 
