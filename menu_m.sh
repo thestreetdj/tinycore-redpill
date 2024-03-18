@@ -1948,7 +1948,7 @@ function inject_loader() {
 	  do_ex_first="N"
 	fi
   elif [ ${IDX} -eq 0 ] && [ ${SHR} -gt 1 ]; then 
-    echo "There is at least one disk of type SHR or RAID...OK"  
+    echo "There is at least two disks of type SHR or RAID...OK"  
     if [ -z "${do_ex_first}" ]; then
 	  do_ex_first="N"
 	fi
@@ -1963,7 +1963,7 @@ function inject_loader() {
 # [ ${IDX} -gt 1 ] BASIC more than 2 
 # [ ${IDX} -gt 0 && ${SHR} -gt 0 ] BASIC more than 1 && SHR more than 1
 # [ ${IDX} -eq 0 && ${SHR} -gt 2 ] BASIC 0 && SHR more than 3
-echo -n "(Warning) Do you want to port the bootloader to Syno disk? (2 or more BASIC types are required)? [yY/nN] : "
+echo -n "(Warning) Do you want to port the bootloader to Syno disk? [yY/nN] : "
 readanswer
 if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
     tce-load -i bc
@@ -1975,7 +1975,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
     fi
 
     if [ "${do_ex_first}" = "N" ]; then
-		if [ ${IDX} -gt 1 ] || { [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ]; }; then
+		if [ ${IDX} -gt 1 ] || { [ ${IDX} -gt 0 ] && [ ${SHR} -gt 0 ] } || { [ ${IDX} -eq 0 ] && [ ${SHR} -gt 1 ] }; then
 	        echo "New bootloader injection (including fdisk partition creation)..."
 
 		    BOOTMAKE=""
