@@ -215,6 +215,8 @@ set -u
 # Added RedPill bootloader hard disk porting function
 # 2024.03.15
 # Added RedPill bootloader hard disk porting function supporting 1 SHR Type DISK
+# 2024.03.18
+# Added RedPill bootloader hard disk porting function supporting All SHR & RAID Type DISK        
     
 function showlastupdate() {
     cat <<EOF
@@ -257,6 +259,9 @@ function showlastupdate() {
 
 # 2024.03.15
 # Added RedPill bootloader hard disk porting function supporting 1 SHR Type DISK
+
+# 2024.03.18
+# Added RedPill bootloader hard disk porting function supporting All SHR & RAID Type DISK        
         
 EOF
 }
