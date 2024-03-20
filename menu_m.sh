@@ -1991,13 +1991,6 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 		tce-load -iw dosfstools
 		[ $? -ne 0 ] && returnto "Install dosfstools failed. Stop processing!!! " && false
 	fi
-	tce-load -i mtools
-	if [ $? -eq 0 ]; then
-		echo "Install mtools (mlabel) OK !!!"
-	else
-		tce-load -iw mtools
-		[ $? -ne 0 ] && returnto "Install mtools failed. Stop processing!!! " && false
-	fi
 
     if [ "${do_ex_first}" = "N" ]; then
         if [ ${IDX} -eq 2 ] || [ `expr ${IDX} + ${SHR}` -gt 1 ]; then
