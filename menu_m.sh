@@ -2104,11 +2104,10 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 		            	sleep 1
 	
 						#prepare_img
-                        sudo mkfs.vfat -F16 "${edisk}4"
+                        sudo mkfs.vfat -i 6234C863 -F16 "${edisk}4"
 						[ $? -ne 0 ] && return
 	   
 		                #sudo dd if="${loopdev}p3" of="${edisk}4"
-                        sudo mlabel -i "${edisk}4" -N 6234C863
 	
 	                    wr_part3 "4"
 	                    [ $? -ne 0 ] && return
