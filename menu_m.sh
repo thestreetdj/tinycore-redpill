@@ -1829,7 +1829,7 @@ function prepare_grub() {
 	if [ $? -eq 0 ]; then
 		echo "Install grub2-multi OK !!!"
 	else
-		tce-load -iw grub2-multi dosfstools
+		tce-load -iw grub2-multi
 		[ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && false
 	fi
 	#sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
@@ -1984,6 +1984,20 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 		tce-load -iw bc
 		[ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && return
     fi
+	tce-load -i dosfstools
+	if [ $? -eq 0 ]; then
+		echo "Install dosfstools OK !!!"
+	else
+		tce-load -iw dosfstools
+		[ $? -ne 0 ] && returnto "Install dosfstools failed. Stop processing!!! " && false
+	fi
+	tce-load -i mtools
+	if [ $? -eq 0 ]; then
+		echo "Install mtools (mlabel) OK !!!"
+	else
+		tce-load -iw mtools
+		[ $? -ne 0 ] && returnto "Install mtools failed. Stop processing!!! " && false
+	fi
 
     if [ "${do_ex_first}" = "N" ]; then
         if [ ${IDX} -eq 2 ] || [ `expr ${IDX} + ${SHR}` -gt 1 ]; then
@@ -2065,7 +2079,7 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                         [ $? -ne 0 ] && return
 
                     fi 
-                    sudo mkfs.vfat -F16 "${edisk}6"                    
+                    sudo mkfs.vfat -F16 "${edisk}6"
                     synop2=${edisk}6    
                     wr_part2 "6"
                     [ $? -ne 0 ] && return
@@ -2089,10 +2103,12 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	
 		            	sleep 1
 	
-						prepare_img
+						#prepare_img
+                        sudo mkfs.vfat -F16 "${edisk}4"
 						[ $? -ne 0 ] && return
 	   
-		                sudo dd if="${loopdev}p3" of="${edisk}4"
+		                #sudo dd if="${loopdev}p3" of="${edisk}4"
+                        sudo mlabel -i "${edisk}4" -N 6234C863
 	
 	                    wr_part3 "4"
 	                    [ $? -ne 0 ] && return
@@ -2144,8 +2160,8 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	            
 	      	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
 
-						prepare_img
-						[ $? -ne 0 ] && return
+						#prepare_img
+						#[ $? -ne 0 ] && return
 				   
 	                    wr_part3 "4"
 	                    [ $? -ne 0 ] && return
@@ -2157,8 +2173,8 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
 	        done
 	    fi
 	fi 
-    sudo losetup -d ${loopdev}
-    [ -z "$(losetup | grep -i ${imgpath})" ] && echo "boot-image-to-hdd.img losetup OK !!!"
+    #sudo losetup -d ${loopdev}
+    #[ -z "$(losetup | grep -i ${imgpath})" ] && echo "boot-image-to-hdd.img losetup OK !!!"
     sync
     echo "unmount synoboot partitions...${synop1}, ${synop2}, ${synop3}"
     sudo umount ${synop1} && sudo umount ${synop2} && sudo umount ${synop3}
