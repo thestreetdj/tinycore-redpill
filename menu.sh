@@ -27,12 +27,45 @@ function gitdownload() {
     
 }
 
+###############################################################################
+# get bus of disk
+# 1 - device path
+function getBus() {
+  BUS=""
+  # usb/ata(sata/ide)/scsi
+  [ -z "${BUS}" ] && BUS=$(udevadm info --query property --name "${1}" 2>/dev/null | grep ID_BUS | cut -d= -f2 | sed 's/ata/sata/')
+  # usb/sata(sata/ide)/nvme
+  [ -z "${BUS}" ] && BUS=$(lsblk -dpno KNAME,TRAN 2>/dev/null | grep "${1} " | awk '{print $2}') #Spaces are intentional
+  # usb/scsi(sata/ide)/virtio(scsi/virtio)/mmc/nvme
+  [ -z "${BUS}" ] && BUS=$(lsblk -dpno KNAME,SUBSYSTEMS 2>/dev/null | grep "${1} " | awk -F':' '{print $(NF-1)}' | sed 's/_host//') #Spaces are intentional
+  echo "${BUS}"
+}
+
+loaderdisk=""
 for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
     if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
         echo "Found Bootloader Disk ${edisk}"
         loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"    
     fi    
 done
+if [ -z "${loaderdisk}" ]; then
+    for edisk in $(sudo fdisk -l | grep "Disk /dev/nvme" | awk '{print $2}' | sed 's/://' ); do
+        if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+            loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"    
+        fi    
+    done
+fi
+
+if [ -z "${loaderdisk}" ]; then
+    echo "Not Supported Loader BUS Type, program Exit!!!"
+    exit 99
+fi
+
+getBus "${loaderdisk}" 
+
+[ "${BUS}" = "nvme" ] && loaderdisk="${loaderdisk}p"
+[ "${BUS}" = "mmc"  ] && loaderdisk="${loaderdisk}p"
+
 tcrppart="${loaderdisk}3"
 
 if [ -d /mnt/${tcrppart}/redpill-load/ ] && [ -d /mnt/${tcrppart}/tcrp-addons/ ] && [ -d /mnt/${tcrppart}/tcrp-modules/ ]; then
