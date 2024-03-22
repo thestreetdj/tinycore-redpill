@@ -2447,22 +2447,6 @@ EOF
 
 }
 
-function tinyentrymmc() {
-
-    cat <<EOF
-menuentry 'Tiny Core Image Build' {
-        savedefault
-        search --set=root --fs-uuid $usbpart3uuid --hint hd1,msdos3
-        echo Loading Linux...
-        linux /vmlinuz64 loglevel=3 cde waitusb=5 vga=791
-        echo Loading initramfs...
-        initrd /corepure64.gz
-        echo Booting TinyCore for loader creation
-}
-EOF
-
-}
-
 function tcrpfriendentry() {
     
     cat <<EOF
@@ -2506,22 +2490,6 @@ menuentry 'Re-Install DSM of $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update 
         echo Loading initramfs...
         initrd /initrd-dsm
         echo Entering Force Junior (For Re-install DSM, SATA)
-}
-EOF
-
-}
-
-function tcrpfriendentrymmc() {
-    
-    cat <<EOF
-menuentry 'Tiny Core Friend $MODEL ${TARGET_VERSION}-${TARGET_REVISION} Update ${smallfixnumber} ${DMPM}' {
-        savedefault
-        search --set=root --fs-uuid $usbpart3uuid --hint hd1,msdos3
-        echo Loading Linux...
-        linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 console=ttyS0,115200n8
-        echo Loading initramfs...
-        initrd /initrd-friend
-        echo Booting TinyCore Friend
 }
 EOF
 
@@ -2954,18 +2922,14 @@ fi
 #m shell only end
 
         msgnormal "Replacing set root with filesystem UUID instead"
-        if [ $loaderdisk == "mmcblk0p" ]; then        
-            sudo sed -i "s/set root=(hd1,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd1,msdos1/" /tmp/tempentry.txt
-        else
-            sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" /tmp/tempentry.txt
-            sudo sed -i "s/Verbose/Verbose, ${DMPM}/" /tmp/tempentry.txt
-            sudo sed -i "s/Linux.../Linux... ${DMPM}/" /tmp/tempentry.txt
-            
-            if [ "${CPU}" == "AMD" ]; then
-                echo "Add configuration disable_mtrr_trim for AMD"            
-                sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
-            fi
-        fi    
+        sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" /tmp/tempentry.txt
+        sudo sed -i "s/Verbose/Verbose, ${DMPM}/" /tmp/tempentry.txt
+        sudo sed -i "s/Linux.../Linux... ${DMPM}/" /tmp/tempentry.txt
+        
+        if [ "${CPU}" == "AMD" ]; then
+            echo "Add configuration disable_mtrr_trim for AMD"            
+            sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
+        fi
 
         # Share RD of friend kernel with JOT 2023.05.01
         if [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ]; then
@@ -2984,11 +2948,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         if [ "$WITHFRIEND" = "YES" ]; then
 
             echo "Creating tinycore friend entry"
-            if [ $loaderdisk == "mmcblk0p" ]; then        
-                tcrpfriendentrymmc | sudo tee --append /tmp/grub.cfg
-            else
-                tcrpfriendentry | sudo tee --append /tmp/grub.cfg
-            fi    
+            tcrpfriendentry | sudo tee --append /tmp/grub.cfg
 
         else
 
@@ -2999,13 +2959,8 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
 
         fi
 
-        if [ $loaderdisk == "mmcblk0p" ]; then        
-            echo "Creating tinycore entry for mmc (sdcard)"
-            tinyentrymmc | sudo tee --append /tmp/grub.cfg
-        else
-            echo "Creating tinycore entry"
-            tinyentry | sudo tee --append /tmp/grub.cfg
-        fi
+        echo "Creating tinycore entry"
+        tinyentry | sudo tee --append /tmp/grub.cfg
 
         if [ "$WITHFRIEND" = "YES" ]; then
             tcrpentry_juniorusb | sudo tee --append /tmp/grub.cfg
