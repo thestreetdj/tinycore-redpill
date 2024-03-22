@@ -9,7 +9,7 @@
 #source myfunc.h # my.sh / myv.sh common use 
 ########################################################################################################################
 
-rploaderver="1.0.2.2"
+rploaderver="1.0.2.4"
 build="master"
 redpillmake="prod"
 
@@ -115,6 +115,8 @@ function history() {
     1.0.2.0 Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
     1.0.2.1 Changed extension file organization method
     1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts), The priority starts from custom.gz
+    1.0.2.3 Added RedPill bootloader hard disk porting function
+    1.0.2.4 Added NVMe bootloader support
     --------------------------------------------------------------------------------------
 EOF
 
@@ -3234,9 +3236,8 @@ function bringoverfriend() {
 
   echo -n "Checking for latest friend -> "
   # for test
-  curl -kLO# https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/chksum -O https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/bzImage-friend -O https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/initrd-friend
-  return
-  #URL=$(curl --connect-timeout 15 -s -k -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
+  #curl -kLO# https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/chksum -O https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/bzImage-friend -O https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/v0.1.0o/initrd-friend
+  #return
   
   URL="https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest/download/chksum"
   [ -n "$URL" ] && curl --connect-timeout 5 -s -k -L $URL -O
@@ -3569,20 +3570,52 @@ function getredpillko() {
 
 }
 
+###############################################################################
+# get bus of disk
+# 1 - device path
+function getBus() {
+  BUS=""
+  # usb/ata(sata/ide)/scsi
+  [ -z "${BUS}" ] && BUS=$(udevadm info --query property --name "${1}" 2>/dev/null | grep ID_BUS | cut -d= -f2 | sed 's/ata/sata/')
+  # usb/sata(sata/ide)/nvme
+  [ -z "${BUS}" ] && BUS=$(lsblk -dpno KNAME,TRAN 2>/dev/null | grep "${1} " | awk '{print $2}') #Spaces are intentional
+  # usb/scsi(sata/ide)/virtio(scsi/virtio)/mmc/nvme
+  [ -z "${BUS}" ] && BUS=$(lsblk -dpno KNAME,SUBSYSTEMS 2>/dev/null | grep "${1} " | awk -F':' '{print $(NF-1)}' | sed 's/_host//') #Spaces are intentional
+  echo "${BUS}"
+}
+
 if [ $# -lt 2 ]; then
     syntaxcheck $@
 fi
 
 if [ -z "$GATEWAY_INTERFACE" ]; then
 
-    loaderdisk="$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}'| head -1)"
+    loaderdisk=""
+    for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+        if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+            loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"    
+        fi    
+    done
+    if [ -z "${loaderdisk}" ]; then
+        for edisk in $(sudo fdisk -l | grep "Disk /dev/nvme" | awk '{print $2}' | sed 's/://' ); do
+            if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+                loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"    
+            fi    
+        done
+    fi
+
+    if [ -z "${loaderdisk}" ]; then
+        echo "Not Supported Loader BUS Type, program Exit!!!"
+        exit 99
+    fi
+    
+    getBus "${loaderdisk}" 
+    echo -ne "Loader BUS: $(msgnormal "${BUS}")\n"
+
+    [ "${BUS}" = "nvme" ] && loaderdisk="${loaderdisk}p"
+    [ "${BUS}" = "mmc"  ] && loaderdisk="${loaderdisk}p"
+
     tcrppart="${loaderdisk}3"
-
-    if [ $loaderdisk == "mmc" ]; then
-        tcrppart="mmcblk0p3"
-        loaderdisk="mmcblk0p"
-    fi    
-
     tcrpdisk=$loaderdisk
 
     case $1 in
