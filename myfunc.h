@@ -216,19 +216,12 @@ set -u
 # 2024.03.15
 # Added RedPill bootloader hard disk porting function supporting 1 SHR Type DISK
 # 2024.03.18
-# Added RedPill bootloader hard disk porting function supporting All SHR & RAID Type DISK        
+# Added RedPill bootloader hard disk porting function supporting All SHR & RAID Type DISK
+# 2024.03.22 v1.0.2.4 
+# Added NVMe bootloader support
     
 function showlastupdate() {
     cat <<EOF
-
-# 2023.10.18 v0.9.6.0
-# Update : Improved extension processing speed (local copy instead of remote curl download)
-    
-# 2023.10.27 v1.0.0.0 
-# Update : Kernel patch process improvements
-
-# 2023.11.04 
-# Update : Added DS1522+ (r1000), DS220+ (geminilake), DS2419+ (denverton), DS423+ (geminilake), DS718+ (apollolake), RS2423+ (v1000)
 
 # 2023.12.01
 # Update : Separate tcrp-addons and tcrp-modules repo processing methods
@@ -262,7 +255,10 @@ function showlastupdate() {
 
 # 2024.03.18
 # Added RedPill bootloader hard disk porting function supporting All SHR & RAID Type DISK        
-        
+
+# 2024.03.22 v1.0.2.4 
+# Added NVMe bootloader support
+    
 EOF
 }
 
