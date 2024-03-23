@@ -219,6 +219,8 @@ set -u
 # Added RedPill bootloader hard disk porting function supporting All SHR & RAID Type DISK
 # 2024.03.22 v1.0.2.4 
 # Added NVMe bootloader support
+# 2024.03.23
+# Fixed bug where both modules disappear when switching between ddsml and eudev (Causes NIC unresponsiveness)
     
 function showlastupdate() {
     cat <<EOF
@@ -258,6 +260,9 @@ function showlastupdate() {
 
 # 2024.03.22 v1.0.2.4 
 # Added NVMe bootloader support
+
+# 2024.03.23
+# Fixed bug where both modules disappear when switching between ddsml and eudev (Causes NIC unresponsiveness)
     
 EOF
 }
