@@ -304,6 +304,8 @@ if [ "${DMPM}" = "null" ]; then
     writeConfigKey "general" "devmod" "${DMPM}"
 fi
 cecho y "Device Module Processing Method is ${DMPM}"
+echo  "download original bundled-exts.json file..."
+curl -skL# https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/bundled-exts.json -o /home/tc/redpill-load/bundled-exts.json
 if [ "${DMPM}" = "DDSML" ]; then
     jsonfile=$(jq 'del(.eudev)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
 elif [ "${DMPM}" = "EUDEV" ]; then
@@ -316,11 +318,9 @@ else
 fi
 
 if [ "${offline}" = "NO" ]; then
-    curl -skLO https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json                          
-    curl -skLO https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh                                
-    #curl -skL https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader_t.sh -o rploader.sh
-    
-    #curl -s --insecure -L --progress-bar "https://$gitdomain/PeterSuh-Q3/rp-ext/master/rpext-index.json" -O
+    curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json
+    curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader.sh                                
+    #curl -skL# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/rploader_t.sh -o rploader.sh
 fi
 
 echo
