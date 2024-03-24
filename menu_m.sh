@@ -1700,6 +1700,15 @@ menuentry 'Tiny Core Friend ${MODEL} ${BUILD} Update 0 ${DMPM}' {
         initrd /initrd-friend
         echo Booting TinyCore Friend
 }
+menuentry 'Tiny Core Image Build' {
+        savedefault
+        search --set=root --fs-uuid "6234-C863" --hint hd1,msdos4
+        echo Loading Linux...
+        linux /vmlinuz64 loglevel=3 cde waitusb=5 vga=791
+        echo Loading initramfs...
+        initrd /corepure64.gz
+        echo Booting TinyCore for loader creation
+}
 EOF
 
 }
@@ -1844,8 +1853,9 @@ function wr_part3() {
     echo "TOTALUSED = ${TOTALUSED_FORMATTED} bytes (${TOTALUSED_MB} MB)"
     
     [ 0${TOTALUSED} -ge 0${SPACELEFT} ] && sudo umount "${mdisk}${1}" && returnto "Source Partition is too big ${TOTALUSED}, Space left ${SPACELEFT} !!!. Stop processing!!! " && false
-
-    cd /mnt/${loaderdisk}3 && find . -name "*dsm*" -o -name "*user_config*" | sudo cpio -pdm "${mdisk}${1}" 2>/dev/null
+    ~/rploader.sh clean
+    echo "y" | ~/rploader.sh backup
+    cd /mnt/${loaderdisk}3 && find . -name "*dsm*" -o -name "*user_config*" -o -name "corepure64.gz" -o -name "vmlinuz64" -o -name "mydata.tgz" | sudo cpio -pdm "${mdisk}${1}" 2>/dev/null
     true
 }
 
