@@ -221,6 +221,8 @@ set -u
 # Added NVMe bootloader support
 # 2024.03.23
 # Fixed bug where both modules disappear when switching between ddsml and eudev (Causes NIC unresponsiveness)
+# 2024.03.24    
+# Added missing mmc partition search function
     
 function showlastupdate() {
     cat <<EOF
@@ -263,7 +265,10 @@ function showlastupdate() {
 
 # 2024.03.23
 # Fixed bug where both modules disappear when switching between ddsml and eudev (Causes NIC unresponsiveness)
-    
+
+# 2024.03.24    
+# Added missing mmc partition search function
+        
 EOF
 }
 
