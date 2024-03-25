@@ -4,10 +4,10 @@
 # Date : 221115
 # Version : 0.9.4.0-1
 #
-# 
-##### INCLUDES #########################################################################################################
-#source myfunc.h # my.sh / myv.sh common use 
-########################################################################################################################
+#
+##### INCLUDES ######################################################################################
+source /home/tc/functions.h
+#####################################################################################################
 
 rploaderver="1.0.2.4"
 build="master"
@@ -3523,20 +3523,6 @@ function getredpillko() {
         cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
     fi
 
-}
-
-###############################################################################
-# get bus of disk
-# 1 - device path
-function getBus() {
-  BUS=""
-  # usb/ata(sata/ide)/scsi
-  [ -z "${BUS}" ] && BUS=$(udevadm info --query property --name "${1}" 2>/dev/null | grep ID_BUS | cut -d= -f2 | sed 's/ata/sata/')
-  # usb/sata(sata/ide)/nvme
-  [ -z "${BUS}" ] && BUS=$(lsblk -dpno KNAME,TRAN 2>/dev/null | grep "${1} " | awk '{print $2}') #Spaces are intentional
-  # usb/scsi(sata/ide)/virtio(scsi/virtio)/mmc/nvme
-  [ -z "${BUS}" ] && BUS=$(lsblk -dpno KNAME,SUBSYSTEMS 2>/dev/null | grep "${1} " | awk -F':' '{print $(NF-1)}' | sed 's/_host//') #Spaces are intentional
-  echo "${BUS}"
 }
 
 if [ $# -lt 2 ]; then
