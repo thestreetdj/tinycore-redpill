@@ -39,13 +39,13 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: MshellImage-${{ steps.updaterootfs.outputs.VERSION }}
-          path: /
+          path: /home/runner/work/tinycore-redpill/tinycore-redpill
       # Publish a release if is a tag
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ inputs.version }}
           files: |
-            ~/tinycore-redpill.*.m-shell.img.gz
+            tinycore-redpill.*.m-shell.img.gz
           body: |
             ${{ inputs.version }}
