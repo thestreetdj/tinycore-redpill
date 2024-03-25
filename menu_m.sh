@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ##### INCLUDES #####################################################################################################
-#source /home/tc/menufunc.h
+source /home/tc/functions.h
 #####################################################################################################
 
 # Function to handle Ctrl+C
@@ -86,20 +86,6 @@ function update_tinycore() {
   cd ~
 }
 
-###############################################################################
-# get bus of disk
-# 1 - device path
-function getBus() {
-  BUS=""
-  # usb/ata(sata/ide)/scsi
-  [ -z "${BUS}" ] && BUS=$(udevadm info --query property --name "${1}" 2>/dev/null | grep ID_BUS | cut -d= -f2 | sed 's/ata/sata/')
-  # usb/sata(sata/ide)/nvme
-  [ -z "${BUS}" ] && BUS=$(lsblk -dpno KNAME,TRAN 2>/dev/null | grep "${1} " | awk '{print $2}') #Spaces are intentional
-  # usb/scsi(sata/ide)/virtio(scsi/virtio)/mmc/nvme
-  [ -z "${BUS}" ] && BUS=$(lsblk -dpno KNAME,SUBSYSTEMS 2>/dev/null | grep "${1} " | awk -F':' '{print $(NF-1)}' | sed 's/_host//') #Spaces are intentional
-  echo "${BUS}"
-}
-
 if [ -f /home/tc/my.sh ]; then
   rm /home/tc/my.sh
 fi
@@ -131,7 +117,7 @@ if [ -z "${loaderdisk}" ]; then
     echo "Not Supported Loader BUS Type, program Exit!!!"
     exit 99
 fi
-getBus "${loaderdisk}" 
+getBus "${loaderdisk}"
 
 [ "${BUS}" = "nvme" ] && loaderdisk="${loaderdisk}p"
 [ "${BUS}" = "mmc"  ] && loaderdisk="${loaderdisk}p"
