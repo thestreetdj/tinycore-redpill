@@ -13,29 +13,27 @@ jobs:
       - uses: actions/checkout@v3
       - name: Bring last uploaded mydata.tgz files from tinycore-redpill & lastest img
         run: |
-          curl -kLO# https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/mydata.tgz
-          curl -kLO# https://github.com/PeterSuh-Q3/tinycore-redpill/raw/main/rploader.sh
           curl -kLO# https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/tinycore-redpill.v1.0.1.0.m-shell.img.gz
           gunzip tinycore-redpill.v1.0.1.0.m-shell.img.gz          
+          pwd
           ls -ltr ~
           ls -ltr
       - name: Get Version
         id: cp-mydata-tgz
         run: |
-          VERSION=v`cat /home/runner/work/rploader.sh | grep rploaderver= | cut -d\" -f2`
+          VERSION=v`cat rploader.sh | grep rploaderver= | cut -d\" -f2`
           echo "Version: ${VERSION}"
           echo "::set-output name=VERSION::${VERSION}"
           mv tinycore-redpill.v1.0.1.0.m-shell.img tinycore-redpill.${VERSION}.m-shell.img
-          ls -ltr
       - name: Mount and copy mydata.tgz
         run: |
-          LOOPX=$(losetup -f)
-          losetup -P ${LOOPX} tinycore-redpill.${VERSION}.m-shell.img
-          mkdir -p /mnt/p3
-          mount ${LOOPX}p3 /mnt/p3
-          cp -vf ~/mydata.tgz /mnt/p3
-          umount /mnt/p3
-          losetup -d ${LOOPX}
+          LOOPX=$(sudo losetup -f)
+          sudo losetup -P ${LOOPX} tinycore-redpill.${VERSION}.m-shell.img
+          sudo mkdir -p /mnt/p3
+          sudo mount ${LOOPX}p3 /mnt/p3
+          sudo cp -vf ~/mydata.tgz /mnt/p3
+          sudo umount /mnt/p3
+          sudo losetup -d ${LOOPX}
           gzip -c tinycore-redpill.${VERSION}.m-shell.img > tinycore-redpill.${VERSION}.m-shell.img.gz
           ls -ltr
       - name: Upload MshellImage-${{ steps.updaterootfs.outputs.VERSION }}
