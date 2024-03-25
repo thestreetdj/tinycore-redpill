@@ -52,3 +52,13 @@ A typical build process starts with:
         D. Build the loader.
 
 6. Reboot
+
+< Version History >
+
+    1.0.1.1 Fix monitor fuction about ethernet infomation
+    1.0.1.2 Fix for SA6400
+    1.0.2.0 Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
+    1.0.2.1 Changed extension file organization method
+    1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts), The priority starts from custom.gz
+    1.0.2.3 Added RedPill bootloader hard disk porting function
+    1.0.2.4 Added NVMe bootloader support
