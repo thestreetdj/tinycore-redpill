@@ -18,15 +18,14 @@ jobs:
           pwd
           ls -ltr ~
           ls -ltr
-      - name: Get Version
+      - name: Mount and copy mydata.tgz
         id: cp-mydata-tgz
         run: |
           VERSION=v`cat rploader.sh | grep rploaderver= | cut -d\" -f2`
           echo "Version: ${VERSION}"
           echo "::set-output name=VERSION::${VERSION}"
           mv tinycore-redpill.v1.0.1.0.m-shell.img tinycore-redpill.${VERSION}.m-shell.img
-      - name: Mount and copy mydata.tgz
-        run: |
+          ls -ltr          
           LOOPX=$(sudo losetup -f)
           sudo losetup -P ${LOOPX} tinycore-redpill.${VERSION}.m-shell.img
           sudo mkdir -p /mnt/p3
@@ -35,7 +34,7 @@ jobs:
           sudo umount /mnt/p3
           sudo losetup -d ${LOOPX}
           gzip -c tinycore-redpill.${VERSION}.m-shell.img > tinycore-redpill.${VERSION}.m-shell.img.gz
-          ls -ltr
+          ls -ltr                    
       - name: Upload MshellImage-${{ steps.updaterootfs.outputs.VERSION }}
         if: success()
         uses: actions/upload-artifact@v3
@@ -48,6 +47,6 @@ jobs:
         with:
           tag_name: ${{ inputs.version }}
           files: |
-            ~/tinycore-redpill.${VERSION}.m-shell.img.gz
+            ~/tinycore-redpill.*.m-shell.img.gz
           body: |
             ${{ inputs.version }}
