@@ -12,7 +12,7 @@ jobs:
         
       - name: Compress shell files
         run: |
-          tar -zcvf my.sh.gz my myv myfunc.h menu.sh menu_m.sh ntp.sh sngen.sh macgen.sh edisk.sh rploader.sh custom_config.json modules.alias.4.json extractor.gz
+          tar -zcvf my.sh.gz my myv functions.h myfunc.h menu.sh menu_m.sh ntp.sh sngen.sh macgen.sh edisk.sh rploader.sh custom_config.json modules.alias.4.json extractor.gz
 
       - name: Commit changes
         run: |
