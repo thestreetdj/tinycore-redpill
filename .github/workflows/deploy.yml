@@ -20,7 +20,7 @@ jobs:
           ls -ltr ~
           ls -ltr
       - name: Get Version
-        id: mydata.tgz
+        id: cp-mydata-tgz
         run: |
           VERSION=v`cat /home/runner/work/rploader.sh | grep rploaderver= | cut -d\" -f2`
           echo "Version: ${VERSION}"
