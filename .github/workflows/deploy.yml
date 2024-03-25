@@ -23,8 +23,8 @@ jobs:
           VERSION=v`cat rploader.sh | grep rploaderver= | cut -d\" -f2`
           echo "Version: ${VERSION}"
           echo "::set-output name=VERSION::${VERSION}"
+          mkdir /opt/output
           mv tinycore-redpill.v1.0.1.0.m-shell.img tinycore-redpill.${VERSION}.m-shell.img
-          ls -ltr          
           LOOPX=$(sudo losetup -f)
           sudo losetup -P ${LOOPX} tinycore-redpill.${VERSION}.m-shell.img
           sudo mkdir -p /mnt/p3
@@ -32,20 +32,20 @@ jobs:
           sudo cp -vf mydata.tgz /mnt/p3
           sudo umount /mnt/p3
           sudo losetup -d ${LOOPX}
-          gzip -c tinycore-redpill.${VERSION}.m-shell.img > tinycore-redpill.${VERSION}.m-shell.img.gz
-          ls -ltr                    
-      - name: Upload MshellImage-${{ steps.updaterootfs.outputs.VERSION }}
+          gzip -c tinycore-redpill.${VERSION}.m-shell.img > /opt/output/tinycore-redpill.${VERSION}.m-shell.img.gz
+          ls -ltr /opt/output
+      - name: Upload MshellImage-${{ steps.cp-mydata-tgz.outputs.VERSION }}
         if: success()
         uses: actions/upload-artifact@v3
         with:
-          name: MshellImage-${{ steps.updaterootfs.outputs.VERSION }}
-          path: /home/runner/work/tinycore-redpill/tinycore-redpill
+          name: MshellImage-${{ steps.cp-mydata-tgz.outputs.VERSION }}
+          path: /opt/output
       # Publish a release if is a tag
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ inputs.version }}
           files: |
-            /home/runner/work/tinycore-redpill/tinycore-redpill/tinycore-redpill.*.m-shell.img.gz
+            *.gz
           body: |
             ${{ inputs.version }}
