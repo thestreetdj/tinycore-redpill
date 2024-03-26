@@ -30,14 +30,13 @@ jobs:
           sudo losetup -P ${LOOPX} tinycore-redpill.v1.0.1.0.m-shell.img
 
           dd if=/dev/zero of=tinycore-redpill.${VERSION}.m-shell.img bs=1M seek=1560 count=0
-          LOOPZ=$(sudo losetup -f)
-          sudo losetup -P ${LOOPZ} tinycore-redpill.${VERSION}.m-shell.img
           echo -e "n\np\n1\n\n+72M\nn\np\n2\n\n+74M\nn\np\n3\n\n+1411M\nw\nq\n" | sudo fdisk tinycore-redpill.${VERSION}.m-shell.img
 
+          LOOPZ=$(sudo losetup -f)
+          sudo losetup -P ${LOOPZ} tinycore-redpill.${VERSION}.m-shell.img
           echo "LOOPZ = ${LOOPZ}"
-          sudo fdisk -l
+          sudo fdisk -l ${LOOPZ}
 
-          apt-get update dosfstools
           #sudo mkfs.vfat -F16 ${LOOPZ}p1
           #sudo mkfs.vfat -F16 ${LOOPZ}p2
           sudo mkfs.vfat -i 6234C863 -F16 ${LOOPZ}p3
