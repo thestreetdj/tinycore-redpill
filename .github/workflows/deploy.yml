@@ -32,6 +32,7 @@ jobs:
 
           dd if=/dev/zero of=tinycore-redpill.${VERSION}.m-shell.img bs=1M seek=2048 count=0
           echo -e "n\np\n1\n\n+72M\nn\np\n2\n\n+75M\nn\np\n3\n\n+1899M\nw\nq\n" | sudo fdisk tinycore-redpill.${VERSION}.m-shell.img
+          echo -e "a\n1\nw" | sudo fdisk tinycore-redpill.${VERSION}.m-shell.img
 
           LOOPZ=$(sudo losetup -f)
           sudo losetup -P ${LOOPZ} tinycore-redpill.${VERSION}.m-shell.img
