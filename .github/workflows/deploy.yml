@@ -61,6 +61,10 @@ jobs:
           sudo losetup -d ${LOOPX}
           
           gzip -c tinycore-redpill.${VERSION}.m-shell.img > /opt/output/tinycore-redpill.${VERSION}.m-shell.img.gz
+
+          qemu-img convert -f raw -O vmdk tinycore-redpill.${VERSION}.m-shell.img tinycore-redpill.${VERSION}.m-shell.vmdk
+          gzip -c tinycore-redpill.${VERSION}.m-shell.vmdk > /opt/output/tinycore-redpill.${VERSION}.m-shell.vmdk.gz
+          
           ls -ltr /opt/output
       - name: Upload MshellImage-${{ steps.cp-mydata-tgz.outputs.VERSION }}
         if: success()
