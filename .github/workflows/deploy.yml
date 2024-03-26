@@ -60,15 +60,6 @@ jobs:
           sudo losetup -d ${LOOPZ}
           sudo losetup -d ${LOOPX}
           
-          #mv tinycore-redpill.v1.0.1.0.m-shell.img tinycore-redpill.${VERSION}.m-shell.img
-          #LOOPX=$(sudo losetup -f)
-          #sudo losetup -P ${LOOPX} tinycore-redpill.${VERSION}.m-shell.img
-          #sudo mkdir -p /mnt/p3
-          #sudo mount ${LOOPX}p3 /mnt/p3
-          #sudo cp -vf mydata.tgz /mnt/p3
-          #sudo umount /mnt/p3
-          #sudo losetup -d ${LOOPX}
-          
           gzip -c tinycore-redpill.${VERSION}.m-shell.img > /opt/output/tinycore-redpill.${VERSION}.m-shell.img.gz
           ls -ltr /opt/output
       - name: Upload MshellImage-${{ steps.cp-mydata-tgz.outputs.VERSION }}
