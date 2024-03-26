@@ -2335,7 +2335,7 @@ function getvars() {
     tcrppart="${tcrpdisk}3"
     local_cache="/mnt/${tcrppart}/auxfiles"
     usbpart1uuid=$(blkid /dev/${tcrpdisk}1 | awk '{print $3}' | sed -e "s/\"//g" -e "s/UUID=//g")
-    usbpart3uuid=$(blkid /dev/${tcrpdisk}3 | awk '{print $2}' | sed -e "s/\"//g" -e "s/UUID=//g")
+    usbpart3uuid="6234-C863"
 
     [ ! -h /lib64 ] && sudo ln -s /lib /lib64
 
