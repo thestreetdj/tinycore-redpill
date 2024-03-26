@@ -27,7 +27,7 @@ jobs:
           mkdir /opt/output
 
           LOOPX=$(sudo losetup -f)
-          sudo losetup -P ${LOOPX} tinycore-redpill.${VERSION}.m-shell.img
+          sudo losetup -P ${LOOPX} tinycore-redpill.v1.0.1.0.m-shell.img
 
           dd if=/dev/zero of=tinycore-redpill.${VERSION}.m-shell.img bs=1M seek=1560 count=0
           LOOPZ=$(sudo losetup -f)
