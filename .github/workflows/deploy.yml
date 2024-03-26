@@ -36,7 +36,8 @@ jobs:
 
           echo "LOOPZ = ${LOOPZ}"
           sudo fdisk -l
-          
+
+          apt-get update dosfstools
           #sudo mkfs.vfat -F16 ${LOOPZ}p1
           #sudo mkfs.vfat -F16 ${LOOPZ}p2
           sudo mkfs.vfat -i 6234C863 -F16 ${LOOPZ}p3
