@@ -33,6 +33,9 @@ jobs:
           LOOPZ=$(sudo losetup -f)
           sudo losetup -P ${LOOPZ} tinycore-redpill.${VERSION}.m-shell.img
           echo -e "n\np\n1\n\n+72M\nn\np\n2\n\n+74M\nn\np\n3\n\n+1411M\nw\nq\n" | sudo fdisk tinycore-redpill.${VERSION}.m-shell.img
+
+          echo "LOOPZ = ${LOOPZ}"
+          sudo fdisk -l
           
           sudo mkfs.vfat -F16 ${LOOPZ}p1
           sudo mkfs.vfat -F16 ${LOOPZ}p2
