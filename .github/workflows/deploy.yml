@@ -37,8 +37,8 @@ jobs:
           echo "LOOPZ = ${LOOPZ}"
           sudo fdisk -l
           
-          sudo mkfs.vfat -F16 ${LOOPZ}p1
-          sudo mkfs.vfat -F16 ${LOOPZ}p2
+          #sudo mkfs.vfat -F16 ${LOOPZ}p1
+          #sudo mkfs.vfat -F16 ${LOOPZ}p2
           sudo mkfs.vfat -i 6234C863 -F16 ${LOOPZ}p3
           
           sudo dd if="${LOOPX}p1" of="${LOOPZ}p1"
