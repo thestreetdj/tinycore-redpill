@@ -50,6 +50,7 @@ jobs:
           sudo mount ${LOOPZ}p3 /mnt/tarp3
           
           cd /mnt/p3 && sudo find . | sudo cpio -pdm "/mnt/tarp3"
+          cd ${path}/
           sudo cp -vf ${path}/mydata.tgz /mnt/tarp3
           ls -ltr /mnt/tarp3
           
