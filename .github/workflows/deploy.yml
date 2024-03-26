@@ -20,18 +20,50 @@ jobs:
       - name: Mount and copy mydata.tgz
         id: cp-mydata-tgz
         run: |
+          path=`pwd`
           VERSION=v`cat rploader.sh | grep rploaderver= | cut -d\" -f2`
           echo "Version: ${VERSION}"
           echo "::set-output name=VERSION::${VERSION}"
           mkdir /opt/output
-          mv tinycore-redpill.v1.0.1.0.m-shell.img tinycore-redpill.${VERSION}.m-shell.img
+
           LOOPX=$(sudo losetup -f)
           sudo losetup -P ${LOOPX} tinycore-redpill.${VERSION}.m-shell.img
+
+          dd if=/dev/zero of=tinycore-redpill.${VERSION}.m-shell.img bs=1M seek=1560 count=0
+          LOOPZ=$(sudo losetup -f)
+          sudo losetup -P ${LOOPZ} tinycore-redpill.${VERSION}.m-shell.img
+          echo -e "n\np\n1\n\n+72M\nn\np\n2\n\n+74M\nn\np\n3\n\n+1411M\nw\nq\n" | sudo fdisk tinycore-redpill.${VERSION}.m-shell.img
+          
+          sudo mkfs.vfat -F16 ${LOOPZ}p1
+          sudo mkfs.vfat -F16 ${LOOPZ}p2
+          sudo mkfs.vfat -i 6234C863 -F16 ${LOOPZ}p3
+          
+          sudo dd if="${LOOPX}p1" of="${LOOPZ}p1"
+          sudo dd if="${LOOPX}p2" of="${LOOPZ}p2"
+          
           sudo mkdir -p /mnt/p3
           sudo mount ${LOOPX}p3 /mnt/p3
-          sudo cp -vf mydata.tgz /mnt/p3
+          sudo mkdir -p /mnt/tarp3
+          sudo mount ${LOOPZ}p3 /mnt/tarp3
+          
+          cd /mnt/p3 && sudo find . | sudo cpio -pdm "/mnt/tarp3"
+          sudo cp -vf ${path}mydata.tgz /mnt/tarp3
+          
           sudo umount /mnt/p3
+          sudo umount /mnt/tarp3
+          
+          sudo losetup -d ${LOOPZ}
           sudo losetup -d ${LOOPX}
+          
+          #mv tinycore-redpill.v1.0.1.0.m-shell.img tinycore-redpill.${VERSION}.m-shell.img
+          #LOOPX=$(sudo losetup -f)
+          #sudo losetup -P ${LOOPX} tinycore-redpill.${VERSION}.m-shell.img
+          #sudo mkdir -p /mnt/p3
+          #sudo mount ${LOOPX}p3 /mnt/p3
+          #sudo cp -vf mydata.tgz /mnt/p3
+          #sudo umount /mnt/p3
+          #sudo losetup -d ${LOOPX}
+          
           gzip -c tinycore-redpill.${VERSION}.m-shell.img > /opt/output/tinycore-redpill.${VERSION}.m-shell.img.gz
           ls -ltr /opt/output
       - name: Upload MshellImage-${{ steps.cp-mydata-tgz.outputs.VERSION }}
