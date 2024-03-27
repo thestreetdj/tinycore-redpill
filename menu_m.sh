@@ -99,6 +99,8 @@ prevent_init="OFF"
 # Trap Ctrl+C and call ctrl_c function
 trap ctrl_c INT
 
+VERSION=v`cat /home/tc/rploader.sh | grep rploaderver= | cut -d\" -f2`
+
 loaderdisk=""
 for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
     if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
@@ -754,7 +756,7 @@ function DeleteConfigKey() {
 ###############################################################################
 # Mounts backtitle dynamically
 function backtitle() {
-  BACKTITLE="TCRP-mshell 1.0.2.3"
+  BACKTITLE="TCRP-mshell ${VERSION}"
   BACKTITLE+=" ${DMPM}"
   BACKTITLE+=" ${ucode}"
   BACKTITLE+=" ${LDRMODE}"
