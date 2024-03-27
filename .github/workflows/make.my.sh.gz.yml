@@ -11,7 +11,12 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Compress shell files
+        id: remake-mydata-tgz
         run: |
+          VERSION=v`cat rploader.sh | grep rploaderver= | cut -d\" -f2`
+          echo "Version: ${VERSION}"
+          echo "::set-output name=VERSION::${VERSION}"
+          
           tar -zcvf my.sh.gz my myv functions.h myfunc.h menu.sh menu_m.sh ntp.sh sngen.sh macgen.sh edisk.sh rploader.sh custom_config.json modules.alias.4.json extractor.gz        
           mkdir -p ./mydata/home/tc/
           tar -zxvf mydata.tgz -C ./mydata/
@@ -23,5 +28,5 @@ jobs:
           git config --global user.name "PeterSuh-Q3"
           git config --global user.email dante9000@gmail.com
           git add my.sh.gz mydata.tgz
-          git commit -m "Update my.sh.gz, mydata.tgz"
+          git commit -m "Update ${{ steps.remake-mydata-tgz.outputs.VERSION }} my.sh.gz, mydata.tgz"
           git push  
