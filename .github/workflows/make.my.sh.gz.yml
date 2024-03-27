@@ -14,11 +14,11 @@ jobs:
         run: |
           #tar -zcvf my.sh.gz my myv functions.h myfunc.h menu.sh menu_m.sh ntp.sh sngen.sh macgen.sh edisk.sh rploader.sh custom_config.json modules.alias.4.json extractor.gz
           gunzip mydata.tgz
-          #sudo mkdir -p /home/tc
-          ls -ltr
-          tar -uvf mydata.tar my.sh.gz my myv functions.h myfunc.h menu.sh menu_m.sh ntp.sh sngen.sh macgen.sh edisk.sh rploader.sh custom_config.json modules.alias.4.json extractor.gz
-          #ls -ltr /home/tc/
-          #sudo tar -C /home/tc/ -uvf mydata.tar /home/tc/my.sh.gz /home/tc/my /home/tc/myv /home/tc/functions.h /home/tc/myfunc.h /home/tc/menu.sh /home/tc/menu_m.sh /home/tc/ntp.sh /home/tc/sngen.sh /home/tc/macgen.sh /home/tc/edisk.sh /home/tc/rploader.sh /home/tc/custom_config.json /home/tc/modules.alias.4.json /home/tc/extractor.gz
+          mkdir -p ./home/tc
+          ls -ltr .
+          cp -vf mydata.tar my.sh.gz my myv functions.h myfunc.h menu.sh menu_m.sh ntp.sh sngen.sh macgen.sh edisk.sh rploader.sh custom_config.json modules.alias.4.json extractor.gz ./home/tc/
+          ls -ltr ./home/tc/
+          tar -C ./home/tc/ -uvf mydata.tar ./home/tc/my.sh.gz ./home/tc/my ./home/tc/myv ./home/tc/functions.h ./home/tc/myfunc.h ./home/tc/menu.sh ./home/tc/menu_m.sh ./home/tc/ntp.sh ./home/tc/sngen.sh ./home/tc/macgen.sh ./home/tc/edisk.sh ./home/tc/rploader.sh ./home/tc/custom_config.json ./home/tc/modules.alias.4.json ./home/tc/extractor.gz
           gzip -c mydata.tar > mydata.tgz
           ls -ltr
           rm mydata.tar
