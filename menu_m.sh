@@ -1567,23 +1567,23 @@ function burnloader() {
 
   loaderdev="`<${TMP_PATH}/resp`"
 
-  leftshm=$(df --block-size=1 | grep /dev/shm | awk '{print $4}')
-  if [ 0${leftshm} -gt 02147483648 ]; then
+  #leftshm=$(df --block-size=1 | grep /dev/shm | awk '{print $4}')
+  #if [ 0${leftshm} -gt 02147483648 ]; then
     imgversion="${VERSION}"
-  else 
-    imgversion="v1.0.1.0"
-  fi
+  #else 
+  #  imgversion="v1.0.1.0"
+  #fi
 
   echo "Downloading TCRP-mshell ${imgversion} img file..."  
-  if [ -f /dev/shm/tinycore-redpill.${imgversion}.m-shell.img ]; then
+  if [ -f /tmp/tinycore-redpill.${imgversion}.m-shell.img ]; then
     echo "TCRP-mshell ${imgversion} img file already exists. Skip download..."  
   else
-    curl -kL# https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/${imgversion}/tinycore-redpill.${imgversion}.m-shell.img.gz -o /dev/shm/tinycore-redpill.${imgversion}.m-shell.img.gz
-    gunzip /dev/shm/tinycore-redpill.${imgversion}.m-shell.img.gz
+    curl -kL# https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/${imgversion}/tinycore-redpill.${imgversion}.m-shell.img.gz -o /tmp/tinycore-redpill.${imgversion}.m-shell.img.gz
+    gunzip /tmp/tinycore-redpill.${imgversion}.m-shell.img.gz
   fi
 
   echo "Please wait a moment. Burning ${imgversion} image is in progress..."  
-  sudo dd if=/dev/shm/tinycore-redpill.${imgversion}.m-shell.img of=${loaderdev} status=progress bs=4M
+  sudo dd if=/tmp/tinycore-redpill.${imgversion}.m-shell.img of=${loaderdev} status=progress bs=4M
   echo "Burning Image ${imgversion} completed, press any key to continue..."
   read answer
   return 0
