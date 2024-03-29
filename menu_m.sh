@@ -1578,7 +1578,7 @@ function burnloader() {
   if [ -f /dev/shm/tinycore-redpill.${imgversion}.m-shell.img ]; then
     echo "TCRP-mshell ${imgversion} img file already exists. Skip download..."  
   else
-    curl -kL# https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/${VERSION}/tinycore-redpill.${imgversion}.m-shell.img.gz -o /dev/shm/tinycore-redpill.${imgversion}.m-shell.img.gz
+    curl -kL# https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/${imgversion}/tinycore-redpill.${imgversion}.m-shell.img.gz -o /dev/shm/tinycore-redpill.${imgversion}.m-shell.img.gz
     gunzip /dev/shm/tinycore-redpill.${imgversion}.m-shell.img.gz
   fi
 
