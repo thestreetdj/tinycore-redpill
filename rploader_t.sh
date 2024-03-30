@@ -4,10 +4,10 @@
 # Date : 221115
 # Version : 0.9.4.0-1
 #
-# 
-##### INCLUDES #########################################################################################################
-#source myfunc.h # my.sh / myv.sh common use 
-########################################################################################################################
+#
+##### INCLUDES ######################################################################################
+source /home/tc/functions.h
+#####################################################################################################
 
 rploaderver="1.0.2.4"
 build="master"
@@ -2335,7 +2335,7 @@ function getvars() {
     tcrppart="${tcrpdisk}3"
     local_cache="/mnt/${tcrppart}/auxfiles"
     usbpart1uuid=$(blkid /dev/${tcrpdisk}1 | awk '{print $3}' | sed -e "s/\"//g" -e "s/UUID=//g")
-    usbpart3uuid=$(blkid /dev/${tcrpdisk}3 | awk '{print $2}' | sed -e "s/\"//g" -e "s/UUID=//g")
+    usbpart3uuid="6234-C863"
 
     [ ! -h /lib64 ] && sudo ln -s /lib /lib64
 
@@ -3525,20 +3525,6 @@ function getredpillko() {
 
 }
 
-###############################################################################
-# get bus of disk
-# 1 - device path
-function getBus() {
-  BUS=""
-  # usb/ata(sata/ide)/scsi
-  [ -z "${BUS}" ] && BUS=$(udevadm info --query property --name "${1}" 2>/dev/null | grep ID_BUS | cut -d= -f2 | sed 's/ata/sata/')
-  # usb/sata(sata/ide)/nvme
-  [ -z "${BUS}" ] && BUS=$(lsblk -dpno KNAME,TRAN 2>/dev/null | grep "${1} " | awk '{print $2}') #Spaces are intentional
-  # usb/scsi(sata/ide)/virtio(scsi/virtio)/mmc/nvme
-  [ -z "${BUS}" ] && BUS=$(lsblk -dpno KNAME,SUBSYSTEMS 2>/dev/null | grep "${1} " | awk -F':' '{print $(NF-1)}' | sed 's/_host//') #Spaces are intentional
-  echo "${BUS}"
-}
-
 if [ $# -lt 2 ]; then
     syntaxcheck $@
 fi
@@ -3552,9 +3538,9 @@ if [ -z "$GATEWAY_INTERFACE" ]; then
         fi    
     done
     if [ -z "${loaderdisk}" ]; then
-        for edisk in $(sudo fdisk -l | grep "Disk /dev/nvme" | awk '{print $2}' | sed 's/://' ); do
+        for edisk in $(sudo fdisk -l | grep -e "Disk /dev/nvme" -e "Disk /dev/mmc" | awk '{print $2}' | sed 's/://' ); do
             if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
-                loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"    
+                loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"
             fi    
         done
     fi
