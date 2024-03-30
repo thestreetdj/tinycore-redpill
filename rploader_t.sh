@@ -1954,7 +1954,7 @@ function backup() {
     if [ $(cat /usr/bin/filetool.sh | grep pigz | wc -l ) -eq 0 ]; then
         sudo sed -i "s#-czvf#-cvf - | pigz -p "${thread}" >#g" /usr/bin/filetool.sh
         sudo sed -i "s#-czf#-cf - | pigz -p "${thread}" >#g" /usr/bin/filetool.sh
-        sudo sed -i '187i\\MOUNTPOINT="/tmp"' filetool.sh        
+        sudo sed -i '187i\\MOUNTPOINT="/tmp"' /usr/bin/filetool.sh        
     fi
 #    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
     homesize=$(du -sh /home/tc | awk '{print $1}')
