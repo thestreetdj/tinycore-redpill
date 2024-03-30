@@ -1952,9 +1952,10 @@ function backup() {
 
     thread=$(lscpu |grep CPU\(s\): | awk '{print $2}')
     if [ $(cat /usr/bin/filetool.sh | grep pigz | wc -l ) -eq 0 ]; then
-        sudo sed -i "s#-czvf#-cvf - | pigz -p "${thread}" >#g" /usr/bin/filetool.sh
-        sudo sed -i "s#-czf#-cf - | pigz -p "${thread}" >#g" /usr/bin/filetool.sh
+        sudo sed -i "s/\-czvf/\-cvf \- \| pigz -p "${thread}" \>/g" /usr/bin/filetool.sh
+        sudo sed -i "s/\-czf/\-cf \- \| pigz -p "${thread}" \>/g" /usr/bin/filetool.sh
     fi
+    
 #    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
     homesize=$(du -sh /home/tc | awk '{print $1}')
 
@@ -1965,7 +1966,7 @@ function backup() {
     readanswer
     if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
         echo -n "Backing up home files to $loaderdisk : "
-        if filetool.sh -vb ${loaderdisk}; then
+        if filetool.sh -vb ${loaderdisk}3; then
             echo ""
         else
             echo "Error: Couldn't backup files"
