@@ -199,8 +199,8 @@ MSGUS50="Mac-spoof Addon"
 MSGUS51="Prevent SataPortMap,DiskIdxMap initialization"
 MSGUS52="Show SATA(s) ports and drives for SataPortMap"
 MSGUS53="Show error log of running loader"
-MSGUS54="Burn Another TCRP Bootloader to USB or SSD"
-MSGUS55="Clone TCRP Bootloader to USB or SSD"
+MSGUS54="Burn TCRP Bootloader Img to USB or SSD"
+MSGUS55="Clone Current TCRP Bootloader to USB or SSD"
 
 ## RU
 MSGRU00="Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap. DT модели не поддерживают HBAs\n"
@@ -549,8 +549,8 @@ MSGKR50="Mac 스푸핑 애드온"
 MSGKR51="SataPortMap,DiskIdxMap 초기화 방지"
 MSGKR52="SataPortMap용 SATA 포트 및 드라이브 표시"
 MSGKR53="실행 중인 로더의 오류 로그 표시"
-MSGKR54="다른 TCRP 부트로더를 USB 또는 SSD에 굽기"
-MSGKR55="TCRP 부트로더를 USB 또는 SSD에 복제"
+MSGKR54="TCRP 부트로더 Img를 USB 또는 SSD에 굽기"
+MSGKR55="현재의 TCRP 부트로더를 USB 또는 SSD에 복제"
 
 ## CN
 MSGCN00="设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap. DT模型不支持HBA\n"
