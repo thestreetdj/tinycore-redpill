@@ -1966,8 +1966,9 @@ function backup() {
     readanswer
     if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
         echo -n "Backing up home files to $loaderdisk : "
-        if filetool.sh -b ${loaderdisk}3; then
+        if filetool.sh -b /tmp; then
             echo ""
+            sudo mv -vf /tmp/mydata.tgz ${loaderdisk}3/mydata.tgz
         else
             echo "Error: Couldn't backup files"
         fi
