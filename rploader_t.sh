@@ -1968,7 +1968,7 @@ function backup() {
         echo -n "Backing up home files to $loaderdisk : "
         if filetool.sh -b; then
             echo ""
-            sudo mv -vf /tmp/mydata.tgz ${loaderdisk}3/mydata.tgz
+            sudo mv -vf /tmp/mydata.tgz /mnt/${loaderdisk}3/mydata.tgz
         else
             echo "Error: Couldn't backup files"
         fi
