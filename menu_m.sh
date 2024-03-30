@@ -1669,14 +1669,14 @@ function cloneloader() {
   loaderdev="`<${TMP_PATH}/resp`"
 
   echo "Backup Current TCRP-mshell loader to img file..."  
-  sudo dd if=${tcrpdev}1 of=/dev/shm/tinycore-redpill.backup_p1.img status=progress bs=4M
-  sudo dd if=${tcrpdev}2 of=/dev/shm/tinycore-redpill.backup_p2.img status=progress bs=4M
-  sudo dd if=${tcrpdev}3 of=/dev/shm/tinycore-redpill.backup_p3.img status=progress bs=4M
+  sudo dd if=${tcrpdev}1 of=${TMP_PATH}/tinycore-redpill.backup_p1.img status=progress bs=4M
+  sudo dd if=${tcrpdev}2 of=${TMP_PATH}/tinycore-redpill.backup_p2.img status=progress bs=4M
+  sudo dd if=${tcrpdev}3 of=${TMP_PATH}/tinycore-redpill.backup_p3.img status=progress bs=4M
   
   echo "Please wait a moment. Cloning is in progress..."  
-  sudo dd if=/dev/shm/tinycore-redpill.backup_p1.img of=${loaderdev}1 status=progress bs=4M
-  sudo dd if=/dev/shm/tinycore-redpill.backup_p2.img of=${loaderdev}2 status=progress bs=4M
-  sudo dd if=/dev/shm/tinycore-redpill.backup_p3.img of=${loaderdev}3 status=progress bs=4M
+  sudo dd if=${TMP_PATH}/tinycore-redpill.backup_p1.img of=${loaderdev}1 status=progress bs=4M
+  sudo dd if=${TMP_PATH}/tinycore-redpill.backup_p2.img of=${loaderdev}2 status=progress bs=4M
+  sudo dd if=${TMP_PATH}/tinycore-redpill.backup_p3.img of=${loaderdev}3 status=progress bs=4M
   
   echo "Cloning completed, press any key to continue..."
   read answer
