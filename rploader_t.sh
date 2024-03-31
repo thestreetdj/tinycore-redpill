@@ -1966,12 +1966,11 @@ function backup() {
     readanswer
     if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
         echo -n "Backing up home files to $loaderdisk : "
-        #if filetool.sh -vb ${loaderdisk}3; then
-        #    echo ""
-        #else
-        #    echo "Error: Couldn't backup files"
-        #fi
-        sync
+        if filetool.sh -b ${loaderdisk}3; then
+            echo ""
+        else
+            echo "Error: Couldn't backup files"
+        fi
     else
         echo "OK, keeping last status"
     fi
