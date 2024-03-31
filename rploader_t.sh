@@ -2929,6 +2929,9 @@ fi
         if [ "${CPU}" == "AMD" ]; then
             echo "Add configuration disable_mtrr_trim for AMD"            
             sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
+        else
+            echo "Add configuration i915.modeset=0 for INTEL i915"
+            sudo sed -i "s/withefi/withefi i915.modeset=0/" /tmp/tempentry.txt
         fi
 
         # Share RD of friend kernel with JOT 2023.05.01
