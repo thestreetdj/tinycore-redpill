@@ -2248,10 +2248,10 @@ function additional() {
       fi
     elif [ "${resp}" = "z" ]; then
       if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
-        [ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && return
+        [ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
 	    echo "${disablei915}" > /tmp/disable.i915
       else	
-  	    echo "This platform is not supported..." && read answer && return
+  	    echo "This platform is not supported..." && read answer && continue
       fi 
     elif [ "${resp}" = "b" ]; then
       prevent
