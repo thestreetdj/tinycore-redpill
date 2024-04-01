@@ -2930,8 +2930,10 @@ fi
             echo "Add configuration disable_mtrr_trim for AMD"            
             sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
         else
-            echo "Add configuration i915.modeset=0 for INTEL i915"
-            sudo sed -i "s/withefi/withefi i915.modeset=0/" /tmp/tempentry.txt
+            if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "epyc7002" ] || [ ${ORIGIN_PLATFORM} = "apollolake" ]; then
+                echo "Add configuration i915.modeset=0 for INTEL i915"
+                sudo sed -i "s/withefi/withefi i915.enable_psr=0/" /tmp/tempentry.txt
+            fi    
         fi
 
         # Share RD of friend kernel with JOT 2023.05.01
