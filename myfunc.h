@@ -223,6 +223,8 @@ set -u
 # Fixed bug where both modules disappear when switching between ddsml and eudev (Causes NIC unresponsiveness)
 # 2024.03.24    
 # Added missing mmc partition search function
+# 2024.04.01 v1.0.2.5
+# Provides menu option to disable i915 module loading to prevent console blackout in ApolloLake (DS918+), GeminiLake (DS920+), and Epyc7002 (SA6400)    
     
 function showlastupdate() {
     cat <<EOF
