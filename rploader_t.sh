@@ -9,7 +9,7 @@
 source /home/tc/functions.h
 #####################################################################################################
 
-rploaderver="1.0.2.4"
+rploaderver="1.0.2.5"
 build="master"
 redpillmake="prod"
 
@@ -117,6 +117,7 @@ function history() {
     1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts), The priority starts from custom.gz
     1.0.2.3 Added RedPill bootloader hard disk porting function
     1.0.2.4 Added NVMe bootloader support
+    1.0.2.5 Provides menu option to disable i915 module loading to prevent console blackout in ApolloLake (DS918+), GeminiLake (DS920+), and Epyc7002 (SA6400)
     --------------------------------------------------------------------------------------
 EOF
 
