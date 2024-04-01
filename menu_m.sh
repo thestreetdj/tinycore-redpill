@@ -2204,6 +2204,13 @@ function additional() {
       spoof="Add"
   fi
 
+  if [ -f /tmp/disable.i915 ]; then
+      curi915=$(cat /tmp/disable.i915)
+      [ "${curi915}" = "ON" ] && disablei915="OFF" || disablei915="ON"
+  else
+      disablei915="ON"
+  fi  
+
   eval "MSG50=\"\${MSG${tz}50}\""
   eval "MSG51=\"\${MSG${tz}51}\""
   eval "MSG52=\"\${MSG${tz}52}\""
@@ -2216,6 +2223,7 @@ function additional() {
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
       a "${spoof} ${MSG50}" \
+      z "Disable i915 module ${disablei915}" \
       b "${MSG51}" \
       c "${MSG52}" \
       d "${MSG53}" \
@@ -2238,6 +2246,13 @@ function additional() {
       else
         spoof="Add"
       fi
+    elif [ "${resp}" = "z" ]; then
+      if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
+        [ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && return
+	    echo "${disablei915}" > /tmp/disable.i915
+      else	
+  	    echo "This platform is not supported..." && read answer && return
+      fi 
     elif [ "${resp}" = "b" ]; then
       prevent
     elif [ "${resp}" = "c" ]; then
