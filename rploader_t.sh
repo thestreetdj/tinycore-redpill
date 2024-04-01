@@ -2797,17 +2797,12 @@ checkmachine
     fi    
 
     [ ! -d /lib64 ] &&  sudo ln -s /lib /lib64
-
     [ ! -f /lib64/libbz2.so.1 ] && sudo ln -s /usr/local/lib/libbz2.so.1.0.8 /lib64/libbz2.so.1
-
     [ ! -f /home/tc/redpill-load/user_config.json ] && ln -s /home/tc/user_config.json /home/tc/redpill-load/user_config.json
-
     [ ! -d cache ] && mkdir -p /home/tc/redpill-load/cache
-
     cd /home/tc/redpill-load
 
     #downloadtools
-    
     if [ ${TARGET_REVISION} -gt 42218 ]; then
         echo "Found build request for revision greater than 42218"
         downloadextractor
@@ -2916,9 +2911,14 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         SATA_LINE="${SATA_LINE} disable_mtrr_trim=1 "
     else
         if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "epyc7002" ] || [ ${ORIGIN_PLATFORM} = "apollolake" ]; then
-            echo "Add configuration i915.modeset=0 for INTEL i915"
-            USB_LINE="${USB_LINE} i915.modeset=0 "
-            SATA_LINE="${SATA_LINE} i915.modeset=0 "
+            if [ "$MACHINE" != "VIRTUAL" ] && [ -f /tmp/disable.i915 ]; then
+                curi915=$(cat /tmp/disable.i915)
+                if [ "${curi915}" = "ON" ]; then
+                    echo "Add configuration i915.modeset=0 for INTEL i915"
+                    USB_LINE="${USB_LINE} i915.modeset=0 "
+                    SATA_LINE="${SATA_LINE} i915.modeset=0 "
+                fi
+            fi  
         fi    
     fi
     
