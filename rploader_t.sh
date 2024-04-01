@@ -2796,46 +2796,29 @@ checkmachine
         removemodelexts    
     fi    
 
-    if [ ! -d /lib64 ]; then
-        sudo ln -s /lib /lib64
-    fi
-    if [ ! -f /lib64/libbz2.so.1 ]; then
-        sudo ln -s /usr/local/lib/libbz2.so.1.0.8 /lib64/libbz2.so.1
-    fi
+    [ ! -d /lib64 ] &&  sudo ln -s /lib /lib64
 
-    if [ ! -f /home/tc/redpill-load/user_config.json ]; then
-        ln -s /home/tc/user_config.json /home/tc/redpill-load/user_config.json
-    fi
+    [ ! -f /lib64/libbz2.so.1 ] && sudo ln -s /usr/local/lib/libbz2.so.1.0.8 /lib64/libbz2.so.1
+
+    [ ! -f /home/tc/redpill-load/user_config.json ] && ln -s /home/tc/user_config.json /home/tc/redpill-load/user_config.json
+
+    [ ! -d cache ] && mkdir -p /home/tc/redpill-load/cache
 
     cd /home/tc/redpill-load
-
-    if [ -d cache ]; then
-        msgnormal "Cache directory OK "
-    else
-        mkdir cache
-    fi
 
     #downloadtools
     
     if [ ${TARGET_REVISION} -gt 42218 ]; then
-
         echo "Found build request for revision greater than 42218"
         downloadextractor
         processpat
-
     else
-      
-        if [ -d /home/tc/custom-module ]; then
-            sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
-        fi
-
+        [ -d /home/tc/custom-module ] && sudo cp -adp /home/tc/custom-module/*${TARGET_REVISION}*.pat /home/tc/redpill-load/cache/
     fi
 
     [ -d /home/tc/redpill-load ] && cd /home/tc/redpill-load
 
     [ ! -d /home/tc/redpill-load/custom/extensions ] && mkdir -p /home/tc/redpill-load/custom/extensions
-#    msgnormal "======Mount the ramdisk for quick add processing of extensions.======="
-#    [ ! -n "$(mount | grep -i extensions)" ] && sudo mount -t tmpfs -o size=512M tmpfs /home/tc/redpill-load/custom/extensions
 st "extensions" "Extensions collection" "Extensions collection..."
     addrequiredexts
 st "make loader" "Creation boot loader" "Compile n make boot file."
@@ -2857,124 +2840,63 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
         sudo ./build-loader.sh $MODEL $TARGET_VERSION-$TARGET_REVISION loader.img ${UPPER_ORIGIN_PLATFORM} ${vkersion}
     fi
 
-#    msgnormal "======Unmount the ramdisk for add extensions.======="
-#    sudo umount /home/tc/redpill-load/custom/extensions
-    if [ $? -ne 0 ]; then
-        echo "FAILED : Loader creation failed check the output for any errors"
-        exit 99
-    fi
+    [ $? -ne 0 ] && echo "FAILED : Loader creation failed check the output for any errors" && exit 99
 
-#def
-if [ 1 = 0 ]; then
-    sudo losetup -fP ./loader.img
-    loopdev=$(losetup -j loader.img | awk '{print $1}' | sed -e 's/://')
-
-    if [ -d part1 ]; then
-        sudo mount ${loopdev}p1 part1
+    msgnormal "Modify Jot Menu entry"
+    tempentry=$(cat /tmp/grub.cfg | head -n 80 | tail -n 20)
+    sudo sed -i '61,80d' /tmp/grub.cfg
+    echo "$tempentry" > /tmp/tempentry.txt
+    
+    if [ "$WITHFRIEND" = "YES" ]; then
+        echo
     else
-        mkdir part1
-        sudo mount ${loopdev}p1 part1
+        sudo sed -i '31,34d' /tmp/grub.cfg
+        tinyjotfunc | sudo tee --append /tmp/grub.cfg
     fi
 
-    if [ -d part2 ]; then
-        sudo mount ${loopdev}p2 part2
+    msgnormal "Replacing set root with filesystem UUID instead"
+    sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" /tmp/tempentry.txt
+    sudo sed -i "s/Verbose/Verbose, ${DMPM}/" /tmp/tempentry.txt
+    sudo sed -i "s/Linux.../Linux... ${DMPM}/" /tmp/tempentry.txt
+    
+    if [ "${CPU}" == "AMD" ]; then
+        echo "Add configuration disable_mtrr_trim for AMD"            
+        sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
     else
-        mkdir part2
-        sudo mount ${loopdev}p2 part2
+        if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "epyc7002" ] || [ ${ORIGIN_PLATFORM} = "apollolake" ]; then
+            echo "Add configuration i915.modeset=0 for INTEL i915"
+            sudo sed -i "s/withefi/withefi i915.modeset=0/" /tmp/tempentry.txt
+        fi    
     fi
 
-    mkdir -p localdiskp1
-    sudo mount /dev/${loaderdisk}1 localdiskp1
-    msgnormal "Mounting /dev/${loaderdisk}1 to localdiskp1 "
-
-    mkdir -p localdiskp2
-    sudo mount /dev/${loaderdisk}2 localdiskp2
-    echo /dev/${loaderdisk}2 localdiskp2
-
-    mkdir -p localdiskp3
-    sudo mount /dev/${loaderdisk}3 localdiskp3
-    msgnormal "Mounting /dev/${loaderdisk}3 to localdiskp3 "
-#def
-fi
-
-#    if [ $(mount | grep -i part1 | wc -l) -eq 1 ] && [ $(mount | grep -i part2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp1 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp2 | wc -l) -eq 1 ] && [ $(mount | grep -i localdiskp3 | wc -l) -eq 1 ]; then
-#def
-if [ 1 = 0 ]; then
-        sudo rm -rf localdiskp1/*
-        sudo cp -rf part1/* localdiskp1/
-        sudo rm -rf localdiskp2/*
-        sudo cp -rf part2/* localdiskp2/
-#def
-fi
-
-#m shell only start
-        msgnormal "Modify Jot Menu entry"
-        tempentry=$(cat /tmp/grub.cfg | head -n 80 | tail -n 20)
-        sudo sed -i '61,80d' /tmp/grub.cfg
-        echo "$tempentry" > /tmp/tempentry.txt
-        
-        if [ "$WITHFRIEND" = "YES" ]; then
-            echo
-        else
-            sudo sed -i '31,34d' /tmp/grub.cfg
-            tinyjotfunc | sudo tee --append /tmp/grub.cfg
-        fi
-#m shell only end
-
-        msgnormal "Replacing set root with filesystem UUID instead"
-        sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" /tmp/tempentry.txt
-        sudo sed -i "s/Verbose/Verbose, ${DMPM}/" /tmp/tempentry.txt
-        sudo sed -i "s/Linux.../Linux... ${DMPM}/" /tmp/tempentry.txt
-        
-        if [ "${CPU}" == "AMD" ]; then
-            echo "Add configuration disable_mtrr_trim for AMD"            
-            sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
-        else
-            if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "epyc7002" ] || [ ${ORIGIN_PLATFORM} = "apollolake" ]; then
-                echo "Add configuration i915.modeset=0 for INTEL i915"
-                sudo sed -i "s/withefi/withefi i915.enable_psr=0/" /tmp/tempentry.txt
-            fi    
-        fi
-
-        # Share RD of friend kernel with JOT 2023.05.01
-        if [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ]; then
+    # Share RD of friend kernel with JOT 2023.05.01
+    if [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ]; then
 st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdisk}3"        
-            bringoverfriend
-        fi
+        bringoverfriend
+    fi
 
-        if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
-            cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
-            cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
-        fi
+    if [ -f /home/tc/friend/initrd-friend ] && [ -f /home/tc/friend/bzImage-friend ]; then
+        cp /home/tc/friend/initrd-friend /mnt/${loaderdisk}3/
+        cp /home/tc/friend/bzImage-friend /mnt/${loaderdisk}3/
+    fi
 
     USB_LINE="$(grep -A 5 "USB," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
     SATA_LINE="$(grep -A 5 "SATA," /tmp/tempentry.txt | grep linux | cut -c 16-999)"
 
-        if [ "$WITHFRIEND" = "YES" ]; then
+    if [ "$WITHFRIEND" = "YES" ]; then
+        echo "Creating tinycore friend entry"
+        tcrpfriendentry | sudo tee --append /tmp/grub.cfg
+    else
+        echo "Creating tinycore Jot entry"
+        echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /tmp/grub.cfg
+        echo "Creating tinycore Jot postupdate entry"            
+        postupdateentry | sudo tee --append /tmp/grub.cfg
+    fi
 
-            echo "Creating tinycore friend entry"
-            tcrpfriendentry | sudo tee --append /tmp/grub.cfg
+    echo "Creating tinycore entry"
+    tinyentry | sudo tee --append /tmp/grub.cfg
 
-        else
-
-            echo "Creating tinycore Jot entry"
-            echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /tmp/grub.cfg
-            echo "Creating tinycore Jot postupdate entry"            
-            postupdateentry | sudo tee --append /tmp/grub.cfg
-
-        fi
-
-        echo "Creating tinycore entry"
-        tinyentry | sudo tee --append /tmp/grub.cfg
-
-        if [ "$WITHFRIEND" = "YES" ]; then
-            tcrpentry_juniorusb | sudo tee --append /tmp/grub.cfg
-            tcrpentry_juniorsata | sudo tee --append /tmp/grub.cfg
-        fi    
-
-#    else
-#        echo "ERROR: Failed to mount correctly all required partitions"
-#    fi
+    [ "$WITHFRIEND" = "YES" ] && tcrpentry_juniorusb | sudo tee --append /tmp/grub.cfg && tcrpentry_juniorsata | sudo tee --append /tmp/grub.cfg
 
     cd /home/tc/redpill-load
 
@@ -3010,28 +2932,6 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     cp /mnt/${loaderdisk}1/zImage /mnt/${loaderdisk}3/zImage-dsm
 
     # Repack custom.gz including /usr/lib/modules and /usr/lib/firmware in all_modules 2024.02.18
-#def
-if [ 1 = 0 ]; then
-    [ ! -d /home/tc/custom.temp ] && mkdir /home/tc/custom.temp
-    [ -d /home/tc/custom.temp ] && cd /home/tc/custom.temp
-    
-    cat /mnt/${loaderdisk}3/custom.gz | sudo cpio -idm
-    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
-        sudo curl -kL https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/usr.tgz -o /tmp/usr.tgz
-        [ ! -d /home/tc/custom.temp/usr/lib/firmware ] && sudo mkdir /home/tc/custom.temp/usr/lib/firmware
-        sudo tar xvfz /tmp/usr.tgz -C /home/tc/custom.temp
-        sudo tar xvfz /home/tc/custom.temp/exts/all-modules/sbin.tgz -C /home/tc/custom.temp
-        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/raw/main/thirdparty/epyc7002-7.2-5.10.55/i915.ko -o /home/tc/custom.temp/usr/lib/modules/i915.ko
-#    else
-#        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/${ORIGIN_PLATFORM}-${KVER}.tgz  -o /tmp/modules.tgz
-#        sudo curl -kL https://github.com/PeterSuh-Q3/arpl-modules/releases/latest/download/firmware.tgz  -o /tmp/firmware.tgz                
-#        sudo tar xvfz /tmp/modules.tgz -C /home/tc/custom.temp/usr/lib/modules/
-#        sudo tar xvfz /tmp/firmware.tgz -C /home/tc/custom.temp/usr/lib/firmware/
-#        sudo tar xvfz /home/tc/custom.temp/exts/all-modules/sbin.tgz -C /home/tc/custom.temp
-    fi
-    (cd /home/tc/custom.temp && sudo find . | sudo cpio -o -H newc -R root:root >/mnt/${loaderdisk}3/custom.gz) >/dev/null
-fi
-
     # Compining rd.gz and custom.gz
     
     [ ! -d /home/tc/rd.temp ] && mkdir /home/tc/rd.temp
@@ -3041,7 +2941,6 @@ fi
     if [ "$RD_COMPRESSED" = "false" ]; then
         echo "Ramdisk in not compressed "    
         cat /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
-
     else    
         echo "Ramdisk in compressed " 
         unlzma -dc /mnt/${loaderdisk}3/rd.gz | sudo cpio -idm
@@ -3099,10 +2998,8 @@ fi
     fi
 
     if [ "$WITHFRIEND" = "YES" ]; then
-    
         msgnormal "Setting default boot entry to TCRP Friend"
         sudo sed -i "/set default=\"*\"/cset default=\"0\"" /tmp/grub.cfg
-
     else
         echo
         if [ "$MACHINE" = "VIRTUAL" ]; then
@@ -3113,36 +3010,9 @@ fi
     sudo cp -vf /tmp/grub.cfg /mnt/${loaderdisk}1/boot/grub/grub.cfg
 st "gen grub     " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
 
-#def
-if [ 1 = 0 ]; then
-    cd /home/tc/redpill-load/
-
-    ####
-
-    sudo umount part1
-    sudo umount part2
-    sudo umount localdiskp1
-    sudo umount localdiskp2
-    sudo umount localdiskp3
-    sudo losetup -D
-#def
-fi
-
-#    if [ ${TARGET_REVISION} -gt 64569 ]; then
-#        echo "Bakcup loader.img and grub.cfg file for update to 7.2"
-#        sudo cp -vf /home/tc/redpill-load/loader.img /mnt/${loaderdisk}3/loader72.img
-#        sudo cp -vf /mnt/${loaderdisk}1/boot/GRUB/grub.cfg /mnt/${loaderdisk}3/grub72.cfg
-#        sudo cp -vf /mnt/${loaderdisk}3/initrd-dsm /mnt/${loaderdisk}3/initrd-dsm72
-#    fi
-    if [ -f /mnt/${loaderdisk}3/loader72.img ]; then
-      rm /mnt/${loaderdisk}3/loader72.img
-    fi  
-    if [ -f /mnt/${loaderdisk}3/grub72.cfg ]; then
-      rm /mnt/${loaderdisk}3/grub72.cfg
-    fi  
-    if [ -f /mnt/${loaderdisk}3/initrd-dsm72 ]; then
-      rm /mnt/${loaderdisk}3/initrd-dsm72
-    fi
+    [ -f /mnt/${loaderdisk}3/loader72.img ] && rm /mnt/${loaderdisk}3/loader72.img
+    [ -f /mnt/${loaderdisk}3/grub72.cfg ] && rm /mnt/${loaderdisk}3/grub72.cfg
+    [ -f /mnt/${loaderdisk}3/initrd-dsm72 ] && rm /mnt/${loaderdisk}3/initrd-dsm72
 
     sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/cache/*.pat
     
