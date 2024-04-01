@@ -2858,16 +2858,6 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
     sudo sed -i "s/set root=(hd0,msdos1)/search --set=root --fs-uuid $usbpart1uuid --hint hd0,msdos1/" /tmp/tempentry.txt
     sudo sed -i "s/Verbose/Verbose, ${DMPM}/" /tmp/tempentry.txt
     sudo sed -i "s/Linux.../Linux... ${DMPM}/" /tmp/tempentry.txt
-    
-    if [ "${CPU}" == "AMD" ]; then
-        echo "Add configuration disable_mtrr_trim for AMD"            
-        sudo sed -i "s/withefi/withefi disable_mtrr_trim=1/" /tmp/tempentry.txt
-    else
-        if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "epyc7002" ] || [ ${ORIGIN_PLATFORM} = "apollolake" ]; then
-            echo "Add configuration i915.modeset=0 for INTEL i915"
-            sudo sed -i "s/withefi/withefi i915.modeset=0/" /tmp/tempentry.txt
-        fi    
-    fi
 
     # Share RD of friend kernel with JOT 2023.05.01
     if [ ! -f /home/tc/friend/initrd-friend ] && [ ! -f /home/tc/friend/bzImage-friend ]; then
@@ -2905,7 +2895,6 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     grep menuentry /tmp/grub.cfg
 
     ### Updating user_config.json
-
     updateuserconfigfield "general" "model" "$MODEL"
     updateuserconfigfield "general" "version" "${TARGET_VERSION}-${TARGET_REVISION}"
     updateuserconfigfield "general" "redpillmake" "${redpillmake}"
@@ -2919,6 +2908,18 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         echo "add modprobe.blacklist=mpt3sas for Device-tree based platforms"
         USB_LINE="${USB_LINE} modprobe.blacklist=mpt3sas "
         SATA_LINE="${SATA_LINE} modprobe.blacklist=mpt3sas "
+    fi
+
+    if [ "${CPU}" == "AMD" ]; then
+        echo "Add configuration disable_mtrr_trim for AMD"
+        USB_LINE="${USB_LINE} disable_mtrr_trim=1 "
+        SATA_LINE="${SATA_LINE} disable_mtrr_trim=1 "
+    else
+        if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "epyc7002" ] || [ ${ORIGIN_PLATFORM} = "apollolake" ]; then
+            echo "Add configuration i915.modeset=0 for INTEL i915"
+            USB_LINE="${USB_LINE} i915.modeset=0 "
+            SATA_LINE="${SATA_LINE} i915.modeset=0 "
+        fi    
     fi
     
     msgwarning "Updated user_config with USB Command Line : $USB_LINE"
