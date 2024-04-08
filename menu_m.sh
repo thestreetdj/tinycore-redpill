@@ -4,6 +4,15 @@
 source /home/tc/functions.h
 #####################################################################################################
 
+# Apply i18n
+if type gettext >/dev/null 2>&1; then
+  export TEXTDOMAINDIR="~/lang"
+  alias TEXT='gettext "tcrp"'
+else
+  alias TEXT='echo'
+fi
+shopt -s expand_aliases
+
 # Function to handle Ctrl+C
 function ctrl_c() {
   echo ", Ctrl+C detected. Press Enter to return menu..."
