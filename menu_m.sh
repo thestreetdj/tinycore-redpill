@@ -2334,7 +2334,20 @@ sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" ~/.dia
 
 writexsession
 
-    if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
+if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep gettext | wc -w) -eq 0 ]; then
+	tce-load -wi gettext
+	if [ $? -eq 0 ]; then
+	    echo "Download gettext.tcz OK, Permanent installation progress !!!"
+	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
+	    sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst
+	    sudo echo "gettext.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+	    echo 'Y'|./rploader.sh backup
+	    echo "You have finished installing TC gettext package."
+	    restart
+ 	fi
+fi
+
+if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
 	tce-load -wi glibc_apps
 	tce-load -wi glibc_i18n_locale
 	tce-load -wi unifont
@@ -2342,7 +2355,7 @@ writexsession
 	if [ $? -eq 0 ]; then
 	    echo "Download glibc_apps.tcz and glibc_i18n_locale.tcz OK, Permanent installation progress !!!"
 	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
-	    sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst	    
+	    sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst
 	    sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 	    sudo echo "glibc_i18n_locale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 	    sudo echo "unifont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
@@ -2355,7 +2368,7 @@ writexsession
 	else
 	    echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
 	fi
-    fi
+fi
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
 # for 2Byte Language
