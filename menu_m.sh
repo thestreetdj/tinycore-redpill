@@ -4,13 +4,6 @@
 source /home/tc/functions.h
 #####################################################################################################
 
-# Apply i18n
-if type gettext >/dev/null 2>&1; then
-  alias TEXT='gettext "tcrp"'
-else
-  alias TEXT='echo'
-fi
-
 # Function to handle Ctrl+C
 function ctrl_c() {
   echo ", Ctrl+C detected. Press Enter to return menu..."
@@ -2356,6 +2349,8 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep gettext | wc -w) -eq 0 ]; then
 	    sudo echo "gettext.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 	    echo 'Y'|./rploader.sh backup
 	    echo "You have finished installing TC gettext package."
+		# Apply i18n TEXT alias
+		echo "alias TEXT='gettext \"tcrp\"'" >> ~/.ashrc
 	    restart
  	fi
 fi
