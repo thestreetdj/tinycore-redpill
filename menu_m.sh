@@ -165,7 +165,8 @@ sudo cp -vf "lang/ko_KR/LC_MESSAGES/msg.mo" "${path_i}/tcrp.mo"
 tz="US"
 
 ## US
-MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs\n"
+MSGUS00=$(TEXT "No NIC found! - Loader does not work without Network connection.")
+#MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs\n"
 MSGUS01="Choose a Dev Mod handling method, DDSML/EUDEV"
 MSGUS02="Choose a Synology Model"
 MSGUS03="Choose a Synology Serial Number"
@@ -1156,8 +1157,8 @@ function setSuggest() {
   esac
 
   if [ $(echo ${platform} | grep "(DT)" | wc -l) -gt 0 ]; then
-    #eval "MSG00=\"\${MSG${tz}00}\""
-    MSG00="$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")"
+    eval "MSG00=\"\${MSG${tz}00}\""
+    #MSG00="$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")"
     echo "${MSG00}"
   else
     MSG00=""
