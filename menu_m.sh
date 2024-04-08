@@ -6,12 +6,10 @@ source /home/tc/functions.h
 
 # Apply i18n
 if type gettext >/dev/null 2>&1; then
-  export TEXTDOMAINDIR="~/lang"
   alias TEXT='gettext "tcrp"'
 else
   alias TEXT='echo'
 fi
-shopt -s expand_aliases
 
 # Function to handle Ctrl+C
 function ctrl_c() {
@@ -1482,6 +1480,8 @@ function langMenu() {
 
   export LANG=${ucode}.UTF-8
   export LC_ALL=${ucode}.UTF-8
+  set -o allexport
+  
   [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
   sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
   sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8
@@ -2385,6 +2385,8 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
   [ ! -d /usr/lib/locale ] && sudo mkdir /usr/lib/locale
   export LANG=${ucode}.UTF-8
   export LC_ALL=${ucode}.UTF-8
+  set -o allexport
+  
   sudo localedef -c -i ${ucode} -f UTF-8 ${ucode}.UTF-8
   sudo localedef -f UTF-8 -i ${ucode} ${ucode}.UTF-8
 
@@ -2413,6 +2415,9 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
     echo "URxvt*locale: ${ucode}.UTF-8"  >> ~/.Xdefaults
   fi
 fi
+
+export TEXTDOMAINDIR="/usr/local/share/locale"
+set -o allexport
 locale
 #End Locale Setting process
 
