@@ -164,9 +164,6 @@ export TEXTDOMAINDIR="/usr/local/share/locale"
 set -o allexport
 
 ### Messages Contents
-# Fix US
-tz="US"
-
 ## US
 function load_us() {
 MSGUS00=$(gettext "tcrp" "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs")
@@ -2335,6 +2332,8 @@ else
 fi
 
 echo "current lcode = ${lcode}"
+
+tz="${lcode}"
 
 case "${lcode}" in
 US) ucode="en_US";;
