@@ -169,7 +169,7 @@ tz="US"
 
 ## US
 function load_us() {
-MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs\n"
+MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
 MSGUS01="Choose a Dev Mod handling method, DDSML/EUDEV"
 MSGUS02="Choose a Synology Model"
 MSGUS03="Choose a Synology Serial Number"
@@ -205,9 +205,9 @@ MSGUS32="Get a real mac address"
 MSGUS33="Generate a random mac address"
 MSGUS34="Enter a mac address"
 MSGUS35="press any key to continue..."
-MSGUS36="Synology serial number not set. Check user_config.json again. Abort the loader build !!!!!!"
-MSGUS37="The first MAC address is not set. Check user_config.json again. Abort the loader build !!!!!!"
-MSGUS38="The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!!!!"
+MSGUS36="Synology serial number not set. Check user_config.json again. Abort the loader build !!!"
+MSGUS37="The first MAC address is not set. Check user_config.json again. Abort the loader build !!!"
+MSGUS38="The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!"
 MSGUS39="Choose a language"
 MSGUS40="DDSML+EUDEV"
 MSGUS41="Choose a Storage Panel Size"
@@ -1162,9 +1162,10 @@ function setSuggest() {
   esac
 
   if [ $(echo ${platform} | grep "(DT)" | wc -l) -gt 0 ]; then
-    eval "MSG00=\"\${MSG${tz}00}\""
+    #eval "MSG00=\"\${MSG${tz}00}\""
+	eval "MSG00=\"\${MSX}\"\n"
   else
-    MSG00=""
+    MSG00="\n"
   fi  
   readanswer
   result="${line}${MSG00}${desc}"
