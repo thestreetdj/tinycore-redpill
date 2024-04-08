@@ -2308,23 +2308,24 @@ cd /home/tc
 #Start Locale Setting process
 #Get Langugae code & country code
 echo "current ucode = ${ucode}"
-echo "current tz = ${tz}"
 
 country=$(curl -s ipinfo.io | grep country | awk '{print $2}' | cut -c 2-3 )
 
 if [ "${ucode}" == "null" ]; then 
-  tz="${country}"
+  lcode="${country}"
 else
-  if [ "${tz}" != "${country}" ]; then
+  if [ "${lcode}" != "${country}" ]; then
     echo -n "Country code ${country} has been detected. Do you want to change your locale settings to ${country}? [yY/nN] : "
     readanswer    
     if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
-      tz="${country}"
+      lcode="${country}"
     fi
   fi    
 fi
 
-case "${tz}" in
+echo "current lcode = ${lcode}"
+
+case "${lcode}" in
 US) ucode="en_US";;
 KR) ucode="ko_KR";;
 JP) ucode="ja_JP";;
@@ -2335,7 +2336,7 @@ DE) ucode="de_DE";;
 ES) ucode="es_ES";;
 IT) ucode="it_IT";;
 BR) ucode="pt_BR";;
-*) tz="US"; ucode="en_US";;
+*) lcode="US"; ucode="en_US";;
 esac
 writeConfigKey "general" "ucode" "${ucode}"
 
