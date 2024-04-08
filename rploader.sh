@@ -3074,7 +3074,7 @@ function bringoverfriend() {
   URL="https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest/download/chksum"
   [ -n "$URL" ] && curl --connect-timeout 5 -s -k -L $URL -O
   if [ ! -f chksum ]; then
-    URL="https://gitea.com/PeterSuh-Q3/tcrpfriend/raw/branch/main/chksum"
+    URL="https://raw.githubusercontent.com/PeterSuh-Q3/tcrpfriend/main/chksum"
     [ -n "$URL" ] && curl --connect-timeout 5 -s -k -L $URL -O
   fi
 
