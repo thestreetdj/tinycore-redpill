@@ -154,7 +154,7 @@ BLOCK_EUDEV="N"
 # for test gettext
 path_i="/usr/local/share/locale/ko_KR/LC_MESSAGES"
 sudo mkdir -p "${path_i}"
-sudo echo 'msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs\n"' >> "tcrp.po"
+sudo echo 'msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs\n"' > "tcrp.po"
 sudo echo 'msgstr "Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다. DT모델은 HBA를 지원하지 않습니다.\n"' >> "tcrp.po"
 cat "tcrp.po"
 msgfmt "tcrp.po" -o "tcrp.mo"
