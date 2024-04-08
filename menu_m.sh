@@ -670,9 +670,9 @@ function checkforsas() {
     for sasmodule in $sasmods
     do
         echo "Checking existense of $sasmodule"
-        for alias in `depmod -n 2>/dev/null |grep -i $sasmodule |grep pci|cut -d":" -f 2 | cut -c 6-9,15-18`
+        for sas in `depmod -n 2>/dev/null |grep -i $sasmodule |grep pci|cut -d":" -f 2 | cut -c 6-9,15-18`
 	do
-	    if [ `grep -i $alias /proc/bus/pci/devices |wc -l` -gt 0 ] ; then
+	    if [ `grep -i $sas /proc/bus/pci/devices |wc -l` -gt 0 ] ; then
 	        echo "  => $sasmodule, device found, block eudev mode" 
 	        BLOCK_EUDEV="Y"
 	    fi
