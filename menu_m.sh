@@ -1166,7 +1166,7 @@ function setSuggest() {
   else
     MSG00="\n"
   fi  
-  readanswer
+  
   result="${line}${MSG00}${desc}"
   echo "${platform} : ${bay} : ${mcpu}"
 }
