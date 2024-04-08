@@ -1159,7 +1159,7 @@ function setSuggest() {
   if [ $(echo ${platform} | grep "(DT)" | wc -l) -gt 0 ]; then
     eval "MSG00=\"\${MSG${tz}00}\""
     #MSG00="$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")"
-    echo "${MSG00}"
+    echo "${MSGUS00}"
   else
     MSG00=""
   fi  
