@@ -148,7 +148,7 @@ KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
 LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
 ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
-#tz=$(echo $ucode | cut -c 4-)
+lcode=$(echo $ucode | cut -c 4-)
 BLOCK_EUDEV="N"
 
 # for test gettext
