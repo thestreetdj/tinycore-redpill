@@ -151,6 +151,14 @@ ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
 #tz=$(echo $ucode | cut -c 4-)
 BLOCK_EUDEV="N"
 
+# for test gettext
+path_i = "/usr/local/share/locale/ko_KR/LC_MESSAGES"
+sudo mkdir -p ${path_i}
+sudo echo 'msgid="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs\n"' >> ${path_i}/tcrp.po
+sudo echo 'msgstr="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다. DT모델은 HBA를 지원하지 않습니다.\n"' >> ${path_i}/tcrp.po
+sudo cat ${path_i}/tcrp.po
+sudo msgfmt ${path_i}/tcrp.po -o ${path_i}/tcrp.mo
+
 ### Messages Contents
 # Fix US
 tz="US"
@@ -2417,7 +2425,7 @@ fi
 export TEXTDOMAINDIR="/usr/local/share/locale"
 set -o allexport
 [ ! -d "/usr/local/share/locale" ] && sudo mkdir -p "/usr/local/share/locale"
-sudo tar -xzvf lang.gz -C /usr/local/share/locale
+#sudo tar -xzvf lang.gz -C /usr/local/share/locale
 locale
 #End Locale Setting process
 
