@@ -158,7 +158,7 @@ sudo mkdir -p "${path_i}"
 #echo 'msgstr "Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다. DT모델은 HBA를 지원하지 않습니다.\n"' >> "tcrp.po"
 #cat "tcrp.po"
 #msgfmt "tcrp.po" -o "tcrp.mo"
-sudo cp -vf "~/lang/ko_KR/LC_MESSAGES/msg.mo" "${path_i}/tcrp.mo"
+sudo cp -vf "lang/ko_KR/LC_MESSAGES/msg.mo" "${path_i}/tcrp.mo"
 
 ### Messages Contents
 # Fix US
