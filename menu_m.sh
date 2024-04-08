@@ -168,7 +168,8 @@ set -o allexport
 tz="US"
 
 ## US
-#MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs\n"
+function load_us() {
+MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs\n"
 MSGUS01="Choose a Dev Mod handling method, DDSML/EUDEV"
 MSGUS02="Choose a Synology Model"
 MSGUS03="Choose a Synology Serial Number"
@@ -216,6 +217,8 @@ MSGUS52="Show SATA(s) ports and drives for SataPortMap"
 MSGUS53="Show error log of running loader"
 MSGUS54="Burn TCRP Bootloader Img to USB or SSD"
 MSGUS55="Clone Current TCRP Bootloader to USB or SSD"
+MSX=$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")
+}
 
 ## RU
 MSGRU00="Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap. DT модели не поддерживают HBAs\n"
@@ -2430,9 +2433,9 @@ fi
 #sudo tar -xzvf lang.gz -C /usr/local/share/locale
 locale
 #End Locale Setting process
+load_us
 
-MSGUS00=$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")
-echo "${MSGUS00}"
+echo "${MSX}"
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -w) -gt 0 ]; then
     sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst	
