@@ -165,7 +165,7 @@ sudo cp -vf "lang/ko_KR/LC_MESSAGES/msg.mo" "${path_i}/tcrp.mo"
 tz="US"
 
 ## US
-MSGUS00=$(TEXT "No NIC found! - Loader does not work without Network connection.")
+MSGUS00=$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")
 #MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs\n"
 MSGUS01="Choose a Dev Mod handling method, DDSML/EUDEV"
 MSGUS02="Choose a Synology Model"
