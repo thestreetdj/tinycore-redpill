@@ -217,7 +217,7 @@ MSGUS52="Show SATA(s) ports and drives for SataPortMap"
 MSGUS53="Show error log of running loader"
 MSGUS54="Burn TCRP Bootloader Img to USB or SSD"
 MSGUS55="Clone Current TCRP Bootloader to USB or SSD"
-MSX=$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")
+#MSX=$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")
 }
 
 ## RU
@@ -1162,8 +1162,7 @@ function setSuggest() {
   esac
 
   if [ $(echo ${platform} | grep "(DT)" | wc -l) -gt 0 ]; then
-    #eval "MSG00=\"\${MSG${tz}00}\""
-	eval "MSG00=\"\${MSX}\"\n"
+    eval "MSG00=\"\${MSG${tz}00}\""
   else
     MSG00="\n"
   fi  
@@ -2365,8 +2364,6 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep gettext | wc -w) -eq 0 ]; then
 	    sudo echo "gettext.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 	    echo 'Y'|./rploader.sh backup
 	    echo "You have finished installing TC gettext package."
-		# Apply i18n TEXT alias
-		echo "alias TEXT='gettext \"tcrp\"'" >> ~/.ashrc
 	    restart
  	fi
 fi
@@ -2435,8 +2432,6 @@ fi
 locale
 #End Locale Setting process
 load_us
-
-echo "${MSX}"
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -w) -gt 0 ]; then
     sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst	
