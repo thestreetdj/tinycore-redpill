@@ -166,6 +166,7 @@ tz="US"
 
 ## US
 MSGUS00=$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")
+echo "${MSGUS00}"
 #MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs\n"
 MSGUS01="Choose a Dev Mod handling method, DDSML/EUDEV"
 MSGUS02="Choose a Synology Model"
@@ -1158,8 +1159,6 @@ function setSuggest() {
 
   if [ $(echo ${platform} | grep "(DT)" | wc -l) -gt 0 ]; then
     eval "MSG00=\"\${MSG${tz}00}\""
-    #MSG00="$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")"
-    echo "${MSGUS00}"
   else
     MSG00=""
   fi  
