@@ -160,13 +160,14 @@ sudo mkdir -p "${path_i}"
 #msgfmt "tcrp.po" -o "tcrp.mo"
 sudo cp -vf "lang/ko_KR/LC_MESSAGES/msg.mo" "${path_i}/tcrp.mo"
 
+export TEXTDOMAINDIR="/usr/local/share/locale"
+set -o allexport
+
 ### Messages Contents
 # Fix US
 tz="US"
 
 ## US
-MSGUS00=$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")
-echo "${MSGUS00}"
 #MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs\n"
 MSGUS01="Choose a Dev Mod handling method, DDSML/EUDEV"
 MSGUS02="Choose a Synology Model"
@@ -2425,12 +2426,13 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
   fi
 fi
 
-export TEXTDOMAINDIR="/usr/local/share/locale"
-set -o allexport
 [ ! -d "/usr/local/share/locale" ] && sudo mkdir -p "/usr/local/share/locale"
 #sudo tar -xzvf lang.gz -C /usr/local/share/locale
 locale
 #End Locale Setting process
+
+MSGUS00=$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")
+echo "${MSGUS00}"
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -w) -gt 0 ]; then
     sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst	
