@@ -2418,6 +2418,8 @@ fi
 
 export TEXTDOMAINDIR="/usr/local/share/locale"
 set -o allexport
+[ ! -d "/usr/local/share/locale" ] && sudo mkdir -p "/usr/local/share/locale"
+sudo tar -xzvf lang.gz -C /usr/local/share/locale
 locale
 #End Locale Setting process
 
