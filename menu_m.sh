@@ -1766,10 +1766,10 @@ function additional() {
     [ -z "${resp}" ] && return
     if [ "${resp}" = "a" ]; then
       [ "${spoof}" = "Add" ] && add-macspoof || del-macspoof
-      [ "${dbgutils}" = "Add" ] && add-dbgutils || del-dbgutils
 	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
-  	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
-	  
+	elif [ "${resp}" = "y" ]; then 
+      [ "${dbgutils}" = "Add" ] && add-dbgutils || del-dbgutils 
+  	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"	  
     elif [ "${resp}" = "z" ]; then
       if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
         [ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
