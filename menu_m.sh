@@ -1732,6 +1732,18 @@ function del-macspoof() {
   jsonfile=$(jq 'del(.["mac-spoof"])' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
 }
 
+function add-dbgutils() {
+  echo -n "Would you like to add dbgutils for error analysis? [yY/nN] : "
+  readanswer    
+  if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
+    jsonfile=$(jq '. |= .+ {"dbgutils":"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dbgutils/rpext-index.json"}' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+  fi
+}
+
+function del-dbgutils() {
+  jsonfile=$(jq 'del(.["dbgutils"])' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+}
+
 function returnto() {
     echo "${1}"
     read answer
