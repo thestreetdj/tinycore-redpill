@@ -1,4 +1,63 @@
+#!/usr/bin/env bash
+
 ### Messages Contents
+
+function TEXT() {
+	gettext "tcrp"
+}
+
+## US gettext
+function load_us() {
+MSGUS00=$(TEXT "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs")
+MSGUS01=$(TEXT "Choose a Dev Mod handling method, DDSML/EUDEV")
+MSGUS02=$(TEXT "Choose a Synology Model")
+MSGUS03=$(TEXT "Choose a Synology Serial Number")
+MSGUS04=$(TEXT "Choose a mac address")
+MSGUS05=$(TEXT "Choose a DSM VERSION, Current")
+MSGUS06=$(TEXT "Choose a loader Mode, Current")
+MSGUS07=""
+MSGUS08=""
+MSGUS09=""
+MSGUS10=$(TEXT "Edit user config file manually")
+MSGUS11=$(TEXT "Choose a keymap")
+MSGUS12=$(TEXT "Format Disk(s) # Excluding Loader Disk")
+MSGUS13=$(TEXT "Backup TCRP")
+MSGUS14=$(TEXT "Reboot")
+MSGUS15=$(TEXT "Power Off")
+MSGUS16=$(TEXT "Max 24 Threads, any x86-64")
+MSGUS17=$(TEXT "Max 8 Threads, Haswell or later,iGPU Transcoding")
+MSGUS18=$(TEXT "Build the loader")
+MSGUS19=""
+MSGUS20=$(TEXT "Max ? Threads, any x86-64")
+MSGUS21=$(TEXT "Have a camera license")
+MSGUS22=$(TEXT "Max 16 Threads, any x86-64")
+MSGUS23=$(TEXT "Max 16 Threads, Haswell or later")
+MSGUS24=$(TEXT "Nvidia GTX1650")
+MSGUS25=$(TEXT "Nvidia GTX1050Ti")
+MSGUS26=$(TEXT "EUDEV (enhanced user-space device)")
+MSGUS27=$(TEXT "DDSML (Detected Device Static Module Loading)")
+MSGUS28=$(TEXT "FRIEND (most recently stabilized)")
+MSGUS29=$(TEXT "JOT (The old way before friend)")
+MSGUS30=$(TEXT "Generate a random serial number")
+MSGUS31=$(TEXT "Enter a serial number")
+MSGUS32=$(TEXT "Get a real mac address")
+MSGUS33=$(TEXT "Generate a random mac address")
+MSGUS34=$(TEXT "Enter a mac address")
+MSGUS35=$(TEXT "press any key to continue...")
+MSGUS36=$(TEXT "Synology serial number not set. Check user_config.json again. Abort the loader build !!!")
+MSGUS37=$(TEXT "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!")
+MSGUS38=$(TEXT "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!")
+MSGUS39=$(TEXT "Choose a language")
+MSGUS40=$(TEXT "DDSML+EUDEV")
+MSGUS41=$(TEXT "Choose a Storage Panel Size")
+MSGUS50=$(TEXT "Mac-spoof Addon")
+MSGUS51=$(TEXT "Prevent SataPortMap,DiskIdxMap initialization")
+MSGUS52=$(TEXT "Show SATA(s) ports and drives for SataPortMap")
+MSGUS53=$(TEXT "Show error log of running loader")
+MSGUS54=$(TEXT "Burn TCRP Bootloader Img to USB or SSD")
+MSGUS55=$(TEXT "Clone Current TCRP Bootloader to USB or SSD")
+#MSX=$(TEXT "No NIC found! - Loader does not work without Network connection.")
+}
 
 #US
 MSGUS00="Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
@@ -749,5 +808,4 @@ MSGTR52="SataPortMap için SATA bağlantı noktalarını ve sürücülerini gös
 MSGTR53="Çalışan yükleyicinin hata günlüğünü göster"
 MSGTR54="TCRP Bootloader Görüntüsünü USB veya SSD'ye Yaz"
 MSGTR55="Geçerli TCRP Önyükleyicisini USB veya SSD'ye Klonla"
-
   
