@@ -1887,6 +1887,7 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep dejavu-fonts-ttf | wc -w) -eq 0 
 	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
 	    sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst
 	    sudo echo "dejavu-fonts-ttf.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+	    sudo echo "setfont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst     
 	    echo 'Y'|./rploader.sh backup
 	    echo "You have finished installing TC dejavu-fonts-ttf package."
 	    restart
