@@ -5,9 +5,9 @@
 . /home/tc/i18n.h
 #####################################################################################################
 
-# Function to handle Ctrl+C
+# Function to be called on Ctrl+C or ESC
 function ctrl_c() {
-  echo ", Ctrl+C detected. Press Enter to return menu..."
+  echo ", Ctrl+C or ESC key pressed. Press Enter to return menu..."
 }
 
 function readanswer() {
@@ -97,8 +97,8 @@ fi
 # Prevent SataPortMap/DiskIdxMap initialization 2023.12.31
 prevent_init="OFF"
 
-# Trap Ctrl+C and call ctrl_c function
-trap ctrl_c INT
+# Trap Ctrl+C (SIGINT) and ESC (SIGTERM) signals and call ctrl_c function
+trap ctrl_c INT TERM
 
 VERSION=v`cat /home/tc/rploader.sh | grep rploaderver= | cut -d\" -f2`
 
