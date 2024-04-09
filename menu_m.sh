@@ -4,6 +4,10 @@
 source /home/tc/functions.h
 #####################################################################################################
 
+function TEXT() {
+	gettext "tcrp"
+}
+
 # Function to handle Ctrl+C
 function ctrl_c() {
   echo ", Ctrl+C detected. Press Enter to return menu..."
@@ -166,55 +170,55 @@ set -o allexport
 ### Messages Contents
 ## US
 function load_us() {
-MSGUS00=$(gettext "tcrp" "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs")
-MSGUS01=$(gettext "tcrp" "Choose a Dev Mod handling method, DDSML/EUDEV")
-MSGUS02=$(gettext "tcrp" "Choose a Synology Model")
-MSGUS03=$(gettext "tcrp" "Choose a Synology Serial Number")
-MSGUS04=$(gettext "tcrp" "Choose a mac address")
-MSGUS05=$(gettext "tcrp" "Choose a DSM VERSION, Current")
-MSGUS06=$(gettext "tcrp" "Choose a loader Mode, Current")
-MSGUS07=$(gettext "tcrp" "Build the [TCRP 7.1.1-42962] loader")
-MSGUS08=$(gettext "tcrp" "Build the [TCRP 7.0.1-42218] loader (FRIEND)")
-MSGUS09=$(gettext "tcrp" "Build the [TCRP 7.2.0-64570] loader")
-MSGUS10=$(gettext "tcrp" "Edit user config file manually")
-MSGUS11=$(gettext "tcrp" "Choose a keymap")
-MSGUS12=$(gettext "tcrp" "Format Disk(s) # Excluding Loader Disk")
-MSGUS13=$(gettext "tcrp" "Backup TCRP")
-MSGUS14=$(gettext "tcrp" "Reboot")
-MSGUS15=$(gettext "tcrp" "Power Off")
-MSGUS16=$(gettext "tcrp" "Max 24 Threads, any x86-64")
-MSGUS17=$(gettext "tcrp" "Max 8 Threads, Haswell or later,iGPU Transcoding")
-MSGUS18=$(gettext "tcrp" "Build the loader")
-MSGUS19=$(gettext "tcrp" "Build the [TCRP 7.2.0-64570 JOT Mode] loader")
-MSGUS20=$(gettext "tcrp" "Max ? Threads, any x86-64")
-MSGUS21=$(gettext "tcrp" "Have a camera license")
-MSGUS22=$(gettext "tcrp" "Max 16 Threads, any x86-64")
-MSGUS23=$(gettext "tcrp" "Max 16 Threads, Haswell or later")
-MSGUS24=$(gettext "tcrp" "Nvidia GTX1650")
-MSGUS25=$(gettext "tcrp" "Nvidia GTX1050Ti")
-MSGUS26=$(gettext "tcrp" "EUDEV (enhanced user-space device)")
-MSGUS27=$(gettext "tcrp" "DDSML (Detected Device Static Module Loading)")
-MSGUS28=$(gettext "tcrp" "FRIEND (most recently stabilized)")
-MSGUS29=$(gettext "tcrp" "JOT (The old way before friend)")
-MSGUS30=$(gettext "tcrp" "Generate a random serial number")
-MSGUS31=$(gettext "tcrp" "Enter a serial number")
-MSGUS32=$(gettext "tcrp" "Get a real mac address")
-MSGUS33=$(gettext "tcrp" "Generate a random mac address")
-MSGUS34=$(gettext "tcrp" "Enter a mac address")
-MSGUS35=$(gettext "tcrp" "press any key to continue...")
-MSGUS36=$(gettext "tcrp" "Synology serial number not set. Check user_config.json again. Abort the loader build !!!")
-MSGUS37=$(gettext "tcrp" "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!")
-MSGUS38=$(gettext "tcrp" "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!")
-MSGUS39=$(gettext "tcrp" "Choose a language")
-MSGUS40=$(gettext "tcrp" "DDSML+EUDEV")
-MSGUS41=$(gettext "tcrp" "Choose a Storage Panel Size")
-MSGUS50=$(gettext "tcrp" "Mac-spoof Addon")
-MSGUS51=$(gettext "tcrp" "Prevent SataPortMap,DiskIdxMap initialization")
-MSGUS52=$(gettext "tcrp" "Show SATA(s) ports and drives for SataPortMap")
-MSGUS53=$(gettext "tcrp" "Show error log of running loader")
-MSGUS54=$(gettext "tcrp" "Burn TCRP Bootloader Img to USB or SSD")
-MSGUS55=$(gettext "tcrp" "Clone Current TCRP Bootloader to USB or SSD")
-#MSX=$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")
+MSGUS00=$(TEXT "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs")
+MSGUS01=$(TEXT "Choose a Dev Mod handling method, DDSML/EUDEV")
+MSGUS02=$(TEXT "Choose a Synology Model")
+MSGUS03=$(TEXT "Choose a Synology Serial Number")
+MSGUS04=$(TEXT "Choose a mac address")
+MSGUS05=$(TEXT "Choose a DSM VERSION, Current")
+MSGUS06=$(TEXT "Choose a loader Mode, Current")
+MSGUS07=""
+MSGUS08=""
+MSGUS09=""
+MSGUS10=$(TEXT "Edit user config file manually")
+MSGUS11=$(TEXT "Choose a keymap")
+MSGUS12=$(TEXT "Format Disk(s) # Excluding Loader Disk")
+MSGUS13=$(TEXT "Backup TCRP")
+MSGUS14=$(TEXT "Reboot")
+MSGUS15=$(TEXT "Power Off")
+MSGUS16=$(TEXT "Max 24 Threads, any x86-64")
+MSGUS17=$(TEXT "Max 8 Threads, Haswell or later,iGPU Transcoding")
+MSGUS18=$(TEXT "Build the loader")
+MSGUS19=""
+MSGUS20=$(TEXT "Max ? Threads, any x86-64")
+MSGUS21=$(TEXT "Have a camera license")
+MSGUS22=$(TEXT "Max 16 Threads, any x86-64")
+MSGUS23=$(TEXT "Max 16 Threads, Haswell or later")
+MSGUS24=$(TEXT "Nvidia GTX1650")
+MSGUS25=$(TEXT "Nvidia GTX1050Ti")
+MSGUS26=$(TEXT "EUDEV (enhanced user-space device)")
+MSGUS27=$(TEXT "DDSML (Detected Device Static Module Loading)")
+MSGUS28=$(TEXT "FRIEND (most recently stabilized)")
+MSGUS29=$(TEXT "JOT (The old way before friend)")
+MSGUS30=$(TEXT "Generate a random serial number")
+MSGUS31=$(TEXT "Enter a serial number")
+MSGUS32=$(TEXT "Get a real mac address")
+MSGUS33=$(TEXT "Generate a random mac address")
+MSGUS34=$(TEXT "Enter a mac address")
+MSGUS35=$(TEXT "press any key to continue...")
+MSGUS36=$(TEXT "Synology serial number not set. Check user_config.json again. Abort the loader build !!!")
+MSGUS37=$(TEXT "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!")
+MSGUS38=$(TEXT "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!")
+MSGUS39=$(TEXT "Choose a language")
+MSGUS40=$(TEXT "DDSML+EUDEV")
+MSGUS41=$(TEXT "Choose a Storage Panel Size")
+MSGUS50=$(TEXT "Mac-spoof Addon")
+MSGUS51=$(TEXT "Prevent SataPortMap,DiskIdxMap initialization")
+MSGUS52=$(TEXT "Show SATA(s) ports and drives for SataPortMap")
+MSGUS53=$(TEXT "Show error log of running loader")
+MSGUS54=$(TEXT "Burn TCRP Bootloader Img to USB or SSD")
+MSGUS55=$(TEXT "Clone Current TCRP Bootloader to USB or SSD")
+#MSX=$(TEXT "No NIC found! - Loader does not work without Network connection.")
 }
 
 ## RU
@@ -225,9 +229,9 @@ MSGRU03="Выберите серийный номер Synology"
 MSGRU04="Выберите MAC-адрес"
 MSGRU05="Выберите ВЕРСИЮ DSM, Текущий"
 MSGRU06="Выберите текущий режим загрузчика, Текущий"
-MSGRU07="Соберите загрузчик [TCRP 7.1.1-42962]"
-MSGRU08="Соберите загрузчик [TCRP 7.0.1-42218] (FRIEND)"
-MSGRU09="Соберите загрузчик [TCRP 7.2.0-64570]"
+MSGRU07=""
+MSGRU08=""
+MSGRU09=""
 MSGRU10="Отредактируйте файл конфигурации пользователя вручную"
 MSGRU11="Выберите раскладку клавиатуры"
 MSGRU12="Форматировать диск(и) # Без загрузочного диска"
@@ -237,7 +241,7 @@ MSGRU15="выключение"
 MSGRU16="Максимум 24 потока, любой x86-64"
 MSGRU17="Максимум 8 потоков, Haswell или более поздний, iGPU транскодирование"
 MSGRU18="Соберите загрузчик"
-MSGRU19="Соберите загрузчик [TCRP 7.2.0-64570 JOT Mode]"
+MSGRU19=""
 MSGRU20="Максимум ? Потоки, любой x86-64"
 MSGRU21="Есть ли лицензия на камеру"
 MSGRU22="Максимум 16 потоков, любой x86-64"
