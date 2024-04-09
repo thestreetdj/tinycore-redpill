@@ -979,11 +979,11 @@ function langMenu() {
     Español) tz="ES"; ucode="es_ES";;
     Italiano) tz="IT"; ucode="it_IT";;
     brasileiro) tz="BR"; ucode="pt_BR";;
-    عربي) tz="EG"; ucode="ar_EG";;
-    हिंदी) tz="IN"; ucode="hi_IN";;
     Magyar) tz="HU"; ucode="hu_HU";;
     bahasa_Indonesia) tz="ID"; ucode="id_ID";;
     Türkçe) tz="TR"; ucode="tr_TR";;
+    हिंदी) tz="IN"; ucode="hi_IN";;
+    عربي) tz="EG"; ucode="ar_EG";;
   esac
 
   export LANG=${ucode}.UTF-8
