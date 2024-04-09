@@ -9,7 +9,7 @@
 source /home/tc/functions.h
 #####################################################################################################
 
-rploaderver="1.0.2.5"
+rploaderver="1.0.2.7"
 build="master"
 redpillmake="prod"
 
@@ -118,6 +118,8 @@ function history() {
     1.0.2.3 Added RedPill bootloader hard disk porting function
     1.0.2.4 Added NVMe bootloader support
     1.0.2.5 Provides menu option to disable i915 module loading to prevent console blackout in ApolloLake (DS918+), GeminiLake (DS920+), and Epyc7002 (SA6400)
+    1.0.2.6 Added multilingual support languages (locales) (Arabic, Hindi, Hungarian, Indonesian, Turkish)
+    1.0.2.7 dbgutils Addon Add/Delete selection menu
     --------------------------------------------------------------------------------------
 EOF
 
