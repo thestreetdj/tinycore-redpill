@@ -14,8 +14,8 @@ jobs:
       - name: Bring last uploaded mydata.tgz files from tinycore-redpill & lastest img
         run: |
           sudo apt-get install qemu-utils grub2
-          curl -kLO# https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.1.0/tinycore-redpill.v1.0.1.0.m-shell.img.gz
-          gunzip tinycore-redpill.v1.0.1.0.m-shell.img.gz          
+          curl -kLO# https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/v1.0.2.4/tinycore-redpill.v1.0.2.4.m-shell.img.gz
+          gunzip tinycore-redpill.v1.0.2.4.m-shell.img.gz          
           pwd
           ls -ltr
       - name: Mount and copy mydata.tgz
@@ -28,7 +28,7 @@ jobs:
           mkdir /opt/output
 
           LOOPX=$(sudo losetup -f)
-          sudo losetup -P ${LOOPX} tinycore-redpill.v1.0.1.0.m-shell.img
+          sudo losetup -P ${LOOPX} tinycore-redpill.v1.0.2.4.m-shell.img
 
           dd if=/dev/zero of=tinycore-redpill.${VERSION}.m-shell.img bs=1M seek=2048 count=0
           echo -e "n\np\n1\n\n+72M\nn\np\n2\n\n+75M\nn\np\n3\n\n+1899M\nw\nq\n" | sudo fdisk tinycore-redpill.${VERSION}.m-shell.img
@@ -56,7 +56,6 @@ jobs:
           sudo mkdir -p /mnt/tarp3
           sudo mount ${LOOPZ}p3 /mnt/tarp3
           cd /mnt/p3 && sudo find . | sudo cpio -pdm "/mnt/tarp3"
-
     
           cd ${path}/
           sudo cp -vf ${path}/mydata.tgz /mnt/tarp3
