@@ -979,6 +979,11 @@ function langMenu() {
     Español) tz="ES"; ucode="es_ES";;
     Italiano) tz="IT"; ucode="it_IT";;
     brasileiro) tz="BR"; ucode="pt_BR";;
+    عربي) tz="EG"; ucode="ar_EG";;
+    हिंदी) tz="IN"; ucode="hi_IN";;
+    Magyar) tz="HU"; ucode="hu_HU";;
+    bahasa_Indonesia) tz="ID"; ucode="id_ID";;
+    Türkçe) tz="TR"; ucode="tr_TR";;
   esac
 
   export LANG=${ucode}.UTF-8
@@ -1853,6 +1858,12 @@ DE) ucode="de_DE";;
 ES) ucode="es_ES";;
 IT) ucode="it_IT";;
 BR) ucode="pt_BR";;
+EG) ucode="ar_EG";;
+IN) ucode="hi_IN";;
+HU) ucode="hu_HU";;
+ID) ucode="id_ID";;
+TR) ucode="tr_TR";;
+
 *) lcode="US"; ucode="en_US";;
 esac
 writeConfigKey "general" "ucode" "${ucode}"
