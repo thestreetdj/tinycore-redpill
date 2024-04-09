@@ -7,7 +7,7 @@
 
 # Function to be called on Ctrl+C or ESC
 function ctrl_c() {
-  echo ", Ctrl+C or ESC key pressed. Press Enter to return menu..."
+  echo ", Ctrl+C key pressed. Press Enter to return menu..."
 }
 
 function readanswer() {
@@ -97,8 +97,8 @@ fi
 # Prevent SataPortMap/DiskIdxMap initialization 2023.12.31
 prevent_init="OFF"
 
-# Trap Ctrl+C (SIGINT) and ESC (SIGTERM) signals and call ctrl_c function
-trap ctrl_c INT TERM
+# Trap Ctrl+C (SIGINT) signals and call ctrl_c function
+trap ctrl_c INT
 
 VERSION=v`cat /home/tc/rploader.sh | grep rploaderver= | cut -d\" -f2`
 
