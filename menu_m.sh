@@ -857,15 +857,15 @@ function usbidentify() {
 	    rm /tmp/lsusb.out
         else
             usbdevice="$(grep iManufacturer /tmp/lsusb.out | awk '{print $3}') $(grep iProduct /tmp/lsusb.out | awk '{print $3}') SerialNumber: $(grep iSerial /tmp/lsusb.out | awk '{print $3}')"
-	    if [ -n "$usbdevice" ] && [ -n "$vendorid" ] && [ -n "$productid" ]; then
-	        echo "Found $usbdevice"
-	        echo "Vendor ID : $vendorid Product ID : $productid"
-	        json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-	        json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-	    else
-	        echo "Sorry, no usb disk could be identified"
-	        rm /tmp/lsusb.out
-	    fi
+		    if [ -n "$usbdevice" ] && [ -n "$vendorid" ] && [ -n "$productid" ]; then
+		        echo "Found $usbdevice"
+		        echo "Vendor ID : $vendorid Product ID : $productid"
+		        json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+		        json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+		    else
+		        echo "Sorry, no usb disk could be identified"
+		        rm /tmp/lsusb.out
+		    fi
         fi
     fi      
 }
