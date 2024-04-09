@@ -224,8 +224,12 @@ set -u
 # 2024.03.24    
 # Added missing mmc partition search function
 # 2024.04.01 v1.0.2.5
-# Provides menu option to disable i915 module loading to prevent console blackout in ApolloLake (DS918+), GeminiLake (DS920+), and Epyc7002 (SA6400)    
-    
+# Provides menu option to disable i915 module loading to prevent console blackout in ApolloLake (DS918+), GeminiLake (DS920+), and Epyc7002 (SA6400)
+# 2024.04.09 v1.0.2.6
+# Added multilingual support languages (locales) (Arabic, Hindi, Hungarian, Indonesian, Turkish)
+# 2024.04.09 v1.0.2.7
+# dbgutils Addon Add/Delete selection menu
+
 function showlastupdate() {
     cat <<EOF
 
@@ -273,6 +277,12 @@ function showlastupdate() {
 
 # 2024.04.01 v1.0.2.5
 # Provides menu option to disable i915 module loading to prevent console blackout in ApolloLake (DS918+), GeminiLake (DS920+), and Epyc7002 (SA6400)
+
+# 2024.04.09 v1.0.2.6
+# Added multilingual support languages (locales) (Arabic, Hindi, Hungarian, Indonesian, Turkish)
+    
+# 2024.04.09 v1.0.2.7
+# dbgutils Addon Add/Delete selection menu
     
 EOF
 }
