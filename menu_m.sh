@@ -971,9 +971,9 @@ function langMenu() {
   
   case `<"${TMP_PATH}/resp"` in
     English) tz="US"; ucode="en_US";;
-    한국어) tz="KR"; ucode="ko_KR";;
-    日本語) tz="JP"; ucode="ja_JP";;
-    中文) tz="CN"; ucode="zh_CN";;
+    한국어) tz="KR"; ucode="ko_KR"; setfont /usr/local/share/fonts/truetype/unifont/unifont.ttf;;
+    日本語) tz="JP"; ucode="ja_JP"; setfont /usr/local/share/fonts/truetype/unifont/unifont.ttf;;
+    中文) tz="CN"; ucode="zh_CN"; setfont /usr/local/share/fonts/truetype/unifont/unifont.ttf;;
     Русский) tz="RU"; ucode="ru_RU";;
     Français) tz="FR"; ucode="fr_FR";;
     Deutsch) tz="DE"; ucode="de_DE";;
@@ -983,8 +983,8 @@ function langMenu() {
     Magyar) tz="HU"; ucode="hu_HU";;
     bahasa_Indonesia) tz="ID"; ucode="id_ID";;
     Türkçe) tz="TR"; ucode="tr_TR";;
-    हिंदी) tz="IN"; ucode="hi_IN";;
-    عربي) tz="EG"; ucode="ar_EG";;
+    हिंदी) tz="IN"; ucode="hi_IN"; setfont /usr/local/share/fonts/dejavu/DejaVuSans.ttf;;
+    عربي) tz="EG"; ucode="ar_EG"; setfont /usr/local/share/fonts/dejavu/DejaVuSans.ttf;;
   esac
 
   export LANG=${ucode}.UTF-8
@@ -1881,7 +1881,7 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep gettext | wc -w) -eq 0 ]; then
 fi
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep dejavu-fonts-ttf | wc -w) -eq 0 ]; then
-	tce-load -wi dejavu-fonts-ttf
+	tce-load -wi dejavu-fonts-ttf setfont
 	if [ $? -eq 0 ]; then
 	    echo "Download dejavu-fonts-ttf.tcz OK, Permanent installation progress !!!"
 	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
@@ -1894,10 +1894,7 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep dejavu-fonts-ttf | wc -w) -eq 0 
 fi
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
-	tce-load -wi glibc_apps
-	tce-load -wi glibc_i18n_locale
-	tce-load -wi unifont
-	tce-load -wi rxvt
+	tce-load -wi glibc_apps glibc_i18n_locale unifont rxvt
 	if [ $? -eq 0 ]; then
 	    echo "Download glibc_apps.tcz and glibc_i18n_locale.tcz OK, Permanent installation progress !!!"
 	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
