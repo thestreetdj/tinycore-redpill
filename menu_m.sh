@@ -1881,13 +1881,12 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep gettext | wc -w) -eq 0 ]; then
 fi
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep dejavu-fonts-ttf | wc -w) -eq 0 ]; then
-	tce-load -wi dejavu-fonts-ttf liberation-fonts-ttf setfont
+	tce-load -wi dejavu-fonts-ttf setfont
 	if [ $? -eq 0 ]; then
-	    echo "Download dejavu-fonts-ttf.tcz, liberation-fonts-ttf, setfont OK, Permanent installation progress !!!"
+	    echo "Download dejavu-fonts-ttf.tcz, setfont OK, Permanent installation progress !!!"
 	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
 	    sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst
 	    sudo echo "dejavu-fonts-ttf.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-	    sudo echo "liberation-fonts-ttf.tcz" >> /mnt/${tcrppart}/cde/onboot.lst     
 	    sudo echo "setfont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst     
 	    echo 'Y'|./rploader.sh backup
 	    echo "You have finished installing TC dejavu-fonts-ttf package."
