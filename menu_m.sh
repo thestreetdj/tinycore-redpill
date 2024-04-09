@@ -1728,17 +1728,9 @@ fi
 
 function additional() {
 
-  if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ]; then
-      spoof="Remove"
-  else
-      spoof="Add"
-  fi
+  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
 
-  if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ]; then
-      dbgutils="Remove"
-  else
-      dbgutils="Add"
-  fi
+  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
 
   if [ -f /tmp/disable.i915 ]; then
       curi915=$(cat /tmp/disable.i915)
@@ -1773,26 +1765,11 @@ function additional() {
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
     if [ "${resp}" = "a" ]; then
-      if [ "${spoof}" = "Add" ]; then
-        add-macspoof
-      else
-        del-macspoof
-      fi
-      if [ "${dbgutils}" = "Add" ]; then
-        add-dbgutils
-      else
-        del-dbgutils
-      fi
-      if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ]; then
-        spoof="Remove"
-      else
-        spoof="Add"
-      fi
-      if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ]; then
-        dbgutils="Remove"
-      else
-        dbgutils="Add"
-      fi
+      [ "${spoof}" = "Add" ] && add-macspoof || del-macspoof
+      [ "${dbgutils}" = "Add" ] && add-dbgutils || del-dbgutils
+	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
+  	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
+	  
     elif [ "${resp}" = "z" ]; then
       if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
         [ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
