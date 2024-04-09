@@ -1734,6 +1734,12 @@ function additional() {
       spoof="Add"
   fi
 
+  if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ]; then
+      dbgutils="Remove"
+  else
+      dbgutils="Add"
+  fi
+
   if [ -f /tmp/disable.i915 ]; then
       curi915=$(cat /tmp/disable.i915)
       [ "${curi915}" = "ON" ] && disablei915="OFF" || disablei915="ON"
@@ -1753,6 +1759,7 @@ function additional() {
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
       a "${spoof} ${MSG50}" \
+      y "${dbgutils} dbgutils Addon" \
       z "Disable i915 module ${disablei915}" \
       b "${MSG51}" \
       c "${MSG52}" \
@@ -1771,10 +1778,20 @@ function additional() {
       else
         del-macspoof
       fi
+      if [ "${dbgutils}" = "Add" ]; then
+        add-dbgutils
+      else
+        del-dbgutils
+      fi
       if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ]; then
         spoof="Remove"
       else
         spoof="Add"
+      fi
+      if [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ]; then
+        dbgutils="Remove"
+      else
+        dbgutils="Add"
       fi
     elif [ "${resp}" = "z" ]; then
       if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
