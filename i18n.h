@@ -110,7 +110,7 @@ MSGUS54="Burn TCRP Bootloader Img to USB or SSD"
 MSGUS55="Clone Current TCRP Bootloader to USB or SSD"
 
 ## RU
-MSGRU00="Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap. DT модели не поддерживают HBAs\n"
+MSGRU00="Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap. DT модели не поддерживают HBAs"
 MSGRU01="Выберите метод обработки Dev Mod, DDSML/EUDEV"
 MSGRU02="Выберите модель Synology"
 MSGRU03="Выберите серийный номер Synology"
@@ -160,7 +160,7 @@ MSGRU54="Записать еще один загрузчик TCRP на USB ил�
 MSGRU55="Клонировать загрузчик TCRP на USB или SSD"
 
 ## FR
-MSGFR00="Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne nécessitent pas de SataPortMap, DiskIdxMap. Les modèles DT ne prennent pas en charge les HBAs\n"
+MSGFR00="Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne nécessitent pas de SataPortMap, DiskIdxMap. Les modèles DT ne prennent pas en charge les HBAs"
 MSGFR01="Choisissez une méthode de gestion des modèles de périphérique, DDSML/EUDEV"
 MSGFR02="Choisissez un modèle Synology"
 MSGFR03="Choisissez un numéro de série Synology"
@@ -210,7 +210,7 @@ MSGFR54="Graver un autre chargeur de démarrage TCRP sur USB ou SSD"
 MSGFR55="Cloner le chargeur de démarrage TCRP sur USB ou SSD"
 
 ## DE
-MSGDE00="Gerätebaum[DT] Basismodelle und HBAs benötigen kein SataPortMap,DiskIdxMap. DT-Modelle unterstützen keine HBAs\n"
+MSGDE00="Gerätebaum[DT] Basismodelle und HBAs benötigen kein SataPortMap,DiskIdxMap. DT-Modelle unterstützen keine HBAs"
 MSGDE01="Wählen Sie eine Methode zur Verwaltung von Dev-Mods, DDSML/EUDEV"
 MSGDE02="Wählen Sie ein Synology-Modell"
 MSGDE03="Wählen Sie eine Synology-Seriennummer"
@@ -260,7 +260,7 @@ MSGDE54="Einen weiteren TCP-Bootloader auf USB oder SSD brennen"
 MSGDE55="TCRP-Bootloader auf USB oder SSD klonen"
 
 ## ES
-MSGES00="Los modelos base y HBAs de Device-Tree[DT] no requieren SataPortMap, DiskIdxMap. Los modelos DT no admiten HBAs\n"
+MSGES00="Los modelos base y HBAs de Device-Tree[DT] no requieren SataPortMap, DiskIdxMap. Los modelos DT no admiten HBAs"
 MSGES01="Elija un método de manejo de Mod Dev, DDSML/EUDEV"
 MSGES02="Elija un modelo de Synology"
 MSGES03="Elija un número de serie de Synology"
@@ -310,7 +310,7 @@ MSGES54="Grabar otro gestor de arranque TCRP en USB o SSD"
 MSGES55="Clonar el cargador de arranque TCRP a USB o SSD"
 
 ## BR
-MSGBR00="Modelos Base e HBAs do Device-Tree[DT] não requerem SataPortMap, DiskIdxMap. Modelos DT não suportam HBAs\n"
+MSGBR00="Modelos Base e HBAs do Device-Tree[DT] não requerem SataPortMap, DiskIdxMap. Modelos DT não suportam HBAs"
 MSGBR01="Escolha um método de manipulação de Dev Mod, DDSML/EUDEV"
 MSGBR02="Escolha um modelo Synology"
 MSGBR03="Escolha um número de série Synology"
@@ -360,7 +360,7 @@ MSGBR54="Gravar outro bootloader TCPP em USB ou SSD"
 MSGBR55="Clone Bootloader TCRP para USB ou SSD"
 
 ## IT
-MSGIT00="I modelli di base e gli HBA di Device-Tree [DT] non richiedono SataPortMap, DiskIdxMap. I modelli DT non supportano gli HBA\n"
+MSGIT00="I modelli di base e gli HBA di Device-Tree [DT] non richiedono SataPortMap, DiskIdxMap. I modelli DT non supportano gli HBA"
 MSGIT01="Scegli un metodo di gestione del Mod Dev, DDSML/EUDEV"
 MSGIT02="Scegli un modello Synology"
 MSGIT03="Scegli un numero di serie Synology"
@@ -410,7 +410,7 @@ MSGIT54="Masterizza un altro bootloader TCRP su USB o SSD"
 MSGIT55="Clona bootloader TCRP su USB o SSD"
 
 ## KR
-MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다. DT모델은 HBA를 지원하지 않습니다.\n"
+MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다. DT모델은 HBA를 지원하지 않습니다."
 MSGKR01="커널모듈 처리방법 선택 DDSML/EUDEV"
 MSGKR02="Synology 모델 선택"
 MSGKR03="Synology S/N 선택"
@@ -460,7 +460,7 @@ MSGKR54="TCRP 부트로더 Img를 USB 또는 SSD에 굽기"
 MSGKR55="현재의 TCRP 부트로더를 USB 또는 SSD에 복제"
 
 ## CN
-MSGCN00="设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap. DT模型不支持HBA\n"
+MSGCN00="设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap. DT模型不支持HBA"
 MSGCN01="选择Dev Mod处理方法，DDSML/EUDEV"
 MSGCN02="选择一个Synology型号"
 MSGCN03="选择一个Synology序列号"
@@ -510,7 +510,7 @@ MSGCN54="将另一个 TCRP 引导加载程序刻录到 USB 或 SSD"
 MSGCN55="将 TCRP 引导加载程序克隆到 USB 或 SSD"
 
 ## JP
-MSGJP00="Device-Tree[DT]ベースモデルとHBAsは、SataPortMap、DiskIdxMapが必要ありません. DTモデルはHBAsをサポートしていません\n"
+MSGJP00="Device-Tree[DT]ベースモデルとHBAsは、SataPortMap、DiskIdxMapが必要ありません. DTモデルはHBAsをサポートしていません"
 MSGJP01="Dev Mod処理方法を選択してください、EUDEV / DDSML"
 MSGJP02="Synologyモデルを選択してください"
 MSGJP03="Synologyシリアル番号を選択してください"
