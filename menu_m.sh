@@ -984,8 +984,6 @@ function langMenu() {
     عربي) tz="EG"; ucode="ar_EG";;
   esac
 
-  tz="US"
-
   export LANG=${ucode}.UTF-8
   export LC_ALL=${ucode}.UTF-8
   set -o allexport
@@ -996,10 +994,11 @@ function langMenu() {
   
   writeConfigKey "general" "ucode" "${ucode}"  
   writexsession
+
+  tz="US"
+  load_us
   
   setSuggest $MODEL
-
-  load_us
   
   return 0
 
