@@ -30,6 +30,10 @@ jobs:
           for L in `echo "en_US ko_KR ja_JP zh_CN ru_RU fr_FR de_DE es_ES it_IT pt_BR ar_EG hi_IN hu_HU id_ID tr_TR"`; do
               [ ! -d "lang/${L}/LC_MESSAGES" ] && mkdir -p lang/${L}/LC_MESSAGES    
               lcode=$(echo ${L} | cut -c 4-)
+              llang=$(echo ${L} | cut -c 1-2)
+              cat Charset-header.h > lang/${L}/LC_MESSAGES/tcrp.po
+              sed -i "s#l_lang#${llang}#" lang/${L}/LC_MESSAGES/tcrp.po
+              sed -i "s#locale#${L}#" lang/${L}/LC_MESSAGES/tcrp.po                  
               for ((i=0; i<=55; i++)); do 
                   msg_us="MSGUS$(printf "%02d" $i)" 
                   msg_ot="MSG${lcode}$(printf "%02d" $i)"            
