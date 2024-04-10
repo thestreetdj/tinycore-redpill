@@ -1,0 +1,244 @@
+# i18n translations for PACKAGE package.
+# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Linux User <dante9000@gmail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 13:16+0000\n"
+"PO-Revision-Date: 2024-04-08 14:17+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: i18n <https://hosted.weblate.org/projects/tcrp-mshell/"
+"lang-tcrp/hi/>\n"
+"Language: hi_IN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.5-dev\n"
+#: MSGIN00 
+msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
+msgstr "डिवाइस-ट्री[DT] बेस मॉडल और HBA को SataPortMap, DiskIdxMap की आवश्यकता नहीं है। DT मॉडल HBA का समर्थन नहीं करते हैं"
+
+#: MSGIN01 
+msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
+msgstr "एक डेव मॉड हैंडलिंग विधि चुनें, DDSML/EUDEV"
+
+#: MSGIN02 
+msgid "Choose a Synology Model"
+msgstr "एक Synology मॉडल चुनें"
+
+#: MSGIN03 
+msgid "Choose a Synology Serial Number"
+msgstr "एक Synology सीरियल नंबर चुनें"
+
+#: MSGIN04 
+msgid "Choose a mac address"
+msgstr "एक मैक पता चुनें"
+
+#: MSGIN05 
+msgid "Choose a DSM VERSION, Current"
+msgstr "वर्तमान DSM संस्करण चुनें"
+
+#: MSGIN06 
+msgid "Choose a loader Mode, Current"
+msgstr "एक लोडर मोड चुनें, वर्तमान"
+
+#: MSGIN07 
+msgid ""
+msgstr ""
+
+#: MSGIN08 
+msgid ""
+msgstr ""
+
+#: MSGIN09 
+msgid ""
+msgstr ""
+
+#: MSGIN10 
+msgid "Edit user config file manually"
+msgstr "उपयोगकर्ता कॉन्फिग फ़ाइल को मैन्युअल रूप से संपादित करें"
+
+#: MSGIN11 
+msgid "Choose a keymap"
+msgstr "एक कीमैप चुनें"
+
+#: MSGIN12 
+msgid "Format Disk(s # Excluding Loader Disk"
+msgstr "प्रारूपित डिस्क # लोडर डिस्क को छोड़कर"
+
+#: MSGIN13 
+msgid "Backup TCRP"
+msgstr "बैकअप टीसीआरपी"
+
+#: MSGIN14 
+msgid "Reboot"
+msgstr "रीबूट"
+
+#: MSGIN15 
+msgid "Power Off"
+msgstr "पावर बंद"
+
+#: MSGIN16 
+msgid "Max 24 Threads, any x86-64"
+msgstr "अधिकतम 24 धागे, कोई भी x86-64"
+
+#: MSGIN17 
+msgid "Max 8 Threads, Haswell or later,iGPU Transcoding"
+msgstr "अधिकतम 8 थ्रेड, हैसवेल या बाद का संस्करण, iGPU ट्रांसकोडिंग"
+
+#: MSGIN18 
+msgid "Build the loader"
+msgstr "लोडर बनाएँ एमएसजीआईएन19="
+
+#: MSGIN19 
+msgid ""
+msgstr ""
+
+#: MSGIN20 
+msgid "Max ? Threads, any x86-64"
+msgstr "अधिकतम ? धागे, कोई भी x86-64"
+
+#: MSGIN21 
+msgid "Have a camera license"
+msgstr "कैमरा लाइसेंस लें"
+
+#: MSGIN22 
+msgid "Max 16 Threads, any x86-64"
+msgstr "अधिकतम 16 धागे, कोई भी x86-64"
+
+#: MSGIN23 
+msgid "Max 16 Threads, Haswell or later"
+msgstr "अधिकतम 16 धागे, हैसवेल या बाद का संस्करण"
+
+#: MSGIN24 
+msgid "Nvidia GTX1650"
+msgstr "एनवीडिया GTX1650"
+
+#: MSGIN25 
+msgid "Nvidia GTX1050Ti"
+msgstr "एनवीडिया GTX1050Ti"
+
+#: MSGIN26 
+msgid "EUDEV (enhanced user-space device"
+msgstr "EUDEV (उन्नत उपयोगकर्ता-स्थान उपकरण)"
+
+#: MSGIN27 
+msgid "DDSML (Detected Device Static Module Loading"
+msgstr "DDSML (पता लगाया गया डिवाइस स्टेटिक मॉड्यूल लोड हो रहा है)"
+
+#: MSGIN28 
+msgid "FRIEND (most recently stabilized"
+msgstr "मित्र (हाल ही में स्थिर)"
+
+#: MSGIN29 
+msgid "JOT (The old way before friend"
+msgstr "JOT (दोस्त से पहले का पुराना तरीका)"
+
+#: MSGIN30 
+msgid "Generate a random serial number"
+msgstr "एक यादृच्छिक क्रमांक उत्पन्न करें"
+
+#: MSGIN31 
+msgid "Enter a serial number"
+msgstr "क्रम संख्या दर्ज करें"
+
+#: MSGIN32 
+msgid "Get a real mac address"
+msgstr "वास्तविक मैक पता प्राप्त करें"
+
+#: MSGIN33 
+msgid "Generate a random mac address"
+msgstr "एक यादृच्छिक मैक पता जनरेट करें"
+
+#: MSGIN34 
+msgid "Enter a mac address"
+msgstr "एक मैक पता दर्ज करें"
+
+#: MSGIN35 
+msgid "press any key to continue..."
+msgstr "जारी रखने के लिए कोई भी कुंजी दबाएँ..."
+
+#: MSGIN36 
+msgid "Synology serial number not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "Synology सीरियल नंबर सेट नहीं है। user_config.json को दोबारा जांचें। लोडर बिल्ड को निरस्त करें!!!"
+
+#: MSGIN37 
+msgid "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "पहला MAC पता सेट नहीं है। user_config.json को दोबारा जांचें। लोडर बिल्ड को निरस्त करें!!!"
+
+#: MSGIN38 
+msgid "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!"
+msgstr "netif_num और मैक पतों की संख्या मेल नहीं खाती। user_config.json को दोबारा जांचें। लोडर बिल्ड को निरस्त करें!!!"
+
+#: MSGIN39 
+msgid "Choose a language"
+msgstr "एक भाषा चुनें"
+
+#: MSGIN40 
+msgid "DDSML+EUDEV"
+msgstr "DDSML+EUDEV"
+
+#: MSGIN41 
+msgid "Choose a Storage Panel Size"
+msgstr "स्टोरेज पैनल का आकार चुनें"
+
+#: MSGIN42 
+msgid ""
+msgstr ""
+
+#: MSGIN43 
+msgid ""
+msgstr ""
+
+#: MSGIN44 
+msgid ""
+msgstr ""
+
+#: MSGIN45 
+msgid ""
+msgstr ""
+
+#: MSGIN46 
+msgid ""
+msgstr ""
+
+#: MSGIN47 
+msgid ""
+msgstr ""
+
+#: MSGIN48 
+msgid ""
+msgstr ""
+
+#: MSGIN49 
+msgid ""
+msgstr ""
+
+#: MSGIN50 
+msgid "Mac-spoof Addon"
+msgstr "मैक-स्पूफ ऐडऑन"
+
+#: MSGIN51 
+msgid "Prevent SataPortMap,DiskIdxMap initialization"
+msgstr "SataPortMap,DiskIdxMap आरंभीकरण को रोकें"
+
+#: MSGIN52 
+msgid "Show SATA(s ports and drives for SataPortMap"
+msgstr "SataPortMap के लिए SATA(s पोर्ट और ड्राइव दिखाएं)"
+
+#: MSGIN53 
+msgid "Show error log of running loader"
+msgstr "चल रहे लोडर का त्रुटि लॉग दिखाएँ"
+
+#: MSGIN54 
+msgid "Burn TCRP Bootloader Img to USB or SSD"
+msgstr "TCRP बूटलोडर Img को USB या SSD में बर्न करें"
+
+#: MSGIN55 
+msgid "Clone Current TCRP Bootloader to USB or SSD"
+msgstr "वर्तमान TCRP बूटलोडर को USB या SSD पर क्लोन करें"
+

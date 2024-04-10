@@ -1,0 +1,244 @@
+# i18n translations for PACKAGE package.
+# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Linux User <dante9000@gmail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 13:16+0000\n"
+"PO-Revision-Date: 2024-04-08 14:17+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: i18n <https://hosted.weblate.org/projects/tcrp-mshell/"
+"lang-tcrp/de/>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.5-dev\n"
+#: MSGDE00 
+msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
+msgstr "Gerätebaum[DT] Basismodelle und HBAs benötigen kein SataPortMap,DiskIdxMap. DT-Modelle unterstützen keine HBAs\n"
+
+#: MSGDE01 
+msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
+msgstr "Wählen Sie eine Methode zur Verwaltung von Dev-Mods, DDSML/EUDEV"
+
+#: MSGDE02 
+msgid "Choose a Synology Model"
+msgstr "Wählen Sie ein Synology-Modell"
+
+#: MSGDE03 
+msgid "Choose a Synology Serial Number"
+msgstr "Wählen Sie eine Synology-Seriennummer"
+
+#: MSGDE04 
+msgid "Choose a mac address"
+msgstr "Wählen Sie eine MAC-Adresse"
+
+#: MSGDE05 
+msgid "Choose a DSM VERSION, Current"
+msgstr "Wählen Sie eine DSM-VERSION, Aktuell"
+
+#: MSGDE06 
+msgid "Choose a loader Mode, Current"
+msgstr "Wählen Sie einen Loader-Modus, Aktuell"
+
+#: MSGDE07 
+msgid ""
+msgstr ""
+
+#: MSGDE08 
+msgid ""
+msgstr ""
+
+#: MSGDE09 
+msgid ""
+msgstr ""
+
+#: MSGDE10 
+msgid "Edit user config file manually"
+msgstr "Bearbeiten Sie die Benutzerkonfigurationsdatei manuell"
+
+#: MSGDE11 
+msgid "Choose a keymap"
+msgstr "Wählen Sie eine Tastenkarte"
+
+#: MSGDE12 
+msgid "Format Disk(s # Excluding Loader Disk"
+msgstr "Diskette(n) formatieren # Ohne Ladediskette"
+
+#: MSGDE13 
+msgid "Backup TCRP"
+msgstr "Backup TCRP"
+
+#: MSGDE14 
+msgid "Reboot"
+msgstr "Neu starten"
+
+#: MSGDE15 
+msgid "Power Off"
+msgstr "ausschalten"
+
+#: MSGDE16 
+msgid "Max 24 Threads, any x86-64"
+msgstr "Max. 24 Threads, beliebiges x86-64"
+
+#: MSGDE17 
+msgid "Max 8 Threads, Haswell or later,iGPU Transcoding"
+msgstr "Max. 8 Threads, Haswell oder höher, iGPU-Transcodierung"
+
+#: MSGDE18 
+msgid "Build the loader"
+msgstr "Erstellen Sie den Loader"
+
+#: MSGDE19 
+msgid ""
+msgstr ""
+
+#: MSGDE20 
+msgid "Max ? Threads, any x86-64"
+msgstr "Max. ? Threads, beliebiges x86-64"
+
+#: MSGDE21 
+msgid "Have a camera license"
+msgstr "Haben Sie eine Kamera-Lizenz"
+
+#: MSGDE22 
+msgid "Max 16 Threads, any x86-64"
+msgstr "Max. 16 Threads, beliebiges x86-64"
+
+#: MSGDE23 
+msgid "Max 16 Threads, Haswell or later"
+msgstr "Max. 16 Threads, Haswell oder höher"
+
+#: MSGDE24 
+msgid "Nvidia GTX1650"
+msgstr "Nvidia GTX1650"
+
+#: MSGDE25 
+msgid "Nvidia GTX1050Ti"
+msgstr "Nvidia GTX1050Ti"
+
+#: MSGDE26 
+msgid "EUDEV (enhanced user-space device"
+msgstr "EUDEV (verbessertes Benutzerraumgerät)"
+
+#: MSGDE27 
+msgid "DDSML (Detected Device Static Module Loading"
+msgstr "DDSML (Erkannte Gerätestatische Modulladung)"
+
+#: MSGDE28 
+msgid "FRIEND (most recently stabilized"
+msgstr "FRIEND (zuletzt stabilisiert)"
+
+#: MSGDE29 
+msgid "JOT (The old way before friend"
+msgstr "JOT (Der alte Weg vor Freund)"
+
+#: MSGDE30 
+msgid "Generate a random serial number"
+msgstr "Erstellen Sie eine zufällige Seriennummer"
+
+#: MSGDE31 
+msgid "Enter a serial number"
+msgstr "Geben Sie eine Seriennummer ein"
+
+#: MSGDE32 
+msgid "Get a real mac address"
+msgstr "Holen Sie sich eine echte MAC-Adresse"
+
+#: MSGDE33 
+msgid "Generate a random mac address"
+msgstr "Erstellen Sie eine zufällige MAC-Adresse"
+
+#: MSGDE34 
+msgid "Enter a mac address"
+msgstr "Geben Sie eine MAC-Adresse ein"
+
+#: MSGDE35 
+msgid "press any key to continue..."
+msgstr "Drücken Sie eine beliebige Taste, um fortzufahren..."
+
+#: MSGDE36 
+msgid "Synology serial number not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "Synology-Seriennummer nicht festgelegt. Überprüfen Sie user_config.json erneut. Loader-Build abbrechen !!!!!!"
+
+#: MSGDE37 
+msgid "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "Die erste MAC-Adresse ist nicht festgelegt. Überprüfen Sie user_config.json erneut. Loader-Build abbrechen !!!!!!"
+
+#: MSGDE38 
+msgid "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!"
+msgstr "Die netif_num und die Anzahl der MAC-Adressen stimmen nicht überein. Überprüfen Sie user_config.json erneut. Loader-Build abbrechen !!!!!!"
+
+#: MSGDE39 
+msgid "Choose a language"
+msgstr "Wählen Sie eine Sprache"
+
+#: MSGDE40 
+msgid "DDSML+EUDEV"
+msgstr "DDSML+EUDEV"
+
+#: MSGDE41 
+msgid "Choose a Storage Panel Size"
+msgstr "Wählen Sie eine Größe des Speicherpaneels"
+
+#: MSGDE42 
+msgid ""
+msgstr ""
+
+#: MSGDE43 
+msgid ""
+msgstr ""
+
+#: MSGDE44 
+msgid ""
+msgstr ""
+
+#: MSGDE45 
+msgid ""
+msgstr ""
+
+#: MSGDE46 
+msgid ""
+msgstr ""
+
+#: MSGDE47 
+msgid ""
+msgstr ""
+
+#: MSGDE48 
+msgid ""
+msgstr ""
+
+#: MSGDE49 
+msgid ""
+msgstr ""
+
+#: MSGDE50 
+msgid "Mac-spoof Addon"
+msgstr "Mac-Spoof Addon"
+
+#: MSGDE51 
+msgid "Prevent SataPortMap,DiskIdxMap initialization"
+msgstr "SataPortMap,DiskIdxMap-Initialisierung verhindern"
+
+#: MSGDE52 
+msgid "Show SATA(s ports and drives for SataPortMap"
+msgstr "SATA(s)-Ports und -Laufwerke für SataPortMap anzeigen"
+
+#: MSGDE53 
+msgid "Show error log of running loader"
+msgstr "Fehlerprotokoll des laufenden Loaders anzeigen"
+
+#: MSGDE54 
+msgid "Burn TCRP Bootloader Img to USB or SSD"
+msgstr "Einen weiteren TCP-Bootloader auf USB oder SSD brennen"
+
+#: MSGDE55 
+msgid "Clone Current TCRP Bootloader to USB or SSD"
+msgstr "TCRP-Bootloader auf USB oder SSD klonen"
+

@@ -1,0 +1,244 @@
+# i18n translations for PACKAGE package.
+# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Linux User <dante9000@gmail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 13:16+0000\n"
+"PO-Revision-Date: 2024-04-08 14:17+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: i18n <https://hosted.weblate.org/projects/tcrp-mshell/"
+"lang-tcrp/fr/>\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.5-dev\n"
+#: MSGFR00 
+msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
+msgstr "Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne nécessitent pas de SataPortMap, DiskIdxMap. Les modèles DT ne prennent pas en charge les HBAs\n"
+
+#: MSGFR01 
+msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
+msgstr "Choisissez une méthode de gestion des modèles de périphérique, DDSML/EUDEV"
+
+#: MSGFR02 
+msgid "Choose a Synology Model"
+msgstr "Choisissez un modèle Synology"
+
+#: MSGFR03 
+msgid "Choose a Synology Serial Number"
+msgstr "Choisissez un numéro de série Synology"
+
+#: MSGFR04 
+msgid "Choose a mac address"
+msgstr "Choisissez une adresse MAC"
+
+#: MSGFR05 
+msgid "Choose a DSM VERSION, Current"
+msgstr "Choisissez une VERSION DSM, Actuelle"
+
+#: MSGFR06 
+msgid "Choose a loader Mode, Current"
+msgstr "Choisissez un mode de chargeur, Actuelle"
+
+#: MSGFR07 
+msgid ""
+msgstr ""
+
+#: MSGFR08 
+msgid ""
+msgstr ""
+
+#: MSGFR09 
+msgid ""
+msgstr ""
+
+#: MSGFR10 
+msgid "Edit user config file manually"
+msgstr "Modifier manuellement le fichier de configuration de l'utilisateur"
+
+#: MSGFR11 
+msgid "Choose a keymap"
+msgstr "Choisissez une disposition de clavier"
+
+#: MSGFR12 
+msgid "Format Disk(s # Excluding Loader Disk"
+msgstr "Formater le(s) disque(s) # Sans disque de chargement"
+
+#: MSGFR13 
+msgid "Backup TCRP"
+msgstr "Sauvegarde TCRP"
+
+#: MSGFR14 
+msgid "Reboot"
+msgstr "Redémarrer"
+
+#: MSGFR15 
+msgid "Power Off"
+msgstr "éteindre"
+
+#: MSGFR16 
+msgid "Max 24 Threads, any x86-64"
+msgstr "Max 24 Threads, n'importe quel x86-64"
+
+#: MSGFR17 
+msgid "Max 8 Threads, Haswell or later,iGPU Transcoding"
+msgstr "Max 8 Threads, Haswell ou plus tard, transcodage iGPU"
+
+#: MSGFR18 
+msgid "Build the loader"
+msgstr "Construisez le chargeur"
+
+#: MSGFR19 
+msgid ""
+msgstr ""
+
+#: MSGFR20 
+msgid "Max ? Threads, any x86-64"
+msgstr "Max ? Threads, n'importe quel x86-64"
+
+#: MSGFR21 
+msgid "Have a camera license"
+msgstr "Avoir une licence de caméra"
+
+#: MSGFR22 
+msgid "Max 16 Threads, any x86-64"
+msgstr "Max 16 Threads, n'importe quel x86-64"
+
+#: MSGFR23 
+msgid "Max 16 Threads, Haswell or later"
+msgstr "Max 16 Threads, Haswell ou plus tard"
+
+#: MSGFR24 
+msgid "Nvidia GTX1650"
+msgstr "Nvidia GTX1650"
+
+#: MSGFR25 
+msgid "Nvidia GTX1050Ti"
+msgstr "Nvidia GTX1050Ti"
+
+#: MSGFR26 
+msgid "EUDEV (enhanced user-space device"
+msgstr "EUDEV (périphérique d'espace utilisateur amélioré)"
+
+#: MSGFR27 
+msgid "DDSML (Detected Device Static Module Loading"
+msgstr "DDSML (Chargement de module statique de périphérique détecté)"
+
+#: MSGFR28 
+msgid "FRIEND (most recently stabilized"
+msgstr "FRIEND (le plus récemment stabilisé)"
+
+#: MSGFR29 
+msgid "JOT (The old way before friend"
+msgstr "JOT (l'ancienne méthode avant friend)"
+
+#: MSGFR30 
+msgid "Generate a random serial number"
+msgstr "Générer un numéro de série aléatoire"
+
+#: MSGFR31 
+msgid "Enter a serial number"
+msgstr "Entrez un numéro de série"
+
+#: MSGFR32 
+msgid "Get a real mac address"
+msgstr "Obtenir une véritable adresse MAC"
+
+#: MSGFR33 
+msgid "Generate a random mac address"
+msgstr "Générer une adresse MAC aléatoire"
+
+#: MSGFR34 
+msgid "Enter a mac address"
+msgstr "Entrez une adresse MAC"
+
+#: MSGFR35 
+msgid "press any key to continue..."
+msgstr "appuyez sur n'importe quelle touche pour continuer..."
+
+#: MSGFR36 
+msgid "Synology serial number not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "Le numéro de série Synology n'est pas défini. Vérifiez à nouveau user_config.json. Abandonner la construction du chargeur !!!!!!"
+
+#: MSGFR37 
+msgid "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "La première adresse MAC n'est pas définie. Vérifiez à nouveau user_config.json. Abandonner la construction du chargeur !!!!!!"
+
+#: MSGFR38 
+msgid "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!"
+msgstr "Le netif_num et le nombre d'adresses MAC ne correspondent pas. Vérifiez à nouveau user_config.json. Abandonner la construction du chargeur !!!!!!"
+
+#: MSGFR39 
+msgid "Choose a language"
+msgstr "Choisissez une langue"
+
+#: MSGFR40 
+msgid "DDSML+EUDEV"
+msgstr "DDSML+EUDEV"
+
+#: MSGFR41 
+msgid "Choose a Storage Panel Size"
+msgstr "Choisissez une taille de panneau de stockage"
+
+#: MSGFR42 
+msgid ""
+msgstr ""
+
+#: MSGFR43 
+msgid ""
+msgstr ""
+
+#: MSGFR44 
+msgid ""
+msgstr ""
+
+#: MSGFR45 
+msgid ""
+msgstr ""
+
+#: MSGFR46 
+msgid ""
+msgstr ""
+
+#: MSGFR47 
+msgid ""
+msgstr ""
+
+#: MSGFR48 
+msgid ""
+msgstr ""
+
+#: MSGFR49 
+msgid ""
+msgstr ""
+
+#: MSGFR50 
+msgid "Mac-spoof Addon"
+msgstr "Module complémentaire usurpant Mac"
+
+#: MSGFR51 
+msgid "Prevent SataPortMap,DiskIdxMap initialization"
+msgstr "Empêcher l'initialisation de SataPortMap, DiskIdxMap"
+
+#: MSGFR52 
+msgid "Show SATA(s ports and drives for SataPortMap"
+msgstr "Afficher les ports et lecteurs SATA(s) pour SataPortMap"
+
+#: MSGFR53 
+msgid "Show error log of running loader"
+msgstr "Afficher le journal des erreurs du chargeur en cours d'exécution"
+
+#: MSGFR54 
+msgid "Burn TCRP Bootloader Img to USB or SSD"
+msgstr "Graver un autre chargeur de démarrage TCRP sur USB ou SSD"
+
+#: MSGFR55 
+msgid "Clone Current TCRP Bootloader to USB or SSD"
+msgstr "Cloner le chargeur de démarrage TCRP sur USB ou SSD"
+

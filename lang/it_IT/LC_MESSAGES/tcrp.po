@@ -1,0 +1,244 @@
+# i18n translations for PACKAGE package.
+# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Linux User <dante9000@gmail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 13:16+0000\n"
+"PO-Revision-Date: 2024-04-08 14:17+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: i18n <https://hosted.weblate.org/projects/tcrp-mshell/"
+"lang-tcrp/it/>\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.5-dev\n"
+#: MSGIT00 
+msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
+msgstr "I modelli di base e gli HBA di Device-Tree [DT] non richiedono SataPortMap, DiskIdxMap. I modelli DT non supportano gli HBA\n"
+
+#: MSGIT01 
+msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
+msgstr "Scegli un metodo di gestione del Mod Dev, DDSML/EUDEV"
+
+#: MSGIT02 
+msgid "Choose a Synology Model"
+msgstr "Scegli un modello Synology"
+
+#: MSGIT03 
+msgid "Choose a Synology Serial Number"
+msgstr "Scegli un numero di serie Synology"
+
+#: MSGIT04 
+msgid "Choose a mac address"
+msgstr "Scegli un indirizzo MAC"
+
+#: MSGIT05 
+msgid "Choose a DSM VERSION, Current"
+msgstr "Scegli una VERSIONE DSM, Attuale"
+
+#: MSGIT06 
+msgid "Choose a loader Mode, Current"
+msgstr "Scegli una modalità di caricatore, Attuale"
+
+#: MSGIT07 
+msgid ""
+msgstr ""
+
+#: MSGIT08 
+msgid ""
+msgstr ""
+
+#: MSGIT09 
+msgid ""
+msgstr ""
+
+#: MSGIT10 
+msgid "Edit user config file manually"
+msgstr "Modifica manualmente il file di configurazione dell'utente"
+
+#: MSGIT11 
+msgid "Choose a keymap"
+msgstr "Scegli una mappatura dei tasti"
+
+#: MSGIT12 
+msgid "Format Disk(s # Excluding Loader Disk"
+msgstr "Formatta disco(i) # Senza disco caricatore"
+
+#: MSGIT13 
+msgid "Backup TCRP"
+msgstr "Backup TCRP"
+
+#: MSGIT14 
+msgid "Reboot"
+msgstr "Riavvia"
+
+#: MSGIT15 
+msgid "Power Off"
+msgstr "spegni"
+
+#: MSGIT16 
+msgid "Max 24 Threads, any x86-64"
+msgstr "Max 24 Thread, qualsiasi x86-64"
+
+#: MSGIT17 
+msgid "Max 8 Threads, Haswell or later,iGPU Transcoding"
+msgstr "Max 8 Thread, Haswell o successivi, trascodifica iGPU"
+
+#: MSGIT18 
+msgid "Build the loader"
+msgstr "Costruisci il caricatore"
+
+#: MSGIT19 
+msgid ""
+msgstr ""
+
+#: MSGIT20 
+msgid "Max ? Threads, any x86-64"
+msgstr "Max ? Thread, qualsiasi x86-64"
+
+#: MSGIT21 
+msgid "Have a camera license"
+msgstr "Hai una licenza per la telecamera"
+
+#: MSGIT22 
+msgid "Max 16 Threads, any x86-64"
+msgstr "Max 16 Thread, qualsiasi x86-64"
+
+#: MSGIT23 
+msgid "Max 16 Threads, Haswell or later"
+msgstr "Max 16 Thread, Haswell o successivi"
+
+#: MSGIT24 
+msgid "Nvidia GTX1650"
+msgstr "Nvidia GTX1650"
+
+#: MSGIT25 
+msgid "Nvidia GTX1050Ti"
+msgstr "Nvidia GTX1050Ti"
+
+#: MSGIT26 
+msgid "EUDEV (enhanced user-space device"
+msgstr "EUDEV (dispositivo a spazio utente migliorato)"
+
+#: MSGIT27 
+msgid "DDSML (Detected Device Static Module Loading"
+msgstr "DDSML (Caricamento statico del modulo dispositivo rilevato)"
+
+#: MSGIT28 
+msgid "FRIEND (most recently stabilized"
+msgstr "FRIEND (più recentemente stabilizzato)"
+
+#: MSGIT29 
+msgid "JOT (The old way before friend"
+msgstr "JOT (il vecchio modo prima di FRIEND)"
+
+#: MSGIT30 
+msgid "Generate a random serial number"
+msgstr "Genera un numero di serie casuale"
+
+#: MSGIT31 
+msgid "Enter a serial number"
+msgstr "Inserisci un numero di serie"
+
+#: MSGIT32 
+msgid "Get a real mac address"
+msgstr "Ottieni un vero indirizzo MAC"
+
+#: MSGIT33 
+msgid "Generate a random mac address"
+msgstr "Genera un indirizzo MAC casuale"
+
+#: MSGIT34 
+msgid "Enter a mac address"
+msgstr "Inserisci un indirizzo MAC"
+
+#: MSGIT35 
+msgid "press any key to continue..."
+msgstr "premere un tasto per continuare..."
+
+#: MSGIT36 
+msgid "Synology serial number not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "Numero di serie Synology non impostato. Controlla di nuovo user_config.json. Abortire la costruzione del caricatore !!!!!!"
+
+#: MSGIT37 
+msgid "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "Il primo indirizzo MAC non è impostato. Controlla di nuovo user_config.json. Abortire la costruzione del caricatore !!!!!!"
+
+#: MSGIT38 
+msgid "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!"
+msgstr "Il numero di netif e il numero di indirizzi MAC non corrispondono. Controlla di nuovo user_config.json. Abortire la costruzione del caricatore !!!!!!"
+
+#: MSGIT39 
+msgid "Choose a language"
+msgstr "Scegli una lingua"
+
+#: MSGIT40 
+msgid "DDSML+EUDEV"
+msgstr "DDSML+EUDEV"
+
+#: MSGIT41 
+msgid "Choose a Storage Panel Size"
+msgstr "Scegli una dimensione del pannello di archiviazione"
+
+#: MSGIT42 
+msgid ""
+msgstr ""
+
+#: MSGIT43 
+msgid ""
+msgstr ""
+
+#: MSGIT44 
+msgid ""
+msgstr ""
+
+#: MSGIT45 
+msgid ""
+msgstr ""
+
+#: MSGIT46 
+msgid ""
+msgstr ""
+
+#: MSGIT47 
+msgid ""
+msgstr ""
+
+#: MSGIT48 
+msgid ""
+msgstr ""
+
+#: MSGIT49 
+msgid ""
+msgstr ""
+
+#: MSGIT50 
+msgid "Mac-spoof Addon"
+msgstr "Componente aggiuntivo spoofing Mac"
+
+#: MSGIT51 
+msgid "Prevent SataPortMap,DiskIdxMap initialization"
+msgstr "Impedisci l'inizializzazione di SataPortMap, DiskIdxMap"
+
+#: MSGIT52 
+msgid "Show SATA(s ports and drives for SataPortMap"
+msgstr "Mostra porte e unità SATA per SATAPortMap"
+
+#: MSGIT53 
+msgid "Show error log of running loader"
+msgstr "Mostra registro errori del caricatore in esecuzione"
+
+#: MSGIT54 
+msgid "Burn TCRP Bootloader Img to USB or SSD"
+msgstr "Masterizza un altro bootloader TCRP su USB o SSD"
+
+#: MSGIT55 
+msgid "Clone Current TCRP Bootloader to USB or SSD"
+msgstr "Clona bootloader TCRP su USB o SSD"
+

@@ -1,0 +1,244 @@
+# i18n translations for PACKAGE package.
+# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Linux User <dante9000@gmail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 13:16+0000\n"
+"PO-Revision-Date: 2024-04-08 14:17+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: i18n <https://hosted.weblate.org/projects/tcrp-mshell/"
+"lang-tcrp/ja/>\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.5-dev\n"
+#: MSGJP00 
+msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
+msgstr "Device-Tree[DT]ベースモデルとHBAsは、SataPortMap、DiskIdxMapが必要ありません. DTモデルはHBAsをサポートしていません\n"
+
+#: MSGJP01 
+msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
+msgstr "Dev Mod処理方法を選択してください、EUDEV / DDSML"
+
+#: MSGJP02 
+msgid "Choose a Synology Model"
+msgstr "Synologyモデルを選択してください"
+
+#: MSGJP03 
+msgid "Choose a Synology Serial Number"
+msgstr "Synologyシリアル番号を選択してください"
+
+#: MSGJP04 
+msgid "Choose a mac address"
+msgstr "MACアドレスを選択してください"
+
+#: MSGJP05 
+msgid "Choose a DSM VERSION, Current"
+msgstr "DSM VERSION 選択、現在"
+
+#: MSGJP06 
+msgid "Choose a loader Mode, Current"
+msgstr "のローダーモードを選択してください、現在"
+
+#: MSGJP07 
+msgid ""
+msgstr ""
+
+#: MSGJP08 
+msgid ""
+msgstr ""
+
+#: MSGJP09 
+msgid ""
+msgstr ""
+
+#: MSGJP10 
+msgid "Edit user config file manually"
+msgstr "ユーザー設定ファイルを手動で編集する"
+
+#: MSGJP11 
+msgid "Choose a keymap"
+msgstr "キーマップを選択してください"
+
+#: MSGJP12 
+msgid "Format Disk(s # Excluding Loader Disk"
+msgstr "ディスクフォーマット#ローダーディスクを除く"
+
+#: MSGJP13 
+msgid "Backup TCRP"
+msgstr "TCRPをバックアップする"
+
+#: MSGJP14 
+msgid "Reboot"
+msgstr "再起動"
+
+#: MSGJP15 
+msgid "Power Off"
+msgstr "電源を切る"
+
+#: MSGJP16 
+msgid "Max 24 Threads, any x86-64"
+msgstr "最大24スレッド、任意のx86-64"
+
+#: MSGJP17 
+msgid "Max 8 Threads, Haswell or later,iGPU Transcoding"
+msgstr "Haswell以降、iGPUトランスコーディングを備えた最大8スレッド"
+
+#: MSGJP18 
+msgid "Build the loader"
+msgstr "ローダーをビルドする"
+
+#: MSGJP19 
+msgid ""
+msgstr ""
+
+#: MSGJP20 
+msgid "Max ? Threads, any x86-64"
+msgstr "最大？スレッド、任意のx86-64"
+
+#: MSGJP21 
+msgid "Have a camera license"
+msgstr "カメラライセンスを持っています"
+
+#: MSGJP22 
+msgid "Max 16 Threads, any x86-64"
+msgstr "最大16スレッド、任意のx86-64"
+
+#: MSGJP23 
+msgid "Max 16 Threads, Haswell or later"
+msgstr "Haswell以降、最大16スレッド"
+
+#: MSGJP24 
+msgid "Nvidia GTX1650"
+msgstr "Nvidia GTX1650"
+
+#: MSGJP25 
+msgid "Nvidia GTX1050Ti"
+msgstr "Nvidia GTX1050Ti"
+
+#: MSGJP26 
+msgid "EUDEV (enhanced user-space device"
+msgstr "EUDEV（拡張ユーザースペースデバイス）"
+
+#: MSGJP27 
+msgid "DDSML (Detected Device Static Module Loading"
+msgstr "DDSML（検出されたデバイス静的モジュールローディング）"
+
+#: MSGJP28 
+msgid "FRIEND (most recently stabilized"
+msgstr "FRIEND（最近安定化されました）"
+
+#: MSGJP29 
+msgid "JOT (The old way before friend"
+msgstr "JOT（フレンドよりも古い方法）"
+
+#: MSGJP30 
+msgid "Generate a random serial number"
+msgstr "ランダムなシリアル番号を生成する"
+
+#: MSGJP31 
+msgid "Enter a serial number"
+msgstr "シリアル番号を入力してください"
+
+#: MSGJP32 
+msgid "Get a real mac address"
+msgstr "実際のMACアドレスを取得する"
+
+#: MSGJP33 
+msgid "Generate a random mac address"
+msgstr "ランダムなMACアドレスを生成する"
+
+#: MSGJP34 
+msgid "Enter a mac address"
+msgstr "MACアドレスを入力してください"
+
+#: MSGJP35 
+msgid "press any key to continue..."
+msgstr "続行するには任意のキーを押してください..."
+
+#: MSGJP36 
+msgid "Synology serial number not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "Synologyのシリアル番号が設定されていません。user_config.jsonを再度確認してください。ローダービルドを中止します！！！！"
+
+#: MSGJP37 
+msgid "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "最初のMACアドレスが設定されていません。user_config.jsonを再度確認してください。ローダービルドを中止します！！！！"
+
+#: MSGJP38 
+msgid "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!"
+msgstr "netif_numとMACアドレスの数が一致しません。user_config.jsonを再度確認してください。ローダービルドを中止します！！！！"
+
+#: MSGJP39 
+msgid "Choose a language"
+msgstr "言語を選択してください"
+
+#: MSGJP40 
+msgid "DDSML+EUDEV"
+msgstr "DDSML+EUDEV"
+
+#: MSGJP41 
+msgid "Choose a Storage Panel Size"
+msgstr "ストレージパネルのサイズを選択してください"
+
+#: MSGJP42 
+msgid ""
+msgstr ""
+
+#: MSGJP43 
+msgid ""
+msgstr ""
+
+#: MSGJP44 
+msgid ""
+msgstr ""
+
+#: MSGJP45 
+msgid ""
+msgstr ""
+
+#: MSGJP46 
+msgid ""
+msgstr ""
+
+#: MSGJP47 
+msgid ""
+msgstr ""
+
+#: MSGJP48 
+msgid ""
+msgstr ""
+
+#: MSGJP49 
+msgid ""
+msgstr ""
+
+#: MSGJP50 
+msgid "Mac-spoof Addon"
+msgstr "Mac なりすましアドオン"
+
+#: MSGJP51 
+msgid "Prevent SataPortMap,DiskIdxMap initialization"
+msgstr "SataPortMap、DiskIdxMap の初期化を防止します"
+
+#: MSGJP52 
+msgid "Show SATA(s ports and drives for SataPortMap"
+msgstr "SataPortMap の SATA ポートとドライブを表示"
+
+#: MSGJP53 
+msgid "Show error log of running loader"
+msgstr "実行中のローダーのエラー ログを表示"
+
+#: MSGJP54 
+msgid "Burn TCRP Bootloader Img to USB or SSD"
+msgstr "別の TCRP ブートローダーを USB または SSD に書き込む"
+
+#: MSGJP55 
+msgid "Clone Current TCRP Bootloader to USB or SSD"
+msgstr "TCRP ブートローダーのクローンを USB または SSD に作成"
+

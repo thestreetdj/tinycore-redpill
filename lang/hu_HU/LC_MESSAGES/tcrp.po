@@ -1,0 +1,244 @@
+# i18n translations for PACKAGE package.
+# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Linux User <dante9000@gmail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 13:16+0000\n"
+"PO-Revision-Date: 2024-04-08 14:17+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: i18n <https://hosted.weblate.org/projects/tcrp-mshell/"
+"lang-tcrp/hu/>\n"
+"Language: hu_HU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.5-dev\n"
+#: MSGHU00 
+msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
+msgstr "A Device-Tree[DT] alapmodellek és HBA-k nem igényelnek SataPortMap-et, DiskIdxMap-et. A DT-modellek nem támogatják a HBA-kat"
+
+#: MSGHU01 
+msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
+msgstr "Válassz egy Dev Mod kezelési módszert, DDSML/EUDEV"
+
+#: MSGHU02 
+msgid "Choose a Synology Model"
+msgstr "Szinológiai modell kiválasztása"
+
+#: MSGHU03 
+msgid "Choose a Synology Serial Number"
+msgstr "Válassz egy Synology sorozatszámot"
+
+#: MSGHU04 
+msgid "Choose a mac address"
+msgstr "Mac-cím kiválasztása"
+
+#: MSGHU05 
+msgid "Choose a DSM VERSION, Current"
+msgstr "Válasszon DSM VERZIÓT, Aktuális"
+
+#: MSGHU06 
+msgid "Choose a loader Mode, Current"
+msgstr "Válasszon betöltő módot, Aktuális"
+
+#: MSGHU07 
+msgid ""
+msgstr ""
+
+#: MSGHU08 
+msgid ""
+msgstr ""
+
+#: MSGHU09 
+msgid ""
+msgstr ""
+
+#: MSGHU10 
+msgid "Edit user config file manually"
+msgstr "Felhasználói konfigurációs fájl manuális szerkesztése"
+
+#: MSGHU11 
+msgid "Choose a keymap"
+msgstr "Válassz ki egy billentyűkiosztást"
+
+#: MSGHU12 
+msgid "Format Disk(s # Excluding Loader Disk"
+msgstr "Lemez(ek # formázása, a betöltő lemez kivételével)"
+
+#: MSGHU13 
+msgid "Backup TCRP"
+msgstr "Tartalék TCRP"
+
+#: MSGHU14 
+msgid "Reboot"
+msgstr "Újraindítás"
+
+#: MSGHU15 
+msgid "Power Off"
+msgstr "Kikapcsolás"
+
+#: MSGHU16 
+msgid "Max 24 Threads, any x86-64"
+msgstr "Maximum 24 szál, bármilyen x86-64"
+
+#: MSGHU17 
+msgid "Max 8 Threads, Haswell or later,iGPU Transcoding"
+msgstr "Maximum 8 szál, Haswell vagy újabb, iGPU átkódolás"
+
+#: MSGHU18 
+msgid "Build the loader"
+msgstr "A betöltő készítése"
+
+#: MSGHU19 
+msgid ""
+msgstr ""
+
+#: MSGHU20 
+msgid "Max ? Threads, any x86-64"
+msgstr "Max? szálak, bármilyen x86-64"
+
+#: MSGHU21 
+msgid "Have a camera license"
+msgstr "Van kameraengedély"
+
+#: MSGHU22 
+msgid "Max 16 Threads, any x86-64"
+msgstr "Maximum 16 szál, bármilyen x86-64"
+
+#: MSGHU23 
+msgid "Max 16 Threads, Haswell or later"
+msgstr "Maximum 16 szál, Haswell vagy újabb"
+
+#: MSGHU24 
+msgid "Nvidia GTX1650"
+msgstr "Nvidia GTX1650"
+
+#: MSGHU25 
+msgid "Nvidia GTX1050Ti"
+msgstr "Nvidia GTX1050Ti"
+
+#: MSGHU26 
+msgid "EUDEV (enhanced user-space device"
+msgstr "EUDEV (bővített felhasználói tér eszköz"
+
+#: MSGHU27 
+msgid "DDSML (Detected Device Static Module Loading"
+msgstr "DDSML (észlelt eszköz statikus modul betöltése"
+
+#: MSGHU28 
+msgid "FRIEND (most recently stabilized"
+msgstr "BARÁT (legutóbb stabilizált"
+
+#: MSGHU29 
+msgid "JOT (The old way before friend"
+msgstr "JOT (a régi út barát előtt"
+
+#: MSGHU30 
+msgid "Generate a random serial number"
+msgstr "Véletlenszerű sorozatszám generálása"
+
+#: MSGHU31 
+msgid "Enter a serial number"
+msgstr "Adjon meg egy sorozatszámot"
+
+#: MSGHU32 
+msgid "Get a real mac address"
+msgstr "Szerezzen valódi Mac-címet"
+
+#: MSGHU33 
+msgid "Generate a random mac address"
+msgstr "Véletlenszerű Mac-cím létrehozása"
+
+#: MSGHU34 
+msgid "Enter a mac address"
+msgstr "Adjon meg egy Mac-címet"
+
+#: MSGHU35 
+msgid "press any key to continue..."
+msgstr "nyomjon meg egy gombot a folytatáshoz..."
+
+#: MSGHU36 
+msgid "Synology serial number not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "A szinológia sorozatszáma nincs beállítva. Ellenőrizze újra a user_config.json fájlt. Szakítsa meg a betöltő összeállítását !!!"
+
+#: MSGHU37 
+msgid "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "Az első MAC-cím nincs beállítva. Ellenőrizze újra a user_config.json fájlt. Szakítsa meg a betöltő összeállítását !!!"
+
+#: MSGHU38 
+msgid "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!"
+msgstr "A netif_num és a Mac-címek száma nem egyezik. Ellenőrizze újra a user_config.json fájlt. Állítsa meg a betöltő összeállítását !!!"
+
+#: MSGHU39 
+msgid "Choose a language"
+msgstr "Nyelv kiválasztása"
+
+#: MSGHU40 
+msgid "DDSML+EUDEV"
+msgstr "DDSML+EUDEV"
+
+#: MSGHU41 
+msgid "Choose a Storage Panel Size"
+msgstr "Válassz egy tárolópanel méretét"
+
+#: MSGHU42 
+msgid ""
+msgstr ""
+
+#: MSGHU43 
+msgid ""
+msgstr ""
+
+#: MSGHU44 
+msgid ""
+msgstr ""
+
+#: MSGHU45 
+msgid ""
+msgstr ""
+
+#: MSGHU46 
+msgid ""
+msgstr ""
+
+#: MSGHU47 
+msgid ""
+msgstr ""
+
+#: MSGHU48 
+msgid ""
+msgstr ""
+
+#: MSGHU49 
+msgid ""
+msgstr ""
+
+#: MSGHU50 
+msgid "Mac-spoof Addon"
+msgstr "Mac-hamis kiegészítés"
+
+#: MSGHU51 
+msgid "Prevent SataPortMap,DiskIdxMap initialization"
+msgstr "A SataPortMap,DiskIdxMap inicializálás megakadályozása"
+
+#: MSGHU52 
+msgid "Show SATA(s ports and drives for SataPortMap"
+msgstr "SATA portok és meghajtók megjelenítése a SataPortMap számára"
+
+#: MSGHU53 
+msgid "Show error log of running loader"
+msgstr "A futó betöltő hibanaplójának megjelenítése"
+
+#: MSGHU54 
+msgid "Burn TCRP Bootloader Img to USB or SSD"
+msgstr "A TCRP Bootloader kép írása USB-re vagy SSD-re"
+
+#: MSGHU55 
+msgid "Clone Current TCRP Bootloader to USB or SSD"
+msgstr "A jelenlegi TCRP rendszerbetöltő klónozása USB-re vagy SSD-re"
+

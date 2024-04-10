@@ -1,0 +1,244 @@
+# i18n translations for PACKAGE package.
+# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Linux User <dante9000@gmail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 13:16+0000\n"
+"PO-Revision-Date: 2024-04-08 14:17+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: i18n <https://hosted.weblate.org/projects/tcrp-mshell/"
+"lang-tcrp/ar/>\n"
+"Language: ar_EG\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.5-dev\n"
+#: MSGEG00 
+msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
+msgstr "النماذج الأساسية لشجرة الأجهزة [DT] وHBAs لا تتطلب SataPortMap، وDiskIdxMap. ونماذج DT لا تدعم HBAs"
+
+#: MSGEG01 
+msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
+msgstr "اختر طريقة التعامل مع Dev Mod، DDSML/EUDEV"
+
+#: MSGEG02 
+msgid "Choose a Synology Model"
+msgstr "اختر نموذج Synology"
+
+#: MSGEG03 
+msgid "Choose a Synology Serial Number"
+msgstr "اختر الرقم التسلسلي لـ Synology"
+
+#: MSGEG04 
+msgid "Choose a mac address"
+msgstr "اختر عنوان ماك"
+
+#: MSGEG05 
+msgid "Choose a DSM VERSION, Current"
+msgstr "اختر إصدار DSM، الحالي"
+
+#: MSGEG06 
+msgid "Choose a loader Mode, Current"
+msgstr "اختر وضع المُحمل، الحالي"
+
+#: MSGEG07 
+msgid ""
+msgstr ""
+
+#: MSGEG08 
+msgid ""
+msgstr ""
+
+#: MSGEG09 
+msgid ""
+msgstr ""
+
+#: MSGEG10 
+msgid "Edit user config file manually"
+msgstr "تحرير ملف تكوين المستخدم يدويًا"
+
+#: MSGEG11 
+msgid "Choose a keymap"
+msgstr "اختر خريطة مفاتيح"
+
+#: MSGEG12 
+msgid "Format Disk(s # Excluding Loader Disk"
+msgstr "تنسيق القرص (الأقراص # باستثناء قرص التحميل"
+
+#: MSGEG13 
+msgid "Backup TCRP"
+msgstr "النسخ الاحتياطي لـ TCRP"
+
+#: MSGEG14 
+msgid "Reboot"
+msgstr "إعادة التشغيل"
+
+#: MSGEG15 
+msgid "Power Off"
+msgstr "إيقاف التشغيل"
+
+#: MSGEG16 
+msgid "Max 24 Threads, any x86-64"
+msgstr "24 خيط كحد أقصى، أي x86-64"
+
+#: MSGEG17 
+msgid "Max 8 Threads, Haswell or later,iGPU Transcoding"
+msgstr "8 خيوط بحد أقصى، Haswell أو إصدار أحدث، تحويل ترميز iGPU"
+
+#: MSGEG18 
+msgid "Build the loader"
+msgstr "إنشاء المحمل"
+
+#: MSGEG19 
+msgid ""
+msgstr ""
+
+#: MSGEG20 
+msgid "Max ? Threads, any x86-64"
+msgstr "الحد الأقصى؟ المواضيع، أي x86-64"
+
+#: MSGEG21 
+msgid "Have a camera license"
+msgstr "لديك رخصة كاميرا"
+
+#: MSGEG22 
+msgid "Max 16 Threads, any x86-64"
+msgstr "16 خيط كحد أقصى، أي x86-64"
+
+#: MSGEG23 
+msgid "Max 16 Threads, Haswell or later"
+msgstr "16 خيط كحد أقصى، Haswell أو الأحدث"
+
+#: MSGEG24 
+msgid "Nvidia GTX1650"
+msgstr "إنفيديا جي تي إكس 1650"
+
+#: MSGEG25 
+msgid "Nvidia GTX1050Ti"
+msgstr "إنفيديا جي تي إكس 1050 تي آي"
+
+#: MSGEG26 
+msgid "EUDEV (enhanced user-space device"
+msgstr "EUDEV (جهاز مساحة المستخدم المحسّن"
+
+#: MSGEG27 
+msgid "DDSML (Detected Device Static Module Loading"
+msgstr "DDSML (تحميل الوحدة الثابتة للجهاز الذي تم اكتشافه"
+
+#: MSGEG28 
+msgid "FRIEND (most recently stabilized"
+msgstr "الصديق (الصديق (المستقر مؤخرًا)"
+
+#: MSGEG29 
+msgid "JOT (The old way before friend"
+msgstr "JOT (الطريقة القديمة قبل الصديق"
+
+#: MSGEG30 
+msgid "Generate a random serial number"
+msgstr "إنشاء رقم تسلسلي عشوائي"
+
+#: MSGEG31 
+msgid "Enter a serial number"
+msgstr "أدخل الرقم التسلسلي"
+
+#: MSGEG32 
+msgid "Get a real mac address"
+msgstr "الحصول على عنوان Mac حقيقي"
+
+#: MSGEG33 
+msgid "Generate a random mac address"
+msgstr "إنشاء عنوان Mac عشوائي"
+
+#: MSGEG34 
+msgid "Enter a mac address"
+msgstr "أدخل عنوان ماك"
+
+#: MSGEG35 
+msgid "press any key to continue..."
+msgstr "اضغط على أي مفتاح للمتابعة..."
+
+#: MSGEG36 
+msgid "Synology serial number not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "لم يتم تعيين الرقم التسلسلي لـ Synology. تحقق من user_config.json مرة أخرى. قم بإحباط بناء أداة التحميل !!!"
+
+#: MSGEG37 
+msgid "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "لم يتم تعيين عنوان MAC الأول. تحقق من user_config.json مرة أخرى. قم بإحباط إنشاء أداة التحميل !!!"
+
+#: MSGEG38 
+msgid "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!"
+msgstr "netif_num وعدد عناوين mac غير متطابقين. تحقق من user_config.json مرة أخرى. قم بإلغاء إنشاء أداة التحميل !!!"
+
+#: MSGEG39 
+msgid "Choose a language"
+msgstr "اختر لغة"
+
+#: MSGEG40 
+msgid "DDSML+EUDEV"
+msgstr "DDSML+EUDEV"
+
+#: MSGEG41 
+msgid "Choose a Storage Panel Size"
+msgstr "اختر حجم لوحة التخزين"
+
+#: MSGEG42 
+msgid ""
+msgstr ""
+
+#: MSGEG43 
+msgid ""
+msgstr ""
+
+#: MSGEG44 
+msgid ""
+msgstr ""
+
+#: MSGEG45 
+msgid ""
+msgstr ""
+
+#: MSGEG46 
+msgid ""
+msgstr ""
+
+#: MSGEG47 
+msgid ""
+msgstr ""
+
+#: MSGEG48 
+msgid ""
+msgstr ""
+
+#: MSGEG49 
+msgid ""
+msgstr ""
+
+#: MSGEG50 
+msgid "Mac-spoof Addon"
+msgstr "ملحق Mac-spoof"
+
+#: MSGEG51 
+msgid "Prevent SataPortMap,DiskIdxMap initialization"
+msgstr "منع تهيئة SataPortMap وDiskIdxMap"
+
+#: MSGEG52 
+msgid "Show SATA(s ports and drives for SataPortMap"
+msgstr "إظهار منافذ ومحركات أقراص SATA لـSataPortMap"
+
+#: MSGEG53 
+msgid "Show error log of running loader"
+msgstr "إظهار سجل أخطاء أداة التحميل قيد التشغيل"
+
+#: MSGEG54 
+msgid "Burn TCRP Bootloader Img to USB or SSD"
+msgstr "نسخ صورة أداة تحميل التشغيل TCRP على USB أو SSD"
+
+#: MSGEG55 
+msgid "Clone Current TCRP Bootloader to USB or SSD"
+msgstr "استنساخ أداة تحميل التشغيل TCRP الحالية إلى USB أو SSD"
+

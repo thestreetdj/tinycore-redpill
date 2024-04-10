@@ -1,0 +1,244 @@
+# i18n translations for PACKAGE package.
+# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Linux User <dante9000@gmail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 13:16+0000\n"
+"PO-Revision-Date: 2024-04-08 14:17+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: i18n <https://hosted.weblate.org/projects/tcrp-mshell/"
+"lang-tcrp/zh/>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.5-dev\n"
+#: MSGCN00 
+msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
+msgstr "设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap. DT模型不支持HBA\n"
+
+#: MSGCN01 
+msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
+msgstr "选择Dev Mod处理方法，DDSML/EUDEV"
+
+#: MSGCN02 
+msgid "Choose a Synology Model"
+msgstr "选择一个Synology型号"
+
+#: MSGCN03 
+msgid "Choose a Synology Serial Number"
+msgstr "选择一个Synology序列号"
+
+#: MSGCN04 
+msgid "Choose a mac address"
+msgstr "选择一个mac地址"
+
+#: MSGCN05 
+msgid "Choose a DSM VERSION, Current"
+msgstr "选择当前的 DSM, 版本"
+
+#: MSGCN06 
+msgid "Choose a loader Mode, Current"
+msgstr "选择加载器模式, 版本"
+
+#: MSGCN07 
+msgid ""
+msgstr ""
+
+#: MSGCN08 
+msgid ""
+msgstr ""
+
+#: MSGCN09 
+msgid ""
+msgstr ""
+
+#: MSGCN10 
+msgid "Edit user config file manually"
+msgstr "手动编辑用户配置文件"
+
+#: MSGCN11 
+msgid "Choose a keymap"
+msgstr "选择一个键盘映射"
+
+#: MSGCN12 
+msgid "Format Disk(s # Excluding Loader Disk"
+msgstr "磁盘格式 # 不包括加载器磁盘"
+
+#: MSGCN13 
+msgid "Backup TCRP"
+msgstr "备份TCRP"
+
+#: MSGCN14 
+msgid "Reboot"
+msgstr "重新启动"
+
+#: MSGCN15 
+msgid "Power Off"
+msgstr "关闭电源"
+
+#: MSGCN16 
+msgid "Max 24 Threads, any x86-64"
+msgstr "最大24线程，任何x86-64"
+
+#: MSGCN17 
+msgid "Max 8 Threads, Haswell or later,iGPU Transcoding"
+msgstr "最大8线程，Haswell或更高版本，iGPU转码"
+
+#: MSGCN18 
+msgid "Build the loader"
+msgstr "构建加载器"
+
+#: MSGCN19 
+msgid ""
+msgstr ""
+
+#: MSGCN20 
+msgid "Max ? Threads, any x86-64"
+msgstr "最大？线程，任何x86-64"
+
+#: MSGCN21 
+msgid "Have a camera license"
+msgstr "拥有摄像机许可证"
+
+#: MSGCN22 
+msgid "Max 16 Threads, any x86-64"
+msgstr "最大16线程，任何x86-64"
+
+#: MSGCN23 
+msgid "Max 16 Threads, Haswell or later"
+msgstr "最大16线程，Haswell或更高版本"
+
+#: MSGCN24 
+msgid "Nvidia GTX1650"
+msgstr "Nvidia GTX1650"
+
+#: MSGCN25 
+msgid "Nvidia GTX1050Ti"
+msgstr "Nvidia GTX1050Ti"
+
+#: MSGCN26 
+msgid "EUDEV (enhanced user-space device"
+msgstr "EUDEV（增强的用户空间设备）"
+
+#: MSGCN27 
+msgid "DDSML (Detected Device Static Module Loading"
+msgstr "DDSML（检测到的设备静态模块加载）"
+
+#: MSGCN28 
+msgid "FRIEND (most recently stabilized"
+msgstr "FRIEND（最近稳定）"
+
+#: MSGCN29 
+msgid "JOT (The old way before friend"
+msgstr "JOT（在friend之前的旧方式）"
+
+#: MSGCN30 
+msgid "Generate a random serial number"
+msgstr "生成一个随机序列号"
+
+#: MSGCN31 
+msgid "Enter a serial number"
+msgstr "输入序列号"
+
+#: MSGCN32 
+msgid "Get a real mac address"
+msgstr "获取真实的mac地址"
+
+#: MSGCN33 
+msgid "Generate a random mac address"
+msgstr "生成一个随机的mac地址"
+
+#: MSGCN34 
+msgid "Enter a mac address"
+msgstr "输入mac地址"
+
+#: MSGCN35 
+msgid "press any key to continue..."
+msgstr "按任意键继续..."
+
+#: MSGCN36 
+msgid "Synology serial number not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "未设置Synology序列号。请再次检查user_config.json。终止加载器构建!!!!!!"
+
+#: MSGCN37 
+msgid "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "未设置第一个MAC地址。请再次检查user_config.json。终止加载器构建!!!!!!"
+
+#: MSGCN38 
+msgid "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!"
+msgstr "netif_num和mac地址数量不匹配。请再次检查user_config.json。终止加载器构建!!!!!!"
+
+#: MSGCN39 
+msgid "Choose a language"
+msgstr "选择语言"
+
+#: MSGCN40 
+msgid "DDSML+EUDEV"
+msgstr "DDSML+EUDEV"
+
+#: MSGCN41 
+msgid "Choose a Storage Panel Size"
+msgstr "选择存储面板尺寸"
+
+#: MSGCN42 
+msgid ""
+msgstr ""
+
+#: MSGCN43 
+msgid ""
+msgstr ""
+
+#: MSGCN44 
+msgid ""
+msgstr ""
+
+#: MSGCN45 
+msgid ""
+msgstr ""
+
+#: MSGCN46 
+msgid ""
+msgstr ""
+
+#: MSGCN47 
+msgid ""
+msgstr ""
+
+#: MSGCN48 
+msgid ""
+msgstr ""
+
+#: MSGCN49 
+msgid ""
+msgstr ""
+
+#: MSGCN50 
+msgid "Mac-spoof Addon"
+msgstr "Mac 欺骗插件"
+
+#: MSGCN51 
+msgid "Prevent SataPortMap,DiskIdxMap initialization"
+msgstr "防止 SataPortMap、DiskIdxMap 初始化"
+
+#: MSGCN52 
+msgid "Show SATA(s ports and drives for SataPortMap"
+msgstr "显示 SATAPortMap 的 SATA 端口和驱动器"
+
+#: MSGCN53 
+msgid "Show error log of running loader"
+msgstr "显示运行加载程序的错误日志"
+
+#: MSGCN54 
+msgid "Burn TCRP Bootloader Img to USB or SSD"
+msgstr "将另一个 TCRP 引导加载程序刻录到 USB 或 SSD"
+
+#: MSGCN55 
+msgid "Clone Current TCRP Bootloader to USB or SSD"
+msgstr "将 TCRP 引导加载程序克隆到 USB 或 SSD"
+
