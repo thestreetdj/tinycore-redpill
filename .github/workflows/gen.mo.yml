@@ -58,6 +58,7 @@ jobs:
           echo "Convert po2mo end"
           
           ls -lrt ${DEST_PATH}/*/LC_MESSAGES/
+          tar -zcvf lang.tgz -C ${DEST_PATH} .          
       - name: Commit and push changes
         run: |
           git add .
