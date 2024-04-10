@@ -19,12 +19,25 @@ jobs:
           
       - name: make local mo file
         run: |
+          sudo apt-get update
+          sudo apt-get install gettext
           ROOT_PATH=${{ github.workspace }}
           cd ${ROOT_PATH}/
           echo "${ROOT_PATH}"
+          
+          echo "make po begin"
+          ./i18n.h
+          for L in `echo "en_US ko_KR ja_JP zh_CN ru_RU fr_FR de_DE es_ES it_IT pt_BR ar_EG hi_IN hu_HU id_ID tr_TR"`; do
+          	[ ! -d "lang/${L}/LC_MESSAGES" ] && mkdir -p lang/${L}/LC_MESSAGES
+            lcode=$(echo ${L} | cut -c 4-) 
+            for 
+          	  echo "msgid " >> lang/${L}/LC_MESSAGES/tcrp.po
+              echo "msgstr " >> lang/${L}/LC_MESSAGES/tcrp.po
+            done  
+          done
+          echo "make po end"
+          
           echo "Convert po2mo begin"
-          sudo apt-get update
-          sudo apt-get install gettext
           DEST_PATH="${ROOT_PATH}/buildroot/board/tcrpfriend/rootfs-overlay/root/lang"
           echo "${DEST_PATH}"
           for P in $(ls ${DEST_PATH}/*/LC_MESSAGES/msg.po 2>/dev/null); do
@@ -32,7 +45,8 @@ jobs:
             echo "msgfmt ${P} to ${P/.po/.mo}"
             msgfmt ${P} -o ${P/.po/.mo}
           done
-          echo "Convert po2mo end"          
+          echo "Convert po2mo end"
+          
           ls -lrt ${DEST_PATH}/*/LC_MESSAGES/
       - name: Commit and push changes
         run: |
