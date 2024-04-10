@@ -46,18 +46,6 @@ msgstr "Geçerli bir DSM SÜRÜMÜ Seçin"
 msgid "Choose a loader Mode, Current"
 msgstr "Bir yükleyici modu seçin, Geçerli"
 
-#: MSGTR07 
-msgid ""
-msgstr ""
-
-#: MSGTR08 
-msgid ""
-msgstr ""
-
-#: MSGTR09 
-msgid ""
-msgstr ""
-
 #: MSGTR10 
 msgid "Edit user config file manually"
 msgstr "Kullanıcı yapılandırma dosyasını manuel olarak düzenle"
@@ -93,10 +81,6 @@ msgstr "Maksimum 8 Konu, Haswell veya üzeri,iGPU Kod Dönüştürme"
 #: MSGTR18 
 msgid "Build the loader"
 msgstr "Yükleyiciyi oluştur"
-
-#: MSGTR19 
-msgid ""
-msgstr ""
 
 #: MSGTR20 
 msgid "Max ? Threads, any x86-64"
@@ -185,38 +169,6 @@ msgstr "DDSML+EUDEV"
 #: MSGTR41 
 msgid "Choose a Storage Panel Size"
 msgstr "Depolama Paneli Boyutu Seçin"
-
-#: MSGTR42 
-msgid ""
-msgstr ""
-
-#: MSGTR43 
-msgid ""
-msgstr ""
-
-#: MSGTR44 
-msgid ""
-msgstr ""
-
-#: MSGTR45 
-msgid ""
-msgstr ""
-
-#: MSGTR46 
-msgid ""
-msgstr ""
-
-#: MSGTR47 
-msgid ""
-msgstr ""
-
-#: MSGTR48 
-msgid ""
-msgstr ""
-
-#: MSGTR49 
-msgid ""
-msgstr ""
 
 #: MSGTR50 
 msgid "Mac-spoof Addon"

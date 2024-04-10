@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Weblate 5.5-dev\n"
 #: MSGKR00 
 msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
-msgstr "Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다. DT모델은 HBA를 지원하지 않습니다.\n"
+msgstr "Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다. DT모델은 HBA를 지원하지 않습니다."
 
 #: MSGKR01 
 msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
@@ -45,18 +45,6 @@ msgstr "DSM VERSION 선택, 현재"
 #: MSGKR06 
 msgid "Choose a loader Mode, Current"
 msgstr "로더모드 선택, 현재"
-
-#: MSGKR07 
-msgid ""
-msgstr ""
-
-#: MSGKR08 
-msgid ""
-msgstr ""
-
-#: MSGKR09 
-msgid ""
-msgstr ""
 
 #: MSGKR10 
 msgid "Edit user config file manually"
@@ -93,10 +81,6 @@ msgstr "최대 8 스레드 지원, 인텔 4세대 하스웰 이후부터 지원,
 #: MSGKR18 
 msgid "Build the loader"
 msgstr "로더 빌드"
-
-#: MSGKR19 
-msgid ""
-msgstr ""
 
 #: MSGKR20 
 msgid "Max ? Threads, any x86-64"
@@ -185,38 +169,6 @@ msgstr "DDSML+EUDEV"
 #: MSGKR41 
 msgid "Choose a Storage Panel Size"
 msgstr "저장소 패널 크기를 선택하세요"
-
-#: MSGKR42 
-msgid ""
-msgstr ""
-
-#: MSGKR43 
-msgid ""
-msgstr ""
-
-#: MSGKR44 
-msgid ""
-msgstr ""
-
-#: MSGKR45 
-msgid ""
-msgstr ""
-
-#: MSGKR46 
-msgid ""
-msgstr ""
-
-#: MSGKR47 
-msgid ""
-msgstr ""
-
-#: MSGKR48 
-msgid ""
-msgstr ""
-
-#: MSGKR49 
-msgid ""
-msgstr ""
 
 #: MSGKR50 
 msgid "Mac-spoof Addon"

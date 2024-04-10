@@ -46,18 +46,6 @@ msgstr "वर्तमान DSM संस्करण चुनें"
 msgid "Choose a loader Mode, Current"
 msgstr "एक लोडर मोड चुनें, वर्तमान"
 
-#: MSGIN07 
-msgid ""
-msgstr ""
-
-#: MSGIN08 
-msgid ""
-msgstr ""
-
-#: MSGIN09 
-msgid ""
-msgstr ""
-
 #: MSGIN10 
 msgid "Edit user config file manually"
 msgstr "उपयोगकर्ता कॉन्फिग फ़ाइल को मैन्युअल रूप से संपादित करें"
@@ -93,10 +81,6 @@ msgstr "अधिकतम 8 थ्रेड, हैसवेल या बा�
 #: MSGIN18 
 msgid "Build the loader"
 msgstr "लोडर बनाएँ एमएसजीआईएन19="
-
-#: MSGIN19 
-msgid ""
-msgstr ""
 
 #: MSGIN20 
 msgid "Max ? Threads, any x86-64"
@@ -185,38 +169,6 @@ msgstr "DDSML+EUDEV"
 #: MSGIN41 
 msgid "Choose a Storage Panel Size"
 msgstr "स्टोरेज पैनल का आकार चुनें"
-
-#: MSGIN42 
-msgid ""
-msgstr ""
-
-#: MSGIN43 
-msgid ""
-msgstr ""
-
-#: MSGIN44 
-msgid ""
-msgstr ""
-
-#: MSGIN45 
-msgid ""
-msgstr ""
-
-#: MSGIN46 
-msgid ""
-msgstr ""
-
-#: MSGIN47 
-msgid ""
-msgstr ""
-
-#: MSGIN48 
-msgid ""
-msgstr ""
-
-#: MSGIN49 
-msgid ""
-msgstr ""
 
 #: MSGIN50 
 msgid "Mac-spoof Addon"

@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Weblate 5.5-dev\n"
 #: MSGCN00 
 msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
-msgstr "设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap. DT模型不支持HBA\n"
+msgstr "设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap. DT模型不支持HBA"
 
 #: MSGCN01 
 msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
@@ -45,18 +45,6 @@ msgstr "选择当前的 DSM, 版本"
 #: MSGCN06 
 msgid "Choose a loader Mode, Current"
 msgstr "选择加载器模式, 版本"
-
-#: MSGCN07 
-msgid ""
-msgstr ""
-
-#: MSGCN08 
-msgid ""
-msgstr ""
-
-#: MSGCN09 
-msgid ""
-msgstr ""
 
 #: MSGCN10 
 msgid "Edit user config file manually"
@@ -93,10 +81,6 @@ msgstr "最大8线程，Haswell或更高版本，iGPU转码"
 #: MSGCN18 
 msgid "Build the loader"
 msgstr "构建加载器"
-
-#: MSGCN19 
-msgid ""
-msgstr ""
 
 #: MSGCN20 
 msgid "Max ? Threads, any x86-64"
@@ -185,38 +169,6 @@ msgstr "DDSML+EUDEV"
 #: MSGCN41 
 msgid "Choose a Storage Panel Size"
 msgstr "选择存储面板尺寸"
-
-#: MSGCN42 
-msgid ""
-msgstr ""
-
-#: MSGCN43 
-msgid ""
-msgstr ""
-
-#: MSGCN44 
-msgid ""
-msgstr ""
-
-#: MSGCN45 
-msgid ""
-msgstr ""
-
-#: MSGCN46 
-msgid ""
-msgstr ""
-
-#: MSGCN47 
-msgid ""
-msgstr ""
-
-#: MSGCN48 
-msgid ""
-msgstr ""
-
-#: MSGCN49 
-msgid ""
-msgstr ""
 
 #: MSGCN50 
 msgid "Mac-spoof Addon"

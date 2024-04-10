@@ -46,18 +46,6 @@ msgstr "اختر إصدار DSM، الحالي"
 msgid "Choose a loader Mode, Current"
 msgstr "اختر وضع المُحمل، الحالي"
 
-#: MSGEG07 
-msgid ""
-msgstr ""
-
-#: MSGEG08 
-msgid ""
-msgstr ""
-
-#: MSGEG09 
-msgid ""
-msgstr ""
-
 #: MSGEG10 
 msgid "Edit user config file manually"
 msgstr "تحرير ملف تكوين المستخدم يدويًا"
@@ -93,10 +81,6 @@ msgstr "8 خيوط بحد أقصى، Haswell أو إصدار أحدث، تحوي
 #: MSGEG18 
 msgid "Build the loader"
 msgstr "إنشاء المحمل"
-
-#: MSGEG19 
-msgid ""
-msgstr ""
 
 #: MSGEG20 
 msgid "Max ? Threads, any x86-64"
@@ -185,38 +169,6 @@ msgstr "DDSML+EUDEV"
 #: MSGEG41 
 msgid "Choose a Storage Panel Size"
 msgstr "اختر حجم لوحة التخزين"
-
-#: MSGEG42 
-msgid ""
-msgstr ""
-
-#: MSGEG43 
-msgid ""
-msgstr ""
-
-#: MSGEG44 
-msgid ""
-msgstr ""
-
-#: MSGEG45 
-msgid ""
-msgstr ""
-
-#: MSGEG46 
-msgid ""
-msgstr ""
-
-#: MSGEG47 
-msgid ""
-msgstr ""
-
-#: MSGEG48 
-msgid ""
-msgstr ""
-
-#: MSGEG49 
-msgid ""
-msgstr ""
 
 #: MSGEG50 
 msgid "Mac-spoof Addon"

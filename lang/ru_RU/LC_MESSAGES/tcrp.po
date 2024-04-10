@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Weblate 5.5-dev\n"
 #: MSGRU00 
 msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
-msgstr "Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap. DT модели не поддерживают HBAs\n"
+msgstr "Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap. DT модели не поддерживают HBAs"
 
 #: MSGRU01 
 msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
@@ -45,18 +45,6 @@ msgstr "Выберите ВЕРСИЮ DSM, Текущий"
 #: MSGRU06 
 msgid "Choose a loader Mode, Current"
 msgstr "Выберите текущий режим загрузчика, Текущий"
-
-#: MSGRU07 
-msgid ""
-msgstr ""
-
-#: MSGRU08 
-msgid ""
-msgstr ""
-
-#: MSGRU09 
-msgid ""
-msgstr ""
 
 #: MSGRU10 
 msgid "Edit user config file manually"
@@ -93,10 +81,6 @@ msgstr "Максимум 8 потоков, Haswell или более поздн�
 #: MSGRU18 
 msgid "Build the loader"
 msgstr "Соберите загрузчик"
-
-#: MSGRU19 
-msgid ""
-msgstr ""
 
 #: MSGRU20 
 msgid "Max ? Threads, any x86-64"
@@ -185,38 +169,6 @@ msgstr "DDSML+EUDEV"
 #: MSGRU41 
 msgid "Choose a Storage Panel Size"
 msgstr "Выберите размер панели хранения"
-
-#: MSGRU42 
-msgid ""
-msgstr ""
-
-#: MSGRU43 
-msgid ""
-msgstr ""
-
-#: MSGRU44 
-msgid ""
-msgstr ""
-
-#: MSGRU45 
-msgid ""
-msgstr ""
-
-#: MSGRU46 
-msgid ""
-msgstr ""
-
-#: MSGRU47 
-msgid ""
-msgstr ""
-
-#: MSGRU48 
-msgid ""
-msgstr ""
-
-#: MSGRU49 
-msgid ""
-msgstr ""
 
 #: MSGRU50 
 msgid "Mac-spoof Addon"

@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Weblate 5.5-dev\n"
 #: MSGFR00 
 msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
-msgstr "Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne nécessitent pas de SataPortMap, DiskIdxMap. Les modèles DT ne prennent pas en charge les HBAs\n"
+msgstr "Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne nécessitent pas de SataPortMap, DiskIdxMap. Les modèles DT ne prennent pas en charge les HBAs"
 
 #: MSGFR01 
 msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
@@ -45,18 +45,6 @@ msgstr "Choisissez une VERSION DSM, Actuelle"
 #: MSGFR06 
 msgid "Choose a loader Mode, Current"
 msgstr "Choisissez un mode de chargeur, Actuelle"
-
-#: MSGFR07 
-msgid ""
-msgstr ""
-
-#: MSGFR08 
-msgid ""
-msgstr ""
-
-#: MSGFR09 
-msgid ""
-msgstr ""
 
 #: MSGFR10 
 msgid "Edit user config file manually"
@@ -93,10 +81,6 @@ msgstr "Max 8 Threads, Haswell ou plus tard, transcodage iGPU"
 #: MSGFR18 
 msgid "Build the loader"
 msgstr "Construisez le chargeur"
-
-#: MSGFR19 
-msgid ""
-msgstr ""
 
 #: MSGFR20 
 msgid "Max ? Threads, any x86-64"
@@ -185,38 +169,6 @@ msgstr "DDSML+EUDEV"
 #: MSGFR41 
 msgid "Choose a Storage Panel Size"
 msgstr "Choisissez une taille de panneau de stockage"
-
-#: MSGFR42 
-msgid ""
-msgstr ""
-
-#: MSGFR43 
-msgid ""
-msgstr ""
-
-#: MSGFR44 
-msgid ""
-msgstr ""
-
-#: MSGFR45 
-msgid ""
-msgstr ""
-
-#: MSGFR46 
-msgid ""
-msgstr ""
-
-#: MSGFR47 
-msgid ""
-msgstr ""
-
-#: MSGFR48 
-msgid ""
-msgstr ""
-
-#: MSGFR49 
-msgid ""
-msgstr ""
 
 #: MSGFR50 
 msgid "Mac-spoof Addon"

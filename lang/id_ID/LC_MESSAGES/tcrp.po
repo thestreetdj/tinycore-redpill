@@ -46,18 +46,6 @@ msgstr "Pilih VERSI DSM, Saat Ini"
 msgid "Choose a loader Mode, Current"
 msgstr "Pilih Mode Loader, Saat Ini"
 
-#: MSGID07 
-msgid ""
-msgstr ""
-
-#: MSGID08 
-msgid ""
-msgstr ""
-
-#: MSGID09 
-msgid ""
-msgstr ""
-
 #: MSGID10 
 msgid "Edit user config file manually"
 msgstr "Edit berkas konfigurasi pengguna secara manual"
@@ -93,10 +81,6 @@ msgstr "Maks 8 Thread, Haswell atau lebih baru, Transcoding iGPU"
 #: MSGID18 
 msgid "Build the loader"
 msgstr "Bangun pemuat"
-
-#: MSGID19 
-msgid ""
-msgstr ""
 
 #: MSGID20 
 msgid "Max ? Threads, any x86-64"
@@ -185,38 +169,6 @@ msgstr "DDSML+EUDEV"
 #: MSGID41 
 msgid "Choose a Storage Panel Size"
 msgstr "Pilih Ukuran Panel Penyimpanan"
-
-#: MSGID42 
-msgid ""
-msgstr ""
-
-#: MSGID43 
-msgid ""
-msgstr ""
-
-#: MSGID44 
-msgid ""
-msgstr ""
-
-#: MSGID45 
-msgid ""
-msgstr ""
-
-#: MSGID46 
-msgid ""
-msgstr ""
-
-#: MSGID47 
-msgid ""
-msgstr ""
-
-#: MSGID48 
-msgid ""
-msgstr ""
-
-#: MSGID49 
-msgid ""
-msgstr ""
 
 #: MSGID50 
 msgid "Mac-spoof Addon"

@@ -46,18 +46,6 @@ msgstr "Válasszon DSM VERZIÓT, Aktuális"
 msgid "Choose a loader Mode, Current"
 msgstr "Válasszon betöltő módot, Aktuális"
 
-#: MSGHU07 
-msgid ""
-msgstr ""
-
-#: MSGHU08 
-msgid ""
-msgstr ""
-
-#: MSGHU09 
-msgid ""
-msgstr ""
-
 #: MSGHU10 
 msgid "Edit user config file manually"
 msgstr "Felhasználói konfigurációs fájl manuális szerkesztése"
@@ -93,10 +81,6 @@ msgstr "Maximum 8 szál, Haswell vagy újabb, iGPU átkódolás"
 #: MSGHU18 
 msgid "Build the loader"
 msgstr "A betöltő készítése"
-
-#: MSGHU19 
-msgid ""
-msgstr ""
 
 #: MSGHU20 
 msgid "Max ? Threads, any x86-64"
@@ -185,38 +169,6 @@ msgstr "DDSML+EUDEV"
 #: MSGHU41 
 msgid "Choose a Storage Panel Size"
 msgstr "Válassz egy tárolópanel méretét"
-
-#: MSGHU42 
-msgid ""
-msgstr ""
-
-#: MSGHU43 
-msgid ""
-msgstr ""
-
-#: MSGHU44 
-msgid ""
-msgstr ""
-
-#: MSGHU45 
-msgid ""
-msgstr ""
-
-#: MSGHU46 
-msgid ""
-msgstr ""
-
-#: MSGHU47 
-msgid ""
-msgstr ""
-
-#: MSGHU48 
-msgid ""
-msgstr ""
-
-#: MSGHU49 
-msgid ""
-msgstr ""
 
 #: MSGHU50 
 msgid "Mac-spoof Addon"
