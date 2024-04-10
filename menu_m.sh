@@ -984,6 +984,8 @@ function langMenu() {
     عربي) tz="EG"; ucode="ar_EG";;
   esac
 
+  tz="US"
+
   export LANG=${ucode}.UTF-8
   export LC_ALL=${ucode}.UTF-8
   set -o allexport
