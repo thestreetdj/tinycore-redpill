@@ -1961,6 +1961,8 @@ export TEXTDOMAINDIR="/usr/local/share/locale"
 set -o allexport
 tz="US"
 load_us
+TEXT "Choose a mac address"
+read answer
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -w) -gt 0 ]; then
     sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst	
