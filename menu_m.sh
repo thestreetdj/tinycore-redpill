@@ -998,6 +998,8 @@ function langMenu() {
   writexsession
   
   setSuggest $MODEL
+
+  load_us
   
   return 0
 
