@@ -43,6 +43,7 @@ jobs:
                   echo "msgstr \"${!msg_ot}\"" >> lang/${L}/LC_MESSAGES/tcrp.po
                   echo "" >> lang/${L}/LC_MESSAGES/tcrp.po
               done
+              cat lang/${L}/LC_MESSAGES/tcrp.po
           done
           echo "make po end"
           
