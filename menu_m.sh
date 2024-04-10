@@ -1953,7 +1953,7 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
 fi
 
 #gettext
-#[ ! -d "/usr/local/share/locale" ] && sudo mkdir -p "/usr/local/share/locale"
+[ ! -d "/usr/local/share/locale" ] && sudo mkdir -p "/usr/local/share/locale"
 sudo tar -xzvf lang.tgz -C /usr/local/share/locale
 locale
 #End Locale Setting process
@@ -1961,8 +1961,6 @@ export TEXTDOMAINDIR="/usr/local/share/locale"
 set -o allexport
 tz="US"
 load_us
-TEXT "Choose a mac address"
-read answer
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -w) -gt 0 ]; then
     sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst	
