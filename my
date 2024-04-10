@@ -79,7 +79,8 @@ function _pat_process() {
   PATURL="${URL}"
   PAT_FILE="${SYNOMODEL}.pat"
   PAT_PATH="${patfile}"
-  mirrors=("global.synologydownload.com" "global.download.synology.com" "cndl.synology.cn")
+  #mirrors=("global.synologydownload.com" "global.download.synology.com" "cndl.synology.cn")
+  mirrors=("global.synologydownload.com" "global.download.synology.com")
 
   SPACELEFT=$(df --block-size=1 | awk '/'${loaderdisk}'3/{print $4}') # Check disk space left
 
