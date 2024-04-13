@@ -229,7 +229,9 @@ set -u
 # Added multilingual support languages (locales) (Arabic, Hindi, Hungarian, Indonesian, Turkish)
 # 2024.04.09 v1.0.2.7
 # dbgutils Addon Add/Delete selection menu
-
+# 2024.04.14
+# sortnetif Addon Add/Delete selection menu
+    
 function showlastupdate() {
     cat <<EOF
 
@@ -283,7 +285,10 @@ function showlastupdate() {
     
 # 2024.04.09 v1.0.2.7
 # dbgutils Addon Add/Delete selection menu
-    
+
+# 2024.04.14
+# sortnetif Addon Add/Delete selection menu
+        
 EOF
 }
 
