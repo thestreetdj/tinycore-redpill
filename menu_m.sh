@@ -1217,28 +1217,20 @@ EOF
 
 }
 
-function add-macspoof() {
-  echo -n "(Warning) Enabling mac-spoof may compromise San Manager and VMM. Do you still want to add it? [yY/nN] : "
+function add-addon() {
+
+  [ "${1}" = "mac-spoof" ] && echo -n "(Warning) Enabling mac-spoof may compromise San Manager and VMM. Do you still want to add it? [yY/nN] : "
+  [ "${1}" = "dbgutils" ] && echo -n "Would you like to add dbgutils for error analysis? [yY/nN] : "
+  [ "${1}" = "sortnetif" ] && echo -n "Would you like to add sortnetif? [yY/nN] : "
+  
   readanswer    
   if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
-    jsonfile=$(jq '. |= .+ {"mac-spoof":"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/mac-spoof/rpext-index.json"}' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+    jsonfile=$(jq '. |= .+ {"${1}":"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json"}' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
   fi
 }
 
-function del-macspoof() {
-  jsonfile=$(jq 'del(.["mac-spoof"])' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
-}
-
-function add-dbgutils() {
-  echo -n "Would you like to add dbgutils for error analysis? [yY/nN] : "
-  readanswer    
-  if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
-    jsonfile=$(jq '. |= .+ {"dbgutils":"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/dbgutils/rpext-index.json"}' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
-  fi
-}
-
-function del-dbgutils() {
-  jsonfile=$(jq 'del(.["dbgutils"])' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+function del-addon() {
+  jsonfile=$(jq 'del(.["${1}"])' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
 }
 
 function returnto() {
@@ -1729,8 +1721,8 @@ fi
 function additional() {
 
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
-
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
+  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"  
 
   if [ -f /tmp/disable.i915 ]; then
       curi915=$(cat /tmp/disable.i915)
@@ -1752,6 +1744,7 @@ function additional() {
       --menu "Choose a option" 0 0 0 \
       a "${spoof} ${MSG50}" \
       y "${dbgutils} dbgutils Addon" \
+	  x "${sortnetif} sortnetif Addon" \
       z "Disable i915 module ${disablei915}" \
       b "${MSG51}" \
       c "${MSG52}" \
@@ -1765,11 +1758,14 @@ function additional() {
     resp=$(<${TMP_PATH}/resp)
     [ -z "${resp}" ] && return
     if [ "${resp}" = "a" ]; then
-      [ "${spoof}" = "Add" ] && add-macspoof || del-macspoof
-	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
+      [ "${spoof}" = "Add" ] && add-addon "mac-spoof" || del-addon "mac-spoof"
+      [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
 	elif [ "${resp}" = "y" ]; then 
-      [ "${dbgutils}" = "Add" ] && add-dbgutils || del-dbgutils 
-  	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"	  
+      [ "${dbgutils}" = "Add" ] && add-addon "dbgutils" || del-addon "dbgutils"
+  	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
+	elif [ "${resp}" = "x" ]; then 
+      [ "${sortnetif}" = "Add" ] && add-addon "sortnetif" || del-addon "sortnetif"
+  	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"
     elif [ "${resp}" = "z" ]; then
       if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
         [ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
