@@ -120,6 +120,10 @@ function _pat_process() {
 
 }
 
+function add-addon() {
+    jsonfile=$(jq '. |= .+ {"${1}":"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json"}' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+}
+
 loaderdisk=""
 for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
     if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
@@ -292,8 +296,14 @@ if [ "${DMPM}" = "null" ]; then
     writeConfigKey "general" "devmod" "${DMPM}"
 fi
 cecho y "Device Module Processing Method is ${DMPM}"
+
+[ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof=true || spoof=false
+[ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils=true || dbgutils=false
+[ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif=true || sortnetif=false
+
 echo  "download original bundled-exts.json file..."
 curl -skL# https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/bundled-exts.json -o /home/tc/redpill-load/bundled-exts.json
+
 if [ "${DMPM}" = "DDSML" ]; then
     jsonfile=$(jq 'del(.eudev)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
 elif [ "${DMPM}" = "EUDEV" ]; then
@@ -304,6 +314,10 @@ else
     cecho p "Device Module Processing Method is Undefined, Program Exit!!!!!!!!"
     exit 0
 fi
+
+[ "$spoof" = true ] && add-addon "mac-spoof" 
+[ "$dbgutils" = true ] && add-addon "dbgutils" 
+[ "$sortnetif" = true ] && add-addon "sortnetif" 
 
 if [ "${offline}" = "NO" ]; then
     curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json
