@@ -1225,13 +1225,14 @@ function add-addon() {
   
   readanswer    
   if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
-    jsonfile=$(jq '. |= .+ {"${1}":"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json"}' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+    jsonfile=$(jq ". |= .+ {\"${1}\": \"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json\"}" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json	
   fi
 }
 
 function del-addon() {
-  jsonfile=$(jq 'del(.["${1}"])' ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+  jsonfile=$(jq "del(.[\"${1}\"])" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
 }
+
 
 function returnto() {
     echo "${1}"
