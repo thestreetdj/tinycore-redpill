@@ -1801,18 +1801,18 @@ cd /dev/shm
 if [ -d /dev/shm/tcrp-addons ]; then
   echo "tcrp-addons already downloaded!"    
 else    
-  git clone "https://github.com/PeterSuh-Q3/tcrp-addons.git"
+  git clone --depth=1 "https://github.com/PeterSuh-Q3/tcrp-addons.git"
   if [ $? -ne 0 ]; then
-    git clone "https://gitea.com/PeterSuh-Q3/tcrp-addons.git"
-    git clone "https://gitea.com/PeterSuh-Q3/tcrp-modules.git"
+    git clone --depth=1 "https://gitea.com/PeterSuh-Q3/tcrp-addons.git"
+    git clone --depth=1 "https://gitea.com/PeterSuh-Q3/tcrp-modules.git"
   fi    
 fi
 #if [ -d /dev/shm/tcrp-modules ]; then
 #  echo "tcrp-modules already downloaded!"    
 #else    
-#  git clone "https://github.com/PeterSuh-Q3/tcrp-modules.git"
+#  git clone --depth=1 "https://github.com/PeterSuh-Q3/tcrp-modules.git"
 #  if [ $? -ne 0 ]; then
-#    git clone "https://gitea.com/PeterSuh-Q3/tcrp-modules.git"
+#    git clone --depth=1 "https://gitea.com/PeterSuh-Q3/tcrp-modules.git"
 #  fi    
 #fi
 cd /home/tc
