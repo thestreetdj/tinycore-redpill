@@ -11,7 +11,7 @@ source /home/tc/functions.h
 
 rploaderver="1.0.2.7"
 build="master"
-redpillmake="prod"
+redpillmake="test"
 
 rploaderfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/rploader.sh"
 rploaderrepo="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/"
@@ -3393,13 +3393,13 @@ function getredpillko() {
     sudo rm -f /home/tc/custom-module/*.gz
     sudo rm -f /home/tc/custom-module/*.ko
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then    
-        unzip /mnt/${tcrppart}/rp-lkms${v}.zip        rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-dev.ko.gz -d /tmp >/dev/null 2>&1
-        gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-dev.ko.gz >/dev/null 2>&1
-        cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-dev.ko /home/tc/custom-module/redpill.ko
+        unzip /mnt/${tcrppart}/rp-lkms${v}.zip        rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-${redpillmake}.ko.gz -d /tmp >/dev/null 2>&1
+        gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-${redpillmake}.ko.gz >/dev/null 2>&1
+        cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-${redpillmake}.ko /home/tc/custom-module/redpill.ko
     else    
-        unzip /mnt/${tcrppart}/rp-lkms${v}.zip        rp-${ORIGIN_PLATFORM}-${KVER}-dev.ko.gz -d /tmp >/dev/null 2>&1
-        gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-dev.ko.gz >/dev/null 2>&1
-        cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-dev.ko /home/tc/custom-module/redpill.ko
+        unzip /mnt/${tcrppart}/rp-lkms${v}.zip        rp-${ORIGIN_PLATFORM}-${KVER}-${redpillmake}.ko.gz -d /tmp >/dev/null 2>&1
+        gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-${redpillmake}.ko.gz >/dev/null 2>&1
+        cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-${redpillmake}.ko /home/tc/custom-module/redpill.ko
     fi
 
 }
