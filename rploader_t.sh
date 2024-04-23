@@ -11,7 +11,7 @@ source /home/tc/functions.h
 
 rploaderver="1.0.2.7"
 build="master"
-redpillmake="test"
+redpillmake="dev"
 
 rploaderfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/rploader.sh"
 rploaderrepo="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/"
