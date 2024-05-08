@@ -960,6 +960,7 @@ function langMenu() {
     --menu "Choose a language" 0 0 0 "English" "한국어" "日本語" "中文" "Русский" \
     "Français" "Deutsch" "Español" "Italiano" "brasileiro" \
     "Magyar" "bahasa_Indonesia" "Türkçe" "हिंदी" "عربي" \
+    "አማርኛ" "ไทย" \
     2>${TMP_PATH}/resp
     
   [ $? -ne 0 ] && return
@@ -982,6 +983,8 @@ function langMenu() {
     Türkçe) tz="TR"; ucode="tr_TR";;
     हिंदी) tz="IN"; ucode="hi_IN";;
     عربي) tz="EG"; ucode="ar_EG";;
+    አማርኛ) tz="ET"; ucode="am_ET";;
+    ไทย) tz="TH"; ucode="th_TH";;
   esac
 
   export LANG=${ucode}.UTF-8
