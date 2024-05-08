@@ -231,6 +231,8 @@ set -u
 # dbgutils Addon Add/Delete selection menu
 # 2024.04.14
 # sortnetif Addon Add/Delete selection menu
+# 2024.05.08 v1.0.2.8
+# Added multilingual support languages (locales) (Amharic-Ethiopian, Thai)
     
 function showlastupdate() {
     cat <<EOF
@@ -288,6 +290,9 @@ function showlastupdate() {
 
 # 2024.04.14
 # sortnetif Addon Add/Delete selection menu
+
+# 2024.05.08 v1.0.2.8
+# Added multilingual support languages (locales) (Amharic-Ethiopian, Thai)
         
 EOF
 }
