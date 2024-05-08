@@ -1,0 +1,196 @@
+# i18n translations for PACKAGE package.
+# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Linux User <dante9000@gmail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 13:16+0000\n"
+"PO-Revision-Date: 2024-04-08 14:17+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: i18n <https://hosted.weblate.org/projects/tcrp-mshell/"
+"lang-tcrp/th/>\n"
+"Language: th_TH\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.5-dev\n"
+#: MSGTH00 
+msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
+msgstr "Device-Tree[DT] Base Models & HBAs ไม่จำเป็นต้องใช้ SataPortMap,DiskIdxMap โมเดล DT ไม่รองรับ HBAs"
+
+#: MSGTH01 
+msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
+msgstr "เลือกวิธีการจัดการ Dev Mod, DDSML/EUDEV"
+
+#: MSGTH02 
+msgid "Choose a Synology Model"
+msgstr "เลือกรุ่น Synology"
+
+#: MSGTH03 
+msgid "Choose a Synology Serial Number"
+msgstr "เลือกหมายเลขซีเรียลของ Synology"
+
+#: MSGTH04 
+msgid "Choose a mac address"
+msgstr "เลือกที่อยู่ Mac"
+
+#: MSGTH05 
+msgid "Choose a DSM VERSION, Current"
+msgstr "เลือกเวอร์ชัน DSM, ปัจจุบัน"
+
+#: MSGTH06 
+msgid "Choose a loader Mode, Current"
+msgstr "เลือกโหมดตัวโหลด, กระแส"
+
+#: MSGTH10 
+msgid "Edit user config file manually"
+msgstr "แก้ไขไฟล์ปรับแต่งผู้ใช้ด้วยตนเอง"
+
+#: MSGTH11 
+msgid "Choose a keymap"
+msgstr "เลือกคีย์แมป"
+
+#: MSGTH12 
+msgid "Format Disk(s # Excluding Loader Disk"
+msgstr "ฟอร์แมตดิสก์(s # ไม่รวม Loader Disk"
+
+#: MSGTH13 
+msgid "Backup TCRP"
+msgstr "สำรองข้อมูล TCRP"
+
+#: MSGTH14 
+msgid "Reboot"
+msgstr "รีบูต"
+
+#: MSGTH15 
+msgid "Power Off"
+msgstr "ปิดเครื่อง"
+
+#: MSGTH16 
+msgid "Max 24 Threads, any x86-64"
+msgstr "สูงสุด 24 เธรด x86-64 ใดก็ได้"
+
+#: MSGTH17 
+msgid "Max 8 Threads, Haswell or later,iGPU Transcoding"
+msgstr "สูงสุด 8 เธรด, Haswell หรือใหม่กว่า, การแปลงรหัส iGPU"
+
+#: MSGTH18 
+msgid "Build the loader"
+msgstr "สร้างตัวโหลด"
+
+#: MSGTH20 
+msgid "Max ? Threads, any x86-64"
+msgstr "สูงสุด ? เธรดใดๆ x86-64"
+
+#: MSGTH21 
+msgid "Have a camera license"
+msgstr "มีใบอนุญาตกล้อง"
+
+#: MSGTH22 
+msgid "Max 16 Threads, any x86-64"
+msgstr "สูงสุด 16 เธรด x86-64 ใดก็ได้"
+
+#: MSGTH23 
+msgid "Max 16 Threads, Haswell or later"
+msgstr "สูงสุด 16 เธรด Haswell หรือใหม่กว่า"
+
+#: MSGTH24 
+msgid "Nvidia GTX1650"
+msgstr "Nvidia GTX1650"
+
+#: MSGTH25 
+msgid "Nvidia GTX1050Ti"
+msgstr "Nvidia GTX1050Ti"
+
+#: MSGTH26 
+msgid "EUDEV (enhanced user-space device"
+msgstr "EUDEV (อุปกรณ์พื้นที่ผู้ใช้ที่ได้รับการปรับปรุง"
+
+#: MSGTH27 
+msgid "DDSML (Detected Device Static Module Loading"
+msgstr "DDSML (ตรวจพบการโหลดโมดูลคงที่ของอุปกรณ์"
+
+#: MSGTH28 
+msgid "FRIEND (most recently stabilized"
+msgstr "เพื่อน (ล่าสุดมีเสถียรภาพ"
+
+#: MSGTH29 
+msgid "JOT (The old way before friend"
+msgstr "JOT (ทางเก่าก่อนเพื่อน"
+
+#: MSGTH30 
+msgid "Generate a random serial number"
+msgstr "สร้างหมายเลขซีเรียลแบบสุ่ม"
+
+#: MSGTH31 
+msgid "Enter a serial number"
+msgstr "ป้อนหมายเลขซีเรียล"
+
+#: MSGTH32 
+msgid "Get a real mac address"
+msgstr "รับที่อยู่ Mac จริง"
+
+#: MSGTH33 
+msgid "Generate a random mac address"
+msgstr "สร้างที่อยู่ Mac แบบสุ่ม"
+
+#: MSGTH34 
+msgid "Enter a mac address"
+msgstr "ป้อนที่อยู่ Mac"
+
+#: MSGTH35 
+msgid "press any key to continue..."
+msgstr "กดปุ่มใดก็ได้เพื่อดำเนินการต่อ..."
+
+#: MSGTH36 
+msgid "Synology serial number not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "ไม่ได้ตั้งค่าหมายเลขซีเรียลของ Synology โปรดตรวจสอบ user_config.json อีกครั้ง ยกเลิกบิลด์ตัวโหลด !!!"
+
+#: MSGTH37 
+msgid "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "ไม่ได้ตั้งค่าที่อยู่ MAC แรก โปรดตรวจสอบ user_config.json อีกครั้ง ยกเลิกการสร้างตัวโหลด !!!"
+
+#: MSGTH38 
+msgid "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!"
+msgstr "netif_num และจำนวนที่อยู่ mac ไม่ตรงกัน ตรวจสอบ user_config.json อีกครั้ง ยกเลิกการสร้างตัวโหลด !!!"
+
+#: MSGTH39 
+msgid "Choose a language"
+msgstr "เลือกภาษา"
+
+#: MSGTH40 
+msgid "DDSML+EUDEV"
+msgstr "DDSML+EUDEV"
+
+#: MSGTH41 
+msgid "Choose a Storage Panel Size"
+msgstr "เลือกขนาดแผงจัดเก็บข้อมูล"
+
+#: MSGTH50 
+msgid "Mac-spoof Addon"
+msgstr "โปรแกรมเสริม Mac-spoof"
+
+#: MSGTH51 
+msgid "Prevent SataPortMap,DiskIdxMap initialization"
+msgstr "ป้องกัน SataPortMap,DiskIdxMap การเริ่มต้น"
+
+#: MSGTH52 
+msgid "Show SATA(s ports and drives for SataPortMap"
+msgstr "แสดงพอร์ตและไดรฟ์ SATA สำหรับ SataPortMap"
+
+#: MSGTH53 
+msgid "Show error log of running loader"
+msgstr "แสดงบันทึกข้อผิดพลาดของตัวโหลดที่ทำงานอยู่"
+
+#: MSGTH54 
+msgid "Burn TCRP Bootloader Img to USB or SSD"
+msgstr "เบิร์น TCRP Bootloader Img ไปยัง USB หรือ SSD"
+
+#: MSGTH55 
+msgid "Clone Current TCRP Bootloader to USB or SSD"
+msgstr "โคลน TCRP Bootloader ปัจจุบันเป็น USB หรือ SSD"
+

@@ -1,0 +1,196 @@
+# i18n translations for PACKAGE package.
+# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Linux User <dante9000@gmail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 13:16+0000\n"
+"PO-Revision-Date: 2024-04-08 14:17+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: i18n <https://hosted.weblate.org/projects/tcrp-mshell/"
+"lang-tcrp/am/>\n"
+"Language: am_ET\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.5-dev\n"
+#: MSGET00 
+msgid "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap. DT models do not support HBAs"
+msgstr "Device-Tree[DT] Base Models እና HBAs SataPortMap፣DiskIdxMap አያስፈልጋቸውም።የዲቲ ሞዴሎች HBAsን አይደግፉም።"
+
+#: MSGET01 
+msgid "Choose a Dev Mod handling method, DDSML/EUDEV"
+msgstr "የዴቭ ሞድ አያያዝ ዘዴን ይምረጡ፣DDSML/EUDEV"
+
+#: MSGET02 
+msgid "Choose a Synology Model"
+msgstr "የሲኖሎጂ ሞዴል ምረጥ"
+
+#: MSGET03 
+msgid "Choose a Synology Serial Number"
+msgstr "የሲኖሎጂ መለያ ቁጥር ምረጥ"
+
+#: MSGET04 
+msgid "Choose a mac address"
+msgstr "ማክ አድራሻ ምረጥ"
+
+#: MSGET05 
+msgid "Choose a DSM VERSION, Current"
+msgstr "DSM VERSION፣ Current ምረጥ"
+
+#: MSGET06 
+msgid "Choose a loader Mode, Current"
+msgstr "የጫኚ ሁነታ ምረጥ፣ የአሁኑ"
+
+#: MSGET10 
+msgid "Edit user config file manually"
+msgstr "የተጠቃሚ ውቅር ፋይልን በእጅ አርትዕ"
+
+#: MSGET11 
+msgid "Choose a keymap"
+msgstr "የቁልፍ ካርታ ምረጥ"
+
+#: MSGET12 
+msgid "Format Disk(s # Excluding Loader Disk"
+msgstr "ቅርጸት ዲስክ(ዎች # ጫኚ ዲስክን ሳይጨምር)"
+
+#: MSGET13 
+msgid "Backup TCRP"
+msgstr "ምትኬ TCRP"
+
+#: MSGET14 
+msgid "Reboot"
+msgstr "ዳግም አስነሳ"
+
+#: MSGET15 
+msgid "Power Off"
+msgstr "ኃይል ጠፍቷል"
+
+#: MSGET16 
+msgid "Max 24 Threads, any x86-64"
+msgstr "ከፍተኛ 24 ክሮች፣ ማንኛውም x86-64"
+
+#: MSGET17 
+msgid "Max 8 Threads, Haswell or later,iGPU Transcoding"
+msgstr "ከፍተኛ 8 ክሮች፣ሃስዌል ወይም ከዚያ በኋላ፣iGPU ትራንስኮዲንግ"
+
+#: MSGET18 
+msgid "Build the loader"
+msgstr "ጫኚውን ይገንቡ"
+
+#: MSGET20 
+msgid "Max ? Threads, any x86-64"
+msgstr "ከፍተኛ? ክሮች፣ ማንኛውም x86-64"
+
+#: MSGET21 
+msgid "Have a camera license"
+msgstr "የካሜራ ፍቃድ ይኑርዎት"
+
+#: MSGET22 
+msgid "Max 16 Threads, any x86-64"
+msgstr "ከፍተኛ 16 ክሮች፣ ማንኛውም x86-64"
+
+#: MSGET23 
+msgid "Max 16 Threads, Haswell or later"
+msgstr "ከፍተኛ 16 ክሮች፣ ሃስዌል ወይም ከዚያ በኋላ"
+
+#: MSGET24 
+msgid "Nvidia GTX1650"
+msgstr "Nvidia GTX1650"
+
+#: MSGET25 
+msgid "Nvidia GTX1050Ti"
+msgstr "Nvidia GTX1050Ti"
+
+#: MSGET26 
+msgid "EUDEV (enhanced user-space device"
+msgstr "EUDEV (የተሻሻለ የተጠቃሚ ቦታ መሣሪያ"
+
+#: MSGET27 
+msgid "DDSML (Detected Device Static Module Loading"
+msgstr "DDSML (የተገኘ መሳሪያ የማይለዋወጥ ሞዱል ጭነት"
+
+#: MSGET28 
+msgid "FRIEND (most recently stabilized"
+msgstr "ጓደኛ (በጣም በቅርብ ጊዜ የተረጋጋ)"
+
+#: MSGET29 
+msgid "JOT (The old way before friend"
+msgstr "JOT (የቀድሞው መንገድ ከጓደኛ በፊት)"
+
+#: MSGET30 
+msgid "Generate a random serial number"
+msgstr "የዘፈቀደ ተከታታይ ቁጥር ፍጠር"
+
+#: MSGET31 
+msgid "Enter a serial number"
+msgstr "መለያ ቁጥር አስገባ"
+
+#: MSGET32 
+msgid "Get a real mac address"
+msgstr "እውነተኛ የማክ አድራሻ ያግኙ"
+
+#: MSGET33 
+msgid "Generate a random mac address"
+msgstr "የዘፈቀደ የማክ አድራሻ ፍጠር"
+
+#: MSGET34 
+msgid "Enter a mac address"
+msgstr "የማክ አድራሻ አስገባ"
+
+#: MSGET35 
+msgid "press any key to continue..."
+msgstr "ለመቀጠል ማንኛውንም ቁልፍ ይጫኑ..."
+
+#: MSGET36 
+msgid "Synology serial number not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "Synology መለያ ቁጥር አልተዘጋጀም። የተጠቃሚ_config.jsonን እንደገና ያረጋግጡ። ጫኚውን አቋርጥ!!!"
+
+#: MSGET37 
+msgid "The first MAC address is not set. Check user_config.json again. Abort the loader build !!!"
+msgstr "የመጀመሪያው የማክ አድራሻ አልተዘጋጀም። የተጠቃሚ_config.jsonን እንደገና አረጋግጥ። ጫኚውን አቋርጥ!!!"
+
+#: MSGET38 
+msgid "The netif_num and the number of mac addresses do not match. Check user_config.json again. Abort the loader build !!!"
+msgstr "netif_num እና የማክ አድራሻዎች ብዛት አይዛመድም።በድጋሚ user_config.jsonን አረጋግጥ።የጫኚውን ግንባታ አቋርጥ!!!"
+
+#: MSGET39 
+msgid "Choose a language"
+msgstr "ቋንቋ ምረጥ"
+
+#: MSGET40 
+msgid "DDSML+EUDEV"
+msgstr "DDSML+EUDEV"
+
+#: MSGET41 
+msgid "Choose a Storage Panel Size"
+msgstr "የማከማቻ ፓነል መጠን ምረጥ"
+
+#: MSGET50 
+msgid "Mac-spoof Addon"
+msgstr "ማክ-ስፖፍ አዶን"
+
+#: MSGET51 
+msgid "Prevent SataPortMap,DiskIdxMap initialization"
+msgstr "SataPortMap፣DiskIdxMap ማስጀመርን አግድ"
+
+#: MSGET52 
+msgid "Show SATA(s ports and drives for SataPortMap"
+msgstr "SATA(sports and drives for SataPortMap) አሳይ"
+
+#: MSGET53 
+msgid "Show error log of running loader"
+msgstr "የአሂድ ጫኚውን የስህተት ምዝግብ ማስታወሻ አሳይ"
+
+#: MSGET54 
+msgid "Burn TCRP Bootloader Img to USB or SSD"
+msgstr "TCRP Bootloader Img ወደ USB ወይም SSD ያቃጥሉ"
+
+#: MSGET55 
+msgid "Clone Current TCRP Bootloader to USB or SSD"
+msgstr "Clone Current TCRP Bootloader ወደ USB ወይም SSD"
+
