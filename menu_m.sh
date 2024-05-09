@@ -1729,7 +1729,7 @@ function additional() {
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"  
 
-  [ "${DISABLEI915}" = "ON" ] && DISABLEI915="OFF" || DISABLEI915="ON"
+  [ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
 
   eval "MSG50=\"\${MSG${tz}50}\""
   eval "MSG51=\"\${MSG${tz}51}\""
@@ -1745,7 +1745,7 @@ function additional() {
       a "${spoof} ${MSG50}" \
       y "${dbgutils} dbgutils Addon" \
 	  x "${sortnetif} sortnetif Addon" \
-      z "Disable i915 module ${DISABLEI915}" \
+      z "Disable i915 module ${DISPLAYI915}" \
       b "${MSG51}" \
       c "${MSG52}" \
       d "${MSG53}" \
@@ -1769,7 +1769,7 @@ function additional() {
     elif [ "${resp}" = "z" ]; then
       if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
         [ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
-        [ "${DISABLEI915}" = "ON" ] && DISABLEI915="OFF" || DISABLEI915="ON"
+        [ "${DISPLAYI915}" = "ON" ] && DISABLEI915="OFF" || DISABLEI915="ON"
 		writeConfigKey "general" "disablei915" "${DISABLEI915}"
       else	
   	  	echo "This platform is not supported..." && read answer && continue
