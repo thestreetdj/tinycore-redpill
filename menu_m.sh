@@ -148,6 +148,7 @@ KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 
 DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
 LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
+DISABLEI915=$(jq -r -e '.general.disablei915' "$USER_CONFIG_FILE")
 ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
 lcode=$(echo $ucode | cut -c 4-)
 BLOCK_EUDEV="N"
@@ -1728,12 +1729,7 @@ function additional() {
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"  
 
-  if [ -f /tmp/disable.i915 ]; then
-      curi915=$(cat /tmp/disable.i915)
-      [ "${curi915}" = "ON" ] && disablei915="OFF" || disablei915="ON"
-  else
-      disablei915="ON"
-  fi  
+  [ "${DISABLEI915}" = "ON" ] && DISABLEI915="OFF" || DISABLEI915="ON"
 
   eval "MSG50=\"\${MSG${tz}50}\""
   eval "MSG51=\"\${MSG${tz}51}\""
@@ -1749,7 +1745,7 @@ function additional() {
       a "${spoof} ${MSG50}" \
       y "${dbgutils} dbgutils Addon" \
 	  x "${sortnetif} sortnetif Addon" \
-      z "Disable i915 module ${disablei915}" \
+      z "Disable i915 module ${DISABLEI915}" \
       b "${MSG51}" \
       c "${MSG52}" \
       d "${MSG53}" \
@@ -1773,11 +1769,10 @@ function additional() {
     elif [ "${resp}" = "z" ]; then
       if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
         [ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
-	    echo "${disablei915}" > /tmp/disable.i915
-        curi915=$(cat /tmp/disable.i915)
-        [ "${curi915}" = "ON" ] && disablei915="OFF" || disablei915="ON"
+        [ "${DISABLEI915}" = "ON" ] && DISABLEI915="OFF" || DISABLEI915="ON"
+		writeConfigKey "general" "disablei915" "${DISABLEI915}"
       else	
-  	    echo "This platform is not supported..." && read answer && continue
+  	  	echo "This platform is not supported..." && read answer && continue
       fi 
     elif [ "${resp}" = "b" ]; then
       prevent
@@ -1990,10 +1985,9 @@ if [ "${LDRMODE}" = "null" ]; then
     writeConfigKey "general" "loadermode" "${LDRMODE}"          
 fi
 
-#/tmp/disable.i915
 if [ "${DISABLEI915}" = "null" ]; then
     DISABLEI915="OFF"
-    writeConfigKey "general" "disablei915" "${DISABLEI915}"          
+    writeConfigKey "general" "disablei915" "${DISABLEI915}"
 fi
 
 # Get actual IP
