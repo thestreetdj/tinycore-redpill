@@ -1769,8 +1769,10 @@ function additional() {
     elif [ "${resp}" = "z" ]; then
       if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
         [ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
-        [ "${DISPLAYI915}" = "ON" ] && DISABLEI915="OFF" || DISABLEI915="ON"
-		writeConfigKey "general" "disablei915" "${DISABLEI915}"
+
+		writeConfigKey "general" "disablei915" "${DISPLAYI915}"
+  		DISABLEI915=$(jq -r -e '.general.disablei915' "$USER_CONFIG_FILE")
+  		[ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
       else	
   	  	echo "This platform is not supported..." && read answer && continue
       fi 
