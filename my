@@ -298,6 +298,7 @@ fi
 cecho y "Device Module Processing Method is ${DMPM}"
 
 [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof=true || spoof=false
+[ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes=true || nvmes=false
 [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils=true || dbgutils=false
 [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif=true || sortnetif=false
 
@@ -316,6 +317,7 @@ else
 fi
 
 [ "$spoof" = true ] && add-addon "mac-spoof" 
+[ "$nvmes" = true ] && add-addon "nvmesystem" 
 [ "$dbgutils" = true ] && add-addon "dbgutils" 
 [ "$sortnetif" = true ] && add-addon "sortnetif" 
 
