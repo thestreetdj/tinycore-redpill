@@ -1224,6 +1224,7 @@ EOF
 function add-addon() {
 
   [ "${1}" = "mac-spoof" ] && echo -n "(Warning) Enabling mac-spoof may compromise San Manager and VMM. Do you still want to add it? [yY/nN] : "
+  [ "${1}" = "nvmesystem" ] && echo -n "Would you like to add nvmesystem? [yY/nN] : "
   [ "${1}" = "dbgutils" ] && echo -n "Would you like to add dbgutils for error analysis? [yY/nN] : "
   [ "${1}" = "sortnetif" ] && echo -n "Would you like to add sortnetif? [yY/nN] : "
   
@@ -1743,8 +1744,8 @@ function additional() {
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
-      w "${nvmes} nvmesystem Addon" \	  
       a "${spoof} ${MSG50}" \
+      w "${nvmes} nvmesystem Addon" \
       y "${dbgutils} dbgutils Addon" \
       x "${sortnetif} sortnetif Addon" \
       z "Disable i915 module ${DISPLAYI915}" \
@@ -1762,13 +1763,13 @@ function additional() {
     if [ "${resp}" = "a" ]; then
       [ "${spoof}" = "Add" ] && add-addon "mac-spoof" || del-addon "mac-spoof"
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
-	elif [ "${resp}" = "w" ]; then
+    elif [ "${resp}" = "w" ]; then
       [ "${nvmes}" = "Add" ] && add-addon "nvmesystem" || del-addon "nvmesystem"
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"	  
-	elif [ "${resp}" = "y" ]; then 
+    elif [ "${resp}" = "y" ]; then 
       [ "${dbgutils}" = "Add" ] && add-addon "dbgutils" || del-addon "dbgutils"
   	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
-	elif [ "${resp}" = "x" ]; then 
+    elif [ "${resp}" = "x" ]; then 
       [ "${sortnetif}" = "Add" ] && add-addon "sortnetif" || del-addon "sortnetif"
   	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"
     elif [ "${resp}" = "z" ]; then
