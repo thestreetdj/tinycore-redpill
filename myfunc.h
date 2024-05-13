@@ -233,36 +233,17 @@ set -u
 # sortnetif Addon Add/Delete selection menu
 # 2024.05.08 v1.0.2.8
 # Added multilingual support languages (locales) (Amharic-Ethiopian, Thai)
+# 2024.05.13
+# Menu configuration for adding nvmesystem addon
     
 function showlastupdate() {
     cat <<EOF
-
-# 2023.12.01
-# Update : Separate tcrp-addons and tcrp-modules repo processing methods
 
 # 2023.12.02
 # Update : Add offline loader build function
 
 # 2023.12.18 v1.0.1.0
 # Update : Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
-
-# 2023.12.31        
-# Added SataPortMap/DiskIdxMap prevent initialization menu for virtual machines       
-
-# 2024.02.03
-# Created a menu to select the mac-spoof add-on and a submenu for additional features.
-
-# 2024.02.06
-# update corepure64.gz for tc user ttyS0 serial console works
-
-# 2024.02.22 v1.0.2.0
-# Remove restrictions on use of DT-based models when using HBA (apply mpt3sas blacklist instead)
-
-# 2024.03.06 v1.0.2.2
-# Recycle initrd-dsm instead of custom.gz (extract /exts)
-    
-# 2024.03.13 v1.0.2.3 
-# Added RedPill bootloader hard disk porting function
 
 # 2024.03.15
 # Added RedPill bootloader hard disk porting function supporting 1 SHR Type DISK
@@ -272,12 +253,6 @@ function showlastupdate() {
 
 # 2024.03.22 v1.0.2.4 
 # Added NVMe bootloader support
-
-# 2024.03.23
-# Fixed bug where both modules disappear when switching between ddsml and eudev (Causes NIC unresponsiveness)
-
-# 2024.03.24
-# Added missing mmc partition search function
 
 # 2024.04.01 v1.0.2.5
 # Provides menu option to disable i915 module loading to prevent console blackout in ApolloLake (DS918+), GeminiLake (DS920+), and Epyc7002 (SA6400)
@@ -293,7 +268,10 @@ function showlastupdate() {
 
 # 2024.05.08 v1.0.2.8
 # Added multilingual support languages (locales) (Amharic-Ethiopian, Thai)
-        
+
+# 2024.05.13
+# Menu configuration for adding nvmesystem addon
+    
 EOF
 }
 
