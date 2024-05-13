@@ -1725,6 +1725,7 @@ fi
 
 function additional() {
 
+  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"  
@@ -1742,9 +1743,10 @@ function additional() {
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
+      w "${nvmes} nvmesystem Addon" \	  
       a "${spoof} ${MSG50}" \
       y "${dbgutils} dbgutils Addon" \
-	  x "${sortnetif} sortnetif Addon" \
+      x "${sortnetif} sortnetif Addon" \
       z "Disable i915 module ${DISPLAYI915}" \
       b "${MSG51}" \
       c "${MSG52}" \
@@ -1760,6 +1762,9 @@ function additional() {
     if [ "${resp}" = "a" ]; then
       [ "${spoof}" = "Add" ] && add-addon "mac-spoof" || del-addon "mac-spoof"
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
+	elif [ "${resp}" = "w" ]; then
+      [ "${nvmes}" = "Add" ] && add-addon "nvmesystem" || del-addon "nvmesystem"
+      [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"	  
 	elif [ "${resp}" = "y" ]; then 
       [ "${dbgutils}" = "Add" ] && add-addon "dbgutils" || del-addon "dbgutils"
   	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
