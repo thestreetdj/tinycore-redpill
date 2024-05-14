@@ -1227,7 +1227,6 @@ function add-addon() {
   [ "${1}" = "nvmesystem" ] && echo -n "Would you like to add nvmesystem? [yY/nN] : "
   [ "${1}" = "dbgutils" ] && echo -n "Would you like to add dbgutils for error analysis? [yY/nN] : "
   [ "${1}" = "sortnetif" ] && echo -n "Would you like to add sortnetif? [yY/nN] : "
-  [ "${1}" = "nvmevolume-onthefly" ] && jsonfile=$(jq ". |= .+ {\"${1}\": \"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json\"}" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json && return 
   
   readanswer    
   if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
@@ -1765,13 +1764,7 @@ function additional() {
       [ "${spoof}" = "Add" ] && add-addon "mac-spoof" || del-addon "mac-spoof"
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
     elif [ "${resp}" = "w" ]; then
-      if [ "${nvmes}" = "Add" ]; then
-        add-addon "nvmesystem"
-        del-addon "nvmevolume-onthefly"
-      else
-        del-addon "nvmesystem"
-        add-addon "nvmevolume-onthefly"
-      fi
+      [ "${nvmes}" = "Add" ] && add-addon "nvmesystem" || del-addon "nvmesystem"
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"	  
     elif [ "${resp}" = "y" ]; then 
       [ "${dbgutils}" = "Add" ] && add-addon "dbgutils" || del-addon "dbgutils"
