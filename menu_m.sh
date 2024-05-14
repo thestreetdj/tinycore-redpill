@@ -1764,7 +1764,13 @@ function additional() {
       [ "${spoof}" = "Add" ] && add-addon "mac-spoof" || del-addon "mac-spoof"
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
     elif [ "${resp}" = "w" ]; then
-      [ "${nvmes}" = "Add" ] && add-addon "nvmesystem" || del-addon "nvmesystem"
+      if [ "${nvmes}" = "Add" ]; then
+        add-addon "nvmesystem"
+		del-addon "nvmevolume-onthefly"
+      else
+        del-addon "nvmesystem"
+        add-addon "nvmevolume-onthefly"		
+      fi
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"	  
     elif [ "${resp}" = "y" ]; then 
       [ "${dbgutils}" = "Add" ] && add-addon "dbgutils" || del-addon "dbgutils"
