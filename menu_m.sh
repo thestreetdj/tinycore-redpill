@@ -1227,6 +1227,7 @@ function add-addon() {
   [ "${1}" = "nvmesystem" ] && echo -n "Would you like to add nvmesystem? [yY/nN] : "
   [ "${1}" = "dbgutils" ] && echo -n "Would you like to add dbgutils for error analysis? [yY/nN] : "
   [ "${1}" = "sortnetif" ] && echo -n "Would you like to add sortnetif? [yY/nN] : "
+  [ "${1}" = "nvmevolume-onthefly" ] && answ="y" && answer="y"
   
   readanswer    
   if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
@@ -1766,10 +1767,10 @@ function additional() {
     elif [ "${resp}" = "w" ]; then
       if [ "${nvmes}" = "Add" ]; then
         add-addon "nvmesystem"
-		del-addon "nvmevolume-onthefly"
+        del-addon "nvmevolume-onthefly"
       else
         del-addon "nvmesystem"
-        add-addon "nvmevolume-onthefly"		
+        add-addon "nvmevolume-onthefly"
       fi
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"	  
     elif [ "${resp}" = "y" ]; then 
