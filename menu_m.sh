@@ -1767,7 +1767,7 @@ function additional() {
     elif [ "${resp}" = "w" ]; then
       [ "${nvmes}" = "Add" ] && add-addon "nvmesystem" || del-addon "nvmesystem"
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"	  
-	  [ "${nvmes}" = "Add" ] && NVMES="ON" || NVMES="OFF"	  
+	  [ "${nvmes}" = "Add" ] && NVMES="OFF" || NVMES="ON"
 	  writeConfigKey "general" "nvmesystem" "${NVMES}"
     elif [ "${resp}" = "y" ]; then 
       [ "${dbgutils}" = "Add" ] && add-addon "dbgutils" || del-addon "dbgutils"
