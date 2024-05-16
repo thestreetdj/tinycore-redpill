@@ -1733,7 +1733,6 @@ function additional() {
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"  
 
   [ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
-  [ "${nvmes}" = "Remove" ] && NVMES="OFF" || NVMES="ON"
 
   eval "MSG50=\"\${MSG${tz}50}\""
   eval "MSG51=\"\${MSG${tz}51}\""
@@ -1768,6 +1767,7 @@ function additional() {
     elif [ "${resp}" = "w" ]; then
       [ "${nvmes}" = "Add" ] && add-addon "nvmesystem" || del-addon "nvmesystem"
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"	  
+	  [ "${nvmes}" = "Add" ] && NVMES="ON" || NVMES="OFF"	  
 	  writeConfigKey "general" "nvmesystem" "${NVMES}"
     elif [ "${resp}" = "y" ]; then 
       [ "${dbgutils}" = "Add" ] && add-addon "dbgutils" || del-addon "dbgutils"
