@@ -2924,8 +2924,8 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
                 fi
             fi  
         fi    
-        NVMES=$(jq -r -e '.general.nvmesystem' "$userconfigfile")
-        if [ "${NVMES}" = "ON" ]; then
+
+        if [ -d "/home/tc/redpill-load/custom/extensions/nvmesystem" ]; then
             echo "Add configuration pci=nommconf for nvmesystem addon"
             USB_LINE="${USB_LINE} pci=nommconf "
             SATA_LINE="${SATA_LINE} pci=nommconf "
