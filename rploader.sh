@@ -2924,6 +2924,12 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
                 fi
             fi  
         fi    
+        NVMES=$(jq -r -e '.general.nvmesystem' "$userconfigfile")
+        if [ "${NVMES}" = "ON" ]; then
+            echo "Add configuration pci=nommconf for nvmesystem addon"
+            USB_LINE="${USB_LINE} pci=nommconf "
+            SATA_LINE="${SATA_LINE} pci=nommconf "
+        fi
     fi
     
     msgwarning "Updated user_config with USB Command Line : $USB_LINE"
