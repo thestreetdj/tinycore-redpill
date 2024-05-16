@@ -149,6 +149,7 @@ KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
 LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
 DISABLEI915=$(jq -r -e '.general.disablei915' "$USER_CONFIG_FILE")
+NVMES=$(jq -r -e '.general.nvmesystem' "$USER_CONFIG_FILE")
 ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
 lcode=$(echo $ucode | cut -c 4-)
 BLOCK_EUDEV="N"
@@ -1732,6 +1733,7 @@ function additional() {
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"  
 
   [ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
+  [ "${nvmes}" = "Remove" ] && NVMES="OFF" || NVMES="ON"
 
   eval "MSG50=\"\${MSG${tz}50}\""
   eval "MSG51=\"\${MSG${tz}51}\""
@@ -1766,6 +1768,7 @@ function additional() {
     elif [ "${resp}" = "w" ]; then
       [ "${nvmes}" = "Add" ] && add-addon "nvmesystem" || del-addon "nvmesystem"
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"	  
+	  writeConfigKey "general" "nvmesystem" "${NVMES}"
     elif [ "${resp}" = "y" ]; then 
       [ "${dbgutils}" = "Add" ] && add-addon "dbgutils" || del-addon "dbgutils"
   	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
@@ -1775,10 +1778,9 @@ function additional() {
     elif [ "${resp}" = "z" ]; then
       if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
         [ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
-
-		writeConfigKey "general" "disablei915" "${DISPLAYI915}"
-  		DISABLEI915=$(jq -r -e '.general.disablei915' "$USER_CONFIG_FILE")
-  		[ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
+        writeConfigKey "general" "disablei915" "${DISPLAYI915}"
+        DISABLEI915=$(jq -r -e '.general.disablei915' "$USER_CONFIG_FILE")
+        [ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
       else	
   	  	echo "This platform is not supported..." && read answer && continue
       fi 
@@ -1996,6 +1998,11 @@ fi
 if [ "${DISABLEI915}" = "null" ]; then
     DISABLEI915="OFF"
     writeConfigKey "general" "disablei915" "${DISABLEI915}"
+fi
+
+if [ "${NVMES}" = "null" ]; then
+    NVMES="OFF"
+    writeConfigKey "general" "nvmesystem" "${NVMES}"
 fi
 
 # Get actual IP
