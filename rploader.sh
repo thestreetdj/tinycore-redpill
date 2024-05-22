@@ -9,7 +9,7 @@
 source /home/tc/functions.h
 #####################################################################################################
 
-rploaderver="1.0.2.8"
+rploaderver="1.0.2.9"
 build="master"
 redpillmake="prod"
 
@@ -121,6 +121,7 @@ function history() {
     1.0.2.6 Added multilingual support languages (locales) (Arabic, Hindi, Hungarian, Indonesian, Turkish)
     1.0.2.7 dbgutils Addon Add/Delete selection menu
     1.0.2.8 Added multilingual support languages (locales) (Amharic-Ethiopian, Thai)
+    1.0.2.9 Release img image with gettext.tgz
     --------------------------------------------------------------------------------------
 EOF
 
