@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ##### INCLUDES #####################################################################################################
-. /home/tc/functions.h
+. /home/tc/functions.sh
 . /home/tc/i18n.h
 #####################################################################################################
 
@@ -899,9 +899,9 @@ function make() {
   clear
 
   if [ "${prevent_init}" = "OFF" ]; then
-    ./my "${MODEL}"-"${BUILD}" noconfig "${1}" | tee "/home/tc/zlastbuild.log"
+    my "${MODEL}"-"${BUILD}" noconfig "${1}" | tee "/home/tc/zlastbuild.log"
   else
-    ./my "${MODEL}"-"${BUILD}" noconfig "${1}" prevent_init | tee "/home/tc/zlastbuild.log"
+    my "${MODEL}"-"${BUILD}" noconfig "${1}" prevent_init | tee "/home/tc/zlastbuild.log"
   fi 
 
   if  [ -f /home/tc/custom-module/redpill.ko ]; then
@@ -925,7 +925,7 @@ st "finishloader" "Loader build status" "Finished building the loader"
 ###############################################################################
 # Post Update for jot mode 
 function postupdate() {
-  ./my "${MODEL}" postupdate | tee "/home/tc/zpostupdate.log"
+  my "${MODEL}" postupdate | tee "/home/tc/zpostupdate.log"
   echo "press any key to continue..."
   read answer
   return 0
