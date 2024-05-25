@@ -2029,6 +2029,18 @@ EOF
 
 }
 
+function tinyjotfunc() {
+    cat <<EOF
+function savedefault {
+    saved_entry="\${chosen}"
+    save_env --file \$prefix/grubenv saved_entry
+    echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
+    echo "TCRP JOT Version : 1.0.2.0"
+    echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
+    echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
+}    
+EOF
+}
 
 function showsyntax() {
     cat <<EOF
@@ -2160,19 +2172,6 @@ EOF
 
 }
 
-function checkinternet() {
-
-    echo -n "Checking Internet Access -> "
-    nslookup github.com 2>&1 >/dev/null
-    if [ $? -eq 0 ]; then
-        echo "OK"
-    else
-        echo "Error: No internet found, or github is not accessible"
-        exit 99
-    fi
-
-}
-
 function getstaticmodule() {
 
     cd /home/tc
@@ -2222,19 +2221,6 @@ function getstaticmodule() {
         exit 99
     fi
 
-}
-
-function tinyjotfunc() {
-    cat <<EOF
-function savedefault {
-    saved_entry="\${chosen}"
-    save_env --file \$prefix/grubenv saved_entry
-    echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
-    echo "TCRP JOT Version : 1.0.2.0"
-    echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
-    echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
-}    
-EOF
 }
 
 function checkUserConfig() {
@@ -2699,48 +2685,6 @@ function listmodules() {
         echo "------------------------------------------------------------------------------------------------"
     else
         echo "Error : File $MODULE_ALIAS_FILE could not be parsed"
-    fi
-
-}
-
-function listextension() {
-
-    if [ ! -f rpext-index.json ]; then
-        curl -k -# -L "${modextention}" -o rpext-index.json
-    fi
-
-    ## Get extension author rpext-index.json and then parse for extension download with :
-    #       jq '. | select(.id | contains("vxge")) .url  ' rpext-index.json
-
-    if [ ! -z $1 ]; then
-        echo "Searching for matching extension for $1"
-        matchingextension=($(jq ". | select(.id | endswith(\"${1}\")) .url  " rpext-index.json))
-
-        if [ ! -z $matchingextension ]; then
-            echo "Found matching extension : "
-            echo $matchingextension
-            ./redpill-load/ext-manager.sh add "${matchingextension//\"/}"
-        fi
-
-        extensionslist+="${matchingextension} "
-        echo $extensionslist
-
-#m shell only
-        #def
-        if [ 1 = 0 ]; then
-        echo "Target Platform : ${TARGET_PLATFORM}"
-        if [ "${TARGET_PLATFORM}" = "broadwellnk" ] || [ "${TARGET_PLATFORM}" = "rs4021xsp" ] || [ "${TARGET_PLATFORM}" = "ds1621xsp" ]; then
-            if [ -d /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe ]; then
-                echo "Removing : PeterSuh-Q3.ixgbe"
-                echo "Reason : The Broadwellnk platform has a vanilla.ixgbe ext driver built into the DSM, so they conflict with each other if ixgbe is added separately."
-                sudo rm -rf /home/tc/redpill-load/custom/extensions/PeterSuh-Q3.ixgbe
-            fi
-        fi
-        #def
-        fi
-        
-    else
-        echo "No matching extension"
     fi
 
 }
