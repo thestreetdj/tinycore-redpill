@@ -1409,6 +1409,36 @@ st "extractor" "Extraction tools" "Extraction Tools downloaded"
 
 }
 
+function testarchive() {
+
+    archive="$1"
+    archiveheader="$(od -bc ${archive} | head -1 | awk '{print $3}')"
+
+    case ${archiveheader} in
+    105)
+        echo "${archive}, is a Tar file"
+        isencrypted="no"
+        return 0
+        ;;
+    255)
+        echo "File ${archive}, is  encrypted"
+        isencrypted="yes"
+        return 1
+        ;;
+    213)
+        echo "File ${archive}, is a compressed tar"
+        isencrypted="no"
+        ;;
+    *)
+        echo "Could not determine if file ${archive} is encrypted or not, maybe corrupted"
+        ls -ltr ${archive}
+        echo ${archiveheader}
+        exit 99
+        ;;
+    esac
+
+}
+
 function processpat() {
 
 #    loaderdisk="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)"
