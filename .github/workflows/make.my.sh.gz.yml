@@ -17,10 +17,10 @@ jobs:
           echo "Version: ${VERSION}"
           echo "::set-output name=VERSION::${VERSION}"
           
-          tar -zcvf my.sh.gz my myv i18n.h functions.h myfunc.h menu.sh menu_m.sh ntp.sh sngen.sh macgen.sh edisk.sh rploader.sh custom_config.json modules.alias.4.json extractor.gz
+          tar -zcvf my.sh.gz i18n.h functions.sh menu.sh menu_m.sh ntp.sh sngen.sh macgen.sh edisk.sh custom_config.json modules.alias.4.json extractor.gz
           mkdir -p ./mydata/home/tc/
           tar -zxvf mydata.tgz -C ./mydata/
-          cp -vf my.sh.gz my myv i18n.h functions.h myfunc.h menu.sh menu_m.sh ntp.sh sngen.sh macgen.sh edisk.sh rploader.sh custom_config.json modules.alias.4.json extractor.gz ./mydata/home/tc/
+          cp -vf my.sh.gz i18n.h functions.sh menu.sh menu_m.sh ntp.sh sngen.sh macgen.sh edisk.sh custom_config.json modules.alias.4.json extractor.gz ./mydata/home/tc/
           tar -zcvf mydata.tgz -C ./mydata/ .
           
       - name: Commit changes
