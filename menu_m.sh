@@ -1066,7 +1066,7 @@ function cloneloader() {
   return 0
 }
 
-function tcrpfriendentry() {
+function tcrpfriendentry_hdd() {
     
     cat <<EOF
 menuentry 'Tiny Core Friend ${MODEL} ${BUILD} Update 0 ${DMPM}' {
@@ -1168,7 +1168,7 @@ function wr_part1() {
 
     echo "Modifying grub.cfg for new loader boot..."
     sudo sed -i '61,$d' "${mdisk}${1}"/boot/grub/grub.cfg
-    tcrpfriendentry ${1} | sudo tee --append "${mdisk}${1}"/boot/grub/grub.cfg
+    tcrpfriendentry_hdd ${1} | sudo tee --append "${mdisk}${1}"/boot/grub/grub.cfg
 
     sudo cp -vf /mnt/${loaderdisk}3/bzImage-friend  "${mdisk}${1}"
     sudo cp -vf /mnt/${loaderdisk}3/initrd-friend  "${mdisk}${1}"
