@@ -1159,10 +1159,6 @@ function _pat_process() {
 
 }
 
-function add-addon() {
-    jsonfile=$(jq ". |= .+ {\"${1}\": \"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json\"}" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json	
-}
-
 function setnetwork() {
 
     if [ -f /opt/eth*.sh ] && [ "$(grep dhcp /opt/eth*.sh | wc -l)" -eq 0 ]; then
@@ -2857,6 +2853,10 @@ echo "$3"
     esac
 }
 
+function add-addons() {
+    jsonfile=$(jq ". |= .+ {\"${1}\": \"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json\"}" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json	
+}
+
 function my() {
 
   loaderdisk=""
@@ -3039,10 +3039,10 @@ function my() {
       exit 0
   fi
   
-  [ "$spoof" = true ] && add-addon "mac-spoof" 
-  [ "$nvmes" = true ] && add-addon "nvmesystem" 
-  [ "$dbgutils" = true ] && add-addon "dbgutils" 
-  [ "$sortnetif" = true ] && add-addon "sortnetif" 
+  [ "$spoof" = true ] && add-addons "mac-spoof" 
+  [ "$nvmes" = true ] && add-addons "nvmesystem" 
+  [ "$dbgutils" = true ] && add-addons "dbgutils" 
+  [ "$sortnetif" = true ] && add-addons "sortnetif" 
   
   if [ "${offline}" = "NO" ]; then
       curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json
