@@ -1897,7 +1897,7 @@ function cleanloader() {
 
 }
 
-function backup() {
+function backuploader() {
 
 #Apply pigz for fast backup  
     if [ ! -n "$(which pigz)" ]; then
@@ -2893,7 +2893,7 @@ echo "$3"
         ;;
 
     backup)
-        backup
+        backuploader
         ;;
 
     postupdate)
