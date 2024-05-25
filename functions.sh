@@ -469,6 +469,22 @@ EOF
 
 }
 
+function getloaderdisk() {
+    loaderdisk=""
+    for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+        if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+    	loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+        fi    
+    done
+    if [ -z "${loaderdisk}" ]; then
+        for edisk in $(sudo fdisk -l | grep -e "Disk /dev/nvme" -e "Disk /dev/mmc" | awk '{print $2}' | sed 's/://' ); do
+    	if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+    	    loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"    
+    	fi    
+        done
+    fi
+}
+
 # ==============================================================================          
 # Color Function                                                                          
 # ==============================================================================          
