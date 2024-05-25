@@ -2278,12 +2278,8 @@ checkmachine
         exit 99
     fi
 
-    if [ "$FROMMYV" = "YES" ]; then
-        echo "skip removebundledexts() for called from myv.sh"
-    else
-        echo "Clean up extension files before building!!!"
-        removemodelexts    
-    fi    
+    echo "Clean up extension files before building!!!"
+    removemodelexts    
 
     [ ! -d /lib64 ] &&  sudo ln -s /lib /lib64
     [ ! -f /lib64/libbz2.so.1 ] && sudo ln -s /usr/local/lib/libbz2.so.1.0.8 /lib64/libbz2.so.1
