@@ -613,7 +613,6 @@ done
 # Set Describe model-specific requirements or suggested hardware
 function setSuggest() {
 
-  line="-------------------------------------------------------\n"
   case $1 in
     DS620slim)   platform="apollolake";bay="TOWER_6_Bay";mcpu="Intel Celeron J3355";eval "desc=\"[${MODEL}]:${platform},${bay},${mcpu}, \${MSG${tz}17}\"";;  
     DS1019+)     platform="apollolake";bay="TOWER_5_Bay";mcpu="Intel Celeron J3455";eval "desc=\"[${MODEL}]:${platform},${bay},${mcpu}, \${MSG${tz}17}\"";;
@@ -657,7 +656,7 @@ function setSuggest() {
     MSG00="\n"
   fi  
   
-  result="${line}${MSG00}${desc}"
+  result="${MSG00}${desc}"
   echo "${platform} : ${bay} : ${mcpu}"
 }
 
