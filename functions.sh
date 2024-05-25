@@ -1812,7 +1812,7 @@ function getvars() {
         exit 99
     fi
 
-    case $ORIGINAL_PLATFORM in
+    case $ORIGIN_PLATFORM in
 
     bromolow | braswell)
         KERNEL_MAJOR="3"
