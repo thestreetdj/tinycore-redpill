@@ -850,7 +850,7 @@ function getlatestmshell() {
             echo "Updating m shell with latest updates"
             source myfunc.h
             showlastupdate
-            echo "y"|./rploader.sh backup
+            echo "y"|rploader backup
             echo "press any key to continue..."                                                                                                   
             read answer            
             exit
@@ -1537,7 +1537,7 @@ function addrequiredexts() {
         cd /home/tc/redpill-load/ && ./ext-manager.sh add "$(echo $extension | sed -s 's/"//g' | sed -s 's/,//g')"
         if [ $? -ne 0 ]; then
             echo "FAILED : Processing add_extensions failed check the output for any errors"
-            ./rploader.sh clean
+            rploader clean
             exit 99
         fi
     done
@@ -1555,7 +1555,7 @@ function addrequiredexts() {
         cd /home/tc/redpill-load/ && ./ext-manager.sh _update_platform_exts ${platkver} ${extension}
         if [ $? -ne 0 ]; then
             echo "FAILED : Processing add_extensions failed check the output for any errors"
-            ./rploader.sh clean
+            rploader clean
             exit 99
         fi
     done
@@ -3128,12 +3128,12 @@ function my() {
   
   if [ "$postupdate" = "Y" ]; then
       cecho y "Postupdate in progress..."  
-      sudo ./rploader.sh postupdate ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}
+      sudo rploader postupdate ${TARGET_PLATFORM}-7.1.1-${TARGET_REVISION}
   
       echo                                                                                                                                        
       cecho y "Backup in progress..."
       echo                                                                                                                                        
-      echo "y"|./rploader.sh backup    
+      echo "y"|rploader backup    
       exit 0
   fi
   
@@ -3152,7 +3152,7 @@ function my() {
       echo                                                                                                                                        
       cecho y "Backup in progress..."
       echo                                                                                                                                        
-      echo "y"|./rploader.sh backup    
+      echo "y"|rploader backup    
       exit 0
   fi
   
@@ -3170,12 +3170,12 @@ function my() {
   else 
       cecho c "Before changing user_config.json" 
       cat user_config.json
-      echo "y"|./rploader.sh identifyusb
+      echo "y"|rploader identifyusb
   
       if [ "$ORIGIN_PLATFORM" = "v1000" ]||[ "$ORIGIN_PLATFORM" = "r1000" ]||[ "$ORIGIN_PLATFORM" = "geminilake" ]; then
           cecho p "Device Tree based model does not need SataPortMap setting...."     
       else    
-          ./rploader.sh satamap    
+          rploader satamap    
       fi    
       cecho y "After changing user_config.json"     
       cat user_config.json        
@@ -3262,17 +3262,17 @@ function my() {
   fi
   
   if [ "$jot" = "N" ]; then
-      echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend ${parmfrmyv}
+      echo "n"|rploader build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend ${parmfrmyv}
   else
-      echo "n"|./rploader.sh build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static ${parmfrmyv}
+      echo "n"|rploader build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static ${parmfrmyv}
   fi
   
   if [ $? -ne 0 ]; then
       cecho r "An error occurred while building the loader!!! Clean the redpill-load directory!!! "
-      ./rploader.sh clean
+      rploader clean
   else
       [ "$MACHINE" != "VIRTUAL" ] && sleep 2
-      echo "y"|./rploader.sh backup
+      echo "y"|rploader backup
   fi
 }
 
