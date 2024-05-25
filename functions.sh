@@ -6,27 +6,15 @@ rploaderver="1.0.2.9"
 build="master"
 redpillmake="prod"
 
-rploaderfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/rploader.sh"
-rploaderrepo="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/"
-
 redpillextension="https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/redpill${redpillmake}/rpext-index.json"
-modextention="https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/rpext-index.json"
 modalias4="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/modules.alias.4.json.gz"
 modalias3="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/modules.alias.3.json.gz"
-dtcbin="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/dtc"
-dtsfiles="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build"
+
 timezone="UTC"
 ntpserver="pool.ntp.org"
 userconfigfile="/home/tc/user_config.json"
 
-fullupdatefiles="custom_config.json custom_config_jun.json global_config.json modules.alias.3.json.gz modules.alias.4.json.gz rpext-index.json user_config.json rploader.sh"
-
-HOMEPATH="/home/tc"
-TOOLSPATH="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/main/tools/"
-TOOLS="bspatch bzImage-template-v4.gz bzImage-template-v5.gz bzImage-to-vmlinux.sh calc_run_size.sh crc32 dtc kexec ramdisk-patch.sh vmlinux-to-bzImage.sh xxd zimage-patch.sh kpatch grub-editenv pigz modprobe"
-
 gitdomain="raw.githubusercontent.com"
-
 mshellgz="my.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/my.sh.gz"
 
