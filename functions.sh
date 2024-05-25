@@ -1698,6 +1698,18 @@ function postupdate() {
 
 }
 
+function getbspatch() {
+    if [ ! -f /usr/local/bspatch ]; then
+
+        #echo "bspatch does not exist, bringing over from repo"
+        #curl -kL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
+         
+        echo "bspatch does not exist, copy from tools"
+        chmod 777 ~/tools/bspatch
+        sudo cp -vf ~/tools/bspatch /usr/local/bin/
+    fi
+}
+
 function removemodelexts() {                                                                             
                                                                                         
     echo "Entering redpill-load directory to remove exts"                                                            
