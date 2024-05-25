@@ -166,51 +166,15 @@ function backtitle() {
   BACKTITLE+=" ${DMPM}"
   BACKTITLE+=" ${ucode}"
   BACKTITLE+=" ${LDRMODE}"
-  if [ -n "${MODEL}" ]; then
-    BACKTITLE+=" ${MODEL}"
-  else
-    BACKTITLE+=" (no model)"
-  fi
-  if [ -n "${BUILD}" ]; then
-    BACKTITLE+=" ${BUILD}"
-  else
-    BACKTITLE+=" (no build)"
-  fi
-  if [ -n "${SN}" ]; then
-    BACKTITLE+=" ${SN}"
-  else
-    BACKTITLE+=" (no SN)"
-  fi
-  if [ -n "${IP}" ]; then
-    BACKTITLE+=" ${IP}"
-  else
-    BACKTITLE+=" (no IP)"
-  fi
-  if [ -n "${MACADDR1}" ]; then
-    BACKTITLE+=" ${MACADDR1}"
-  else
-    BACKTITLE+=" (no MAC1)"
-  fi
-  if [ -n "${MACADDR2}" ]; then
-    BACKTITLE+=" ${MACADDR2}"
-  else
-    BACKTITLE+=" (no MAC2)"
-  fi
-  if [ -n "${MACADDR3}" ]; then
-    BACKTITLE+=" ${MACADDR3}"
-  else
-    BACKTITLE+=" (no MAC3)"
-  fi
-  if [ -n "${MACADDR4}" ]; then
-    BACKTITLE+=" ${MACADDR4}"
-  else
-    BACKTITLE+=" (no MAC4)"
-  fi
-  if [ -n "${KEYMAP}" ]; then
-    BACKTITLE+=" (${LAYOUT}/${KEYMAP})"
-  else
-    BACKTITLE+=" (qwerty/us)"
-  fi
+  [ -n "${MODEL}" ] && BACKTITLE+=" ${MODEL}" || BACKTITLE+=" (no model)"
+  [ -n "${BUILD}" ] && BACKTITLE+=" ${BUILD}" || BACKTITLE+=" (no build)"
+  [ -n "${SN}" ] && BACKTITLE+=" ${SN}" || BACKTITLE+=" (no SN)"
+  [ -n "${IP}" ] && BACKTITLE+=" ${IP}" || BACKTITLE+=" (no IP)"
+  [ -n "${MACADDR1}" == "null" ] && BACKTITLE+=" (no MAC1)" || BACKTITLE+=" ${MACADDR1}"
+  [ -n "${MACADDR2}" == "null" ] && BACKTITLE+=" (no MAC2)" || BACKTITLE+=" ${MACADDR2}"
+  [ -n "${MACADDR3}" == "null" ] && BACKTITLE+=" (no MAC3)" || BACKTITLE+=" ${MACADDR3}"
+  [ -n "${MACADDR4}" == "null" ] && BACKTITLE+=" (no MAC4)" || BACKTITLE+=" ${MACADDR4}"  
+  [ -n "${KEYMAP}" ] && BACKTITLE+=" (${LAYOUT}/${KEYMAP})" || BACKTITLE+=" (qwerty/us)"
   echo ${BACKTITLE}
 }
 
