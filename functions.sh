@@ -2254,7 +2254,7 @@ function checkUserConfig() {
 
 }
 
-function buildloader() {
+function () {
 
 #    tcrppart="$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)3"
     local_cache="/mnt/${tcrppart}/auxfiles"
@@ -2850,7 +2850,7 @@ echo "$3"
             echo "Got $REDPILL_MOD_NAME "
             echo "Manual extension handling,skipping extension auto detection "
             echo "Starting loader creation "
-            buildloader
+            buildloader "manual"
             [ $? -eq 0 ] && savesession
             ;;
 
@@ -2860,7 +2860,7 @@ echo "$3"
             echo "Got $REDPILL_MOD_NAME "
             listmodules
             echo "Starting loader creation "
-            buildloader junmod
+            buildloader "junmod"
             [ $? -eq 0 ] && savesession
             ;;
 
@@ -2869,9 +2869,9 @@ echo "$3"
             echo "Using static compiled redpill extension"
             getstaticmodule
             echo "Got $REDPILL_MOD_NAME "
-            listmodules
+            listmodules 
             echo "Starting loader creation "
-            buildloader
+            buildloader "static"
             [ $? -eq 0 ] && savesession
             ;;
 
