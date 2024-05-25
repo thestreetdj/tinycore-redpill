@@ -703,6 +703,12 @@ function READ_YN () { # ${1}:question ${2}:default
     done        
 }                                                                                         
 
+function st() {
+echo -e "[$(date '+%T.%3N')]:-------------------------------------------------------------" >> /home/tc/buildstatus
+echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
+}
+
+
 function getlatestmshell() {
 
     echo -n "Checking if a newer mshell version exists on the repo -> "
@@ -806,6 +812,39 @@ function readanswer() {
         esac
     done
 }        
+
+###############################################################################
+# Write to json config file
+function writeConfigKey() {
+
+    block="$1"
+    field="$2"
+    value="$3"
+
+    if [ -n "$1 " ] && [ -n "$2" ]; then
+        jsonfile=$(jq ".$block+={\"$field\":\"$value\"}" $USER_CONFIG_FILE)
+        echo $jsonfile | jq . >$USER_CONFIG_FILE
+    else
+        echo "No values to update"
+    fi
+
+}
+
+###############################################################################
+# Delete field from json config file
+function DeleteConfigKey() {
+
+    block="$1"
+    field="$2"
+
+    if [ -n "$1 " ] && [ -n "$2" ]; then
+        jsonfile=$(jq "del(.$block.$field)" $USER_CONFIG_FILE)
+        echo $jsonfile | jq . >$USER_CONFIG_FILE
+    else
+        echo "No values to remove"
+    fi
+
+}
     
 function checkmachine() {
 
@@ -817,12 +856,13 @@ function checkmachine() {
         MACHINE="NON-VIRTUAL"
     fi
 
-    if [ $(lscpu |grep Intel |wc -l) -gt 0 ]; then
-        CPU="INTEL"
-    else	
-        CPU="AMD"    
-    fi
-
+    if [ $(lspci -nn | grep -ie "\[0107\]" | wc -l) -gt 0 ]; then
+        echo "Found SAS HBAs, Restrict use of DT Models."
+        HBADETECT="ON"
+    else
+        HBADETECT="OFF"    
+    fi   
+    
 }
 
 function checkinternet() {
@@ -850,19 +890,51 @@ function checkinternet() {
 }
 
 ###############################################################################
-# Write to json config file
-function writeConfigKey() {
+# check for Sas module
+function checkforsas() {
 
-    block="$1"
-    field="$2"
-    value="$3"
+    sasmods="mpt3sas hpsa mvsas"
+    for sasmodule in $sasmods
+    do
+        echo "Checking existense of $sasmodule"
+        for sas in `depmod -n 2>/dev/null |grep -i $sasmodule |grep pci|cut -d":" -f 2 | cut -c 6-9,15-18`
+	do
+	    if [ `grep -i $sas /proc/bus/pci/devices |wc -l` -gt 0 ] ; then
+	        echo "  => $sasmodule, device found, block eudev mode" 
+	        BLOCK_EUDEV="Y"
+	    fi
+	done
+    done 
+}
 
-    if [ -n "$1 " ] && [ -n "$2" ]; then
-        jsonfile=$(jq ".$block+={\"$field\":\"$value\"}" $USER_CONFIG_FILE)
-        echo $jsonfile | jq . >$USER_CONFIG_FILE
+###############################################################################
+# check Intel or AMD
+function checkcpu() {
+
+    if [ $(lscpu |grep Intel |wc -l) -gt 0 ]; then
+        CPU="INTEL"
     else
-        echo "No values to update"
+        if [ $(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//' | grep -e N36L -e N40L -e N54L | wc -l) -gt 0 ]; then
+	    CPU="HP"
+            LDRMODE="JOT"
+            writeConfigKey "general" "loadermode" "${LDRMODE}"
+	else
+            CPU="AMD"
+        fi	    
     fi
+
+    threads="$(lscpu |grep CPU\(s\): | awk '{print $2}')"
+    
+    if [ $(lscpu |grep movbe |wc -l) -gt 0 ]; then    
+        AFTERHASWELL="ON"
+    else
+        AFTERHASWELL="OFF"
+    fi
+    
+    if [ "$MACHINE" = "VIRTUAL" ] && [ "$HYPERVISOR" = "KVM" ]; then
+        AFTERHASWELL="ON"    
+    fi
+
 }
 
 ###############################################################################
