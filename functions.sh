@@ -120,7 +120,7 @@ EOF
 
 }
 
-# my.sh (Batch Shell Script for rploader.sh)                 
+            
 # Made by Peter Suh
 # 2022.04.18                      
 # Update add 42661 U1 NanoPacked 
@@ -173,7 +173,7 @@ EOF
 # 2022.07.20
 # Update : Add DVA3219 jot mode (Release 22.07.25)
 # 2022.07.21
-# Update : Active rploader.sh satamap for non dtc model
+# Update : Active rploader satamap for non dtc model
 # 2022.07.27
 # Update : Add Re-Install DSM menuentry
 # 2022.08.03
@@ -1101,7 +1101,7 @@ function gitdownload() {
         git pull
         if [ $? -ne 0 ]; then
            cd /home/tc    
-           /home/tc/rploader.sh clean 
+           rploader clean 
            git clone -b master --single-branch https://github.com/PeterSuh-Q3/redpill-load.git
            #git clone -b master --single-branch https://giteas.duckdns.org/PeterSuh-Q3/redpill-load.git
         fi   
@@ -1894,7 +1894,6 @@ function cleanloader() {
     echo "Clearing local redpill files"
     sudo rm -rf /home/tc/redpill*
     sudo rm -rf /home/tc/*tgz
-    sudo rm -rf /home/tc/latestrploader.sh
 
 }
 
@@ -2079,9 +2078,9 @@ mountshare, version, monitor, bringfriend, downloadupgradepat, help
   Valid Options:  add/force_add/info/remove/update/cleanup/auto . Options after platform 
   
   Example: 
-  rploader.sh ext apollolake-7.0.1-42218 add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/e1000/rpext-index.json
+  rploader ext apollolake-7.0.1-42218 add https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/e1000/rpext-index.json
   or for auto detect use 
-  rploader.sh ext apollolake-7.0.1-42218 auto 
+  rploader ext apollolake-7.0.1-42218 auto 
   
 - download <platform> :
   Download redpill sources only
