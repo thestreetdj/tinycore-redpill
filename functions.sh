@@ -7,7 +7,7 @@ gitdomain="raw.githubusercontent.com"
 mshellgz="my.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/my.sh.gz"
 
-USER_CONFIG_FILE="/home/tc/user_config.json"
+userconfigfile="/home/tc/user_config.json"
 
 # my.sh (Batch Shell Script for rploader.sh)                 
 # Made by Peter Suh
@@ -822,8 +822,8 @@ function writeConfigKey() {
     value="$3"
 
     if [ -n "$1 " ] && [ -n "$2" ]; then
-        jsonfile=$(jq ".$block+={\"$field\":\"$value\"}" $USER_CONFIG_FILE)
-        echo $jsonfile | jq . >$USER_CONFIG_FILE
+        jsonfile=$(jq ".$block+={\"$field\":\"$value\"}" $userconfigfile)
+        echo $jsonfile | jq . >$userconfigfile
     else
         echo "No values to update"
     fi
@@ -838,8 +838,8 @@ function DeleteConfigKey() {
     field="$2"
 
     if [ -n "$1 " ] && [ -n "$2" ]; then
-        jsonfile=$(jq "del(.$block.$field)" $USER_CONFIG_FILE)
-        echo $jsonfile | jq . >$USER_CONFIG_FILE
+        jsonfile=$(jq "del(.$block.$field)" $userconfigfile)
+        echo $jsonfile | jq . >$userconfigfile
     else
         echo "No values to remove"
     fi
@@ -1220,7 +1220,7 @@ function my() {
   
   writeConfigKey "general" "kver" "${KVER}"
   
-  DMPM="$(jq -r -e '.general.devmod' $USER_CONFIG_FILE)"
+  DMPM="$(jq -r -e '.general.devmod' $userconfigfile)"
   if [ "${DMPM}" = "null" ]; then
       DMPM="DDSML"
       writeConfigKey "general" "devmod" "${DMPM}"
