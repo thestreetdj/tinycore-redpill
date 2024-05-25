@@ -136,6 +136,9 @@ MODEL=$(jq -r -e '.general.model' "$USER_CONFIG_FILE")
 BUILD=$(jq -r -e '.general.version' "$USER_CONFIG_FILE")
 SN=$(jq -r -e '.extra_cmdline.sn' "$USER_CONFIG_FILE")
 MACADDR1=$(jq -r -e '.extra_cmdline.mac1' "$USER_CONFIG_FILE")
+MACADDR2="$(jq -r -e '.extra_cmdline.mac2' $USER_CONFIG_FILE)"
+MACADDR3="$(jq -r -e '.extra_cmdline.mac3' $USER_CONFIG_FILE)"
+MACADDR4="$(jq -r -e '.extra_cmdline.mac4' $USER_CONFIG_FILE)"
 NETNUM="1"
 
 LAYOUT=$(jq -r -e '.general.layout' "$USER_CONFIG_FILE")
