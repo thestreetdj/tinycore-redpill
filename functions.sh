@@ -1270,10 +1270,10 @@ function monitor() {
         exit 99
     fi
 
-    mount /dev/${loaderdisk}1
-    mount /dev/${loaderdisk}2
+    [ "$(mount | grep /dev/${loaderdisk}1 | wc -l)" -eq 0 ] && mount /dev/${loaderdisk}1
+    [ "$(mount | grep /dev/${loaderdisk}2 | wc -l)" -eq 0 ] && mount /dev/${loaderdisk}2
 
-    while [ -z "$GATEWAY_INTERFACE" ]; do
+    while true; do
         clear
         echo -e "-------------------------------System Information----------------------------"
         echo -e "Hostname:\t\t"$(hostname) 
