@@ -2886,20 +2886,6 @@ echo "$3"
             ;;
 
         esac
-
-        ;;
-
-    \
-        ext)
-        getvars $2
-        checkinternet
-        gitdownload
-
-        if [ "$3" = "auto" ]; then
-            listmodules
-        else
-            ext_manager $@ # instead of listmodules
-        fi
         ;;
 
     clean)
