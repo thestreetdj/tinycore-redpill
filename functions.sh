@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 
 gitdomain="raw.githubusercontent.com"
 
@@ -481,7 +480,7 @@ function my() {
       [ "$MACHINE" != "VIRTUAL" ] && sleep 2
       echo "y"|./rploader.sh backup
   fi
-fi
+}
 
 ###############################################################################
 # get bus of disk
