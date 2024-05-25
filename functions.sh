@@ -111,7 +111,7 @@ function _pat_process() {
 
 }
 
-function add-addon() {
+function add_addon() {
     jsonfile=$(jq ". |= .+ {\"${1}\": \"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json\"}" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json	
 }
 
@@ -309,10 +309,10 @@ function my() {
       exit 0
   fi
   
-  [ "$spoof" = true ] && add-addon "mac-spoof" 
-  [ "$nvmes" = true ] && add-addon "nvmesystem" 
-  [ "$dbgutils" = true ] && add-addon "dbgutils" 
-  [ "$sortnetif" = true ] && add-addon "sortnetif" 
+  [ "$spoof" = true ] && add_addon "mac-spoof" 
+  [ "$nvmes" = true ] && add_addon "nvmesystem" 
+  [ "$dbgutils" = true ] && add_addon "dbgutils" 
+  [ "$sortnetif" = true ] && add_addon "sortnetif" 
   
   if [ "${offline}" = "NO" ]; then
       curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json
