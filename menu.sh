@@ -70,7 +70,7 @@ if [ -d /mnt/${tcrppart}/redpill-load/ ] && [ -d /mnt/${tcrppart}/tcrp-addons/ ]
 else
     while true; do
       if [ $(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | wc -l) -gt 0 ]; then
-        /home/tc/my update
+        getlatestmshell "noask"
         break
       fi
       sleep 1
