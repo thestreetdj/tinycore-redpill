@@ -2844,7 +2844,14 @@ echo "$3"
         postupdate
         [ $? -eq 0 ] && savesession
         ;;
-
+    help)
+        showhelp
+        exit 99
+        ;;
+    monitor)
+        monitor
+        exit 0
+        ;;
     *)
         showsyntax
         exit 99
