@@ -2793,7 +2793,7 @@ function rploader() {
 
 echo "$3"
 
-        [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
+        [ "$3" = "withfriend" ] && WITHFRIEND="YES" || WITHFRIEND="NO"
 
         case $3 in
 
