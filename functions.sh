@@ -2291,7 +2291,7 @@ function buildloader() {
 
 checkmachine
 
-    [ "$1" == "junmod" ] && JUNLOADER="YES"
+    [ "$1" == "junmod" ] && JUNLOADER="YES" || JUNLOADER="NO"
 
     [ -d $local_cache ] && echo "Found tinycore cache folder, linking to home/tc/custom-module" && [ ! -d /home/tc/custom-module ] && ln -s $local_cache /home/tc/custom-module
 
