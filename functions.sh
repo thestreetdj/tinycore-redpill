@@ -2838,12 +2838,8 @@ function rploader() {
         getredpillko
 
 echo "$3"
-echo "$4"
+
         [ "$3" = "withfriend" ] && echo "withfriend option set, My friend will be added" && WITHFRIEND="YES"
-
-        [ "$4" = "frmyv" ] && echo "called from myv.sh option set, From Myv will be added" && FROMMYV="YES"
-
-        [ "$4" = "makeimg" ] && echo "makeimg option set, keep loader.img for 7.2" && MAKEIMG="YES"
 
         case $3 in
 
@@ -2984,9 +2980,7 @@ function my() {
   postupdate="N"
   userdts="N"
   noconfig="N"
-  frmyv="N"
   jot="N"
-  makeimg="N"
   prevent_init="N"
   
   shift
@@ -3005,20 +2999,12 @@ function my() {
               noconfig="Y"
               ;;
            
-          frmyv)
-              frmyv="Y"
-              ;;
-              
           jot)
               jot="Y"
               ;;
   
           fri)
               jot="N"
-              ;;
-              
-          makeimg)
-              makeimg="Y"
               ;;
   
           prevent_init)
@@ -3037,8 +3023,6 @@ function my() {
   #echo $postupdate
   #echo $userdts
   #echo $noconfig
-  #echo $frmyv
-  #echo "makeimg = $makeimg"
   
   echo
   
@@ -3253,16 +3237,6 @@ function my() {
   cecho g "Loader Building in progress..."
   echo
   
-  if [ "$frmyv" = "Y" ]; then
-      parmfrmyv="frmyv"
-  else
-      if [ "$makeimg" = "Y" ]; then
-          parmfrmyv="makeimg"
-      else
-          parmfrmyv=""
-      fi
-  fi
-  
   if [ "$MODEL" = "SA6400" ]; then
       cecho g "Remove Exts for SA6400 (thethorgroup.boot-wait) ..."
       jsonfile=$(jq 'del(.["thethorgroup.boot-wait"])' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
@@ -3274,9 +3248,9 @@ function my() {
   fi
   
   if [ "$jot" = "N" ]; then
-      echo "n"|rploader build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend ${parmfrmyv}
+      echo "n"|rploader build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend
   else
-      echo "n"|rploader build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static ${parmfrmyv}
+      echo "n"|rploader build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static
   fi
   
   if [ $? -ne 0 ]; then
