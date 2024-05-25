@@ -3203,4 +3203,10 @@ function my() {
   fi
 }
 
-[ "$1" == "monitor" ] && rploader monitor
+if [ $# -lt 2 ]; then
+    syntaxcheck $@
+fi
+
+if [ -z "$GATEWAY_INTERFACE" ]; then
+    [ "$1" == "monitor" ] && rploader monitor
+fi
