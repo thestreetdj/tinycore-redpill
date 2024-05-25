@@ -97,28 +97,7 @@ trap ctrl_c INT
 
 VERSION=v`cat /home/tc/functions.sh | grep rploaderver= | cut -d\" -f2`
 
-loaderdisk=""
-for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-    if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
-        loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
-    fi    
-done
-if [ -z "${loaderdisk}" ]; then
-    for edisk in $(sudo fdisk -l | grep -e "Disk /dev/nvme" -e "Disk /dev/mmc" | awk '{print $2}' | sed 's/://' ); do
-        if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
-            loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"    
-        fi    
-    done
-fi
-
-if [ -z "${loaderdisk}" ]; then
-    echo "Not Supported Loader BUS Type, program Exit!!!"
-    exit 99
-fi
-getBus "${loaderdisk}"
-
-[ "${BUS}" = "nvme" ] && loaderdisk="${loaderdisk}p"
-[ "${BUS}" = "mmc"  ] && loaderdisk="${loaderdisk}p"
+getloaderdisk
 
 tcrppart="${loaderdisk}3"
 
