@@ -75,7 +75,7 @@ function update_tinycore() {
       	sudo curl -kL#  https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tinycore_14.0/etc/shadow -o /etc/shadow
         echo "/etc/shadow" >> /opt/.filetool.lst
 	cd ~
-	echo 'Y'|./rploader.sh backup
+	echo 'Y'|rploader backup
         restart
       fi
   fi
@@ -95,7 +95,7 @@ prevent_init="OFF"
 # Trap Ctrl+C (SIGINT) signals and call ctrl_c function
 trap ctrl_c INT
 
-VERSION=v`cat /home/tc/rploader.sh | grep rploaderver= | cut -d\" -f2`
+VERSION=v`cat /home/tc/functions.sh | grep rploaderver= | cut -d\" -f2`
 
 loaderdisk=""
 for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
@@ -926,7 +926,7 @@ function keymapMenu() {
   writeConfigKey "general" "keymap" "${KEYMAP}"
   sed -i "/loadkmap/d" /opt/bootsync.sh
   echo "loadkmap < /usr/share/kmap/${LAYOUT}/${KEYMAP}.kmap &" >> /opt/bootsync.sh
-  echo 'Y'|./rploader.sh backup
+  echo 'Y'|rploader backup
   
   echo
   echo "Since the keymap has been changed,"
@@ -956,7 +956,7 @@ function backup() {
     rm -f /home/tc/custom-module
   fi
 
-  echo "y"|./rploader.sh backup
+  echo "y"|rploader backup
   echo "press any key to continue..."
   read answer
   return 0
@@ -1771,7 +1771,7 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep gettext | wc -w) -eq 0 ]; then
 	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
 	    sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst
 	    sudo echo "gettext.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-	    echo 'Y'|./rploader.sh backup
+	    echo 'Y'|rploader backup
 	    echo "You have finished installing TC gettext package."
 	    restart
  	fi
@@ -1786,7 +1786,7 @@ fi
 #	    sudo echo "dejavu-fonts-ttf.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 #	    sudo echo "notosansdevanagari-fonts-ttf.tcz" >> /mnt/${tcrppart}/cde/onboot.lst     
 #	    sudo echo "setfont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst     
-#	    echo 'Y'|./rploader.sh backup
+#	    echo 'Y'|rploader backup
 #	    echo "You have finished installing TC dejavu-fonts-ttf package."
 #	    restart
 # 	fi
@@ -1802,7 +1802,7 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
 	    sudo echo "glibc_i18n_locale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 	    sudo echo "unifont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 	    sudo echo "rxvt.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-	    echo 'Y'|./rploader.sh backup
+	    echo 'Y'|rploader backup
 
 	    echo
 	    echo "You have finished installing TC Unicode package and urxvt."
@@ -1863,7 +1863,7 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -
     sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst	
     sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
     sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-    echo 'Y'|./rploader.sh backup
+    echo 'Y'|rploader backup
     
     echo
     echo "We have finished bug fix for /mnt/${tcrppart}/cde/onboot.lst."
@@ -2009,7 +2009,7 @@ fi
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep firmware-broadcom_bnx2x | wc -w) -eq 0 ]; then
     installtcz "firmware-broadcom_bnx2x.tcz"
     echo "Install firmware-broadcom_bnx2x OK !!!"
-    echo "y"|./rploader.sh backup
+    echo "y"|rploader backup
     restart
 fi
 
