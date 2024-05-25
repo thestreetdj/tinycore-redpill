@@ -2848,10 +2848,6 @@ echo "$3"
         showhelp
         exit 99
         ;;
-    monitor)
-        monitor
-        exit 0
-        ;;
     *)
         showsyntax
         exit 99
@@ -3209,3 +3205,4 @@ function my() {
   fi
 }
 
+monitor
