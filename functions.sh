@@ -3202,11 +3202,3 @@ function my() {
       echo "y"|rploader backup
   fi
 }
-
-if [ $# -lt 2 ]; then
-    syntaxcheck $@
-fi
-
-if [ -z "$GATEWAY_INTERFACE" ]; then
-    [ "$1" == "monitor" ] && rploader monitor
-fi
