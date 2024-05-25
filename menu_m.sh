@@ -98,6 +98,14 @@ trap ctrl_c INT
 VERSION=v`cat /home/tc/functions.sh | grep rploaderver= | cut -d\" -f2`
 
 getloaderdisk
+if [ -z "${loaderdisk}" ]; then
+    echo "Not Supported Loader BUS Type, program Exit!!!"
+    exit 99
+fi
+getBus "${loaderdisk}"
+
+[ "${BUS}" = "nvme" ] && loaderdisk="${loaderdisk}p"
+[ "${BUS}" = "mmc"  ] && loaderdisk="${loaderdisk}p"
 
 tcrppart="${loaderdisk}3"
 
