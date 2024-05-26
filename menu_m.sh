@@ -1726,6 +1726,7 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep gettext | wc -w) -eq 0 ]; then
 	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
 	    sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst
 	    sudo echo "gettext.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+        sudo echo "ncursesw.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 	    echo 'Y'|rploader backup
 	    echo "You have finished installing TC gettext package."
 	    restart
