@@ -858,7 +858,7 @@ function getlatestmshell() {
             rm -f /home/tc/latest.mshell.gz
             tar -zxvf $mshellgz
             echo "Updating m shell with latest updates"
-            source myfunc.h
+            . /home/tc/functions.sh
             showlastupdate
             echo "y"|rploader backup
             echo "press any key to continue..."                                                                                                   
