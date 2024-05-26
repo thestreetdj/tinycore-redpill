@@ -64,8 +64,8 @@ jobs:
           sudo cp -vf ${path}/tce/optional/gettext.* /mnt/tarp3/cde/optional
           sudo cp -vf ${path}/tce/optional/ncursesw.* /mnt/tarp3/cde/optional
           ls -ltr /mnt/tarp3/cde/optional
-          cat ${path}/tce/onboot.lst >> /mnt/tarp3/cde/onboot.lst
-          cat /mnt/tarp3/cde/onboot.lst
+          sudo cat ${path}/tce/onboot.lst >> /mnt/tarp3/cde/onboot.lst
+          sudo cat /mnt/tarp3/cde/onboot.lst
           
           sudo umount /mnt/p3
           sudo umount /mnt/tarp3
