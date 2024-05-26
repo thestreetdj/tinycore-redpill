@@ -13,7 +13,7 @@ jobs:
       - name: Compress shell files
         id: remake-mydata-tgz
         run: |
-          VERSION=v`cat rploader.sh | grep rploaderver= | cut -d\" -f2`
+          VERSION=v`cat functions.sh | grep rploaderver= | cut -d\" -f2`
           echo "Version: ${VERSION}"
           echo "::set-output name=VERSION::${VERSION}"
           
