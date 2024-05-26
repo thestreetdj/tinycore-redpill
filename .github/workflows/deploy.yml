@@ -61,10 +61,10 @@ jobs:
           sudo cp -vf ${path}/mydata.tgz /mnt/tarp3
           ls -ltr /mnt/tarp3
           # from version 1.0.3.0 add gettext.tcz
-          sudo cp -vf ${path}/tce/cde/optional/gettext.* /mnt/tarp3/cde/optional
-          sudo cp -vf ${path}/tce/cde/optional/ncursesw.* /mnt/tarp3/cde/optional
+          sudo cp -vf ${path}/tce/optional/gettext.* /mnt/tarp3/cde/optional
+          sudo cp -vf ${path}/tce/optional/ncursesw.* /mnt/tarp3/cde/optional
           ls -ltr /mnt/tarp3/cde/optional
-          cat ${path}/tce/cde/onboot.lst >> /mnt/tarp3/cde/onboot.lst
+          cat ${path}/tce/onboot.lst >> /mnt/tarp3/cde/onboot.lst
           cat /mnt/tarp3/cde/onboot.lst
           
           sudo umount /mnt/p3
