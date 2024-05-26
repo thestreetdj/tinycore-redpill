@@ -863,7 +863,7 @@ function getlatestmshell() {
             echo "y"|rploader backup
             echo "press any key to continue..."                                                                                                   
             read answer            
-            exit
+            return
         else
             rm -f /home/tc/latest.mshell.gz
             return
