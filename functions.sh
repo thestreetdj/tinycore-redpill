@@ -2,7 +2,7 @@
 
 set -u
 
-rploaderver="1.0.2.9"
+rploaderver="1.0.3.0"
 build="master"
 redpillmake="prod"
 
@@ -103,6 +103,7 @@ function history() {
     1.0.2.7 dbgutils Addon Add/Delete selection menu
     1.0.2.8 Added multilingual support languages (locales) (Amharic-Ethiopian, Thai)
     1.0.2.9 Release img image with gettext.tgz
+    1.0.3.0 Integrate my, rploader.sh, myfunc.h into functions.sh, optimize distribution
     --------------------------------------------------------------------------------------
 EOF
 
@@ -342,6 +343,8 @@ EOF
 # Added multilingual support languages (locales) (Amharic-Ethiopian, Thai)
 # 2024.05.13
 # Menu configuration for adding nvmesystem addon
+# 2024.05.26 v1.0.3.0
+# Integrate my, rploader.sh, myfunc.h into functions.sh, optimize distribution
     
 function showlastupdate() {
     cat <<EOF
@@ -378,6 +381,9 @@ function showlastupdate() {
 
 # 2024.05.13
 # Menu configuration for adding nvmesystem addon
+
+# 2024.05.26 v1.0.3.0
+# Integrate my, rploader.sh, myfunc.h into functions.sh, optimize distribution
     
 EOF
 }
