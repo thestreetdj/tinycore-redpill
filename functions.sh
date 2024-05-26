@@ -863,10 +863,8 @@ function getlatestmshell() {
             echo "y"|rploader backup
             echo "press any key to continue..."                                                                                                   
             read answer            
-            return
         else
             rm -f /home/tc/latest.mshell.gz
-            return
         fi
     else
         echo "Version is current"
