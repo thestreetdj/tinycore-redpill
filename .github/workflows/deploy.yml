@@ -56,7 +56,6 @@ jobs:
           sudo mkdir -p /mnt/tarp3
           sudo mount ${LOOPZ}p3 /mnt/tarp3
           cd /mnt/p3 && sudo find . | sudo cpio -pdm "/mnt/tarp3"
-    
           cd ${path}/
           sudo cp -vf ${path}/mydata.tgz /mnt/tarp3
           ls -ltr /mnt/tarp3
@@ -64,8 +63,8 @@ jobs:
           sudo cp -vf ${path}/tce/optional/gettext.* /mnt/tarp3/cde/optional
           sudo cp -vf ${path}/tce/optional/ncursesw.* /mnt/tarp3/cde/optional
           ls -ltr /mnt/tarp3/cde/optional
-          sudo cat ${path}/tce/onboot.lst >> /mnt/tarp3/cde/onboot.lst
-          sudo cat /mnt/tarp3/cde/onboot.lst
+          sudo echo "gettext.tcz" >> /mnt/tarp3/cde/onboot.lst
+          sudo echo "ncursesw.tcz" >> /mnt/tarp3/cde/onboot.lst
           
           sudo umount /mnt/p3
           sudo umount /mnt/tarp3
