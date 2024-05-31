@@ -1575,6 +1575,21 @@ fi
 
 function packing_loader() {
 
+    echo "Would you like to pack your loader for a remote TCRP? [Yy/Nn] "
+    readanswer
+    if [ -n "$answer" ] && [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
+        mkdir -p /dev/shm/p1
+        mkdir -p /dev/shm/p2
+        mkdir -p /dev/shm/p3
+        cp -vf ${loaderdisk}1/GRUB_VER ${loaderdisk}1/zImage /dev/shm/p1
+        cp -vf ${loaderdisk}2/GRUB_VER ${loaderdisk}2/zImage ${loaderdisk}2/rd.gz ${loaderdisk}2/grub_cksum.syno /dev/shm/p2
+        cp -vf ${loaderdisk}3/custom.gz ${loaderdisk}3/initrd-dsm ${loaderdisk}3/rd.gz ${loaderdisk}3/zImage-dsm ${loaderdisk}3/user_config.json /dev/shm/p3
+        tar -zcvf /home/tc/remote.pack.tgz -C /dev/shm/p1 /dev/shm/p2 /dev/shm/p3
+    else
+        echo "OK, the package has been canceled."
+        read answer
+    fi    
+
 }
 
 function additional() {
