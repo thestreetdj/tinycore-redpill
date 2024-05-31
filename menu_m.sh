@@ -1587,8 +1587,8 @@ function packing_loader() {
         tar -zcvf /home/tc/remote.pack.tgz -C /dev/shm/p1 /dev/shm/p2 /dev/shm/p3
     else
         echo "OK, the package has been canceled."
-        read answer
     fi    
+    returnto "The entire process of packing the boot loader has been completed! Press any key to continue..." && return    
 
 }
 
