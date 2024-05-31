@@ -1573,6 +1573,10 @@ fi
 
 }
 
+function packing_loader() {
+
+}
+
 function additional() {
 
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"
@@ -1605,6 +1609,7 @@ function additional() {
       f "${MSG55}" \
       g "${MSG12}" \
       h "Inject Bootloader to Syno DISK" \
+      i "Packing loader file for remote update" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
@@ -1645,6 +1650,8 @@ function additional() {
       erasedisk
     elif [ "${resp}" = "h" ]; then
       inject_loader
+    elif [ "${resp}" = "i" ]; then
+      packing_loader
     fi
   done
 }
