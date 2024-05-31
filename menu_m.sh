@@ -1665,7 +1665,7 @@ function additional() {
       erasedisk
     elif [ "${resp}" = "h" ]; then
       inject_loader
-    elif [ "${resp}" = "i" ]; then
+    elif [ "${resp}" = "i" ]; then
       packing_loader
     fi
   done
