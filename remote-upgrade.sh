@@ -9,7 +9,7 @@ mount -t vfat synoboot1 /mnt/p1
 mount -t vfat synoboot2 /mnt/p2
 mount -t vfat synoboot3 /mnt/p3
 
-tar -zxvf /volume1/homes/admin/remote.pack.tgz -C /mnt
+tar --no-same-owner --touch -zxvf /volume1/homes/admin/remote.pack.tgz -C /mnt
 
 cd /mnt
 umount /mnt/p1
