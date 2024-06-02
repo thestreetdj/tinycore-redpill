@@ -2410,14 +2410,14 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         SATA_LINE="${SATA_LINE} disable_mtrr_trim=1 "
     else
         if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "epyc7002" ] || [ ${ORIGIN_PLATFORM} = "apollolake" ]; then
-            if [ "$MACHINE" != "VIRTUAL" ]; then
+            #if [ "$MACHINE" != "VIRTUAL" ]; then
                 DISABLEI915=$(jq -r -e '.general.disablei915' "$userconfigfile")
                 if [ "${DISABLEI915}" = "ON" ]; then
                     echo "Add configuration i915.modeset=0 for INTEL i915"
                     USB_LINE="${USB_LINE} i915.modeset=0 "
                     SATA_LINE="${SATA_LINE} i915.modeset=0 "
                 fi
-            fi  
+            #fi  
         fi    
 
         if [ -d "/home/tc/redpill-load/custom/extensions/nvmesystem" ]; then
