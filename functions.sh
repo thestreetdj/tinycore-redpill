@@ -2,7 +2,7 @@
 
 set -u
 
-rploaderver="1.0.3.1"
+rploaderver="1.0.3.2"
 build="master"
 redpillmake="prod"
 
@@ -105,6 +105,7 @@ function history() {
     1.0.2.9 Release img image with gettext.tgz
     1.0.3.0 Integrate my, rploader.sh, myfunc.h into functions.sh, optimize distribution
     1.0.3.1 Added loader file packing menu for remote update
+    1.0.3.1 Added dom_szmax for jot mode
     --------------------------------------------------------------------------------------
 EOF
 
@@ -346,20 +347,14 @@ EOF
 # Menu configuration for adding nvmesystem addon
 # 2024.05.26 v1.0.3.0
 # Integrate my, rploader.sh, myfunc.h into functions.sh, optimize distribution
-# 2024.06.01 v1.0.3.1
-# Added loader file packing menu for remote update
+# 2024.06.01 v1.0.3.1, 1.0.3.2
+# Added loader file packing menu for remote update, Added dom_szmax for jot mode
     
 function showlastupdate() {
     cat <<EOF
 
-# 2023.12.02
-# Update : Add offline loader build function
-
 # 2023.12.18 v1.0.1.0
 # Update : Upgrade from Tinycore version 12.0 (kernel 5.10.3) to 14.0 (kernel 6.1.2) to improve compatibility with the latest devices.
-
-# 2024.03.15
-# Added RedPill bootloader hard disk porting function supporting 1 SHR Type DISK
 
 # 2024.03.18
 # Added RedPill bootloader hard disk porting function supporting All SHR & RAID Type DISK        
@@ -367,29 +362,14 @@ function showlastupdate() {
 # 2024.03.22 v1.0.2.4 
 # Added NVMe bootloader support
 
-# 2024.04.01 v1.0.2.5
-# Provides menu option to disable i915 module loading to prevent console blackout in ApolloLake (DS918+), GeminiLake (DS920+), and Epyc7002 (SA6400)
-
-# 2024.04.09 v1.0.2.6
-# Added multilingual support languages (locales) (Arabic, Hindi, Hungarian, Indonesian, Turkish)
-    
-# 2024.04.09 v1.0.2.7
-# dbgutils Addon Add/Delete selection menu
-
-# 2024.04.14
-# sortnetif Addon Add/Delete selection menu
-
-# 2024.05.08 v1.0.2.8
-# Added multilingual support languages (locales) (Amharic-Ethiopian, Thai)
-
 # 2024.05.13
 # Menu configuration for adding nvmesystem addon
 
 # 2024.05.26 v1.0.3.0
 # Integrate my, rploader.sh, myfunc.h into functions.sh, optimize distribution
 
-# 2024.06.01 v1.0.3.1
-# Added loader file packing menu for remote update
+# 2024.06.01 v1.0.3.1, 1.0.3.2
+# Added loader file packing menu for remote update, Added dom_szmax for jot mode
     
 EOF
 }
@@ -2426,6 +2406,13 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
             SATA_LINE="${SATA_LINE} pci=nommconf "
         fi
     fi
+
+    if [ "$WITHFRIEND" = "YES" ]; then
+        echo
+    else
+    	# Check dom size and set max size accordingly for jot
+        [ "${BUS}" = "sata" ] && SATA_LINE="${SATA_LINE} dom_szmax=$(fdisk -l /dev/${loaderdisk} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}') "
+    fi	
     
     msgwarning "Updated user_config with USB Command Line : $USB_LINE"
     json=$(jq --arg var "${USB_LINE}" '.general.usb_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
