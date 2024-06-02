@@ -1643,11 +1643,10 @@ function additional() {
   	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"
     elif [ "${resp}" = "z" ]; then
       if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
-        [ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
-
-		writeConfigKey "general" "disablei915" "${DISPLAYI915}"
-  		DISABLEI915=$(jq -r -e '.general.disablei915' "$USER_CONFIG_FILE")
-  		[ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
+        #[ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
+        writeConfigKey "general" "disablei915" "${DISPLAYI915}"
+        DISABLEI915=$(jq -r -e '.general.disablei915' "$USER_CONFIG_FILE")
+        [ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
       else	
   	  	echo "This platform is not supported..." && read answer && continue
       fi 
