@@ -105,7 +105,7 @@ function history() {
     1.0.2.9 Release img image with gettext.tgz
     1.0.3.0 Integrate my, rploader.sh, myfunc.h into functions.sh, optimize distribution
     1.0.3.1 Added loader file packing menu for remote update
-    1.0.3.1 Added dom_szmax for jot mode
+    1.0.3.2 Added dom_szmax for jot mode
     --------------------------------------------------------------------------------------
 EOF
 
@@ -2325,6 +2325,11 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
         echo
     else
         sudo sed -i '31,34d' /tmp/grub.cfg
+    	# Check dom size and set max size accordingly for jot
+        if [ "${BUS}" = "sata" ]; then
+	    DOM_PARA="dom_szmax=$(fdisk -l /dev/${loaderdisk} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}')"
+            sed -i "s/synoboot_satadom/${DOM_PARA} synoboot_satadom/" /tmp/tempentry.txt
+        fi
         tinyjotfunc | sudo tee --append /tmp/grub.cfg
     fi
 
@@ -2353,7 +2358,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     else
         echo "Creating tinycore Jot entry"
         echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /tmp/grub.cfg
-        echo "Creating tinycore Jot postupdate entry"            
+        echo "Creating tinycore Jot postupdate entry"    
         postupdateentry | sudo tee --append /tmp/grub.cfg
     fi
 
@@ -2406,13 +2411,6 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
             SATA_LINE="${SATA_LINE} pci=nommconf "
         fi
     fi
-
-    if [ "$WITHFRIEND" = "YES" ]; then
-        echo
-    else
-    	# Check dom size and set max size accordingly for jot
-        [ "${BUS}" = "sata" ] && SATA_LINE="${SATA_LINE} dom_szmax=$(fdisk -l /dev/${loaderdisk} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}') "
-    fi	
     
     msgwarning "Updated user_config with USB Command Line : $USB_LINE"
     json=$(jq --arg var "${USB_LINE}" '.general.usb_line = $var' $userconfigfile) && echo -E "${json}" | jq . >$userconfigfile
