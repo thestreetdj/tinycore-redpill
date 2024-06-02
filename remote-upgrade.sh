@@ -47,7 +47,7 @@ mount -t vfat synoboot3 /mnt/p3
 
 cecho yellow "Unzip the updatepack and upgrade the synoboot loader partition..."
 echo
-tar --no-same-owner --touch -zxvf /volume1/homes/admin/remote.updatepack.*.tgz -C /mnt
+tar --no-same-owner --touch -zxvf /volume*/homes/admin/remote.updatepack.*.tgz -C /mnt
 
 cd /mnt
 umount /mnt/p1
