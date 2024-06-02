@@ -2304,6 +2304,10 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
     else
         vkersion=${KVER}
     fi
+
+    if [ "$WITHFRIEND" != "YES" ]; then
+    	jsonfile=$(jq "del(.[\"localrss\"])" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+    fi 
     
     if [ "$JUNLOADER" == "YES" ]; then
         echo "jun build option has been specified, so JUN MOD loader will be created"
