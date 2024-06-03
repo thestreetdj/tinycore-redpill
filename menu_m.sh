@@ -157,10 +157,10 @@ function backtitle() {
   [ -n "${BUILD}" ] && BACKTITLE+=" ${BUILD}" || BACKTITLE+=" (no build)"
   [ -n "${SN}" ] && BACKTITLE+=" ${SN}" || BACKTITLE+=" (no SN)"
   [ -n "${IP}" ] && BACKTITLE+=" ${IP}" || BACKTITLE+=" (no IP)"
-  [ -n "${MACADDR1}" == "null" ] && BACKTITLE+=" (no MAC1)" || BACKTITLE+=" ${MACADDR1}"
-  [ -n "${MACADDR2}" == "null" ] && BACKTITLE+=" (no MAC2)" || BACKTITLE+=" ${MACADDR2}"
-  [ -n "${MACADDR3}" == "null" ] && BACKTITLE+=" (no MAC3)" || BACKTITLE+=" ${MACADDR3}"
-  [ -n "${MACADDR4}" == "null" ] && BACKTITLE+=" (no MAC4)" || BACKTITLE+=" ${MACADDR4}"  
+  [ ! -n "${MACADDR1}" ] && BACKTITLE+=" (no MAC1)" || BACKTITLE+=" ${MACADDR1}"
+  [ ! -n "${MACADDR2}" ] && BACKTITLE+=" (no MAC2)" || BACKTITLE+=" ${MACADDR2}"
+  [ ! -n "${MACADDR3}" ] && BACKTITLE+=" (no MAC3)" || BACKTITLE+=" ${MACADDR3}"
+  [ ! -n "${MACADDR4}" ] && BACKTITLE+=" (no MAC4)" || BACKTITLE+=" ${MACADDR4}"  
   [ -n "${KEYMAP}" ] && BACKTITLE+=" (${LAYOUT}/${KEYMAP})" || BACKTITLE+=" (qwerty/us)"
   echo ${BACKTITLE}
 }
