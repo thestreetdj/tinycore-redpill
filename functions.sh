@@ -2,7 +2,7 @@
 
 set -u
 
-rploaderver="1.0.3.2"
+rploaderver="1.0.3.3"
 build="master"
 redpillmake="prod"
 
@@ -106,6 +106,7 @@ function history() {
     1.0.3.0 Integrate my, rploader.sh, myfunc.h into functions.sh, optimize distribution
     1.0.3.1 Added loader file packing menu for remote update
     1.0.3.2 Added dom_szmax for jot mode
+    1.0.3.3 Boot entry order for jot mode synchronized with Friend's order
     --------------------------------------------------------------------------------------
 EOF
 
@@ -349,6 +350,8 @@ EOF
 # Integrate my, rploader.sh, myfunc.h into functions.sh, optimize distribution
 # 2024.06.01 v1.0.3.1, 1.0.3.2
 # Added loader file packing menu for remote update, Added dom_szmax for jot mode
+# 2024.06.04 v1.0.3.3 
+# Boot entry order for jot mode synchronized with Friend's order
     
 function showlastupdate() {
     cat <<EOF
@@ -370,6 +373,9 @@ function showlastupdate() {
 
 # 2024.06.01 v1.0.3.1, 1.0.3.2
 # Added loader file packing menu for remote update, Added dom_szmax for jot mode
+
+# 2024.06.04 v1.0.3.3 
+# Boot entry order for jot mode synchronized with Friend's order
     
 EOF
 }
@@ -2032,10 +2038,16 @@ function savedefault {
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
     echo "TCRP JOT Version : ${rploaderver}"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
-    echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
 }    
 EOF
 }
+
+function tinyjotentry() {
+    cat <<EOF
+    echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
+EOF
+}
+
 
 function showsyntax() {
     cat <<EOF
@@ -2362,14 +2374,19 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     else
         echo "Creating tinycore Jot entry"
         echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /tmp/grub.cfg
-        echo "Creating tinycore Jot postupdate entry"    
+        echo "Creating tinycore Jot postupdate entry"
         postupdateentry | sudo tee --append /tmp/grub.cfg
     fi
 
     echo "Creating tinycore entry"
     tinyentry | sudo tee --append /tmp/grub.cfg
 
-    [ "$WITHFRIEND" = "YES" ] && tcrpentry_juniorusb | sudo tee --append /tmp/grub.cfg && tcrpentry_juniorsata | sudo tee --append /tmp/grub.cfg
+    if [ "$WITHFRIEND" = "YES" ]; then
+        tcrpentry_juniorusb | sudo tee --append /tmp/grub.cfg 
+        tcrpentry_juniorsata | sudo tee --append /tmp/grub.cfg
+    else
+        tinyjotentry | sudo tee --append /tmp/grub.cfg
+    fi
 
     cd /home/tc/redpill-load
 
@@ -2497,9 +2514,11 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         sudo sed -i "/set default=\"*\"/cset default=\"0\"" /tmp/grub.cfg
     else
         echo
-        if [ "$MACHINE" = "VIRTUAL" ]; then
-            msgnormal "Setting default boot entry to JOT SATA"
-            sudo sed -i "/set default=\"*\"/cset default=\"1\"" /tmp/grub.cfg
+        msgnormal "Setting default boot entry to JOT ${BUS}"	
+        if [ "${BUS}" = "usb" ]; then
+            sudo sed -i "/set default=\"*\"/cset default=\"2\"" /tmp/grub.cfg
+	else
+            sudo sed -i "/set default=\"*\"/cset default=\"3\"" /tmp/grub.cfg
         fi
     fi
     sudo cp -vf /tmp/grub.cfg /mnt/${loaderdisk}1/boot/grub/grub.cfg
