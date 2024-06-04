@@ -106,7 +106,7 @@ function history() {
     1.0.3.0 Integrate my, rploader.sh, myfunc.h into functions.sh, optimize distribution
     1.0.3.1 Added loader file packing menu for remote update
     1.0.3.2 Added dom_szmax for jot mode
-    1.0.3.3 Boot entry order for jot mode synchronized with Friend's order
+    1.0.3.3 Boot entry order for jot mode synchronized with Friend's order, remove custom_config_jun.json
     --------------------------------------------------------------------------------------
 EOF
 
@@ -1760,14 +1760,14 @@ function removemodelexts() {
 
 function getPlatforms() {
 
-    platform_versions=$(jq -s '.[0].build_configs=(.[1].build_configs + .[0].build_configs | unique_by(.id)) | .[0]' custom_config_jun.json custom_config.json | jq -r '.build_configs[].id')
+    platform_versions=$(jq -s '.[0].build_configs=(.[1].build_configs + .[0].build_configs | unique_by(.id)) | .[0]'  custom_config.json | jq -r '.build_configs[].id')
     echo "platform_versions=$platform_versions"
 
 }
 
 function selectPlatform() {
 
-    platform_selected=$(jq -s '.[0].build_configs=(.[1].build_configs + .[0].build_configs | unique_by(.id)) | .[0]' custom_config_jun.json custom_config.json | jq ".build_configs[] | select(.id==\"${1}\")")
+    platform_selected=$(jq -s '.[0].build_configs=(.[1].build_configs + .[0].build_configs | unique_by(.id)) | .[0]'  custom_config.json | jq ".build_configs[] | select(.id==\"${1}\")")
     echo "platform_selected=${platform_selected}"
 
 }
@@ -1783,7 +1783,7 @@ function readConfig() {
     if [ ! -e custom_config.json ]; then
         cat global_config.json
     else
-        jq -s '.[0].build_configs=(.[1].build_configs + .[0].build_configs | unique_by(.id)) | .[0]' custom_config_jun.json custom_config.json
+        jq -s '.[0].build_configs=(.[1].build_configs + .[0].build_configs | unique_by(.id)) | .[0]'  custom_config.json
     fi
 
 }
@@ -3059,7 +3059,6 @@ function my() {
   
   if [ -f /home/tc/custom-module/${TARGET_PLATFORM}.dts ]; then
       sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config.json
-      sed -i "s/dtbpatch/redpill-dtb-static/g" custom_config_jun.json
   fi
   
   if [ "$postupdate" = "Y" ]; then
