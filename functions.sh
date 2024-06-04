@@ -2038,16 +2038,10 @@ function savedefault {
     echo -e "----------={ M Shell for TinyCore RedPill JOT }=----------"
     echo "TCRP JOT Version : ${rploaderver}"
     echo -e "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
+    echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"    
 }    
 EOF
 }
-
-function tinyjotentry() {
-    cat <<EOF
-    echo -e "$(cat /tmp/tempentry.txt | grep earlyprintk | head -1 | sed 's/linux \/zImage/cmdline :/' )"
-EOF
-}
-
 
 function showsyntax() {
     cat <<EOF
@@ -2372,8 +2366,6 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         echo "Creating tinycore friend entry"
         tcrpfriendentry | sudo tee --append /tmp/grub.cfg
     else
-        echo "Creating tinycore Jot entry"
-        echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /tmp/grub.cfg
         echo "Creating tinycore Jot postupdate entry"
         postupdateentry | sudo tee --append /tmp/grub.cfg
     fi
@@ -2385,7 +2377,8 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         tcrpentry_juniorusb | sudo tee --append /tmp/grub.cfg 
         tcrpentry_juniorsata | sudo tee --append /tmp/grub.cfg
     else
-        tinyjotentry | sudo tee --append /tmp/grub.cfg
+        echo "Creating tinycore Jot entry"
+        echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /tmp/grub.cfg
     fi
 
     cd /home/tc/redpill-load
