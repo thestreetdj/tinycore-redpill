@@ -2737,6 +2737,10 @@ function getredpillko() {
     if [ "${offline}" = "NO" ]; then
         echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."    
         LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/latest"`"
+	echo "PROXY = $PROXY" 
+	echo "v = $v" 
+        echo "? = $?"
+        echo "LATESTURL = $LATESTURL" 
         if [ $? -ne 0 ]; then
             echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
             curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms.zip -o /mnt/${tcrppart}/rp-lkms${v}.zip
@@ -2800,7 +2804,7 @@ function rploader() {
         checkUserConfig
         getredpillko
 #for test
-return
+exit 0
 echo "$3"
 
         [ "$3" = "withfriend" ] && WITHFRIEND="YES" || WITHFRIEND="NO"
