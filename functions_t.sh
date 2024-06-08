@@ -3053,8 +3053,8 @@ function my() {
   
   if [ "${offline}" = "NO" ]; then
       curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json
-      curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/functions.sh
-      #curl -skL# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/functions_t.sh -o functions.sh
+      #curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/functions.sh
+      curl -skL# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/functions_t.sh -o functions.sh
   fi
   
   echo
