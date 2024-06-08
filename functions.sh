@@ -2,7 +2,7 @@
 
 set -u
 
-rploaderver="1.0.3.3"
+rploaderver="1.0.3.4"
 build="master"
 redpillmake="prod"
 
@@ -107,6 +107,7 @@ function history() {
     1.0.3.1 Added loader file packing menu for remote update
     1.0.3.2 Added dom_szmax for jot mode
     1.0.3.3 Boot entry order for jot mode synchronized with Friend's order, remove custom_config_jun.json
+    1.0.3.4 Maintain boot-wait addon when using satadom in SA6400
     --------------------------------------------------------------------------------------
 EOF
 
@@ -352,6 +353,8 @@ EOF
 # Added loader file packing menu for remote update, Added dom_szmax for jot mode
 # 2024.06.04 v1.0.3.3 
 # Boot entry order for jot mode synchronized with Friend's order
+# 2024.06.08 v1.0.3.4
+# Maintain boot-wait addon when using satadom in SA6400
     
 function showlastupdate() {
     cat <<EOF
@@ -376,6 +379,9 @@ function showlastupdate() {
 
 # 2024.06.04 v1.0.3.3 
 # Boot entry order for jot mode synchronized with Friend's order
+
+# 2024.06.08 v1.0.3.4
+# Maintain boot-wait addon when using satadom in SA6400
     
 EOF
 }
@@ -3176,7 +3182,7 @@ function my() {
   cecho g "Loader Building in progress..."
   echo
   
-  if [ "$MODEL" = "SA6400" ]; then
+  if [ "$MODEL" = "SA6400" ] && [ "${BUS}" = "usb" ]; then
       cecho g "Remove Exts for SA6400 (thethorgroup.boot-wait) ..."
       jsonfile=$(jq 'del(.["thethorgroup.boot-wait"])' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
       sudo rm -rf /home/tc/redpill-load/custom/extensions/thethorgroup.boot-wait
