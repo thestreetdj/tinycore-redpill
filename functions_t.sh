@@ -2,11 +2,10 @@
 
 set -u
 
-rploaderver="1.0.3.4"
+rploaderver="1.0.3.5"
 build="master"
 redpillmake="prod"
 
-redpillextension="https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/redpill${redpillmake}/rpext-index.json"
 modalias4="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/modules.alias.4.json.gz"
 modalias3="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/modules.alias.3.json.gz"
 
@@ -108,6 +107,7 @@ function history() {
     1.0.3.2 Added dom_szmax for jot mode
     1.0.3.3 Boot entry order for jot mode synchronized with Friend's order, remove custom_config_jun.json
     1.0.3.4 Maintain boot-wait addon when using satadom in SA6400
+    1.0.3.5 Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
     --------------------------------------------------------------------------------------
 EOF
 
@@ -355,6 +355,8 @@ EOF
 # Boot entry order for jot mode synchronized with Friend's order
 # 2024.06.08 v1.0.3.4
 # Maintain boot-wait addon when using satadom in SA6400
+# 2024.06.09 v1.0.3.5 
+# Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
     
 function showlastupdate() {
     cat <<EOF
@@ -382,6 +384,9 @@ function showlastupdate() {
 
 # 2024.06.08 v1.0.3.4
 # Maintain boot-wait addon when using satadom in SA6400
+
+# 2024.06.09 v1.0.3.5 
+# Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
     
 EOF
 }
@@ -1647,7 +1652,7 @@ function postupdate() {
     updateuserconfigfield "general" "model" "$MODEL"
     updateuserconfigfield "general" "version" "${TARGET_VERSION}-${TARGET_REVISION}"
     updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}"
-    updateuserconfigfield "general" "redpillmake" "${redpillmake}"
+    updateuserconfigfield "general" "redpillmake" "${redpillmake}-${TAG}"
     echo "Creating temp ramdisk space" && mkdir /home/tc/ramdisk
 
     echo "Mounting partition ${loaderdisk}1" && sudo mount /dev/${loaderdisk}1
@@ -2176,57 +2181,6 @@ mountshare, version, monitor, bringfriend, downloadupgradepat, help
 ----------------------------------------------------------------------------------------
 Version : $rploaderver
 EOF
-
-}
-
-function getstaticmodule() {
-
-    cd /home/tc
-
-    if [ -d /home/tc/custom-module ] && [ -f /home/tc/custom-module/redpill.ko ]; then
-        #echo "Found custom redpill module, do you want to use this instead ? [yY/nN] : "
-        #readanswer
-
-        #if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
-            REDPILL_MOD_NAME="redpill-linux-v$(modinfo /home/tc/custom-module/redpill.ko | grep vermagic | awk '{print $2}').ko"
-            cp -vf /home/tc/custom-module/redpill.ko /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
-            strip --strip-debug /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
-            return
-        #fi
-
-    fi
-
-    echo "Removing any old redpill.ko modules"
-    [ -f /home/tc/redpill.ko ] && rm -f /home/tc/redpill.ko
-
-    extension=$(curl -k -s -L "$redpillextension")
-
-    setplatform
-
-    echo "Looking for redpill for : $SYNOMODEL "
-
-    #release=`echo $extension |  jq -r '.releases .${SYNOMODEL}_{$TARGET_REVISION}'`
-    release=$(echo $extension | jq -r -e --arg SYNOMODEL $SYNOMODEL '.releases[$SYNOMODEL]')
-    files=$(curl -k -s -L "$release" | jq -r '.files[] .url')
-
-    for file in $files; do
-        echo "Getting file $file"
-        curl -k -s -O $file
-        if [ -f redpill*.tgz ]; then
-            echo "Extracting module"
-            tar xf redpill*.tgz
-            rm redpill*.tgz
-            strip --strip-debug redpill.ko
-        fi
-    done
-
-    if [ -f redpill.ko ] && [ -n $(strings redpill.ko | grep $SYNOMODEL) ]; then
-        REDPILL_MOD_NAME="redpill-linux-v$(modinfo redpill.ko | grep vermagic | awk '{print $2}').ko"
-        mv /home/tc/redpill.ko /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
-    else
-        echo "Module does not contain platorm information for ${SYNOMODEL}"
-        exit 99
-    fi
 
 }
 
@@ -2773,6 +2727,10 @@ function getredpillko() {
  	echo "TAG of VERSION is ${TAG}"
     fi
 
+    REDPILL_MOD_NAME="redpill-linux-v$(modinfo /home/tc/custom-module/redpill.ko | grep vermagic | awk '{print $2}').ko"
+    cp -vf /home/tc/custom-module/redpill.ko /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
+    strip --strip-debug /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
+
 }
 
 function rploader() {
@@ -2818,7 +2776,6 @@ echo "$3"
         manual)
 
             echo "Using static compiled redpill extension"
-            getstaticmodule
             echo "Got $REDPILL_MOD_NAME "
             echo "Manual extension handling,skipping extension auto detection "
             echo "Starting loader creation "
@@ -2828,7 +2785,6 @@ echo "$3"
 
         jun)
             echo "Using static compiled redpill extension"
-            getstaticmodule
             echo "Got $REDPILL_MOD_NAME "
             listmodules
             echo "Starting loader creation "
@@ -2839,7 +2795,6 @@ echo "$3"
         static | *)
             echo "No extra build option or static specified, using default <static> "
             echo "Using static compiled redpill extension"
-            getstaticmodule
             echo "Got $REDPILL_MOD_NAME "
             listmodules 
             echo "Starting loader creation "
@@ -2862,7 +2817,6 @@ echo "$3"
         getvars $2
         checkinternet
         gitdownload
-        getstaticmodule
         postupdate
         [ $? -eq 0 ] && savesession
         ;;
