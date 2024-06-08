@@ -2734,12 +2734,11 @@ function getredpillko() {
         v=""
     fi
 
+    TAG=""
     if [ "${offline}" = "NO" ]; then
         echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."    
         LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/latest"`"
-	echo "v = $v" 
         echo "? = $?"
-        echo "LATESTURL = $LATESTURL" 
         if [ $? -ne 0 ]; then
             echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
             curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms.zip -o /mnt/${tcrppart}/rp-lkms${v}.zip
@@ -2749,7 +2748,7 @@ function getredpillko() {
             fi    
         else
             TAG="${LATESTURL##*/}"
-            echo "TAG is ${TAG}"        
+            echo "TAG is ${TAG}"
             STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/download/${TAG}/rp-lkms.zip" -o "/mnt/${tcrppart}/rp-lkms${v}.zip"`
         fi
     else
@@ -2766,6 +2765,12 @@ function getredpillko() {
         unzip /mnt/${tcrppart}/rp-lkms${v}.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
         gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
         cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
+    fi
+
+    if [ -z "${TAG}" ]; then
+        unzip /mnt/${tcrppart}/rp-lkms${v}.zip        VERSION -d /tmp >/dev/null 2>&1
+	TAG=$(cat /tmp/VERSION )
+ 	echo "TAG of VERSION is ${TAG}"
     fi
 
 }
@@ -2802,8 +2807,8 @@ function rploader() {
 #        gitdownload     # When called from the parent my.sh, -d flag authority check is not possible, pre-downloaded in advance 
         checkUserConfig
         getredpillko
-#for test
-exit 0
+#for test getredpillko
+#exit 0
 echo "$3"
 
         [ "$3" = "withfriend" ] && WITHFRIEND="YES" || WITHFRIEND="NO"
