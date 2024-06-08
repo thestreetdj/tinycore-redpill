@@ -2799,7 +2799,8 @@ function rploader() {
 #        gitdownload     # When called from the parent my.sh, -d flag authority check is not possible, pre-downloaded in advance 
         checkUserConfig
         getredpillko
-
+#for test
+return
 echo "$3"
 
         [ "$3" = "withfriend" ] && WITHFRIEND="YES" || WITHFRIEND="NO"
