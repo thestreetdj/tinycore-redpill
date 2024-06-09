@@ -3015,8 +3015,12 @@ function my() {
   
   if [ "${offline}" = "NO" ]; then
       curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json
-      #curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/functions.sh
-      curl -skL# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/functions_t.sh -o functions.sh
+      if [ -f /tmp/test_mode ]; then
+        cecho g "###############################  This is Test Mode  ############################"
+        curl -skL# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/functions_t.sh -o functions.sh
+      else
+        curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/functions.sh
+      fi
   fi
   
   echo
