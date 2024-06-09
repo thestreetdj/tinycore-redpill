@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
-set -u
+set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.3.4"
+rploaderver="1.0.3.5"
 build="master"
 redpillmake="prod"
 
-redpillextension="https://raw.githubusercontent.com/PeterSuh-Q3/rp-ext/master/redpill${redpillmake}/rpext-index.json"
 modalias4="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/modules.alias.4.json.gz"
 modalias3="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/modules.alias.3.json.gz"
 
@@ -108,6 +107,7 @@ function history() {
     1.0.3.2 Added dom_szmax for jot mode
     1.0.3.3 Boot entry order for jot mode synchronized with Friend's order, remove custom_config_jun.json
     1.0.3.4 Maintain boot-wait addon when using satadom in SA6400
+    1.0.3.5 Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
     --------------------------------------------------------------------------------------
 EOF
 
@@ -355,6 +355,8 @@ EOF
 # Boot entry order for jot mode synchronized with Friend's order
 # 2024.06.08 v1.0.3.4
 # Maintain boot-wait addon when using satadom in SA6400
+# 2024.06.09 v1.0.3.5 
+# Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
     
 function showlastupdate() {
     cat <<EOF
@@ -382,6 +384,9 @@ function showlastupdate() {
 
 # 2024.06.08 v1.0.3.4
 # Maintain boot-wait addon when using satadom in SA6400
+
+# 2024.06.09 v1.0.3.5 
+# Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
     
 EOF
 }
@@ -1647,7 +1652,7 @@ function postupdate() {
     updateuserconfigfield "general" "model" "$MODEL"
     updateuserconfigfield "general" "version" "${TARGET_VERSION}-${TARGET_REVISION}"
     updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}"
-    updateuserconfigfield "general" "redpillmake" "${redpillmake}"
+    updateuserconfigfield "general" "redpillmake" "${redpillmake}-${TAG}"
     echo "Creating temp ramdisk space" && mkdir /home/tc/ramdisk
 
     echo "Mounting partition ${loaderdisk}1" && sudo mount /dev/${loaderdisk}1
@@ -2179,57 +2184,6 @@ EOF
 
 }
 
-function getstaticmodule() {
-
-    cd /home/tc
-
-    if [ -d /home/tc/custom-module ] && [ -f /home/tc/custom-module/redpill.ko ]; then
-        #echo "Found custom redpill module, do you want to use this instead ? [yY/nN] : "
-        #readanswer
-
-        #if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
-            REDPILL_MOD_NAME="redpill-linux-v$(modinfo /home/tc/custom-module/redpill.ko | grep vermagic | awk '{print $2}').ko"
-            cp -vf /home/tc/custom-module/redpill.ko /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
-            strip --strip-debug /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
-            return
-        #fi
-
-    fi
-
-    echo "Removing any old redpill.ko modules"
-    [ -f /home/tc/redpill.ko ] && rm -f /home/tc/redpill.ko
-
-    extension=$(curl -k -s -L "$redpillextension")
-
-    setplatform
-
-    echo "Looking for redpill for : $SYNOMODEL "
-
-    #release=`echo $extension |  jq -r '.releases .${SYNOMODEL}_{$TARGET_REVISION}'`
-    release=$(echo $extension | jq -r -e --arg SYNOMODEL $SYNOMODEL '.releases[$SYNOMODEL]')
-    files=$(curl -k -s -L "$release" | jq -r '.files[] .url')
-
-    for file in $files; do
-        echo "Getting file $file"
-        curl -k -s -O $file
-        if [ -f redpill*.tgz ]; then
-            echo "Extracting module"
-            tar xf redpill*.tgz
-            rm redpill*.tgz
-            strip --strip-debug redpill.ko
-        fi
-    done
-
-    if [ -f redpill.ko ] && [ -n $(strings redpill.ko | grep $SYNOMODEL) ]; then
-        REDPILL_MOD_NAME="redpill-linux-v$(modinfo redpill.ko | grep vermagic | awk '{print $2}').ko"
-        mv /home/tc/redpill.ko /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
-    else
-        echo "Module does not contain platorm information for ${SYNOMODEL}"
-        exit 99
-    fi
-
-}
-
 function checkUserConfig() {
 
   SN=$(jq -r -e '.extra_cmdline.sn' "$userconfigfile")
@@ -2396,7 +2350,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     ### Updating user_config.json
     updateuserconfigfield "general" "model" "$MODEL"
     updateuserconfigfield "general" "version" "${TARGET_VERSION}-${TARGET_REVISION}"
-    updateuserconfigfield "general" "redpillmake" "${redpillmake}"
+    updateuserconfigfield "general" "redpillmake" "${redpillmake}-${TAG}"
     updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}"
     zimghash=$(sha256sum /mnt/${loaderdisk}2/zImage | awk '{print $1}')
     updateuserconfigfield "general" "zimghash" "$zimghash"
@@ -2734,9 +2688,11 @@ function getredpillko() {
         v=""
     fi
 
+    TAG=""
     if [ "${offline}" = "NO" ]; then
         echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."    
-        LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/latest"`"
+        LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/latest"`"
+        echo "? = $?"
         if [ $? -ne 0 ]; then
             echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
             curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms.zip -o /mnt/${tcrppart}/rp-lkms${v}.zip
@@ -2746,8 +2702,8 @@ function getredpillko() {
             fi    
         else
             TAG="${LATESTURL##*/}"
-            echo "TAG is ${TAG}"        
-            STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/download/${TAG}/rp-lkms.zip" -o "/mnt/${tcrppart}/rp-lkms${v}.zip"`
+            echo "TAG is ${TAG}"
+            STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/download/${TAG}/rp-lkms.zip" -o "/mnt/${tcrppart}/rp-lkms${v}.zip"`
         fi
     else
         echo "Unzipping ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."        
@@ -2764,6 +2720,16 @@ function getredpillko() {
         gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
         cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
     fi
+
+    if [ -z "${TAG}" ]; then
+        unzip /mnt/${tcrppart}/rp-lkms${v}.zip        VERSION -d /tmp >/dev/null 2>&1
+	TAG=$(cat /tmp/VERSION )
+ 	echo "TAG of VERSION is ${TAG}"
+    fi
+
+    REDPILL_MOD_NAME="redpill-linux-v$(modinfo /home/tc/custom-module/redpill.ko | grep vermagic | awk '{print $2}').ko"
+    cp -vf /home/tc/custom-module/redpill.ko /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
+    strip --strip-debug /home/tc/redpill-load/ext/rp-lkm/${REDPILL_MOD_NAME}
 
 }
 
@@ -2799,7 +2765,8 @@ function rploader() {
 #        gitdownload     # When called from the parent my.sh, -d flag authority check is not possible, pre-downloaded in advance 
         checkUserConfig
         getredpillko
-
+#for test getredpillko
+#exit 0
 echo "$3"
 
         [ "$3" = "withfriend" ] && WITHFRIEND="YES" || WITHFRIEND="NO"
@@ -2809,7 +2776,6 @@ echo "$3"
         manual)
 
             echo "Using static compiled redpill extension"
-            getstaticmodule
             echo "Got $REDPILL_MOD_NAME "
             echo "Manual extension handling,skipping extension auto detection "
             echo "Starting loader creation "
@@ -2819,7 +2785,6 @@ echo "$3"
 
         jun)
             echo "Using static compiled redpill extension"
-            getstaticmodule
             echo "Got $REDPILL_MOD_NAME "
             listmodules
             echo "Starting loader creation "
@@ -2830,7 +2795,6 @@ echo "$3"
         static | *)
             echo "No extra build option or static specified, using default <static> "
             echo "Using static compiled redpill extension"
-            getstaticmodule
             echo "Got $REDPILL_MOD_NAME "
             listmodules 
             echo "Starting loader creation "
@@ -2853,7 +2817,6 @@ echo "$3"
         getvars $2
         checkinternet
         gitdownload
-        getstaticmodule
         postupdate
         [ $? -eq 0 ] && savesession
         ;;
@@ -3052,8 +3015,12 @@ function my() {
   
   if [ "${offline}" = "NO" ]; then
       curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/custom_config.json
-      curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/functions.sh
-      #curl -skL# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/functions_t.sh -o functions.sh
+      if [ -f /tmp/test_mode ]; then
+        cecho g "###############################  This is Test Mode  ############################"
+        curl -skL# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/functions_t.sh -o functions.sh
+      else
+        curl -skLO# https://$gitdomain/PeterSuh-Q3/tinycore-redpill/master/functions.sh
+      fi
   fi
   
   echo
