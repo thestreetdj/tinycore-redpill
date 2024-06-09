@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set +u # Allow unbound variable errors
+
 ##### INCLUDES ######################################################################################
 . /home/tc/functions.sh
 #####################################################################################################
@@ -79,7 +81,7 @@ else
     gitdownload
 fi
 
-if [ -z "${1}" ]; then
+if [ -z "${1+x}" ]; then
   [ -f /tmp/test_mode ] && rm /tmp/test_mode
 else
   touch /tmp/test_mode
