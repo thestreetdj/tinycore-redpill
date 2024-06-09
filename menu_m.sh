@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u # Unbound variable errors are not allowed
+
 ##### INCLUDES #####################################################################################################
 . /home/tc/functions.sh
 . /home/tc/i18n.h
