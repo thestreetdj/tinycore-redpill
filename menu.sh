@@ -79,5 +79,11 @@ else
     gitdownload
 fi
 
+if [ -z "${1}" ]; then
+  [ -f /tmp/test_mode ] && rm /tmp/test_mode
+else
+  touch /tmp/test_mode
+fi
+
 /home/tc/menu_m.sh
 exit 0
