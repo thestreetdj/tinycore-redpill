@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -u
+set -u # Unbound variable errors are not allowed
 
 rploaderver="1.0.3.5"
 build="master"
