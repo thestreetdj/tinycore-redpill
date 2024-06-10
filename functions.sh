@@ -108,7 +108,7 @@ function history() {
     1.0.3.3 Boot entry order for jot mode synchronized with Friend's order, remove custom_config_jun.json
     1.0.3.4 Maintain boot-wait addon when using satadom in SA6400
     1.0.3.5 Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
-    1.0.3.6 Use intel_iommu instead of i915.modeset on the command line
+    1.0.3.6 Use intel_iommu on the command line
     --------------------------------------------------------------------------------------
 EOF
 
@@ -359,7 +359,7 @@ EOF
 # 2024.06.09 v1.0.3.5 
 # Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
 # 2024.06.10 v1.0.3.6 
-# Use intel_iommu instead of i915.modeset on the command line
+# Use intel_iommu on the command line
     
 function showlastupdate() {
     cat <<EOF
@@ -392,7 +392,7 @@ function showlastupdate() {
 # Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
 
 # 2024.06.10 v1.0.3.6 
-# Use intel_iommu instead of i915.modeset on the command line
+# Use intel_iommu on the command line
     
 EOF
 }
