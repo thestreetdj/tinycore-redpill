@@ -1616,13 +1616,14 @@ function additional() {
   eval "MSG54=\"\${MSG${tz}54}\""
   eval "MSG55=\"\${MSG${tz}55}\""
   eval "MSG12=\"\${MSG${tz}12}\""
-  
+
+  #[ "${BUS}" != "usb" ] && 
   while true; do
       a "${spoof} ${MSG50}" > "${TMP_PATH}/menua"
       w "${nvmes} nvmesystem Addon" >> "${TMP_PATH}/menua"
       y "${dbgutils} dbgutils Addon" >> "${TMP_PATH}/menua"
       x "${sortnetif} sortnetif Addon" >> "${TMP_PATH}/menua"
-      [ "${BUS}" != "usb" ] && j "Active ${DOMKIND} Satadom Option" >> "${TMP_PATH}/menua"
+      j "Active ${DOMKIND} Satadom Option" >> "${TMP_PATH}/menua"
       z "Disable i915 module ${DISPLAYI915}" >> "${TMP_PATH}/menua"
       b "${MSG51}" >> "${TMP_PATH}/menua"
       c "${MSG52}" >> "${TMP_PATH}/menua"
