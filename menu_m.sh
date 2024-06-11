@@ -1616,16 +1616,13 @@ function additional() {
   eval "MSG54=\"\${MSG${tz}54}\""
   eval "MSG55=\"\${MSG${tz}55}\""
   eval "MSG12=\"\${MSG${tz}12}\""
-
-  #[ "${BUS}" != "usb" ] && 
+  
   while true; do
-    dialog --clear --backtitle "`backtitle`" \
-      --menu "Choose a option" 0 0 0 \
       a "${spoof} ${MSG50}" > "${TMP_PATH}/menua"
       w "${nvmes} nvmesystem Addon" >> "${TMP_PATH}/menua"
       y "${dbgutils} dbgutils Addon" >> "${TMP_PATH}/menua"
       x "${sortnetif} sortnetif Addon" >> "${TMP_PATH}/menua"
-      j "Active ${DOMKIND} Satadom Option" >> "${TMP_PATH}/menua"
+      [ "${BUS}" != "usb" ] && j "Active ${DOMKIND} Satadom Option" >> "${TMP_PATH}/menua"
       z "Disable i915 module ${DISPLAYI915}" >> "${TMP_PATH}/menua"
       b "${MSG51}" >> "${TMP_PATH}/menua"
       c "${MSG52}" >> "${TMP_PATH}/menua"
@@ -1635,6 +1632,8 @@ function additional() {
       g "${MSG12}" >> "${TMP_PATH}/menua"
       h "Inject Bootloader to Syno DISK" >> "${TMP_PATH}/menua"
       i "Packing loader file for remote update" >> "${TMP_PATH}/menua"
+    dialog --clear --backtitle "`backtitle`" \
+      --menu "Choose a option" 0 0 0 --file "${TMP_PATH}/menua" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
     resp=$(<${TMP_PATH}/resp)
