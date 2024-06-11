@@ -841,9 +841,8 @@ function READ_YN () { # ${1}:question ${2}:default
 
 function st() {
 echo -e "[$(date '+%T.%3N')]:-------------------------------------------------------------" >> /home/tc/buildstatus
-echo -e "\e[35m$1\e[0m    \e[36m$2\e[0m    $3" >> /home/tc/buildstatus
+echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
 }
-
 
 function getlatestmshell() {
 
@@ -931,10 +930,6 @@ function msgwarning() {
 function msgnormal() {
     echo -e "\033[1;32m$1\033[0m"
 } 
-function st() {
-echo -e "[$(date '+%T.%3N')]:-------------------------------------------------------------" >> /home/tc/buildstatus
-echo -e "\e[35m$1\e[0m    \e[36m$2\e[0m    $3" >> /home/tc/buildstatus
-}
 
 function readanswer() {
     while true; do
