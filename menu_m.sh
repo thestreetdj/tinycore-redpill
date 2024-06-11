@@ -1892,11 +1892,6 @@ if [ "${LDRMODE}" = "null" ]; then
     writeConfigKey "general" "loadermode" "${LDRMODE}"          
 fi
 
-if [ "${DISABLEI915}" = "null" ]; then
-    DISABLEI915="OFF"
-    writeConfigKey "general" "disablei915" "${DISABLEI915}"
-fi
-
 # Get actual IP
 IP="$(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | awk '{print $2}' | cut -c 6- )"
 
