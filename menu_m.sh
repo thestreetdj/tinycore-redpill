@@ -1596,6 +1596,7 @@ function packing_loader() {
 function satadom_edit() {
     sed -i "s/synoboot_satadom=[^ ]*/synoboot_satadom=${1}/g" /home/tc/user_config.json
     sudo cp /home/tc/user_config.json /mnt/${tcrppart}/user_config.json
+    echo "y"|rploader backup
 }
 
 function i915_edit() {
@@ -1607,7 +1608,7 @@ function i915_edit() {
     jsonfile=$(jq '.general.sata_line += " i915.modeset=0"' /home/tc/user_config.json) && echo $jsonfile | jq . > /home/tc/user_config.json    
   fi
   sudo cp /home/tc/user_config.json /mnt/${tcrppart}/user_config.json  
-
+  echo "y"|rploader backup
 }
 
 function additional() {
