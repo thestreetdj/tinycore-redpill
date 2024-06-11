@@ -1633,8 +1633,7 @@ function additional() {
     eval "echo \"g \"${MSG12}\"\"" >> "${TMP_PATH}/menua"
     eval "echo \"h \"Inject Bootloader to Syno DISK\"\"" >> "${TMP_PATH}/menua"
     eval "echo \"i \"Packing loader file for remote update\"\"" >> "${TMP_PATH}/menua"
-    
-    dialog --clear --backtitle "`backtitle`" \
+    dialog --clear --backtitle "`backtitle`" --colors \
       --menu "Choose a option" 0 0 0 --file "${TMP_PATH}/menua" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
