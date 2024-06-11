@@ -1606,7 +1606,7 @@ function additional() {
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"  
 
-  [ $(cat /home/tc/user_config.json | grep "synoboot_satadom=2" | wc -l) -eq 1 ] && DOMKIND="Native" || DOMKIND="Fake"
+  [ $(cat /home/tc/user_config.json | grep "synoboot_satadom=1" | wc -l) -eq 1 ] && DOMKIND="Native" || DOMKIND="Fake"
   [ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
 
   eval "MSG50=\"\${MSG${tz}50}\""
@@ -1616,7 +1616,8 @@ function additional() {
   eval "MSG54=\"\${MSG${tz}54}\""
   eval "MSG55=\"\${MSG${tz}55}\""
   eval "MSG12=\"\${MSG${tz}12}\""
-  
+
+  #[ "${BUS}" != "usb" ] && 
   while true; do
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 \
@@ -1624,7 +1625,6 @@ function additional() {
       w "${nvmes} nvmesystem Addon" \
       y "${dbgutils} dbgutils Addon" \
       x "${sortnetif} sortnetif Addon" \
-      #[ "${BUS}" != "usb" ] && 
       j "Active ${DOMKIND} Satadom Option" \
       z "Disable i915 module ${DISPLAYI915}" \
       b "${MSG51}" \
