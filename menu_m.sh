@@ -1594,6 +1594,11 @@ function packing_loader() {
 
 }
 
+function satadom_edit() {
+    sed -i "s/synoboot_satadom=[^ ]*/synoboot_satadom=${1}/g" /home/tc/user_config.json
+    sudo sed -i "s/synoboot_satadom=[^ ]*/synoboot_satadom=${1}/g" /mnt/${tcrppart}/user_config.json
+}
+
 function additional() {
 
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"
@@ -1601,6 +1606,7 @@ function additional() {
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"  
 
+  [ $(cat /home/tc/user_config.json | grep "synoboot_satadom=2" | wc -c) -eq 1 ] && DOMKIND = "Native" || DOMKIND = "Fake"
   [ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
 
   eval "MSG50=\"\${MSG${tz}50}\""
@@ -1618,6 +1624,7 @@ function additional() {
       w "${nvmes} nvmesystem Addon" \
       y "${dbgutils} dbgutils Addon" \
       x "${sortnetif} sortnetif Addon" \
+      [ "${BUS}" != "usb" ] && j "Active ${DOMKIND} Satadom Option" \
       z "Disable i915 module ${DISPLAYI915}" \
       b "${MSG51}" \
       c "${MSG52}" \
@@ -1643,6 +1650,8 @@ function additional() {
     elif [ "${resp}" = "x" ]; then 
       [ "${sortnetif}" = "Add" ] && add-addon "sortnetif" || del-addon "sortnetif"
   	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"
+    elif [ "${resp}" = "j" ]; then 
+      [ "${DOMKIND}" == "Native" ] && satadom_edit 1 || satadom_edit 2
     elif [ "${resp}" = "z" ]; then
       if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
         #[ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
@@ -2009,18 +2018,10 @@ while true; do
   if [ -n "${MODEL}" ]; then
     eval "echo \"s \\\"\${MSG${tz}03}\\\"\""             >> "${TMP_PATH}/menu"
     eval "echo \"a \\\"\${MSG${tz}04} 1\\\"\""           >> "${TMP_PATH}/menu"
-    if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
-      eval "echo \"f \\\"\${MSG${tz}04} 2\\\"\""         >> "${TMP_PATH}/menu"
-    fi  
-    if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
-      eval "echo \"g \\\"\${MSG${tz}04} 3\\\"\""         >> "${TMP_PATH}/menu"
-    fi  
-    if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
-      eval "echo \"h \\\"\${MSG${tz}04} 4\\\"\""         >> "${TMP_PATH}/menu"
-    fi
-    if [ "${CPU}" != "HP" ]; then
-      eval "echo \"z \\\"\${MSG${tz}06} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
-    fi
+    [ $(ifconfig | grep eth1 | wc -l) -gt 0 ] && eval "echo \"f \\\"\${MSG${tz}04} 2\\\"\""         >> "${TMP_PATH}/menu"
+    [ $(ifconfig | grep eth2 | wc -l) -gt 0 ] && eval "echo \"g \\\"\${MSG${tz}04} 3\\\"\""         >> "${TMP_PATH}/menu"
+    [ $(ifconfig | grep eth3 | wc -l) -gt 0 ] && eval "echo \"h \\\"\${MSG${tz}04} 4\\\"\""         >> "${TMP_PATH}/menu"
+    [ "${CPU}" != "HP" ] && eval "echo \"z \\\"\${MSG${tz}06} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
     eval "echo \"j \\\"\${MSG${tz}05} (${BUILD})\\\"\""     >> "${TMP_PATH}/menu"
     eval "echo \"p \\\"\${MSG${tz}18} (${BUILD}, ${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
   fi
@@ -2042,34 +2043,15 @@ while true; do
     m) modelMenu;       NEXT="s" ;;
     s) serialMenu;      NEXT="j" ;;
     a) macMenu "eth0"
-        if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
-            NEXT="f" 
-	else
-            NEXT="z" 	
-	fi
-        ;;
+    [ $(ifconfig | grep eth1 | wc -l) -gt 0 ] && NEXT="f" || NEXT="z" ;;
     f) macMenu "eth1"
-        if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
-            NEXT="g" 
-	else
-            NEXT="z" 	
-	fi
-        ;;
+    [ $(ifconfig | grep eth2 | wc -l) -gt 0 ] && NEXT="g" || NEXT="z" ;;
     g) macMenu "eth2"
-        if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
-            NEXT="h" 
-	else
-            NEXT="z" 	
-	fi
-        ;;
+    [ $(ifconfig | grep eth3 | wc -l) -gt 0 ] && NEXT="h" || NEXT="z" ;;
     h) macMenu "eth3";    NEXT="p" ;; 
     z) selectldrmode ;    NEXT="p" ;;
     j) selectversion ;    NEXT="p" ;; 
-    p) if [ "${LDRMODE}" == "FRIEND" ]; then
-         make "fri" "${prevent_init}"
-       else
-         make "jot" "${prevent_init}"
-       fi
+    p) [ "${LDRMODE}" == "FRIEND" ] && make "fri" "${prevent_init}" || make "jot" "${prevent_init}"
        NEXT="r" ;;
     u) editUserConfig;    NEXT="p" ;;
     q) storagepanel;      NEXT="p" ;;
