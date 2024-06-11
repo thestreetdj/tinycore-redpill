@@ -1600,7 +1600,7 @@ function satadom_edit() {
 
 function i915_edit() {
 
-  if [ "${1}" == "Disable" ]; then
+  if [ "${1}" == "Enable" ]; then
     sed -i "s/i915.modeset=0//g" /home/tc/user_config.json
   else
     jsonfile=$(jq '.general.usb_line += " i915.modeset=0"' /home/tc/user_config.json) && echo $jsonfile | jq . > /home/tc/user_config.json
