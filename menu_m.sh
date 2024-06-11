@@ -1619,20 +1619,20 @@ function additional() {
 
   #[ "${BUS}" != "usb" ] && 
   while true; do
-    echo "a ${spoof} ${MSG50}" > "${TMP_PATH}/menua"
-    echo "w ${nvmes} nvmesystem Addon" >> "${TMP_PATH}/menua"
-    echo "y ${dbgutils} dbgutils Addon" >> "${TMP_PATH}/menua"
-    echo "x ${sortnetif} sortnetif Addon" >> "${TMP_PATH}/menua"
-    echo "j Active ${DOMKIND} Satadom Option" >> "${TMP_PATH}/menua"
-    echo "z Disable i915 module ${DISPLAYI915}" >> "${TMP_PATH}/menua"
-    echo "b ${MSG51}" >> "${TMP_PATH}/menua"
-    echo "c ${MSG52}" >> "${TMP_PATH}/menua"
-    echo "d ${MSG53}" >> "${TMP_PATH}/menua"
-    echo "e ${MSG54}" >> "${TMP_PATH}/menua"
-    echo "f ${MSG55}" >> "${TMP_PATH}/menua"
-    echo "g ${MSG12}" >> "${TMP_PATH}/menua"
-    echo "h Inject Bootloader to Syno DISK" >> "${TMP_PATH}/menua"
-    echo "i Packing loader file for remote update" >> "${TMP_PATH}/menua"
+    eval "echo a \"${spoof} ${MSG50}\" > \"${TMP_PATH}/menua\""
+    eval "echo w \"${nvmes} nvmesystem Addon\" >> \"${TMP_PATH}/menua\""
+    eval "echo y \"${dbgutils} dbgutils Addon\" >> \"${TMP_PATH}/menua\""
+    eval "echo x \"${sortnetif} sortnetif Addon\" >> \"${TMP_PATH}/menua\""
+    eval "echo j \"Active ${DOMKIND} Satadom Option\" >> \"${TMP_PATH}/menua\""
+    eval "echo z \"Disable i915 module ${DISPLAYI915}\" >> \"${TMP_PATH}/menua\""
+    eval "echo b \"${MSG51}\" >> \"${TMP_PATH}/menua\""
+    eval "echo c \"${MSG52}\" >> \"${TMP_PATH}/menua\""
+    eval "echo d \"${MSG53}\" >> \"${TMP_PATH}/menua\""
+    eval "echo e \"${MSG54}\" >> \"${TMP_PATH}/menua\""
+    eval "echo f \"${MSG55}\" >> \"${TMP_PATH}/menua\""
+    eval "echo g \"${MSG12}\" >> \"${TMP_PATH}/menua\""
+    eval "echo h \"Inject Bootloader to Syno DISK\" >> \"${TMP_PATH}/menua\""
+    eval "echo i \"Packing loader file for remote update\" >> \"${TMP_PATH}/menua\""
     
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 --file "${TMP_PATH}/menua" \
