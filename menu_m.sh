@@ -1618,7 +1618,7 @@ function additional() {
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"  
 
   [ $(cat /home/tc/user_config.json | grep "synoboot_satadom=2" | wc -l) -eq 1 ] && DOMKIND="Native" || DOMKIND="Fake"
-  [ $(cat /home/tc/user_config.json | grep "i915.modeset=0" | wc -l) -eq 1 ] && DISPLAYI915="Enable" || DISPLAYI915="Disable"
+  [ $(cat /home/tc/user_config.json | grep "i915.modeset=0" | wc -l) -eq 2 ] && DISPLAYI915="Enable" || DISPLAYI915="Disable"
 
   eval "MSG50=\"\${MSG${tz}50}\""
   eval "MSG51=\"\${MSG${tz}51}\""
