@@ -135,7 +135,6 @@ KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 
 DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
 LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
-DISABLEI915=$(jq -r -e '.general.disablei915' "$USER_CONFIG_FILE")
 ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
 lcode=$(echo $ucode | cut -c 4-)
 BLOCK_EUDEV="N"
@@ -1596,7 +1595,19 @@ function packing_loader() {
 
 function satadom_edit() {
     sed -i "s/synoboot_satadom=[^ ]*/synoboot_satadom=${1}/g" /home/tc/user_config.json
-    sudo sed -i "s/synoboot_satadom=[^ ]*/synoboot_satadom=${1}/g" /mnt/${tcrppart}/user_config.json
+    sudo cp /home/tc/user_config.json /mnt/${tcrppart}/user_config.json
+}
+
+function i915_edit() {
+
+  if [ "${1}" == "Disable" ]; then
+    sed -i "s/i915.modeset=0//g" /home/tc/user_config.json
+  else
+    jsonfile=$(jq '.general.usb_line += " i915.modeset=0"' /home/tc/user_config.json) && echo $jsonfile | jq . > /home/tc/user_config.json
+    jsonfile=$(jq '.general.sata_line += " i915.modeset=0"' /home/tc/user_config.json) && echo $jsonfile | jq . > /home/tc/user_config.json    
+  fi
+  sudo cp /home/tc/user_config.json /mnt/${tcrppart}/user_config.json  
+
 }
 
 function additional() {
@@ -1607,7 +1618,7 @@ function additional() {
   [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"  
 
   [ $(cat /home/tc/user_config.json | grep "synoboot_satadom=2" | wc -l) -eq 1 ] && DOMKIND="Native" || DOMKIND="Fake"
-  [ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
+  [ $(cat /home/tc/user_config.json | grep "i915.modeset=0" | wc -l) -eq 1 ] && DISPLAYI915="Disable" || DISPLAYI915="Enable"
 
   eval "MSG50=\"\${MSG${tz}50}\""
   eval "MSG51=\"\${MSG${tz}51}\""
@@ -1623,7 +1634,7 @@ function additional() {
     eval "echo \"y \\\"${dbgutils} dbgutils Addon\\\"\"" >> "${TMP_PATH}/menua"
     eval "echo \"x \\\"${sortnetif} sortnetif Addon\\\"\"" >> "${TMP_PATH}/menua"
     [ "${BUS}" != "usb" ] && eval "echo \"j \\\"Active ${DOMKIND} Satadom Option\\\"\"" >> "${TMP_PATH}/menua"
-    eval "echo \"z \\\"Disable i915 module ${DISPLAYI915}\\\"\"" >> "${TMP_PATH}/menua"
+    [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ] && eval "echo \"z \\\"${DISPLAYI915} i915 module \\\"\"" >> "${TMP_PATH}/menua"
     eval "echo \"b \\\"${MSG51}\\\"\"" >> "${TMP_PATH}/menua"
     eval "echo \"c \\\"${MSG52}\\\"\"" >> "${TMP_PATH}/menua"
     eval "echo \"d \\\"${MSG53}\\\"\"" >> "${TMP_PATH}/menua"
@@ -1659,14 +1670,14 @@ function additional() {
         DOMKIND="Native"
       fi   
     elif [ "${resp}" = "z" ]; then
-      if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
-        #[ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
-        writeConfigKey "general" "disablei915" "${DISPLAYI915}"
-        DISABLEI915=$(jq -r -e '.general.disablei915' "$USER_CONFIG_FILE")
-        [ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
-      else    
-        echo "This platform is not supported..." && read answer && continue
-      fi 
+      #[ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
+      if [ "${DISPLAYI915}" == "Disable" ]; then
+        i915_edit ${DISPLAYI915}
+        DISPLAYI915="Enable" 
+      else
+        i915_edit ${DISPLAYI915}      
+        DISPLAYI915="Disable"
+      fi
     elif [ "${resp}" = "b" ]; then
       prevent
     elif [ "${resp}" = "c" ]; then
