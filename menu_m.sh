@@ -1619,20 +1619,21 @@ function additional() {
 
   #[ "${BUS}" != "usb" ] && 
   while true; do
-      a "${spoof} ${MSG50}" > "${TMP_PATH}/menua"
-      w "${nvmes} nvmesystem Addon" >> "${TMP_PATH}/menua"
-      y "${dbgutils} dbgutils Addon" >> "${TMP_PATH}/menua"
-      x "${sortnetif} sortnetif Addon" >> "${TMP_PATH}/menua"
-      j "Active ${DOMKIND} Satadom Option" >> "${TMP_PATH}/menua"
-      z "Disable i915 module ${DISPLAYI915}" >> "${TMP_PATH}/menua"
-      b "${MSG51}" >> "${TMP_PATH}/menua"
-      c "${MSG52}" >> "${TMP_PATH}/menua"
-      d "${MSG53}" >> "${TMP_PATH}/menua"
-      e "${MSG54}" >> "${TMP_PATH}/menua"
-      f "${MSG55}" >> "${TMP_PATH}/menua"
-      g "${MSG12}" >> "${TMP_PATH}/menua"
-      h "Inject Bootloader to Syno DISK" >> "${TMP_PATH}/menua"
-      i "Packing loader file for remote update" >> "${TMP_PATH}/menua"
+    echo "a ${spoof} ${MSG50}" > "${TMP_PATH}/menua"
+    echo "w ${nvmes} nvmesystem Addon" >> "${TMP_PATH}/menua"
+    echo "y ${dbgutils} dbgutils Addon" >> "${TMP_PATH}/menua"
+    echo "x ${sortnetif} sortnetif Addon" >> "${TMP_PATH}/menua"
+    echo "j Active ${DOMKIND} Satadom Option" >> "${TMP_PATH}/menua"
+    echo "z Disable i915 module ${DISPLAYI915}" >> "${TMP_PATH}/menua"
+    echo "b ${MSG51}" >> "${TMP_PATH}/menua"
+    echo "c ${MSG52}" >> "${TMP_PATH}/menua"
+    echo "d ${MSG53}" >> "${TMP_PATH}/menua"
+    echo "e ${MSG54}" >> "${TMP_PATH}/menua"
+    echo "f ${MSG55}" >> "${TMP_PATH}/menua"
+    echo "g ${MSG12}" >> "${TMP_PATH}/menua"
+    echo "h Inject Bootloader to Syno DISK" >> "${TMP_PATH}/menua"
+    echo "i Packing loader file for remote update" >> "${TMP_PATH}/menua"
+    
     dialog --clear --backtitle "`backtitle`" \
       --menu "Choose a option" 0 0 0 --file "${TMP_PATH}/menua" \
     2>${TMP_PATH}/resp
