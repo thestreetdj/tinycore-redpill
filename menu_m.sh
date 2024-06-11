@@ -1617,7 +1617,6 @@ function additional() {
   eval "MSG55=\"\${MSG${tz}55}\""
   eval "MSG12=\"\${MSG${tz}12}\""
 
-    #eval "echo \"e \\\"\${MSG${tz}15}\\\"\""               >> "${TMP_PATH}/menu"
   while true; do
     eval "echo \"a \"${spoof} ${MSG50}\"\"" > "${TMP_PATH}/menua"
     eval "echo \"w \"${nvmes} nvmesystem Addon\"\"" >> "${TMP_PATH}/menua"
