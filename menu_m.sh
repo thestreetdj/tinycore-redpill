@@ -50,10 +50,10 @@ function restoresession() {
     lastsessiondir="/mnt/${tcrppart}/lastsession"
     if [ -d $lastsessiondir ]; then
         echo "Found last user session, restoring session..."
-	if [ -d $lastsessiondir ] && [ -f ${lastsessiondir}/user_config.json ]; then
-	    echo "Copying last stored user_config.json"
-	    cp -f ${lastsessiondir}/user_config.json /home/tc
-	fi
+    if [ -d $lastsessiondir ] && [ -f ${lastsessiondir}/user_config.json ]; then
+        echo "Copying last stored user_config.json"
+        cp -f ${lastsessiondir}/user_config.json /home/tc
+    fi
     else
         echo "There is no last session stored!!!"
     fi
@@ -71,13 +71,13 @@ function update_tinycore() {
       md5_corepure64=$(sudo md5sum corepure64.gz_copy | awk '{print $1}')
       md5_vmlinuz64=$(sudo md5sum vmlinuz64_copy | awk '{print $1}')
       if [ ${md5_corepure64} = "f33c4560e3909a7784c0e83ce424ff5c" ] && [ ${md5_vmlinuz64} = "04cb17bbf7fbca9aaaa2e1356a936d7c" ]; then
-  	echo "tinycore 14.0 md5 check is OK! ( corepure64.gz / vmlinuz64 ) "
+      echo "tinycore 14.0 md5 check is OK! ( corepure64.gz / vmlinuz64 ) "
         sudo mv corepure64.gz_copy corepure64.gz
-	sudo mv vmlinuz64_copy vmlinuz64
-      	sudo curl -kL#  https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tinycore_14.0/etc/shadow -o /etc/shadow
+    sudo mv vmlinuz64_copy vmlinuz64
+          sudo curl -kL#  https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tinycore_14.0/etc/shadow -o /etc/shadow
         echo "/etc/shadow" >> /opt/.filetool.lst
-	cd ~
-	echo 'Y'|rploader backup
+    cd ~
+    echo 'Y'|rploader backup
         restart
       fi
   fi
@@ -192,20 +192,20 @@ function usbidentify() {
 
         if [ $(echo $vendorid | wc -w) -gt 1 ]; then
             echo "Found more than one USB disk devices."
-	    echo "Please leave it to the FRIEND kernel." 
+        echo "Please leave it to the FRIEND kernel." 
             echo "Automatically obtains the VID/PID of the required bootloader USB."
-	    rm /tmp/lsusb.out
+        rm /tmp/lsusb.out
         else
             usbdevice="$(grep iManufacturer /tmp/lsusb.out | awk '{print $3}') $(grep iProduct /tmp/lsusb.out | awk '{print $3}') SerialNumber: $(grep iSerial /tmp/lsusb.out | awk '{print $3}')"
-		    if [ -n "$usbdevice" ] && [ -n "$vendorid" ] && [ -n "$productid" ]; then
-		        echo "Found $usbdevice"
-		        echo "Vendor ID : $vendorid Product ID : $productid"
-		        json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-		        json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
-		    else
-		        echo "Sorry, no usb disk could be identified"
-		        rm /tmp/lsusb.out
-		    fi
+            if [ -n "$usbdevice" ] && [ -n "$vendorid" ] && [ -n "$productid" ]; then
+                echo "Found $usbdevice"
+                echo "Vendor ID : $vendorid Product ID : $productid"
+                json="$(jq --arg var "$productid" '.extra_cmdline.pid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+                json="$(jq --arg var "$vendorid" '.extra_cmdline.vid = $var' user_config.json)" && echo -E "${json}" | jq . >user_config.json
+            else
+                echo "Sorry, no usb disk could be identified"
+                rm /tmp/lsusb.out
+            fi
         fi
     fi      
 }
@@ -221,10 +221,10 @@ function seleudev() {
   if [ "${MODEL}" = "SA6400" ]; then
     while true; do
       dialog --clear --backtitle "`backtitle`" \
-	--menu "Choose a option" 0 0 0 \
-	e "${MSG26}" \
-	f "${MSG40}" \
-	2>${TMP_PATH}/resp
+    --menu "Choose a option" 0 0 0 \
+    e "${MSG26}" \
+    f "${MSG40}" \
+    2>${TMP_PATH}/resp
       [ $? -ne 0 ] && return
       resp=$(<${TMP_PATH}/resp)
       [ -z "${resp}" ] && return
@@ -239,43 +239,43 @@ function seleudev() {
   else
     if [ ${BLOCK_EUDEV} = "Y" ]; then
       while true; do
-	dialog --clear --backtitle "`backtitle`" \
-	  --menu "Choose a option" 0 0 0 \
-	  d "${MSG27}" \
-	  f "${MSG40}" \
-	  2>${TMP_PATH}/resp
-	[ $? -ne 0 ] && return
-	resp=$(<${TMP_PATH}/resp)
-	[ -z "${resp}" ] && return
-	if [ "${resp}" = "d" ]; then
-	  DMPM="DDSML"
-	  break
-	elif [ "${resp}" = "f" ]; then
-	  DMPM="DDSML+EUDEV"
-	  break
-	fi
+    dialog --clear --backtitle "`backtitle`" \
+      --menu "Choose a option" 0 0 0 \
+      d "${MSG27}" \
+      f "${MSG40}" \
+      2>${TMP_PATH}/resp
+    [ $? -ne 0 ] && return
+    resp=$(<${TMP_PATH}/resp)
+    [ -z "${resp}" ] && return
+    if [ "${resp}" = "d" ]; then
+      DMPM="DDSML"
+      break
+    elif [ "${resp}" = "f" ]; then
+      DMPM="DDSML+EUDEV"
+      break
+    fi
       done
     else
       while true; do
         dialog --clear --backtitle "`backtitle`" \
           --menu "Choose a option" 0 0 0 \
-	  d "${MSG27}" \
-	  e "${MSG26}" \
-	  f "${MSG40}" \
-	  2>${TMP_PATH}/resp
-	[ $? -ne 0 ] && return
-	resp=$(<${TMP_PATH}/resp)
-	[ -z "${resp}" ] && return
-	if [ "${resp}" = "d" ]; then
-	  DMPM="DDSML"
-	  break
-	elif [ "${resp}" = "e" ]; then
-	  DMPM="EUDEV"
-	  break
-	elif [ "${resp}" = "f" ]; then
-	  DMPM="DDSML+EUDEV"
-	  break
-	fi
+      d "${MSG27}" \
+      e "${MSG26}" \
+      f "${MSG40}" \
+      2>${TMP_PATH}/resp
+    [ $? -ne 0 ] && return
+    resp=$(<${TMP_PATH}/resp)
+    [ -z "${resp}" ] && return
+    if [ "${resp}" = "d" ]; then
+      DMPM="DDSML"
+      break
+    elif [ "${resp}" = "e" ]; then
+      DMPM="EUDEV"
+      break
+    elif [ "${resp}" = "f" ]; then
+      DMPM="DDSML+EUDEV"
+      break
+    fi
       done
     fi
   fi 
@@ -375,30 +375,30 @@ while true; do
 #  if [ "$HBADETECT" = "ON" ]; then
 #      if [ "${AFTERHASWELL}" == "OFF" ]; then
 #        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-#        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+#        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"    
 #      else
 #        echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
 #        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-#        echo "${M_GRP4}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+#        echo "${M_GRP4}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"    
 #        echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
 #      fi
 #  else
       if [ "${AFTERHASWELL}" == "OFF" ]; then
         echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"    
         echo "${M_GRP5}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"    
       else
         echo "${M_GRP1}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
         echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
         echo "${M_GRP4}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
         echo "${M_GRP5}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-        echo "${M_GRP7}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"		
-        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP7}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"        
+        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"    
         echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-	RESTRICT=0
+    RESTRICT=0
       fi
-#  fi	  
+#  fi      
   
   if [ ${RESTRICT} -eq 1 ]; then
         echo "Release-model-restriction" >> "${TMP_PATH}/mdl"
@@ -408,8 +408,8 @@ while true; do
         echo "${M_GRP2}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
         echo "${M_GRP4}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
         echo "${M_GRP5}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
-        echo "${M_GRP7}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"		
-        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"	
+        echo "${M_GRP7}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"        
+        echo "${M_GRP6}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"    
         echo "${M_GRP3}" | tr ' ' '\n' >> "${TMP_PATH}/mdl"
   fi
   
@@ -450,9 +450,9 @@ done
 
   if [ "${MODEL}" = "SA6400" ]; then
     if [ "$HBADETECT" = "ON" ]; then
-	DMPM="DDSML+EUDEV"
+    DMPM="DDSML+EUDEV"
     else
-    	DMPM="EUDEV"
+        DMPM="EUDEV"
     fi 
   else
     DMPM="DDSML"
@@ -517,8 +517,8 @@ function storagepanel() {
   BAYSIZE="${bay}"
   dialog --backtitle "`backtitle`" --default-item "${BAYSIZE}" --no-items \
     --menu "Choose a Panel Size" 0 0 0 "TOWER_1_Bay" "TOWER_2_Bay" "TOWER_4_Bay" "TOWER_4_Bay_J" \
-		"TOWER_4_Bay_S" "TOWER_5_Bay" "TOWER_6_Bay" "TOWER_8_Bay" "TOWER_12_Bay" \
-		"RACK_2_Bay" "RACK_4_Bay" "RACK_8_Bay" "RACK_10_Bay" \
+        "TOWER_4_Bay_S" "TOWER_5_Bay" "TOWER_6_Bay" "TOWER_8_Bay" "TOWER_12_Bay" \
+        "RACK_2_Bay" "RACK_4_Bay" "RACK_8_Bay" "RACK_10_Bay" \
                 "RACK_12_Bay" "RACK_12_Bay_2" "RACK_16_Bay" "RACK_20_Bay" "RACK_24_Bay" "RACK_60_Bay" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
@@ -971,18 +971,18 @@ function showsata () {
         MSG+="\Zb${NAME}\Zn\nPorts: "
         PORTS=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
         for P in ${PORTS}; do
-	  # Skip for Unused Port
+      # Skip for Unused Port
           if [ "$(dmesg | grep 'SATA link down' | grep ata$((${P} + 1)): | wc -l)" -eq 0 ]; then          
-  	    DUMMY="$([ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ] && echo 1 || echo 2)"
-	    if [ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ]; then
-	      MSG+="\Z1$(printf "%02d" ${P})\Zn "
-	    else
+          DUMMY="$([ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ] && echo 1 || echo 2)"
+        if [ "$(cat /sys/class/scsi_host/host${P}/ahci_port_cmd)" = "0" ]; then
+          MSG+="\Z1$(printf "%02d" ${P})\Zn "
+        else
               if lsscsi -b | grep -v - | grep -q "\[${P}:"; then
-	        MSG+="\Z2$(printf "%02d" ${P})\Zn "
+            MSG+="\Z2$(printf "%02d" ${P})\Zn "
               else
                 MSG+="$(printf "%02d" ${P}) "
               fi
-	    fi  
+        fi  
           fi
           NUMPORTS=$((${NUMPORTS} + 1))
         done
@@ -1061,7 +1061,7 @@ function tcrpfriendentry_hdd() {
     cat <<EOF
 menuentry 'Tiny Core Friend ${MODEL} ${BUILD} Update 0 ${DMPM}' {
         savedefault
-	set root=(hd0,msdos${1})
+    set root=(hd0,msdos${1})
         echo Loading Linux...
         linux /bzImage-friend loglevel=3 waitusb=5 vga=791 net.ifnames=0 biosdevname=0 console=ttyS0,115200n8
         echo Loading initramfs...
@@ -1081,7 +1081,7 @@ function add-addon() {
   
   readanswer    
   if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then    
-    jsonfile=$(jq ". |= .+ {\"${1}\": \"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json\"}" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json	
+    jsonfile=$(jq ". |= .+ {\"${1}\": \"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json\"}" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json    
   fi
 }
 
@@ -1225,42 +1225,42 @@ function wr_part3() {
 
 function prepare_grub() {
 
-	tce-load -i grub2-multi 
-	if [ $? -eq 0 ]; then
-		echo "Install grub2-multi OK !!!"
-	else
-		tce-load -iw grub2-multi
-		[ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && false
-	fi
-	#sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+    tce-load -i grub2-multi 
+    if [ $? -eq 0 ]; then
+        echo "Install grub2-multi OK !!!"
+    else
+        tce-load -iw grub2-multi
+        [ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && false
+    fi
+    #sudo echo "grub2-multi.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 
     true
 }
 
 function prepare_img() {
 
-	echo "Downloading tempelete disk image to ${imgpath}..."
+    echo "Downloading tempelete disk image to ${imgpath}..."
     imgpath="/dev/shm/boot-image-to-hdd.img"  
-	if [ -f ${imgpath} ]; then
-		echo "Image file ${imgpath} Already Exist..."
- 	else
-		sudo curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
-		[ $? -ne 0 ] && returnto "Download failed. Stop processing!!! ${imgpath}" && false
-		echo "Unpacking image ${imgpath}..."
-		sudo gunzip -f "${imgpath}.gz"
+    if [ -f ${imgpath} ]; then
+        echo "Image file ${imgpath} Already Exist..."
+     else
+        sudo curl -kL# https://github.com/PeterSuh-Q3/rp-ext/releases/download/temp/boot-image-to-hdd.img.gz -o "${imgpath}.gz"
+        [ $? -ne 0 ] && returnto "Download failed. Stop processing!!! ${imgpath}" && false
+        echo "Unpacking image ${imgpath}..."
+        sudo gunzip -f "${imgpath}.gz"
     fi
 
- 	if [ -z "$(losetup | grep -i ${imgpath})" ]; then
-		if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
-			echo -n "Setting up ${imgpath} loop -> "
-			sudo losetup -fP ${imgpath}
-			[ $? -ne 0 ] && returnto "Mount loop device for ${imgpath} failed. Stop processing!!! " && false
-		else
-			echo -n "Loop device exists..."
-		fi
+     if [ -z "$(losetup | grep -i ${imgpath})" ]; then
+        if [ ! -n "$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')" ]; then
+            echo -n "Setting up ${imgpath} loop -> "
+            sudo losetup -fP ${imgpath}
+            [ $? -ne 0 ] && returnto "Mount loop device for ${imgpath} failed. Stop processing!!! " && false
+        else
+            echo -n "Loop device exists..."
+        fi
     fi
-	loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
-	echo "$loopdev"
+    loopdev=$(losetup -j ${imgpath} | awk '{print $1}' | sed -e 's/://')
+    echo "$loopdev"
  
     true
 }
@@ -1292,13 +1292,13 @@ function get_disk_type_cnt() {
 function inject_loader() {
 
   if [ ! -f /mnt/${loaderdisk}3/bzImage-friend ] || [ ! -f /mnt/${loaderdisk}3/initrd-friend ] || [ ! -f /mnt/${loaderdisk}3/zImage-dsm ] || [ ! -f /mnt/${loaderdisk}3/initrd-dsm ] || [ ! -f /mnt/${loaderdisk}3/user_config.json ] || [ ! $(grep -i "Tiny Core Friend" /mnt/${loaderdisk}1/boot/grub/grub.cfg | wc -l) -eq 1 ]; then
-	returnto "The loader has not been built yet. Start with the build.... Stop processing!!! " && return
+    returnto "The loader has not been built yet. Start with the build.... Stop processing!!! " && return
   fi
 
   plat=$(cat /mnt/${loaderdisk}1/GRUB_VER | grep PLATFORM | cut -d "=" -f2 | tr '[:upper:]' '[:lower:]' | sed 's/"//g')
-  [ "${plat}" = "epyc7002" ] &&	returnto "Epyc7002 like SA6400 is not supported... Stop processing!!! " && return
+  [ "${plat}" = "epyc7002" ] &&    returnto "Epyc7002 like SA6400 is not supported... Stop processing!!! " && return
 
-  #[ "$MACHINE" = "VIRTUAL" ] &&	returnto "Virtual system environment is not supported. Two or more BASIC type hard disks are required on bare metal. (SSD not possible)... Stop processing!!! " && return
+  #[ "$MACHINE" = "VIRTUAL" ] &&    returnto "Virtual system environment is not supported. Two or more BASIC type hard disks are required on bare metal. (SSD not possible)... Stop processing!!! " && return
 
   IDX=0
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
@@ -1329,10 +1329,10 @@ function inject_loader() {
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
       get_disk_type_cnt "${edisk}" "N"
       if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 1 ] && [ "${W95_CNT}" -eq 0 ]; then
-      	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
+            if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
               echo "This is BASIC Type Hard Disk and Has synoboot3 Boot Partition $edisk"
               IDX_EX=$((${IDX_EX} + 1))
-	  	  fi    
+            fi    
       fi
   done
 
@@ -1347,22 +1347,22 @@ function inject_loader() {
   for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
       get_disk_type_cnt "${edisk}" "N"
       if [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 1 ] && [ "${W95_CNT}" -eq 1 ]; then
-      	  if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
+            if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
               echo "This is SHR Type Hard Disk and Has synoboot3 Boot Partition $edisk"
               SHR_EX=$((${SHR_EX} + 1))
-	      fi
+          fi
       fi
   done
 
-  do_ex_first=""	
+  do_ex_first=""    
   if [ ${IDX_EX} -eq 2 ] || [ `expr ${IDX_EX} + ${SHR_EX}` -eq 2 ]; then
     echo "There is at least one BASIC or SHR type disk each with an injected bootloader...OK"
     do_ex_first="Y"
   elif [ ${IDX} -eq 2 ] || [ `expr ${IDX} + ${SHR}` -gt 1 ]; then
     echo "There is at least one disk of type BASIC or SHR...OK"
     if [ -z "${do_ex_first}" ]; then
-	  do_ex_first="N"
-	fi
+      do_ex_first="N"
+    fi
   #elif [ ${IDX_EX} -eq 0 ] && [ ${SHR_EX} -gt 1 ]; then 
   else
       echo "IDX = ${IDX}, SHR = ${SHR}, IDX_EX = ${IDX_EX}, SHR_EX=${SHR_EX}"
@@ -1379,34 +1379,34 @@ readanswer
 if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
     tce-load -i bc
     if [ $? -eq 0 ]; then
-		echo "Install bc OK !!!"
+        echo "Install bc OK !!!"
     else
-		tce-load -iw bc
-		[ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && return
+        tce-load -iw bc
+        [ $? -ne 0 ] && returnto "Install grub2-multi failed. Stop processing!!! " && return
     fi
-	tce-load -i dosfstools
-	if [ $? -eq 0 ]; then
-		echo "Install dosfstools OK !!!"
-	else
-		tce-load -iw dosfstools
-		[ $? -ne 0 ] && returnto "Install dosfstools failed. Stop processing!!! " && false
-	fi
+    tce-load -i dosfstools
+    if [ $? -eq 0 ]; then
+        echo "Install dosfstools OK !!!"
+    else
+        tce-load -iw dosfstools
+        [ $? -ne 0 ] && returnto "Install dosfstools failed. Stop processing!!! " && false
+    fi
 
     if [ "${do_ex_first}" = "N" ]; then
         if [ ${IDX} -eq 2 ] || [ `expr ${IDX} + ${SHR}` -gt 1 ]; then
-	        echo "New bootloader injection (including fdisk partition creation)..."
+            echo "New bootloader injection (including fdisk partition creation)..."
 
-		    BOOTMAKE=""
-	  		SYNOP3MAKE=""
-	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-		 
-	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
+            BOOTMAKE=""
+              SYNOP3MAKE=""
+            for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+         
+                model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
                 get_disk_type_cnt "${edisk}" "Y"
                 
-	            if [ "${DOS_CNT}" -eq 3 ]; then
-	                echo "Skip this disk as it is a loader disk. $model"
-	                continue
-	            elif [ -z "${BOOTMAKE}" ] && [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ]; then
+                if [ "${DOS_CNT}" -eq 3 ]; then
+                    echo "Skip this disk as it is a loader disk. $model"
+                    continue
+                elif [ -z "${BOOTMAKE}" ] && [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 0 ]; then
 
                     prepare_grub
                     [ $? -ne 0 ] && return
@@ -1480,91 +1480,91 @@ if [ "${answer}" = "Y" ] || [ "${answer}" = "y" ]; then
                     BOOTMAKE="YES"
                     continue
 
-            	elif [ -z "${SYNOP3MAKE}" ] && [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 0 ]; then
+                elif [ -z "${SYNOP3MAKE}" ] && [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 0 ]; then
 
-	 				if [ $(blkid | grep "6234-C863" | wc -l) -eq 1 ]; then
-	  					# + 128M
-	                    echo "Create partitions on 2nd disks... $edisk"
-	    	            last_sector="20979712"
-	    	     	    echo "2nd disk's last sector is $last_sector"
-	        	   	    echo -e "n\np\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
-	                    [ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
-	                    
-	                    # + 127M logical
-	                    #echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
-	                    #[ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
-	
-		            	sleep 1
-	
-						#prepare_img
+                     if [ $(blkid | grep "6234-C863" | wc -l) -eq 1 ]; then
+                          # + 128M
+                        echo "Create partitions on 2nd disks... $edisk"
+                        last_sector="20979712"
+                         echo "2nd disk's last sector is $last_sector"
+                           echo -e "n\np\n$last_sector\n\n\nw" | sudo fdisk "${edisk}"
+                        [ $? -ne 0 ] && returnto "make extend partition on ${edisk} failed. Stop processing!!! " && return
+                        
+                        # + 127M logical
+                        #echo -e "n\n\n\nw\n" | sudo fdisk "${edisk}"
+                        #[ $? -ne 0 ] && returnto "make logical partition on ${edisk} failed. Stop processing!!! " && return
+    
+                        sleep 1
+    
+                        #prepare_img
                         sudo mkfs.vfat -i 6234C863 -F16 "${edisk}4"
-						[ $? -ne 0 ] && return
-	   
-		                #sudo dd if="${loopdev}p3" of="${edisk}4"
-	
-	                    wr_part3 "4"
-	                    [ $? -ne 0 ] && return
-	
-			            synop3=${edisk}4
+                        [ $? -ne 0 ] && return
+       
+                        #sudo dd if="${loopdev}p3" of="${edisk}4"
+    
+                        wr_part3 "4"
+                        [ $? -ne 0 ] && return
+    
+                        synop3=${edisk}4
                     else
-			            echo "The synoboot3 was already made!!!"
-			            continue
-			   		fi
-					SYNOP3MAKE="YES"
-			        continue
-		   
-		        else
-		            echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
-		            continue
-		        fi
-		    done
-	    fi
-	elif [ "${do_ex_first}" = "Y" ]; then
-	    if [ ${IDX_EX} -eq 2 ] || [ `expr ${IDX_EX} + ${SHR_EX}` -eq 2 ]; then
-	        echo "Reinject bootloader (into existing partition)..."
-	        for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-		 
-	            model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
+                        echo "The synoboot3 was already made!!!"
+                        continue
+                       fi
+                    SYNOP3MAKE="YES"
+                    continue
+           
+                else
+                    echo "The conditions for adding a fat partition are not met (3 rd, 0 83). $model"
+                    continue
+                fi
+            done
+        fi
+    elif [ "${do_ex_first}" = "Y" ]; then
+        if [ ${IDX_EX} -eq 2 ] || [ `expr ${IDX_EX} + ${SHR_EX}` -eq 2 ]; then
+            echo "Reinject bootloader (into existing partition)..."
+            for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+         
+                model=$(lsblk -o PATH,MODEL | grep $edisk | head -1)
                 get_disk_type_cnt "${edisk}" "Y"
                 
-	            echo
-	            if [ "${DOS_CNT}" -eq 3 ]; then
-	                echo "Skip this disk as it is a loader disk. $model"
-	                continue
-	            elif [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 2 ]; then
+                echo
+                if [ "${DOS_CNT}" -eq 3 ]; then
+                    echo "Skip this disk as it is a loader disk. $model"
+                    continue
+                elif [ "${RAID_CNT}" -eq 3 ] && [ "${DOS_CNT}" -eq 2 ]; then
 
-					prepare_grub
-					[ $? -ne 0 ] && return
+                    prepare_grub
+                    [ $? -ne 0 ] && return
                     if [ "${W95_CNT}" -eq 1 ]; then
-	                    synop1=${edisk}4                    
-	                    wr_part1 "4"
+                        synop1=${edisk}4                    
+                        wr_part1 "4"
                     else 
-	                    synop1=${edisk}5
-	                    wr_part1 "5"
+                        synop1=${edisk}5
+                        wr_part1 "5"
                     fi
 
-		   		    synop2=${edisk}6                 
-	                wr_part2 "6"
-	                [ $? -ne 0 ] && return
-		            continue
+                       synop2=${edisk}6                 
+                    wr_part2 "6"
+                    [ $? -ne 0 ] && return
+                    continue
               
-	            elif [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 1 ]; then
-	            
-	      	        if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
+                elif [ "${RAID_CNT}" -gt 2 ] && [ "${DOS_CNT}" -eq 1 ]; then
+                
+                      if [ $(blkid | grep ${edisk} | grep "6234-C863" | wc -l ) -eq 1 ]; then
 
-						#prepare_img
-						#[ $? -ne 0 ] && return
-				   
-	                    wr_part3 "4"
-	                    [ $? -ne 0 ] && return
-	
-	                    synop3=${edisk}4
-	                fi
-				    continue
-	            fi
-	        done
-	    fi
-	fi 
+                        #prepare_img
+                        #[ $? -ne 0 ] && return
+                   
+                        wr_part3 "4"
+                        [ $? -ne 0 ] && return
+    
+                        synop3=${edisk}4
+                    fi
+                    continue
+                fi
+            done
+        fi
+    fi 
     #sudo losetup -d ${loopdev}
     #[ -z "$(losetup | grep -i ${imgpath})" ] && echo "boot-image-to-hdd.img losetup OK !!!"
     sync
@@ -1643,13 +1643,13 @@ function additional() {
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
     elif [ "${resp}" = "w" ]; then
       [ "${nvmes}" = "Add" ] && add-addon "nvmesystem" || del-addon "nvmesystem"
-      [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"	  
+      [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"      
     elif [ "${resp}" = "y" ]; then 
       [ "${dbgutils}" = "Add" ] && add-addon "dbgutils" || del-addon "dbgutils"
-  	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
+        [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
     elif [ "${resp}" = "x" ]; then 
       [ "${sortnetif}" = "Add" ] && add-addon "sortnetif" || del-addon "sortnetif"
-  	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"
+        [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"
     elif [ "${resp}" = "j" ]; then 
       if [ "${DOMKIND}" == "Native" ]; then
         satadom_edit 1
@@ -1664,7 +1664,7 @@ function additional() {
         writeConfigKey "general" "disablei915" "${DISPLAYI915}"
         DISABLEI915=$(jq -r -e '.general.disablei915' "$USER_CONFIG_FILE")
         [ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
-      else	
+      else    
         echo "This platform is not supported..." && read answer && continue
       fi 
     elif [ "${resp}" = "b" ]; then
@@ -1758,52 +1758,52 @@ sed -i "s/screen_color = (CYAN,GREEN,ON)/screen_color = (CYAN,BLUE,ON)/g" ~/.dia
 writexsession
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep gettext | wc -w) -eq 0 ]; then
-	tce-load -wi gettext
-	if [ $? -eq 0 ]; then
-	    echo "Download gettext.tcz OK, Permanent installation progress !!!"
-	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
-	    sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst
-	    sudo echo "gettext.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+    tce-load -wi gettext
+    if [ $? -eq 0 ]; then
+        echo "Download gettext.tcz OK, Permanent installation progress !!!"
+        sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
+        sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst
+        sudo echo "gettext.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
         sudo echo "ncursesw.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-	    echo 'Y'|rploader backup
-	    echo "You have finished installing TC gettext package."
-	    restart
- 	fi
+        echo 'Y'|rploader backup
+        echo "You have finished installing TC gettext package."
+        restart
+     fi
 fi
 
 #if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep dejavu-fonts-ttf | wc -w) -eq 0 ]; then
-#	tce-load -wi dejavu-fonts-ttf notosansdevanagari-fonts-ttf setfont
-#	if [ $? -eq 0 ]; then
-#	    echo "Download dejavu-fonts-ttf.tcz, notosansdevanagari-fonts-ttf, setfont OK, Permanent installation progress !!!"
-#	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
-#	    sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst
-#	    sudo echo "dejavu-fonts-ttf.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-#	    sudo echo "notosansdevanagari-fonts-ttf.tcz" >> /mnt/${tcrppart}/cde/onboot.lst     
-#	    sudo echo "setfont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst     
-#	    echo 'Y'|rploader backup
-#	    echo "You have finished installing TC dejavu-fonts-ttf package."
-#	    restart
-# 	fi
+#    tce-load -wi dejavu-fonts-ttf notosansdevanagari-fonts-ttf setfont
+#    if [ $? -eq 0 ]; then
+#        echo "Download dejavu-fonts-ttf.tcz, notosansdevanagari-fonts-ttf, setfont OK, Permanent installation progress !!!"
+#        sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
+#        sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst
+#        sudo echo "dejavu-fonts-ttf.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+#        sudo echo "notosansdevanagari-fonts-ttf.tcz" >> /mnt/${tcrppart}/cde/onboot.lst     
+#        sudo echo "setfont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst     
+#        echo 'Y'|rploader backup
+#        echo "You have finished installing TC dejavu-fonts-ttf package."
+#        restart
+#     fi
 #fi
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -eq 0 ]; then
-	tce-load -wi glibc_apps glibc_i18n_locale unifont rxvt
-	if [ $? -eq 0 ]; then
-	    echo "Download glibc_apps.tcz and glibc_i18n_locale.tcz OK, Permanent installation progress !!!"
-	    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
-	    sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst
-	    sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-	    sudo echo "glibc_i18n_locale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-	    sudo echo "unifont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-	    sudo echo "rxvt.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-	    echo 'Y'|rploader backup
+    tce-load -wi glibc_apps glibc_i18n_locale unifont rxvt
+    if [ $? -eq 0 ]; then
+        echo "Download glibc_apps.tcz and glibc_i18n_locale.tcz OK, Permanent installation progress !!!"
+        sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional
+        sudo echo "" >> /mnt/${tcrppart}/cde/onboot.lst
+        sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+        sudo echo "glibc_i18n_locale.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+        sudo echo "unifont.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+        sudo echo "rxvt.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+        echo 'Y'|rploader backup
 
-	    echo
-	    echo "You have finished installing TC Unicode package and urxvt."
-	    restart
-	else
-	    echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
-	fi
+        echo
+        echo "You have finished installing TC Unicode package and urxvt."
+        restart
+    else
+        echo "Download glibc_apps.tcz, glibc_i18n_locale.tcz FAIL !!!"
+    fi
 fi
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
@@ -1819,22 +1819,22 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep rxvt | wc -w) -gt 0 ]; then
   if [ $(cat ~/.Xdefaults|grep "URxvt.background: black" | wc -w) -eq 0 ]; then
     echo "URxvt.background: black"  >> ~/.Xdefaults
   fi
-  if [ $(cat ~/.Xdefaults|grep "URxvt.foreground: white" | wc -w) -eq 0 ]; then	
+  if [ $(cat ~/.Xdefaults|grep "URxvt.foreground: white" | wc -w) -eq 0 ]; then    
     echo "URxvt.foreground: white"  >> ~/.Xdefaults
   fi
-  if [ $(cat ~/.Xdefaults|grep "URxvt.transparent: true" | wc -w) -eq 0 ]; then	
+  if [ $(cat ~/.Xdefaults|grep "URxvt.transparent: true" | wc -w) -eq 0 ]; then    
     echo "URxvt.transparent: true"  >> ~/.Xdefaults
   fi
-  if [ $(cat ~/.Xdefaults|grep "URxvt\*encoding: UTF-8" | wc -w) -eq 0 ]; then	
+  if [ $(cat ~/.Xdefaults|grep "URxvt\*encoding: UTF-8" | wc -w) -eq 0 ]; then    
     echo "URxvt*encoding: UTF-8"  >> ~/.Xdefaults
   else
     sed -i "/URxvt\*encoding:/d" ~/.Xdefaults
     echo "URxvt*encoding: UTF-8"  >> ~/.Xdefaults  
   fi
-  if [ $(cat ~/.Xdefaults|grep "URxvt\*inputMethod: ibus" | wc -w) -eq 0 ]; then	
+  if [ $(cat ~/.Xdefaults|grep "URxvt\*inputMethod: ibus" | wc -w) -eq 0 ]; then    
     echo "URxvt*inputMethod: ibus"  >> ~/.Xdefaults
   fi
-  if [ $(cat ~/.Xdefaults|grep "URxvt\*locale:" | wc -w) -eq 0 ]; then	
+  if [ $(cat ~/.Xdefaults|grep "URxvt\*locale:" | wc -w) -eq 0 ]; then    
     echo "URxvt*locale: ${ucode}.UTF-8"  >> ~/.Xdefaults
   else
     sed -i "/URxvt\*locale:/d" ~/.Xdefaults
@@ -1854,7 +1854,7 @@ tz="US"
 load_us
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -w) -gt 0 ]; then
-    sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst	
+    sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst    
     sudo echo "glibc_apps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
     sudo echo "kmaps.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
     echo 'Y'|rploader backup
@@ -1862,7 +1862,7 @@ if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -
     echo
     echo "We have finished bug fix for /mnt/${tcrppart}/cde/onboot.lst."
     restart
-fi	
+fi    
 
 if [ "${KEYMAP}" = "null" ]; then
     LAYOUT="qwerty"
