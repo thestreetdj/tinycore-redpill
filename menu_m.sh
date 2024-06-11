@@ -1617,13 +1617,13 @@ function additional() {
   eval "MSG55=\"\${MSG${tz}55}\""
   eval "MSG12=\"\${MSG${tz}12}\""
 
-  #[ "${BUS}" != "usb" ] && 
+  
   while true; do
     eval "echo a \"${spoof} ${MSG50}\" > \"${TMP_PATH}/menua\""
     eval "echo w \"${nvmes} nvmesystem Addon\" >> \"${TMP_PATH}/menua\""
     eval "echo y \"${dbgutils} dbgutils Addon\" >> \"${TMP_PATH}/menua\""
     eval "echo x \"${sortnetif} sortnetif Addon\" >> \"${TMP_PATH}/menua\""
-    eval "echo j \"Active ${DOMKIND} Satadom Option\" >> \"${TMP_PATH}/menua\""
+    [ "${BUS}" != "usb" ] && eval "echo j \"Active ${DOMKIND} Satadom Option\" >> \"${TMP_PATH}/menua\""
     eval "echo z \"Disable i915 module ${DISPLAYI915}\" >> \"${TMP_PATH}/menua\""
     eval "echo b \"${MSG51}\" >> \"${TMP_PATH}/menua\""
     eval "echo c \"${MSG52}\" >> \"${TMP_PATH}/menua\""
