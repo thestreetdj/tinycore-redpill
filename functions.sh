@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.3.6"
+rploaderver="1.0.3.7"
 build="master"
 redpillmake="prod"
 
@@ -109,6 +109,7 @@ function history() {
     1.0.3.4 Maintain boot-wait addon when using satadom in SA6400
     1.0.3.5 Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
     1.0.3.6 Use intel_iommu on the command line
+    1.0.3.7 Add command line native satadom support option change menu
     --------------------------------------------------------------------------------------
 EOF
 
@@ -360,6 +361,8 @@ EOF
 # Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
 # 2024.06.10 v1.0.3.6 
 # Use intel_iommu on the command line
+# 2024.06.11 v1.0.3.7 
+#Add command line native satadom support option change menu
     
 function showlastupdate() {
     cat <<EOF
@@ -393,6 +396,9 @@ function showlastupdate() {
 
 # 2024.06.10 v1.0.3.6 
 # Use intel_iommu on the command line
+
+# 2024.06.11 v1.0.3.7 
+#Add command line native satadom support option change menu
     
 EOF
 }
