@@ -22,7 +22,7 @@ function readanswer() {
         esac
     done
 }
-
+ 
 function restart() {
     echo "A reboot is required. Press any key to reboot..."
     read answer
