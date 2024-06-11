@@ -1624,7 +1624,8 @@ function additional() {
       w "${nvmes} nvmesystem Addon" \
       y "${dbgutils} dbgutils Addon" \
       x "${sortnetif} sortnetif Addon" \
-      [ "${BUS}" != "usb" ] && j "Active ${DOMKIND} Satadom Option" \
+      #[ "${BUS}" != "usb" ] && 
+      j "Active ${DOMKIND} Satadom Option" \
       z "Disable i915 module ${DISPLAYI915}" \
       b "${MSG51}" \
       c "${MSG52}" \
@@ -1651,7 +1652,13 @@ function additional() {
       [ "${sortnetif}" = "Add" ] && add-addon "sortnetif" || del-addon "sortnetif"
   	  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif="Remove" || sortnetif="Add"
     elif [ "${resp}" = "j" ]; then 
-      [ "${DOMKIND}" == "Native" ] && satadom_edit 1 || satadom_edit 2
+      if [ "${DOMKIND}" == "Native" ]; then
+        satadom_edit 1
+        DOMKIND="Fake"
+      else
+        satadom_edit 2
+        DOMKIND="Native"
+      fi   
     elif [ "${resp}" = "z" ]; then
       if [ ${platform} = "geminilake(DT)" ] || [ ${platform} = "epyc7002(DT)" ] || [ ${platform} = "apollolake" ]; then
         #[ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
@@ -1659,7 +1666,7 @@ function additional() {
         DISABLEI915=$(jq -r -e '.general.disablei915' "$USER_CONFIG_FILE")
         [ "${DISABLEI915}" = "ON" ] && DISPLAYI915="OFF" || DISPLAYI915="ON"
       else	
-  	  	echo "This platform is not supported..." && read answer && continue
+        echo "This platform is not supported..." && read answer && continue
       fi 
     elif [ "${resp}" = "b" ]; then
       prevent
