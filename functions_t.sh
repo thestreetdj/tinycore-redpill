@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.3.5"
+rploaderver="1.0.3.7"
 build="master"
 redpillmake="prod"
 
@@ -108,6 +108,8 @@ function history() {
     1.0.3.3 Boot entry order for jot mode synchronized with Friend's order, remove custom_config_jun.json
     1.0.3.4 Maintain boot-wait addon when using satadom in SA6400
     1.0.3.5 Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
+    1.0.3.6 Use intel_iommu on the command line
+    1.0.3.7 Add command line native satadom support option change menu
     --------------------------------------------------------------------------------------
 EOF
 
@@ -357,6 +359,10 @@ EOF
 # Maintain boot-wait addon when using satadom in SA6400
 # 2024.06.09 v1.0.3.5 
 # Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
+# 2024.06.10 v1.0.3.6 
+# Use intel_iommu on the command line
+# 2024.06.11 v1.0.3.7 
+#Add command line native satadom support option change menu
     
 function showlastupdate() {
     cat <<EOF
@@ -387,6 +393,12 @@ function showlastupdate() {
 
 # 2024.06.09 v1.0.3.5 
 # Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
+
+# 2024.06.10 v1.0.3.6 
+# Use intel_iommu on the command line
+
+# 2024.06.11 v1.0.3.7 
+#Add command line native satadom support option change menu
     
 EOF
 }
@@ -470,14 +482,14 @@ function getloaderdisk() {
     loaderdisk=""
     for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
         if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
-    	loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+        loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
         fi    
     done
     if [ -z "${loaderdisk}" ]; then
         for edisk in $(sudo fdisk -l | grep -e "Disk /dev/nvme" -e "Disk /dev/mmc" | awk '{print $2}' | sed 's/://' ); do
-    	if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
-    	    loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"    
-    	fi    
+        if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+            loaderdisk="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"    
+        fi    
         done
     fi
 }
@@ -829,7 +841,7 @@ function READ_YN () { # ${1}:question ${2}:default
 
 function st() {
 echo -e "[$(date '+%T.%3N')]:-------------------------------------------------------------" >> /home/tc/buildstatus
-echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
+echo -e "\e[35m$1\e[0m    \e[36m$2\e[0m    $3" >> /home/tc/buildstatus
 }
 
 
@@ -921,7 +933,7 @@ function msgnormal() {
 } 
 function st() {
 echo -e "[$(date '+%T.%3N')]:-------------------------------------------------------------" >> /home/tc/buildstatus
-echo -e "\e[35m$1\e[0m	\e[36m$2\e[0m	$3" >> /home/tc/buildstatus
+echo -e "\e[35m$1\e[0m    \e[36m$2\e[0m    $3" >> /home/tc/buildstatus
 }
 
 function readanswer() {
@@ -1020,12 +1032,12 @@ function checkforsas() {
     do
         echo "Checking existense of $sasmodule"
         for sas in `depmod -n 2>/dev/null |grep -i $sasmodule |grep pci|cut -d":" -f 2 | cut -c 6-9,15-18`
-	do
-	    if [ `grep -i $sas /proc/bus/pci/devices |wc -l` -gt 0 ] ; then
-	        echo "  => $sasmodule, device found, block eudev mode" 
-	        BLOCK_EUDEV="Y"
-	    fi
-	done
+    do
+        if [ `grep -i $sas /proc/bus/pci/devices |wc -l` -gt 0 ] ; then
+            echo "  => $sasmodule, device found, block eudev mode" 
+            BLOCK_EUDEV="Y"
+        fi
+    done
     done 
 }
 
@@ -1037,12 +1049,12 @@ function checkcpu() {
         CPU="INTEL"
     else
         if [ $(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//' | grep -e N36L -e N40L -e N54L | wc -l) -gt 0 ]; then
-	    CPU="HP"
+        CPU="HP"
             LDRMODE="JOT"
             writeConfigKey "general" "loadermode" "${LDRMODE}"
-	else
+    else
             CPU="AMD"
-        fi	    
+        fi        
     fi
 
     threads="$(lscpu |grep CPU\(s\): | awk '{print $2}')"
@@ -2272,7 +2284,7 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
     fi
 
     #if [ "$WITHFRIEND" != "YES" ]; then
-    #	jsonfile=$(jq "del(.[\"localrss\"])" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+    #    jsonfile=$(jq "del(.[\"localrss\"])" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
     #fi 
     
     if [ "$JUNLOADER" == "YES" ]; then
@@ -2295,9 +2307,9 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
         echo
     else
         sudo sed -i '31,34d' /tmp/grub.cfg
-    	# Check dom size and set max size accordingly for jot
+        # Check dom size and set max size accordingly for jot
         if [ "${BUS}" = "sata" ]; then
-	    DOM_PARA="dom_szmax=$(fdisk -l /dev/${loaderdisk} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}')"
+        DOM_PARA="dom_szmax=$(fdisk -l /dev/${loaderdisk} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}')"
             sed -i "s/synoboot_satadom/${DOM_PARA} synoboot_satadom/" /tmp/tempentry.txt
         fi
         tinyjotfunc | sudo tee --append /tmp/grub.cfg
@@ -2368,15 +2380,9 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         USB_LINE="${USB_LINE} disable_mtrr_trim=1 "
         SATA_LINE="${SATA_LINE} disable_mtrr_trim=1 "
     else
-        if [ ${ORIGIN_PLATFORM} = "geminilake" ] || [ ${ORIGIN_PLATFORM} = "epyc7002" ] || [ ${ORIGIN_PLATFORM} = "apollolake" ]; then
-            #if [ "$MACHINE" != "VIRTUAL" ]; then
-                DISABLEI915=$(jq -r -e '.general.disablei915' "$userconfigfile")
-                if [ "${DISABLEI915}" = "ON" ]; then
-                    echo "Add configuration i915.modeset=0 for INTEL i915"
-                    USB_LINE="${USB_LINE} i915.modeset=0 "
-                    SATA_LINE="${SATA_LINE} i915.modeset=0 "
-                fi
-            #fi  
+        if echo "epyc7002 apollolake geminilake" | grep -wq "${ORIGIN_PLATFORM}"; then
+            USB_LINE="${USB_LINE} intel_iommu=igfx_off "
+            SATA_LINE="${SATA_LINE} intel_iommu=igfx_off "
         fi    
 
         if [ -d "/home/tc/redpill-load/custom/extensions/nvmesystem" ]; then
@@ -2467,10 +2473,10 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         sudo sed -i "/set default=\"*\"/cset default=\"0\"" /tmp/grub.cfg
     else
         echo
-        msgnormal "Setting default boot entry to JOT ${BUS}"	
+        msgnormal "Setting default boot entry to JOT ${BUS}"    
         if [ "${BUS}" = "usb" ]; then
             sudo sed -i "/set default=\"*\"/cset default=\"2\"" /tmp/grub.cfg
-	else
+    else
             sudo sed -i "/set default=\"*\"/cset default=\"3\"" /tmp/grub.cfg
         fi
     fi
@@ -2692,7 +2698,7 @@ function getredpillko() {
     if [ "${offline}" = "NO" ]; then
         echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."    
         LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/latest"`"
-        echo "? = $?"
+        #echo "? = $?"
         if [ $? -ne 0 ]; then
             echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
             curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms.zip -o /mnt/${tcrppart}/rp-lkms${v}.zip
@@ -2723,8 +2729,8 @@ function getredpillko() {
 
     if [ -z "${TAG}" ]; then
         unzip /mnt/${tcrppart}/rp-lkms${v}.zip        VERSION -d /tmp >/dev/null 2>&1
-	TAG=$(cat /tmp/VERSION )
- 	echo "TAG of VERSION is ${TAG}"
+    TAG=$(cat /tmp/VERSION )
+     echo "TAG of VERSION is ${TAG}"
     fi
 
     REDPILL_MOD_NAME="redpill-linux-v$(modinfo /home/tc/custom-module/redpill.ko | grep vermagic | awk '{print $2}').ko"
@@ -2827,7 +2833,7 @@ echo "$3"
     monitor)
         monitor
         exit 0
-        ;;	
+        ;;    
     *)
         showsyntax
         exit 99
@@ -2837,7 +2843,7 @@ echo "$3"
 }
 
 function add-addons() {
-    jsonfile=$(jq ". |= .+ {\"${1}\": \"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json\"}" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json	
+    jsonfile=$(jq ". |= .+ {\"${1}\": \"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json\"}" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json    
 }
 
 function my() {
