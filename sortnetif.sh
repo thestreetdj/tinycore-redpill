@@ -6,7 +6,7 @@
 # See /LICENSE for more information.
 #
 
-tce-load -wi ethtool
+tce-load -wi ethtool iproute2
 
 echo "this is sortnetif..."
 #  echo "extract usr.tgz to /usr/ "
@@ -36,26 +36,24 @@ while true; do
   echo "ETH: ${ETH}"
   if [ -n "${ETH}" ] && [ ! "${ETH}" = "eth${IDX}" ]; then
     echo "change ${ETH} <=> eth${IDX}"
-    sudo ifconfig eth${IDX} down
-    sudo ifconfig ${ETH} down
-    sleep 1
-    echo "SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{address}==\"$(cat /sys/class/net/${ETH}/address)\", NAME=\"eth${IDX}\"" >> ./70-persistent-net.rules
-    echo "SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{address}==\"$(cat /sys/class/net/eth${IDX}/address)\", NAME=\"${ETH}\"" >> ./70-persistent-net.rules
-    sleep 1
-    sudo ifconfig eth${IDX} up
-    sudo ifconfig ${ETH} up
-    sleep 1
-    sed -i "s/eth${IDX}/tmp/" /tmp/ethlist
-    sed -i "s/${ETH}/eth${IDX}/" /tmp/ethlist
-    sed -i "s/tmp/${ETH}/" /tmp/ethlist
-    sleep 1
+      ip link set dev eth${IDX} down
+      ip link set dev ${ETH} down
+      sleep 1
+      ip link set dev eth${IDX} name tmp
+      ip link set dev ${ETH} name eth${IDX}
+      ip link set dev tmp name ${ETH}
+      sleep 1
+      ip link set dev eth${IDX} up
+      ip link set dev ${ETH} up
+      sleep 1
+      sed -i "s/eth${IDX}/tmp/" /tmp/ethlist
+      sed -i "s/${ETH}/eth${IDX}/" /tmp/ethlist
+      sed -i "s/tmp/${ETH}/" /tmp/ethlist
+      sleep 1
   fi
   IDX=$((${IDX} + 1))
 done
 
-cat ./70-persistent-net.rules
-sudo mv -vf ./70-persistent-net.rules /etc/udev/rules.d/70-persistent-net.rules
-
 rm -f /tmp/ethlist
 
-exit
+exit 0
