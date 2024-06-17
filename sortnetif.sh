@@ -39,8 +39,8 @@ while true; do
     sudo ifconfig eth${IDX} down
     sudo ifconfig ${ETH} down
     sleep 1
-    sudo echo "SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{address}==\"$(sudo cat /sys/class/net/${ETH}/address)\", NAME=\"eth${IDX}\"" >> /etc/udev/rules.d/70-persistent-net.rules
-    sudo echo "SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{address}==\"$(sudo cat /sys/class/net/eth${IDX}/address)\", NAME=\"${ETH}\"" >> /etc/udev/rules.d/70-persistent-net.rules
+    echo "SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{address}==\"$(cat /sys/class/net/${ETH}/address)\", NAME=\"eth${IDX}\"" >> ./70-persistent-net.rules
+    echo "SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{address}==\"$(cat /sys/class/net/eth${IDX}/address)\", NAME=\"${ETH}\"" >> ./70-persistent-net.rules
     sleep 1
     sudo ifconfig eth${IDX} up
     sudo ifconfig ${ETH} up
@@ -52,6 +52,9 @@ while true; do
   fi
   IDX=$((${IDX} + 1))
 done
+
+cat ./70-persistent-net.rules
+sudo mv -vf ./70-persistent-net.rules /etc/udev/rules.d/70-persistent-net.rules
 
 rm -f /tmp/ethlist
 
