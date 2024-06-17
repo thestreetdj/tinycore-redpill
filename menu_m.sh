@@ -1699,6 +1699,51 @@ function additional() {
   done
 }
 
+function sortnetif() {
+  ETHLIST=""
+  ETHX=$(ls /sys/class/net/ 2>/dev/null | grep eth) # real network cards list
+  for ETH in ${ETHX}; do
+    MAC="$(cat /sys/class/net/${ETH}/address 2>/dev/null | sed 's/://g' | tr '[:upper:]' '[:lower:]')"
+    BUS=$(ethtool -i ${ETH} 2>/dev/null | grep bus-info | awk '{print $2}')
+    ETHLIST="${ETHLIST}${BUS} ${MAC} ${ETH}\n"
+  done
+  
+  ETHLIST="$(echo -e "${ETHLIST}" | sort)"
+  ETHLIST="$(echo -e "${ETHLIST}" | grep -v '^$')"
+  
+  echo -e "${ETHLIST}" >/tmp/ethlist
+  cat /tmp/ethlist
+  
+  # sort
+  IDX=0
+  while true; do
+    cat /tmp/ethlist
+    [ ${IDX} -ge $(wc -l </tmp/ethlist) ] && break
+    ETH=$(cat /tmp/ethlist | sed -n "$((${IDX} + 1))p" | awk '{print $3}')
+    echo "ETH: ${ETH}"
+    if [ -n "${ETH}" ] && [ ! "${ETH}" = "eth${IDX}" ]; then
+      echo "change ${ETH} <=> eth${IDX}"
+        sudo ip link set dev eth${IDX} down
+        sudo ip link set dev ${ETH} down
+        sleep 1
+        sudo ip link set dev eth${IDX} name tmp
+        sudo ip link set dev ${ETH} name eth${IDX}
+        sudo ip link set dev tmp name ${ETH}
+        sleep 1
+        sudo ip link set dev eth${IDX} up
+        sudo ip link set dev ${ETH} up
+        sleep 1
+        sed -i "s/eth${IDX}/tmp/" /tmp/ethlist
+        sed -i "s/${ETH}/eth${IDX}/" /tmp/ethlist
+        sed -i "s/tmp/${ETH}/" /tmp/ethlist
+        sleep 1
+    fi
+    IDX=$((${IDX} + 1))
+  done
+  
+  rm -f /tmp/ethlist
+}
+
 # Main loop
 
 # add git download 2023.10.18
@@ -1721,6 +1766,17 @@ fi
 #  fi    
 #fi
 cd /home/tc
+
+# Download ethtool
+if [ "$(which ethtool)_" == "_" ]; then
+   echo "ethtool does not exist, install from tinycore"
+   tce-load -iw ethtool iproute2 2>&1 >/dev/null
+   sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional   
+   sudo echo "ethtool.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+   sudo echo "iproute2.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+fi
+
+sortnetif
 
 #Start Locale Setting process
 #Get Langugae code & country code
@@ -1968,13 +2024,6 @@ if [ "$(which ntpclient)_" == "_" ]; then
     echo "ntpclient does not exist, install from tinycore"
    tce-load -iw ntpclient 2>&1 >/dev/null
    sudo echo "ntpclient.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-fi
-
-# Download ethtool
-if [ "$(which ethtool)_" == "_" ]; then
-    echo "ethtool does not exist, install from tinycore"
-   tce-load -iw ethtool 2>&1 >/dev/null
-   sudo echo "ethtool.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 fi
 
 # Download pigz
