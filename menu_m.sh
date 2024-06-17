@@ -1740,6 +1740,8 @@ function sortnetif() {
     fi
     IDX=$((${IDX} + 1))
   done
+
+  sudo udhcpc -i eth0
   
   rm -f /tmp/ethlist
 }
