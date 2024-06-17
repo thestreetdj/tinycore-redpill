@@ -36,15 +36,15 @@ while true; do
   echo "ETH: ${ETH}"
   if [ -n "${ETH}" ] && [ ! "${ETH}" = "eth${IDX}" ]; then
     echo "change ${ETH} <=> eth${IDX}"
-      ip link set dev eth${IDX} down
-      ip link set dev ${ETH} down
+      sudo ip link set dev eth${IDX} down
+      sudo ip link set dev ${ETH} down
       sleep 1
-      ip link set dev eth${IDX} name tmp
-      ip link set dev ${ETH} name eth${IDX}
-      ip link set dev tmp name ${ETH}
+      sudo ip link set dev eth${IDX} name tmp
+      sudo ip link set dev ${ETH} name eth${IDX}
+      sudo ip link set dev tmp name ${ETH}
       sleep 1
-      ip link set dev eth${IDX} up
-      ip link set dev ${ETH} up
+      sudo ip link set dev eth${IDX} up
+      sudo ip link set dev ${ETH} up
       sleep 1
       sed -i "s/eth${IDX}/tmp/" /tmp/ethlist
       sed -i "s/${ETH}/eth${IDX}/" /tmp/ethlist
