@@ -8,6 +8,8 @@
 
 tce-load -wi ethtool
 
+sudo -i
+
   echo "this is sortnetif..."
 #  echo "extract usr.tgz to /usr/ "
 #  tar xvfz /exts/sortnetif/usr.tgz -C /
@@ -54,3 +56,5 @@ while true; do
 done
 
 rm -f /tmp/ethlist
+
+exit
