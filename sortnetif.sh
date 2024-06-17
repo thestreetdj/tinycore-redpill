@@ -36,14 +36,14 @@ while true; do
   echo "ETH: ${ETH}"
   if [ -n "${ETH}" ] && [ ! "${ETH}" = "eth${IDX}" ]; then
     echo "change ${ETH} <=> eth${IDX}"
-    ifconfig eth${IDX} down
-    ifconfig ${ETH} down
+    sudo ifconfig eth${IDX} down
+    sudo ifconfig ${ETH} down
     sleep 1
     sudo echo "SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{address}==\"$(sudo cat /sys/class/net/${ETH}/address)\", NAME=\"eth${IDX}\"" >> /etc/udev/rules.d/70-persistent-net.rules
     sudo echo "SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{address}==\"$(sudo cat /sys/class/net/eth${IDX}/address)\", NAME=\"${ETH}\"" >> /etc/udev/rules.d/70-persistent-net.rules
     sleep 1
-    ifconfig eth${IDX} up
-    ifconfig ${ETH} up
+    sudo ifconfig eth${IDX} up
+    sudo ifconfig ${ETH} up
     sleep 1
     sed -i "s/eth${IDX}/tmp/" /tmp/ethlist
     sed -i "s/${ETH}/eth${IDX}/" /tmp/ethlist
