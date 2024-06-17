@@ -22,10 +22,17 @@ for ETH in ${ETHX}; do
 done
 
 ETHLIST="$(echo -e "${ETHLIST}" | sort)"
+
+echo ${ETHLIST}
+
 ETHLIST="$(echo -e "${ETHLIST}" | grep -v '^$')"
+
+echo ${ETHLIST}
 
 echo -e "${ETHLIST}" >/tmp/ethlist
 cat /tmp/ethlist
+
+exit 0
 
 # sort
 IDX=0
