@@ -1209,6 +1209,7 @@ function getip() {
     ethdevs=$(ls /sys/class/net/ | grep eth || true)
     for eth in $ethdevs; do 
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
+        BUSID=$(ls -ld /sys/class/net/${eth}/device 2>/dev/null | awk -F '0000:' '{print $NF}')
         IP="$(ifconfig ${eth} | grep inet | awk '{print $2}' | awk -F \: '{print $2}')"
         HWADDR="$(ifconfig ${eth} | grep HWaddr | awk '{print $5}')"
         VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
@@ -1221,7 +1222,7 @@ function getip() {
                 fi
             fi
         fi    
-        echo "IP Address : $(msgnormal "${IP}"), ${HWADDR} : ${eth} (${DRIVER})"        
+        echo "IP Addr : $(msgnormal "${IP}"), ${HWADDR}, ${BUSID}, ${eth} (${DRIVER})"
     done
 }
 
