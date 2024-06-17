@@ -1769,17 +1769,6 @@ fi
 #fi
 cd /home/tc
 
-# Download ethtool
-if [ "$(which ethtool)_" == "_" ]; then
-   echo "ethtool does not exist, install from tinycore"
-   tce-load -iw ethtool iproute2 2>&1 >/dev/null
-   sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional   
-   sudo echo "ethtool.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-   sudo echo "iproute2.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
-fi
-
-sortnetif
-
 #Start Locale Setting process
 #Get Langugae code & country code
 echo "current ucode = ${ucode}"
@@ -1922,6 +1911,17 @@ export TEXTDOMAINDIR="/usr/local/share/locale"
 set -o allexport
 tz="US"
 load_us
+
+# Download ethtool
+if [ "$(which ethtool)_" == "_" ]; then
+   echo "ethtool does not exist, install from tinycore"
+   tce-load -iw ethtool iproute2 2>&1 >/dev/null
+   sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional   
+   sudo echo "ethtool.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+   sudo echo "iproute2.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+fi
+
+sortnetif
 
 if [ $(cat /mnt/${tcrppart}/cde/onboot.lst|grep "kmaps.tczglibc_apps.tcz" | wc -w) -gt 0 ]; then
     sudo sed -i "/kmaps.tczglibc_apps.tcz/d" /mnt/${tcrppart}/cde/onboot.lst    
