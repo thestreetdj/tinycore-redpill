@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.3.7"
+rploaderver="1.0.3.8"
 build="master"
 redpillmake="prod"
 
@@ -110,6 +110,7 @@ function history() {
     1.0.3.5 Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
     1.0.3.6 Use intel_iommu on the command line
     1.0.3.7 Add command line native satadom support option change menu
+    1.0.3.8 Sort netif order by bus-id order (Synology netif sorting method)
     --------------------------------------------------------------------------------------
 EOF
 
@@ -362,7 +363,9 @@ EOF
 # 2024.06.10 v1.0.3.6 
 # Use intel_iommu on the command line
 # 2024.06.11 v1.0.3.7 
-#Add command line native satadom support option change menu
+# Add command line native satadom support option change menu
+# 2024.06.17 v1.0.3.8
+# Sort netif order by bus-id order (Synology netif sorting method)
     
 function showlastupdate() {
     cat <<EOF
@@ -399,6 +402,9 @@ function showlastupdate() {
 
 # 2024.06.11 v1.0.3.7 
 #Add command line native satadom support option change menu
+
+# 2024.06.17 v1.0.3.8
+# Sort netif order by bus-id order (Synology netif sorting method)
     
 EOF
 }
