@@ -2382,12 +2382,12 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         USB_LINE="${USB_LINE} disable_mtrr_trim=1 "
         SATA_LINE="${SATA_LINE} disable_mtrr_trim=1 "
     else
-        if echo "epyc7002 apollolake geminilake" | grep -wq "${ORIGIN_PLATFORM}"; then
-            if [ "$MACHINE" = "VIRTUAL" ]; then
-                USB_LINE="${USB_LINE} intel_iommu=igfx_off "
-                SATA_LINE="${SATA_LINE} intel_iommu=igfx_off "
-            fi   
-        fi    
+        #if echo "epyc7002 apollolake geminilake" | grep -wq "${ORIGIN_PLATFORM}"; then
+        #    if [ "$MACHINE" = "VIRTUAL" ]; then
+        #        USB_LINE="${USB_LINE} intel_iommu=igfx_off "
+        #        SATA_LINE="${SATA_LINE} intel_iommu=igfx_off "
+        #    fi   
+        #fi    
 
         if [ -d "/home/tc/redpill-load/custom/extensions/nvmesystem" ]; then
             echo "Add configuration pci=nommconf for nvmesystem addon"
