@@ -1970,6 +1970,13 @@ if [ "$(which ntpclient)_" == "_" ]; then
    sudo echo "ntpclient.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 fi
 
+# Download ethtool
+if [ "$(which ethtool)_" == "_" ]; then
+    echo "ethtool does not exist, install from tinycore"
+   tce-load -iw ethtool 2>&1 >/dev/null
+   sudo echo "ethtool.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+fi
+
 # Download pigz
 if [ "$(which pigz)_" == "_" ]; then
     echo "pigz does not exist, bringing over from repo"
