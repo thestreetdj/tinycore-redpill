@@ -32,8 +32,6 @@ echo ${ETHLIST}
 echo -e "${ETHLIST}" >/tmp/ethlist
 cat /tmp/ethlist
 
-exit 0
-
 # sort
 IDX=0
 while true; do
@@ -62,5 +60,7 @@ while true; do
 done
 
 rm -f /tmp/ethlist
+
+sudo udhcpc -i eth0
 
 exit 0
