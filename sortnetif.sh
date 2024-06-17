@@ -8,9 +8,7 @@
 
 tce-load -wi ethtool
 
-sudo -i
-
-  echo "this is sortnetif..."
+echo "this is sortnetif..."
 #  echo "extract usr.tgz to /usr/ "
 #  tar xvfz /exts/sortnetif/usr.tgz -C /
 #  chmod +x /usr/bin/awk /usr/bin/tr /usr/bin/sort /usr/bin/sed /usr/bin/ethtool
@@ -41,8 +39,8 @@ while true; do
     ifconfig eth${IDX} down
     ifconfig ${ETH} down
     sleep 1
-    echo "SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{address}==\"$(cat /sys/class/net/${ETH}/address)\", NAME=\"eth${IDX}\"" >> /etc/udev/rules.d/70-persistent-net.rules
-    echo "SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{address}==\"$(cat /sys/class/net/eth${IDX}/address)\", NAME=\"${ETH}\"" >> /etc/udev/rules.d/70-persistent-net.rules
+    sudo echo "SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{address}==\"$(sudo cat /sys/class/net/${ETH}/address)\", NAME=\"eth${IDX}\"" >> /etc/udev/rules.d/70-persistent-net.rules
+    sudo echo "SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{address}==\"$(sudo cat /sys/class/net/eth${IDX}/address)\", NAME=\"${ETH}\"" >> /etc/udev/rules.d/70-persistent-net.rules
     sleep 1
     ifconfig eth${IDX} up
     ifconfig ${ETH} up
