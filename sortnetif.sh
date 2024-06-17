@@ -6,7 +6,7 @@
 # See /LICENSE for more information.
 #
 
-tce-load -wi ethtool iproute2
+#tce-load -wi ethtool iproute2
 
 echo "this is sortnetif..."
 #  echo "extract usr.tgz to /usr/ "
@@ -22,12 +22,7 @@ for ETH in ${ETHX}; do
 done
 
 ETHLIST="$(echo -e "${ETHLIST}" | sort)"
-
-echo ${ETHLIST}
-
 ETHLIST="$(echo -e "${ETHLIST}" | grep -v '^$')"
-
-echo ${ETHLIST}
 
 echo -e "${ETHLIST}" >/tmp/ethlist
 cat /tmp/ethlist
@@ -41,26 +36,25 @@ while true; do
   echo "ETH: ${ETH}"
   if [ -n "${ETH}" ] && [ ! "${ETH}" = "eth${IDX}" ]; then
     echo "change ${ETH} <=> eth${IDX}"
-      sudo ip link set dev eth${IDX} down
-      sudo ip link set dev ${ETH} down
+      ip link set dev eth${IDX} down
+      ip link set dev ${ETH} down
       sleep 1
-      sudo ip link set dev eth${IDX} name tmp
-      sudo ip link set dev ${ETH} name eth${IDX}
-      sudo ip link set dev tmp name ${ETH}
+      ip link set dev eth${IDX} name tmp
+      ip link set dev ${ETH} name eth${IDX}
+      ip link set dev tmp name ${ETH}
       sleep 1
-      sudo ip link set dev eth${IDX} up
-      sudo ip link set dev ${ETH} up
+      ip link set dev eth${IDX} up
+      ip link set dev ${ETH} up
       sleep 1
       sed -i "s/eth${IDX}/tmp/" /tmp/ethlist
       sed -i "s/${ETH}/eth${IDX}/" /tmp/ethlist
       sed -i "s/tmp/${ETH}/" /tmp/ethlist
       sleep 1
+      udhcpc -i ${ETH}
   fi
   IDX=$((${IDX} + 1))
 done
 
 rm -f /tmp/ethlist
-
-sudo udhcpc -i eth0
 
 exit 0
