@@ -1737,11 +1737,10 @@ function sortnetif() {
         sed -i "s/${ETH}/eth${IDX}/" /tmp/ethlist
         sed -i "s/tmp/${ETH}/" /tmp/ethlist
         sleep 1
-        sudo udhcpc -i ${ETH}
     fi
     IDX=$((${IDX} + 1))
   done
-  
+  sudo udhcpc
   rm -f /tmp/ethlist
 }
 
