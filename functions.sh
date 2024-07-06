@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.3.8"
+rploaderver="1.0.3.9"
 build="master"
 redpillmake="prod"
 
@@ -111,7 +111,8 @@ function history() {
     1.0.3.6 Use intel_iommu on the command line
     1.0.3.7 Add command line native satadom support option change menu
     1.0.3.8 Sort netif order by bus-id order (Synology netif sorting method)
-           (NVMe-related function supplementation and error correction)
+    1.0.3.9 NVMe-related function supplementation and error correction
+            Discontinue use of sortnetif addon, discontinue use of sortnetif if there is only 1 NIC
     --------------------------------------------------------------------------------------
 EOF
 
@@ -367,7 +368,10 @@ EOF
 # Add command line native satadom support option change menu
 # 2024.06.17 v1.0.3.8
 # Sort netif order by bus-id order (Synology netif sorting method)
-# (NVMe-related function supplementation and error correction)
+# 2024.07.06 v1.0.3.9 
+# NVMe-related function supplementation and error correction
+# Discontinue use of sortnetif addon, discontinue use of sortnetif if there is only 1 NIC
+
     
 function showlastupdate() {
     cat <<EOF
@@ -407,7 +411,10 @@ function showlastupdate() {
 
 # 2024.06.17 v1.0.3.8
 # Sort netif order by bus-id order (Synology netif sorting method)
-# (2024.07.06 NVMe-related function supplementation and error correction)
+
+# 2024.07.06 v1.0.3.9 
+# NVMe-related function supplementation and error correction
+# Discontinue use of sortnetif addon, discontinue use of sortnetif if there is only 1 NIC
     
 EOF
 }
