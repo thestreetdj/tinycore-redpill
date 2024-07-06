@@ -922,16 +922,17 @@ function burnloader() {
 
   tcrpdev=/dev/$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
   listusb=()
-  listusb+=( $(lsblk -o PATH,ROTA,TRAN | grep '/dev/sd' | grep -v ${tcrpdev} | grep -E '(1 usb|0 sata)' | awk '{print $1}' ) )
+  # 2024.07.06 Add NVMe
+  listusb+=( $(lsblk -o PATH,ROTA,TRAN | grep -E '/dev/(sd|nvme)' | grep -v ${tcrpdev} | grep -E '(1 usb|0 sata|0 nvme)' | awk '{print $1}' ) )
 
   if [ ${#listusb[@]} -eq 0 ]; then 
-    echo "No Available USB or SSD, press any key continue..."
+    echo "No Available USB,SSD or NVMe, press any key continue..."
     read answer                       
     return 0   
   fi
 
   dialog --backtitle "`backtitle`" --no-items --colors \
-    --menu "Choose a USB Stick or SSD for New Loader\n\Z1(Caution!) In the case of SSD, be sure to check whether it is a cache or data disk.\Zn" 0 0 0 "${listusb[@]}" \
+    --menu "Choose a USB Stick, SSD or NVMe for New Loader\n\Z1(Caution!) In the case of SSD(include NVMe), be sure to check whether it is a cache or data disk.\Zn" 0 0 0 "${listusb[@]}" \
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && return
   resp=$(<${TMP_PATH}/resp)
