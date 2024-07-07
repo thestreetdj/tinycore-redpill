@@ -52,6 +52,7 @@ MSGUS52=$(gettext "tcrp" "Show SATA(s) ports and drives for SataPortMap")
 MSGUS53=$(gettext "tcrp" "Show error log of running loader")
 MSGUS54=$(gettext "tcrp" "Burn TCRP Bootloader Img to USB or SSD")
 MSGUS55=$(gettext "tcrp" "Clone Current TCRP Bootloader to USB or SSD")
+MSGUS56=$(gettext "tcrp" "sata_remap processing for SataPort reordering")
 #MSX=$(gettext "tcrp" "No NIC found! - Loader does not work without Network connection.")
 }
 
@@ -104,6 +105,7 @@ MSGUS52="Show SATA(s ports and drives for SataPortMap"
 MSGUS53="Show error log of running loader"
 MSGUS54="Burn TCRP Bootloader Img to USB or SSD"
 MSGUS55="Clone Current TCRP Bootloader to USB or SSD"
+MSGUS56="sata_remap processing for SataPort reordering"
 
 ## RU
 MSGRU00="Базовые модели и HBAs Device-Tree [DT] не требуют SataPortMap, DiskIdxMap. DT модели не поддерживают HBAs"
@@ -154,6 +156,7 @@ MSGRU52="Показать порты и диски SATA для SataPortMap"
 MSGRU53="Показать журнал ошибок работающего загрузчика"
 MSGRU54="Записать еще один загрузчик TCRP на USB или SSD"
 MSGRU55="Клонировать загрузчик TCRP на USB или SSD"
+MSGRU56="Обработка sata_remap для изменения порядка SataPort"
 
 ## FR
 MSGFR00="Les modèles de base et les HBAs de l'arbre de périphériques [DT] ne nécessitent pas de SataPortMap, DiskIdxMap. Les modèles DT ne prennent pas en charge les HBAs"
@@ -204,7 +207,8 @@ MSGFR52="Afficher les ports et lecteurs SATA(s) pour SataPortMap"
 MSGFR53="Afficher le journal des erreurs du chargeur en cours d'exécution"
 MSGFR54="Graver un autre chargeur de démarrage TCRP sur USB ou SSD"
 MSGFR55="Cloner le chargeur de démarrage TCRP sur USB ou SSD"
-
+MSGFR56="Traitement sata_remap pour la réorganisation de SataPort"
+  
 ## DE
 MSGDE00="Gerätebaum[DT] Basismodelle und HBAs benötigen kein SataPortMap,DiskIdxMap. DT-Modelle unterstützen keine HBAs"
 MSGDE01="Wählen Sie eine Methode zur Verwaltung von Dev-Mods, DDSML/EUDEV"
@@ -254,6 +258,7 @@ MSGDE52="SATA(s)-Ports und -Laufwerke für SataPortMap anzeigen"
 MSGDE53="Fehlerprotokoll des laufenden Loaders anzeigen"
 MSGDE54="Einen weiteren TCP-Bootloader auf USB oder SSD brennen"
 MSGDE55="TCRP-Bootloader auf USB oder SSD klonen"
+MSGDE56="sata_remap-Verarbeitung zur Neuanordnung der SATAPorts"
 
 ## ES
 MSGES00="Los modelos base y HBAs de Device-Tree[DT] no requieren SataPortMap, DiskIdxMap. Los modelos DT no admiten HBAs"
@@ -304,6 +309,7 @@ MSGES52="Mostrar puertos y unidades SATA para SataPortMap"
 MSGES53="Mostrar registro de errores del cargador en ejecución"
 MSGES54="Grabar otro gestor de arranque TCRP en USB o SSD"
 MSGES55="Clonar el cargador de arranque TCRP a USB o SSD"
+MSGES56="Procesamiento sata_remap para reordenamiento de SataPort"
 
 ## BR
 MSGBR00="Modelos Base e HBAs do Device-Tree[DT] não requerem SataPortMap, DiskIdxMap. Modelos DT não suportam HBAs"
@@ -354,6 +360,7 @@ MSGBR52="Mostrar portas e unidades SATA(s) para SataPortMap"
 MSGBR53="Mostrar log de erros do carregador em execução"
 MSGBR54="Gravar outro bootloader TCPP em USB ou SSD"
 MSGBR55="Clone Bootloader TCRP para USB ou SSD"
+MSGBR56="processamento sata_remap para reordenação SataPort"  
 
 ## IT
 MSGIT00="I modelli di base e gli HBA di Device-Tree [DT] non richiedono SataPortMap, DiskIdxMap. I modelli DT non supportano gli HBA"
@@ -404,6 +411,7 @@ MSGIT52="Mostra porte e unità SATA per SATAPortMap"
 MSGIT53="Mostra registro errori del caricatore in esecuzione"
 MSGIT54="Masterizza un altro bootloader TCRP su USB o SSD"
 MSGIT55="Clona bootloader TCRP su USB o SSD"
+MSGIT56="elaborazione sata_remap per il riordino di SataPort"  
 
 ## KR
 MSGKR00="Device-Tree[DT]모델과 HBA는 SataPortMap,DiskIdxMap 설정이 필요없습니다. DT모델은 HBA를 지원하지 않습니다."
@@ -454,6 +462,7 @@ MSGKR52="SataPortMap용 SATA 포트 및 드라이브 표시"
 MSGKR53="실행 중인 로더의 오류 로그 표시"
 MSGKR54="TCRP 부트로더 Img를 USB 또는 SSD에 굽기"
 MSGKR55="현재의 TCRP 부트로더를 USB 또는 SSD에 복제"
+MSGKR56="SataPort 순서재정렬을 위한 sata_remap 처리"  
 
 ## CN
 MSGCN00="设备树[DT]基本型号和HBA不需要SataPortMap、DiskIdxMap. DT模型不支持HBA"
@@ -504,6 +513,7 @@ MSGCN52="显示 SATAPortMap 的 SATA 端口和驱动器"
 MSGCN53="显示运行加载程序的错误日志"
 MSGCN54="将另一个 TCRP 引导加载程序刻录到 USB 或 SSD"
 MSGCN55="将 TCRP 引导加载程序克隆到 USB 或 SSD"
+MSGCN56="sata_remap 处理 SataPort 重新排序"  
 
 ## JP
 MSGJP00="Device-Tree[DT]ベースモデルとHBAsは、SataPortMap、DiskIdxMapが必要ありません. DTモデルはHBAsをサポートしていません"
@@ -554,6 +564,7 @@ MSGJP52="SataPortMap の SATA ポートとドライブを表示"
 MSGJP53="実行中のローダーのエラー ログを表示"
 MSGJP54="別の TCRP ブートローダーを USB または SSD に書き込む"
 MSGJP55="TCRP ブートローダーのクローンを USB または SSD に作成"
+MSGJP56="SataPort の並べ替えのための sata_remap 処理"  
   
 #EG
 MSGEG00="النماذج الأساسية لشجرة الأجهزة [DT] وHBAs لا تتطلب SataPortMap، وDiskIdxMap. ونماذج DT لا تدعم HBAs"
@@ -604,6 +615,7 @@ MSGEG52="إظهار منافذ ومحركات أقراص SATA لـSataPortMap"
 MSGEG53="إظهار سجل أخطاء أداة التحميل قيد التشغيل"
 MSGEG54="نسخ صورة أداة تحميل التشغيل TCRP على USB أو SSD"
 MSGEG55="استنساخ أداة تحميل التشغيل TCRP الحالية إلى USB أو SSD"
+MSGEG56="معالجة sata_remap لإعادة ترتيب SATAPort"  
 
 #HU
 MSGHU00="A Device-Tree[DT] alapmodellek és HBA-k nem igényelnek SataPortMap-et, DiskIdxMap-et. A DT-modellek nem támogatják a HBA-kat"
@@ -654,6 +666,7 @@ MSGHU52="SATA portok és meghajtók megjelenítése a SataPortMap számára"
 MSGHU53="A futó betöltő hibanaplójának megjelenítése"
 MSGHU54="A TCRP Bootloader kép írása USB-re vagy SSD-re"
 MSGHU55="A jelenlegi TCRP rendszerbetöltő klónozása USB-re vagy SSD-re"
+MSGHU56="sata_remap feldolgozás a SataPort újrarendezéshez"  
 
 #ID
 MSGID00="Device-Tree[DT] Model Dasar & HBA tidak memerlukan SataPortMap,DiskIdxMap. Model DT tidak mendukung HBA"
@@ -704,6 +717,7 @@ MSGID52="Tampilkan port dan drive SATA untuk SataPortMap"
 MSGID53="Tampilkan log kesalahan saat menjalankan loader"
 MSGID54="Bakar Gambar Bootloader TCRP ke USB atau SSD"
 MSGID55="Kloning Bootloader TCRP Saat Ini ke USB atau SSD"
+MSGID56="pemrosesan sata_remap untuk penataan ulang SataPort"  
 
 #IN
 MSGIN00="डिवाइस-ट्री[DT] बेस मॉडल और HBA को SataPortMap, DiskIdxMap की आवश्यकता नहीं है। DT मॉडल HBA का समर्थन नहीं करते हैं"
@@ -754,6 +768,7 @@ MSGIN52="SataPortMap के लिए SATA(s पोर्ट और ड्रा
 MSGIN53="चल रहे लोडर का त्रुटि लॉग दिखाएँ"
 MSGIN54="TCRP बूटलोडर Img को USB या SSD में बर्न करें"
 MSGIN55="वर्तमान TCRP बूटलोडर को USB या SSD पर क्लोन करें"
+MSGIN56="SataPort पुनर्व्यवस्था के लिए sata_remap प्रसंस्करण"  
 
 #TR
 MSGTR00="Device-Tree[DT] Temel Modeller ve HBA'lar SataPortMap,DiskIdxMap gerektirmez. DT modelleri HBA'ları desteklemez"
@@ -804,6 +819,7 @@ MSGTR52="SataPortMap için SATA bağlantı noktalarını ve sürücülerini gös
 MSGTR53="Çalışan yükleyicinin hata günlüğünü göster"
 MSGTR54="TCRP Bootloader Görüntüsünü USB veya SSD'ye Yaz"
 MSGTR55="Geçerli TCRP Önyükleyicisini USB veya SSD'ye Klonla"
+MSGTR56="sata_remap processing for SataPort reordering"  
   
 #ET
 MSGET00="Device-Tree[DT] Base Models እና HBAs SataPortMap፣DiskIdxMap አያስፈልጋቸውም።የዲቲ ሞዴሎች HBAsን አይደግፉም።"
@@ -854,6 +870,7 @@ MSGET52="SATA(sports and drives for SataPortMap) አሳይ"
 MSGET53="የአሂድ ጫኚውን የስህተት ምዝግብ ማስታወሻ አሳይ"
 MSGET54="TCRP Bootloader Img ወደ USB ወይም SSD ያቃጥሉ"
 MSGET55="Clone Current TCRP Bootloader ወደ USB ወይም SSD"
+MSGET56="sata_remap processing for SataPort reordering"  
 
 #TH
 MSGTH00="Device-Tree[DT] Base Models & HBAs ไม่จำเป็นต้องใช้ SataPortMap,DiskIdxMap โมเดล DT ไม่รองรับ HBAs"
@@ -904,3 +921,4 @@ MSGTH52="แสดงพอร์ตและไดรฟ์ SATA สำหร�
 MSGTH53="แสดงบันทึกข้อผิดพลาดของตัวโหลดที่ทำงานอยู่"
 MSGTH54="เบิร์น TCRP Bootloader Img ไปยัง USB หรือ SSD"
 MSGTH55="โคลน TCRP Bootloader ปัจจุบันเป็น USB หรือ SSD"
+MSGTH56="การประมวลผล sata_remap สำหรับการเรียงลำดับ SataPort ใหม่"  
