@@ -1743,6 +1743,38 @@ function sortnetif() {
   rm -f /tmp/ethlist
 }
 
+function remapsata() {
+  CON=""
+  remap=""
+
+  for PCI in $(lspci -d ::106 | awk '{print $1}'); do
+    PORTS=$(ls -l /sys/class/scsi_host | grep "${PCI}" | awk -F'/' '{print $NF}' | sed 's/host//' | sort -n)
+    for P in ${PORTS}; do
+      if [ "$(dmesg | grep 'SATA link down' | grep ata$((${P} + 1)): | wc -l)" -eq 0 ]; then          
+        if lsscsi -b | grep -v - | grep -q "\[${P}:"; then
+          CON+="$(printf "%d" ${P}) "
+        fi
+      fi
+    done
+  done
+
+  #echo $CON
+
+  CON_ARR=($CON)
+  PORTS_ARR=($PORTS)
+  len=${#CON_ARR[@]}
+
+  for ((i=0; i<$len; i++)); do
+    remap+="${CON_ARR[i]}\\\\>${PORTS_ARR[i]}"
+    if [ $i -lt $((len-1)) ]; then
+      remap+=":"
+    fi
+  done
+  
+  #echo $remap
+  writeConfigKey "extra_cmdline" "sata_remap" "${remap}"
+}
+
 # Main loop
 
 # add git download 2023.10.18
@@ -2091,6 +2123,7 @@ while true; do
     [ $(ifconfig | grep eth3 | wc -l) -gt 0 ] && eval "echo \"h \\\"\${MSG${tz}04} 4\\\"\""         >> "${TMP_PATH}/menu"
     [ "${CPU}" != "HP" ] && eval "echo \"z \\\"\${MSG${tz}06} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
     eval "echo \"j \\\"\${MSG${tz}05} (${BUILD})\\\"\""     >> "${TMP_PATH}/menu"
+    eval "echo \"k \\\"\${MSG${tz}56} (${BUILD})\\\"\""     >> "${TMP_PATH}/menu"
     eval "echo \"p \\\"\${MSG${tz}18} (${BUILD}, ${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
   fi
   eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"  
@@ -2118,6 +2151,7 @@ while true; do
     h) macMenu "eth3";    NEXT="p" ;; 
     z) selectldrmode ;    NEXT="p" ;;
     j) selectversion ;    NEXT="p" ;; 
+    k) remapsata ;        NEXT="p" ;;
     p) [ "${LDRMODE}" == "FRIEND" ] && make "fri" "${prevent_init}" || make "jot" "${prevent_init}"
        NEXT="r" ;;
     u) editUserConfig;    NEXT="p" ;;
