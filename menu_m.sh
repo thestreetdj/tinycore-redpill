@@ -1627,6 +1627,7 @@ function additional() {
   eval "MSG54=\"\${MSG${tz}54}\""
   eval "MSG55=\"\${MSG${tz}55}\""
   eval "MSG12=\"\${MSG${tz}12}\""
+  eval "MSG11=\"\${MSG${tz}11}\""  
 
   while true; do
     eval "echo \"a \\\"${spoof} ${MSG50}\\\"\"" > "${TMP_PATH}/menua"
@@ -1642,22 +1643,25 @@ function additional() {
     eval "echo \"g \\\"${MSG12}\\\"\"" >> "${TMP_PATH}/menua"
     eval "echo \"h \\\"Inject Bootloader to Syno DISK\\\"\"" >> "${TMP_PATH}/menua"
     eval "echo \"i \\\"Packing loader file for remote update\\\"\"" >> "${TMP_PATH}/menua"
+    eval "echo \"k \\\"${MSG11}\\\"\"" >> "${TMP_PATH}/menua"    
     dialog --clear --backtitle "`backtitle`" --colors \
       --menu "Choose a option" 0 0 0 --file "${TMP_PATH}/menua" \
     2>${TMP_PATH}/resp
     [ $? -ne 0 ] && return
-    resp=$(<${TMP_PATH}/resp)
-    [ -z "${resp}" ] && return
-    if [ "${resp}" = "a" ]; then
+    case `<"${TMP_PATH}/resp"` in
+    a) 
       [ "${spoof}" = "Add" ] && add-addon "mac-spoof" || del-addon "mac-spoof"
       [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof="Remove" || spoof="Add"
-    elif [ "${resp}" = "w" ]; then
+      ;;
+    w) 
       [ "${nvmes}" = "Add" ] && add-addon "nvmesystem" || del-addon "nvmesystem"
-      [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"      
-    elif [ "${resp}" = "y" ]; then 
+      [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes="Remove" || nvmes="Add"
+      ;;
+    y) 
       [ "${dbgutils}" = "Add" ] && add-addon "dbgutils" || del-addon "dbgutils"
-        [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
-    elif [ "${resp}" = "j" ]; then 
+      [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils="Remove" || dbgutils="Add"
+      ;;
+    j)
       if [ "${DOMKIND}" == "Native" ]; then
         satadom_edit 1
         DOMKIND="Fake"
@@ -1665,7 +1669,8 @@ function additional() {
         satadom_edit 2
         DOMKIND="Native"
       fi   
-    elif [ "${resp}" = "z" ]; then
+      ;;
+    z)
       #[ "$MACHINE" = "VIRTUAL" ] && echo "VIRTUAL Machine is not supported..." && read answer && continue
       if [ "${DISPLAYI915}" == "Disable" ]; then
         i915_edit ${DISPLAYI915}
@@ -1674,23 +1679,19 @@ function additional() {
         i915_edit ${DISPLAYI915}      
         DISPLAYI915="Disable"
       fi
-    elif [ "${resp}" = "b" ]; then
-      prevent
-    elif [ "${resp}" = "c" ]; then
-      showsata
-    elif [ "${resp}" = "d" ]; then
-      viewerrorlog
-    elif [ "${resp}" = "e" ]; then
-      burnloader
-    elif [ "${resp}" = "f" ]; then
-      cloneloader
-    elif [ "${resp}" = "g" ]; then
-      erasedisk
-    elif [ "${resp}" = "h" ]; then
-      inject_loader
-    elif [ "${resp}" = "i" ]; then
-      packing_loader
-    fi
+      ;;
+    b) prevent;;
+    c) showsata;;
+    d) viewerrorlog;;
+    e) burnloader;;
+    f) cloneloader;;
+    g) erasedisk;;
+    h) inject_loader;;
+    i) packing_loader;;
+    k) keymapMenu ;;
+    *) return;;
+    esac
+    
   done
 }
 
@@ -2095,7 +2096,6 @@ while true; do
   eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"  
   eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
-  eval "echo \"k \\\"\${MSG${tz}11}\\\"\""               >> "${TMP_PATH}/menu"
   echo "n \"Additional Functions\""  >> "${TMP_PATH}/menu"  
   eval "echo \"b \\\"\${MSG${tz}13}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"r \\\"\${MSG${tz}14}\\\"\""               >> "${TMP_PATH}/menu"
@@ -2123,7 +2123,6 @@ while true; do
     u) editUserConfig;    NEXT="p" ;;
     q) storagepanel;      NEXT="p" ;;
     l) langMenu ;;
-    k) keymapMenu ;;
     b) backup ;;
     r) restart ;;
     e) sudo poweroff ;;
