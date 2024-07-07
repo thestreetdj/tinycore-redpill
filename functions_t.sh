@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.3.7"
+rploaderver="1.0.4.0"
 build="master"
 redpillmake="prod"
 
@@ -110,6 +110,10 @@ function history() {
     1.0.3.5 Remove getstaticmodule() and undefined PROXY variables (cause of lkm download failure in final release)
     1.0.3.6 Use intel_iommu on the command line
     1.0.3.7 Add command line native satadom support option change menu
+    1.0.3.8 Sort netif order by bus-id order (Synology netif sorting method)
+    1.0.3.9 NVMe-related function supplementation and error correction
+            Discontinue use of sortnetif addon, discontinue use of sortnetif if there is only 1 NIC
+    1.0.4.0 Added sata_remap processing menu for SataPort reordering.
     --------------------------------------------------------------------------------------
 EOF
 
@@ -362,7 +366,14 @@ EOF
 # 2024.06.10 v1.0.3.6 
 # Use intel_iommu on the command line
 # 2024.06.11 v1.0.3.7 
-#Add command line native satadom support option change menu
+# Add command line native satadom support option change menu
+# 2024.06.17 v1.0.3.8
+# Sort netif order by bus-id order (Synology netif sorting method)
+# 2024.07.06 v1.0.3.9 
+# NVMe-related function supplementation and error correction
+# Discontinue use of sortnetif addon, discontinue use of sortnetif if there is only 1 NIC
+# 2024.07.07 v1.0.4.0 
+# Added sata_remap processing menu for SataPort reordering.
     
 function showlastupdate() {
     cat <<EOF
@@ -399,6 +410,16 @@ function showlastupdate() {
 
 # 2024.06.11 v1.0.3.7 
 #Add command line native satadom support option change menu
+
+# 2024.06.17 v1.0.3.8
+# Sort netif order by bus-id order (Synology netif sorting method)
+
+# 2024.07.06 v1.0.3.9 
+# NVMe-related function supplementation and error correction
+# Discontinue use of sortnetif addon, discontinue use of sortnetif if there is only 1 NIC
+
+# 2024.07.07 v1.0.4.0 
+# Added sata_remap processing menu for SataPort reordering.
     
 EOF
 }
@@ -1203,6 +1224,7 @@ function getip() {
     ethdevs=$(ls /sys/class/net/ | grep eth || true)
     for eth in $ethdevs; do 
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
+        BUSID=$(ls -ld /sys/class/net/${eth}/device 2>/dev/null | awk -F '0000:' '{print $NF}')
         IP="$(ifconfig ${eth} | grep inet | awk '{print $2}' | awk -F \: '{print $2}')"
         HWADDR="$(ifconfig ${eth} | grep HWaddr | awk '{print $5}')"
         VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
@@ -1215,7 +1237,7 @@ function getip() {
                 fi
             fi
         fi    
-        echo "IP Address : $(msgnormal "${IP}"), ${HWADDR} : ${eth} (${DRIVER})"        
+        echo "IP Addr : $(msgnormal "${IP}"), ${HWADDR}, ${BUSID}, ${eth} (${DRIVER})"
     done
 }
 
@@ -1271,6 +1293,10 @@ function monitor() {
         echo "Not Supported Loader BUS Type, program Exit!!!"
         exit 99
     fi
+
+    getBus "${loaderdisk}" 
+    [ "${BUS}" = "nvme" ] && loaderdisk="${loaderdisk}p"
+    [ "${BUS}" = "mmc"  ] && loaderdisk="${loaderdisk}p"    
 
     [ "$(mount | grep /dev/${loaderdisk}1 | wc -l)" -eq 0 ] && mount /dev/${loaderdisk}1
     [ "$(mount | grep /dev/${loaderdisk}2 | wc -l)" -eq 0 ] && mount /dev/${loaderdisk}2
@@ -2375,10 +2401,12 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         USB_LINE="${USB_LINE} disable_mtrr_trim=1 "
         SATA_LINE="${SATA_LINE} disable_mtrr_trim=1 "
     else
-        if echo "epyc7002 apollolake geminilake" | grep -wq "${ORIGIN_PLATFORM}"; then
-            USB_LINE="${USB_LINE} intel_iommu=igfx_off "
-            SATA_LINE="${SATA_LINE} intel_iommu=igfx_off "
-        fi    
+        #if echo "epyc7002 apollolake geminilake" | grep -wq "${ORIGIN_PLATFORM}"; then
+        #    if [ "$MACHINE" = "VIRTUAL" ]; then
+        #        USB_LINE="${USB_LINE} intel_iommu=igfx_off "
+        #        SATA_LINE="${SATA_LINE} intel_iommu=igfx_off "
+        #    fi   
+        #fi    
 
         if [ -d "/home/tc/redpill-load/custom/extensions/nvmesystem" ]; then
             echo "Add configuration pci=nommconf for nvmesystem addon"
