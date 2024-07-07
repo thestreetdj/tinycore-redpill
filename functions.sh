@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.3.9"
+rploaderver="1.0.4.0"
 build="master"
 redpillmake="prod"
 
@@ -113,6 +113,7 @@ function history() {
     1.0.3.8 Sort netif order by bus-id order (Synology netif sorting method)
     1.0.3.9 NVMe-related function supplementation and error correction
             Discontinue use of sortnetif addon, discontinue use of sortnetif if there is only 1 NIC
+    1.0.4.0 Added sata_remap processing menu for SataPort reordering.
     --------------------------------------------------------------------------------------
 EOF
 
@@ -371,7 +372,8 @@ EOF
 # 2024.07.06 v1.0.3.9 
 # NVMe-related function supplementation and error correction
 # Discontinue use of sortnetif addon, discontinue use of sortnetif if there is only 1 NIC
-
+# 2024.07.07 v1.0.4.0 
+# Added sata_remap processing menu for SataPort reordering.
     
 function showlastupdate() {
     cat <<EOF
@@ -415,6 +417,9 @@ function showlastupdate() {
 # 2024.07.06 v1.0.3.9 
 # NVMe-related function supplementation and error correction
 # Discontinue use of sortnetif addon, discontinue use of sortnetif if there is only 1 NIC
+
+# 2024.07.07 v1.0.4.0 
+# Added sata_remap processing menu for SataPort reordering.
     
 EOF
 }
