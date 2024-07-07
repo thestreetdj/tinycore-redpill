@@ -34,7 +34,7 @@ jobs:
               cat Charset-header.h > lang/${L}/LC_MESSAGES/tcrp.po
               sed -i "s#l_lang#${llang}#" lang/${L}/LC_MESSAGES/tcrp.po
               sed -i "s#locale#${L}#" lang/${L}/LC_MESSAGES/tcrp.po                  
-              for ((i=0; i<=55; i++)); do 
+              for ((i=0; i<=56; i++)); do 
                   msg_us="MSGUS$(printf "%02d" $i)"
                   [ "${!msg_us}" == "" ] && continue
                   msg_ot="MSG${lcode}$(printf "%02d" $i)"            
