@@ -194,3 +194,7 @@ msgstr "نسخ صورة أداة تحميل التشغيل TCRP على USB أو 
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "استنساخ أداة تحميل التشغيل TCRP الحالية إلى USB أو SSD"
 
+#: MSGEG56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "معالجة sata_remap لإعادة ترتيب SATAPort"
+

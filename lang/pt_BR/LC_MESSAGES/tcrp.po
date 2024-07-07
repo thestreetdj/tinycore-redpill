@@ -194,3 +194,7 @@ msgstr "Gravar outro bootloader TCPP em USB ou SSD"
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "Clone Bootloader TCRP para USB ou SSD"
 
+#: MSGBR56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "processamento sata_remap para reordenação SataPort"
+

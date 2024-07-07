@@ -194,3 +194,7 @@ msgstr "Grabar otro gestor de arranque TCRP en USB o SSD"
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "Clonar el cargador de arranque TCRP a USB o SSD"
 
+#: MSGES56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "Procesamiento sata_remap para reordenamiento de SataPort"
+

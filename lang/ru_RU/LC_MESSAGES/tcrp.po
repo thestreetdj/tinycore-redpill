@@ -194,3 +194,7 @@ msgstr "Записать еще один загрузчик TCRP на USB или
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "Клонировать загрузчик TCRP на USB или SSD"
 
+#: MSGRU56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "Обработка sata_remap для изменения порядка SataPort"
+

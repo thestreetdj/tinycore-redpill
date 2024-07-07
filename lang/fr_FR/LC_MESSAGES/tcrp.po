@@ -194,3 +194,7 @@ msgstr "Graver un autre chargeur de démarrage TCRP sur USB ou SSD"
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "Cloner le chargeur de démarrage TCRP sur USB ou SSD"
 
+#: MSGFR56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "Traitement sata_remap pour la réorganisation de SataPort"
+

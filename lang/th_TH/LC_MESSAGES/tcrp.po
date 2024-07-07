@@ -194,3 +194,7 @@ msgstr "เบิร์น TCRP Bootloader Img ไปยัง USB หรือ 
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "โคลน TCRP Bootloader ปัจจุบันเป็น USB หรือ SSD"
 
+#: MSGTH56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "การประมวลผล sata_remap สำหรับการเรียงลำดับ SataPort ใหม่"
+

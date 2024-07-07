@@ -194,3 +194,7 @@ msgstr "Einen weiteren TCP-Bootloader auf USB oder SSD brennen"
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "TCRP-Bootloader auf USB oder SSD klonen"
 
+#: MSGDE56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "sata_remap-Verarbeitung zur Neuanordnung der SATAPorts"
+

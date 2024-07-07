@@ -194,3 +194,7 @@ msgstr "A TCRP Bootloader kép írása USB-re vagy SSD-re"
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "A jelenlegi TCRP rendszerbetöltő klónozása USB-re vagy SSD-re"
 
+#: MSGHU56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "sata_remap feldolgozás a SataPort újrarendezéshez"
+

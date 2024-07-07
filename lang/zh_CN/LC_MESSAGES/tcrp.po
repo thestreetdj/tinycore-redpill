@@ -194,3 +194,7 @@ msgstr "将另一个 TCRP 引导加载程序刻录到 USB 或 SSD"
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "将 TCRP 引导加载程序克隆到 USB 或 SSD"
 
+#: MSGCN56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "sata_remap 处理 SataPort 重新排序"
+

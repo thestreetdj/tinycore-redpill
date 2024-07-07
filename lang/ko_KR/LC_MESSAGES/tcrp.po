@@ -194,3 +194,7 @@ msgstr "TCRP 부트로더 Img를 USB 또는 SSD에 굽기"
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "현재의 TCRP 부트로더를 USB 또는 SSD에 복제"
 
+#: MSGKR56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "SataPort 순서재정렬을 위한 sata_remap 처리"
+

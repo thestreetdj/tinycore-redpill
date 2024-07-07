@@ -194,3 +194,7 @@ msgstr "TCRP बूटलोडर Img को USB या SSD में बर्
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "वर्तमान TCRP बूटलोडर को USB या SSD पर क्लोन करें"
 
+#: MSGIN56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "SataPort पुनर्व्यवस्था के लिए sata_remap प्रसंस्करण"
+

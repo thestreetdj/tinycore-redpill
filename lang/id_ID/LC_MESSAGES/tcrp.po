@@ -194,3 +194,7 @@ msgstr "Bakar Gambar Bootloader TCRP ke USB atau SSD"
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "Kloning Bootloader TCRP Saat Ini ke USB atau SSD"
 
+#: MSGID56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "pemrosesan sata_remap untuk penataan ulang SataPort"
+

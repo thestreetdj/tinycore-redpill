@@ -194,3 +194,7 @@ msgstr "別の TCRP ブートローダーを USB または SSD に書き込む"
 msgid "Clone Current TCRP Bootloader to USB or SSD"
 msgstr "TCRP ブートローダーのクローンを USB または SSD に作成"
 
+#: MSGJP56 
+msgid "sata_remap processing for SataPort reordering"
+msgstr "SataPort の並べ替えのための sata_remap 処理"
+
