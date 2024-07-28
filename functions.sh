@@ -17,6 +17,9 @@ gitdomain="raw.githubusercontent.com"
 mshellgz="my.sh.gz"
 mshtarfile="https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/my.sh.gz"
 
+#Defaults
+smallfixnumber="0"
+
 function history() {
 
     cat <<EOF
@@ -2384,7 +2387,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     updateuserconfigfield "general" "model" "$MODEL"
     updateuserconfigfield "general" "version" "${TARGET_VERSION}-${TARGET_REVISION}"
     updateuserconfigfield "general" "redpillmake" "${redpillmake}-${TAG}"
-    [ ${TARGET_REVISION} -gt 42218 ] && updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}" || updateuserconfigfield "general" "smallfixnumber" "0"
+    updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}"
     zimghash=$(sha256sum /mnt/${loaderdisk}2/zImage | awk '{print $1}')
     updateuserconfigfield "general" "zimghash" "$zimghash"
     rdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
