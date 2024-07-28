@@ -2384,7 +2384,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     updateuserconfigfield "general" "model" "$MODEL"
     updateuserconfigfield "general" "version" "${TARGET_VERSION}-${TARGET_REVISION}"
     updateuserconfigfield "general" "redpillmake" "${redpillmake}-${TAG}"
-    updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}"
+    [ ${TARGET_REVISION} -gt 42218 ] && updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}" || updateuserconfigfield "general" "smallfixnumber" "0"
     zimghash=$(sha256sum /mnt/${loaderdisk}2/zImage | awk '{print $1}')
     updateuserconfigfield "general" "zimghash" "$zimghash"
     rdhash=$(sha256sum /mnt/${loaderdisk}2/rd.gz | awk '{print $1}')
