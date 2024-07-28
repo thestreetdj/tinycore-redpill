@@ -1227,7 +1227,11 @@ function getip() {
     ethdevs=$(ls /sys/class/net/ | grep eth || true)
     for eth in $ethdevs; do 
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
-        BUSID=$(ls -ld /sys/class/net/${eth}/device 2>/dev/null | awk -F '0000:' '{print $NF}')
+        if [ $(ll /sys/class/net/${eth}/device | grep "0000:" | wc -l) -gt 0 ]; then
+            BUSID=$(ls -ld /sys/class/net/${eth}/device 2>/dev/null | awk -F '0000:' '{print $NF}')
+        else
+            BUSID=""
+        fi
         IP="$(ifconfig ${eth} | grep inet | awk '{print $2}' | awk -F \: '{print $2}')"
         HWADDR="$(ifconfig ${eth} | grep HWaddr | awk '{print $5}')"
         if [ -f /sys/class/net/${eth}/device/vendor ] && [ -f /sys/class/net/${eth}/device/device ]; then
