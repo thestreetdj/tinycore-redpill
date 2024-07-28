@@ -1230,15 +1230,17 @@ function getip() {
         BUSID=$(ls -ld /sys/class/net/${eth}/device 2>/dev/null | awk -F '0000:' '{print $NF}')
         IP="$(ifconfig ${eth} | grep inet | awk '{print $2}' | awk -F \: '{print $2}')"
         HWADDR="$(ifconfig ${eth} | grep HWaddr | awk '{print $5}')"
-        VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
-        DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
-        if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
-            MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
-            if [ ! -z "${MATCHDRIVER}" ]; then
-                if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
-                    DRIVER=${MATCHDRIVER}
+        if [ -f /sys/class/net/${eth}/device/vendor ] && [ -f /sys/class/net/${eth}/device/device ]; then
+            VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
+            DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
+            if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
+                MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
+                if [ ! -z "${MATCHDRIVER}" ]; then
+                    if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
+                        DRIVER=${MATCHDRIVER}
+                    fi
                 fi
-            fi
+            fi    
         fi    
         echo "IP Addr : $(msgnormal "${IP}"), ${HWADDR}, ${BUSID}, ${eth} (${DRIVER})"
     done
