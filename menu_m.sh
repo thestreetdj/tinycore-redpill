@@ -1944,9 +1944,15 @@ load_us
 # Download ethtool
 if [ "$(which ethtool)_" == "_" ]; then
    echo "ethtool does not exist, install from tinycore"
-   tce-load -iw ethtool iproute2 2>&1 >/dev/null
+   tce-load -iw ethtool 2>&1 >/dev/null
    sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional   
    sudo echo "ethtool.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
+fi
+
+if [ "$(which iproute2)_" == "_" ]; then
+   echo "iproute2 does not exist, install from tinycore"
+   tce-load -iw iproute2 2>&1 >/dev/null
+   sudo cp -f /tmp/tce/optional/* /mnt/${tcrppart}/cde/optional   
    sudo echo "iproute2.tcz" >> /mnt/${tcrppart}/cde/onboot.lst
 fi
 
