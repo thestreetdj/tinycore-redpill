@@ -1699,7 +1699,11 @@ function sortnetif() {
   ETHLIST=""
   ETHX=$(ls /sys/class/net/ 2>/dev/null | grep eth) # real network cards list
 
-  [ $(echo ${ETHX} | wc -l) -eq 1 ] && return
+  # Set ETHX as an array separated by spaces
+  set -- ${ETHX}
+
+  # Check the number of arguments
+  [ $# -eq 1 ] && return
   
   for ETH in ${ETHX}; do
     MAC="$(cat /sys/class/net/${ETH}/address 2>/dev/null | sed 's/://g' | tr '[:upper:]' '[:lower:]')"
