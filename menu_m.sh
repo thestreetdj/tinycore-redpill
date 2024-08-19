@@ -120,6 +120,10 @@ update_tinycore
 TMP_PATH=/tmp
 LOG_FILE="${TMP_PATH}/log.txt"
 USER_CONFIG_FILE="/home/tc/user_config.json"
+if [ ! -f "${USER_CONFIG_FILE}" ]; then
+    echo "Not Found User config file, program Exit!!!"
+    exit 99
+fi
 
 MODEL=$(jq -r -e '.general.model' "$USER_CONFIG_FILE")
 BUILD=$(jq -r -e '.general.version' "$USER_CONFIG_FILE")
