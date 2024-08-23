@@ -102,6 +102,8 @@ VERSION=v`cat /home/tc/functions.sh | grep rploaderver= | cut -d\" -f2`
 getloaderdisk
 if [ -z "${loaderdisk}" ]; then
     echo "Not Supported Loader BUS Type, program Exit!!!"
+    echo "press any key to continue..."
+    read answer    
     exit 99
 fi
 getBus "${loaderdisk}"
@@ -122,6 +124,8 @@ LOG_FILE="${TMP_PATH}/log.txt"
 USER_CONFIG_FILE="/home/tc/user_config.json"
 if [ ! -f "${USER_CONFIG_FILE}" ]; then
     echo "Not Found User config file, program Exit!!!"
+    echo "press any key to continue..."
+    read answer    
     exit 99
 fi
 
