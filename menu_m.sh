@@ -654,10 +654,16 @@ function editUserConfig() {
   while true; do
     dialog --backtitle "`backtitle`" --title "Edit with caution" \
       --editbox "${USER_CONFIG_FILE}" 0 0 2>"${TMP_PATH}/userconfig"
+    
     [ $? -ne 0 ] && return
-    mv "${TMP_PATH}/userconfig" "${USER_CONFIG_FILE}"
-    [ $? -eq 0 ] && break
-    dialog --backtitle "`backtitle`" --title "Invalid JSON format" --msgbox "${ERRORS}" 0 0
+
+    # JSON format validation
+    if jq . "${TMP_PATH}/userconfig" > /dev/null 2>&1; then
+        mv "${TMP_PATH}/userconfig" "${USER_CONFIG_FILE}"
+        [ $? -eq 0 ] && break
+    else
+        dialog --backtitle "`backtitle`" --title "Invalid JSON format" --msgbox "The JSON format is invalid." 0 0
+    fi
   done
 
   MODEL="$(jq -r -e '.general.model' $USER_CONFIG_FILE)"
