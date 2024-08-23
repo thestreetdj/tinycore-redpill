@@ -141,7 +141,6 @@ NETNUM="1"
 LAYOUT=$(jq -r -e '.general.layout' "$USER_CONFIG_FILE")
 KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 
-CHKDISK=$(jq -r -e '.general.check_diskcnt' "$USER_CONFIG_FILE")
 DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
 LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
 ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
@@ -1815,7 +1814,8 @@ function chk_diskcnt() {
 
 chk_diskcnt
 writeConfigKey "general" "diskcount" "${DISKCNT}"
-[ -z "${CHKDISK}" ] && writeConfigKey "general" "check_diskcnt" "false"
+CHKDISK=$(jq -r -e '.general.check_diskcnt' "$USER_CONFIG_FILE")
+[ -n "${CHKDISK}" ] && writeConfigKey "general" "check_diskcnt" "false"
 
 # add git download 2023.10.18
 cd /dev/shm
