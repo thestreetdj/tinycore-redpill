@@ -1802,7 +1802,7 @@ function chk_diskcnt() {
     if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l) -gt 0 ]; then
         continue
     else
-        DISKCNT =$((DISKCNT + 1))
+        DISKCNT=$((DISKCNT+1))
     fi    
   done
 
