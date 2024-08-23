@@ -975,18 +975,17 @@ function readanswer() {
 ###############################################################################
 # Write to json config file
 function writeConfigKey() {
-
     block="$1"
     field="$2"
     value="$3"
 
-    if [ -n "$1 " ] && [ -n "$2" ]; then
-        jsonfile=$(jq ".$block+={\"$field\":\"$value\"}" $userconfigfile)
-        echo $jsonfile | jq . >$userconfigfile
+    if [ -n "$block" ] && [ -n "$field" ]; then
+        jsonfile=$(jq --arg field "$field" --arg value "$value" \
+            "$block += {\"\$field\": \"\$value\"}" "$userconfigfile")
+        echo "$jsonfile" > "$userconfigfile"
     else
         echo "No values to update"
     fi
-
 }
 
 ###############################################################################
@@ -996,7 +995,7 @@ function DeleteConfigKey() {
     block="$1"
     field="$2"
 
-    if [ -n "$1 " ] && [ -n "$2" ]; then
+    if [ -n "$block" ] && [ -n "$field" ]; then
         jsonfile=$(jq "del(.$block.$field)" $userconfigfile)
         echo $jsonfile | jq . >$userconfigfile
     else
