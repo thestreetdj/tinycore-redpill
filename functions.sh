@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.4.0"
+rploaderver="1.0.4.1"
 build="master"
 redpillmake="prod"
 
@@ -117,6 +117,7 @@ function history() {
     1.0.3.9 NVMe-related function supplementation and error correction
             Discontinue use of sortnetif addon, discontinue use of sortnetif if there is only 1 NIC
     1.0.4.0 Added sata_remap processing menu for SataPort reordering.
+    1.0.4.1 Added a feature to check whether the pre-counted number of disks matches when booting Friend
     --------------------------------------------------------------------------------------
 EOF
 
@@ -377,6 +378,8 @@ EOF
 # Discontinue use of sortnetif addon, discontinue use of sortnetif if there is only 1 NIC
 # 2024.07.07 v1.0.4.0 
 # Added sata_remap processing menu for SataPort reordering.
+# 2024.08.23 v1.0.4.1 
+# Added a feature to check whether the pre-counted number of disks matches when booting Friend
     
 function showlastupdate() {
     cat <<EOF
@@ -423,6 +426,9 @@ function showlastupdate() {
 
 # 2024.07.07 v1.0.4.0 
 # Added sata_remap processing menu for SataPort reordering.
+
+# 2024.08.23 v1.0.4.1 
+# Added a feature to check whether the pre-counted number of disks matches when booting Friend
     
 EOF
 }

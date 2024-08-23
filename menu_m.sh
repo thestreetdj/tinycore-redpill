@@ -141,6 +141,7 @@ NETNUM="1"
 LAYOUT=$(jq -r -e '.general.layout' "$USER_CONFIG_FILE")
 KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 
+CHKDISK=$(jq -r -e '.general.check_diskcnt' "$USER_CONFIG_FILE")
 DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
 LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
 ucode=$(jq -r -e '.general.ucode' "$USER_CONFIG_FILE")
@@ -1793,7 +1794,28 @@ function remapsata() {
   writeConfigKey "extra_cmdline" "sata_remap" "${remap}"
 }
 
+function chk_diskcnt() {
+
+  DISKCNT=0
+
+  for edisk in $(sudo fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://'); do
+    if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l) -gt 0 ]; then
+        continue
+    else
+        DISKCNT =$((DISKCNT + 1))
+    fi    
+  done
+
+  echo "Disk count: $DISKCNT"
+
+
+}
+
 # Main loop
+
+chk_diskcnt
+writeConfigKey "general" "diskcount" "${DISKCNT}"
+[ -z "${CHKDISK}" ] && writeConfigKey "general" "check_diskcnt" "false"
 
 # add git download 2023.10.18
 cd /dev/shm
