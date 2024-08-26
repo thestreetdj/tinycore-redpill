@@ -579,7 +579,7 @@ function getvarsmshell()
 
     MODEL="$(echo ${tem} |cut -d '-' -f 1)"
     TARGET_REVISION="$(echo ${tem} |cut -d '-' -f 3)"    
-    if [ "$TARGET_REVISION" == "64570" ]||[ "$TARGET_REVISION" == "72803" ]; then
+    if [ "$TARGET_REVISION" == "64570" ]; then
       TARGET_VERSION="$(echo ${tem} |cut -d '-' -f 2 | cut -c 1-3)"
     else
       TARGET_VERSION="$(echo ${tem} |cut -d '-' -f 2)"
