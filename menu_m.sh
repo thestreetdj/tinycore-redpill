@@ -351,10 +351,11 @@ while true; do
   [ -z "${resp}" ] && return
 
   case $resp in
-    "a") BUILD="7.2.1-69057"; break;;
-    "b") BUILD="7.2.0-64570"; break;;
-    "c") BUILD="7.1.1-42962"; break;;
-    "d") BUILD="7.0.1-42218"; break;;
+    "a") BUILD="7.2.2-72803"; break;;
+    "b") BUILD="7.2.1-69057"; break;;
+    "c") BUILD="7.2.0-64570"; break;;
+    "d") BUILD="7.1.1-42962"; break;;
+    "e") BUILD="7.0.1-42218"; break;;
     *) echo "Invalid option";;
   esac
 done
@@ -451,7 +452,7 @@ done
       writeConfigKey "general" "version" "${BUILD}"
   fi    
   if [ "${MODEL}" = "DS923+" ] || [ "${MODEL}" = "DS723+" ] || [ "${MODEL}" = "DS1823+" ] || [ "${MODEL}" = "DVA1622" ]; then
-      BUILD="7.2.1-69057"
+      BUILD="7.2.2-72803"
       writeConfigKey "general" "version" "${BUILD}"
   fi
 

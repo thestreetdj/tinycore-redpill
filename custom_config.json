@@ -1316,6 +1316,22 @@
       ]
     },
     {
+      "id": "ds920p-7.2.2-72803",
+      "platform_name": "geminilake",
+      "downloads": {
+        "os": {
+          "sha256": "c4892c8c4880a998c8bcef4070c36797f2bb86b222b84bc92b48b3b78346114d"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
       "id": "ds923p-7.1.1-42962",
       "platform_name": "r1000",
       "downloads": {
