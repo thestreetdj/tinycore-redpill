@@ -2040,6 +2040,508 @@
           "sortnetif": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/sortnetif/rpext-index.json"
         }
       ]
+    },
+    {
+      "id": "ds1019p-7.2.2-72803",
+      "platform_name": "apollolake",
+      "downloads": {
+        "os": {
+          "sha256": "5739cdc037751ca5815d6059bdf44153d49d2021bef032ed1a8084dda96d092e"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds1520p-7.2.2-72803",
+      "platform_name": "geminilake",
+      "downloads": {
+        "os": {
+          "sha256": "c234afa4b588ef2f51f8115de7ab929e5af0d64cb9aab48489ae12feb92e78e3"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds1522p-7.2.2-72803",
+      "platform_name": "r1000",
+      "downloads": {
+        "os": {
+          "sha256": "e5622e1433d51f43d322b593cfe372d40dce49f7e6d2ea86407bfbf0b54d190b"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds1621p-7.2.2-72803",
+      "platform_name": "v1000",
+      "downloads": {
+        "os": {
+          "sha256": "3ea58aafbdf3a8377494d7626f5d77de84707f1d8df7c0b2e271d3ffaa06a372"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds1621xsp-7.2.2-72803",
+      "platform_name": "broadwellnk",
+      "downloads": {
+        "os": {
+          "sha256": "dfea7745e77572bdd6fef9efc658571579fbe08ad47a1c406098fa614d9fc084"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds1819p-7.2.2-72803",
+      "platform_name": "denverton",
+      "downloads": {
+        "os": {
+          "sha256": "b2933e4234c8dd981c8943dfb61f73c6c9d1d144307bb276eb9e63fc9fc5da81"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds1821p-7.2.2-72803",
+      "platform_name": "v1000",
+      "downloads": {
+        "os": {
+          "sha256": "f3671a48ab8415a44c5c2005035c957cb4bb9c09e6566b4780e282317972f84f"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds1823xsp-7.2.2-72803",
+      "platform_name": "v1000",
+      "downloads": {
+        "os": {
+          "sha256": "ec40ee0d1ef5b55a3079c887a4650fe01e047c87213a08ec55f4b8a4c1692dcf"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds220p-7.2.2-72803",
+      "platform_name": "geminilake",
+      "downloads": {
+        "os": {
+          "sha256": "3b31c815a9bb1c648ccd36ba93924667a2cd2c677b471736c51fd9e97bdea24d"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds2419p-7.2.2-72803",
+      "platform_name": "denverton",
+      "downloads": {
+        "os": {
+          "sha256": "732bf7487e43db84f687312f1a96112cede15a99dbf2c92c1731e4391340ab5c"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds2422p-7.2.2-72803",
+      "platform_name": "v1000",
+      "downloads": {
+        "os": {
+          "sha256": "c4371bdf628cee2b5fa5a414b606e8471c6492d4eaecc3391131287b5b44ac91"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds3617xs-7.2.2-72803",
+      "platform_name": "broadwell",
+      "downloads": {
+        "os": {
+          "sha256": "116acafa540b0df852037c3cf1b4576cb73d6a53df2613357b08c86ecff8cd1f"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds3622xsp-7.2.2-72803",
+      "platform_name": "broadwellnk",
+      "downloads": {
+        "os": {
+          "sha256": "b393d369d26ac179efd1ace75f470df6cbd4666baa343624cc94d4424f5edf25"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds423p-7.2.2-72803",
+      "platform_name": "geminilake",
+      "downloads": {
+        "os": {
+          "sha256": "e9579a33e878b4951bdad1a428146aa57d2d15013a8d4cd7cc01e22d155f036f"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds620slim-7.2.2-72803",
+      "platform_name": "apollolake",
+      "downloads": {
+        "os": {
+          "sha256": "05e96aabdc6172e5035c14cb5c9a34a8b623c89abffd7cec17aba31b18fa3507"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds718p-7.2.2-72803",
+      "platform_name": "apollolake",
+      "downloads": {
+        "os": {
+          "sha256": "d0f17ddcde736a625eea4ad42befc19e4bb1a061da846895d6b82f572da03d4c"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds720p-7.2.2-72803",
+      "platform_name": "geminilake",
+      "downloads": {
+        "os": {
+          "sha256": "2e4906f9c4c27b5178aa98c0a8ce77aa002b984b97840424589a80e019ba52df"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds723p-7.2.2-72803",
+      "platform_name": "r1000",
+      "downloads": {
+        "os": {
+          "sha256": "62fb6ba567241af4de5d42549afd1b565231313bcf6b6d58937598806a98bf67"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds218p-7.2.2-72803",
+      "platform_name": "apollolake",
+      "downloads": {
+        "os": {
+          "sha256": "c217cdbf68f74bb6298a27c7bb10740902ddb10fa65b4a6172d93292475e853e"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds918p-7.2.2-72803",
+      "platform_name": "apollolake",
+      "downloads": {
+        "os": {
+          "sha256": "0c21f4c8ecaed54d5ef33f18b5406219aba5c6339b8247c861582b5a2ff1072a"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds920p-7.2.2-72803",
+      "platform_name": "geminilake",
+      "downloads": {
+        "os": {
+          "sha256": "c4892c8c4880a998c8bcef4070c36797f2bb86b222b84bc92b48b3b78346114d"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "ds923p-7.2.2-72803",
+      "platform_name": "r1000",
+      "downloads": {
+        "os": {
+          "sha256": "f7b069e654bf2d5567c4115956ac00ef15bc17fc25fe139f6bf72af3cba4881c"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "dva1622-7.2.2-72803",
+      "platform_name": "geminilake",
+      "downloads": {
+        "os": {
+          "sha256": "4f0412f4c7595ae034ff12474ba87e88b404c20efe0e77826d415473def1e2cb"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "dva3219-7.2.2-72803",
+      "platform_name": "denverton",
+      "downloads": {
+        "os": {
+          "sha256": "11e16089d63989ee65ad5290f591653b343572b829c8cb6e9e81fef70ee18632"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "dva3221-7.2.2-72803",
+      "platform_name": "denverton",
+      "downloads": {
+        "os": {
+          "sha256": "179f3b11fecefce4efb147e8fb047aa05f0e8748949297d30ef0afbec04cbb2a"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "fs2500-7.2.2-72803",
+      "platform_name": "v1000",
+      "downloads": {
+        "os": {
+          "sha256": "f87e70debf48314802cfcfd74107c78ea3cbd37c5ebe5e01fb70929716b403af"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "rs1221p-7.2.2-72803",
+      "platform_name": "v1000",
+      "downloads": {
+        "os": {
+          "sha256": "57eb454d4645665b2f00cb23fc3c562e4499bff2b1dacdd866e8b245bb8ffbdc"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "rs2423p-7.2.2-72803",
+      "platform_name": "v1000",
+      "downloads": {
+        "os": {
+          "sha256": "9c5af5f9171d18a934e8d52e2ad681b2ce6042f2e2891f0083ee674e5021ae36"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "rs3618xs-7.2.2-72803",
+      "platform_name": "broadwell",
+      "downloads": {
+        "os": {
+          "sha256": "2b5b4db380338b1a5d490773b4dc055cc4805e73664ce9d7ad1d0ad08a541698"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "rs3621xsp-7.2.2-72803",
+      "platform_name": "broadwellnk",
+      "downloads": {
+        "os": {
+          "sha256": "e1a8da23f333b8799dd23706e8c9ca23bdc1593737ea41e56d66930cb77c232d"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "rs4021xsp-7.2.2-72803",
+      "platform_name": "broadwellnk",
+      "downloads": {
+        "os": {
+          "sha256": "779034519be532c2dbba6efd4762817bb524863f8cb2ad6609631d2d580a5fce"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
+    },
+    {
+      "id": "sa6400-7.2.2-72803",
+      "platform_name": "epyc7002",
+      "downloads": {
+        "os": {
+          "sha256": "f85d2e93dd010da3128e80060479f0231041f99ba9248dfeaca55628cfa2999f"
+        }
+      },
+      "add_extensions": [
+        {
+          "all-modules": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-modules/master/all-modules/rpext-index.json",
+          "powersched": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/powersched/rpext-index.json",
+          "storagepanel": "https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/storagepanel/rpext-index.json"
+        }
+      ]
     }
   ]
 }
