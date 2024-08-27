@@ -329,15 +329,15 @@ function selectversion () {
 while true; do
   cmd=(dialog --clear --backtitle "`backtitle`" --menu "Choose an option" 0 0 0)
   if [ "${MODEL}" != "DS3615xs" ]; then
-    options=("a" "7.2.1-69057" "b" "7.2.0-64570" "c" "7.1.1-42962")
+    options=("a" "7.2.2-72803" "b" "7.2.1-69057" "c" "7.2.0-64570" "d" "7.1.1-42962")
   else  
-    options=("c" "7.1.1-42962")
+    options=("d" "7.1.1-42962")
   fi 
   case $MODEL in
     DS923+ | DS723+ | DS1823+ | DVA1622 | DS1522+ | DS423+ | RS2423+ )
       ;;
     * )
-      options+=("d" "7.0.1-42218")
+      options+=("e" "7.0.1-42218")
       ;;
   esac    
 
