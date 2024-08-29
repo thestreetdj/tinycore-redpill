@@ -2947,8 +2947,6 @@ function my() {
   userdts="N"
   noconfig="N"
   jot="N"
-  jun="N"
-  fri="N"
   prevent_init="N"
   
   shift
@@ -2970,13 +2968,9 @@ function my() {
           jot)
               jot="Y"
               ;;
-              
-          jun)
-              jun="Y"
-              ;;
   
           fri)
-              fri="Y"
+              jot="N"
               ;;
   
           prevent_init)
@@ -3222,9 +3216,11 @@ function my() {
       sudo rm -rf /home/tc/redpill-load/custom/extensions/automount
   fi
   
-  [ "$jot" = "Y" ] && echo "n"|rploader build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static
-  [ "$jun" = "Y" ] && echo "n"|rploader build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} junmod
-  [ "$fri" = "Y" ] && echo "n"|rploader build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend 
+  if [ "$jot" = "N" ]; then
+      echo "n"|rploader build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} withfriend
+  else
+      echo "n"|rploader build ${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION} static
+  fi
   
   if [ $? -ne 0 ]; then
       cecho r "An error occurred while building the loader!!! Clean the redpill-load directory!!! "
