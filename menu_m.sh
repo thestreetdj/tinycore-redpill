@@ -313,7 +313,7 @@ function selectldrmode() {
       LDRMODE="FRIEND"
       break
     elif [ "${resp}" = "j" ]; then
-      LDRMODE="JOT"
+      LDRMODE="JUN"
       break
     fi
   done
@@ -2193,7 +2193,7 @@ while true; do
     z) selectldrmode ;    NEXT="p" ;;
     j) selectversion ;    NEXT="p" ;; 
     k) remapsata ;        NEXT="p" ;;
-    p) [ "${LDRMODE}" == "FRIEND" ] && make "fri" "${prevent_init}" || make "jot" "${prevent_init}"
+    p) [ "${LDRMODE}" == "FRIEND" ] && make "fri" "${prevent_init}" || make "jun" "${prevent_init}"
        NEXT="r" ;;
     u) editUserConfig;    NEXT="p" ;;
     q) storagepanel;      NEXT="p" ;;
