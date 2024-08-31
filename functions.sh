@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.4.2"
+rploaderver="1.0.4.3"
 build="master"
 redpillmake="prod"
 
@@ -119,7 +119,7 @@ function history() {
     1.0.4.0 Added sata_remap processing menu for SataPort reordering.
     1.0.4.1 Added a feature to check whether the pre-counted number of disks matches when booting Friend
     1.0.4.2 Add Support DSM 7.2.2-72803 Official Version
-
+    1.0.4.3 No separation between USB/SATA menus in Jot Mod (boot menu merge)
 
     --------------------------------------------------------------------------------------
 EOF
@@ -383,10 +383,10 @@ EOF
 # Added sata_remap processing menu for SataPort reordering.
 # 2024.08.23 v1.0.4.1 
 # Added a feature to check whether the pre-counted number of disks matches when booting Friend
-# 2024.08.26
+# 2024.08.26 v1.0.4.2
 # Update : Add Support DSM 7.2.2-72803 Official Version
-
-
+# 2024.08.31 v1.0.4.3 
+# No separation between USB/SATA menus in Jot Mod (boot menu merge)
     
 function showlastupdate() {
     cat <<EOF
@@ -439,6 +439,9 @@ function showlastupdate() {
     
 # 2024.08.26 v1.0.4.2
 # Update : Add Support DSM 7.2.2-72803 Official Version
+
+# 2024.08.31 v1.0.4.3 
+# No separation between USB/SATA menus in Jot Mod (boot menu merge)
 
 EOF
 }
@@ -1087,10 +1090,10 @@ function checkcpu() {
         CPU="INTEL"
     else
         if [ $(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//' | grep -e N36L -e N40L -e N54L | wc -l) -gt 0 ]; then
-        CPU="HP"
+            CPU="HP"
             LDRMODE="JOT"
             writeConfigKey "general" "loadermode" "${LDRMODE}"
-    else
+        else
             CPU="AMD"
         fi        
     fi
@@ -2358,7 +2361,7 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
         sudo sed -i '31,34d' /tmp/grub.cfg
         # Check dom size and set max size accordingly for jot
         if [ "${BUS}" = "sata" ]; then
-        DOM_PARA="dom_szmax=$(fdisk -l /dev/${loaderdisk} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}')"
+            DOM_PARA="dom_szmax=$(fdisk -l /dev/${loaderdisk} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}')"
             sed -i "s/synoboot_satadom/${DOM_PARA} synoboot_satadom/" /tmp/tempentry.txt
         fi
         tinyjotfunc | sudo tee --append /tmp/grub.cfg
@@ -2399,7 +2402,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         tcrpentry_juniorsata | sudo tee --append /tmp/grub.cfg
     else
         echo "Creating tinycore Jot entry"
-        echo "$(cat /tmp/tempentry.txt)" | sudo tee --append /tmp/grub.cfg
+        echo "$(head -n 10 /tmp/tempentry.txt | sed 's/with USB boot/with USB\/SATA boot/g')" | sudo tee --append /tmp/grub.cfg
     fi
 
     cd /home/tc/redpill-load
@@ -2525,11 +2528,11 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
     else
         echo
         msgnormal "Setting default boot entry to JOT ${BUS}"    
-        if [ "${BUS}" = "usb" ]; then
+        #if [ "${BUS}" = "usb" ]; then
             sudo sed -i "/set default=\"*\"/cset default=\"2\"" /tmp/grub.cfg
-    else
-            sudo sed -i "/set default=\"*\"/cset default=\"3\"" /tmp/grub.cfg
-        fi
+        #else
+        #    sudo sed -i "/set default=\"*\"/cset default=\"3\"" /tmp/grub.cfg
+        #fi
     fi
     sudo cp -vf /tmp/grub.cfg /mnt/${loaderdisk}1/boot/grub/grub.cfg
 st "gen grub     " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
