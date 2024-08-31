@@ -2402,7 +2402,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         tcrpentry_juniorsata | sudo tee --append /tmp/grub.cfg
     else
         echo "Creating tinycore Jot entry"
-        echo "$(head -n 10 /tmp/tempentry.txt | sed 's/with USB boot/with USB\/SATA boot/g')" | sudo tee --append /tmp/grub.cfg
+        echo "$(head -n 10 /tmp/tempentry.txt | sed 's/USB/USB\/SATA/g')" | sudo tee --append /tmp/grub.cfg
     fi
 
     cd /home/tc/redpill-load
