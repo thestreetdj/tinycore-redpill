@@ -1758,7 +1758,7 @@ function sortnetif() {
     fi
     IDX=$((${IDX} + 1))
   done
-  sudo udhcpc
+  sudo timeout 10s udhcpc
   rm -f /tmp/ethlist
 }
 
