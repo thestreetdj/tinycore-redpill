@@ -2761,8 +2761,14 @@ function getredpillko() {
                 exit 99
             fi    
         else
-            TAG="${LATESTURL##*/}"
-            echo "TAG is ${TAG}"
+            if [ "${ORIGIN_PLATFORM}" = "apollolake" ] && [ "${TARGET_VERSION}" == "72803" ]; then 
+                TAG="${LATESTURL##*/}"
+            elif [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+                TAG="${LATESTURL##*/}"
+            else
+                TAG="24.4.11"
+            fi
+            echo "TAG is ${TAG}"        
             STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/download/${TAG}/rp-lkms.zip" -o "/mnt/${tcrppart}/rp-lkms${v}.zip"`
         fi
     else
