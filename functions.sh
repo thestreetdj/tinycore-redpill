@@ -2761,7 +2761,7 @@ function getredpillko() {
                 exit 99
             fi    
         else
-            if [ "${ORIGIN_PLATFORM}" = "apollolake" ] && [ "${TARGET_VERSION}" == "72803" ]; then 
+            if [ "${ORIGIN_PLATFORM}" = "apollolake" ]; then
                 TAG="${LATESTURL##*/}"
             elif [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
                 TAG="${LATESTURL##*/}"
