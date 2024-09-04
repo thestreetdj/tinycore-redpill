@@ -2778,19 +2778,24 @@ function getredpillko() {
     sudo rm -f /home/tc/custom-module/*.gz
     sudo rm -f /home/tc/custom-module/*.ko
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then    
-        unzip /mnt/${tcrppart}/rp-lkms${v}.zip        rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
-        gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-prod.ko.gz >/dev/null 2>&1
-        cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
+        unzip /mnt/${tcrppart}/rp-lkms${v}.zip        rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-${redpillmake}.ko.gz -d /tmp >/dev/null 2>&1
+        gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-${redpillmake}.ko.gz >/dev/null 2>&1
+        cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${DSMVER}-${KVER}-${redpillmake}.ko /home/tc/custom-module/redpill.ko
     else    
-        unzip /mnt/${tcrppart}/rp-lkms${v}.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
-        gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
-        cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /home/tc/custom-module/redpill.ko
+        if [ "${ORIGIN_PLATFORM}" = "apollolake" ]; then
+            redpillmake="dev"
+        else
+            redpillmake="prod"
+        fi
+        unzip /mnt/${tcrppart}/rp-lkms${v}.zip        rp-${ORIGIN_PLATFORM}-${KVER}-${redpillmake}.ko.gz -d /tmp >/dev/null 2>&1
+        gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-${redpillmake}.ko.gz >/dev/null 2>&1
+        cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-${redpillmake}.ko /home/tc/custom-module/redpill.ko
     fi
 
     if [ -z "${TAG}" ]; then
         unzip /mnt/${tcrppart}/rp-lkms${v}.zip        VERSION -d /tmp >/dev/null 2>&1
-    TAG=$(cat /tmp/VERSION )
-     echo "TAG of VERSION is ${TAG}"
+        TAG=$(cat /tmp/VERSION )
+        echo "TAG of VERSION is ${TAG}"
     fi
 
     REDPILL_MOD_NAME="redpill-linux-v$(modinfo /home/tc/custom-module/redpill.ko | grep vermagic | awk '{print $2}').ko"
