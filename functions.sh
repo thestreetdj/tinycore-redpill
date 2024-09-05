@@ -1332,6 +1332,8 @@ function monitor() {
     [ "$(mount | grep /dev/${loaderdisk}1 | wc -l)" -eq 0 ] && mount /dev/${loaderdisk}1
     [ "$(mount | grep /dev/${loaderdisk}2 | wc -l)" -eq 0 ] && mount /dev/${loaderdisk}2
 
+    HYPERVISOR=$(dmesg | grep -i "Hypervisor detected" | awk '{print $5}')
+
     while true; do
         clear
         echo -e "-------------------------------System Information----------------------------"
@@ -1346,7 +1348,7 @@ function monitor() {
         echo -e "Processor Name:\t\t"$(awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//')
         echo -e "Machine Type:\t\t"$(
             vserver=$(lscpu | grep Hypervisor | wc -l)
-            if [ $vserver -gt 0 ]; then echo "VM"; else echo "Physical"; fi
+            if [ $vserver -gt 0 ]; then echo "VM (${HYPERVISOR})"; else echo "Physical"; fi
         ) 
         msgnormal "CPU Threads:\t\t"$(lscpu |grep CPU\(s\): | awk '{print $2}')
         echo -e "Current Date Time:\t"$(date)
