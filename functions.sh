@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.4.3"
+rploaderver="1.0.4.4"
 build="master"
 redpillmake="prod"
 
@@ -120,6 +120,7 @@ function history() {
     1.0.4.1 Added a feature to check whether the pre-counted number of disks matches when booting Friend
     1.0.4.2 Add Support DSM 7.2.2-72803 Official Version
     1.0.4.3 No separation between USB/SATA menus in Jot Mod (boot menu merge)
+    1.0.4.4 Loader building is blocked when using Apollolake + proxmox(kvm)/qemu(kvm) (KP occurs in versions after lkm 24.8.29)
 
     --------------------------------------------------------------------------------------
 EOF
@@ -387,6 +388,8 @@ EOF
 # Update : Add Support DSM 7.2.2-72803 Official Version
 # 2024.08.31 v1.0.4.3 
 # No separation between USB/SATA menus in Jot Mod (boot menu merge)
+# 2024.09.05 v1.0.4.4 
+# Loader building is blocked when using Apollolake + proxmox(kvm)/qemu(kvm) (KP occurs in versions after lkm 24.8.29)
     
 function showlastupdate() {
     cat <<EOF
@@ -442,6 +445,9 @@ function showlastupdate() {
 
 # 2024.08.31 v1.0.4.3 
 # No separation between USB/SATA menus in Jot Mod (boot menu merge)
+
+# 2024.09.05 v1.0.4.4 
+# Loader building is blocked when using Apollolake + proxmox(kvm)/qemu(kvm) (KP occurs in versions after lkm 24.8.29)
 
 EOF
 }
