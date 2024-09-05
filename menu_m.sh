@@ -182,8 +182,8 @@ function usbidentify() {
 
     if [ "$MACHINE" = "VIRTUAL" ] && [ "$HYPERVISOR" = "VMware" ]; then
         echo "Running on VMware, no need to set USB VID and PID, you should SATA shim instead"
-    elif [ "$MACHINE" = "VIRTUAL" ] && [ "$HYPERVISOR" = "QEMU" ]; then
-        echo "Running on QEMU, If you are using USB shim, VID 0x46f4 and PID 0x0001 should work for you"
+    elif [ "$MACHINE" = "VIRTUAL" ] && [ "$HYPERVISOR" = "KVM" ]; then
+        echo "Running on Proxmox/QEMU(KVM), If you are using USB shim, VID 0x46f4 and PID 0x0001 should work for you"
         vendorid="0x46f4"
         productid="0x0001"
         echo "Vendor ID : $vendorid Product ID : $productid"
@@ -757,6 +757,13 @@ function make() {
   if [ $? -ne 0 ]; then
     dialog --backtitle "`backtitle`" --title "Error loader building" 0 0 #--textbox "${LOG_FILE}" 0 0      
     return 1  
+  fi
+
+  if [ "${BUS}" != "usb" ] && [ ${platform} = "apollolake" ] && [ "$HYPERVISOR" = "KVM" ]; then
+      echo "When using SATA/NVMe type loader + Apollolake + proxmox(kvm)/qemu(kvm), loader build is not possible. KP occurs in versions after lkm 24.8.29..."
+      echo "press any key to continue..."
+      read answer
+      return 1
   fi
 
   usbidentify
