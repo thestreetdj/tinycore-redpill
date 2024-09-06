@@ -759,12 +759,12 @@ function make() {
     return 1  
   fi
 
-  if [ "${BUS}" != "usb" ] && [ ${platform} = "apollolake" ] && [ "$HYPERVISOR" = "KVM" ]; then
-      echo "When using SATA/NVMe type loader + Apollolake + proxmox(kvm)/qemu(kvm), loader build is not possible. KP occurs in versions after lkm 24.8.29..."
-      echo "press any key to continue..."
-      read answer
-      return 1
-  fi
+  #if [ "${BUS}" != "usb" ] && [ ${platform} = "apollolake" ] && [ "$HYPERVISOR" = "KVM" ]; then
+  #    echo "When using SATA/NVMe type loader + Apollolake + proxmox(kvm)/qemu(kvm), loader build is not possible. KP occurs in versions after lkm 24.8.29..."
+  #    echo "press any key to continue..."
+  #    read answer
+  #    return 1
+  #fi
 
   usbidentify
   clear
