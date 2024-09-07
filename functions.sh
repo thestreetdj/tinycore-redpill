@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.4.4"
+rploaderver="1.0.4.5"
 build="master"
 redpillmake="prod"
 
@@ -121,7 +121,8 @@ function history() {
     1.0.4.2 Add Support DSM 7.2.2-72803 Official Version
     1.0.4.3 No separation between USB/SATA menus in Jot Mod (boot menu merge)
     1.0.4.4 Loader building is blocked when using Apollolake + proxmox(kvm)/qemu(kvm) (KP occurs in versions after lkm 24.8.29)
-
+    1.0.4.5 Solved the KP occurrence issue when using SATA-type bootloader in proxmox(kvm), 
+            SA6400(epyc7002) integration from lkm5 (lkm 24.9.8)
     --------------------------------------------------------------------------------------
 EOF
 
@@ -390,6 +391,9 @@ EOF
 # No separation between USB/SATA menus in Jot Mod (boot menu merge)
 # 2024.09.05 v1.0.4.4 
 # Loader building is blocked when using Apollolake + proxmox(kvm)/qemu(kvm) (KP occurs in versions after lkm 24.8.29)
+# 2024.09.08 v1.0.4.5 
+# Solved the KP occurrence issue when using SATA-type bootloader in proxmox(kvm), 
+# SA6400(epyc7002) integration from lkm5 (lkm 24.9.8)
     
 function showlastupdate() {
     cat <<EOF
@@ -448,6 +452,10 @@ function showlastupdate() {
 
 # 2024.09.05 v1.0.4.4 
 # Loader building is blocked when using Apollolake + proxmox(kvm)/qemu(kvm) (KP occurs in versions after lkm 24.8.29)
+
+# 2024.09.08 v1.0.4.5 
+# Solved the KP occurrence issue when using SATA-type bootloader in proxmox(kvm), 
+# SA6400(epyc7002) integration from lkm5 (lkm 24.9.8)
 
 EOF
 }
@@ -2751,7 +2759,7 @@ function getredpillko() {
     DSMVER=$(echo ${TARGET_VERSION} | cut -c 1-3 )
     echo "KERNEL VERSION of getredpillko() is ${KVER}, DSMVER is ${DSMVER}"
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
-        v="5"
+        v=""
     else
         v=""
     fi
@@ -2761,21 +2769,21 @@ function getredpillko() {
         echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."    
         LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/latest"`"
         #echo "? = $?"
-        if [ $? -ne 0 ]; then
-            echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
-            curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms.zip -o /mnt/${tcrppart}/rp-lkms${v}.zip
-            if [ $? -ne 0 ]; then
-                echo "Error downloading https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms${v}.zip"
-                exit 99
-            fi    
-        else
-            if [ "${ORIGIN_PLATFORM}" = "apollolake" ]; then
+        #if [ $? -ne 0 ]; then
+        #    echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
+        #    curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms.zip -o /mnt/${tcrppart}/rp-lkms${v}.zip
+        #    if [ $? -ne 0 ]; then
+        #        echo "Error downloading https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms${v}.zip"
+        #        exit 99
+        #    fi    
+        #else
+        #    if [ "${ORIGIN_PLATFORM}" = "apollolake" ]; then
                 TAG="${LATESTURL##*/}"
-            elif [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
-                TAG="${LATESTURL##*/}"
-            else
-                TAG="24.4.11"
-            fi
+        #    elif [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        #        TAG="${LATESTURL##*/}"
+        #    else
+        #        TAG="24.4.11"
+        #    fi
             echo "TAG is ${TAG}"        
             STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/download/${TAG}/rp-lkms.zip" -o "/mnt/${tcrppart}/rp-lkms${v}.zip"`
         fi
