@@ -2591,14 +2591,17 @@ st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
 
 function curlfriend() {
 
-    msgwarning "Download failed from ${domain}..."
-    curl -kLO# "https://${domain}/PeterSuh-Q3/tcrpfriend/main/chksum" \
-    -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/bzImage-friend" \
-    -O "https://${domain}/PeterSuh-Q3/tcrpfriend/main/initrd-friend"
+    LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest"`"
+    TAG="${LATESTURL##*/}"
+    echo "FRIEND TAG is ${TAG}"        
+    curl -kLO# "https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/${TAG}/chksum" \
+    -O "https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/${TAG}/bzImage-friend" \
+    -O "https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/${TAG}/initrd-friend"
+
     if [ $? -ne 0 ]; then
-        msgalert "Download failed from ${domain}... !!!!!!!!"
+        msgalert "Download failed from github.com friend... !!!!!!!!"
     else
-        msgnormal "Bringing over my friend from ${domain} Done!!!!!!!!!!!!!!"            
+        msgnormal "Bringing over my friend from github.com Done!!!!!!!!!!!!!!"            
     fi
 
 }
@@ -2614,10 +2617,6 @@ function bringoverfriend() {
   
   URL="https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest/download/chksum"
   [ -n "$URL" ] && curl --connect-timeout 5 -s -k -L $URL -O
-  if [ ! -f chksum ]; then
-    URL="https://raw.githubusercontent.com/PeterSuh-Q3/tcrpfriend/main/chksum"
-    [ -n "$URL" ] && curl --connect-timeout 5 -s -k -L $URL -O
-  fi
 
   if [ -f chksum ]; then
     FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
@@ -2627,8 +2626,6 @@ function bringoverfriend() {
         msgnormal "OK, latest \n"
     else
         msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
-
-        domain="raw.githubusercontent.com"
         curlfriend
 
         if [ -f bzImage-friend ] && [ -f initrd-friend ] && [ -f chksum ]; then
@@ -2642,13 +2639,10 @@ function bringoverfriend() {
         else
             msgalert "Could not find friend files !!!!!!!!!!!!!!!!!!!!!!!"
         fi
-        
     fi
-    
   else
     msgalert "No IP yet to check for latest friend \n"
   fi
-
 
 }
 
