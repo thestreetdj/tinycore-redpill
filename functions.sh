@@ -2592,11 +2592,11 @@ st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
 function curlfriend() {
 
     LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest"`"
-    TAG="${LATESTURL##*/}"
-    echo "FRIEND TAG is ${TAG}"        
+    FRTAG="${LATESTURL##*/}"
+    echo "FRIEND TAG is ${FRTAG}"        
     curl -kLO# "https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/${TAG}/chksum" \
-    -O "https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/${TAG}/bzImage-friend" \
-    -O "https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/${TAG}/initrd-friend"
+    -O "https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/${FRTAG}/bzImage-friend" \
+    -O "https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/${FRTAG}/initrd-friend"
 
     if [ $? -ne 0 ]; then
         msgalert "Download failed from github.com friend... !!!!!!!!"
