@@ -1,13 +1,13 @@
 {
   "general": {
-    "model": "DS918+",
-    "version": "7.2.1-69057",
+    "model": "DS920+",
+    "version": "7.2.2-72803",
     "smallfixnumber": "0",
     "zimghash": "",
     "rdhash": "",
     "usb_line": "",
     "sata_line": "",
-    "redpillmake": "prod-24.4.11",
+    "redpillmake": "prod-24.9.8",
     "friendautoupd": "true",
     "hidesensitive": "false",
     "layout": "qwerty",
