@@ -2600,7 +2600,7 @@ function curlfriend() {
     LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "https://github.com/PeterSuh-Q3/tcrpfriend/releases/latest"`"
     FRTAG="${LATESTURL##*/}"
     echo "FRIEND TAG is ${FRTAG}"        
-    curl -kLO# "https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/${TAG}/chksum" \
+    curl -kLO# "https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/${FRTAG}/chksum" \
     -O "https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/${FRTAG}/bzImage-friend" \
     -O "https://github.com/PeterSuh-Q3/tcrpfriend/releases/download/${FRTAG}/initrd-friend"
 
