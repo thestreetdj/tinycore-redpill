@@ -721,17 +721,17 @@ function checkUserConfig() {
 
   if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ] && [ ! -n "${MACADDR2}" ]; then
     MACADDR2=`./macgen.sh "realmac" "eth1" ${MODEL}`
-    writeConfigKey "extra_cmdline" "mac1" "${MACADDR2}"
+    writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
   fi
 
   if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ] && [ ! -n "${MACADDR3}" ]; then
     MACADDR3=`./macgen.sh "realmac" "eth2" ${MODEL}`
-    writeConfigKey "extra_cmdline" "mac1" "${MACADDR3}"
+    writeConfigKey "extra_cmdline" "mac3" "${MACADDR3}"
   fi
 
   if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ] && [ ! -n "${MACADDR4}" ]; then
     MACADDR4=`./macgen.sh "realmac" "eth3" ${MODEL}`
-    writeConfigKey "extra_cmdline" "mac1" "${MACADDR4}"
+    writeConfigKey "extra_cmdline" "mac4" "${MACADDR4}"
   fi
 
   netif_num=$(jq -r -e '.extra_cmdline.netif_num' $USER_CONFIG_FILE)
