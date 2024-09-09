@@ -2189,7 +2189,7 @@ while true; do
     c) seleudev;        NEXT="m" ;;  
     m) modelMenu;       NEXT="j" ;;
     j) selectversion ;    NEXT="s" ;;     
-    s) serialMenu;      NEXT="j" ;;
+    s) serialMenu;      NEXT="a" ;;
     a) macMenu "eth0"
     [ $(ifconfig | grep eth1 | wc -l) -gt 0 ] && NEXT="f" || NEXT="p" ;;
     f) macMenu "eth1"
