@@ -2164,20 +2164,20 @@ while true; do
   eval "echo \"c \\\"\${MSG${tz}01}, (${DMPM})\\\"\""     > "${TMP_PATH}/menu" 
   eval "echo \"m \\\"\${MSG${tz}02}, (${MODEL})\\\"\""   >> "${TMP_PATH}/menu"
   if [ -n "${MODEL}" ]; then
+    eval "echo \"j \\\"\${MSG${tz}05} (${BUILD})\\\"\""  >> "${TMP_PATH}/menu"  
     eval "echo \"s \\\"\${MSG${tz}03}\\\"\""             >> "${TMP_PATH}/menu"
     eval "echo \"a \\\"\${MSG${tz}04} 1\\\"\""           >> "${TMP_PATH}/menu"
     [ $(ifconfig | grep eth1 | wc -l) -gt 0 ] && eval "echo \"f \\\"\${MSG${tz}04} 2\\\"\""         >> "${TMP_PATH}/menu"
     [ $(ifconfig | grep eth2 | wc -l) -gt 0 ] && eval "echo \"g \\\"\${MSG${tz}04} 3\\\"\""         >> "${TMP_PATH}/menu"
     [ $(ifconfig | grep eth3 | wc -l) -gt 0 ] && eval "echo \"h \\\"\${MSG${tz}04} 4\\\"\""         >> "${TMP_PATH}/menu"
     [ "${CPU}" != "HP" ] && eval "echo \"z \\\"\${MSG${tz}06} (${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"
-    eval "echo \"j \\\"\${MSG${tz}05} (${BUILD})\\\"\""  >> "${TMP_PATH}/menu"
     eval "echo \"k \\\"\${MSG${tz}56}\\\"\""             >> "${TMP_PATH}/menu"
+    eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"    
     eval "echo \"p \\\"\${MSG${tz}18} (${BUILD}, ${LDRMODE})\\\"\""   >> "${TMP_PATH}/menu"      
   fi
+  echo "n \"Additional Functions\""  >> "${TMP_PATH}/menu"      
   eval "echo \"u \\\"\${MSG${tz}10}\\\"\""               >> "${TMP_PATH}/menu"  
-  eval "echo \"q \\\"\${MSG${tz}41} (${bay})\\\"\""      >> "${TMP_PATH}/menu"
   eval "echo \"l \\\"\${MSG${tz}39}\\\"\""               >> "${TMP_PATH}/menu"
-  echo "n \"Additional Functions\""  >> "${TMP_PATH}/menu"  
   eval "echo \"b \\\"\${MSG${tz}13}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"r \\\"\${MSG${tz}14}\\\"\""               >> "${TMP_PATH}/menu"
   eval "echo \"e \\\"\${MSG${tz}15}\\\"\""               >> "${TMP_PATH}/menu"
@@ -2186,24 +2186,24 @@ while true; do
     2>${TMP_PATH}/resp
   [ $? -ne 0 ] && break
   case `<"${TMP_PATH}/resp"` in
-    n) additional;      NEXT="p" ;; 
     c) seleudev;        NEXT="m" ;;  
-    m) modelMenu;       NEXT="s" ;;
+    m) modelMenu;       NEXT="j" ;;
+    j) selectversion ;    NEXT="s" ;;     
     s) serialMenu;      NEXT="j" ;;
     a) macMenu "eth0"
-    [ $(ifconfig | grep eth1 | wc -l) -gt 0 ] && NEXT="f" || NEXT="z" ;;
+    [ $(ifconfig | grep eth1 | wc -l) -gt 0 ] && NEXT="f" || NEXT="p" ;;
     f) macMenu "eth1"
-    [ $(ifconfig | grep eth2 | wc -l) -gt 0 ] && NEXT="g" || NEXT="z" ;;
+    [ $(ifconfig | grep eth2 | wc -l) -gt 0 ] && NEXT="g" || NEXT="p" ;;
     g) macMenu "eth2"
-    [ $(ifconfig | grep eth3 | wc -l) -gt 0 ] && NEXT="h" || NEXT="z" ;;
+    [ $(ifconfig | grep eth3 | wc -l) -gt 0 ] && NEXT="h" || NEXT="p" ;;
     h) macMenu "eth3";    NEXT="p" ;; 
     z) selectldrmode ;    NEXT="p" ;;
-    j) selectversion ;    NEXT="p" ;; 
     k) remapsata ;        NEXT="p" ;;
+    q) storagepanel;      NEXT="p" ;;    
     p) [ "${LDRMODE}" == "FRIEND" ] && make "fri" "${prevent_init}" || make "jot" "${prevent_init}"
        NEXT="r" ;;
+    n) additional;      NEXT="p" ;;
     u) editUserConfig;    NEXT="p" ;;
-    q) storagepanel;      NEXT="p" ;;
     l) langMenu ;;
     b) backup ;;
     r) restart ;;
