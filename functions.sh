@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.4.5"
+rploaderver="1.0.4.6"
 build="master"
 redpillmake="prod"
 
@@ -123,6 +123,7 @@ function history() {
     1.0.4.4 Loader building is blocked when using Apollolake + proxmox(kvm)/qemu(kvm) (KP occurs in versions after lkm 24.8.29)
     1.0.4.5 Solved the KP occurrence issue when using SATA-type bootloader in proxmox(kvm), 
             SA6400(epyc7002) integration from lkm5 (lkm 24.9.8)
+    1.0.4.6 Rearrange menu order, automatically enter Gen value when S/N or mac is not selected
     --------------------------------------------------------------------------------------
 EOF
 
@@ -394,6 +395,8 @@ EOF
 # 2024.09.08 v1.0.4.5 
 # Solved the KP occurrence issue when using SATA-type bootloader in proxmox(kvm), 
 # SA6400(epyc7002) integration from lkm5 (lkm 24.9.8)
+# 2024.09.09 v1.0.4.6 
+# Rearrange menu order, automatically enter Gen value when S/N or mac is not selected
     
 function showlastupdate() {
     cat <<EOF
@@ -456,6 +459,9 @@ function showlastupdate() {
 # 2024.09.08 v1.0.4.5 
 # Solved the KP occurrence issue when using SATA-type bootloader in proxmox(kvm), 
 # SA6400(epyc7002) integration from lkm5 (lkm 24.9.8)
+
+# 2024.09.09 v1.0.4.6 
+# Rearrange menu order, automatically enter Gen value when S/N or mac is not selected
 
 EOF
 }
