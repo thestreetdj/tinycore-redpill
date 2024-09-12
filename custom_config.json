@@ -2042,7 +2042,7 @@
       ]
     },
     {
-      "id": "ds1019p-7.2.2-72803",
+      "id": "ds1019p-7.2.2-72806",
       "platform_name": "apollolake",
       "downloads": {
         "os": {
@@ -2058,7 +2058,7 @@
       ]
     },
     {
-      "id": "ds1520p-7.2.2-72803",
+      "id": "ds1520p-7.2.2-72806",
       "platform_name": "geminilake",
       "downloads": {
         "os": {
@@ -2074,7 +2074,7 @@
       ]
     },
     {
-      "id": "ds1522p-7.2.2-72803",
+      "id": "ds1522p-7.2.2-72806",
       "platform_name": "r1000",
       "downloads": {
         "os": {
@@ -2090,7 +2090,7 @@
       ]
     },
     {
-      "id": "ds1621p-7.2.2-72803",
+      "id": "ds1621p-7.2.2-72806",
       "platform_name": "v1000",
       "downloads": {
         "os": {
@@ -2106,7 +2106,7 @@
       ]
     },
     {
-      "id": "ds1621xsp-7.2.2-72803",
+      "id": "ds1621xsp-7.2.2-72806",
       "platform_name": "broadwellnk",
       "downloads": {
         "os": {
@@ -2121,7 +2121,7 @@
       ]
     },
     {
-      "id": "ds1819p-7.2.2-72803",
+      "id": "ds1819p-7.2.2-72806",
       "platform_name": "denverton",
       "downloads": {
         "os": {
@@ -2136,7 +2136,7 @@
       ]
     },
     {
-      "id": "ds1821p-7.2.2-72803",
+      "id": "ds1821p-7.2.2-72806",
       "platform_name": "v1000",
       "downloads": {
         "os": {
@@ -2152,7 +2152,7 @@
       ]
     },
     {
-      "id": "ds1823xsp-7.2.2-72803",
+      "id": "ds1823xsp-7.2.2-72806",
       "platform_name": "v1000",
       "downloads": {
         "os": {
@@ -2168,7 +2168,7 @@
       ]
     },
     {
-      "id": "ds220p-7.2.2-72803",
+      "id": "ds220p-7.2.2-72806",
       "platform_name": "geminilake",
       "downloads": {
         "os": {
@@ -2184,7 +2184,7 @@
       ]
     },
     {
-      "id": "ds2419p-7.2.2-72803",
+      "id": "ds2419p-7.2.2-72806",
       "platform_name": "denverton",
       "downloads": {
         "os": {
@@ -2199,7 +2199,7 @@
       ]
     },
     {
-      "id": "ds2422p-7.2.2-72803",
+      "id": "ds2422p-7.2.2-72806",
       "platform_name": "v1000",
       "downloads": {
         "os": {
@@ -2215,7 +2215,7 @@
       ]
     },
     {
-      "id": "ds3617xs-7.2.2-72803",
+      "id": "ds3617xs-7.2.2-72806",
       "platform_name": "broadwell",
       "downloads": {
         "os": {
@@ -2230,7 +2230,7 @@
       ]
     },
     {
-      "id": "ds3622xsp-7.2.2-72803",
+      "id": "ds3622xsp-7.2.2-72806",
       "platform_name": "broadwellnk",
       "downloads": {
         "os": {
@@ -2245,7 +2245,7 @@
       ]
     },
     {
-      "id": "ds423p-7.2.2-72803",
+      "id": "ds423p-7.2.2-72806",
       "platform_name": "geminilake",
       "downloads": {
         "os": {
@@ -2261,7 +2261,7 @@
       ]
     },
     {
-      "id": "ds620slim-7.2.2-72803",
+      "id": "ds620slim-7.2.2-72806",
       "platform_name": "apollolake",
       "downloads": {
         "os": {
@@ -2277,7 +2277,7 @@
       ]
     },
     {
-      "id": "ds718p-7.2.2-72803",
+      "id": "ds718p-7.2.2-72806",
       "platform_name": "apollolake",
       "downloads": {
         "os": {
@@ -2293,7 +2293,7 @@
       ]
     },
     {
-      "id": "ds720p-7.2.2-72803",
+      "id": "ds720p-7.2.2-72806",
       "platform_name": "geminilake",
       "downloads": {
         "os": {
@@ -2309,7 +2309,7 @@
       ]
     },
     {
-      "id": "ds723p-7.2.2-72803",
+      "id": "ds723p-7.2.2-72806",
       "platform_name": "r1000",
       "downloads": {
         "os": {
@@ -2325,7 +2325,7 @@
       ]
     },
     {
-      "id": "ds218p-7.2.2-72803",
+      "id": "ds218p-7.2.2-72806",
       "platform_name": "apollolake",
       "downloads": {
         "os": {
@@ -2341,7 +2341,7 @@
       ]
     },
     {
-      "id": "ds918p-7.2.2-72803",
+      "id": "ds918p-7.2.2-72806",
       "platform_name": "apollolake",
       "downloads": {
         "os": {
@@ -2357,7 +2357,7 @@
       ]
     },
     {
-      "id": "ds920p-7.2.2-72803",
+      "id": "ds920p-7.2.2-72806",
       "platform_name": "geminilake",
       "downloads": {
         "os": {
@@ -2373,7 +2373,7 @@
       ]
     },
     {
-      "id": "ds923p-7.2.2-72803",
+      "id": "ds923p-7.2.2-72806",
       "platform_name": "r1000",
       "downloads": {
         "os": {
@@ -2389,7 +2389,7 @@
       ]
     },
     {
-      "id": "dva1622-7.2.2-72803",
+      "id": "dva1622-7.2.2-72806",
       "platform_name": "geminilake",
       "downloads": {
         "os": {
@@ -2405,7 +2405,7 @@
       ]
     },
     {
-      "id": "dva3219-7.2.2-72803",
+      "id": "dva3219-7.2.2-72806",
       "platform_name": "denverton",
       "downloads": {
         "os": {
@@ -2420,7 +2420,7 @@
       ]
     },
     {
-      "id": "dva3221-7.2.2-72803",
+      "id": "dva3221-7.2.2-72806",
       "platform_name": "denverton",
       "downloads": {
         "os": {
@@ -2435,7 +2435,7 @@
       ]
     },
     {
-      "id": "fs2500-7.2.2-72803",
+      "id": "fs2500-7.2.2-72806",
       "platform_name": "v1000",
       "downloads": {
         "os": {
@@ -2451,7 +2451,7 @@
       ]
     },
     {
-      "id": "rs1221p-7.2.2-72803",
+      "id": "rs1221p-7.2.2-72806",
       "platform_name": "v1000",
       "downloads": {
         "os": {
@@ -2467,7 +2467,7 @@
       ]
     },
     {
-      "id": "rs2423p-7.2.2-72803",
+      "id": "rs2423p-7.2.2-72806",
       "platform_name": "v1000",
       "downloads": {
         "os": {
@@ -2483,7 +2483,7 @@
       ]
     },
     {
-      "id": "rs3618xs-7.2.2-72803",
+      "id": "rs3618xs-7.2.2-72806",
       "platform_name": "broadwell",
       "downloads": {
         "os": {
@@ -2498,7 +2498,7 @@
       ]
     },
     {
-      "id": "rs3621xsp-7.2.2-72803",
+      "id": "rs3621xsp-7.2.2-72806",
       "platform_name": "broadwellnk",
       "downloads": {
         "os": {
@@ -2513,7 +2513,7 @@
       ]
     },
     {
-      "id": "rs4021xsp-7.2.2-72803",
+      "id": "rs4021xsp-7.2.2-72806",
       "platform_name": "broadwellnk",
       "downloads": {
         "os": {
@@ -2528,7 +2528,7 @@
       ]
     },
     {
-      "id": "sa6400-7.2.2-72803",
+      "id": "sa6400-7.2.2-72806",
       "platform_name": "epyc7002",
       "downloads": {
         "os": {
