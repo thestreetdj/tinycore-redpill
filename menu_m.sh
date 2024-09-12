@@ -2132,13 +2132,13 @@ if [ "$(which pigz)_" == "_" ]; then
     sudo mv -vf pigz /usr/local/bin/
 fi
 
-# Download dtc
-if [ "$(which dtc)_" == "_" ]; then
-    echo "dtc dos not exist, Downloading dtc binary"
-    curl -skLO# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tools/dtc
-    chmod 700 dtc
-    sudo mv -vf dtc /usr/local/bin/
-fi   
+# Download dtc, Don't used anymore 24.9.13
+#if [ "$(which dtc)_" == "_" ]; then
+#    echo "dtc dos not exist, Downloading dtc binary"
+#    curl -skLO# https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/tools/dtc
+#    chmod 700 dtc
+#    sudo mv -vf dtc /usr/local/bin/
+#fi   
 
 # Download bspatch
 if [ ! -f /usr/local/bspatch ]; then
