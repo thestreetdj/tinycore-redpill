@@ -329,7 +329,7 @@ function selectversion () {
 while true; do
   cmd=(dialog --clear --backtitle "`backtitle`" --menu "Choose an option" 0 0 0)
   if [ "${MODEL}" != "DS3615xs" ]; then
-    options=("a" "7.2.2-72803" "b" "7.2.1-69057" "c" "7.2.0-64570" "d" "7.1.1-42962")
+    options=("a" "7.2.2-72806" "b" "7.2.1-69057" "c" "7.2.0-64570" "d" "7.1.1-42962")
   else  
     options=("d" "7.1.1-42962")
   fi 
@@ -351,7 +351,7 @@ while true; do
   [ -z "${resp}" ] && return
 
   case $resp in
-    "a") BUILD="7.2.2-72803"; break;;
+    "a") BUILD="7.2.2-72806"; break;;
     "b") BUILD="7.2.1-69057"; break;;
     "c") BUILD="7.2.0-64570"; break;;
     "d") BUILD="7.1.1-42962"; break;;
@@ -452,7 +452,7 @@ done
       writeConfigKey "general" "version" "${BUILD}"
   fi    
   if [ "${MODEL}" = "DS923+" ] || [ "${MODEL}" = "DS723+" ] || [ "${MODEL}" = "DS1823+" ] || [ "${MODEL}" = "DVA1622" ]; then
-      BUILD="7.2.2-72803"
+      BUILD="7.2.2-72806"
       writeConfigKey "general" "version" "${BUILD}"
   fi
 
