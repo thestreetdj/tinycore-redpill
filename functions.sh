@@ -2759,7 +2759,7 @@ function getredpillko() {
     DSMVER=$(echo ${TARGET_VERSION} | cut -c 1-3 )
     echo "KERNEL VERSION of getredpillko() is ${KVER}, DSMVER is ${DSMVER}"
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
-        v=""
+        v="5"
     else
         v=""
     fi
