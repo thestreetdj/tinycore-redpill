@@ -1,0 +1,19 @@
+version: '3.x'
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin-igpu
+    environment:
+        - UID=1026
+        - GID=100
+        - GIDLIST=100
+        - TZ=Asia/Seoul
+    network_mode: 'host'
+    ports:
+      - 8096:8096
+    volumes:
+      - ./config:/config
+      - ./cache:/cache
+      - ./video:/media
+      - /usr/lib/jellyfin-ffmpeg:/ffmpeg
+
