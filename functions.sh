@@ -3096,9 +3096,9 @@ function my() {
       exit 0
   fi
 
-  if [ "$MACHINE" = "VIRTUAL" ]; then
-      jsonfile=$(jq 'del(.acpid)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
-  fi
+  #if [ "$MACHINE" = "VIRTUAL" ]; then
+  #    jsonfile=$(jq 'del(.acpid)' /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
+  #fi
   
   [ "$spoof" = true ] && add-addons "mac-spoof" 
   [ "$nvmes" = true ] && add-addons "nvmesystem" 
