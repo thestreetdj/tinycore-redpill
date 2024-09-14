@@ -6,15 +6,15 @@ services:
     environment:
         - UID=1026
         - GID=100
-        - GIDLIST=100
         - TZ=Asia/Seoul
+        - DOCKER_MODS=linuxserver/mods:jellyfin-opencl-intel
     network_mode: 'host'
     ports:
       - 8096:8096
     volumes:
       - ./config:/config
       - ./cache:/cache
-      - ./video:/media
+      - /volume1/_DRAMA:/volume1/_DRAMA
       - /usr/lib/jellyfin-ffmpeg:/ffmpeg
     devices:
       - "/dev/dri/card0:/dev/dri/card0"
