@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.4.7"
+rploaderver="1.0.4.8"
 build="master"
 redpillmake="prod"
 
@@ -125,6 +125,7 @@ function history() {
             SA6400(epyc7002) integration from lkm5 (lkm 24.9.8)
     1.0.4.6 Rearrange menu order, automatically enter Gen value when S/N or mac is not selected
     1.0.4.7 Fix from DSM 7.2.2-72803 to DSM 7.2.2-72806
+    1.0.4.8 Enable mmc (SD Card) bus type recognition for the bootloader
     --------------------------------------------------------------------------------------
 EOF
 
@@ -400,6 +401,8 @@ EOF
 # Rearrange menu order, automatically enter Gen value when S/N or mac is not selected
 # 2024.09.12 v1.0.4.7 
 # Fix from DSM 7.2.2-72803 to DSM 7.2.2-72806
+# 2024.10.14 v1.0.4.8 
+# Enable mmc (SD Card) bus type recognition for the bootloader
     
 function showlastupdate() {
     cat <<EOF
@@ -468,6 +471,9 @@ function showlastupdate() {
 
 # 2024.09.12 v1.0.4.7 
 # Fix from DSM 7.2.2-72803 to DSM 7.2.2-72806
+
+# 2024.10.14 v1.0.4.8 
+# Enable mmc (SD Card) bus type recognition for the bootloader
 
 EOF
 }
