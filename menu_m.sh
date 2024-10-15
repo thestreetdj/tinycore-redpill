@@ -225,7 +225,7 @@ function seleudev() {
   eval "MSG26=\"\${MSG${tz}26}\""
   eval "MSG40=\"\${MSG${tz}40}\""
 
-  if [ "${MODEL}" = "SA6400" ]; then
+  if [ "${MODEL}" = "SA6400" ]||[ "${BUS}" = "mmc" ]; then
     while true; do
       dialog --clear --backtitle "`backtitle`" \
     --menu "Choose a option" 0 0 0 \
@@ -2038,6 +2038,11 @@ fi
 
 if [ "${DMPM}" = "null" ]; then
     DMPM="DDSML"
+    writeConfigKey "general" "devmod" "${DMPM}"          
+fi
+
+if [ "${BUS}" = "mmc"  ]; then
+    DMPM="EUDEV"
     writeConfigKey "general" "devmod" "${DMPM}"          
 fi
 
