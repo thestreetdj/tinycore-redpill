@@ -455,7 +455,7 @@ done
   fi
   writeConfigKey "general" "version" "${BUILD}"  
 
-  if [ "${MODEL}" = "SA6400" ]; then
+  if [ "${MODEL}" = "SA6400" ]||[ "${BUS}" = "mmc" ]; then
     if [ "$HBADETECT" = "ON" ]; then
     DMPM="DDSML+EUDEV"
     else
