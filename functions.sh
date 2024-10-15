@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.4.8"
+rploaderver="1.0.4.9"
 build="master"
 redpillmake="prod"
 
@@ -126,6 +126,7 @@ function history() {
     1.0.4.6 Rearrange menu order, automatically enter Gen value when S/N or mac is not selected
     1.0.4.7 Fix from DSM 7.2.2-72803 to DSM 7.2.2-72806
     1.0.4.8 Enable mmc (SD Card) bus type recognition for the bootloader
+    1.0.4.9 When mmc bus type is used, module processing method is applied with priority given to eudev instead of ddsml.
     --------------------------------------------------------------------------------------
 EOF
 
@@ -403,6 +404,8 @@ EOF
 # Fix from DSM 7.2.2-72803 to DSM 7.2.2-72806
 # 2024.10.14 v1.0.4.8 
 # Enable mmc (SD Card) bus type recognition for the bootloader
+# 2024.10.15 v1.0.4.9 
+# When mmc bus type is used, module processing method is applied with priority given to eudev instead of ddsml.
     
 function showlastupdate() {
     cat <<EOF
@@ -474,6 +477,9 @@ function showlastupdate() {
 
 # 2024.10.14 v1.0.4.8 
 # Enable mmc (SD Card) bus type recognition for the bootloader
+
+# 2024.10.15 v1.0.4.9 
+# When mmc bus type is used, module processing method is applied with priority given to eudev instead of ddsml.
 
 EOF
 }
