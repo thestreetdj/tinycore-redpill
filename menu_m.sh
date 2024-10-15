@@ -449,12 +449,11 @@ done
 
   if [ "${MODEL}" = "DS3615xs" ]; then
       BUILD="7.1.1-42962"
-      writeConfigKey "general" "version" "${BUILD}"
-  fi    
-  if [ "${MODEL}" = "DS923+" ] || [ "${MODEL}" = "DS723+" ] || [ "${MODEL}" = "DS1823+" ] || [ "${MODEL}" = "DVA1622" ]; then
+  else    
+  #elif [ "${MODEL}" = "DS923+" ] || [ "${MODEL}" = "DS723+" ] || [ "${MODEL}" = "DS1823+" ] || [ "${MODEL}" = "DVA1622" ]; then
       BUILD="7.2.2-72806"
-      writeConfigKey "general" "version" "${BUILD}"
   fi
+  writeConfigKey "general" "version" "${BUILD}"  
 
   if [ "${MODEL}" = "SA6400" ]; then
     if [ "$HBADETECT" = "ON" ]; then
