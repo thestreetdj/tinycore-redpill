@@ -6,6 +6,11 @@ set -u # Unbound variable errors are not allowed
 . /home/tc/functions.sh
 #####################################################################################################
 
+function check_internet() {
+  ping -c 1 -W 1 8.8.8.8 > /dev/null 2>&1
+  return $?
+}
+
 function gitclone() {
     git clone -b master --single-branch --depth=1 https://github.com/PeterSuh-Q3/redpill-load.git
     if [ $? -ne 0 ]; then
@@ -23,7 +28,7 @@ function gitdownload() {
         git pull
         if [ $? -ne 0 ]; then
            cd /home/tc
-           ./rploader.sh clean
+           rploader clean
            gitclone    
         fi   
         cd /home/tc
@@ -71,12 +76,12 @@ if [ -d /mnt/${tcrppart}/redpill-load/ ] && [ -d /mnt/${tcrppart}/tcrp-addons/ ]
     read answer
 else
     while true; do
-      if [ $(ifconfig | grep -i "inet " | grep -v "127.0.0.1" | wc -l) -gt 0 ]; then
+      if check_internet; then
         getlatestmshell "noask"
         break
       fi
-      sleep 1
-      echo "Waiting for internet activation in menu.sh !!!"
+      sleep 5
+      echo "Waiting for internet connection in menu.sh..."
     done
     gitdownload
 fi
