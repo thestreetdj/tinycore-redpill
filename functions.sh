@@ -2,7 +2,7 @@
 
 set -u # Unbound variable errors are not allowed
 
-rploaderver="1.0.4.9"
+rploaderver="1.0.5.0"
 build="master"
 redpillmake="prod"
 
@@ -127,6 +127,7 @@ function history() {
     1.0.4.7 Fix from DSM 7.2.2-72803 to DSM 7.2.2-72806
     1.0.4.8 Enable mmc (SD Card) bus type recognition for the bootloader
     1.0.4.9 When mmc bus type is used, module processing method is applied with priority given to eudev instead of ddsml.
+    1.0.5.0 Improved internet check function in menu.sh
     --------------------------------------------------------------------------------------
 EOF
 
@@ -406,6 +407,8 @@ EOF
 # Enable mmc (SD Card) bus type recognition for the bootloader
 # 2024.10.15 v1.0.4.9 
 # When mmc bus type is used, module processing method is applied with priority given to eudev instead of ddsml.
+# 2024.10.26 v1.0.5.0 
+# Improved internet check function in menu.sh
     
 function showlastupdate() {
     cat <<EOF
@@ -480,6 +483,9 @@ function showlastupdate() {
 
 # 2024.10.15 v1.0.4.9 
 # When mmc bus type is used, module processing method is applied with priority given to eudev instead of ddsml.
+
+# 2024.10.26 v1.0.5.0 
+# Improved internet check function in menu.sh
 
 EOF
 }
