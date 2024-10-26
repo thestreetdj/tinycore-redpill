@@ -62,3 +62,6 @@ A typical build process starts with:
     1.0.2.2 Recycle initrd-dsm instead of custom.gz (extract /exts), The priority starts from custom.gz
     1.0.2.3 Added RedPill bootloader hard disk porting function
     1.0.2.4 Added NVMe bootloader support
+    ...
+    1.0.5.0 Improved internet check function in menu.sh
+
