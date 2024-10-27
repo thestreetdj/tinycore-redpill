@@ -52,6 +52,14 @@ if [ -z "${loaderdisk}" ]; then
         fi    
     done
 fi
+if [ -z "${loaderdisk}" ]; then
+    for edisk in $(sudo fdisk -l | grep "Disk /dev/loop" | awk '{print $2}' | sed 's/://' ); do
+    if [ $(sudo fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+        loaderdisk="$(echo ${edisk} | cut -c 1-12 | awk -F\/ '{print $3}')"
+    fi    
+    done
+fi
+echo "loaderdisk = ${loaderdisk}" 
 
 if [ -z "${loaderdisk}" ]; then
     echo "Not Supported Loader BUS Type, program Exit!!!"
