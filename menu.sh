@@ -70,6 +70,7 @@ getBus "${loaderdisk}"
 
 [ "${BUS}" = "nvme" ] && loaderdisk="${loaderdisk}p"
 [ "${BUS}" = "mmc"  ] && loaderdisk="${loaderdisk}p"
+[ "${BUS}" = "block"  ] && loaderdisk="${loaderdisk}p"
 
 tcrppart="${loaderdisk}3"
 
