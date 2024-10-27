@@ -1380,7 +1380,8 @@ function monitor() {
 
     getBus "${loaderdisk}" 
     [ "${BUS}" = "nvme" ] && loaderdisk="${loaderdisk}p"
-    [ "${BUS}" = "mmc"  ] && loaderdisk="${loaderdisk}p"    
+    [ "${BUS}" = "mmc"  ] && loaderdisk="${loaderdisk}p"
+    [ "${BUS}" = "block"  ] && loaderdisk="${loaderdisk}p"    
 
     [ "$(mount | grep /dev/${loaderdisk}1 | wc -l)" -eq 0 ] && mount /dev/${loaderdisk}1
     [ "$(mount | grep /dev/${loaderdisk}2 | wc -l)" -eq 0 ] && mount /dev/${loaderdisk}2
@@ -2861,6 +2862,7 @@ function rploader() {
 
     [ "${BUS}" = "nvme" ] && loaderdisk="${loaderdisk}p"
     [ "${BUS}" = "mmc"  ] && loaderdisk="${loaderdisk}p"
+    [ "${BUS}" = "block"  ] && loaderdisk="${loaderdisk}p"
 
     tcrppart="${loaderdisk}3"
     tcrpdisk=$loaderdisk
@@ -2967,6 +2969,7 @@ function my() {
   
   [ "${BUS}" = "nvme" ] && loaderdisk="${loaderdisk}p"
   [ "${BUS}" = "mmc"  ] && loaderdisk="${loaderdisk}p"
+  [ "${BUS}" = "block"  ] && loaderdisk="${loaderdisk}p"
   
   tcrppart="${loaderdisk}3"
   
