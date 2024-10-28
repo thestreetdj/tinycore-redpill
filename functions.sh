@@ -3038,10 +3038,16 @@ function my() {
   getBus "${loaderdisk}" 
   
   [ "${BUS}" = "nvme" ] && loaderdisk="${loaderdisk}p"
-  [ "${BUS}" = "mmc"  ] && loaderdisk="${loaderdisk}p"
-  [ "${BUS}" = "block"  ] && loaderdisk="${loaderdisk}p"
+  [ "${BUS}" = "mmc" ] && loaderdisk="${loaderdisk}p"
+  [ "${BUS}" = "block" ] && loaderdisk="${loaderdisk}p"
   
   tcrppart="${loaderdisk}3"
+
+  if [ "${BUS}" = "block" ]; then
+    cd /dev/shm
+    git clone --depth=1 "https://github.com/PeterSuh-Q3/tcrp-addons.git"
+    cd /home/tc
+  fi
   
   if [ -d /mnt/${tcrppart}/redpill-load/ ]; then
       offline="YES"
