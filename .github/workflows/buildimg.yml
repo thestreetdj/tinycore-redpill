@@ -51,8 +51,12 @@ jobs:
           sudo mount ${LOOPX}p2 /mnt/${LOOPX}p2
           sudo mount ${LOOPX}p3 /mnt/${LOOPX}p3
 
+          ll /mnt/${LOOPX}p1
+          ll /mnt/${LOOPX}p2
+          ll /mnt/${LOOPX}p3
+
           cd /home/tc
-          sudo ./functions.sh DS3622xs+7.2.2-72806 noconfig fri          
+          sudo ./functions.sh ${{github.event.inputs.model}}-${{github.event.inputs.revision}} noconfig fri
 
           sudo losetup -d ${LOOPX}
 
