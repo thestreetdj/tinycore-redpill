@@ -1493,6 +1493,12 @@ function copyextractor() {
     [ ! -f /home/tc/extractor.gz ] && sudo curl -kL -# "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/master/extractor.gz" -o /home/tc/extractor.gz
     sudo tar -zxvf /home/tc/extractor.gz -C ${local_cache}/extractor
 
+    if [ "${BUS}" = "block"  ]; then
+      EXTRACTOR_PATH="/mnt/${tcrppart}/auxfiles/extractor"
+      cp /lib/x86_64-linux-gnu/libcurl.so.4 $EXTRACTOR_PATH
+      cp $EXTRACTOR_PATH/scemd $EXTRACTOR_PATH/syno_extract_system_patch
+    fi
+
     echo "Copying required libraries to local lib directory"
     sudo cp /mnt/${tcrppart}/auxfiles/extractor/lib* /lib/
     echo "Linking lib to lib64"
@@ -1568,9 +1574,17 @@ st "extractor" "Extraction tools" "Extraction Tools downloaded"
 
     msgnormal "Checking if tool is accessible"
     if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then    
-        /bin/syno_extract_system_patch 2>&1 >/dev/null
+        if [ "${BUS}" = "block"  ]; then
+            $EXTRACTOR_PATH/syno_extract_system_patch 2>&1 >/dev/null
+        else
+            /bin/syno_extract_system_patch 2>&1 >/dev/null
+        fi
     else
-        /bin/syno_extract_system_patch
+        if [ "${BUS}" = "block"  ]; then
+            $EXTRACTOR_PATH/syno_extract_system_patch
+        else
+            /bin/syno_extract_system_patch
+        fi
     fi
     if [ $? -eq 255 ]; then echo "Executed succesfully"; else echo "Cound not execute"; fi    
 
@@ -1645,7 +1659,11 @@ st "iscached" "Caching pat file" "Patfile ${SYNOMODEL}.pat is cached"
                 echo "Copy encrypted pat file : ${patfile} to ${temp_dsmpat_folder}"
                 mv -f ${patfile} ${temp_dsmpat_folder}/${SYNOMODEL}.pat
                 echo "Extracting encrypted pat file : ${temp_dsmpat_folder}/${SYNOMODEL}.pat to ${temp_pat_folder}"
-                sudo /bin/syno_extract_system_patch ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
+                if [ "${BUS}" = "block"  ]; then
+                  LD_LIBRARY_PATH=${EXTRACTOR_PATH} "${EXTRACTOR_PATH}/syno_extract_system_patch" ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
+                else
+                  sudo /bin/syno_extract_system_patch ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
+                fi
                 echo "Creating unecrypted pat file ${SYNOMODEL}.pat to /home/tc/redpill-load/cache folder (multithreaded comporession)"
                 mkdir -p /home/tc/redpill-load/cache/
                 thread=$(lscpu |grep CPU\(s\): | awk '{print $2}')
