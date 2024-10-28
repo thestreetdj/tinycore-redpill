@@ -3047,7 +3047,7 @@ function my() {
     git clone --depth=1 "https://github.com/PeterSuh-Q3/tcrp-addons.git"
     mkdir -p /dev/shm/tcrp-addons
     rm -rf ./tcrp-addons/.git/
-    rsync -a --remove-source-files ./tcrp-addons/ /dev/shm/tcrp-addons/
+    mv -f ./tcrp-addons/* /dev/shm/tcrp-addons/
   fi
   
   if [ -d /mnt/${tcrppart}/redpill-load/ ]; then
