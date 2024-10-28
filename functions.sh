@@ -3113,7 +3113,7 @@ function my() {
   
   if [ ! -d "/mnt/${tcrppart}/auxfiles" ]; then
       cecho g "making directory  /mnt/${tcrppart}/auxfiles"  
-      mkdir /mnt/${tcrppart}/auxfiles 
+      mkdir -p /mnt/${tcrppart}/auxfiles 
   fi
   if [ ! -h /home/tc/custom-module ]; then
       cecho y "making link /home/tc/custom-module"  
