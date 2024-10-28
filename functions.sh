@@ -1649,7 +1649,11 @@ st "iscached" "Caching pat file" "Patfile ${SYNOMODEL}.pat is cached"
                 echo "Creating unecrypted pat file ${SYNOMODEL}.pat to /home/tc/redpill-load/cache folder (multithreaded comporession)"
                 mkdir -p /home/tc/redpill-load/cache/
                 thread=$(lscpu |grep CPU\(s\): | awk '{print $2}')
-                cd ${temp_pat_folder} && tar -cf - ./ | pigz -p $thread > ${temp_dsmpat_folder}/${SYNOMODEL}.pat && cp -f ${temp_dsmpat_folder}/${SYNOMODEL}.pat /home/tc/redpill-load/cache/${SYNOMODEL}.pat                
+                if [ "${BUS}" = "block"  ]; then
+                  cd ${temp_pat_folder} && tar -cf ${temp_dsmpat_folder}/${SYNOMODEL}.pat ./ && cp -f ${temp_dsmpat_folder}/${SYNOMODEL}.pat /home/tc/redpill-load/cache/${SYNOMODEL}.pat
+                else
+                  cd ${temp_pat_folder} && tar -cf - ./ | pigz -p $thread > ${temp_dsmpat_folder}/${SYNOMODEL}.pat && cp -f ${temp_dsmpat_folder}/${SYNOMODEL}.pat /home/tc/redpill-load/cache/${SYNOMODEL}.pat
+                fi
             fi
             patfile="/home/tc/redpill-load/cache/${SYNOMODEL}.pat"            
 
@@ -2066,6 +2070,7 @@ function cleanloader() {
 
 function backuploader() {
 
+  if [ "${BUS}" != "block"  ]; then
 #Apply pigz for fast backup  
     if [ ! -n "$(which pigz)" ]; then
         echo "pigz does not exist, bringing over from repo"
@@ -2079,7 +2084,7 @@ function backuploader() {
         sudo sed -i "s/\-czvf/\-cvf \- \| pigz -p "${thread}" \>/g" /usr/bin/filetool.sh
         sudo sed -i "s/\-czf/\-cf \- \| pigz -p "${thread}" \>/g" /usr/bin/filetool.sh
     fi
-    
+  fi  
 #    loaderdisk=$(mount | grep -i optional | grep cde | awk -F / '{print $3}' | uniq | cut -c 1-3)
     homesize=$(du -sh /home/tc | awk '{print $1}')
 
