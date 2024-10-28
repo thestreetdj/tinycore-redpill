@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: prepare build tinycore-redpill loader with lastest img
-      - id: prepare-build-loader
+        id: prepare-build-loader
         run: |
           sudo apt update
           #sudo apt-get install grub2
