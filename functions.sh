@@ -2668,35 +2668,36 @@ st "gen grub     " "Gen GRUB entries" "Finished Gen GRUB entries : ${MODEL}"
     [ -f /mnt/${loaderdisk}3/initrd-dsm72 ] && rm /mnt/${loaderdisk}3/initrd-dsm72
 
     sudo rm -rf /home/tc/rd.temp /home/tc/friend /home/tc/cache/*.pat
+
+    if [ "${BUS}" != "block" ]; then
+        msgnormal "Caching files for future use"
+        [ ! -d ${local_cache} ] && mkdir ${local_cache}
     
-    msgnormal "Caching files for future use"
-    [ ! -d ${local_cache} ] && mkdir ${local_cache}
-
-    # Discover remote file size
-    patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)    
-    FILESIZE=$(stat -c%s "${patfile}")
-    SPACELEFT=$(df --block-size=1 | awk '/'${loaderdisk}'3/{print $4}') # Check disk space left    
-
-    FILESIZE_FORMATTED=$(printf "%'d" "${FILESIZE}")
-    SPACELEFT_FORMATTED=$(printf "%'d" "${SPACELEFT}")
-    FILESIZE_MB=$((FILESIZE / 1024 / 1024))
-    SPACELEFT_MB=$((SPACELEFT / 1024 / 1024))    
-
-    echo "FILESIZE  = ${FILESIZE_FORMATTED} bytes (${FILESIZE_MB} MB)"
-    echo "SPACELEFT = ${SPACELEFT_FORMATTED} bytes (${SPACELEFT_MB} MB)"
-
-    if [ 0${FILESIZE} -ge 0${SPACELEFT} ]; then
-        # No disk space to download, change it to RAMDISK
-        echo "No adequate space on ${local_cache} to backup cache pat file, clean up PAT file now ....."
-        sudo sh -c "rm -vf $(ls -t ${local_cache}/*.pat | head -n 1)"
-    fi
-
-    if [ -f ${patfile} ]; then
-        echo "Found ${patfile}, moving to cache directory : ${local_cache} "
-        cp -vf ${patfile} ${local_cache} && rm -vf /home/tc/redpill-load/cache/*.pat
-    fi
+        # Discover remote file size
+        patfile=$(ls /home/tc/redpill-load/cache/*${TARGET_REVISION}*.pat | head -1)    
+        FILESIZE=$(stat -c%s "${patfile}")
+        SPACELEFT=$(df --block-size=1 | awk '/'${loaderdisk}'3/{print $4}') # Check disk space left    
+    
+        FILESIZE_FORMATTED=$(printf "%'d" "${FILESIZE}")
+        SPACELEFT_FORMATTED=$(printf "%'d" "${SPACELEFT}")
+        FILESIZE_MB=$((FILESIZE / 1024 / 1024))
+        SPACELEFT_MB=$((SPACELEFT / 1024 / 1024))    
+    
+        echo "FILESIZE  = ${FILESIZE_FORMATTED} bytes (${FILESIZE_MB} MB)"
+        echo "SPACELEFT = ${SPACELEFT_FORMATTED} bytes (${SPACELEFT_MB} MB)"
+    
+        if [ 0${FILESIZE} -ge 0${SPACELEFT} ]; then
+            # No disk space to download, change it to RAMDISK
+            echo "No adequate space on ${local_cache} to backup cache pat file, clean up PAT file now ....."
+            sudo sh -c "rm -vf $(ls -t ${local_cache}/*.pat | head -n 1)"
+        fi
+    
+        if [ -f ${patfile} ]; then
+            echo "Found ${patfile}, moving to cache directory : ${local_cache} "
+            cp -vf ${patfile} ${local_cache} && rm -vf /home/tc/redpill-load/cache/*.pat
+        fi
 st "cachingpat" "Caching pat file" "Cached file to: ${local_cache}"
-
+    fi    
 }
 
 function curlfriend() {
