@@ -17,12 +17,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: prepare build tinycore-redpill loader with lastest img
-        id: prepare-build-loader
+      - name: build tinycore-redpill loader with lastest img
+        id: build-loader
         run: |
           sudo apt update
           #sudo apt-get install grub2
           sudo apt-get install qemu-utils
+
+          sudo mkdir /home/tc
+          sudo mkdir /opt/output
+          sudo cp -rf ./* /home/tc
+          ls -ltr /home/tc
+          
           LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "https://github.com/PeterSuh-Q3/tinycore-redpill/releases/latest"`"
           TAG="${LATESTURL##*/}"
           echo "TAG is ${TAG}"
@@ -31,14 +37,8 @@ jobs:
           pwd
           ls -ltr
           echo "::set-output name=TAG::${TAG}"
-      - name: Mount and build loader
-        id: mount-and-build-loader
-        run: |
+
           path=`pwd`
-          sudo mkdir /home/tc
-          sudo mkdir /opt/output
-          sudo cp -rf ./* /home/tc
-          ls -ltr /home/tc
 
           LOOPX=$(sudo losetup -f)
           sudo losetup -P ${LOOPX} tinycore-redpill.${TAG}.m-shell.img
@@ -47,7 +47,7 @@ jobs:
           sudo ln -s ${LOOPX}p1 /mnt
           sudo ln -s ${LOOPX}p2 /mnt
           sudo ln -s ${LOOPX}p3 /mnt
-          
+
           sudo losetup -d ${LOOPX}
           
           gzip -c tinycore-redpill.${TAG}.m-shell.img > /opt/output/tinycore-redpill.${TAG}.m-shell.img.gz
@@ -56,11 +56,12 @@ jobs:
           gzip -c tinycore-redpill.${TAG}.m-shell.vmdk > /opt/output/tinycore-redpill.${TAG}.m-shell.vmdk.gz
           
           ls -ltr /opt/output
-      - name: Upload MshellImage-${{ steps.prepare-build-loader.outputs.TAG }}
+          
+      - name: Upload MshellImage-${{ steps.build-loader.outputs.TAG }}
         if: success()
         uses: actions/upload-artifact@v3
         with:
-          name: MshellImage-${{ steps.prepare-build-loader.outputs.TAG }}
+          name: MshellImage-${{ steps.build-loader.outputs.TAG }}
           path: /opt/output
       # Publish a release if is a tag
       - name: Release
