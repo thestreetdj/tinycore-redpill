@@ -70,9 +70,9 @@ jobs:
           
           ls -ltr /opt/output
           
-      - name: Upload MshellImage-${{ steps.build-loader.outputs.TAG }}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}
+      - name: Upload MshellImage-${{ steps.build-loader.outputs.TAG }}
         if: success()
         uses: actions/upload-artifact@v3
         with:
-          name: MshellImage-${{ steps.build-loader.outputs.TAG }}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}
+          name: MshellImage-${{ steps.build-loader.outputs.TAG }}
           path: /opt/output
