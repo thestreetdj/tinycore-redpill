@@ -51,9 +51,9 @@ jobs:
           sudo mount ${LOOPX}p2 /mnt/${LOOPX}p2
           sudo mount ${LOOPX}p3 /mnt/${LOOPX}p3
 
-          ll /mnt/${LOOPX}p1
-          ll /mnt/${LOOPX}p2
-          ll /mnt/${LOOPX}p3
+          ls -ltr /mnt/${LOOPX}p1
+          ls -ltr /mnt/${LOOPX}p2
+          ls -ltr /mnt/${LOOPX}p3
 
           cd /home/tc
           sudo ./functions.sh ${{github.event.inputs.model}}-${{github.event.inputs.revision}} noconfig fri
@@ -68,9 +68,9 @@ jobs:
           
           ls -ltr /opt/output
           
-      - name: Upload MshellImage-${{ steps.build-loader.outputs.TAG }}
+      - name: Upload MshellImage-${{ steps.build-loader.outputs.TAG }}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}
         if: success()
         uses: actions/upload-artifact@v3
         with:
-          name: MshellImage-${{ steps.build-loader.outputs.TAG }}
+          name: MshellImage-${{ steps.build-loader.outputs.TAG }}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}
           path: /opt/output
