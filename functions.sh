@@ -2483,7 +2483,7 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         SATA_LINE="${SATA_LINE} modprobe.blacklist=mpt3sas "
     fi
 
-    if [ ! -z "${CPU}" ]; then
+    if [ -v CPU ]; then
         if [ "${CPU}" == "AMD" ]; then
             echo "Add configuration disable_mtrr_trim for AMD"
             USB_LINE="${USB_LINE} disable_mtrr_trim=1 "
