@@ -43,13 +43,15 @@ jobs:
           sudo losetup -P ${LOOPX} tinycore-redpill.${TAG}.m-shell.img
           sudo fdisk -l ${LOOPX}
 
-          sudo mkdir -p /mnt/${LOOPX}p1
-          sudo mkdir -p /mnt/${LOOPX}p2
-          sudo mkdir -p /mnt/${LOOPX}p3
+          loaderdisk=$(echo ${LOOPX} | cut -c 6-12 )
 
-          sudo mount ${LOOPX}p1 /mnt/${LOOPX}p1
-          sudo mount ${LOOPX}p2 /mnt/${LOOPX}p2
-          sudo mount ${LOOPX}p3 /mnt/${LOOPX}p3
+          sudo mkdir -p /mnt/${loaderdisk}p1
+          sudo mkdir -p /mnt/${loaderdisk}p2
+          sudo mkdir -p /mnt/${loaderdisk}p3
+
+          sudo mount ${LOOPX}p1 /mnt/${loaderdisk}p1
+          sudo mount ${LOOPX}p2 /mnt/${loaderdisk}p2
+          sudo mount ${LOOPX}p3 /mnt/${loaderdisk}p3
 
           ls -ltr /mnt/${LOOPX}p1
           ls -ltr /mnt/${LOOPX}p2
