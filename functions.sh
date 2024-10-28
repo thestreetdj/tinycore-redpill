@@ -1017,6 +1017,40 @@ function generateMacAddress() {
     printf '00:11:32:%02X:%02X:%02X' $((RANDOM % 256)) $((RANDOM % 256)) $((RANDOM % 256))
 
 }
+function random() {
+        printf "%06d" $(($RANDOM % 30000 + 1))
+}
+function randomhex() {
+        val=$(($RANDOM % 255 + 1))
+        echo "obase=16; $val" | bc
+}
+function generateRandomLetter() {
+        for i in a b c d e f g h j k l m n p q r s t v w x y z; do
+            echo $i
+        done | sort -R | tail -1
+}
+function generateRandomValue() {
+        for i in 0 1 2 3 4 5 6 7 8 9 a b c d e f g h j k l m n p q r s t v w x y z; do
+            echo $i
+        done | sort -R | tail -1
+}
+function toupper() {
+       echo $1 | tr '[:lower:]' '[:upper:]'
+}
+function generateSerial() {
+    case ${suffix} in
+    numeric)
+        serialnum="$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(random)
+        ;;
+    alpha)
+        serialnum=$(toupper "$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(generateRandomLetter)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomValue)$(generateRandomLetter))
+        ;;
+    *)    
+        serialnum="$(echo "$serialstart" | tr ' ' '\n' | sort -R | tail -1)$permanent"$(random)
+        ;;  
+    esac
+    echo $serialnum
+}
 
 function msgalert() {
     echo -e "\033[1;31m$1\033[0m"
@@ -2315,7 +2349,7 @@ function checkUserConfig() {
   tz="US"
 
   if [ "${BUS}" = "block"  ]; then
-    SN=`./sngen.sh "${MODEL}-${TARGET_VERSION}-${TARGET_REVISION}"`
+    SN=$(echo $(generateSerial ${MODEL}))
     writeConfigKey "extra_cmdline" "sn" "${SN}"
     
     MACADDR1=`./macgen.sh "randommac" "eth0" ${MODEL}`
