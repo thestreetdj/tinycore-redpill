@@ -1867,8 +1867,8 @@ function getbspatch() {
         #curl -kL "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/bspatch" -O
          
         echo "bspatch does not exist, copy from tools"
-        chmod 777 ~/tools/bspatch
-        sudo cp -vf ~/tools/bspatch /usr/local/bin/
+        chmod 777 /home/tc/tools/bspatch
+        sudo cp -vf /home/tc/tools/bspatch /usr/local/bin/
     fi
 }
 
@@ -2392,7 +2392,7 @@ st "copyfiles" "Copying files to P1,P2" "Copied boot files to the loader"
     fi
 
     #if [ "$WITHFRIEND" != "YES" ]; then
-    #    jsonfile=$(jq "del(.[\"localrss\"])" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json
+    #    jsonfile=$(jq "del(.[\"localrss\"])" /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json
     #fi 
     
     if [ "$JUNLOADER" == "YES" ]; then
@@ -2956,7 +2956,7 @@ echo "$3"
 }
 
 function add-addons() {
-    jsonfile=$(jq ". |= .+ {\"${1}\": \"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json\"}" ~/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > ~/redpill-load/bundled-exts.json    
+    jsonfile=$(jq ". |= .+ {\"${1}\": \"https://raw.githubusercontent.com/PeterSuh-Q3/tcrp-addons/master/${1}/rpext-index.json\"}" /home/tc/redpill-load/bundled-exts.json) && echo $jsonfile | jq . > /home/tc/redpill-load/bundled-exts.json    
 }
 
 function my() {
@@ -3109,10 +3109,10 @@ function my() {
   fi
   cecho y "Device Module Processing Method is ${DMPM}"
   
-  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof=true || spoof=false
-  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes=true || nvmes=false
-  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils=true || dbgutils=false
-  [ $(cat ~/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif=true || sortnetif=false
+  [ $(cat /home/tc/redpill-load/bundled-exts.json | jq 'has("mac-spoof")') = true ] && spoof=true || spoof=false
+  [ $(cat /home/tc/redpill-load/bundled-exts.json | jq 'has("nvmesystem")') = true ] && nvmes=true || nvmes=false
+  [ $(cat /home/tc/redpill-load/bundled-exts.json | jq 'has("dbgutils")') = true ] && dbgutils=true || dbgutils=false
+  [ $(cat /home/tc/redpill-load/bundled-exts.json | jq 'has("sortnetif")') = true ] && sortnetif=true || sortnetif=false
   
   echo  "download original bundled-exts.json file..."
   curl -skL# https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/bundled-exts.json -o /home/tc/redpill-load/bundled-exts.json
