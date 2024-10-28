@@ -1,0 +1,73 @@
+name: buildimg
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: 'model'
+        required: true
+        default: 'DS3622xs+'
+      revision:
+        description: 'revision'
+        required: true
+        default: '7.2.2-72806'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: prepare build tinycore-redpill loader with lastest img
+        run: |
+          sudo apt update
+          #sudo apt-get install grub2
+          sudo apt-get install qemu-utils
+          LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "https://github.com/PeterSuh-Q3/tinycore-redpill/releases/latest"`"
+          TAG="${LATESTURL##*/}"
+          echo "TAG is ${TAG}"
+          curl -kLO# https://github.com/PeterSuh-Q3/tinycore-redpill/releases/download/${TAG}/tinycore-redpill.${TAG}.m-shell.img.gz
+          gunzip tinycore-redpill.${TAG}.m-shell.img.gz          
+          pwd
+          ls -ltr
+      - name: Mount and build loader
+        id: mount-and-build-loader
+        run: |
+          path=`pwd`
+          #VERSION=v`cat functions.sh | grep rploaderver= | cut -d\" -f2`
+          VERSION=${TAG}
+          echo "Version: ${VERSION}"
+          echo "::set-output name=VERSION::${VERSION}"
+          sudo mkdir /home/tc
+          sudo mkdir /opt/output
+
+          LOOPX=$(sudo losetup -f)
+          sudo losetup -P ${LOOPX} tinycore-redpill.${VERSION}.m-shell.img
+          sudo fdisk -l ${LOOPX}
+          
+          sudo ln -s ${LOOPX}p1 /mnt
+          sudo ln -s ${LOOPX}p2 /mnt
+          sudo ln -s ${LOOPX}p3 /mnt
+          
+          sudo losetup -d ${LOOPX}
+          
+          gzip -c tinycore-redpill.${VERSION}.m-shell.img > /opt/output/tinycore-redpill.${VERSION}.m-shell.img.gz
+
+          qemu-img convert -f raw -O vmdk tinycore-redpill.${VERSION}.m-shell.img tinycore-redpill.${VERSION}.m-shell.vmdk
+          gzip -c tinycore-redpill.${VERSION}.m-shell.vmdk > /opt/output/tinycore-redpill.${VERSION}.m-shell.vmdk.gz
+          
+          ls -ltr /opt/output
+      - name: Upload MshellImage-${{ steps.mount-and-build-loader.outputs.VERSION }}
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: MshellImage-${{ steps.mount-and-build-loader.outputs.VERSION }}
+          path: /opt/output
+      # Publish a release if is a tag
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ inputs.version }}
+          files: |
+            /opt/output/*.gz
+          body: |
+            ${{ inputs.version }}
