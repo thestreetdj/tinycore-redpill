@@ -3369,7 +3369,7 @@ function my() {
       rploader clean
   else
       [ "$MACHINE" != "VIRTUAL" ] && sleep 2
-      echo "y"|rploader backup
+      [ "${BUS}" != "block" ] && echo "y"|rploader backup
   fi
 }
 
