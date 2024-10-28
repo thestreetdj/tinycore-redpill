@@ -1658,7 +1658,7 @@ st "iscached" "Caching pat file" "Patfile ${SYNOMODEL}.pat is cached"
                   echo "Copy encrypted pat file : ${patfile} to ~/data/in"
                   mv -f ${patfile} ~/data/in/${SYNOMODEL}.pat
                   echo "Extracting encrypted pat file : ~/data/in/${SYNOMODEL}.pat to ~/data/out"
-                  sudo docker run --rm -v ~/data:/data syno-extract-system-patch ~/data/in/${SYNOMODEL}.pat /data/out/. || echo "extract latest pat"
+                  sudo docker run --rm -v ~/data:/data syno-extract-system-patch /data/in/${SYNOMODEL}.pat /data/out/. || echo "extract latest pat"
                   mv -f ~/data/out/* ${temp_pat_folder}
                 else
                   echo "Copy encrypted pat file : ${patfile} to ${temp_dsmpat_folder}"
