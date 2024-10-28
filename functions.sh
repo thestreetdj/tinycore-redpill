@@ -2483,22 +2483,24 @@ st "frienddownload" "Friend downloading" "TCRP friend copied to /mnt/${loaderdis
         SATA_LINE="${SATA_LINE} modprobe.blacklist=mpt3sas "
     fi
 
-    if [ "${CPU}" == "AMD" ]; then
-        echo "Add configuration disable_mtrr_trim for AMD"
-        USB_LINE="${USB_LINE} disable_mtrr_trim=1 "
-        SATA_LINE="${SATA_LINE} disable_mtrr_trim=1 "
-    else
-        #if echo "epyc7002 apollolake geminilake" | grep -wq "${ORIGIN_PLATFORM}"; then
-        #    if [ "$MACHINE" = "VIRTUAL" ]; then
-        #        USB_LINE="${USB_LINE} intel_iommu=igfx_off "
-        #        SATA_LINE="${SATA_LINE} intel_iommu=igfx_off "
-        #    fi   
-        #fi    
-
-        if [ -d "/home/tc/redpill-load/custom/extensions/nvmesystem" ]; then
-            echo "Add configuration pci=nommconf for nvmesystem addon"
-            USB_LINE="${USB_LINE} pci=nommconf "
-            SATA_LINE="${SATA_LINE} pci=nommconf "
+    if [ ! -z "${CPU}" ]; then
+        if [ "${CPU}" == "AMD" ]; then
+            echo "Add configuration disable_mtrr_trim for AMD"
+            USB_LINE="${USB_LINE} disable_mtrr_trim=1 "
+            SATA_LINE="${SATA_LINE} disable_mtrr_trim=1 "
+        else
+            #if echo "epyc7002 apollolake geminilake" | grep -wq "${ORIGIN_PLATFORM}"; then
+            #    if [ "$MACHINE" = "VIRTUAL" ]; then
+            #        USB_LINE="${USB_LINE} intel_iommu=igfx_off "
+            #        SATA_LINE="${SATA_LINE} intel_iommu=igfx_off "
+            #    fi   
+            #fi    
+    
+            if [ -d "/home/tc/redpill-load/custom/extensions/nvmesystem" ]; then
+                echo "Add configuration pci=nommconf for nvmesystem addon"
+                USB_LINE="${USB_LINE} pci=nommconf "
+                SATA_LINE="${SATA_LINE} pci=nommconf "
+            fi
         fi
     fi
     
