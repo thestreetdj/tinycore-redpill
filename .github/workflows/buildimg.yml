@@ -18,6 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: prepare build tinycore-redpill loader with lastest img
+      - id: prepare-build-loader
         run: |
           sudo apt update
           #sudo apt-get install grub2
@@ -29,19 +30,18 @@ jobs:
           gunzip tinycore-redpill.${TAG}.m-shell.img.gz          
           pwd
           ls -ltr
+          echo "::set-output name=TAG::${TAG}"
       - name: Mount and build loader
         id: mount-and-build-loader
         run: |
           path=`pwd`
-          #VERSION=v`cat functions.sh | grep rploaderver= | cut -d\" -f2`
-          VERSION=${TAG}
-          echo "Version: ${VERSION}"
-          echo "::set-output name=VERSION::${VERSION}"
           sudo mkdir /home/tc
           sudo mkdir /opt/output
+          sudo cp -rf ./* /home/tc
+          ls -ltr /home/tc
 
           LOOPX=$(sudo losetup -f)
-          sudo losetup -P ${LOOPX} tinycore-redpill.${VERSION}.m-shell.img
+          sudo losetup -P ${LOOPX} tinycore-redpill.${TAG}.m-shell.img
           sudo fdisk -l ${LOOPX}
           
           sudo ln -s ${LOOPX}p1 /mnt
@@ -50,17 +50,17 @@ jobs:
           
           sudo losetup -d ${LOOPX}
           
-          gzip -c tinycore-redpill.${VERSION}.m-shell.img > /opt/output/tinycore-redpill.${VERSION}.m-shell.img.gz
+          gzip -c tinycore-redpill.${TAG}.m-shell.img > /opt/output/tinycore-redpill.${TAG}.m-shell.img.gz
 
-          qemu-img convert -f raw -O vmdk tinycore-redpill.${VERSION}.m-shell.img tinycore-redpill.${VERSION}.m-shell.vmdk
-          gzip -c tinycore-redpill.${VERSION}.m-shell.vmdk > /opt/output/tinycore-redpill.${VERSION}.m-shell.vmdk.gz
+          qemu-img convert -f raw -O vmdk tinycore-redpill.${TAG}.m-shell.img tinycore-redpill.${TAG}.m-shell.vmdk
+          gzip -c tinycore-redpill.${TAG}.m-shell.vmdk > /opt/output/tinycore-redpill.${TAG}.m-shell.vmdk.gz
           
           ls -ltr /opt/output
-      - name: Upload MshellImage-${{ steps.mount-and-build-loader.outputs.VERSION }}
+      - name: Upload MshellImage-${{ steps.prepare-build-loader.outputs.TAG }}
         if: success()
         uses: actions/upload-artifact@v3
         with:
-          name: MshellImage-${{ steps.mount-and-build-loader.outputs.VERSION }}
+          name: MshellImage-${{ steps.prepare-build-loader.outputs.TAG }}
           path: /opt/output
       # Publish a release if is a tag
       - name: Release
