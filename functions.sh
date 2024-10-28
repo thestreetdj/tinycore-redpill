@@ -3297,3 +3297,5 @@ function my() {
       echo "y"|rploader backup
   fi
 }
+
+[ $# -ge 1 ] && my "$1" "noconfig" "fri"
