@@ -1500,7 +1500,7 @@ function copyextractor() {
     echo "Copying executable"
     sudo cp /mnt/${tcrppart}/auxfiles/extractor/scemd /bin/syno_extract_system_patch
     echo "pigz copy for multithreaded compression"
-    sudo cp /mnt/${tcrppart}/auxfiles/extractor/pigz /usr/local/bin/pigz
+    sudo cp /mnt/${tcrppart}/auxfiles/extractor/pigz /usr/bin/pigz
 
 }
 
