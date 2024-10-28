@@ -2071,7 +2071,7 @@ function backuploader() {
         echo "pigz does not exist, bringing over from repo"
         curl -s -k -L "https://raw.githubusercontent.com/PeterSuh-Q3/tinycore-redpill/$build/tools/pigz" -O
         chmod 777 pigz
-        sudo mv pigz /usr/local/bin/
+        sudo mv pigz /usr/bin/
     fi
 
     thread=$(lscpu |grep CPU\(s\): | awk '{print $2}')
