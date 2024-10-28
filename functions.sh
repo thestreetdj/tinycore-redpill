@@ -1494,9 +1494,10 @@ function copyextractor() {
     sudo tar -zxvf /home/tc/extractor.gz -C ${local_cache}/extractor
 
     if [ "${BUS}" = "block"  ]; then
-      EXTRACTOR_PATH="/mnt/${tcrppart}/auxfiles/extractor"
-      cp /lib/x86_64-linux-gnu/libcurl.so.4 $EXTRACTOR_PATH
-      cp $EXTRACTOR_PATH/scemd $EXTRACTOR_PATH/syno_extract_system_patch
+      git clone https://github.com/technorabilia/syno-extract-system-patch.git
+      cd syno-extract-system-patch
+      sudo docker build --tag syno-extract-system-patch .
+      sudo mkdir -p ~/data
     fi
 
     echo "Copying required libraries to local lib directory"
@@ -1574,15 +1575,11 @@ st "extractor" "Extraction tools" "Extraction Tools downloaded"
 
     msgnormal "Checking if tool is accessible"
     if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then    
-        if [ "${BUS}" = "block"  ]; then
-            $EXTRACTOR_PATH/syno_extract_system_patch 2>&1 >/dev/null
-        else
+        if [ "${BUS}" != "block"  ]; then
             /bin/syno_extract_system_patch 2>&1 >/dev/null
         fi
     else
-        if [ "${BUS}" = "block"  ]; then
-            $EXTRACTOR_PATH/syno_extract_system_patch
-        else
+        if [ "${BUS}" != "block"  ]; then
             /bin/syno_extract_system_patch
         fi
     fi
@@ -1660,7 +1657,7 @@ st "iscached" "Caching pat file" "Patfile ${SYNOMODEL}.pat is cached"
                 mv -f ${patfile} ${temp_dsmpat_folder}/${SYNOMODEL}.pat
                 echo "Extracting encrypted pat file : ${temp_dsmpat_folder}/${SYNOMODEL}.pat to ${temp_pat_folder}"
                 if [ "${BUS}" = "block"  ]; then
-                  LD_LIBRARY_PATH=${EXTRACTOR_PATH} "${EXTRACTOR_PATH}/syno_extract_system_patch" ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
+                  sudo docker run --rm -v ~/data:/data syno-extract-system-patch ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
                 else
                   sudo /bin/syno_extract_system_patch ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
                 fi
