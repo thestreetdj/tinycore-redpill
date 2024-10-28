@@ -63,12 +63,3 @@ jobs:
         with:
           name: MshellImage-${{ steps.build-loader.outputs.TAG }}
           path: /opt/output
-      # Publish a release if is a tag
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ inputs.version }}
-          files: |
-            /opt/output/*.gz
-          body: |
-            ${{ inputs.version }}
