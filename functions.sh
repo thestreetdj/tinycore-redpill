@@ -1497,7 +1497,8 @@ function copyextractor() {
       git clone https://github.com/technorabilia/syno-extract-system-patch.git
       cd syno-extract-system-patch
       sudo docker build --tag syno-extract-system-patch .
-      sudo mkdir -p ~/data
+      sudo mkdir -p ~/data/in
+      sudo mkdir -p ~/data/out
     fi
 
     echo "Copying required libraries to local lib directory"
@@ -1653,12 +1654,16 @@ st "iscached" "Caching pat file" "Patfile ${SYNOMODEL}.pat is cached"
             if [ -f /home/tc/redpill-load/cache/${SYNOMODEL}.pat ] && [ ${isencrypted} = "no" ]; then
                 echo "Unecrypted file is already cached in :  /home/tc/redpill-load/cache/${SYNOMODEL}.pat"
             else
-                echo "Copy encrypted pat file : ${patfile} to ${temp_dsmpat_folder}"
-                mv -f ${patfile} ${temp_dsmpat_folder}/${SYNOMODEL}.pat
-                echo "Extracting encrypted pat file : ${temp_dsmpat_folder}/${SYNOMODEL}.pat to ${temp_pat_folder}"
-                if [ "${BUS}" = "block"  ]; then
-                  sudo docker run --rm -v ~/data:/data syno-extract-system-patch ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
+                if [ "${BUS}" = "block"  ]; then            
+                  echo "Copy encrypted pat file : ${patfile} to ~/data/in"
+                  mv -f ${patfile} ~/data/in/${SYNOMODEL}.pat
+                  echo "Extracting encrypted pat file : ~/data/in/${SYNOMODEL}.pat to ~/data/out"
+                  sudo docker run --rm -v ~/data:/data syno-extract-system-patch ~/data/in/${SYNOMODEL}.pat /data/out/. || echo "extract latest pat"
+                  mv -f ~/data/out/* ${temp_pat_folder}
                 else
+                  echo "Copy encrypted pat file : ${patfile} to ${temp_dsmpat_folder}"
+                  mv -f ${patfile} ${temp_dsmpat_folder}/${SYNOMODEL}.pat
+                  echo "Extracting encrypted pat file : ${temp_dsmpat_folder}/${SYNOMODEL}.pat to ${temp_pat_folder}"
                   sudo /bin/syno_extract_system_patch ${temp_dsmpat_folder}/${SYNOMODEL}.pat ${temp_pat_folder} || echo "extract latest pat"
                 fi
                 echo "Creating unecrypted pat file ${SYNOMODEL}.pat to /home/tc/redpill-load/cache folder (multithreaded comporession)"
