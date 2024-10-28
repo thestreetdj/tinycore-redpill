@@ -1238,8 +1238,6 @@ function _pat_process() {
   #mirrors=("global.synologydownload.com" "global.download.synology.com" "cndl.synology.cn")
   mirrors=("global.synologydownload.com" "global.download.synology.com")
 
-  SPACELEFT=$(df --block-size=1 | awk '/'${loaderdisk}'3/{print $4}') # Check disk space left
-
   fastest=$(_get_fastest "${mirrors[@]}")
   echo "fastest = " "${fastest}"
   mirror="$(echo ${PATURL} | sed 's|^http[s]*://\([^/]*\).*|\1|')"
@@ -1250,22 +1248,25 @@ function _pat_process() {
   fi
 
   # Discover remote file size
-  FILESIZE=$(curl -k -sLI "${PATURL}" | grep -i Content-Length | awk '{print$2}')
-
-  FILESIZE_FORMATTED=$(printf "%'d" "${FILESIZE}")
-  SPACELEFT_FORMATTED=$(printf "%'d" "${SPACELEFT}")
-  FILESIZE_MB=$((FILESIZE / 1024 / 1024))
-  SPACELEFT_MB=$((SPACELEFT / 1024 / 1024))    
-
-  echo "FILESIZE  = ${FILESIZE_FORMATTED} bytes (${FILESIZE_MB} MB)"
-  echo "SPACELEFT = ${SPACELEFT_FORMATTED} bytes (${SPACELEFT_MB} MB)"
-
-  if [ 0${FILESIZE} -ge 0${SPACELEFT} ]; then
-      # No disk space to download, change it to RAMDISK
-      echo "No adequate space on ${local_cache} to download file into cache folder, clean up PAT file now ....."
-      sudo sh -c "rm -vf $(ls -t ${local_cache}/*.pat | head -n 1)"
+  if [ "${BUS}" != "block"  ]; then
+      SPACELEFT=$(df --block-size=1 | awk '/'${loaderdisk}'3/{print $4}') # Check disk space left
+      FILESIZE=$(curl -k -sLI "${PATURL}" | grep -i Content-Length | awk '{print$2}')
+    
+      FILESIZE_FORMATTED=$(printf "%'d" "${FILESIZE}")
+      SPACELEFT_FORMATTED=$(printf "%'d" "${SPACELEFT}")
+      FILESIZE_MB=$((FILESIZE / 1024 / 1024))
+      SPACELEFT_MB=$((SPACELEFT / 1024 / 1024))    
+    
+      echo "FILESIZE  = ${FILESIZE_FORMATTED} bytes (${FILESIZE_MB} MB)"
+      echo "SPACELEFT = ${SPACELEFT_FORMATTED} bytes (${SPACELEFT_MB} MB)"
+    
+      if [ 0${FILESIZE} -ge 0${SPACELEFT} ]; then
+          # No disk space to download, change it to RAMDISK
+          echo "No adequate space on ${local_cache} to download file into cache folder, clean up PAT file now ....."
+          sudo sh -c "rm -vf $(ls -t ${local_cache}/*.pat | head -n 1)"
+      fi
   fi
-
+  
   echo "PATURL = " "${PATURL}"
   STATUS=$(curl -k -w "%{http_code}" -L "${PATURL}" -o "${PAT_PATH}" --progress-bar)
   if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
