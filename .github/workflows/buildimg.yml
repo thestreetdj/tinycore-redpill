@@ -21,8 +21,7 @@ jobs:
         id: build-loader
         run: |
           sudo apt update
-          sudo apt-get install pciutils
-          sudo apt-get install qemu-utils
+          sudo apt-get install pciutils qemu-utils
 
           sudo mkdir /home/tc
           sudo mkdir /opt/output
@@ -43,13 +42,21 @@ jobs:
           LOOPX=$(sudo losetup -f)
           sudo losetup -P ${LOOPX} tinycore-redpill.${TAG}.m-shell.img
           sudo fdisk -l ${LOOPX}
-          
-          sudo ln -s ${LOOPX}p1 /mnt
-          sudo ln -s ${LOOPX}p2 /mnt
-          sudo ln -s ${LOOPX}p3 /mnt
+
+          sudo mkdir -p /mnt/${LOOPX}p1
+          sudo mkdir -p /mnt/${LOOPX}p2
+          sudo mkdir -p /mnt/${LOOPX}p3
+
+          sudo mount ${LOOPX}p1 /mnt/${LOOPX}p1
+          sudo mount ${LOOPX}p2 /mnt/${LOOPX}p2
+          sudo mount ${LOOPX}p3 /mnt/${LOOPX}p3
+
+          cd /home/tc
+          sudo ./functions.sh DS3622xs+7.2.2-72806 noconfig fri          
 
           sudo losetup -d ${LOOPX}
-          
+
+          cd ${path}
           gzip -c tinycore-redpill.${TAG}.m-shell.img > /opt/output/tinycore-redpill.${TAG}.m-shell.img.gz
 
           qemu-img convert -f raw -O vmdk tinycore-redpill.${TAG}.m-shell.img tinycore-redpill.${TAG}.m-shell.vmdk
