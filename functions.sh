@@ -2314,6 +2314,14 @@ function checkUserConfig() {
   
   tz="US"
 
+  if [ "${BUS}" = "block"  ]; then
+    SN=`./sngen.sh "${MODEL}"-"${BUILD}"`
+    writeConfigKey "extra_cmdline" "sn" "${SN}"
+    
+    MACADDR1=`./macgen.sh "randommac" $1 ${MODEL}`
+    writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
+  fi
+
   if [ ! -n "${SN}" ]; then
     eval "echo \${MSG${tz}36}"
     msgalert "Synology serial number not set. Check user_config.json again. Abort the loader build !!!!!!"
