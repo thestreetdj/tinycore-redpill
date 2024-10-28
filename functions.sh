@@ -2315,10 +2315,10 @@ function checkUserConfig() {
   tz="US"
 
   if [ "${BUS}" = "block"  ]; then
-    SN=`./sngen.sh "${MODEL}"-"${BUILD}"`
+    SN=`./sngen.sh "${MODEL}-${TARGET_VERSION}-${TARGET_REVISION}"`
     writeConfigKey "extra_cmdline" "sn" "${SN}"
     
-    MACADDR1=`./macgen.sh "randommac" $1 ${MODEL}`
+    MACADDR1=`./macgen.sh "randommac" "eth0" ${MODEL}`
     writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
   fi
 
