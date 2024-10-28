@@ -3298,4 +3298,4 @@ function my() {
   fi
 }
 
-[ $# -ge 1 ] && my "$1" "noconfig" "fri"
+[ $# -ge 1 ] && my "$1" "$2" "$3"
