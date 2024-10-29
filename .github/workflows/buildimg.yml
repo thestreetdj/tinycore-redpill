@@ -21,7 +21,7 @@ jobs:
         id: build-loader
         run: |
           sudo apt update
-          sudo apt-get install pciutils qemu-utils cpio kmod ncurses-bin
+          sudo apt-get install grub2 pciutils qemu-utils cpio kmod ncurses-bin
 
           sudo mkdir /home/tc
           sudo mkdir /opt/output
@@ -64,17 +64,53 @@ jobs:
           ls -ltr /mnt/${loaderdisk}p2
           ls -ltr /mnt/${loaderdisk}p3
 
+          #make target img
+          dd if=/dev/zero of=tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img bs=1M seek=2048 count=0
+          echo -e "n\np\n1\n\n+72M\nn\np\n2\n\n+75M\nn\np\n3\n\n+1899M\nw\nq\n" | sudo fdisk tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img
+          echo -e "a\n1\nw" | sudo fdisk tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img
+
+          LOOPZ=$(sudo losetup -f)
+          sudo losetup -P ${LOOPZ} tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img
+          echo "LOOPZ = ${LOOPZ}"
+          sudo fdisk -l ${LOOPZ}
+
+          #sudo mkfs.vfat -F16 ${LOOPZ}p1
+          #sudo mkfs.vfat -F16 ${LOOPZ}p2
+          sudo mkfs.vfat -i 6234C863 -F16 ${LOOPZ}p3
+          
+          sudo dd if="${LOOPX}p1" of="${LOOPZ}p1"
+          sudo mkdir -p /mnt/tarp1
+          sudo mount ${LOOPZ}p1 /mnt/tarp1
+          sudo grub-install --target=x86_64-efi --boot-directory="/mnt/tarp1/boot" --efi-directory="/mnt/tarp1" --removable
+          sudo grub-install --target=i386-pc --boot-directory="/mnt/tarp1/boot" "${LOOPZ}"
+          
+          sudo dd if="${LOOPX}p2" of="${LOOPZ}p2"
+          
+          sudo mkdir -p /mnt/tarp3
+          sudo mount ${LOOPZ}p3 /mnt/tarp3
+          cd /mnt/${LOOPX}p3 && sudo find . | sudo cpio -pdm "/mnt/tarp3"
+          cd ${path}/
+          sudo cp -vf ${path}/mydata.tgz /mnt/tarp3
+          ls -ltr /mnt/tarp3
+          # from version 1.0.3.0 add gettext.tcz
+          sudo cp -vf ${path}/tce/optional/gettext.* /mnt/tarp3/cde/optional
+          sudo cp -vf ${path}/tce/optional/ncursesw.* /mnt/tarp3/cde/optional
+          ls -ltr /mnt/tarp3/cde/optional
+          sudo cp -vf ${path}/tce/onboot.lst /mnt/tarp3/cde/onboot.lst          
+          
+          sudo umount /mnt/tarp3
+          
+          sudo losetup -d ${LOOPZ}
           sudo umount /mnt/${loaderdisk}p1
           sudo umount /mnt/${loaderdisk}p2
           sudo umount /mnt/${loaderdisk}p3
-
           sudo losetup -d ${LOOPX}
 
           cd ${path}
-          gzip -c tinycore-redpill.${TAG}.m-shell.img > /opt/output/tinycore-redpill.${TAG}.m-shell.img.gz
+          gzip -c tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img > /opt/output/tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img.gz
 
-          qemu-img convert -f raw -O vmdk tinycore-redpill.${TAG}.m-shell.img tinycore-redpill.${TAG}.m-shell.vmdk
-          gzip -c tinycore-redpill.${TAG}.m-shell.vmdk > /opt/output/tinycore-redpill.${TAG}.m-shell.vmdk.gz
+          qemu-img convert -f raw -O vmdk tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.vmdk
+          gzip -c tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.vmdk > /opt/output/tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.vmdk.gz
           
           ls -ltr /opt/output
           
