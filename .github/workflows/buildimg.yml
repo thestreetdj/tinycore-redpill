@@ -1,7 +1,7 @@
 name: buildimg
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       model:
         description: 'model'
