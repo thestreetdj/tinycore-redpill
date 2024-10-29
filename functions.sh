@@ -3380,8 +3380,9 @@ function my() {
       cecho r "An error occurred while building the loader!!! Clean the redpill-load directory!!! "
       rploader clean
   else
+      [ "${BUS}" = "block" ] && exit 0
       [ "$MACHINE" != "VIRTUAL" ] && sleep 2
-      [ "${BUS}" != "block" ] && echo "y"|rploader backup
+      echo "y"|rploader backup
   fi
 }
 
