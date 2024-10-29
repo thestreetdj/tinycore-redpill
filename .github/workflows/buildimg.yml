@@ -60,6 +60,14 @@ jobs:
           cd /home/tc
           sudo ./functions.sh ${{github.event.inputs.model}}-${{github.event.inputs.revision}} noconfig fri
 
+          ls -ltr /mnt/${loaderdisk}p1
+          ls -ltr /mnt/${loaderdisk}p2
+          ls -ltr /mnt/${loaderdisk}p3
+
+          sudo umount /mnt/${loaderdisk}p1
+          sudo umount /mnt/${loaderdisk}p2
+          sudo umount /mnt/${loaderdisk}p3
+
           sudo losetup -d ${LOOPX}
 
           cd ${path}
