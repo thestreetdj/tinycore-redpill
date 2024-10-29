@@ -1591,7 +1591,7 @@ st "extractor" "Extraction tools" "Extraction Tools downloaded"
 function testarchive() {
 
     archive="$1"
-    archiveheader="$(od -bc ${archive} | head -1 | awk '{print $3}')"
+    archiveheader="$(od -bc ${archive} | head -n 1 | awk '{print $3}')"
 
     case ${archiveheader} in
     105)
