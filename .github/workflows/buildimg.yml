@@ -21,7 +21,7 @@ jobs:
         id: build-loader
         run: |
           sudo apt update
-          sudo apt-get install pciutils qemu-utils cpio kmod
+          sudo apt-get install pciutils qemu-utils cpio kmod ncurses-bin
 
           sudo mkdir /home/tc
           sudo mkdir /opt/output
