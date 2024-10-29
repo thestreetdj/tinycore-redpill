@@ -1574,47 +1574,58 @@ st "extractor" "Extraction tools" "Extraction Tools downloaded"
     echo "Removing temp folder /tmp/synoesp"
     rm -rf $temp_folder
 
-    msgnormal "Checking if tool is accessible"
-    if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then    
-        if [ "${BUS}" != "block"  ]; then
+    if [ "${BUS}" != "block" ]; then
+        msgnormal "Checking if tool is accessible"
+        if [ -d ${local_cache/extractor /} ] && [ -f ${local_cache}/extractor/scemd ]; then    
             /bin/syno_extract_system_patch 2>&1 >/dev/null
-        fi
-    else
-        if [ "${BUS}" != "block"  ]; then
+        else
             /bin/syno_extract_system_patch
         fi
+        if [ $? -eq 255 ]; then echo "Executed succesfully"; else echo "Cound not execute"; fi    
     fi
-    if [ $? -eq 255 ]; then echo "Executed succesfully"; else echo "Cound not execute"; fi    
-
 }
 
 function testarchive() {
 
     archive="$1"
-    archiveheader="$(od -bc ${archive} | awk 'NR==1 {print $3; exit}')"
-
-    case ${archiveheader} in
-    105)
-        echo "${archive}, is a Tar file"
-        isencrypted="no"
-        return 0
-        ;;
-    255)
-        echo "File ${archive}, is  encrypted"
-        isencrypted="yes"
-        return 1
-        ;;
-    213)
-        echo "File ${archive}, is a compressed tar"
-        isencrypted="no"
-        ;;
-    *)
-        echo "Could not determine if file ${archive} is encrypted or not, maybe corrupted"
-        ls -ltr ${archive}
-        echo ${archiveheader}
-        exit 99
-        ;;
-    esac
+    if [ "${BUS}" != "block" ]; then
+        archiveheader="$(od -bc ${archive} | awk 'NR==1 {print $3; exit}')"
+    
+        case ${archiveheader} in
+        105)
+            echo "${archive}, is a Tar file"
+            isencrypted="no"
+            return 0
+            ;;
+        255)
+            echo "File ${archive}, is  encrypted"
+            isencrypted="yes"
+            return 1
+            ;;
+        213)
+            echo "File ${archive}, is a compressed tar"
+            isencrypted="no"
+            ;;
+        *)
+            echo "Could not determine if file ${archive} is encrypted or not, maybe corrupted"
+            ls -ltr ${archive}
+            echo ${archiveheader}
+            exit 99
+            ;;
+        esac
+    else
+        if [ ${TARGET_REVISION} -gt 42218 ]; then
+            echo "Found build request for revision greater than 42218"
+            echo "File ${archive}, is  encrypted"
+            isencrypted="yes"
+            return 1
+        else
+            echo "Found build request for revision less equal than 42218"
+            echo "${archive}, is a Tar file"
+            isencrypted="no"
+            return 0
+        fi
+    fi
 
 }
 
