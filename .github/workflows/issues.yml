@@ -10,6 +10,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Init Env
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          sudo timedatectl set-timezone "Asia/Seoul"
+
       - name: Check Issues
         shell: python
         run: |
@@ -145,9 +151,32 @@ jobs:
           
           ls -ltr /opt/output
           
-      - name: Upload MshellImage-${{ steps.build-loader.outputs.TAG }}-${{ env.model }}-${{ env.version }}
-        if: success()
+      - name: Upload to Artifact
+        if: env.iscustom == 'true' && success()
         uses: actions/upload-artifact@v3
         with:
           name: MshellImage-${{ steps.build-loader.outputs.TAG }}-${{ env.model }}-${{ env.version }}
           path: /opt/output
+
+      - name: Update Comment Success
+        if: env.iscustom == 'true' && success()
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'update-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment-id: ${{ steps.comment.outputs.comment-id }}
+          update-mode: replace
+          body: |
+            Hi @${{ github.event.issue.user.login }}.  
+            RR-${{ env.model }} build success, please download the attachment from the below link (Attachments are only kept for 5 days).
+            > ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}  
+            ----
+          emoji: hooray
+
+      - name: Close Issues
+        if: env.iscustom == 'true' && success()
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'close-issue'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
