@@ -55,9 +55,6 @@ jobs:
         id: build-loader
         if: env.iscustom == 'true'
         run: |
-          MODEL="${{ env.model }}"
-          VERSION="${{ env.version }}"
-          
           sudo apt update
           sudo apt-get install grub2 pciutils qemu-utils cpio kmod ncurses-bin
 
@@ -96,7 +93,7 @@ jobs:
           ls -ltr /mnt/${loaderdisk}p3
 
           cd /home/tc
-          sudo ./functions.sh ${{ MODEL }}-${{ VERSION }} noconfig fri
+          sudo ./functions.sh ${{ env.model }}-${{ env.version }} noconfig fri
 
           ls -ltr /mnt/${loaderdisk}p1
           ls -ltr /mnt/${loaderdisk}p2
