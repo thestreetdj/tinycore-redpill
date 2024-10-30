@@ -2,24 +2,62 @@ name: Issues
 on:
   issues:
     types: [opened, reopened]
-    inputs:
-      model:
-        description: 'model'
-        required: true
-        default: 'DS3622xs+'
-      revision:
-        description: 'revision'
-        required: true
-        default: '7.2.2-72806'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Check Issues
+        shell: python
+        run: |
+          # -*- coding: utf-8 -*-
+          import json, subprocess
+          def set_output(name, value):
+            subprocess.call(["echo '{}={}' >> $GITHUB_ENV".format(name, value)], shell=True)
+          issuetitle = ${{ toJSON(github.event.issue.title) }};
+          issuebody = ${{ toJSON(github.event.issue.body) }};
+          
+          iscustom = 'false'
+          warinfo = 'false'
+          model = ''
+          version = ''
+          try:
+              if issuetitle.lower().startswith('custom'):
+                  jsonbody = json.loads(issuebody)
+                  iscustom = 'true'
+                  model = jsonbody.get('model', '')
+                  version = jsonbody.get('version', '')
+          except ValueError as e:
+              pass
+          if iscustom == 'false':
+              if issuebody.find('DMI') < 0 and issuebody.find('CPU') < 0 and issuebody.find('NIC') < 0:
+                  warinfo = 'true'
+    
+          set_output("iscustom", iscustom)
+          set_output("warinfo", warinfo)  
+
+          set_output("model", model)
+          set_output("version", version)
+
+      - name: Update Comment Labels
+        if: env.iscustom == 'true'
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'add-labels'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          labels: 'custom,${{ env.model }}'
+          
       - name: build tinycore-redpill loader with lastest img
         id: build-loader
+        if: env.iscustom == 'true'
         run: |
+          MODEL="${{ env.model }}"
+          VERSION="${{ env.version }}"
+          
           sudo apt update
           sudo apt-get install grub2 pciutils qemu-utils cpio kmod ncurses-bin
 
@@ -58,7 +96,7 @@ jobs:
           ls -ltr /mnt/${loaderdisk}p3
 
           cd /home/tc
-          sudo ./functions.sh ${{github.event.inputs.model}}-${{github.event.inputs.revision}} noconfig fri
+          sudo ./functions.sh ${{ MODEL }}-${{ VERSION }} noconfig fri
 
           ls -ltr /mnt/${loaderdisk}p1
           ls -ltr /mnt/${loaderdisk}p2
@@ -66,12 +104,12 @@ jobs:
 
           #make target img
           cd ${path}/
-          dd if=/dev/zero of=tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img bs=1M seek=2048 count=0
-          echo -e "n\np\n1\n\n+72M\nn\np\n2\n\n+75M\nn\np\n3\n\n+1899M\nw\nq\n" | sudo fdisk tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img
-          echo -e "a\n1\nw" | sudo fdisk tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img
+          dd if=/dev/zero of=tinycore-redpill.${TAG}-${{ env.model }}-${{ env.version }}.m-shell.img bs=1M seek=2048 count=0
+          echo -e "n\np\n1\n\n+72M\nn\np\n2\n\n+75M\nn\np\n3\n\n+1899M\nw\nq\n" | sudo fdisk tinycore-redpill.${TAG}-${{ env.model }}-${{ env.version }}.m-shell.img
+          echo -e "a\n1\nw" | sudo fdisk tinycore-redpill.${TAG}-${{ env.model }}-${{ env.version }}.m-shell.img
 
           LOOPZ=$(sudo losetup -f)
-          sudo losetup -P ${LOOPZ} tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img
+          sudo losetup -P ${LOOPZ} tinycore-redpill.${TAG}-${{ env.model }}-${{ env.version }}.m-shell.img
           echo "LOOPZ = ${LOOPZ}"
           sudo fdisk -l ${LOOPZ}
 
@@ -103,16 +141,16 @@ jobs:
 
           cd ${path}/
           ls -ltr ${path}/
-          gzip -c tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img > /opt/output/tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img.gz
+          gzip -c tinycore-redpill.${TAG}-${{ env.model }}-${{ env.version }}.m-shell.img > /opt/output/tinycore-redpill.${TAG}-${{ env.model }}-${{ env.version }}.m-shell.img.gz
 
-          qemu-img convert -f raw -O vmdk tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.img tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.vmdk
-          gzip -c tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.vmdk > /opt/output/tinycore-redpill.${TAG}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}.m-shell.vmdk.gz
+          qemu-img convert -f raw -O vmdk tinycore-redpill.${TAG}-${{ env.model }}-${{ env.version }}.m-shell.img tinycore-redpill.${TAG}-${{ env.model }}-${{ env.version }}.m-shell.vmdk
+          gzip -c tinycore-redpill.${TAG}-${{ env.model }}-${{ env.version }}.m-shell.vmdk > /opt/output/tinycore-redpill.${TAG}-${{ env.model }}-${{ env.version }}.m-shell.vmdk.gz
           
           ls -ltr /opt/output
           
-      - name: Upload MshellImage-${{ steps.build-loader.outputs.TAG }}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}
+      - name: Upload MshellImage-${{ steps.build-loader.outputs.TAG }}-${{ env.model }}-${{ env.version }}
         if: success()
         uses: actions/upload-artifact@v3
         with:
-          name: MshellImage-${{ steps.build-loader.outputs.TAG }}-${{github.event.inputs.model}}-${{github.event.inputs.revision}}
+          name: MshellImage-${{ steps.build-loader.outputs.TAG }}-${{ env.model }}-${{ env.version }}
           path: /opt/output
